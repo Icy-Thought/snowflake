@@ -1,0 +1,13 @@
+* NixOS-Configurations
+A hamerspace containing nixos, alacritty, neovim, emacs, zathura and other configuration files!
+
+** RTFM
+1. Clone git repo through:
+   #+begin_quote
+   https://github.com/Icy-Thought/NixOS-Configurations.git
+   #+end_quote
+
+2. Link correct host (/home.nix/) file to .config/nixpkgs/:
+   #+begin_quote
+   ln -s ./hosts/wukong/home.nix ~/.config/nixpkgs/
+   #+end_quote

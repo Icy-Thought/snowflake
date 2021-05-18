@@ -1,2 +1,0 @@
-# Snowflake
-NixOS Flake Configuration.
