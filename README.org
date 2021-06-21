@@ -1,13 +1,110 @@
-* NixOS-Configurations
-A hamerspace containing nixos, alacritty, neovim, emacs, zathura and other configuration files!
+#+TITLE: NixOS Configuration!
+#+DATE: <2021-06-05 lör>
 
-** RTFM
-1. Clone git repo through:
-   #+begin_quote
-   https://github.com/Icy-Thought/NixOS-Configurations.git
-   #+end_quote
+[[./src/desktop.png]]
 
-2. Link correct host (/home.nix/) file to .config/nixpkgs/:
-   #+begin_quote
-   ln -s ./hosts/wukong/home.nix ~/.config/nixpkgs/
-   #+end_quote
+* Table of Contents :TOC:
+- [[#introduction][Introduction]]
+- [[#getting-started][Getting Started]]
+  - [[#partitioning--formatting][Partitioning & Formatting]]
+  - [[#nix-channels][Nix-Channels]]
+  - [[#clone-nixos-configuration-repository][Clone =NixOS Configuration= Repository]]
+- [[#installation-process][Installation Process]]
+  - [[#mount--create-required-dirs][Mount & Create Required Dirs]]
+  - [[#migrating-host-files-to-mnt][Migrating Host Files to =/mnt=]]
+  - [[#replacing-necessary-configurations][Replacing Necessary Configurations]]
+  - [[#installing-nixos][Installing NixOS]]
+  - [[#home-manager][Home-Manager]]
+- [[#congratulations][Congratulations!]]
+- [[#useful-links][Useful Links]]
+
+* Introduction
+This is a hamerspace of a declerative NixOS environment containing several hand-crafted configurations of programs ranging from Alacritty, Neovim (v0.5), Emacs (27.2), Zathura to other configured applications found in the =home/modules= and =home/config= folders.
+
+#+begin_quote
+It's worth mentioning that this repository, like other dotfile/configuration repositories, is subjected to change and therefore one should be aware of the changes made to the repository before blindly replacing/updating the necessary files driving their NixOS environment to sanity.
+#+end_quote
+
+In this README I will try to explain how to replicate my NixOS setup or achieve similar feats. If you find that this guide is not as useful as I had hoped, please do submit an issue asking for the parts you found confusing to be explained in a different manner or submit a PR and hopefully we can make this a better place together!
+
+In this setup I will introduce a rather interesting project, Home-Manager, which is crafted in such manner that allows its user to carefully configure their system environments as they desire! One should note though that this project is still in its early stages, henceforth one should familiarize themself with the [[https://github.com/nix-community/home-manager#words-of-warning][risks]] that comes with the usage of such feature.
+
+* Getting Started
+** Partitioning & Formatting
+Here I advice you to follow to carefully written [[https://nixos.org/manual/nixos/stable/#sec-installation-partitioning][guide]] by the lovely NixOS members about partitions, how to setup your partitions & later format them to their desired filesystems.
+
+** Nix-Channels
+Setup your environment ot use the bleeding edge repository of NixOS and also add Home-Manager to your nix-channels:
+#+begin_src shell :noeval
+sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos
+sudo nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+sudo nix-channel --update
+#+end_src
+** Clone =NixOS Configuration= Repository
+#+begin_src shell :noeval
+git clone https://github.com/Icy-Thought/NixOS-Configurations.git
+#+end_src
+
+* Installation Process
+#+begin_quote
+Since this is a replication of my personal installation, you should note that =hosts/X= (where =X= stands for the device-related folder) have been specifically configurations to use the passwords I currently use on my Desktop and thus you ought to change the hashed password if you choose to use the exact replication of my setup.
+#+end_quote
+
+** Mount & Create Required Dirs
+#+begin_src shell :noeval
+sudo mount /dev/disk/by-label/nixos /mnt
+sudo mkdir -p /mnt/boot
+sudo mount /dev/disk/by-label/boot /mnt/boot
+#+end_src
+
+And to prevent future crashes during the installation process because of no ram, I advice you to enable your newly created swap partition:
+#+begin_src shell :noeval
+sudo swapon /dev/sdX
+#+end_src
+
+** Migrating Host Files to =/mnt=
+To prevent the generated =hardware-configuration.nix= from clashing with my personal =hardware-configuration.nix=, remove the =hardware-configration.nix= in the git repository:
+#+begin_src shell :noeval
+rm NixOS-Configurations/hosts/X/hardware-configuration.nix
+#+end_src
+
+Now migrate the files to your mounted partition (=/mnt=):
+#+begin_src shell :noeval
+sudo cp NixOS-Configurations/hosts/X/* /mnt/etc/nixos
+#+end_src
+
+** Replacing Necessary Configurations
+Due to how I have setup my =configuration.nix= you are required to edit several entries in that file, such as: ~fileSystems~, the kernel parameters specified in the ~boot~ entry and also the applications installed during the installation period.
+
+*** Example: ~fileSystems~
+#+begin_src nix :noeval
+fileSystems."/boot" = {
+  device = "/dev/disk/by-uuid/insert-your-boot-uuid-here";
+  fsType = "vfat";
+  options = [ "x-gvfs-hide" ]; # For hiding boot partition entry in Nautilus.
+};
+#+end_src
+
+** Installing NixOS
+After moving the files to their required locations proceed with the installation by using ~nixos-install~ command followed by a reboot after the system successfully installed the configurations.
+#+begin_src shell :noeval
+sudo nixos-install
+reboot
+#+end_src
+
+** Home-Manager
+After confirming that your NixOS system have successfully installed, proceed by creating =.config/nixpkgs=, moving the desired =hosts/X/home.nix= file and later installing Home-Manager:
+#+begin_src shell :noeval
+mkdir -p ~/.config/nixpkgs
+cp NixOS-Configurations/hosts/X/home.nix ~/.config/nixpkgs
+nix-shell '<home-manager>' -A install
+home-manager switch
+#+end_src
+
+* Congratulations!
+You have succesfully installed my personally crafted NixOS environment. I hope it suits your needs, if not then you are always welcome to propose changes or fork and edit the repository to your heart's content!
+
+* Useful Links
+- [[Stable][NixOS Manual]]: A manual for the newcomer to read and understand different parts of the NixOS distribution.
+- [[https://github.com/nix-community/home-manager][Home-Manager]]: Helps you manage your =~/home= related configurations.
+- [[https://nixos.org/guides/nix-pills][Nix Pills]]: A series written to familiarize the user with the Nix programming language.

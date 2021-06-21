@@ -1,17 +1,32 @@
 {
-  description = "NixOS configuration";
+  description = "A structured and configureable NixOS system!";
 
   inputs = {
-    nixpkgs = {
+
+    master = {
       type = "github";
       owner = "NixOS";
       repo = "nixpkgs";
-      ref = "nixpkgs-unstable";
+      ref = "master";
+    };
+
+    unstable = {
+      type = "github";
+      owner = "NixOS";
+      repo = "nixpkgs";
+      ref = "nixos-unstable";
+    };
+
+    stable = {
+      type = "github";
+      owner = "NixOS";
+      repo = "nixpkgs";
+      ref = "nixos-21.05";
     };
 
     home-manager = {
       type = "github";
-      owner = "rycee";
+      owner = "nix-community";
       repo = "home-manager";
       ref = "master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -30,7 +45,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    neovim-nightly-overlay = {
+    neovim-nightly = {
       type = "github";
       owner = "nix-community";
       repo = "neovim-nightly-overlay";
@@ -71,87 +86,38 @@
 
   };
 
-  outputs = inputs@{ self
-    , nixpkgs
-    , home-manager
-    , flake-utils
-    , agenix
-    # , neovim-nightly-overlay
-    , rust-overlay
-    , naersk
-    # , emacs-overlay
-    # , nixos-hardware
-    , ... 
-  }: 
+  outputs = { self, nixpkgs, home-manager, ... } inputs@: 
 
   let
-    inherit (nixpkgs) lib;
-    inherit (lib) recrusiveUpdate;
-    system = "x86_64-linux";
-    stable-pkgs = import ./overlays;
-    
-    utils = import ./utility-functions.nix {
-      inherit lib system pkgs inputs self;
-      nixosModules = nixosModules;
-    };
+    inherit self inputs;
 
-    pkgs = (utils.pkgImport nixpkgs overlays);
-    
-    hmImports = [
-      ./home/home.nix
-    ];
+    config = {
+        allowUnfree = true;
+      };
 
-    nixosModules = (hostname: [
-      nixpkgs.nixosModules.notDetected
-      home-manager.nixosModules.home-manager
-      ({
-        home-manager.useGlobalPkgs = true;
-        home-manager.useUserPackages = true;
-        home-manager.users.sirius = {
-          import = hmImports ++ [ (./. + "/hosts/${hostname}.hm.nix") ];
-        };
+    overlays = with inputs; [
+      (final: _:
+        let
+          system = final.stdenv.hostPlatform.system;
+        in {
+          agenix = agenix.defaultPackage.${system};
+          neovim-nightly = neovim.packages.${system}.neovim;
+
+          master = import master { inherit config system; };
+          unstable = import unstable { inherit config system; };
+          stable = import stable { inherit config system; };
       })
-    ]);
 
-    overlays = [
-      stable-pkgs
-      inputs.neovim-nightly-overlay.overlay
-      # emacs-overlay.overlay
-    ];
+    # Imported flakes-overlays
+    rust.overlay
+  ]
 
   in
   {
-    homeConfigurations = {
-      sirius = 
-        home-manager.lib.homeManagerConfiguration {
-          inherit system;
-          homeDirectory = /home/sirius;
-          username = "sirius";
-          configuration = { pkgs, ... }: {
-            imports = hmImports;
-            nixpkgs.overlays = overlays;
-          };
-        };
-
-        orca = 
-        home-manager.lib.homeManagerConfiguration {
-          inherit system;
-          homeDirectory = /home/orca;
-          username = "orca";
-          configuration = { pkgs, ... }: {
-            imports = hmImports;
-            nixpkgs.overlays = overlays;
-          };
-        };
+    nixosConfigurations.ThinkPad = import ./hosts/ThinkPad {
+      inherit config agenix home inputs nixpkgs overlays;
     };
 
-    nixosConfigurations = 
-      let
-        dirs = lib.filterAttrs (name: fileType: (fileType == "regular") && (lib.hasSuffix ".nixos.nix" name)) (builtins.readDir ./hosts);
-        fullyQualifiedDirs = (lib.mapAttrsToList (name: _v: ./. + "/hosts/${name}") dirs);
-
-      in
-      utils.buildNixosConfigurations fullyQualifiedDirs;
-
+    ThinkPad = self.nixosConfigurations.superfluous.config.system.build.toplevel;
   };
 }
