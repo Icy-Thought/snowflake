@@ -2,122 +2,144 @@
   description = "A structured and configureable NixOS system!";
 
   inputs = {
-
-    master = {
-      type = "github";
-      owner = "NixOS";
-      repo = "nixpkgs";
-      ref = "master";
-    };
-
-    unstable = {
-      type = "github";
-      owner = "NixOS";
-      repo = "nixpkgs";
-      ref = "nixos-unstable";
-    };
-
-    stable = {
-      type = "github";
-      owner = "NixOS";
-      repo = "nixpkgs";
-      ref = "nixos-21.05";
-    };
+    master.url = "github:NixOS/nixpkgs";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     home-manager = {
-      type = "github";
-      owner = "nix-community";
-      repo = "home-manager";
-      ref = "master";
+      url = "github:nix-community/home-manager/master"};
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    flake-utils = {
-      type = "github";
-      owner = "numtide";
-      repo = "flake-utils";
-    };
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
+    utils.url = "github:numtide/flake-utils";
 
-    agenix = {
-      type = "github";
-      owner = "ryantm";
-      repo = "agenix";
+    emacs-overlay.url = "github:nix-community/emacs-overlay";
+    neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
+    rust-overlay.url = "github:oxalica/rust-overlay";
+
+    nixos-cn = {
+      url = "github:nixos-cn/flakes";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    neovim-nightly = {
-      type = "github";
-      owner = "nix-community";
-      repo = "neovim-nightly-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
+    mozilla-overlay = {
+      url = "github:mozilla/nixpkgs-mozilla";
+      flake = false;
     };
 
-    naersk = {
-      type = "github";
-      owner = "nmattia";
-      repo = "naersk";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    rust-overlay = {
-      type = "github";
-      owner = "oxalica";
-      repo = "rust-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "flake-utils";
-    };
-
-    # Disabled inputs until further notice:
-    #
-    # nixos-hardware = {
-    #   type = "github";
-    #   owner = "NixOS";
-    #   repo = "nixos-hardware";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    #   flake = false;
-    # };
-
-    # emacs-overlay = {
-    #   type = "github";
-    #   owner = "nix-community";
-    #   repo = "emacs-overlay";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
+    # agenix.url = "github:ryantm/agenix";
+    # naersk.url = "github:nmattia/naersk";
 
   };
 
-  outputs = { self, nixpkgs, home-manager, ... } inputs@: 
+  outputs = 
+  { self
+  , home-manager
+  , nixpkgs
+  , rust-overlay
+  , neovim-nightly 
+  , mozilla-overlay
+  , nixos-cn
+  , ...
+  } inputs@:
 
-  let
-    inherit self inputs;
+  let 
+    system = "x86_64-linux";
 
-    config = {
-        allowUnfree = true;
+    overlays = with inputs; [ 
+      rust-overlay
+      emacs-overlay
+      neovim-nightly 
+      mozilla-overlay
+    ];
+
+    lib = nixpkgs.lib.extend
+      (final: prev: (import ./lib final) // home-manager.lib);
+
+    inherit (nixpkgs.lib) nixosSystem;
+    inherit (home-manager.lib) homeManagerConfiguration;
+    inherit (flake-utils.lib) eachDefaultSystem eachSystem;
+    inherit (builtins) listToAttrs map;
+
+    # Generate default NixOS config
+    mkNixosConfig =
+      { system ? "x86_64-linux"
+      , hardwareModules
+      , baseModules ? [
+          home-manager.nixosModules.home-manager
+          ./modules/nixos
+        ]
+      , extraModules ? [ ]
+      }:
+
+      nixosSystem {
+        inherit system;
+        modules = baseModules ++ hardwareModules ++ extraModules
+          ++ [{ nixpkgs.overlays = overlays; }];
+        specialArgs = { inherit inputs lib; };
       };
 
-    overlays = with inputs; [
-      (final: _:
-        let
-          system = final.stdenv.hostPlatform.system;
-        in {
-          agenix = agenix.defaultPackage.${system};
-          neovim-nightly = neovim.packages.${system}.neovim;
+      # Generate default Home-Manager conf
+      mkHomeConfig =
+        { username
+        , system ? "x86_64-linux"
+        , baseModules ? [ ./modules/home-manager ]
+        , extraModules ? [ ]
+        }:
 
-          master = import master { inherit config system; };
-          unstable = import unstable { inherit config system; };
-          stable = import stable { inherit config system; };
-      })
+        homeManagerConfiguration rec {
+          inherit system username;
+          homeDirectory = "/home/${username}";
+          extraSpecialArgs = { inherit inputs lib; };
+          configuration = {
+            imports = baseModules ++ extraModules
+              ++ [{ nixpkgs.overlays = overlays; }];
+          };
+        };
 
-    # Imported flakes-overlays
-    rust.overlay
-  ]
+  in {
+    # Linux-related checks
+    checks = listToAttrs (
+      (map
+        (system: {
+          name = system;
+          value = {
+            nixos = self.nixosConfigurations.phil.config.system.build.toplevel;
+            server = self.homeConfigurations.server.activationPackage;
+          };
+        })
+      lib.platforms.linux)
+    );
 
-  in
-  {
-    nixosConfigurations.ThinkPad = import ./hosts/ThinkPad {
-      inherit config agenix home inputs nixpkgs overlays;
+    nixosConfigurations = {
+      thinkpad = mkNixosConfig {
+        hardwareModules = [
+          ./modules/hardware/thinkpad.nix
+          # nixos-hardware.nixosModules.lenovo-thinkpad-e595
+        ];
+        extraModules = [ ./profiles/ThinkPad-E595.nix ];
+      };
+      
+      probook = mkNixosConfig {
+        hardwareModules = [
+          ./modules/hardware/ProBook-440G3.nix
+          # nixos-hardware.nixosModules.hp-probook-440g3
+        ];
+        extraModules = [ ./profiles/ProBook-440G3.nix ];
+      };
+
     };
 
-    ThinkPad = self.nixosConfigurations.superfluous.config.system.build.toplevel;
-  };
-}
+    homeConfigurations = {
+      thinkpad = mkHomeConfig {
+        username = "sirius";
+        extraModules = [ ./profiles/home-manager/ThinkPad-E595.nix ];
+      };
+
+      probook = mkHomeConfig {
+        username = "orca";
+        extraModules = [ ./profiles/home-manager/ProBook-440G3.nix ];
+      };
+
+    };
+  }
