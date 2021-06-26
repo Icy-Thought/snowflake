@@ -32,16 +32,20 @@
 
   };
 
-  outputs = 
-  { self
-  , home-manager
-  , nixpkgs
-  , rust-overlay
-  , neovim-nightly 
-  , mozilla-overlay
-  , nixos-cn
-  , ...
-  } inputs@:
+  outputs = inputs@{
+    ,self
+    , nixpkgs
+    , master
+    , home-manager
+    , nixos-hardware
+    , utils
+    , rust-overlay
+    , neovim-nightly 
+    , emacs-overlay
+    , mozilla-overlay
+    , nixos-cn
+    , ...
+  }:
 
   let 
     system = "x86_64-linux";
