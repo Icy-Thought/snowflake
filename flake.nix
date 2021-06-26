@@ -32,8 +32,8 @@
 
   };
 
-  outputs = inputs@{
-    ,self
+  outputs = 
+    inputs@{ self
     , nixpkgs
     , master
     , home-manager
