@@ -57,9 +57,6 @@
       # mozilla-overlay.overlay <-- does not exist???
     ];
 
-    lib = nixpkgs.lib.extend
-      (final: prev: (import ./lib final) // home-manager.lib);
-
     inherit (nixpkgs.lib) nixosSystem;
     inherit (home-manager.lib) homeManagerConfiguration;
     inherit (flake-utils.lib) eachDefaultSystem eachSystem;
@@ -80,7 +77,7 @@
         inherit system;
         modules = baseModules ++ hardwareModules ++ extraModules
           ++ [{ nixpkgs.overlays = overlays; }];
-        specialArgs = { inherit inputs lib; };
+        specialArgs = { inherit inputs; };
       };
 
       # Generate default Home-Manager conf
@@ -94,7 +91,7 @@
         homeManagerConfiguration rec {
           inherit system username;
           homeDirectory = "/home/${username}";
-          extraSpecialArgs = { inherit inputs lib; };
+          extraSpecialArgs = { inherit inputs; };
           configuration = {
             imports = baseModules ++ extraModules
               ++ [{ nixpkgs.overlays = overlays; }];
@@ -102,19 +99,6 @@
         };
 
   in {
-    # Linux-related checks
-    checks = listToAttrs (
-      (map
-        (system: {
-          name = system;
-          value = {
-            nixos = self.nixosConfigurations.phil.config.system.build.toplevel;
-            server = self.homeConfigurations.server.activationPackage;
-          };
-        })
-      lib.platforms.linux)
-    );
-
     nixosConfigurations = {
       thinkpad = mkNixosConfig {
         hardwareModules = [

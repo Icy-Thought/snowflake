@@ -1,5 +1,6 @@
 { config, pkgs, ... }:
 {
-  imports = [
+  home-manager.packages = with pkgs; [
+    kdenlive
   ];
 }
