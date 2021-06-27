@@ -50,11 +50,11 @@
   let 
     system = "x86_64-linux";
 
-    overlays = with self.overlays; [ 
+    overlays = with inputs; [ 
       rust-overlay.overlay
       emacs-overlay.overlay
       neovim-nightly.overlay
-      (import mozilla-overlay)
+      (import nixpkgs-mozilla)
     ];
 
     lib = nixpkgs.lib.extend
