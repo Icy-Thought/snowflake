@@ -28,8 +28,7 @@ let
 
 in {
   imports = [
-    ../home.nix
-    ../../modules/dconf.nix
+    ../../modules/home-manager/gnome/dconf.nix
   ];
 
   # Enable chrome-gnome-shell in FireFox nightly (mozilla-overlay):

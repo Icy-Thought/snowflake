@@ -10,15 +10,16 @@ in {
     ./alacritty
     ./emacs
     ./neovim
-    ./gnome/dconf.nix
     ./zathura
     ./mpd
     ./ncmpcpp
   ];
 
   programs = {
-    home-manager.enable = true;
-    path = "${config.home.homeDirectory}/.nixpkgs/modules/home-manager";
+    home-manager = {
+      enable = true;
+      path = "${config.home.homeDirectory}/.nixpkgs/modules/home-manager";
+    };
 
     bash = {
       enable = true;
@@ -58,17 +59,11 @@ in {
     enable = true;
   };
 
-  home = {
-    username = "sirius";
-    homeDirectory = "/home/sirius";
-    stateVersion = "21.05";
-
-    sessionPath = [ 
-      "${config.xdg.configHome}/.cargo/bin"
-      "${config.xdg.configHome}/.local/bin"
-      "${config.xdg.configHome}/.emacs/bin"
-      "${config.xdg.configHome}/go/bin"
-    ];
-  };
+  home.sessionPath = [ 
+    "${config.xdg.configHome}/.cargo/bin"
+    "${config.xdg.configHome}/.local/bin"
+    "${config.xdg.configHome}/.emacs/bin"
+    "${config.xdg.configHome}/go/bin"
+  ];
 
 }
