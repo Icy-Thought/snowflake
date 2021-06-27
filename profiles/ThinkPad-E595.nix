@@ -44,6 +44,8 @@
 
   };
 
+  user.name = "sirius";
+
   networking.hostName = "thinkpad@nixos";
 
   i18n.inputMethod = {

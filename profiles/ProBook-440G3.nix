@@ -30,6 +30,8 @@
     options = [ "x-gvfs-hide" ];
   };
 
+  user.name = "orca";
+
   networking.hostName = "probook-nixos";
 
   # Select internationalisation properties.
