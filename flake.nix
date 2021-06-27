@@ -22,7 +22,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    mozilla-overlay = {
+    nixpkgs-mozilla = {
       url = "github:mozilla/nixpkgs-mozilla";
       flake = false;
     };
@@ -42,7 +42,7 @@
     , rust-overlay
     , neovim-nightly 
     , emacs-overlay
-    , mozilla-overlay
+    , nixpkgs-mozilla
     , nixos-cn
     , ...
   }:
@@ -54,8 +54,11 @@
       rust-overlay.overlay
       emacs-overlay.overlay
       neovim-nightly.overlay
-      # mozilla-overlay.overlay <-- does not exist???
+      (import mozilla-overlay)
     ];
+
+    lib = nixpkgs.lib.extend
+      (final: prev: home-manager.lib);
 
     inherit (nixpkgs.lib) nixosSystem;
     inherit (home-manager.lib) homeManagerConfiguration;
@@ -77,7 +80,7 @@
         inherit system;
         modules = baseModules ++ hardwareModules ++ extraModules
           ++ [{ nixpkgs.overlays = overlays; }];
-        specialArgs = { inherit inputs; };
+        specialArgs = { inherit inputs lib; };
       };
 
       # Generate default Home-Manager conf
@@ -91,7 +94,7 @@
         homeManagerConfiguration rec {
           inherit system username;
           homeDirectory = "/home/${username}";
-          extraSpecialArgs = { inherit inputs; };
+          extraSpecialArgs = { inherit inputs lib; };
           configuration = {
             imports = baseModules ++ extraModules
               ++ [{ nixpkgs.overlays = overlays; }];

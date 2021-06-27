@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 {
-  home-manager.packages = with pkgs; [
+  home.packages = with pkgs; [
     kdenlive
   ];
 }
