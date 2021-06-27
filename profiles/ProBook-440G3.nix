@@ -18,13 +18,19 @@
     options = [ "noatime, x-gvfs-hide" ];
   };
 
-  fileSystems."/boot/efi" = {
+  fileSystems."/" = {
+    device = "/dev/disk/by-uuid/6a76fd5f-b327-43fb-81cd-aef0c69deb7a";
+    fsType = "ext4";
+    options = [ "noatime, x-gvfs-hide" ];
+  };
+
+  fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/9C99-45AA";
     fsType = "vfat";
     options = [ "x-gvfs-hide" ];
   };
 
-  networking.hostName = "probook@nixos";
+  networking.hostName = "probook-nixos";
 
   # Select internationalisation properties.
   i18n = {

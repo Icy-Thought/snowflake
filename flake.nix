@@ -6,12 +6,12 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     home-manager = {
-      url = "github:nix-community/home-manager/master"};
+      url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nixos-hardware.url = "github:NixOS/nixos-hardware";
-    utils.url = "github:numtide/flake-utils";
+    flake-utils.url = "github:numtide/flake-utils";
 
     emacs-overlay.url = "github:nix-community/emacs-overlay";
     neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
@@ -38,7 +38,7 @@
     , master
     , home-manager
     , nixos-hardware
-    , utils
+    , flake-utils
     , rust-overlay
     , neovim-nightly 
     , emacs-overlay
@@ -50,11 +50,11 @@
   let 
     system = "x86_64-linux";
 
-    overlays = with inputs; [ 
-      rust-overlay
-      emacs-overlay
-      neovim-nightly 
-      mozilla-overlay
+    overlays = with self.overlays; [ 
+      rust-overlay.overlay
+      emacs-overlay.overlay
+      neovim-nightly.overlay
+      # mozilla-overlay.overlay <-- does not exist???
     ];
 
     lib = nixpkgs.lib.extend
@@ -146,4 +146,6 @@
       };
 
     };
-  }
+  };
+
+}
