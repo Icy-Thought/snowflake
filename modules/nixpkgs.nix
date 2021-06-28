@@ -1,4 +1,5 @@
-{ inputs, config, lib, pkgs, ... }: {
+{ inputs, config, lib, pkgs, ... }:
+{
   nixpkgs = {
     config = import ./config.nix;
     overlays = [ ];
@@ -32,16 +33,10 @@
 
     binaryCaches = [
       "https://nix-community.cachix.org/"
-
-      # 使用 nixos-cn 的 binaryCache
-      "https://nixos-cn.cachix.org"
     ];
 
     binaryCachePublicKeys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-
-      # 使用 nixos-cn 的 binaryCache-key
-      "nixos-cn.cachix.org-1:L0jEaL6w7kwQOPlLoCR3ADx+E3Q8SEFEcB9Jaibl0Xg="
     ];
 
     registry = {
@@ -62,4 +57,5 @@
       };
     };
   };
+
 }

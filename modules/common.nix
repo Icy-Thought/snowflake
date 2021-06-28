@@ -1,37 +1,24 @@
 { inputs, config, lib, pkgs, ... }:
 {
   imports = [ 
-      ./primary.nix
-      ./nixpkgs.nix
-      ./wireguard.nix
-    ];
+    ./primary.nix
+    ./nixpkgs.nix
+    ./packages.nix
+    # ./wireguard.nix
+  ];
 
-    hm = import ./home-manager;
+  hm = import ./home-manager;
 
   environment.etc = {
     home-manager.source = "${inputs.home-manager}";
     nixpkgs.source = "${inputs.nixpkgs}";
+    # "nixos".source = "${config.home.homeDirectory}/git/Snowflake";
   };
 
   user = {
-    description = "icy-thought";
+    description = "Icy-Thought";
     home = "/home/${config.user.name}";
     shell = pkgs.fish;
-  };
-
-  users = { # Don't forget to set password through `passwd`!
-    defaultUserShell = pkgs.fish;
-    mutableUsers = false;
-    
-    users = {
-      "${config.user.name}" = {
-        isNormalUser = true;
-        createHome = true;
-        useDefaultShell = true;
-        extraGroups = [ "wheel" "network" "plugdev" "adbusers" ];
-        hashedPassword = "$6$DMQjZ0Nn8JAb$2MBYjRZvhACwUJrDXI6GciNglr.KM3Yaza4CMUaG8HCxOJ2EtRqZZKvTBzRhIPQWjKiYeU3cCpntQNkToiUeu0";
-      };
-    };
   };
 
   home-manager = {

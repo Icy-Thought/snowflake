@@ -67,9 +67,12 @@ in
     "org/gnome/desktop/interface" = {
       clock-show-seconds = true;
       clock-show-weekday = true;
+      cursor-theme = "Adwaita";
       font-antialiasing = "grayscale";
       font-hinting = "slight";
       gtk-im-module = "ibus";
+      gtk-theme = "Orchis-dark-compact";
+      icon-theme = "WhiteSur";
       monospace-font-name = "JetBrainsMono Nerd Font Medium 12";
       show-battery-percentage = true;
     };
@@ -104,6 +107,7 @@ in
     "org/gnome/desktop/wm/preferences" = {
       button-layout = "appmenu:minimize,maximize,close";
       workspace-names = "@as []";
+      # theme = "Flat-Remix-GTK-Green-Dark";
     };
 
     "org/gnome/eog/view" = {
@@ -165,7 +169,7 @@ in
 
     "org/gnome/settings-daemon/plugins/media-keys" = {
       area-screenshot = [ "@as []" ];
-      custom-keybindings = [ "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/" "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/" "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/" ];
+      custom-keybindings = [ "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/" "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/" "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/" "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/" "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/" "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/" "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/" ];
       screenshot = [ "@as []" ];
       window-screenshot = [ "@as []" ];
     };
@@ -186,6 +190,30 @@ in
       binding = "Print";
       command = "gnome-screenshot";
       name = "Screenshot Display";
+    };
+
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3" = {
+      binding = "<Super>Return";
+      command = "alacritty";
+      name = "Alacritty Terminal";
+    };
+
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4" = {
+      binding = "<Super>f";
+      command = "nautilus -w";
+      name = "File Manager (Nautilus)";
+    };
+
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5" = {
+      binding = "<Super>b";
+      command = "firefox --profile .mozilla/firefox/62cor33d.default";
+      name = "Launch Firefox (Default)";
+    };
+
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6" = {
+      binding = "<Super><Shift>b";
+      command = "firefox --profile .mozilla/firefox/qqxa82yf.Private";
+      name = "Launch Firefox (Private)";
     };
 
     "org/gnome/settings-daemon/plugins/power" = {

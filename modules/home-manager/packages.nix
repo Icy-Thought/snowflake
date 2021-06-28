@@ -19,6 +19,7 @@ let
     tdesktop                                       # Telegram Desktop.
     signal-desktop                                 # More secure WA alternative.
     fractal                                        # Rust-based matrix client.
+    element-desktop                                # Matrix client by Element.
     easytag                                        # M3U Editor.
     transmission-gtk                               # BitTorrent Client.
     freetube                                       # FOSS private YT app.

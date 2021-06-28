@@ -17,17 +17,12 @@
     neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
     rust-overlay.url = "github:oxalica/rust-overlay";
 
-    nixos-cn = {
-      url = "github:nixos-cn/flakes";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     nixpkgs-mozilla = {
       url = "github:mozilla/nixpkgs-mozilla";
       flake = false;
     };
 
-    # agenix.url = "github:ryantm/agenix";
+    agenix.url = "github:ryantm/agenix";
     # naersk.url = "github:nmattia/naersk";
 
   };
@@ -39,11 +34,11 @@
     , home-manager
     , nixos-hardware
     , flake-utils
+    , agenix
     , rust-overlay
     , neovim-nightly 
     , emacs-overlay
     , nixpkgs-mozilla
-    , nixos-cn
     , ...
   }:
 
@@ -51,6 +46,7 @@
     system = "x86_64-linux";
 
     overlays = with inputs; [ 
+      agenix.overlay
       rust-overlay.overlay
       emacs-overlay.overlay
       neovim-nightly.overlay
@@ -105,10 +101,13 @@
     nixosConfigurations = {
       thinkpad = mkNixosConfig {
         hardwareModules = [
-          ./modules/hardware/thinkpad.nix
+          ./modules/hardware/ThinkPad-E595.nix
           # nixos-hardware.nixosModules.lenovo-thinkpad-e595
         ];
-        extraModules = [ ./profiles/ThinkPad-E595.nix ];
+        extraModules = [ 
+          ./profiles/ThinkPad-E595.nix
+          agenix.nixosModules.age
+        ];
       };
       
       probook = mkNixosConfig {
@@ -116,9 +115,11 @@
           ./modules/hardware/ProBook-440G3.nix
           # nixos-hardware.nixosModules.hp-probook-440g3
         ];
-        extraModules = [ ./profiles/ProBook-440G3.nix ];
+        extraModules = [
+          ./profiles/ProBook-440G3.nix
+          agenix.nixosModules.age
+        ];
       };
-
     };
 
     homeConfigurations = {

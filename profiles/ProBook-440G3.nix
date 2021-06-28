@@ -1,13 +1,15 @@
 { config, pkgs, lib, ... }:
 
 {
+  imports = [ 
+    ../modules/common.nix
+  ];
+
   hm = { imports = [ ./home-manager/ProBook-440G3.nix ]; };
-  imports = [ ../modules/common.nix ];
 
   # Build NixOS from latest stable release.
   system.stateVersion = "21.05"; # Did you read the comment?
 
-  # Boot configurations.
   boot = {
     kernelParams = [ "pcie_aspm.policy=performance" ];
   };
@@ -30,11 +32,22 @@
     options = [ "x-gvfs-hide" ];
   };
 
+  hardware = {
+    cpu.intel = {
+      updateMicrocode = true;
+    };
+
+    opengl.extraPackages = with pkgs; [
+      intel-compute-runtime
+      vaapiIntel
+      vaapiVdpau
+      libvdpau-va-gl
+    ];
+  };
+
   user.name = "orca";
+  networking.hostName = "ProBook-NixOS";
 
-  networking.hostName = "probook-nixos";
-
-  # Select internationalisation properties.
   i18n = {
     defaultLocale = "en_US.UTF-8";
     inputMethod = {
@@ -47,19 +60,6 @@
         # fcitx5-hangul
       ];
     };
-  };
-
-  hardware = {
-    cpu.intel = {
-      updateMicrocode = true;
-    };
-
-    opengl.extraPackages = with pkgs; [
-      intel-compute-runtime
-      vaapiIntel
-      vaapiVdpau
-      libvdpau-va-gl
-    ];
   };
 
   services = {

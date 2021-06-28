@@ -12,15 +12,13 @@
 
   home = {
     sessionVariables = {
-      DOOMDIR = "${config.home.homeDirectory}/git/NixOS-Configurations/home/config/doom.d";
+      DOOMDIR = "${config.home.homeDirectory}/git/Snowflake/modules/home-manager/emacs/doom.d";
     };
 
-    file = {
-      ".doom.d" = {
-        source = ./doom.d;
-        recursive = true;
-        onChange = "doom -y sync -u";
-      };
+    file.".doom.d" = {
+      source = ./doom.d;
+      recursive = true;
+      onChange = "doom -y sync -u";
     };
   };
 

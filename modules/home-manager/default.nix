@@ -4,15 +4,16 @@ let
 
 in {
   imports = [
-    ./packages.nix
     ./git
     ./fish
     ./alacritty
+    ./tmux
     ./emacs
     ./neovim
     ./zathura
     ./mpd
     ./ncmpcpp
+    ./packages.nix
   ];
 
   programs = {
@@ -60,10 +61,9 @@ in {
   };
 
   home.sessionPath = [ 
-    "${config.xdg.configHome}/.cargo/bin"
-    "${config.xdg.configHome}/.local/bin"
     "${config.xdg.configHome}/.emacs/bin"
-    "${config.xdg.configHome}/go/bin"
+    "${config.home.homeDirectory}/.cargo/bin"
+    "${config.home.homeDirectory}/.local/bin"
+    "${config.home.homeDirectory}/go/bin"
   ];
-
 }

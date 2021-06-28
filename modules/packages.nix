@@ -41,6 +41,7 @@ let
     common-updater-scripts                      # Common nix updating scripts????
     zstd                                        # Undo fu-session/tree-compression.
     unrar                                       # File uncompressor.
+    agenix                                      # age-encrypted secrets.
   ];
 
   envPkgs = with pkgs; [
@@ -51,17 +52,17 @@ let
   ];
 
 in {
-  shells = with pkgs; [ 
-    bash
-    fish 
-  ];
-
   environment = {
     systemPackages = builtins.concatLists [
       # kernelPkgs
       defaultPkgs
       utilPkgs
       envPkgs
+    ];
+
+    shells = with pkgs; [ 
+      bash
+      fish 
     ];
   };
 

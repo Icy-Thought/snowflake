@@ -63,9 +63,6 @@
       bind-key -T copy-mode-vi y send-keys -X copy-selection
       bind-key -T copy-mode-vi r send-keys -X rectangle-toggle
       
-      # Reload configuration file
-      bind-key r source-file ~/.tmux.conf \; display-message 'Config reloaded...'
-      
       # Statusline theming
       set -g status 'on'
       set -g status-fg 'colour7'
