@@ -1,8 +1,14 @@
 { config, pkgs, lib, ... }:
 
 {
-  imports = [ ../modules/common.nix ];
+  imports = [ 
+    ../modules/common.nix
+  ];
+
   hm = { imports = [ ./home-manager/ThinkPad-E595.nix ]; };
+
+  # Build NixOS from latest stable release.
+  system.stateVersion = "21.05"; # Did you read the comment?
 
   boot = {
     extraModulePackages = with config.boot.kernelPackages; [ 
@@ -45,8 +51,7 @@
   };
 
   user.name = "sirius";
-
-  networking.hostName = "thinkpad@nixos";
+  networking.hostName = "ThinkPad-NixOS";
 
   i18n.inputMethod = {
     enabled = "ibus";
@@ -68,14 +73,8 @@
     dconf.enable = true;
   };
 
-  environment = {
-    variables = {
-      VK_ICD_FILENAMES = [ "/run/opengl-driver/share/vulkan/icd.d/amd_icd64.json" ];
-    };
-
-    systemPackages = with nixos-cn.legacyPackages.${system}; [
-      flat-remix-gnome
-    ];
+  environment.variables = {
+    VK_ICD_FILENAMES = [ "/run/opengl-driver/share/vulkan/icd.d/amd_icd64.json" ];
   };
 
   services = {
@@ -117,7 +116,6 @@
       packages = with pkgs; [
         gnome.gnome-settings-daemon 
       ];
-
     };
 
   };

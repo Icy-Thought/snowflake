@@ -4,7 +4,7 @@
   system.stateVersion = "21.05"; # Did you read the comment?
 
   boot = {
-    kernelPackages = pkgs.linuxPackages_xanmod;
+    kernelPackages = pkgs.linuxPackages_zen; # xanmod after 5.12.14 release
  
     kernelParams = [
       "pcie_aspm.policy=performance"
@@ -78,6 +78,21 @@
   };
 
   time.timeZone = "Europe/Stockholm";
+
+  users = { # Don't forget to set password through `passwd`!
+    defaultUserShell = pkgs.fish;
+    mutableUsers = false;
+    
+    users = {
+      "${config.user.name}" = {
+        isNormalUser = true;
+        createHome = true;
+        useDefaultShell = true;
+        extraGroups = [ "wheel" "network" "plugdev" "adbusers" ];
+        hashedPassword = "$6$DMQjZ0Nn8JAb$2MBYjRZvhACwUJrDXI6GciNglr.KM3Yaza4CMUaG8HCxOJ2EtRqZZKvTBzRhIPQWjKiYeU3cCpntQNkToiUeu0";
+      };
+    };
+  };
 
   # Recommended for pipewire
   security = {
@@ -156,6 +171,11 @@
   };
 
   services = {
+    openssh = {
+      enable = true;
+      openFirewall = lib.mkDefault false;
+    };
+
     printing = {
       enable = true;
     };

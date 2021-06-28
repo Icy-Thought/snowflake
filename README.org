@@ -1,7 +1,5 @@
-#+TITLE: NixOS Configuration!
+#+TITLE: [[./src/NixOS_logo.svg]]
 #+DATE: <2021-06-05 lör>
-
-[[./src/desktop.png]]
 
 * Table of Contents :TOC:
 - [[#introduction][Introduction]]
@@ -19,6 +17,8 @@
 - [[#useful-links][Useful Links]]
 
 * Introduction
+[[./src/desktop.png]]
+
 This is a hamerspace of a declerative NixOS environment containing several hand-crafted configurations of programs ranging from Alacritty, Neovim (v0.5), Emacs (27.2), Zathura to other configured applications found in the =home/modules= and =home/config= folders.
 
 #+begin_quote
