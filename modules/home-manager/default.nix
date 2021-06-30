@@ -61,7 +61,7 @@ in {
   };
 
   home.sessionPath = [ 
-    "${config.xdg.configHome}/.emacs/bin"
+    "${config.home.homeDirectory}/.emacs.d/bin"
     "${config.home.homeDirectory}/.cargo/bin"
     "${config.home.homeDirectory}/.local/bin"
     "${config.home.homeDirectory}/go/bin"

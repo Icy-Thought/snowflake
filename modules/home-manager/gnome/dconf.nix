@@ -223,7 +223,7 @@ in
 
     "org/gnome/shell" = {
       disable-user-extensions = false;
-      favorite-apps = [ "org.gnome.Nautilus.desktop" "org.gnome.Fractal.desktop" "discord.desktop" "org.gnome.Geary.desktop" "firefox.desktop" "emacs.desktop" "Alacritty.desktop" "qalculate-gtk.desktop" ];
+      favorite-apps = [ "org.gnome.Nautilus.desktop" "element-desktop.desktop" "discord.desktop" "org.gnome.Geary.desktop" "firefox.desktop" "emacs.desktop" "Alacritty.desktop" "qalculate-gtk.desktop" ];
       welcome-dialog-last-shown-version = "40.1";
     };
 

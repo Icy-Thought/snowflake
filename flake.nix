@@ -2,8 +2,8 @@
   description = "A structured and configureable NixOS system!";
 
   inputs = {
-    master.url = "github:NixOS/nixpkgs";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs";
 
     home-manager = {
       url = "github:nix-community/home-manager/master";
@@ -30,7 +30,7 @@
   outputs = 
     inputs@{ self
     , nixpkgs
-    , master
+    , nixpkgs-unstable
     , home-manager
     , nixos-hardware
     , flake-utils
@@ -66,6 +66,7 @@
       { system ? "x86_64-linux"
       , hardwareModules
       , baseModules ? [
+          agenix.nixosModules.age
           home-manager.nixosModules.home-manager
           ./modules/nixos
         ]
@@ -104,10 +105,7 @@
           ./modules/hardware/ThinkPad-E595.nix
           # nixos-hardware.nixosModules.lenovo-thinkpad-e595
         ];
-        extraModules = [ 
-          ./profiles/ThinkPad-E595.nix
-          agenix.nixosModules.age
-        ];
+        extraModules = [ ./profiles/ThinkPad-E595.nix ];
       };
       
       probook = mkNixosConfig {
@@ -115,10 +113,7 @@
           ./modules/hardware/ProBook-440G3.nix
           # nixos-hardware.nixosModules.hp-probook-440g3
         ];
-        extraModules = [
-          ./profiles/ProBook-440G3.nix
-          agenix.nixosModules.age
-        ];
+        extraModules = [ ./profiles/ProBook-440G3.nix ];
       };
     };
 
