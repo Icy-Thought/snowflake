@@ -27,12 +27,4 @@
     useUserPackages = true;
   };
 
-  age.secrets = {
-    "wg-akkad/privateKey" = {
-      file = ../secrets/wg-akkad/privateKey.age;
-      owner = "${config.user.name}";
-      mode = "0440";
-    };
-  };
-
 }
