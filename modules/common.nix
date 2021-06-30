@@ -4,7 +4,7 @@
     ./primary.nix
     ./nixpkgs.nix
     ./packages.nix
-    # ./wireguard.nix
+    ./wireguard
   ];
 
   hm = import ./home-manager;
@@ -25,6 +25,14 @@
     extraSpecialArgs = { inherit inputs lib; };
     useGlobalPkgs = true;
     useUserPackages = true;
+  };
+
+  age.secrets = {
+    "wg-akkad/privateKey" = {
+      file = ../secrets/wg-akkad/privateKey.age;
+      owner = "${config.user.name}";
+      mode = "0440";
+    };
   };
 
 }

@@ -40,12 +40,12 @@
     ];
 
     registry = {
-      master = {
+      nixpkgs-unstable = {
         from = {
-          id = "master";
+          id = "nixpkgs-unstable";
           type = "indirect";
         };
-        flake = inputs.master;
+        flake = inputs.nixpkgs-unstable;
       };
 
       nixpkgs = {
