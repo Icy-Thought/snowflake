@@ -4,16 +4,12 @@
   system.stateVersion = "21.05"; # Did you read the comment?
 
   boot = {
-    kernelPackages = pkgs.linuxPackages_zen; # xanmod after 5.12.14 release
+    kernelPackages = pkgs.linuxPackages_zen; # xanmod after high_cpu fix
  
     kernelParams = [
       "pcie_aspm.policy=performance"
     ];
-
-    kernel.sysctl = {
-      "abi.vsyscall" = 0;
-    };
-    
+   
     # Set GRUB2 to default boot.
     loader = {
       efi = {

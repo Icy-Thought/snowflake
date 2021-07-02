@@ -22,7 +22,7 @@ let
 
   ricePkgs = with pkgs; [
     orchis-theme
-    flat-remix-gtk
+    flat-remix-gnome
     whitesur-icon-theme
   ];
 

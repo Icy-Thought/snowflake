@@ -19,6 +19,7 @@
        doom-dashboard                           ; a nifty splash screen for Emacs
        doom-quit                                ; DOOM quit-message prompts when you quit Emacs
        hl-todo                                  ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
+       (ligatures +extra)           ; ligatures and symbols to make your code pretty again
        modeline                                 ; snazzy, Atom-inspired modeline, plus API
        ophints                                  ; highlight the region an operation acts on
        (popup +all                              ; tame sudden yet inevitable temporary windows

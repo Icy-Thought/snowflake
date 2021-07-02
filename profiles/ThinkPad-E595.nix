@@ -18,6 +18,7 @@
     kernelParams = [
       "acpi_backlight=native"
     ];
+
   };
     
   fileSystems."/" =
@@ -68,9 +69,14 @@
       dockerCompat = true;
     };
   };
+
+  environment.systemPackages = with pkgs; [
+    (steam.override { nativeOnly = true; }).run
+  ];
   
   programs = {
     dconf.enable = true;
+    steam.enable = true;
   };
 
   environment.variables = {
