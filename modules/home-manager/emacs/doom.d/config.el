@@ -13,6 +13,7 @@
 (setq
  confirm-kill-emacs nil                             ; Disable Emacs confirm-exit messages.
  display-line-numbers-type t
+ all-the-icons-dired-monochrome nil
  x-stretch-cursor t)                                ; Cursor size = glyph width.
 
 (with-eval-after-load 'solaire-mode                 ; Inverted solaire color-schemes.

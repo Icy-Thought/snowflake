@@ -5,49 +5,52 @@
 - [[#introduction][Introduction]]
 - [[#getting-started][Getting Started]]
   - [[#partitioning--formatting][Partitioning & Formatting]]
+  - [[#warning][WARNING]]
   - [[#nix-channels][Nix-Channels]]
-  - [[#clone-nixos-configuration-repository][Clone =NixOS Configuration= Repository]]
-- [[#installation-process][Installation Process]]
+- [[#minimal-installation-process][Minimal Installation Process]]
   - [[#mount--create-required-dirs][Mount & Create Required Dirs]]
-  - [[#migrating-host-files-to-mnt][Migrating Host Files to =/mnt=]]
-  - [[#replacing-necessary-configurations][Replacing Necessary Configurations]]
-  - [[#installing-nixos][Installing NixOS]]
-  - [[#home-manager][Home-Manager]]
-- [[#congratulations][Congratulations!]]
+  - [[#prepare-system-environment-for-nix-flake][Prepare System Environment for Nix-Flake]]
+- [[#nix-flake-beginning-of-a-journey][Nix-Flake: Beginning of a Journey]]
+  - [[#git-clone-snowflake--ln--s-nix-files-to-correct-dir][Git Clone ~Snowflake~ && ~ln -s~ Nix-Files To Correct Dir]]
+  - [[#replacing-necessary-configuration-entries][Replacing Necessary Configuration Entries]]
+- [[#congratulations-][Congratulations! 🎉]]
+- [[#special-thanks][Special Thanks]]
 - [[#useful-links][Useful Links]]
 
 * Introduction
 [[./src/desktop.png]]
 
-This is a hamerspace of a declerative NixOS environment containing several hand-crafted configurations of programs ranging from Alacritty, Neovim (v0.5), Emacs (27.2), Zathura to other configured applications found in the =home/modules= and =home/config= folders.
+This is a hamerspace of a declarative NixOS environment containing several hand-crafted configurations of programs ranging from Alacritty, Neovim (v0.5), Emacs (27.2), Zathura to other configured applications found in the =modules/home-manager= directory.
 
 #+begin_quote
 It's worth mentioning that this repository, like other dotfile/configuration repositories, is subjected to change and therefore one should be aware of the changes made to the repository before blindly replacing/updating the necessary files driving their NixOS environment to sanity.
 #+end_quote
 
-In this README I will try to explain how to replicate my NixOS setup or achieve similar feats. If you find that this guide is not as useful as I had hoped, please do submit an issue asking for the parts you found confusing to be explained in a different manner or submit a PR and hopefully we can make this a better place together!
+In this README I will attempt to explain how to replicate my NixOS setup or achieve similar feats. If you find that this guide is not as useful as I intended for it to be, I would kindly ask you to submit an issue requesting for the specific parts you found confusing to be explained in a different manner /or/ submit a PR to the repository and hopefully we can produce better results together!
 
-In this setup I will introduce a rather interesting project, Home-Manager, which is crafted in such manner that allows its user to carefully configure their system environments as they desire! One should note though that this project is still in its early stages, henceforth one should familiarize themself with the [[https://github.com/nix-community/home-manager#words-of-warning][risks]] that comes with the usage of such feature.
+Throughout my Nix journey I've came across two interesting projects which will be introduced in this README, Nix-Flakes and Home-Manager. These projects have been setup in such manner that allows its users to carefully craft their system environments to their liking!
+
+#+begin_quote
+One should note though that this project is still in its early stages, henceforth one should familiarize themselves with the [[https://github.com/nix-community/home-manager#words-of-warning][risks]] that comes with the usage of such experimental features.
+#+end_quote
 
 * Getting Started
 ** Partitioning & Formatting
-Here I advice you to follow to carefully written [[https://nixos.org/manual/nixos/stable/#sec-installation-partitioning][guide]] by the lovely NixOS members about partitions, how to setup your partitions & later format them to their desired filesystems.
+Here I advice you to follow to carefully written [[https://nixos.org/manual/nixos/stable/#sec-installation-partitioning][guide]] by the lovely NixOS members about partitions, how to setup your partitions & later format them to their desired file-systems.
+
+** WARNING
+The following guide is written with =nixos-gnome-21.05.1205.b72bde7c4a1-x86_64-linux.iso= in mind, meaning that the attempt to install your Nix-Flake system from the LiveUSB won't work. You should instead proceed with a minimal NixOS installation and later attempt to upgrade to your Nix-Flake system!
 
 ** Nix-Channels
 Setup your environment ot use the bleeding edge repository of NixOS and also add Home-Manager to your nix-channels:
 #+begin_src shell :noeval
 sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos
-sudo nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
 sudo nix-channel --update
 #+end_src
-** Clone =NixOS Configuration= Repository
-#+begin_src shell :noeval
-git clone https://github.com/Icy-Thought/NixOS-Configurations.git
-#+end_src
 
-* Installation Process
+* Minimal Installation Process
 #+begin_quote
-Since this is a replication of my personal installation, you should note that =hosts/X= (where =X= stands for the device-related folder) have been specifically configurations to use the passwords I currently use on my Desktop and thus you ought to change the hashed password if you choose to use the exact replication of my setup.
+In =nixos-gnome-21.05.1205.b72bde7c4a1-x86_64-linux.iso= it's unfortunately not possible to setup your flake based system without having Nix fail the installation process. Thus the user ought to install a minimal setup and later switch to their flake-based system after rebooting their minimal setup.
 #+end_quote
 
 ** Mount & Create Required Dirs
@@ -57,26 +60,63 @@ sudo mkdir -p /mnt/boot
 sudo mount /dev/disk/by-label/boot /mnt/boot
 #+end_src
 
-And to prevent future crashes during the installation process because of no ram, I advice you to enable your newly created swap partition:
+To prevent future crashes throughout the installation process, enable your newly created swap partition:
 #+begin_src shell :noeval
 sudo swapon /dev/sdX
 #+end_src
 
-** Migrating Host Files to =/mnt=
-To prevent the generated =hardware-configuration.nix= from clashing with my personal =hardware-configuration.nix=, remove the =hardware-configration.nix= in the git repository:
-#+begin_src shell :noeval
-rm NixOS-Configurations/hosts/X/hardware-configuration.nix
+** Prepare System Environment for Nix-Flake
+Don't forget to append the following lines of code to your =configuration.nix=:
+#+begin_src nix :noeval
+nix.package = pkgs.nixUnstable;
+nix.extraOptions = ''
+  experimental-features = nix-command flakes
+'';
 #+end_src
 
-Now migrate the files to your mounted partition (=/mnt=):
-#+begin_src shell :noeval
-sudo cp NixOS-Configurations/hosts/X/* /mnt/etc/nixos
+* Nix-Flake: Beginning of a Journey
+#+begin_quote
+The reader should keep in mind that this guide documents how to replicate my personal setup and thus the reader ought to know that =modules/nixos/default.nix= have been specifically modified to use my system passwords. To change the hashed passwords, replace the ~users.hashedPassword~ with the ~hashedPassword~ generated through ~mkpasswd -m sha-512~.
+#+end_quote
+
+** Git Clone ~Snowflake~ && ~ln -s~ Nix-Files To Correct Dir
+~git clone~ your desired repository and because this guide is written with my personal flake repository in mind:
+#+begin_src sh :noeval
+git clone https://github.com/Icy-Thought/Snowflake.git
 #+end_src
 
-** Replacing Necessary Configurations
-Due to how I have setup my =configuration.nix= you are required to edit several entries in that file, such as: ~fileSystems~, the kernel parameters specified in the ~boot~ entry and also the applications installed during the installation period.
+Backup the contents of your current =/etc/nixos= directory, you'll need your auto-generated =hardware-configuration.nix= file to later input in =modules/hardware=.
 
-*** Example: ~fileSystems~
+I prefer to keep my configurations inside my git repository for easier management, but you are free to do whatever you deem saner in the following installation process:
+#+begin_src sh :noeval
+cd Snowflake
+sudo ln -s flake.nix /etc/nixos
+sudo ln -s flake.lock /etc/nixos
+#+end_src
+
+** Replacing Necessary Configuration Entries
+*** =Hardware-Configuration.nix=
+Place your newly generated =hardware-configuration.nix= inside =modules/hardware= and make sure to update the hardware entry in =flake.nix=.
+
+#+CAPTION: Example: ~ThinkPad-E595~ defined as a valid system environment.
+#+begin_src nix :noeval
+nixosConfigurations = {
+  thinkpad = mkNixosConfig {
+    hardwareModules = [
+      ./modules/hardware/ThinkPad-E595.nix
+      # nixos-hardware.nixosModules.lenovo-thinkpad-e595
+    ];
+    extraModules = [ ./profiles/ThinkPad-E595.nix ];
+  };
+};
+#+end_src
+
+*** =profiles/X=
+By default, Nautilus & Dolphin does not hide system partitions from mounted devices category. Since this has not been the experience I have been accustomed to, I have chosen to hide those partitions from appearing in the mounted devices category of those file managers. I have also added several kernel parameters and other specific configurations for my setup in this repository.
+
+What you are required to edit is the ~fileSystems~ entries in =profiles/X= (where =X= stands for host machine) and also the specific parts which you wish to exclude from your setup, such as: kernel parameters, =modules/wireguard/default.nix=, packages to be installed among other home-related configurations.
+
+#+CAPTION: Example: hiding =/boot= from Nautilus mounted devices.
 #+begin_src nix :noeval
 fileSystems."/boot" = {
   device = "/dev/disk/by-uuid/insert-your-boot-uuid-here";
@@ -85,24 +125,18 @@ fileSystems."/boot" = {
 };
 #+end_src
 
-** Installing NixOS
-After moving the files to their required locations proceed with the installation by using ~nixos-install~ command followed by a reboot after the system successfully installed the configurations.
+*** Installing Nix-Flake System
+After completing your setup, there remains one command to be executed (device = =nixosConfigurations.device_name= entry in =flake.nix=);
 #+begin_src shell :noeval
-sudo nixos-install
+sudo nixos-rebuild switch --flake '/etc/nixos#device_name --impure
 reboot
 #+end_src
 
-** Home-Manager
-After confirming that your NixOS system have successfully installed, proceed by creating =.config/nixpkgs=, moving the desired =hosts/X/home.nix= file and later installing Home-Manager:
-#+begin_src shell :noeval
-mkdir -p ~/.config/nixpkgs
-cp NixOS-Configurations/hosts/X/home.nix ~/.config/nixpkgs
-nix-shell '<home-manager>' -A install
-home-manager switch
-#+end_src
+* Congratulations! 🎉
+You have successful installed your/my personally hand-crafted/replicated Nix-Flake environment. I hope it suits your needs, if not then you are always welcome to propose changes or fork the project and customize the repository to your heart's content!
 
-* Congratulations!
-You have succesfully installed my personally crafted NixOS environment. I hope it suits your needs, if not then you are always welcome to propose changes or fork and edit the repository to your heart's content!
+* Special Thanks
+- [[https://github.com/kclejeune/system][Kclejeune]]
 
 * Useful Links
 - [[Stable][NixOS Manual]]: A manual for the newcomer to read and understand different parts of the NixOS distribution.
