@@ -11,7 +11,7 @@ let
     celluloid                                       # GTK frontend for MPV.
     gimp                                            # Better Photoshop alternative.
     inkscape                                        # Better Illustrator alternative.
-    blender                                         # 3D Creation/Animation.
+    # blender                                         # 3D Creation/Animation.
     libreoffice                                     # Better office alternative suit.
     obs-studio                                      # Streaming/Recording.
     qalculate-gtk                                   # Scientific calculator.
@@ -47,19 +47,19 @@ let
     sumneko-lua-language-server                     # Lua language server.
     gcc11                                           # GNU Compiler Collection.
     ccls                                            # C/C++ language server - Clang.
-    gnumake                                         # Controls the generation of executable files.
-    cmake                                           # Build automation, testing & packaging.
+    gnumake                                         # Control exec. files.
+    cmake                                           # Auto Testing & packaging.
     nodejs-16_x                                     # I/O framwork for JS v8.
-    languagetool                                    # Proofreading for several languages.
-    openssl                                         # Library for SSL and TLS protocols.
+    languagetool                                    # Proofreading.
+    openssl                                         # SSL and TLS protocols.
     sqlite                                          # Serverless SQL database.
     jq                                              # Lightweight JSON processor.
     xsv                                             # Fast CSV toolkit (Rust).
-    python39                                        # Python Programming language.
-    pipenv                                          # Python Development workflow for humans.
-    graphviz                                        # Graph visualization tools.
+    python39                                        # Py-lang.
+    pipenv                                          # Py-dev workflow for humans.
+    graphviz                                        # Graph visualization.
     tectonic                                        # LaTeX support.
-    hugo                                            # Fast + Modern static web-engine.
+    hugo                                            # Modern static web-engine.
   ];
 
   lanservPkgs = with pkgs.nodePackages ; [
@@ -71,11 +71,11 @@ let
   
   pyPkgs = with pkgs.python39Packages; [
     black                                           # Python code formatter.
-    isort                                           # Sort Py imports.
-    pyflakes                                        # Py error check.
+    isort                                           # Sort Py-imports.
+    pyflakes                                        # Py-error check.
     nose-timer                                      # Nosetests timer.
     nose-exclude                                    # Exclude dirs from nosetests.
-    pytest                                          # Py Test framework.
+    pytest                                          # Py-test framework.
   ];                                            
   
   spellPkgs = with pkgs; [
@@ -108,7 +108,7 @@ let
     imagemagick                                     # LaTeX image export.
     winetricks                                      # Required DLL for exe trouble.
     tree-sitter                                     # Generator + incremental parse.
-    ncdu                                            # Dis analyzer through NCurses.
+    ncdu                                            # Dis analyzer (NCurses).
   ];
 
   tuiPkgs = with pkgs; [

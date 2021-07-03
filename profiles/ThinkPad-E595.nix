@@ -7,9 +7,6 @@
 
   hm = { imports = [ ./home-manager/ThinkPad-E595.nix ]; };
 
-  # Build NixOS from latest stable release.
-  system.stateVersion = "21.05"; # Did you read the comment?
-
   boot = {
     extraModulePackages = with config.boot.kernelPackages; [ 
       # amdgpu-pro
