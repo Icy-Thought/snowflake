@@ -98,7 +98,7 @@
 
       # Application-related
       temacs = "emacsclient -t";
-      emacs  = "emacsclient -c";
+      emacs  = "emacsclient -ca";
       zoom   = "firejail zoom";
 
       # VPN
