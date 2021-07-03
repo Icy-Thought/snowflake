@@ -7,9 +7,6 @@
 
   hm = { imports = [ ./home-manager/ProBook-440G3.nix ]; };
 
-  # Build NixOS from latest stable release.
-  system.stateVersion = "21.05"; # Did you read the comment?
-
   boot = {
     kernelParams = [ "pcie_aspm.policy=performance" ];
   };
