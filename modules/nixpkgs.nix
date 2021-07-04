@@ -1,5 +1,5 @@
-{ inputs, config, lib, pkgs, ... }:
-{
+{ inputs, config, lib, pkgs, ... }: {
+
   nixpkgs = {
     config = import ./config.nix;
     overlays = [ ];
@@ -31,10 +31,7 @@
       "home-manager=/etc/${config.environment.etc.home-manager.target}"
     ];
 
-    binaryCaches = [
-      "https://nix-community.cachix.org/"
-    ];
-
+    binaryCaches = [ "https://nix-community.cachix.org/" ];
     binaryCachePublicKeys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
     ];
@@ -45,6 +42,7 @@
           id = "nixpkgs-unstable";
           type = "indirect";
         };
+
         flake = inputs.nixpkgs-unstable;
       };
 
@@ -53,6 +51,7 @@
           id = "nixpkgs";
           type = "indirect";
         };
+
         flake = inputs.nixpkgs;
       };
     };

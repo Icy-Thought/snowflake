@@ -1,6 +1,6 @@
 { config, pkgs, inputs, ... }:
-let
-  homeDir = config.home.homeDirectory;
+
+let homeDir = config.home.homeDirectory;
 
 in {
   imports = [
@@ -24,9 +24,7 @@ in {
 
     bash = {
       enable = true;
-      shellAliases = {
-        ls = "ls --color=auto";
-      };
+      shellAliases = { ls = "ls --color=auto"; };
       bashrcExtra = ''
         eval "$(starship init bash)"
       '';
@@ -55,12 +53,10 @@ in {
     };
 
   };
- 
-  fonts.fontconfig = {
-    enable = true;
-  };
 
-  home.sessionPath = [ 
+  fonts.fontconfig.enable = true;
+
+  home.sessionPath = [
     "${config.home.homeDirectory}/.emacs.d/bin"
     "${config.home.homeDirectory}/.cargo/bin"
     "${config.home.homeDirectory}/.local/bin"

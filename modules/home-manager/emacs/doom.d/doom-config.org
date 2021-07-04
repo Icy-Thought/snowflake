@@ -216,7 +216,7 @@ Since we don't want to disable org-confirm-babel-evaluate all of the time, do it
 #+begin_src emacs-lisp
 (defun org-babel-tangle-config ()
   (when (string-equal (buffer-file-name)
-                      (expand-file-name "~/.doom.d/doom-config.org"))
+                      (expand-file-name "~/git/Snowflake/modules/home-manager/emacs/doom.d/doom-config.org"))
     (let ((org-config-babel-evaluate nil))
       (org-babel-tangle))))
 

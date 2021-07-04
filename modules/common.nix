@@ -1,11 +1,6 @@
-{ inputs, config, lib, pkgs, ... }:
-{
-  imports = [ 
-    ./primary.nix
-    ./nixpkgs.nix
-    ./packages.nix
-    ./wireguard
-  ];
+{ inputs, config, lib, pkgs, ... }: {
+
+  imports = [ ./primary.nix ./nixpkgs.nix ./packages.nix ./wireguard ];
 
   hm = import ./home-manager;
 
