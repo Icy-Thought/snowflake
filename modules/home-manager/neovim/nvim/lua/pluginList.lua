@@ -145,6 +145,7 @@ return packer.startup(
         --   use "alvan/vim-closetag" -- for html autoclosing tag
         use {
             "lukas-reineke/indent-blankline.nvim",
+            branch = "master",
             event = "BufRead",
             setup = function()
                 require("misc-utils").blankline()
