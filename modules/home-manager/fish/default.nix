@@ -1,5 +1,4 @@
-{ config, pkgs, ... }:
-{
+{ config, pkgs, ... }: {
   programs.fish = {
     enable = true;
     shellInit = ''
@@ -7,18 +6,18 @@
       set fish_greeting
       set -gx EDITOR nvim
       set -g fish_key_bindings fish_vi_key_bindings
-      
+
       # Customizable fish_title
       function fish_title
           echo $argv[1]
       end
-      
+
       # Tmux on terminal start
       if status is-interactive
       and not set -q TMUX
           exec tmux
       end
-      
+
       # Colorscheme: Palenight
       if test "$TERM" != "linux"
           set -U fish_color_autosuggestion 676e95
@@ -48,7 +47,7 @@
           set -U fish_pager_color_prefix white --bold #--underline
           set -U fish_pager_color_progress brwhite --background=cyan
       end
-      
+
       # Emacs: Vterm
       # Allow shell to send information to vterm via properly escaped sequences.
       function vterm_printf;
@@ -62,7 +61,7 @@
               printf "\e]%s\e\\" "$argv"
           end
       end
-      
+
       # Print fish-term colours
       function print_fish_colors --description 'Shows the various fish colors being used'
           set -l clr_list (set -n | grep fish | grep color | grep -v __)
@@ -83,7 +82,7 @@
               echo '|________________________________________|________________________________________|'\n
           end
       end
-      
+
       # Sources
       starship init fish | source
     '';
@@ -91,42 +90,43 @@
     shellAbbrs = {
 
       # General
-      ls     = "exa -l";
-      lsa    = "exa -la";
-      ytdl   = "youtube-dl";
-      bat0   = "upower -i /org/freedesktop/UPower/devices/battery_BAT0";
+      ls = "exa -l";
+      lsa = "exa -la";
+      ytdl = "youtube-dl";
+      bat0 = "upower -i /org/freedesktop/UPower/devices/battery_BAT0";
 
       # Application-related
       temacs = "emacsclient -t";
-      emacs  = "emacsclient -ca";
-      zoom   = "firejail zoom";
+      emacs = "emacsclient -ca";
+      zoom = "firejail zoom";
 
       # VPN
       wup = "systemctl start wg-quick-Akkadian_VPN.service";
       wud = "systemctl stop wg-quick-Akkadian_VPN.service";
 
       # Git
-      g   = "git";
-      gc  = "git clone";
-      ga  = "git add";
+      g = "git";
+      gc = "git clone";
+      ga = "git add";
       gaa = "git add -A";
       gcm = "git commit -m";
       gps = "git push";
       gpl = "git pull";
-      gs  = "git status";
+      gs = "git status";
 
       # NixOS
-      g2nix = "dconf dump / | dconf2nix > ~/git/NixOS-Configurations/home/modules/dconf.nix";
-      
+      g2nix =
+        "dconf dump / | dconf2nix > ~/git/NixOS-Configurations/home/modules/dconf.nix";
+
     };
   };
 
   home.packages = with pkgs; [
-    starship                                       # Minimal prompt.
-    nnn                                            # TUI file manager.
-    glances                                        # Curses-based monitoring tool.
-    neofetch                                       # Fetch system information.
-    youtube-dl                                     # YouTube media downloader.
+    starship # Minimal prompt.
+    nnn # TUI file manager.
+    glances # Curses-based monitoring tool.
+    neofetch # Fetch system information.
+    youtube-dl # YouTube media downloader.
     # mpd                                          # Media player daemon.
     # ncmpcpp                                      # TUI music player.
     # spotify-tui                                  # TUI for premium Spotify users.

@@ -1,18 +1,17 @@
-{ config, pkgs, ... }:
-{
+{ config, pkgs, ... }: {
+
   programs.emacs = {
     enable = true;
     # package = pkgs.emacsUnstable;
-    extraPackages = (epkgs: [ epkgs.vterm ] );
+    extraPackages = (epkgs: [ epkgs.vterm ]);
   };
 
-  services.emacs = {
-    enable = true;
-  };
+  services.emacs = { enable = true; };
 
   home = {
     sessionVariables = {
-      DOOMDIR = "${config.home.homeDirectory}/git/Snowflake/modules/home-manager/emacs/doom.d";
+      DOOMDIR =
+        "${config.home.homeDirectory}/git/Snowflake/modules/home-manager/emacs/doom.d";
     };
 
     file.".doom.d" = {

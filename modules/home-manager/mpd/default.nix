@@ -1,5 +1,5 @@
-{ config, ... }:
-{
+{ config, ... }: {
+
   home.file.".config/mpv/mpv.conf".text = ''
     db_file                 "~/.config/mpd/database"
     log_file                "syslog"

@@ -1,10 +1,9 @@
 # Generated via dconf2nix: https://github.com/gvolpe/dconf2nix
 { lib, ... }:
 
-let
-  mkTuple = lib.hm.gvariant.mkTuple;
-in
-{
+let mkTuple = lib.hm.gvariant.mkTuple;
+
+in {
   dconf.settings = {
     "ca/desrt/dconf-editor" = {
       saved-pathbar-path = "/org/gnome/desktop/applications/office/";
@@ -20,9 +19,7 @@ in
       prefer-dark-theme = true;
     };
 
-    "io/github/celluloid-player/celluloid" = {
-      settings-migrated = true;
-    };
+    "io/github/celluloid-player/celluloid" = { settings-migrated = true; };
 
     "io/github/celluloid-player/celluloid/window-state" = {
       loop-playlist = false;
@@ -45,22 +42,25 @@ in
       view = "icon-view";
     };
 
-    "org/gnome/control-center" = {
-      last-panel = "keyboard";
-    };
+    "org/gnome/control-center" = { last-panel = "keyboard"; };
 
-    "org/gnome/desktop/applications/terminal" = {
-      exec = "alacritty";
-    };
+    "org/gnome/desktop/applications/terminal" = { exec = "alacritty"; };
 
-    "org/gnome/desktop/calendar" = {
-      show-weekdate = true;
-    };
+    "org/gnome/desktop/calendar" = { show-weekdate = true; };
 
     "org/gnome/desktop/input-sources" = {
-      mru-sources = [ (mkTuple [ "xkb" "us" ]) (mkTuple [ "xkb" "se" ]) (mkTuple [ "xkb" "ara" ]) ];
+      mru-sources = [
+        (mkTuple [ "xkb" "us" ])
+        (mkTuple [ "xkb" "se" ])
+        (mkTuple [ "xkb" "ara" ])
+      ];
       per-window = true;
-      sources = [ (mkTuple [ "xkb" "us" ]) (mkTuple [ "xkb" "se" ]) (mkTuple [ "xkb" "ara" ]) (mkTuple [ "ibus" "libpinyin" ]) ];
+      sources = [
+        (mkTuple [ "xkb" "us" ])
+        (mkTuple [ "xkb" "se" ])
+        (mkTuple [ "xkb" "ara" ])
+        (mkTuple [ "ibus" "libpinyin" ])
+      ];
       xkb-options = [ "lv3:ralt_switch" ];
     };
 
@@ -77,13 +77,11 @@ in
       show-battery-percentage = true;
     };
 
-    "org/gnome/desktop/peripherals/keyboard" = {
-      numlock-state = true;
-    };
+    "org/gnome/desktop/peripherals/keyboard" = { numlock-state = true; };
 
     "org/gnome/desktop/peripherals/touchpad" = {
       natural-scroll = true;
-      speed = 0.60;
+      speed = 0.6;
       tap-to-click = true;
       two-finger-scrolling-enabled = true;
     };
@@ -96,13 +94,9 @@ in
       remove-old-trash-files = true;
     };
 
-    "org/gnome/desktop/session" = {
-      idle-delay = "uint32 300";
-    };
+    "org/gnome/desktop/session" = { idle-delay = "uint32 300"; };
 
-    "org/gnome/desktop/sound" = {
-      allow-volume-above-100-percent = false;
-    };
+    "org/gnome/desktop/sound" = { allow-volume-above-100-percent = false; };
 
     "org/gnome/desktop/wm/preferences" = {
       button-layout = "appmenu:minimize,maximize,close";
@@ -120,13 +114,9 @@ in
       default-search-engine = "DuckDuckGo";
     };
 
-    "org/gnome/epiphany/reader" = {
-      color-scheme = "dark";
-    };
+    "org/gnome/epiphany/reader" = { color-scheme = "dark"; };
 
-    "org/gnome/epiphany/web" = {
-      default-zoom-level = 1.0;
-    };
+    "org/gnome/epiphany/web" = { default-zoom-level = 1.0; };
 
     "org/gnome/file-roller/listing" = {
       list-mode = "as-folder";
@@ -163,58 +153,71 @@ in
       show-create-link = false;
     };
 
-    "org/gnome/nautilus/window-state" = {
-      maximized = false;
-    };
+    "org/gnome/nautilus/window-state" = { maximized = false; };
 
     "org/gnome/settings-daemon/plugins/media-keys" = {
       area-screenshot = [ "@as []" ];
-      custom-keybindings = [ "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/" "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/" "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/" "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/" "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/" "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/" "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/" ];
+      custom-keybindings = [
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/"
+      ];
       screenshot = [ "@as []" ];
       window-screenshot = [ "@as []" ];
     };
 
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
-      binding = "<Shift>Print";
-      command = "gnome-screenshot -a";
-      name = "Screenshot Selected Area";
-    };
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" =
+      {
+        binding = "<Shift>Print";
+        command = "gnome-screenshot -a";
+        name = "Screenshot Selected Area";
+      };
 
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
-      binding = "<Alt>Print";
-      command = "gnome-screenshot -w";
-      name = "Screenshot Active Application Window";
-    };
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" =
+      {
+        binding = "<Alt>Print";
+        command = "gnome-screenshot -w";
+        name = "Screenshot Active Application Window";
+      };
 
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2" = {
-      binding = "Print";
-      command = "gnome-screenshot";
-      name = "Screenshot Display";
-    };
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2" =
+      {
+        binding = "Print";
+        command = "gnome-screenshot";
+        name = "Screenshot Display";
+      };
 
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3" = {
-      binding = "<Super>Return";
-      command = "alacritty";
-      name = "Alacritty Terminal";
-    };
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3" =
+      {
+        binding = "<Super>Return";
+        command = "alacritty";
+        name = "Alacritty Terminal";
+      };
 
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4" = {
-      binding = "<Super>f";
-      command = "nautilus -w";
-      name = "File Manager (Nautilus)";
-    };
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4" =
+      {
+        binding = "<Super>f";
+        command = "nautilus -w";
+        name = "File Manager (Nautilus)";
+      };
 
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5" = {
-      binding = "<Super>b";
-      command = "firefox --profile .mozilla/firefox/62cor33d.default";
-      name = "Launch Firefox (Default)";
-    };
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5" =
+      {
+        binding = "<Super>b";
+        command = "firefox --profile .mozilla/firefox/62cor33d.default";
+        name = "Launch Firefox (Default)";
+      };
 
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6" = {
-      binding = "<Super><Shift>b";
-      command = "firefox --profile .mozilla/firefox/qqxa82yf.Private";
-      name = "Launch Firefox (Private)";
-    };
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6" =
+      {
+        binding = "<Super><Shift>b";
+        command = "firefox --profile .mozilla/firefox/qqxa82yf.Private";
+        name = "Launch Firefox (Private)";
+      };
 
     "org/gnome/settings-daemon/plugins/power" = {
       sleep-inactive-ac-type = "nothing";
@@ -223,47 +226,71 @@ in
 
     "org/gnome/shell" = {
       disable-user-extensions = false;
-      favorite-apps = [ "org.gnome.Nautilus.desktop" "element-desktop.desktop" "discord.desktop" "org.gnome.Geary.desktop" "firefox.desktop" "emacs.desktop" "Alacritty.desktop" "qalculate-gtk.desktop" ];
+      favorite-apps = [
+        "org.gnome.Nautilus.desktop"
+        "element-desktop.desktop"
+        "discord.desktop"
+        "org.gnome.Geary.desktop"
+        "firefox.desktop"
+        "emacs.desktop"
+        "Alacritty.desktop"
+        "qalculate-gtk.desktop"
+      ];
       welcome-dialog-last-shown-version = "40.1";
     };
 
-    "org/gnome/shell/weather" = {
-      automatic-location = true;
-    };
+    "org/gnome/shell/weather" = { automatic-location = true; };
 
-    "org/gnome/shell/world-clocks" = {
-      locations = "@av []";
-    };
+    "org/gnome/shell/world-clocks" = { locations = "@av []"; };
 
     "org/gnome/terminal/legacy/profiles:" = {
       default = "3ccfc57a-67ca-4e54-bf71-030af000fc48";
-      list = [ "b1dcc9dd-5262-4d8d-a863-c897e6d979b9" "3ccfc57a-67ca-4e54-bf71-030af000fc48" ];
+      list = [
+        "b1dcc9dd-5262-4d8d-a863-c897e6d979b9"
+        "3ccfc57a-67ca-4e54-bf71-030af000fc48"
+      ];
     };
 
-    "org/gnome/terminal/legacy/profiles:/:3ccfc57a-67ca-4e54-bf71-030af000fc48" = {
-      allow-bold = true;
-      background-color = "#1E1E21212727";
-      bold-color = "#5C5C63637070";
-      bold-color-same-as-fg = true;
-      cursor-background-color = "#5C5C63637070";
-      cursor-colors-set = true;
-      cursor-foreground-color = "#1E1E21212727";
-      default-size-columns = 96;
-      default-size-rows = 28;
-      font = "JetBrainsMonoMedium Nerd Font Medium 12";
-      foreground-color = "#5C5C63637070";
-      palette = [ "#000000000000" "#E0E06C6C7575" "#9898C3C37979" "#D1D19A9A6666" "#6161AFAFEFEF" "#C6C67878DDDD" "#5656B6B6C2C2" "#ABABB2B2BFBF" "#5C5C63637070" "#E0E06C6C7575" "#9898C3C37979" "#D1D19A9A6666" "#6161AFAFEFEF" "#C6C67878DDDD" "#5656B6B6C2C2" "#FFFFFEFEFEFE" ];
-      scrollbar-policy = "never";
-      use-system-font = true;
-      use-theme-background = false;
-      use-theme-colors = false;
-      use-theme-transparency = false;
-      visible-name = "One Dark";
-    };
+    "org/gnome/terminal/legacy/profiles:/:3ccfc57a-67ca-4e54-bf71-030af000fc48" =
+      {
+        allow-bold = true;
+        background-color = "#1E1E21212727";
+        bold-color = "#5C5C63637070";
+        bold-color-same-as-fg = true;
+        cursor-background-color = "#5C5C63637070";
+        cursor-colors-set = true;
+        cursor-foreground-color = "#1E1E21212727";
+        default-size-columns = 96;
+        default-size-rows = 28;
+        font = "JetBrainsMonoMedium Nerd Font Medium 12";
+        foreground-color = "#5C5C63637070";
+        palette = [
+          "#000000000000"
+          "#E0E06C6C7575"
+          "#9898C3C37979"
+          "#D1D19A9A6666"
+          "#6161AFAFEFEF"
+          "#C6C67878DDDD"
+          "#5656B6B6C2C2"
+          "#ABABB2B2BFBF"
+          "#5C5C63637070"
+          "#E0E06C6C7575"
+          "#9898C3C37979"
+          "#D1D19A9A6666"
+          "#6161AFAFEFEF"
+          "#C6C67878DDDD"
+          "#5656B6B6C2C2"
+          "#FFFFFEFEFEFE"
+        ];
+        scrollbar-policy = "never";
+        use-system-font = true;
+        use-theme-background = false;
+        use-theme-colors = false;
+        use-theme-transparency = false;
+        visible-name = "One Dark";
+      };
 
-    "org/gnome/tweaks" = {
-      show-extensions-notice = false;
-    };
+    "org/gnome/tweaks" = { show-extensions-notice = false; };
 
     "org/gtk/settings/file-chooser" = {
       date-format = "regular";
@@ -278,9 +305,7 @@ in
       type-format = "category";
     };
 
-    "system/locale" = {
-      region = "sv_SE.UTF-8";
-    };
+    "system/locale" = { region = "sv_SE.UTF-8"; };
 
   };
 }

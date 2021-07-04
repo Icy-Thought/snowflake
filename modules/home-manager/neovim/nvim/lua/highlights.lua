@@ -69,13 +69,17 @@ fg_bg("DiffModified", nord_blue, "none")
 -- NvimTree
 fg("NvimTreeFolderIcon", blue)
 fg("NvimTreeFolderName", blue)
+fg("NvimTreeOpenedFolderName", blue)
+fg("NvimTreeEmptyFolderName", blue)
 fg("NvimTreeIndentMarker", one_bg2)
 fg("NvimTreeVertSplit", darker_black)
 bg("NvimTreeVertSplit", darker_black)
+fg("NvimTreeEndOfBuffer", darker_black)
 
 fg("NvimTreeRootFolder", darker_black)
 bg("NvimTreeNormal", darker_black)
 fg_bg("NvimTreeStatuslineNc", darker_black, darker_black)
+fg_bg("NvimTreeWindowPicker", red, black2)
 
 -- telescope
 fg("TelescopeBorder", line)
@@ -84,7 +88,7 @@ fg("TelescopeResultsBorder", line)
 fg("TelescopePreviewBorder", grey)
 
 -- LspDiagnostics ---
---
+
 -- error / warnings
 fg("LspDiagnosticsSignError", red)
 fg("LspDiagnosticsVirtualTextError", red)
@@ -117,8 +121,8 @@ fg_bg("BufferLineIndicator", black2, black2)
 fg_bg("BufferLineIndicatorSelected", black, black)
 
 -- separators
-fg_bg("BufferLineSeparator", line, black2)
-fg_bg("BufferLineSeparatorVisible", line, black2)
+fg_bg("BufferLineSeparator", black2, black2)
+fg_bg("BufferLineSeparatorVisible", black2, black2)
 fg_bg("BufferLineSeparatorSelected", black, black2)
 
 -- modified buffers

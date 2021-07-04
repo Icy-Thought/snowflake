@@ -1,15 +1,12 @@
-{ inputs, config, lib, pkgs, ... }:
-{
+{ inputs, config, lib, pkgs, ... }: {
+
   # Build NixOS from latest stable release.
   system.stateVersion = "21.05"; # Did you read the comment?
 
   boot = {
     kernelPackages = pkgs.linuxPackages_zen; # xanmod after high_cpu fix
- 
-    kernelParams = [
-      "pcie_aspm.policy=performance"
-    ];
-   
+    kernelParams = [ "pcie_aspm.policy=performance" ];
+
     # Set GRUB2 to default boot.
     loader = {
       efi = {
@@ -51,22 +48,26 @@
       internalInterfaces = [ "wg0" ];
     };
 
-    iproute2 = {
-      enable = true;
-    };
+    iproute2.enable = true;
 
     firewall = {
       allowedTCPPorts = [ 53 ];
-      allowedUDPPorts = [ 53 51820 ];                               # Wireguard
-      allowedTCPPortRanges = [ { from = 1714; to = 1764; } ];       # KDE-Connect
-      allowedUDPPortRanges = [ { from = 1714; to = 1764; } ];       # KDE-Connect
+      allowedUDPPorts = [ 53 51820 ]; # Wireguard
+      allowedTCPPortRanges = [{
+        from = 1714;
+        to = 1764;
+      }]; # KDE-Connect
+
+      allowedUDPPortRanges = [{
+        from = 1714;
+        to = 1764;
+      }]; # KDE-Connect
+
     };
 
   };
 
-  i18n = {
-    defaultLocale = "en_US.UTF-8";
-  };
+  i18n.defaultLocale = "en_US.UTF-8";
 
   console = {
     font = "Lat2-Terminus16";
@@ -78,24 +79,21 @@
   users = { # Don't forget to set password through `passwd`!
     defaultUserShell = pkgs.fish;
     mutableUsers = false;
-    
+
     users = {
       "${config.user.name}" = {
         isNormalUser = true;
         createHome = true;
         useDefaultShell = true;
         extraGroups = [ "wheel" "network" "plugdev" "adbusers" ];
-        hashedPassword = "$6$DMQjZ0Nn8JAb$2MBYjRZvhACwUJrDXI6GciNglr.KM3Yaza4CMUaG8HCxOJ2EtRqZZKvTBzRhIPQWjKiYeU3cCpntQNkToiUeu0";
+        hashedPassword =
+          "$6$DMQjZ0Nn8JAb$2MBYjRZvhACwUJrDXI6GciNglr.KM3Yaza4CMUaG8HCxOJ2EtRqZZKvTBzRhIPQWjKiYeU3cCpntQNkToiUeu0";
       };
     };
   };
 
   # Recommended for pipewire
-  security = {
-    rtkit = {
-      enable = true;
-    };
-  };
+  security.rtkit.enable = true;
 
   hardware = {
     enableRedistributableFirmware = true;
@@ -106,13 +104,8 @@
       driSupport32Bit = true;
     };
 
-    pulseaudio = {
-      enable = false;
-    };
-
-    bluetooth = {
-      enable = true;
-    };
+    pulseaudio.enable = false;
+    bluetooth.enable = true;
 
     openrazer = {
       enable = true;
@@ -123,24 +116,20 @@
   };
 
   documentation = {
-    man.enable   = true;
-    info.enable  = true;
+    man.enable = true;
+    info.enable = true;
   };
 
   programs = {
-    fish.enable  = true;
-    adb.enable   = true;
+    fish.enable = true;
+    adb.enable = true;
     gnupg.agent.enable = true;
   };
 
   fonts = {
     enableDefaultFonts = true;
     fonts = with pkgs; [
-      (nerdfonts.override { fonts = [ 
-        "Iosevka"
-        "JetBrainsMono"
-        ]; 
-      })
+      (nerdfonts.override { fonts = [ "Iosevka" "JetBrainsMono" ]; })
 
       source-code-pro
       emacs-all-the-icons-fonts
@@ -172,9 +161,7 @@
       openFirewall = lib.mkDefault false;
     };
 
-    printing = {
-      enable = true;
-    };
+    printing.enable = true;
 
     xserver = {
       enable = true;
@@ -191,9 +178,7 @@
       };
     };
 
-    flatpak = {
-      enable = true;
-    };
+    flatpak.enable = true;
 
     pipewire = {
       enable = true;
@@ -202,9 +187,7 @@
         support32Bit = true;
       };
 
-      pulse = {
-        enable = true;
-      };
+      pulse.enable = true;
 
       # If you want to use JACK applications, uncomment:
       # #jack.enable = true;
@@ -213,7 +196,7 @@
       media-session.config.bluez-monitor.rules = [
         {
           # Matches all cards
-          matches = [ { "device.name" = "~bluez_card.*"; } ];
+          matches = [{ "device.name" = "~bluez_card.*"; }];
           actions = {
             "update-props" = {
               "bluez5.reconnect-profiles" = [ "hfp_hf" "hsp_hs" "a2dp_sink" ];
@@ -226,13 +209,13 @@
         {
           matches = [
             # Matches all sources
-            { "node.name" = "~bluez_input.*"; }
+            {
+              "node.name" = "~bluez_input.*";
+            }
             # Matches all outputs
             { "node.name" = "~bluez_output.*"; }
           ];
-          actions = {
-            "node.pause-on-idle" = false;
-          };
+          actions = { "node.pause-on-idle" = false; };
         }
       ];
     };

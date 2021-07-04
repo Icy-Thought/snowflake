@@ -1,18 +1,18 @@
-{ config, lib, pkgs, ... }:
-{
+{ config, lib, pkgs, ... }: {
 
   programs.neovim = {
-    enable       = true;
-    package      = pkgs.neovim-nightly;
-    viAlias      = true;
-    vimAlias     = true;
+    enable = true;
+    package = pkgs.neovim;
+    viAlias = true;
+    vimAlias = true;
     vimdiffAlias = true;
-    withPython3  = true; # for plugins
+    withPython3 = true; # for plugins
   };
 
   xdg.configFile."nvim" = {
     source = ./nvim;
     recursive = true;
+    # onChange = "nvim -c PackerSync";
   };
 
 }

@@ -1,15 +1,10 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, ... }: {
 
-{
-  imports = [ 
-    ../modules/common.nix
-  ];
+  imports = [ ../modules/common.nix ];
 
   hm = { imports = [ ./home-manager/ProBook-440G3.nix ]; };
 
-  boot = {
-    kernelParams = [ "pcie_aspm.policy=performance" ];
-  };
+  boot = { kernelParams = [ "pcie_aspm.policy=performance" ]; };
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/42c5c3e5-38df-4007-9fff-5c9841c93a0a";
@@ -30,9 +25,7 @@
   };
 
   hardware = {
-    cpu.intel = {
-      updateMicrocode = true;
-    };
+    cpu.intel = { updateMicrocode = true; };
 
     opengl.extraPackages = with pkgs; [
       intel-compute-runtime
@@ -49,7 +42,7 @@
     defaultLocale = "en_US.UTF-8";
     inputMethod = {
       enabled = "fcitx5";
-      fcitx5.addons = with pkgs; [ 
+      fcitx5.addons = with pkgs; [
         fcitx5-gtk
         fcitx5-configtool
         fcitx5-chinese-addons
@@ -64,13 +57,8 @@
       videoDrivers = [ "modesetting" ];
       useGlamor = true;
 
-      displayManager.sddm = {
-        enable = true;
-      };
-
-      desktopManager.plasma5 = {
-        enable = true;
-      };
+      displayManager.sddm = { enable = true; };
+      desktopManager.plasma5 = { enable = true; };
     };
   };
 

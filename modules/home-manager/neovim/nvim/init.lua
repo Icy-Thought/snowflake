@@ -6,7 +6,6 @@ require "top-bufferline"
 require "statusline"
 
 require("colorizer").setup()
-require("neoscroll").setup() -- smooth scroll
 
 -- lsp stuff
 require "nvim-lspconfig"

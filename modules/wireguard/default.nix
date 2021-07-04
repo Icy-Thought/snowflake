@@ -1,12 +1,9 @@
 { config, ... }:
 
-let
-  akkadia = ../../secrets/wg-akkad/privateKey.age;
+let akkadia = ../../secrets/wg-akkad/privateKey.age;
 
 in {
-  imports = [
-    ./wg-akkad.nix
-  ];
+  imports = [ ./wg-akkad.nix ];
 
   age.secrets = {
     "wg-akkad/privateKey" = {
