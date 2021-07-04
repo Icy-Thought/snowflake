@@ -1,14 +1,17 @@
 local packer = require("packer")
 local use = packer.use
 
--- using { } for using different branch , loading plugin with certain commands etc
-return require("packer").startup(
+return packer.startup(
     function()
         use "wbthomason/packer.nvim"
+
+        use "akinsho/nvim-bufferline.lua"
+        use "glepnir/galaxyline.nvim"
 
         -- color related stuff
         use "siduck76/nvim-base16.lua"
         use "mhinz/vim-startify"
+
         use {
             "norcalli/nvim-colorizer.lua",
             event = "BufRead",
