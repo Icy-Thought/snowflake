@@ -1,59 +1,30 @@
 -- load all plugins
 require "pluginList"
 require "misc-utils"
-
 require "top-bufferline"
-require "statusline"
 
-require("colorizer").setup()
-
--- lsp stuff
-require "nvim-lspconfig"
-require "compe-completion"
-
-local cmd = vim.cmd
 local g = vim.g
 
 g.mapleader = " "
-g.auto_save = 0
+g.auto_save = false
 
 -- colorscheme related stuff
-cmd "syntax on"
+
+g.nvchad_theme = "onedark"
 local base16 = require "base16"
 base16(base16.themes["onedark"], true)
 
 require "highlights"
-
--- blankline
-g.indentLine_enabled = 1
-g.indent_blankline_char = "▏"
-
-g.indent_blankline_filetype_exclude = {"help", "terminal"}
-g.indent_blankline_buftype_exclude = {"terminal"}
-
-g.indent_blankline_show_trailing_blankline_indent = false
-g.indent_blankline_show_first_indent_level = false
-
-require "treesitter-nvim"
 require "mappings"
-
-require "telescope-nvim"
-require "nvimTree"
 require "file-icons"
+require "statusline"
 
--- Sings/Symbols
-require "gitsigns-nvim"
-require("nvim-autopairs").setup()
-require("lspkind").init()
-
--- Hide LineNr. in TUI
-vim.api.nvim_exec([[
+-- hide line numbers , statusline in specific buffers!
+vim.api.nvim_exec(
+    [[
    au BufEnter term://* setlocal nonumber
    au BufEnter,BufWinEnter,WinEnter,CmdwinEnter * if bufname('%') == "NvimTree" | set laststatus=0 | else | set laststatus=2 | endif
    au BufEnter term://* set laststatus=0 
-]], false)
-
--- Setup for TrueZen.nvim
-require "zenmode"
-require "whichkey"
-require("nvim_comment").setup()
+]],
+    false
+)
