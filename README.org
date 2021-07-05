@@ -183,3 +183,6 @@ You have successful installed your/my personally hand-crafted/replicated Nix-Fla
 - [[Stable][NixOS Manual]]: A manual for the newcomer to read and understand different parts of the NixOS distribution.
 - [[https://github.com/nix-community/home-manager][Home-Manager]]: Helps you manage your =~/home= related configurations.
 - [[https://nixos.org/guides/nix-pills][Nix Pills]]: A series written to familiarize the user with the Nix programming language.
+- [[https://nixos.org/manual/nix/unstable/][Nixpkgs Unstable]]: A manual which introduces the Nix-language to people unfamiliar with the wonders of this language.
+- [[https://gist.github.com/edolstra/40da6e3a4d4ee8fd019395365e0772e7][Nix Flake MVP]]: A written Nix guide by [[https://github.com/edolstra][edolstra]].
+- [[https://nixcloud.io/tour/?id=1][A Tour of Nix]]: a beautifully crafted introduction into the Nix programming language.
