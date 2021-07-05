@@ -149,6 +149,14 @@
     };
   };
 
+  xdg = {
+    portal = {
+      enable = true;
+      extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
+      gtkUsePortal = true;
+    };
+  };
+
   systemd.services = {
     systemd-resolved.enable = true;
     systemd-machined.enable = false;

@@ -19,7 +19,7 @@
 
     gc = {
       automatic = true;
-      options = "--delete-older-than 5d";
+      options = "--delete-older-than 3d";
     };
 
     buildCores = 8;
