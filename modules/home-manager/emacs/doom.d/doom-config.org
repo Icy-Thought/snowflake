@@ -36,8 +36,8 @@
 
 ** Personal Info
 #+begin_src emacs-lisp
-(setq user-full-name "Icy_Thought"
-      user-mail-address "gilganyx@gmail.com")
+(setq user-full-name "Icy-Thought"
+      user-mail-address "gilganyx@pm.me")
 #+end_src
 
 ** Appearance

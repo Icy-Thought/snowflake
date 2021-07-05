@@ -97,7 +97,7 @@
 
       # Application-related
       temacs = "emacsclient -t";
-      emacs = "emacsclient -ca";
+      emacs = "emacsclient -c -a";
       zoom = "firejail zoom";
 
       # VPN
@@ -115,6 +115,9 @@
       gs = "git status";
 
       # NixOS
+      flup = "nix flake update";
+      genup =
+        "sudo nixos-rebuild switch --flake '/etc/nixos#thinkpad' --impure";
       g2nix =
         "dconf dump / | dconf2nix > ~/git/NixOS-Configurations/home/modules/dconf.nix";
 
