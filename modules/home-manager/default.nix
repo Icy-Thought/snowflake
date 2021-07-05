@@ -56,10 +56,15 @@ in {
 
   fonts.fontconfig.enable = true;
 
-  home.sessionPath = [
-    "${config.home.homeDirectory}/.emacs.d/bin"
-    "${config.home.homeDirectory}/.cargo/bin"
-    "${config.home.homeDirectory}/.local/bin"
-    "${config.home.homeDirectory}/go/bin"
-  ];
+  home = {
+    sessionVariables = { MOZ_ENABLE_WAYLAND = 1; };
+
+    sessionPath = [
+      "${config.home.homeDirectory}/.emacs.d/bin"
+      "${config.home.homeDirectory}/.cargo/bin"
+      "${config.home.homeDirectory}/.local/bin"
+      "${config.home.homeDirectory}/go/bin"
+    ];
+  };
+
 }
