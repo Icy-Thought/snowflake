@@ -1,7 +1,7 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
-(setq user-full-name "Icy_Thought"
-      user-mail-address "gilganyx@gmail.com")
+(setq user-full-name "Icy-Thought"
+      user-mail-address "gilganyx@pm.me")
 
 (setq
  doom-font (font-spec :family "Iosevka" :size 16 :weight 'Medium)
