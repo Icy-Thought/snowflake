@@ -49,7 +49,6 @@ let
     mesa # FOSS 3D Graphics Lib.
     vulkan-headers # Header files + API registery.
     appimage-run # AppImages support.
-    xdg-desktop-portal-gtk # DIP for sandboxed apps.
   ];
 
 in {
