@@ -10,8 +10,6 @@ let
     gnome-dictionary # Look up mispellings.
     gnome-disk-utility # Manage disks through Gnome.
     gnome-tweak-tool # Advance Gnome setting control.
-    gnome-software # Gnome software store.
-    gnome-packagekit # Installing software on Gnome.
   ];
 
   gextPkgs = with pkgs.gnomeExtensions; [
@@ -23,7 +21,14 @@ let
   ricePkgs = with pkgs; [ orchis-theme flat-remix-gnome whitesur-icon-theme ];
 
 in {
-  imports = [ ../../modules/home-manager/gnome/dconf.nix ];
+  imports = [
+    ../../modules/home-manager/gnome/dconf.nix
+    ../../modules/home-manager/picom
+    ../../modules/home-manager/rofi
+    ../../modules/home-manager/dunst
+    ../../modules/home-manager/xresources
+    ../../modules/home-manager/xsession
+  ];
 
   home = {
     # Enable chrome-gnome-shell in FireFox nightly (mozilla-overlay):

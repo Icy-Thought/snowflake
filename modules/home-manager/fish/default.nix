@@ -18,6 +18,14 @@
           exec tmux
       end
 
+      # Colored man-pages
+      set -xU LESS_TERMCAP_md (printf "\e[01;31m")
+      set -xU LESS_TERMCAP_me (printf "\e[0m")
+      set -xU LESS_TERMCAP_se (printf "\e[0m")
+      set -xU LESS_TERMCAP_so (printf "\e[01;44;33m")
+      set -xU LESS_TERMCAP_ue (printf "\e[0m")
+      set -xU LESS_TERMCAP_us (printf "\e[01;32m")
+
       # Colorscheme: Palenight
       if test "$TERM" != "linux"
           set -U fish_color_autosuggestion 676e95
@@ -51,7 +59,7 @@
       # Emacs: Vterm
       # Allow shell to send information to vterm via properly escaped sequences.
       function vterm_printf;
-          if begin; [  -n "$TMUX" ]  ; and  string match -q -r "screen|tmux" "$TERM"; end 
+          if begin; [  -n "$TMUX" ]  ; and  string match -q -r "screen|tmux" "$TERM"; end
               # tell tmux to pass the escape sequences through
               printf "\ePtmux;\e\e]%s\007\e\\" "$argv"
           else if string match -q -- "screen*" "$TERM"
@@ -88,7 +96,6 @@
     '';
 
     shellAbbrs = {
-
       # General
       ls = "exa -l";
       lsa = "exa -la";
