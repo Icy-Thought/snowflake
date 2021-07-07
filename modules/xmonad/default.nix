@@ -1,6 +1,17 @@
 { config, lib, pkgs, ... }:
 
 let
+
+  xmonad-contrib = with pkgs;
+    haskell.lib.overrideCabal haskellPackages.xmonad-contrib (old: {
+      src = fetchFromGitHub {
+        owner = "xmonad";
+        repo = "xmonad-contrib";
+        rev = "master";
+        sha256 = "";
+      };
+    });
+
   xmonadPkgs = with pkgs; [
     (rofi.override { plugins = [ rofi-emoji rofi-calc ]; }) # dmenu alt.
     dunst # Notification tool.
@@ -26,11 +37,11 @@ in {
         enable = true;
         enableContribAndExtras = true;
 
-        extraPackages = haskellPackages: [
-          haskellPackages.xmonad-contrib
-          haskellPackages.xmonad-extras
-          haskellPackages.xmonad
-          haskellPackages.xmobar
+        extraPackages = hsPkgs: [
+          hsPkgs.xmonad
+          hsPkgs.xmonad-extras
+          hsPkgs.xmobar
+          xmonad-contrib
         ];
       };
     };
