@@ -1,4 +1,4 @@
-#+TITLE: [[./src/NixOS_logo.svg]]
+#+TITLE: [[./assets/NixOS_logo.svg]]
 #+DATE: <2021-06-05 lör>
 
 * Table of Contents :TOC:
@@ -21,7 +21,7 @@
 - [[#useful-links][Useful Links]]
 
 * Introduction
-[[./src/desktop.png]]
+[[./assets/desktop.png]]
 
 This is a hamerspace of a declarative NixOS environment containing several hand-crafted configurations of programs ranging from Alacritty, Neovim (v0.5), Emacs (27.2), Zathura to other configured applications found in the =modules/home-manager= directory.
 

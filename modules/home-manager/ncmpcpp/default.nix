@@ -13,6 +13,7 @@
       autocenter_mode = "yes";
       centered_cursor = "yes";
       ignore_leading_the = "yes";
+      cyclic_scrolling = "yes";
 
       # Appearance
       playlist_display_mode = "classic";
