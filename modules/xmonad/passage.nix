@@ -1,11 +1,11 @@
 { config, lib, pkgs, ... }: {
 
   imports = [
-    ../../modules/home-manager/picom
-    ../../modules/home-manager/rofi
-    ../../modules/home-manager/dunst
-    ../../modules/home-manager/xresources
-    ../../modules/home-manager/xsession
+    ../home-manager/picom
+    ../home-manager/rofi
+    ../home-manager/dunst
+    ../home-manager/xresources
+    ../home-manager/xsession
   ];
 
   xsession = {
