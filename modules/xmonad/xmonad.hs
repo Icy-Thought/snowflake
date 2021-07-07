@@ -88,16 +88,11 @@ import           XMonad.Util.DynamicScratchpads      (makeDynamicSP,
 import           XMonad.Util.NamedScratchpad         (NamedScratchpad (NS),
                                                       customFloating,
                                                       namedScratchpadAction,
-                                                      namedScratchpadManageHook)
+                                                      namedScratchpadManageHook,
+                                                      scratchpadWorkspaceTag)
 import           XMonad.Util.Run                     (safeSpawn, unsafeSpawn)
 import           XMonad.Util.SpawnOnce               (spawnOnce)
 import           XMonad.Util.Ungrab                  (unGrab)
-
-
--- Define this here as a workaround until xmonad-contrib 0.17 get’s released.
--- Should actually be `XMonad.Util.NamedScratchpad.scratchpadWorkspaceTag`.
-scratchpadWorkspaceTag :: String
-scratchpadWorkspaceTag = "NSP"
 
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
