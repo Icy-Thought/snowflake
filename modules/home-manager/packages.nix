@@ -117,10 +117,8 @@ let
     glances # Curses-based monitoring tool.
     neofetch # Fetch system information.
     youtube-dl # YouTube media downloader.
-    # mpd                                           # Media player daemon.
-    # ncmpcpp                                       # TUI music player.
-    # spotify-tui                                   # TUI for premium Spotify users.
-    # speedtest-cli                                 # TUI Speedtest.
+    # spotify-tui # TUI for premium Spotify users.
+    # speedtest-cli # TUI Speedtest.
   ];
 
   gamingPkgs = with pkgs; [

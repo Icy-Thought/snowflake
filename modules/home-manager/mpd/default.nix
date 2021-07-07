@@ -1,28 +1,34 @@
-{ config, ... }: {
+{ config, lib, pkgs, ... }: {
 
-  home.file.".config/mpv/mpv.conf".text = ''
-    db_file                 "~/.config/mpd/database"
-    log_file                "syslog"
-    music_directory         "~/Music"
-    auto_update             "yes"
+  services.mpd = {
+    enable = true;
+    dataDir = "${config.xdg.configHome}/mpd";
+    dbFile = "${config.xdg.configHome}/mpd/dbFile";
 
-    playlist_directory      "~/.config/mpd/playlists"
-    pid_file                "~/.config/mpd/pid"
-    state_file              "~/.config/mpd/state"
-    sticker_file            "~/.config/mpd/sticker.sql"
+    musicDirectory = "${config.home.homeDirectory}/Music";
+    playlistDirectory = "${config.xdg.configHome}/mpd/playlists";
 
-    audio_output {
-           type             "fifo"
-           name             "Visualizer feed"
-           path             "/tmp/mpd.fifo"
-           format           "44100:16:2"
-    }
+    network = {
+      listenAddress = "any";
+      port = 6600;
+    };
 
-    audio_output {
-         type               "pulse"
-         name               "pulse audio"
-         device             "pulse"
-         mixer_type         "hardware"
-    }
-  '';
+    extraConfig = ''
+      audio_output {
+             type             "fifo"
+             name             "Visualizer feed"
+             path             "/tmp/mpd.fifo"
+             format           "44100:16:2"
+      }
+
+      audio_output {
+           type               "pulse"
+           name               "pulse audio"
+           device             "pulse"
+           mixer_type         "hardware"
+      }
+
+      auto_update             "yes"
+    '';
+  };
 }

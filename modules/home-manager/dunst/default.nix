@@ -1,10 +1,10 @@
-{ config, ... }: {
+{ config, lib, pkgs, ... }: {
 
   services.dunst = {
     enable = true;
     iconTheme = {
       name = "Whitesur-dark";
-      package = pkgs.whitesur-dark;
+      package = pkgs.whitesur-icon-theme;
       size = "16x16";
     };
 
@@ -51,7 +51,6 @@
         sticky_history = "yes";
         history_length = 20;
 
-        dmenu = "${pkgs.dmenu}/bin/dmenu" - p dunst;
         browser = "firefox";
         always_run_script = true;
         title = "Dunst";
