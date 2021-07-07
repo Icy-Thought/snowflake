@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
-  programs.picom = {
+  services.picom = {
     enable = true;
     backend = "glx";
     # experimentalBackends = true;

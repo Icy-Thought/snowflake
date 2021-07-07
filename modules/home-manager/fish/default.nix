@@ -131,16 +131,4 @@
     };
   };
 
-  home.packages = with pkgs; [
-    starship # Minimal prompt.
-    nnn # TUI file manager.
-    glances # Curses-based monitoring tool.
-    neofetch # Fetch system information.
-    youtube-dl # YouTube media downloader.
-    # mpd                                          # Media player daemon.
-    # ncmpcpp                                      # TUI music player.
-    # spotify-tui                                  # TUI for premium Spotify users.
-    # speedtest-cli                                # TUI Speedtest.
-  ];
-
 }

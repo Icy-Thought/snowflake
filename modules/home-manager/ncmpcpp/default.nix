@@ -1,13 +1,13 @@
 { config, pkgs, ... }: {
 
   programs.ncmpcpp = {
-    enable = false;
+    enable = true;
     package = pkgs.ncmpcpp.override { visualizerSupport = true; };
-    mpdMusicDir = "~/Music";
+    mpdMusicDir = "${config.home.homeDirectory}/Music";
 
     settings = {
-      ncmpcpp_directory = "~/.config/ncmpcpp";
-      lyrics_directory = "~/.config/ncmpcpp/lyrics";
+      ncmpcpp_directory = "${config.xdg.configHome}/ncmpcpp";
+      lyrics_directory = "${config.xdg.configHome}/ncmpcpp/lyrics";
 
       # Behaviour
       autocenter_mode = "yes";

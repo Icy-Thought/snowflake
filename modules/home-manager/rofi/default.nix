@@ -57,25 +57,25 @@
 
       "element-icon" = { size = "24px"; };
 
-      "element-text" = { vertical-align = 0.5; };
+      "element-text" = { vertical-align = "0.5"; };
 
       "element selected" = { background-color = "#2e343f"; };
 
       "num-filtered-rows" = {
-        vertical-align = 0.5;
+        vertical-align = "0.5";
         expand = false;
         text-color = "#5a6372";
       };
 
       "num-rows" = {
         padding = "0px 16px 0px 0px";
-        vertical-align = 0.5;
+        vertical-align = "0.5";
         expand = false;
         text-color = "#5a6372";
       };
 
       "textbox-num-sep" = {
-        vertical-align = 0.5;
+        vertical-align = "0.5";
         expand = false;
         str = "/";
         text-color = "#5a6372";

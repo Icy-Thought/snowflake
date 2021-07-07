@@ -23,21 +23,19 @@ let
 in {
   imports = [
     ../../modules/home-manager/gnome/dconf.nix
-    ../../modules/home-manager/picom
-    ../../modules/home-manager/rofi
-    ../../modules/home-manager/dunst
-    ../../modules/home-manager/xresources
-    ../../modules/home-manager/xsession
+    ../../modules/xmonad/passage.nix
   ];
 
   home = {
-    # Enable chrome-gnome-shell in FireFox nightly (mozilla-overlay):
-    file.".mozilla/native-messaging-hosts/org.gnome.chrome_gnome_shell.json" = {
-      source =
-        "${pkgs.chrome-gnome-shell}/lib/mozilla/native-messaging-hosts/org.gnome.chrome_gnome_shell.json";
-    };
-
     packages = builtins.concatLists [ gappsPkgs gextPkgs ricePkgs ];
+
+    # Enable chrome-gnome-shell in FireFox nightly (mozilla-overlay):
+    file = {
+      ".mozilla/native-messaging-hosts/org.gnome.chrome_gnome_shell.json" = {
+        source =
+          "${pkgs.chrome-gnome-shell}/lib/mozilla/native-messaging-hosts/org.gnome.chrome_gnome_shell.json";
+      };
+    };
   };
 
 }

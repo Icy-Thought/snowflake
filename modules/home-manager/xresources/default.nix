@@ -18,7 +18,7 @@
     "t.font" = "JetBrainsMono Nerd Font =size=10:weight=90";
     "t.borderpx" = 10;
     "t.opacity" = 255;
-    "t.alpha" = 1.0;
+    "t.alpha" = "1.0";
     "t.cursorshape" = 1;
     "t.blinktimeout" = 900;
 
