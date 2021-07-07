@@ -2,16 +2,6 @@
 
 let
 
-  xmonad-contrib = with pkgs;
-    haskell.lib.overrideCabal haskellPackages.xmonad-contrib (old: {
-      src = fetchFromGitHub {
-        owner = "xmonad";
-        repo = "xmonad-contrib";
-        rev = "master";
-        sha256 = "";
-      };
-    });
-
   xmonadPkgs = with pkgs; [
     (rofi.override { plugins = [ rofi-emoji rofi-calc ]; }) # dmenu alt.
     dunst # Notification tool.
@@ -37,11 +27,35 @@ in {
         enable = true;
         enableContribAndExtras = true;
 
-        extraPackages = hsPkgs: [
-          hsPkgs.xmonad
-          hsPkgs.xmonad-extras
-          hsPkgs.xmobar
-          xmonad-contrib
+        haskellPackages = pkgs.haskellPackages.extend
+          (pkgs.haskell.lib.packageSourceOverrides {
+            xmonad = pkgs.fetchFromGitHub {
+              owner = "xmonad";
+              repo = "xmonad";
+              rev = "master";
+              sha256 = "sq+hDiMfzfYRvzYucpmNt4u60QT9HXH+rJ89jptyMSI=";
+            };
+
+            xmonad-contrib = pkgs.fetchFromGitHub {
+              owner = "xmonad";
+              repo = "xmonad-contrib";
+              rev = "master";
+              sha256 = "ZX7YU/mp/ORufbL4whnD1vBXVcMqOv8aN+x+lQ7HdOo=";
+            };
+
+            xmonad-extras = pkgs.fetchFromGitHub {
+              owner = "xmonad";
+              repo = "xmonad-extras";
+              rev = "master";
+              sha256 = "6ikDQVj4Ua8aVTRqugwDYgxltnr7G5KH4cCjdu7vSM4=";
+            };
+          });
+
+        extraPackages = haskellPackages: [
+          haskellPackages.xmonad
+          haskellPackages.xmonad-extras
+          haskellPackages.xmobar
+          haskellPackages.xmonad-contrib
         ];
       };
     };
