@@ -39,11 +39,6 @@
         fi
       '';
     };
-
-    ".xmonad/Theme" = {
-      source = ./Theme;
-      recursive = true;
-    };
   };
 
 }
