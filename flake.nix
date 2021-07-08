@@ -13,8 +13,17 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     flake-utils.url = "github:numtide/flake-utils";
 
+    xmonad = {
+      url = "github:xmonad/xmonad";
+      flake = false;
+    };
+
+    xmonad-contrib = {
+      url = "github:xmonad/xmonad-contrib";
+      flake = false;
+    };
+
     emacs-overlay.url = "github:nix-community/emacs-overlay";
-    # neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
     rust-overlay.url = "github:oxalica/rust-overlay";
 
     nixpkgs-mozilla = {
@@ -28,18 +37,20 @@
   };
 
   outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager
-    , nixos-hardware, flake-utils, agenix, rust-overlay, emacs-overlay
-    , nixpkgs-mozilla, ... }:
+    , nixos-hardware, flake-utils, xmonad, xmonad-contrib, emacs-overlay
+    , rust-overlay, nixpkgs-mozilla, agenix, ... }:
 
     let
       system = "x86_64-linux";
 
-      overlays = with inputs; [
-        agenix.overlay
-        rust-overlay.overlay
-        emacs-overlay.overlay
-        (import nixpkgs-mozilla)
-      ];
+      overlays = with inputs;
+        [
+          agenix.overlay
+          rust-overlay.overlay
+          emacs-overlay.overlay
+          (import nixpkgs-mozilla)
+        ] ++ map (name: import (./overlays + "/${name}"))
+        (builtins.attrNames (builtins.readDir ./overlays));
 
       lib = nixpkgs.lib.extend (final: prev: home-manager.lib);
 
