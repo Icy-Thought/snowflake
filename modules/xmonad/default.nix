@@ -3,8 +3,6 @@
 let
 
   xmonadPkgs = with pkgs; [
-    (haskellPackages.ghcWithPackages
-      (self: with self; [ xmonad xmonad-extras xmonad-contrib xmobar ]))
     (rofi.override { plugins = [ rofi-emoji rofi-calc ]; }) # dmenu alt.
     dunst # Notification tool.
     sxiv # Simple X image viewer.
@@ -28,6 +26,17 @@ in {
       windowManager.xmonad = {
         enable = true;
         enableContribAndExtras = true;
+        haskellPackages = with pkgs; [
+          haskellPackages.xmobar
+          (haskellPackages.override {
+            overrides = haskellPackagesNew: haskellPackagesOld: rec {
+              xmonad = pkgs.haskell.lib.dontCheck haskellPackagesNew.xmonad;
+              xmonad-extras = haskellPackagesNew.lib.dontCheck (xmonad-extras);
+              xmonad-contrib =
+                haskellPackagesNew.lib.dontCheck (xmonad-contrib);
+            };
+          })
+        ];
       };
     };
   };
