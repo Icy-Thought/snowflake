@@ -103,7 +103,6 @@ let
     wget # TUI Downloader.
     unzip # Unzipping files.
     ffmpeg # Files & streams management.
-    dconf2nix # Nixify your dconf-settings.
     pwgen # Password generator.
     imagemagick # LaTeX image export.
     winetricks # Required DLL for exe trouble.
