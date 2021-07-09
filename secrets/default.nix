@@ -12,4 +12,4 @@ let
   users = [ sirius orca ];
   hosts = [ thinkpad-e595 probook-440g3 ];
 
-in { "secrets/wg-akkad/privateKey.age".publicKeys = users ++ hosts; }
+in { "wg-akkad/privateKey.age".publicKeys = users ++ hosts; }

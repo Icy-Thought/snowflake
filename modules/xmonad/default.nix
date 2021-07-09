@@ -25,7 +25,21 @@ in {
       windowManager.xmonad = {
         enable = true;
         enableContribAndExtras = true;
+        haskellPackages = pkgs.haskellPackages.override {
+          overrides = haskellPackagesNew: haskellPackagesOld: rec {
+            xmonad = let
+              pkg = haskellPackagesNew.callPackage ../../overlays/xmonad { };
+            in pkgs.haskell.lib.dontCheck pkg;
+            xmonad-extras =
+              haskellPackagesNew.callPackage ../../overlays/xmonad-extras { };
+            xmonad-contrib = let
+              pkg = haskellPackagesNew.callPackage ../../overlays/xmonad-contrib
+                { };
+            in pkgs.haskell.lib.dontCheck pkg;
+          };
+        };
       };
     };
   };
+
 }
