@@ -16,4 +16,5 @@ mkDerivation {
   homepage = "https://github.com/Icy-Thought/Snowflake/modules/xmonad";
   description = "Xmonad configuration based on xmonad-atif";
   license = lib.licenses.gpl3Only;
+
 }

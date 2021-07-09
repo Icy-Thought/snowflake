@@ -26,23 +26,6 @@ in {
       windowManager.xmonad = {
         enable = true;
         enableContribAndExtras = true;
-        haskellPackages = pkgs.haskellPackages.override {
-          overrides = hself: hsuper: rec {
-            xmonad = let
-              pkg = hself.callPackage
-                "${config.home.homeDirectory}/git/Snowflake/overlays/xmonad"
-                { };
-            in pkgs.haskell.lib.dontCheck pkg;
-            xmonad-extras = hself.callPackage
-              "${config.home.homeDirectory}/git/Snowflake/overlays/xmonad-extras"
-              { };
-            xmonad-contrib = let
-              pkg = hself.callPackage
-                "${config.home.homeDirectory}/git/Snowflake/overlays/xmonad-contrib"
-                { };
-            in pkgs.haskell.lib.dontCheck pkg;
-          };
-        };
       };
     };
   };
