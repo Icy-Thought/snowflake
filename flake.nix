@@ -13,12 +13,17 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     flake-utils.url = "github:numtide/flake-utils";
 
-    xmonad = {
+    xmonadGH = {
       url = "github:xmonad/xmonad";
       flake = false;
     };
 
-    xmonad-contrib = {
+    xmonad-extrasGH = {
+      url = "github:xmonad/xmonad-extras";
+      flake = false;
+    };
+
+    xmonad-contribGH = {
       url = "github:xmonad/xmonad-contrib";
       flake = false;
     };
@@ -37,20 +42,39 @@
   };
 
   outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager
-    , nixos-hardware, flake-utils, xmonad, xmonad-contrib, emacs-overlay
-    , rust-overlay, nixpkgs-mozilla, agenix, ... }:
+    , nixos-hardware, flake-utils, xmonadGH, xmonad-extrasGH, xmonad-contribGH
+    , emacs-overlay, rust-overlay, nixpkgs-mozilla, agenix, ... }:
 
     let
-      system = "x86_64-linux";
+      pkgs = import nixpkgs { system = "x86_64-linux"; };
 
-      overlays = with inputs;
-        [
-          agenix.overlay
-          rust-overlay.overlay
-          emacs-overlay.overlay
-          (import nixpkgs-mozilla)
-        ] ++ map (name: import (./overlays + "/${name}"))
-        (builtins.attrNames (builtins.readDir ./overlays));
+      overlays = with inputs; [
+        agenix.overlay
+        rust-overlay.overlay
+        emacs-overlay.overlay
+        (import nixpkgs-mozilla)
+
+        (final: prev: rec {
+          haskellPackages = prev.haskellPackages.override {
+            overrides = self: super: rec {
+
+              xmonad = let hpkg = self.callCabal2nix "xmonad" xmonadGH { };
+              in pkgs.haskell.lib.dontCheck hpkg;
+
+              xmonad-extras = let
+                hpkg = self.callCabal2nix "xmonad-extras" xmonad-extrasGH { };
+              in pkgs.haskell.lib.dontCheck hpkg;
+
+              xmonad-contrib = let
+                hpkg = self.callCabal2nix "xmonad-contrib" xmonad-contribGH { };
+              in pkgs.haskell.lib.dontCheck hpkg;
+            };
+          };
+        })
+
+      ];
+      # ++ map (name: import (./overlays + "/${name}"))
+      # (builtins.attrNames (builtins.readDir ./overlays));
 
       lib = nixpkgs.lib.extend (final: prev: home-manager.lib);
 
