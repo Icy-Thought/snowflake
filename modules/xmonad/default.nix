@@ -2,6 +2,7 @@
 
 let
   xmonadPkgs = with pkgs; [
+    xmobar # text-based statusbar.
     (rofi.override { plugins = [ rofi-emoji rofi-calc ]; }) # dmenu alt.
     dunst # Notification tool.
     sxiv # Simple X image viewer.
@@ -26,14 +27,18 @@ in {
         enable = true;
         enableContribAndExtras = true;
         haskellPackages = pkgs.haskellPackages.override {
-          overrides = haskellPackagesNew: haskellPackagesOld: rec {
+          overrides = hself: hsuper: rec {
             xmonad = let
-              pkg = haskellPackagesNew.callPackage ../../overlays/xmonad { };
+              pkg = hself.callPackage
+                "${config.home.homeDirectory}/git/Snowflake/overlays/xmonad"
+                { };
             in pkgs.haskell.lib.dontCheck pkg;
-            xmonad-extras =
-              haskellPackagesNew.callPackage ../../overlays/xmonad-extras { };
+            xmonad-extras = hself.callPackage
+              "${config.home.homeDirectory}/git/Snowflake/overlays/xmonad-extras"
+              { };
             xmonad-contrib = let
-              pkg = haskellPackagesNew.callPackage ../../overlays/xmonad-contrib
+              pkg = hself.callPackage
+                "${config.home.homeDirectory}/git/Snowflake/overlays/xmonad-contrib"
                 { };
             in pkgs.haskell.lib.dontCheck pkg;
           };
