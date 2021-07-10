@@ -1,15 +1,5 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 
-{- |
-   Module : Theme.Theme
-   Copyright : (c) 2021 Joan Milev <joantmilev@gmail.com>
-   License : MIT
-
-   Maintainer : Joan Milev <joantmilev@gmail.com>
-   Stability : Stable
-   Portability : Unknown
--}
-
 module Theme.Theme ( basebg
                    , basefg
                    , basecr

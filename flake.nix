@@ -42,8 +42,8 @@
   };
 
   outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager
-    , nixos-hardware, flake-utils, xmonadGH, xmonad-extrasGH, xmonad-contribGH
-    , emacs-overlay, rust-overlay, nixpkgs-mozilla, agenix, ... }:
+    , nixos-hardware, flake-utils, emacs-overlay, rust-overlay, nixpkgs-mozilla
+    , agenix, ... }:
 
     let
       pkgs = import nixpkgs { system = "x86_64-linux"; };
@@ -57,17 +57,11 @@
         (final: prev: rec {
           haskellPackages = prev.haskellPackages.override {
             overrides = self: super: rec {
-
-              xmonad = let hpkg = self.callCabal2nix "xmonad" xmonadGH { };
-              in pkgs.haskell.lib.dontCheck hpkg;
-
-              xmonad-extras = let
-                hpkg = self.callCabal2nix "xmonad-extras" xmonad-extrasGH { };
-              in pkgs.haskell.lib.dontCheck hpkg;
-
-              xmonad-contrib = let
-                hpkg = self.callCabal2nix "xmonad-contrib" xmonad-contribGH { };
-              in pkgs.haskell.lib.dontCheck hpkg;
+              xmonad = self.callCabal2nix "xmonad" xmonadGH { };
+              xmonad-extras =
+                self.callCabal2nix "xmonad-extras" xmonad-extrasGH { };
+              xmonad-contrib =
+                self.callCabal2nix "xmonad-contrib" xmonad-contribGH { };
             };
           };
         })

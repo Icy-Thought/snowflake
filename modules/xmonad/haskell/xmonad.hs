@@ -1,5 +1,13 @@
--- Import libs
 --
+-- ██╗░█████╗░██╗░░░██╗███╗░░░███╗░█████╗░███╗░░██╗░█████╗░██████╗░
+-- ██║██╔══██╗╚██╗░██╔╝████╗░████║██╔══██╗████╗░██║██╔══██╗██╔══██╗
+-- ██║██║░░╚═╝░╚████╔╝░██╔████╔██║██║░░██║██╔██╗██║███████║██║░░██║
+-- ██║██║░░██╗░░╚██╔╝░░██║╚██╔╝██║██║░░██║██║╚████║██╔══██║██║░░██║
+-- ██║╚█████╔╝░░░██║░░░██║░╚═╝░██║╚█████╔╝██║░╚███║██║░░██║██████╔╝
+-- ╚═╝░╚════╝░░░░╚═╝░░░╚═╝░░░░░╚═╝░╚════╝░╚═╝░░╚══╝╚═╝░░╚═╝╚═════╝░
+--
+
+-- Base
 import           Control.Monad                       (liftM2)
 import qualified Data.Map                            as M
 import           Data.Monoid                         (All)
@@ -8,6 +16,7 @@ import           Theme.Theme                         (base00, base02, base04,
                                                       base05, base06, base07,
                                                       basebg, basefg, myFont,
                                                       myFontGTK)
+-- Actions
 import           XMonad                              hiding ((|||))
 import           XMonad.Actions.CopyWindow           (copyToAll, kill1,
                                                       killAllOtherCopies)
@@ -20,6 +29,8 @@ import qualified XMonad.Actions.FlexibleResize       as Flex (mouseResizeWindow)
 import           XMonad.Actions.Promote              (promote)
 import           XMonad.Actions.TiledWindowDragging  (dragWindow)
 import           XMonad.Actions.WithAll              (killAll, sinkAll)
+
+-- Hooks
 import           XMonad.Hooks.DynamicIcons           (IconConfig, appIcon,
                                                       dynamicIconsPP,
                                                       iconConfigFmt,
@@ -42,6 +53,8 @@ import           XMonad.Hooks.StatusBar.PP           (PP (..), filterOutWsPP,
                                                       xmobarBorder, xmobarColor,
                                                       xmobarFont, xmobarStrip)
 import           XMonad.Hooks.WindowSwallowing       (swallowEventHook)
+
+-- Layouts
 import           XMonad.Layout.Accordion             (Accordion (Accordion))
 import           XMonad.Layout.DraggingVisualizer    (draggingVisualizer)
 import           XMonad.Layout.LayoutCombinators     ((|||))
@@ -72,6 +85,7 @@ import           XMonad.Layout.Tabbed                (Theme (..), addTabs,
 import           XMonad.Layout.ThreeColumns          (ThreeCol (ThreeColMid))
 import           XMonad.Layout.WindowNavigation      (Direction2D (..),
                                                       windowNavigation)
+-- Prompt
 import           XMonad.Prompt                       (XPConfig (..),
                                                       XPPosition (..),
                                                       defaultXPKeymap,
@@ -81,6 +95,8 @@ import           XMonad.Prompt.FuzzyMatch            (fuzzyMatch, fuzzySort)
 import           XMonad.Prompt.Man                   (manPrompt)
 import           XMonad.Prompt.Shell                 (shellPrompt)
 import qualified XMonad.StackSet                     as W
+
+-- Utils
 import           XMonad.Util.ClickableWorkspaces     (clickablePP)
 import           XMonad.Util.Cursor                  (setDefaultCursor)
 import           XMonad.Util.DynamicScratchpads      (makeDynamicSP,
