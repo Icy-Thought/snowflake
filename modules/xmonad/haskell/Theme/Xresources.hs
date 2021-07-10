@@ -1,13 +1,3 @@
-{- |
-   Module : Theme.Xresources
-   Copyright : (c) 2021 Joan Milev <joantmilev@gmail.com>
-   License : MIT
-
-   Maintainer : Joan Milev <joantmilev@gmail.com>
-   Stability : Stable
-   Portability : Unknown
--}
-
 module Theme.Xresources (xprop) where
 
 import           Prelude          (IO, Int, Maybe, ShowS, String, dropWhile,

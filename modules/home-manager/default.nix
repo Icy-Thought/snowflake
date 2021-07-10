@@ -1,6 +1,6 @@
 { config, pkgs, inputs, ... }:
 
-let homeDir = config.home.homeDirectory;
+let home = config.home.homeDirectory;
 
 in {
   imports = [
@@ -19,7 +19,7 @@ in {
   programs = {
     home-manager = {
       enable = true;
-      path = "${config.home.homeDirectory}/.nixpkgs/modules/home-manager";
+      path = "${home}/.nixpkgs/modules/home-manager";
     };
 
     bash = {
@@ -60,10 +60,10 @@ in {
     sessionVariables = { MOZ_ENABLE_WAYLAND = 1; };
 
     sessionPath = [
-      "${config.home.homeDirectory}/.emacs.d/bin"
-      "${config.home.homeDirectory}/.cargo/bin"
-      "${config.home.homeDirectory}/.local/bin"
-      "${config.home.homeDirectory}/go/bin"
+      "${home}/.emacs.d/bin"
+      "${home}/.cargo/bin"
+      "${home}/.local/bin"
+      "${home}/go/bin"
     ];
   };
 

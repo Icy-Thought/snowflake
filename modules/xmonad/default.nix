@@ -2,7 +2,6 @@
 
 let
   xmonadPkgs = with pkgs; [
-    xmobar # text-based statusbar.
     (rofi.override { plugins = [ rofi-emoji rofi-calc ]; }) # dmenu alt.
     dunst # Notification tool.
     sxiv # Simple X image viewer.
@@ -26,6 +25,9 @@ in {
       windowManager.xmonad = {
         enable = true;
         enableContribAndExtras = true;
+        extraPackages = hPkgs: with hPkgs; [
+          xmobar
+        ];
       };
     };
   };
