@@ -27,7 +27,7 @@
       now_playing_prefix = "$5>> $1";
 
       # Visualizer
-      visualizer_fifo_path = "/tmp/mpd.fifo";
+      visualizer_data_source = "/tmp/mpd.fifo";
       visualizer_output_name = "mpd_visualizer";
       visualizer_type = "spectrum";
       visualizer_look = "●●";
