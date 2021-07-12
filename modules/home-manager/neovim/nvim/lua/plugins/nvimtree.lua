@@ -9,6 +9,7 @@ M.config = function()
     g.nvim_tree_width = 25
     g.nvim_tree_ignore = {".git", "node_modules", ".cache"}
     g.nvim_tree_gitignore = 1
+    g.nvim_tree_auto_ignore_ft = {"dashboard"} -- don't open tree on specific fiypes.
     g.nvim_tree_auto_open = 0
     g.nvim_tree_auto_close = 0 -- closes tree when it's the last window
     g.nvim_tree_quit_on_open = 0 -- closes tree when file's opened

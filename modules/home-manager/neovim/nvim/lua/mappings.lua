@@ -8,6 +8,16 @@ end
 
 local opt = {}
 
+-- dont copy any deleted text , this is disabled by default so uncomment the below mappings if you want them
+--[[ remove this line
+
+map("n", "dd", [=[ "_dd ]=], opt)
+map("v", "dd", [=[ "_dd ]=], opt)
+map("v", "x", [=[ "_x ]=], opt)
+
+ this line too ]]
+--
+
 -- OPEN TERMINALS --
 map("n", "<C-l>", [[<Cmd>vnew term://bash <CR>]], opt) -- term over right
 map("n", "<C-x>", [[<Cmd> split term://bash | resize 10 <CR>]], opt) --  term bottom
@@ -20,9 +30,9 @@ map("n", "<C-a>", [[ <Cmd> %y+<CR>]], opt)
 map("n", "<leader>n", [[ <Cmd> set nu!<CR>]], opt)
 
 -- Truezen.nvim
-map("n", "<leader>z", ":TZAtaraxis<CR>", opt)
-map("n", "<leader>m", ":TZMinimalist<CR>", opt)
-map("n", "<leader>f", ":TZFocus<CR>", opt)
+map("n", "<leader>zz", ":TZAtaraxis<CR>", opt)
+map("n", "<leader>zm", ":TZMinimalist<CR>", opt)
+map("n", "<leader>zf", ":TZFocus<CR>", opt)
 
 map("n", "<C-s>", ":w <CR>", opt)
 -- vim.cmd("inoremap jh <Esc>")
@@ -31,10 +41,7 @@ map("n", "<C-s>", ":w <CR>", opt)
 map("n", "<leader>/", ":CommentToggle<CR>", opt)
 map("v", "<leader>/", ":CommentToggle<CR>", opt)
 
-map("n", "<C-q>", ":bp<bar>sp<bar>bn<bar>bd! <CR>", opt)
-
 -- compe stuff
-
 local t = function(str)
     return vim.api.nvim_replace_termcodes(str, true, true, true)
 end
@@ -90,6 +97,14 @@ map("n", "<C-n>", ":NvimTreeToggle<CR>", opt)
 
 -- format code
 map("n", "<Leader>fm", [[<Cmd> Neoformat<CR>]], opt)
+
+-- dashboard stuff
+map("n", "<Leader>fw", [[<Cmd> Telescope live_grep<CR>]], opt)
+map("n", "<Leader>db", [[<Cmd> Dashboard<CR>]], opt)
+map("n", "<Leader>fn", [[<Cmd> DashboardNewFile<CR>]], opt)
+map("n", "<Leader>bm", [[<Cmd> DashboardJumpMarks<CR>]], opt)
+map("n", "<C-s>l", [[<Cmd> SessionLoad<CR>]], opt)
+map("n", "<C-s>s", [[<Cmd> SessionSave<CR>]], opt)
 
 -- Telescope
 map("n", "<Leader>gt", [[<Cmd> Telescope git_status <CR>]], opt)

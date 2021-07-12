@@ -11,12 +11,13 @@ opt.mouse = "a"
 opt.signcolumn = "yes"
 opt.cmdheight = 1
 opt.updatetime = 250 -- update interval for gitsigns
+opt.timeoutlen = 200
 opt.clipboard = "unnamedplus"
 
 -- Numbers
 opt.number = true
 opt.numberwidth = 2
--- opt("w", "relativenumber", true)
+-- opt.relativenumber = true
 
 -- for indenline
 opt.expandtab = true
@@ -49,18 +50,5 @@ end
 
 -- file extension specific tabbing
 -- vim.cmd([[autocmd Filetype python setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4]])
-
--- blankline config
-
-M.blankline = function()
-    vim.g.indentLine_enabled = 1
-    vim.g.indent_blankline_char = "▏"
-
-    vim.g.indent_blankline_filetype_exclude = {"help", "terminal"}
-    vim.g.indent_blankline_buftype_exclude = {"terminal"}
-
-    vim.g.indent_blankline_show_trailing_blankline_indent = false
-    vim.g.indent_blankline_show_first_indent_level = false
-end
 
 return M

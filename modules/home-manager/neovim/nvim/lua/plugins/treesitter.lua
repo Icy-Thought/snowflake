@@ -11,8 +11,9 @@ M.config = function()
             "bash",
             "lua",
             "json",
-            "python"
-            -- "rust",
+            "python",
+            "rust",
+            "nix"
             -- "go"
         },
         highlight = {
@@ -23,3 +24,4 @@ M.config = function()
 end
 
 return M
+
