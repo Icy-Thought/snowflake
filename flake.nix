@@ -13,21 +13,6 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     flake-utils.url = "github:numtide/flake-utils";
 
-    xmonadGH = {
-      url = "github:xmonad/xmonad";
-      flake = false;
-    };
-
-    xmonad-extrasGH = {
-      url = "github:xmonad/xmonad-extras";
-      flake = false;
-    };
-
-    xmonad-contribGH = {
-      url = "github:xmonad/xmonad-contrib";
-      flake = false;
-    };
-
     emacs-overlay.url = "github:nix-community/emacs-overlay";
     rust-overlay.url = "github:oxalica/rust-overlay";
 
@@ -53,19 +38,6 @@
         rust-overlay.overlay
         emacs-overlay.overlay
         (import nixpkgs-mozilla)
-
-        (final: prev: rec {
-          haskellPackages = prev.haskellPackages.override {
-            overrides = self: super: rec {
-              xmonad = self.callCabal2nix "xmonad" xmonadGH { };
-              xmonad-extras =
-                self.callCabal2nix "xmonad-extras" xmonad-extrasGH { };
-              xmonad-contrib =
-                self.callCabal2nix "xmonad-contrib" xmonad-contribGH { };
-            };
-          };
-        })
-
       ];
       # ++ map (name: import (./overlays + "/${name}"))
       # (builtins.attrNames (builtins.readDir ./overlays));

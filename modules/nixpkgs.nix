@@ -1,7 +1,11 @@
 { inputs, config, lib, pkgs, ... }: {
 
   nixpkgs = {
-    config = import ./config.nix;
+    config = {
+      allowUnfree = true;
+      allowBroken = false;
+    };
+
     overlays = [ ];
   };
 

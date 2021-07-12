@@ -3,7 +3,6 @@
 let
   envPkgs = with pkgs; [
     dconf2nix # Nixify your dconf-settings.
-    cabal2nix # .cabal -> .nix
   ];
 
   gappsPkgs = with pkgs.gnome; [
@@ -27,8 +26,6 @@ let
 
 in {
   imports = [
-    ../../modules/xmonad/passage.nix
-    ../../modules/home-manager/scripts.nix
     ../../modules/home-manager/gnome/dconf.nix
   ];
 

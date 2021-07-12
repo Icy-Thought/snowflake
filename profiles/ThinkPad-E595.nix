@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }: {
 
-  imports = [ ../modules/common.nix ../modules/xmonad ];
+  imports = [ ../modules/common.nix ];
 
   hm = { imports = [ ./home-manager/ThinkPad-E595.nix ]; };
 
