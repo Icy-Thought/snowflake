@@ -1,0 +1,9 @@
+#+TITLE: Experimental: Path System!
+#+AUTHOR: Icy-Thought
+#+DATE: <2021-07-12 mån>
+
+* Introduction
+This is an experimental feature which allows the user to maintain a path system for the configurations directory to ease the amount of referencing required to achieve the same results.
+
+* Special Thanks! 🌉
+- [[https://github.com/Lenivaya/dotfiles][Lenivaya]]

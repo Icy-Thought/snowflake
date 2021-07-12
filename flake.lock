@@ -20,11 +20,11 @@
     },
     "emacs-overlay": {
       "locked": {
-        "lastModified": 1625851083,
-        "narHash": "sha256-hFvBi7uj1afbPN0O6Kbn4i/ganVQtspPyysrBfFslJE=",
+        "lastModified": 1626081904,
+        "narHash": "sha256-0wn7dDt3bUIPrPhS7hXJ6uwGrJtDlIz9bJlxOt/oVJ8=",
         "owner": "nix-community",
         "repo": "emacs-overlay",
-        "rev": "de44618b3268c7d3c3d4c40e1c5e662b93f5f658",
+        "rev": "09ca15775275250fdfd6004465ed6fa342194b2b",
         "type": "github"
       },
       "original": {
@@ -70,11 +70,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1625694413,
-        "narHash": "sha256-goRLk1I/OMclS9i17g932wyHyjiKI+htbuFIWIkzTbw=",
+        "lastModified": 1626073055,
+        "narHash": "sha256-vocByfpVu6m9zvtJugDvmd6/9iT2HJuG4tmDICKd0lI=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "06ee8ec8dfc4554c374052cd7b7083765748af99",
+        "rev": "775cb20bd4af7781fbf336fb201df02ee3d544bb",
         "type": "github"
       },
       "original": {
@@ -130,11 +130,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1625841043,
-        "narHash": "sha256-i3OdVSSGLCoamNeBAw1ybLr05AAS91og4D8Hdd0sBe4=",
+        "lastModified": 1626087906,
+        "narHash": "sha256-n6jPX5j5yEsM5GGnMOmD2syZnoYfVONW/LztPsKu5Uc=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "df0d321258a9b35c36cd9d8688985502d464105f",
+        "rev": "eaff114326e814083bcb208caa97eab1fbedd79b",
         "type": "github"
       },
       "original": {
@@ -145,11 +145,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1625697353,
-        "narHash": "sha256-/v85RkZ0Z+lxipkG2sjYNRINktc8VySbLQmPbirY0hQ=",
+        "lastModified": 1625874246,
+        "narHash": "sha256-7cGgcysIXz/j/lRpJn7cNJjf0+k7sQ5EuGn62252Svw=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "87807e64a5ef5206b745a40af118c7be8db73681",
+        "rev": "45fc7d4a35c5343e58541a7847f6415654ccbb37",
         "type": "github"
       },
       "original": {
@@ -184,10 +184,7 @@
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-mozilla": "nixpkgs-mozilla",
         "nixpkgs-unstable": "nixpkgs-unstable",
-        "rust-overlay": "rust-overlay",
-        "xmonad-contribGH": "xmonad-contribGH",
-        "xmonad-extrasGH": "xmonad-extrasGH",
-        "xmonadGH": "xmonadGH"
+        "rust-overlay": "rust-overlay"
       }
     },
     "rust-overlay": {
@@ -196,64 +193,16 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1625796896,
-        "narHash": "sha256-yAFp4hslYKZcZwAXSiKnFezSFY/kdoh4l5qqioTtHFM=",
+        "lastModified": 1626055976,
+        "narHash": "sha256-JWqjfR0eeE505Xp26d3z/0T8+YljjHlS8VX/yCknskY=",
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "rev": "76732f3ddba766b1fe772fca80aafbc9cccd78dd",
+        "rev": "ecb9af08bc7ce17a4c51378c7a301925d4c4344c",
         "type": "github"
       },
       "original": {
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "type": "github"
-      }
-    },
-    "xmonad-contribGH": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1624968929,
-        "narHash": "sha256-ZX7YU/mp/ORufbL4whnD1vBXVcMqOv8aN+x+lQ7HdOo=",
-        "owner": "xmonad",
-        "repo": "xmonad-contrib",
-        "rev": "1351f9a931f53e9f1e16c566c70cb8fa98f97785",
-        "type": "github"
-      },
-      "original": {
-        "owner": "xmonad",
-        "repo": "xmonad-contrib",
-        "type": "github"
-      }
-    },
-    "xmonad-extrasGH": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1624776326,
-        "narHash": "sha256-6ikDQVj4Ua8aVTRqugwDYgxltnr7G5KH4cCjdu7vSM4=",
-        "owner": "xmonad",
-        "repo": "xmonad-extras",
-        "rev": "6df82de88474754bc90724251d5fcbeccccbd7e7",
-        "type": "github"
-      },
-      "original": {
-        "owner": "xmonad",
-        "repo": "xmonad-extras",
-        "type": "github"
-      }
-    },
-    "xmonadGH": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1625296202,
-        "narHash": "sha256-sq+hDiMfzfYRvzYucpmNt4u60QT9HXH+rJ89jptyMSI=",
-        "owner": "xmonad",
-        "repo": "xmonad",
-        "rev": "af354f7528ada1de451365a0f5138ef10a318360",
-        "type": "github"
-      },
-      "original": {
-        "owner": "xmonad",
-        "repo": "xmonad",
         "type": "github"
       }
     }
