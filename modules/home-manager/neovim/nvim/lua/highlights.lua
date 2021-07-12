@@ -1,6 +1,7 @@
 local cmd = vim.cmd
 
-local colors = require "themes/onedark"
+local global_theme = "themes/" .. vim.g.nvchad_theme
+local colors = require(global_theme)
 
 local white = colors.white
 local darker_black = colors.darker_black
@@ -21,6 +22,7 @@ local yellow = colors.yellow
 local purple = colors.purple
 
 -- for guifg , bg
+
 local function fg(group, color)
     cmd("hi " .. group .. " guifg=" .. color)
 end
@@ -134,3 +136,8 @@ fg_bg("BufferLineModifiedSelected", green, black)
 fg_bg("BufferLineCLoseButtonVisible", light_grey, black2)
 fg_bg("BufferLineCLoseButton", light_grey, black2)
 fg_bg("BufferLineCLoseButtonSelected", red, black)
+
+ -- packer's floating window
+bg("NormalFloat", black2)
+bg("FloatBorder", black2)
+fg("FloatBorder", black2)
