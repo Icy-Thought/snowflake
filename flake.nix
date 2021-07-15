@@ -13,8 +13,11 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     flake-utils.url = "github:numtide/flake-utils";
 
-    emacs-overlay.url = "github:nix-community/emacs-overlay";
-    rust-overlay.url = "github:oxalica/rust-overlay";
+    xmonad.url = "github:IvanMalison/xmonad";
+    xmonad-contrib.url = "github:IvanMalison/xmonad-contrib";
+
+    emacs.url = "github:nix-community/emacs-overlay";
+    rust.url = "github:oxalica/rust-overlay";
 
     nixpkgs-mozilla = {
       url = "github:mozilla/nixpkgs-mozilla";
@@ -27,16 +30,18 @@
   };
 
   outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager
-    , nixos-hardware, flake-utils, emacs-overlay, rust-overlay, nixpkgs-mozilla
-    , agenix, ... }:
+    , nixos-hardware, flake-utils, emacs, rust, nixpkgs-mozilla, agenix, xmonad
+    , xmonad-contrib, ... }:
 
     let
       pkgs = import nixpkgs { system = "x86_64-linux"; };
 
       overlays = with inputs; [
         agenix.overlay
-        rust-overlay.overlay
-        emacs-overlay.overlay
+        rust.overlay
+        emacs.overlay
+        xmonad.overlay
+        xmonad-contrib.overlay
         (import nixpkgs-mozilla)
       ];
       # ++ map (name: import (./overlays + "/${name}"))
