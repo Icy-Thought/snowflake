@@ -1,19 +1,6 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 let
-  cpupower = config.boot.kernelPackages.cpupower;
-  perf = config.boot.kernelPackages.perf;
-
-  kernelPkgs = with pkgs; [
-    cpupower # Examine/Tool powersaving features.
-    perf # Profile & Performance counter.
-  ];
-
-  defaultPkgs = with pkgs;
-    [
-      chrome-gnome-shell # Gnome Shell integration.
-    ];
-
   utilPkgs = with pkgs; [
     binutils # Manipulating binaries.
     moreutils # Extension to GNU utils.
@@ -45,22 +32,4 @@ let
     agenix # age-encrypted secrets.
   ];
 
-  envPkgs = with pkgs; [
-    mesa # FOSS 3D Graphics Lib.
-    vulkan-headers # Header files + API registery.
-    appimage-run # AppImages support.
-  ];
-
-in {
-  environment = {
-    systemPackages = builtins.concatLists [
-      # kernelPkgs
-      defaultPkgs
-      utilPkgs
-      envPkgs
-    ];
-
-    shells = with pkgs; [ bash fish ];
-  };
-
-}
+in { environment.systemPackages = utilPkgs; }

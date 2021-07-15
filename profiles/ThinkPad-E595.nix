@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }: {
 
-  imports = [ ../modules/common.nix ];
+  imports = [ ../modules/common.nix ../modules/xmonad ];
 
   hm = { imports = [ ./home-manager/ThinkPad-E595.nix ]; };
 
@@ -46,6 +46,8 @@
   };
 
   virtualisation = {
+    libvirtd.enable = true;
+
     podman = {
       enable = false;
       dockerCompat = true;

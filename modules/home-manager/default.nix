@@ -4,8 +4,10 @@ let home = config.home.homeDirectory;
 
 in {
   imports = [
+    ../../packages/home-manager
     ./git
     ./fish
+    ./xmobar
     ./alacritty
     ./tmux
     ./emacs
@@ -13,7 +15,6 @@ in {
     ./zathura
     ./mpd
     ./ncmpcpp
-    ./packages.nix
   ];
 
   programs = {

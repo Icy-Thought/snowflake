@@ -1,9 +1,10 @@
 { config, pkgs, ... }:
 
 let
-  envPkgs = with pkgs; [
-    dconf2nix # Nixify your dconf-settings.
-  ];
+  envPkgs = with pkgs;
+    [
+      dconf2nix # Nixify your dconf-settings.
+    ];
 
   gappsPkgs = with pkgs.gnome; [
     geary # Gnome 2nd E-Mail client.
@@ -27,10 +28,11 @@ let
 in {
   imports = [
     ../../modules/home-manager/gnome/dconf.nix
+    ../../modules/xmonad/passage.nix
   ];
 
   home = {
-    packages = builtins.concatLists [ envPkgs gappsPkgs gextPkgs ricePkgs ];
+    packages = envPkgs ++ gappsPkgs ++ gextPkgs ++ ricePkgs;
 
     # Enable chrome-gnome-shell in FireFox nightly (mozilla-overlay):
     file = {
