@@ -3,19 +3,7 @@
 let home = config.home.homeDirectory;
 
 in {
-  imports = [
-    ../../packages/home-manager
-    ./git
-    ./fish
-    ./xmobar
-    ./alacritty
-    ./tmux
-    ./emacs
-    ./neovim
-    ./zathura
-    ./mpd
-    ./ncmpcpp
-  ];
+  imports = [ ./common ../../packages/home-manager ];
 
   programs = {
     home-manager = {

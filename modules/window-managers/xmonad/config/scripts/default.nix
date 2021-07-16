@@ -1,5 +1,5 @@
 { config, lib, pkgs, ... }:
 
 {
-  import = [ ./bspwm.nix ];
+  import = [ ./xmonad.nix ];
 }

@@ -28,7 +28,8 @@ let
 in {
   imports = [
     ../../modules/home-manager/gnome/dconf.nix
-    ../../modules/xmonad/passage.nix
+    ../../modules/window-managers/xmonad/config
+    # ../../modules/window-managers/bspwm/config
   ];
 
   home = {

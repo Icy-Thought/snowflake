@@ -1,0 +1,7 @@
+#+TITLE: Welcome to Xmonad!
+#+AUTHOR: Icy-Thought
+#+DATE:
+
+* Introduction
+* Table of Contents :TOC:
+- [[#introduction][Introduction]]
