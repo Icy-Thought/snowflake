@@ -1,0 +1,9 @@
+#+TITLE: Welcome to BSPWM!
+#+AUTHOR: Icy-Thought
+#+DATE:
+
+* Introduction
+WIP, stay tuned!
+
+* Table of Contents :TOC:
+- [[#introduction][Introduction]]

@@ -21,9 +21,8 @@ in {
 
     xserver = {
       xkbOptions = "caps:ctrl_modifier";
-      displayManager = { defaultSession = "none+xmonad"; };
-
       windowManager.xmonad.enable = true;
+      displayManager.defaultSession = "none+xmonad";
     };
   };
 
