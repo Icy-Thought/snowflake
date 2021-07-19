@@ -13,6 +13,11 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     flake-utils.url = "github:numtide/flake-utils";
 
+    picom-jonaburg = {
+      url = "github:jonaburg/picom";
+      flake = false;
+    };
+
     emacs.url = "github:nix-community/emacs-overlay";
     rust.url = "github:oxalica/rust-overlay";
 
@@ -37,6 +42,11 @@
         rust.overlay
         emacs.overlay
         (import nixpkgs-mozilla)
+
+        (final: prev: {
+          picom-jonaburg =
+            prev.picom.overrideAttrs (old: { src = picom-jonaburg; });
+        })
       ];
       # ++ map (name: import (./overlays + "/${name}"))
       # (builtins.attrNames (builtins.readDir ./overlays));

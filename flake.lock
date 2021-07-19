@@ -20,11 +20,11 @@
     },
     "emacs": {
       "locked": {
-        "lastModified": 1626366990,
-        "narHash": "sha256-lj5VqSz46u944/9EW25veo3EZZuUu74aYFj9Iah8dFc=",
+        "lastModified": 1626542694,
+        "narHash": "sha256-SZy1GWgZSfb0Qq1r6aVo6+dsCJVjfF1V5GArkroYjmo=",
         "owner": "nix-community",
         "repo": "emacs-overlay",
-        "rev": "977c17ecfb8c022f8429e569c44c64fa85c96246",
+        "rev": "458d30ef17167e390d0280d0f954ca8ee61ef701",
         "type": "github"
       },
       "original": {
@@ -130,11 +130,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1626392359,
-        "narHash": "sha256-WVeOTssDcmEol+Bjr2hjgZxHxcNyZAsf+QP4P9dGNXU=",
+        "lastModified": 1626562464,
+        "narHash": "sha256-yzLj+jLiktzWzBFNH5+d7WmgNtI1+fux1wGsAb9docQ=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "cc72326a734a2705b009dd6f6ff527775dc7075d",
+        "rev": "688b4cb03efd8bd6bd0796297a8738f8f91a5ff6",
         "type": "github"
       },
       "original": {
@@ -145,11 +145,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1626300184,
-        "narHash": "sha256-1B5P7EUAFeA+P7m6jzbHtrMKcIkPCjQj7lfQPmrYL44=",
+        "lastModified": 1626464457,
+        "narHash": "sha256-u2PCh/+8vQSLwf0mPpKHKQ8hAPB3l4uNZR3r0TdK2Lg=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "23cd13167a1432550e48734079c2ffeeb441fb96",
+        "rev": "c6c4a3d45ab200f17805d2d86a1ff1cc7ca2b186",
         "type": "github"
       },
       "original": {
@@ -174,32 +174,6 @@
         "type": "github"
       }
     },
-    "nixpkgs_4": {
-      "locked": {
-        "lastModified": 1626046891,
-        "narHash": "sha256-Zt8saH+hAehXskW0iFAzk+iMillYoFBxvLReYNqGT9E=",
-        "path": "/nix/store/hv23pdsi6n7z96pkljv25lfrfh1mnzz7-source",
-        "rev": "d8f8f31af9d77a48220e4e8a301d1e79774cb7d2",
-        "type": "path"
-      },
-      "original": {
-        "id": "nixpkgs",
-        "type": "indirect"
-      }
-    },
-    "nixpkgs_5": {
-      "locked": {
-        "lastModified": 1626046891,
-        "narHash": "sha256-Zt8saH+hAehXskW0iFAzk+iMillYoFBxvLReYNqGT9E=",
-        "path": "/nix/store/hv23pdsi6n7z96pkljv25lfrfh1mnzz7-source",
-        "rev": "d8f8f31af9d77a48220e4e8a301d1e79774cb7d2",
-        "type": "path"
-      },
-      "original": {
-        "id": "nixpkgs",
-        "type": "indirect"
-      }
-    },
     "root": {
       "inputs": {
         "agenix": "agenix",
@@ -210,9 +184,7 @@
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-mozilla": "nixpkgs-mozilla",
         "nixpkgs-unstable": "nixpkgs-unstable",
-        "rust": "rust",
-        "xmonad": "xmonad",
-        "xmonad-contrib": "xmonad-contrib"
+        "rust": "rust"
       }
     },
     "rust": {
@@ -221,52 +193,16 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1626315278,
-        "narHash": "sha256-rrN/a7Hq4hp6YLWGKDddGwqaWNjEANpqJHgyANprCRE=",
+        "lastModified": 1626488045,
+        "narHash": "sha256-qGkU/Rg3jvGPGoaDy6ceHhaA+P+0wQoHUv+IUigiXnI=",
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "rev": "41b11431e8dfa23263913bb96b5ef1913e01dfc1",
+        "rev": "462835d47b901e8d5b445642940de40f6344f4f3",
         "type": "github"
       },
       "original": {
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "type": "github"
-      }
-    },
-    "xmonad": {
-      "inputs": {
-        "nixpkgs": "nixpkgs_4"
-      },
-      "locked": {
-        "lastModified": 1625997561,
-        "narHash": "sha256-7+xtRzRU6dTfEpWjUx0g4rEK+02899UXiDpJLeKDksM=",
-        "owner": "IvanMalison",
-        "repo": "xmonad",
-        "rev": "b321489cfcf84d72a280ff1c60718532e319aa2c",
-        "type": "github"
-      },
-      "original": {
-        "owner": "IvanMalison",
-        "repo": "xmonad",
-        "type": "github"
-      }
-    },
-    "xmonad-contrib": {
-      "inputs": {
-        "nixpkgs": "nixpkgs_5"
-      },
-      "locked": {
-        "lastModified": 1625997575,
-        "narHash": "sha256-n4Owh07dOyH/nVmy28NW1rF8XrK+krp3dEgfcoFaOz0=",
-        "owner": "IvanMalison",
-        "repo": "xmonad-contrib",
-        "rev": "ef1e37f7d8448190582e8698e8dfeecf8fbb2ec7",
-        "type": "github"
-      },
-      "original": {
-        "owner": "IvanMalison",
-        "repo": "xmonad-contrib",
         "type": "github"
       }
     }
