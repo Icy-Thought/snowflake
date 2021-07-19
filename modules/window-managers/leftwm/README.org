@@ -1,0 +1,13 @@
+#+TITLE: Welcome to LeftWM!
+#+AUTHOR: Icy-Thought
+#+DATE:
+
+* Introduction
+WIP..
+
+* Table of Contents :TOC:
+- [[#introduction][Introduction]]
+- [[#special-thanks][Special Thanks]]
+
+* Special Thanks
+- [[https://github.com/taylor85345/leftwm-theme-garden][Taylor85345]]

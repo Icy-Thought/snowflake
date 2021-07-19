@@ -1,5 +1,5 @@
 { config, lib, pkgs, ... }:
 
 {
-  import = [ ./xmonad.nix ];
+  imports = [ ./xmonad.nix ];
 }

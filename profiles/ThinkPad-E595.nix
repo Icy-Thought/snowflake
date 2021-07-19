@@ -1,6 +1,11 @@
 { config, pkgs, lib, ... }: {
 
-  imports = [ ../modules/common.nix ../modules/window-managers/xmonad ];
+  imports = [
+    ../modules/common.nix
+    ../modules/window-managers/leftwm
+    # ../modules/window-managers/xmonad
+    # ../modules/window-managers/bspwm
+  ];
 
   hm = { imports = [ ./home-manager/ThinkPad-E595.nix ]; };
 
