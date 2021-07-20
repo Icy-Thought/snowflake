@@ -4,9 +4,9 @@
 ##Please copy misc/default_apps.sh to your root leftwm config folder ($HOME/.config/leftwm) and configure your preferred defaults there.
 
 #Imports variables from default_apps.sh, or assigns default variables if default_apps.sh does not exist.
-if test -e "$HOME"/.config/leftwm/default-apps.sh;
+if test -e "$HOME"/.config/leftwm/themes/current/default-apps.sh;
 then
-  source $HOME/.config/leftwm/default-apps.sh;
+  source $HOME/.config/leftwm/themes/current/default-apps.sh;
 else
   export TERM=alacritty
   export BROWSER=firefox

@@ -36,7 +36,7 @@
         idle_threshold = 120;
 
         ### TEXT ###
-        font = "Inter Nerd Font 10";
+        font = "JetBrainsMonoMedium Nerd Font Medium 10";
         line_height = 0;
         markup = "full";
         format = ''

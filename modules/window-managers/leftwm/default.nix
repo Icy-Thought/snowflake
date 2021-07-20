@@ -2,11 +2,12 @@
 
 let
   leftPkgs = with pkgs; [
-    (nerdfonts.override { fonts = [ "inter" ]; }) # Inter nerd-font.
+    (nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
     (rofi.override { plugins = [ rofi-emoji rofi-calc ]; }) # Window switcher.
     dunst # Notification tool.
     polybar # Customizable toolbar.
     trayer # SysTray
+    feh # Image viewer.
   ];
 
 in {

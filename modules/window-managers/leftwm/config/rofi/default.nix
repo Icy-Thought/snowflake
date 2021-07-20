@@ -1,25 +1,28 @@
-{ config, pkgs, ... }:{
+{ config, pkgs, ... }: {
 
-  xdg.configFile."leftwm/themes/Garden/rofi" = {
-    "icons" = {
-      source = ./icons;
-      recursive = true;
-    };
-    "scripts" = {
-      source = ./scripts;
-      recursive = true;
-    };
-
-    "launcher.rasi".source = ./launcher.rasi;
-    "list-launcher.rasi".source = ./list-launcher.rasi;
-    "powermenu.rasi".source = ./powermenu.rasi;
-    "touch-launcher.rasi".source = ./touch-launcher.rasi;
+  xdg.configFile."leftwm/themes/garden/rofi/icons" = {
+    source = ./icons;
+    recursive = true;
   };
+
+  xdg.configFile."leftwm/themes/garden/rofi/scripts" = {
+    source = ./scripts;
+    recursive = true;
+  };
+
+  xdg.configFile."leftwm/themes/garden/rofi/launcher.rasi".source =
+    ./launcher.rasi;
+
+  xdg.configFile."leftwm/themes/garden/rofi/list-launcher.rasi".source =
+    ./list-launcher.rasi;
+
+  xdg.configFile."leftwm/themes/garden/rofi/powermenu.rasi".source =
+    ./powermenu.rasi;
 
   programs.rofi = {
     enable = true;
     extraConfig = {
-      font = "Inter Regular 10";
+      font = "JetBrainsMonoMedium Nerd Font Medium 10";
       sidebar-mode = true;
       show-icons = true;
       sorting-method = "fzf";
@@ -67,7 +70,7 @@
       };
 
       "entry" = {
-        font = "Inter Regular 12";
+        font = "JetBrainsMonoMedium Nerd Font Medium 12";
         background-color = "@transparent";
         text-color = "@foreground";
         expand = true;
@@ -141,7 +144,7 @@
       };
 
       "element-text" = {
-        font = "Inter Regular 11";
+        font = "JetBrainsMonoMedium Nerd Font Medium 11";
         expand = true;
         horizontal-align = 0;
         vertical-align = "0.5";
