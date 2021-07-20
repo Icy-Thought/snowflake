@@ -1,10 +1,8 @@
-#!/bin/bash
-
-SCRIPTPATH="$( cd "$(dirname "$0")" || return ; pwd -P )"
+#!/usr/bin/env bash
 
 #set background
 if [ -x "$(command -v feh)" ]; then
-  feh --bg-scale "$SCRIPTPATH"/down.jpg
+  feh --bg-scale "$HOME"/.config/leftwm/theme/current/down.jpg
 fi
 
 echo "UnloadTheme" > "$XDG_RUNTIME_DIR"/leftwm/commands.pipe

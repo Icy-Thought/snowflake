@@ -1,6 +1,5 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, ... }: {
 
-{
   services.picom = {
     enable = true;
     package = pkgs.picom-jonaburg;

@@ -1,8 +1,7 @@
 { config, lib, pkgs, ... }: {
 
-  xdg.configFile."leftwm/themes/Garden" = {
-    "leftwm/config.toml".source = ./config.toml;
-    "theme.toml".source = ./theme.toml;
-    "leftwm/default-apps.sh".source = ./default-apps.sh;
-  };
+  xdg.configFile."leftwm/config.toml".source = ./config.toml;
+  xdg.configFile."leftwm/themes/garden/theme.toml".source = ./theme.toml;
+  xdg.configFile."leftwm/themes/garden/leftwm/default-apps.sh".source =
+    ./default-apps.sh;
 }

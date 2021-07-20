@@ -10,7 +10,7 @@ configuration {
 }
 
 * {
-    font: "Inter Nerd Font Semibold 11";
+    font:                           "JetBrainsMonoMedium Nerd Font Medium 11";
     foreground:                     #f8f8f2;
     foreground-alt:                 #9c9c9c;
     background-color:               #00000066;
@@ -28,7 +28,7 @@ configuration {
 	border:							0;
 	border-color:					@background-color;
     border-radius:                  8;
-  height:             70%;
+  height:                           70%;
 	width:							400px;
     location:                       southwest;
     anchor:                         southwest;

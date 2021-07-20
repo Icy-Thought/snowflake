@@ -3,8 +3,12 @@
 let cfg = config.xdg.configHome;
 
 in {
+  xdg.configFile."polybar/polybar-tray.conf".source = ./polybar-tray.conf;
+  xdg.configFile."polybar/polybar-tray.sh".source = ./polybar-tray.sh;
+
   services.polybar = {
     enable = true;
+    script = builtins.readFile ./polybar-tray.sh;
     config = {
       "color" = {
         ### Active Colors
@@ -46,7 +50,7 @@ in {
 
       "module/workspace0" = {
         type = "custom/script";
-        exec = "leftwm-state -w 0 -t ../scripts/template.liquid";
+        exec = "leftwm-state -w 0 -t ../template.liquid";
         tail = true;
       };
 
@@ -57,16 +61,16 @@ in {
 
       "module/workspace1" = {
         type = "custom/script";
-        exec = "leftwm-state -w 1 -t ../scripts/template.liquid";
+        exec = "leftwm-state -w 1 -t ../template.liquid";
         tail = true;
       };
 
       "bar/barbase" = {
         width = "100%";
-        monitor = "\${" "env:MONITOR" "}";
+        monitor = "\${env:MONITOR}";
         offset-x = 0;
         offset-y = 0;
-        height = 54;
+        height = 35;
         fixed-center = true;
         bottom = false;
 
@@ -80,7 +84,7 @@ in {
         module-margin-left = 2;
         module-margin-right = 0;
 
-        font-0 = "Inter Nerd Font:size=20:weight=Regular;3";
+        font-0 = "JetBrainsMonoMedium Nerd Font:size=20:weight=Medium;3";
         modules-center = "ewmh";
         modules-right =
           "systray vpn=wireguard-wg pipewire network battery backlight sysmenu date";
@@ -302,7 +306,6 @@ in {
 
         click-left = "${cfg}/leftwm/themes/current/default-app";
         click-right = "${cfg}/leftwm/themes/current/default-app";
-
       };
 
       "module/search" = {
@@ -312,8 +315,9 @@ in {
         content-foreground = "\${color.fg}";
         content-padding = 0;
 
-        click-left =
-          "rofi -show 'Global Search' -modi 'Global Search':${cfg}/leftwm/themes/current/rofi/rofi-spotlight.sh -theme ${cfg}/leftwm/themes/current/rofi/rofi.rasi";
+        click-left = ''
+          rofi -show "Global Search" -modi "Global Search":${cfg}/leftwm/themes/current/rofi/scripts/rofi-spotlight.sh -theme ${cfg}/rofi/config.rasi
+        '';
         click-right = "${cfg}/.config/leftwm/themes/current/default-app";
       };
     };
