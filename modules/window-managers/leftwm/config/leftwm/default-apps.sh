@@ -3,7 +3,7 @@ set -euo pipefail
 
 #Define default applications to be sourced by default_apps
 TERM=alacritty          #Tag 1
-BROWSER=firefox         #Tag 2
+BROWSER=firefox-bin     #Tag 2
 DOC=emacs               #Tag 3
 FILE=dolphin            #Tag 4
 PLAYER=celluloid        #Tag 5

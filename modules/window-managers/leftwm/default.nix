@@ -8,6 +8,7 @@ let
     polybar # Customizable toolbar.
     trayer # SysTray
     feh # Image viewer.
+    shotgun # Minimal X screenshot util.
   ];
 
 in {

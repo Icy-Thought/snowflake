@@ -21,7 +21,7 @@
 - [[#useful-links][Useful Links]]
 
 * Introduction
-[[./assets/desktop.png]]
+[[./assets/gnome-desktop.png]]
 
 This is a hamerspace of a declarative NixOS environment containing several hand-crafted configurations of programs ranging from Alacritty, Neovim (v0.5), Emacs (27.2), Zathura to other configured applications found in the =modules/home-manager= directory.
 
