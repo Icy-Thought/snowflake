@@ -1,7 +1,7 @@
 { config, pkgs, ... }: {
 
   imports = [
-    ../../modules/desktop-managers/hm.nix
-    ../../modules/window-managers/hm.nix
+    ../../modules/desktop-managers/gnome/config
+    # ../../modules/window-managers/xmonad/config
   ];
 }
