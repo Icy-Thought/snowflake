@@ -8,13 +8,6 @@ if [ -f "/tmp/leftwm-theme-down" ]; then
 fi
 ln -s "$HOME"/.config/leftwm/themes/current/down /tmp/leftwm-theme-down
 
-# Boot picom or compton if it exists
-if [ -x "$(command -v picom)" ]; then
-  picom --experimental-backends --config "$HOME"/.config/picom/picom.conf &> /dev/null &
-elif [ -x "$(command -v compton)" ]; then
-  compton &> /dev/null &
-fi
-
 # Set the theme.toml config
 echo "LoadTheme $HOME/.config/leftwm/themes/current/theme.toml" > "$XDG_RUNTIME_DIR"/leftwm/commands.pipe
 
