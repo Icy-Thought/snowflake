@@ -11,6 +11,7 @@ let
   ];
 
 in {
+  imports = [ ./config/picom ];
   environment.systemPackages = leftPkgs;
 
   services = {

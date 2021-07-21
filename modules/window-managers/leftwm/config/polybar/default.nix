@@ -183,7 +183,7 @@ in {
         type = "custom/text";
 
         content = "";
-        content-foreground = "\${color.indigo}";
+        content-foreground = "#7ebae4";
 
         click-left =
           "rofi -no-config -no-lazy-grab -show drun -theme ${cfg}/leftwm/themes/current/rofi/launcher.rasi";
