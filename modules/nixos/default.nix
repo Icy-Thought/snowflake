@@ -24,7 +24,6 @@
     };
 
     cleanTmpDir = true;
-
   };
 
   networking = {
@@ -62,9 +61,7 @@
         from = 1714;
         to = 1764;
       }]; # KDE-Connect
-
     };
-
   };
 
   i18n.defaultLocale = "en_US.UTF-8";
@@ -137,7 +134,6 @@
       noto-fonts
       noto-fonts-cjk
       noto-fonts-emoji
-
     ];
 
     fontconfig = {

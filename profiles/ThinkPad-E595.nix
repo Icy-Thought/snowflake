@@ -2,6 +2,7 @@
 
   imports = [
     ../modules/common.nix
+    ../modules/nixos/ibus.nix
     ../modules/desktop-managers/gnome
     ../modules/window-managers/leftwm
   ];
@@ -42,11 +43,6 @@
 
   user.name = "sirius";
   networking.hostName = "ThinkPad-NixOS";
-
-  i18n.inputMethod = {
-    enabled = "ibus";
-    ibus.engines = with pkgs.ibus-engines; [ libpinyin hangul mozc ];
-  };
 
   virtualisation = {
     libvirtd.enable = true;
