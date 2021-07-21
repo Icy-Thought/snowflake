@@ -1,6 +1,10 @@
 { config, pkgs, lib, ... }: {
 
-  imports = [ ../modules/common.nix ];
+  imports = [
+    ../modules/common.nix
+    ../modules/desktop-managers/plasma
+    # ../modules/window-managers/xmonad
+  ];
 
   hm = { imports = [ ./home-manager/ProBook-440G3.nix ]; };
 
@@ -56,9 +60,6 @@
     xserver = {
       videoDrivers = [ "modesetting" ];
       useGlamor = true;
-
-      displayManager.sddm = { enable = true; };
-      desktopManager.plasma5 = { enable = true; };
     };
   };
 

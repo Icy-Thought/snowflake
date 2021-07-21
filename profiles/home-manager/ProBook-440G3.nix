@@ -1,6 +1,8 @@
-{ config, pkgs, ... }:
-let
-  qtPkgs = with pkgs; [ kdenlive ];
-  ricePkgs = with pkgs; [ orchis-theme flat-remix-gnome whitesur-icon-theme ];
+{ config, pkgs, ... }: {
 
-in { home.packages = qtPkgs ++ ricePkgs; }
+  imports = [
+    ../../modules/desktop-managers/plasma/config
+    # ../../modules/window-managers/xmonad/config
+  ];
+
+}

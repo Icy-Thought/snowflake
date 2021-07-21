@@ -2,8 +2,8 @@
 
   imports = [
     ../modules/common.nix
-    ../modules/desktop-managers
-    ../modules/window-managers
+    ../modules/desktop-managers/gnome
+    ../modules/window-managers/leftwm
   ];
 
   hm = { imports = [ ./home-manager/ThinkPad-E595.nix ]; };
