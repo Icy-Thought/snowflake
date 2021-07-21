@@ -3,7 +3,18 @@
 let home = config.home.homeDirectory;
 
 in {
-  imports = [ ./common ../../packages/home-manager ];
+  imports = [
+    ./git
+    ./fish
+    ./alacritty
+    ./tmux
+    ./emacs
+    ./neovim
+    ./zathura
+    ./mpd
+    ./ncmpcpp
+    ../../packages/home-manager
+  ];
 
   programs = {
     home-manager = {
@@ -40,7 +51,6 @@ in {
         left_emter_modes = [ 2 2 2 ];
       };
     };
-
   };
 
   fonts.fontconfig.enable = true;
