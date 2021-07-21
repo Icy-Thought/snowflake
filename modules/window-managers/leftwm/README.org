@@ -1,6 +1,6 @@
 #+TITLE: Welcome to LeftWM!
 #+AUTHOR: Icy-Thought
-#+DATE:
+#+DATE: <2021-07-19 mån>
 
 * Introduction
 [[../../../assets/leftwm-desktop.png]]

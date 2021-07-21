@@ -2,9 +2,8 @@
 
   imports = [
     ../modules/common.nix
-    ../modules/window-managers/leftwm
-    # ../modules/window-managers/xmonad
-    # ../modules/window-managers/bspwm
+    ../modules/desktop-managers
+    ../modules/window-managers
   ];
 
   hm = { imports = [ ./home-manager/ThinkPad-E595.nix ]; };
@@ -39,7 +38,6 @@
       driversi686Linux.amdvlk
       rocm-opencl-icd
     ];
-
   };
 
   user.name = "sirius";
@@ -62,10 +60,7 @@
   environment.systemPackages = with pkgs;
     [ (steam.override { nativeOnly = true; }).run ];
 
-  programs = {
-    dconf.enable = true;
-    steam.enable = true;
-  };
+  programs = { steam.enable = true; };
 
   environment.variables = {
     VK_ICD_FILENAMES =
@@ -76,37 +71,6 @@
     avahi.enable = false;
     gvfs.enable = true;
 
-    gnome = { # Remove after fixing gnome/default.nix
-      gnome-keyring.enable = true;
-      chrome-gnome-shell.enable = true;
-    };
-
-    xserver = {
-      videoDrivers = [ "amdgpu" ];
-
-      displayManager.gdm = {
-        enable = true;
-        wayland = true;
-      };
-
-      desktopManager.gnome = { enable = true; };
-    };
-
-    dbus = {
-      enable = true;
-      packages = with pkgs; [ gnome.dconf ];
-    };
-
-    udev = {
-      extraRules = ''
-        ACTION=="add|change", KERNEL=="nvme[0-9]*", ATTR{queue/scheduler}="none"
-        ACTION=="add|change", KERNEL=="sd[a-z]|mmcblk[0-9]*", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="mq-deadline"
-        ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="1", ATTR{queue/scheduler}="bfq"
-      '';
-
-      packages = with pkgs; [ gnome.gnome-settings-daemon ];
-    };
-
+    xserver = { videoDrivers = [ "amdgpu" ]; };
   };
-
 }
