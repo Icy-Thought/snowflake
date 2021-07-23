@@ -5,7 +5,6 @@ let
     wl-clipboard # Wayland c-p/c-v.
     zathura # Minimal Document Reader.
     latest.firefox-nightly-bin # Latest Firefox Browser.
-    brave # Chromium-based browser.
     # Polychromatic # GUI to control OpenRazer.
     anki # Spaced repetition flashcard.
     celluloid # GTK frontend for MPV.

@@ -13,6 +13,7 @@ in {
     ./zathura
     ./mpd
     ./ncmpcpp
+    ./ungoogled-chromium
     ../../packages/home-manager
   ];
 

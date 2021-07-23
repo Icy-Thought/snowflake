@@ -6,13 +6,13 @@
     experimentalBackends = true;
 
     inactiveOpacity = 1.0;
-    opacityRules = [];
-    menuOpacity = 0.90;
+    opacityRules = [ ];
+    menuOpacity = 0.9;
 
     fade = true;
     fadeDelta = 2;
-    fadeExclude = [];
-    fadeSteps = [0.08 0.08];
+    fadeExclude = [ ];
+    fadeSteps = [ (8.0e-2) (8.0e-2) ];
 
     refreshRate = 0;
 
@@ -50,11 +50,8 @@
       frame-opacity = 1;
       inactive-opacity-override = false;
 
-      focus-exclude = [
-        "class_g ?= 'rofi'"
-        "class_g ?= 'slop'"
-        "class_g ?= 'Steam'"
-      ];
+      focus-exclude =
+        [ "class_g ?= 'rofi'" "class_g ?= 'slop'" "class_g ?= 'Steam'" ];
 
       ### Background-Blur ###
       blur = {
@@ -66,10 +63,7 @@
       blur-background-frame = true;
       blur-background-fixed = true;
 
-      blur-background-exclude = [
-      	"class_g = 'slop'"
-      	"_GTK_FRAME_EXTENTS@:c"
-      ];
+      blur-background-exclude = [ "class_g = 'slop'" "_GTK_FRAME_EXTENTS@:c" ];
 
       ### General ###
       daemon = false;
@@ -79,12 +73,12 @@
       detect-rounded-corners = true;
       detect-client-opacity = true;
 
-      unredir-if-possible-exclude = [];
+      unredir-if-possible-exclude = [ ];
       detect-transient = true;
       detect-client-leader = true;
       resize-damage = 1;
 
-      invert-color-include = [];
+      invert-color-include = [ ];
       glx-no-stencil = true;
       use-damage = true;
       transparent-clipping = false;
@@ -94,18 +88,27 @@
       show-all-xerrors = true;
 
       wintypes = {
-      	tooltip = { fade = true; focus = false; };
-      	normal = {  };
-      	dock = {  };
-      	popup_menu = { focus = false; opacity = 0.90; };
-      	dropdown_menu = { focus = false; };
-      	above = {  };
-      	splash = {  };
-      	utility = { focus = false; blur-background = false; };
-      	notification = {  };
-      	desktop = { blur-background = false; };
-      	menu = { focus = false; };
-      	dialog = {  };
+        tooltip = {
+          fade = true;
+          focus = false;
+        };
+        normal = { };
+        dock = { };
+        popup_menu = {
+          focus = false;
+          opacity = 0.9;
+        };
+        dropdown_menu = { focus = false; };
+        above = { };
+        splash = { };
+        utility = {
+          focus = false;
+          blur-background = false;
+        };
+        notification = { };
+        desktop = { blur-background = false; };
+        menu = { focus = false; };
+        dialog = { };
       };
     };
   };
