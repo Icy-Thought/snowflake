@@ -37,26 +37,17 @@
     let
       pkgs = import nixpkgs { system = "x86_64-linux"; };
 
-      overlays = with inputs; [
-        agenix.overlay
-        rust.overlay
-        emacs.overlay
-        (import nixpkgs-mozilla)
-
-        (final: prev: {
-          picom-jonaburg =
-            prev.picom.overrideAttrs (old: { src = picom-jonaburg; });
-        })
-      ];
-      # ++ map (name: import (./overlays + "/${name}"))
-      # (builtins.attrNames (builtins.readDir ./overlays));
+      overlays = with inputs;
+        [ agenix.overlay rust.overlay emacs.overlay (import nixpkgs-mozilla) ]
+        ++ map (name: import (./overlays + "/${name}"))
+        (attrNames (readDir ./overlays));
 
       lib = nixpkgs.lib.extend (final: prev: home-manager.lib);
 
       inherit (nixpkgs.lib) nixosSystem;
       inherit (home-manager.lib) homeManagerConfiguration;
       inherit (flake-utils.lib) eachDefaultSystem eachSystem;
-      inherit (builtins) listToAttrs map;
+      inherit (builtins) listToAttrs map attrNames readDir;
 
       # Generate default NixOS config
       mkNixosConfig = { system ? "x86_64-linux", hardwareModules
@@ -119,5 +110,4 @@
 
       };
     };
-
 }

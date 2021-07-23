@@ -20,14 +20,14 @@ case $chosen in
         systemctl poweroff
         ;;
     $reboot)
-		systemctl reboot
+        systemctl reboot
         ;;
     $lock)
-		if [[ -f /usr/bin/i3lock ]]; then
-			i3lock
-		elif [[ -f /usr/bin/betterlockscreen ]]; then
-			betterlockscreen -l
-		fi
+        if [[ -f /usr/bin/i3lock ]]; then
+         i3lock
+        elif [[ -f /usr/bin/betterlockscreen ]]; then
+         betterlockscreen -l
+        fi
         ;;
     $suspend)
 		systemctl suspend

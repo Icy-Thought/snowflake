@@ -4,7 +4,7 @@
   system.stateVersion = "21.05"; # Did you read the comment?
 
   boot = {
-    kernelPackages = pkgs.linuxPackages_zen; # xanmod after high_cpu fix
+    kernelPackages = pkgs.linuxPackages_xanmod; # pkgs.linuxPackages_zen
     kernelParams = [ "pcie_aspm.policy=performance" ];
 
     # Set GRUB2 to default boot.

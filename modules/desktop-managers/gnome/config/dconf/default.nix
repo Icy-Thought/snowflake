@@ -232,6 +232,7 @@ in {
         "discord.desktop"
         "org.gnome.Geary.desktop"
         "firefox.desktop"
+        "chromium-browser.desktop"
         "emacs.desktop"
         "Alacritty.desktop"
         "qalculate-gtk.desktop"

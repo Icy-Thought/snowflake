@@ -5,6 +5,7 @@
     ../modules/nixos/ibus.nix
     ../modules/desktop-managers/gnome
     ../modules/window-managers/leftwm
+    # ../modules/window-managers/xmonad
   ];
 
   hm = { imports = [ ./home-manager/ThinkPad-E595.nix ]; };
