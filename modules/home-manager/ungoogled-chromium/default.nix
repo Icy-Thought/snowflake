@@ -10,6 +10,7 @@
       { id = "eimadpbcbfnmbkopoojfekhnkhdbieeh"; } # Dark-Reader
       { id = "ldpochfccmkkmhdbclfhpagapcfdljkj"; } # Decentraleyes
       { id = "bkdgflcldnnnapblkhphbgpggdiikppg"; } # DuckDuckGo
+      { id = "gphhapmejobijbbhgpjhcjognlahblep"; } # Gnome-Shell-Integration
       { id = "iaiomicjabeggjcfkbimgmglanimpnae"; } # Tab-Session-Manager
       { id = "hipekcciheckooncpjeljhnekcoolahp"; } # Tabliss
       { id = "cjpalhdlnbpafiamejdnhcphjbkeiagm"; } # Ublock-Origin
