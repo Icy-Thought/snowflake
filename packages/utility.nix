@@ -1,28 +1,34 @@
 { config, lib, pkgs, ... }:
 
 let
-  utilPkgs = with pkgs; [
+  sysPkgs = with pkgs; [
+    tree # Tree view.
+    wireguard # Wireguard tools.
     binutils # Manipulating binaries.
     moreutils # Extension to GNU utils.
-    killall # Completely eradicate processes.
-    direnv # Shell extension to manage env.
     pciutils # lspci, setpci & update-pciids.
     psmisc # Useful utilities.
-    wireguard # Wireguard tools.
+    killall # Completely eradicate processes.
+    xclip # Copy/Paste in xterm.
+    wl-clipboard # Wayland c-p/c-v.
+  ];
+
+  altPkgs = with pkgs; [
+    exa # better ls.
+    pv # Progress-bar.
+    fd # faster find.
+    ripgrep # faster grep.
+    skim # faster fzf.
+  ];
+
+  utilPkgs = with pkgs; [
+    direnv # Shell extension to manage env.
     gnupg # Encrypt/Decrypt.
     firejail # Namespace-based sandboxing.
     exiftool # Control file metadata.
     fail2ban # Scans failed login attempts.
     usbguard # Protect against infected USB.
-    xclip # Copy/Paste in xterm.
-    wl-clipboard # Wayland c-p/c-v.
     gh # Official GH client.
-    pv # Progress-bar.
-    fd # faster find.
-    exa # better ls.
-    ripgrep # faster grep.
-    skim # faster fzf.
-    tree # Tree view.
     bustle # Sequence diagrams (dbus).
     dfeet # dbus debugger.
     diffoscope # In-depth comparison tool.
@@ -32,4 +38,4 @@ let
     agenix # age-encrypted secrets.
   ];
 
-in { environment.systemPackages = utilPkgs; }
+in { environment.systemPackages = utilPkgs ++ sysPkgs ++ altPkgs; }
