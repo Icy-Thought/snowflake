@@ -1,5 +1,5 @@
 border_width = 1
 margin = [8, 8]
-default_border_color = "#EE4F84"
+default_border_color = "#F48FB1"
 floating_border_color = "#F1FF52"
 focused_border_color = "#53E2AE"
