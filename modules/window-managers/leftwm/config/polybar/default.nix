@@ -318,7 +318,9 @@ in {
         click-left = ''
           rofi -show "Global Search" -modi "Global Search":${cfg}/leftwm/themes/current/rofi/scripts/rofi-spotlight.sh -theme ${cfg}/rofi/config.rasi
         '';
-        click-right = "${cfg}/.config/leftwm/themes/current/default-app";
+        click-right = ''
+          rofi -show "Global Search" -modi "Global Search":${cfg}/leftwm/themes/current/rofi/scripts/rofi-spotlight.sh -theme ${cfg}/rofi/config.rasi
+        '';
       };
     };
   };
