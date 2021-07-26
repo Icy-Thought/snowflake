@@ -97,15 +97,16 @@
 
     shellAbbrs = {
       # General
-      ls = "exa -l";
-      lsa = "exa -la";
-      ytdl = "youtube-dl";
+      ls = "exa -Slhg --icons";
+      lsa = "exa -Slhga --icons";
       bat0 = "upower -i /org/freedesktop/UPower/devices/battery_BAT0";
 
       # Application-related
       temacs = "emacsclient -t";
       emacs = "emacsclient -c -a";
       zoom = "firejail zoom";
+      ytv = "youtube-dl --best-quality";
+      yta = "youtube-dl -x --audio-format mp3";
 
       # VPN
       wup = "systemctl start wg-quick-Akkadian_VPN.service";
