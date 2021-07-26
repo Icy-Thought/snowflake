@@ -2,9 +2,9 @@
 
 let
   gamingPkgs = with pkgs; [
-    wine-staging # Latest Wine package.
-    lutris # WINE gaming platform.
-    osu-lazer # FOSS Rythm game!
+    wine-staging # Latest Wine Package.
+    lutris # WINE Gaming Platform.
+    osu-lazer # FOSS Rythm Game!
   ];
 
 in { home.packages = gamingPkgs; }

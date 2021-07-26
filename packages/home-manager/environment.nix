@@ -3,28 +3,21 @@
 let
   gitPkgs = with pkgs.gitAndTools; [
     diff-so-fancy # Colored git diff.
-    git-crypt # git file encryption.
-    tig # diff and commit view.
+    git-crypt # git File Encryption.
+    tig # diff & commit View.
   ];
 
   dictPkgs = with pkgs; [
-    aspell # Spelling support.
-    aspellDicts.en # en_US aspell.
-    aspellDicts.sv # sv_SE aspell.
-    hunspellDicts.sv_SE # sv_SE hunspell.
-    hunspellDicts.en_US # en_US hunspell.
+    aspell # Spelling Support.
+    aspellDicts.en # en_US Aspell.
+    aspellDicts.sv # sv_SE Aspell.
+    hunspellDicts.sv_SE # sv_SE Hunspell.
+    hunspellDicts.en_US # en_US Hunspell.
   ];
 
   nixPkgs = with pkgs; [
-    any-nix-shell # Fish/ZSH support.
+    any-nix-shell # Fish/ZSH Support.
     nix-direnv # Fast nix-impl of direnv.
-    hydra-check # Hydra build status check.
-    nix-prefetch-github # Prefetch from GH.
-    nixpkgs-review # Review nixpkgs PR.
-    nix-top # Tracks nix builds.
-    nixfmt # Nix code formatter.
-    nixpkgs-fmt # [...] -> for nixpkgs.
-    lorri # Project's nix-env.
   ];
 
 in { home.packages = gitPkgs ++ dictPkgs ++ nixPkgs; }

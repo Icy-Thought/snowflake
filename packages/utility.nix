@@ -3,39 +3,38 @@
 let
   sysPkgs = with pkgs; [
     tree # Tree view.
-    wireguard # Wireguard tools.
-    binutils # Manipulating binaries.
-    moreutils # Extension to GNU utils.
+    wireguard # Wireguard Tools.
+    binutils # Manipulating Binaries.
+    moreutils # Extension to GNU Utils.
     pciutils # lspci, setpci & update-pciids.
-    psmisc # Useful utilities.
-    killall # Completely eradicate processes.
-    xclip # Copy/Paste in xterm.
+    psmisc # Useful Utilities.
+    killall # Completely Eradicate Processes.
+    xclip # Copy/Paste in Xterm.
     wl-clipboard # Wayland c-p/c-v.
   ];
 
   altPkgs = with pkgs; [
-    exa # better ls.
+    exa # Better ls.
     pv # Progress-bar.
-    fd # faster find.
-    ripgrep # faster grep.
-    skim # faster fzf.
+    fd # Faster Find.
+    ripgrep # Faster grep.
+    skim # Faster fzf.
   ];
 
   utilPkgs = with pkgs; [
-    direnv # Shell extension to manage env.
+    direnv # Shell Extension to Manage env.
     gnupg # Encrypt/Decrypt.
-    firejail # Namespace-based sandboxing.
-    exiftool # Control file metadata.
-    fail2ban # Scans failed login attempts.
-    usbguard # Protect against infected USB.
-    gh # Official GH client.
-    bustle # Sequence diagrams (dbus).
-    dfeet # dbus debugger.
-    diffoscope # In-depth comparison tool.
-    common-updater-scripts # Common nix updating scripts????
-    zstd # Undo fu-session/tree-compression.
-    unrar # File uncompressor.
-    agenix # age-encrypted secrets.
+    firejail # Namespace-based Sandboxing.
+    exiftool # Control File Metadata.
+    fail2ban # Scans Failed Login Attempts.
+    usbguard # Protect Against Infected USB.
+    gh # Official GH Client.
+    bustle # Sequence Diagrams (dbus).
+    dfeet # dbus Debugger.
+    diffoscope # In-depth Comparison Tool.
+    zstd # Undo fu-Session/tree-Compression.
+    unrar # File Uncompressor.
+    agenix # age-Encrypted Secrets.
   ];
 
 in { environment.systemPackages = utilPkgs ++ sysPkgs ++ altPkgs; }
