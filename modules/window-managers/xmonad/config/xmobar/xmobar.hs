@@ -48,7 +48,7 @@ config = defaultConfig
   , template         =
     wrap " " " " (xmobarAction "xdotool key super+p" "1" (darkPurple (xmobarFont 2 "\xe61f")))
     <> inWrapper "%UnsafeXMonadLog%"
-    <> wrap "}" "{" (inWrapper' (white "%mpd%"))
+    <> wrap "}" "{" (inWrapper' (white "%playerctl%"))
     <> concatMap
          inWrapper
          [ red "%wttr%"
@@ -58,7 +58,7 @@ config = defaultConfig
          $ xmobarAction "st -e alsamixer" "3"
          $ xmobarAction "[ $(pamixer --get-volume) -lt 200 ] && pamixer --allow-boost -u -i 5" "4"
          $ xmobarAction "pamixer --allow-boost -u -d 5" "5"
-         $ white "%alsa:default:Master%"
+         $ white "%volwire%"
          , xmobarAction "~/.config/xmonad/scripts/date.sh" "1" (blue "%date%")
          , "%tray%"
          ]
@@ -109,54 +109,17 @@ myCommands =
     , base01 <> "," <> background
     ]
     (3 `seconds`)
-  , Run $ Alsa
-    "default"
-    "Master"
-    [ "-t"
-    , "<status> <volume>%"
-    , "--"
-    , "-C"
-    , base02 <> "," <> background
-    , "-c"
-    , base01 <> "," <> background
-    , "-O"
-    , ""
-    , "-o"
-    , xmobarFont 1 "\xf6a9"
-    , "-l"
-    , xmobarFont 1 "\xf026"
-    , "-m"
-    , xmobarFont 1 "\xf027"
-    , "-h"
-    , xmobarFont 1 "\xf028"
-    ]
-  , Run $ MPD
-    [ "-t"
-    , xmobarAction "mpc prev" "1" (blue (xmobarFont 1 "\xf048"))
-    <> " <statei> "
-    <> xmobarAction "mpc next" "1" (blue (xmobarFont 1 "\xf051"))
-    <> " <title> - <artist>"
-    , "--"
-    , "-P"
-    , xmobarAction "mpc stop" "3" $ xmobarAction "mpc pause" "1" $ green (xmobarFont 2 "\xf144")
-    , "-Z"
-    , xmobarAction "mpc stop" "3" $ xmobarAction "mpc play" "1" $ yellow (xmobarFont 2 "\xf28b")
-    , "-S"
-    , xmobarAction "mpc play" "1" $ red (xmobarFont 2 "\xf28d")
-    ]
-    5
   , Run $ Date (xmobarFont 1 "\xf017" <> " %l:%M %p") "date" (30 `seconds`)
-  , Run $ ComX (homeDir <> "/.config/xmonad/scripts/weather.sh") ["bar"] "N/A" "wttr" (15 `minutes`)
-  , Run $ Com (homeDir <> "/.config/xmonad/scripts/tray-padding-icon.sh")
-              ["stalonetray"]
-              "tray"
-              (1 `seconds`)
+  , Run $ CommandReader (homeDir <> "/.config/xmonad/scripts/volume.sh") "volwire"
+  , Run $ CommandReader (homeDir <> "/.config/xmonad/scripts/playerctl.sh") "playerctl"
+  , Run $ CommandReader (homeDir <> "/.config/xmonad/scripts/weather.sh bar") "wttr"
+  , Run $ Com (homeDir <> "/.config/xmonad/scripts/tray-padding-icon.sh") ["stalonetray"] "tray" 5
   ]
   where
     -- Convenience functions
-    seconds, minutes :: Int -> Int
+    seconds :: Int -> Int
     seconds = (* 10)
-    minutes = (60 *). seconds
+    -- minutes = (60 *). seconds
 
 -- | Get home directory
 homeDir :: String
@@ -166,12 +129,12 @@ homeDir = unsafeDupablePerformIO (getEnv "HOME")
 background :: String
 background = base00 <> ":5"
 
-red, blue, green, cyan, yellow, purple, white, darkPurple :: String -> String
+red, blue, cyan, purple, white, darkPurple :: String -> String
 red = xmobarColor base01 background
 blue = xmobarColor base04 background
-green = xmobarColor base02 background
+-- green = xmobarColor base02 background
 cyan = xmobarColor base06 background
-yellow = xmobarColor base03 background
+-- yellow = xmobarColor base03 background
 purple = xmobarColor base05 background
 -- gray = xmobarColor "#7a869f" background
 white = xmobarColor base07 background

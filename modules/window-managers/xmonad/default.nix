@@ -7,9 +7,10 @@ let
     dunst # Notification tool.
     sxiv # Simple X image viewer.
     hsetroot # Compose wallpaper for X.
-    redshift # Screen color temp manager.
+    gammastep # Screen color temp manager.
     stalonetray # Stand alone tray.
     shotgun # Minimal X screenshot util.
+    scrot # CLI screen-capture util.
     gxmessage # GTK dropin replacement.
   ];
 
