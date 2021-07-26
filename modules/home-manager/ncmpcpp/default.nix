@@ -1,5 +1,10 @@
 { config, pkgs, ... }: {
 
+  xdg.configFile."ncmpcpp/ncmpcpp-ueberzug" = {
+    source = ./ncmpcpp-ueberzug;
+    recursive = true;
+  };
+
   programs.ncmpcpp = {
     enable = true;
     package = pkgs.ncmpcpp.override { visualizerSupport = true; };
@@ -31,6 +36,9 @@
       visualizer_output_name = "mpd_visualizer";
       visualizer_type = "spectrum";
       visualizer_look = "●●";
+
+      # ncmpcpp-ueberzug
+      execute_on_song_change="${config.xdg.configHome}/ncmpcpp/ncmpcpp-ueberzug/ncmpcpp_cover_art.sh";
     };
   };
 }
