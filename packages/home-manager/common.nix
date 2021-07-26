@@ -3,38 +3,38 @@
 let
   sysPkgs = with pkgs; [
     # Polychromatic # GUI to control OpenRazer.
-    wl-clipboard # Wayland c-p/c-v.
-    gsmartcontrol # HDD health inspection tool.
+    gsmartcontrol # HDD Health Inspection Tool.
     transmission-gtk # BitTorrent Client.
   ];
 
   utilPkgs = with pkgs; [
-    glade # UI GTK designer.
-    anki # Spaced repetition flashcard.
+    ueberzug # Display Images in CLI.
+    glade # UI GTK Designer.
+    anki # Spaced Repetition Flashcard.
     latest.firefox-nightly-bin # Latest Firefox Browser.
-    libreoffice # Better office alternative suit.
+    libreoffice # Better Office Alternative Suit.
     zathura # Minimal Document Reader.
-    foliate # Minimal E-Book reader.
-    heimdall-gui # Suit to flash Android firmware.
-    qalculate-gtk # Scientific calculator.
+    foliate # Minimal E-Book Reader.
+    heimdall-gui # Suit to Flash Android Firmware.
+    qalculate-gtk # Scientific Calculator.
   ];
 
   chatPkgs = with pkgs; [
-    zoom-us # Conferencing application..
-    discord # Latest Discord client.
+    zoom-us # Conferencing Application..
+    discord # Latest Discord Client.
     tdesktop # Telegram Desktop.
-    signal-desktop # More secure WA alternative.
-    element-desktop # Matrix client by Element.
+    signal-desktop # More Secure WA Alternative.
+    element-desktop # Matrix Client by Element.
   ];
 
   mediaPkgs = with pkgs; [
     obs-studio # Streaming/Recording.
-    celluloid # GTK frontend for MPV.
-    freetube # FOSS private YT app.
+    celluloid # GTK Frontend for MPV.
+    freetube # FOSS Private YT App.
     blender # 3D Creation/Animation.
-    gimp # Better Photoshop alternative.
-    inkscape # Better Illustrator alternative.
-    easytag # M3U Editor.
+    gimp # Better Photoshop Alternative.
+    inkscape # Better Illustrator Alternative.
+    kid3 # Audio Tag Editor.
   ];
 
 in { home.packages = sysPkgs ++ chatPkgs ++ mediaPkgs ++ utilPkgs; }

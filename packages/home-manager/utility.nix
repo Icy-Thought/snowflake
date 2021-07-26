@@ -2,24 +2,24 @@
 
 let
   utilsPkgs = with pkgs; [
-    # uutils-coreutils # Rust GNU-coreutils alt.
+    # uutils-coreutils # Rust GNU-coreutils Alt.
     wget # TUI Downloader.
-    unzip # Unzipping files.
-    ffmpeg # Files & streams management.
-    pwgen # Password generator.
-    imagemagick # LaTeX image export.
-    winetricks # Required DLL for exe trouble.
-    tree-sitter # Generator + incremental parse.
-    ncdu # Dis analyzer (NCurses).
+    unzip # Unzipping Files.
+    ffmpeg # Files & Streams Management.
+    pwgen # Password Generator.
+    imagemagick # LaTeX Image Export.
+    winetricks # Required DLL for Exe Trouble.
+    tree-sitter # Generator + Incremental Parse.
+    ncdu # Dis Analyzer (NCurses).
   ];
 
   tuiPkgs = with pkgs; [
-    starship # Minimal + customizable prompt.
-    nnn # TUI file manager.
-    glances # Curses-based monitoring tool.
-    neofetch # Fetch system information.
-    youtube-dl # YouTube media downloader.
-    # spotify-tui # TUI for premium Spotify users.
+    starship # Minimal + Customizable Prompt.
+    nnn # TUI File Manager.
+    glances # Curses-based Monitoring Tool.
+    neofetch # Fetch System Information.
+    youtube-dl # YouTube Media Downloader.
+    # spotify-tui # TUI for Premium Spotify Users.
     # speedtest-cli # TUI Speedtest.
   ];
 

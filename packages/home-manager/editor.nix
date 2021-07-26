@@ -2,8 +2,8 @@
 
 let
   editorPkgs = with pkgs; [
-    gnuplot # Plotting through programming.
-    tmux # Terminal multiplexer.
+    gnuplot # Plotting Through Programming.
+    tmux # Terminal Multiplexer.
   ];
 
 in { home.packages = editorPkgs; }
