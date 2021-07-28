@@ -112,16 +112,16 @@ in {
         enable-click = true;
         enable-scroll = true;
 
-        icon-0 = "1;";
-        icon-1 = "2;";
-        icon-2 = "3;";
-        icon-3 = "4;";
-        icon-4 = "5;輸";
-        icon-5 = "6;";
-        icon-6 = "7;";
-        icon-7 = "8;ﮕ";
-        icon-8 = "9;";
-        icon-default = "♟";
+        icon-0 = "1;一";
+        icon-1 = "2;二";
+        icon-2 = "3;三";
+        icon-3 = "4;四";
+        icon-4 = "5;五";
+        icon-5 = "6;六";
+        icon-6 = "7;七";
+        icon-7 = "8;八";
+        icon-8 = "9;九";
+        icon-default = "福";
         format = "<label-state>";
 
         label-monitor = "%name%";
