@@ -38,7 +38,8 @@
       pkgs = import nixpkgs { system = "x86_64-linux"; };
 
       overlays = with inputs;
-        [ agenix.overlay rust.overlay emacs.overlay (import nixpkgs-mozilla) ]
+      [ ./modules/window-managers/xmonad/config/xmonad/overlay.nix
+        agenix.overlay rust.overlay emacs.overlay (import nixpkgs-mozilla) ]
         ++ map (name: import (./overlays + "/${name}"))
         (attrNames (readDir ./overlays));
 
