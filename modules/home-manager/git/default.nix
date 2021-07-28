@@ -46,5 +46,10 @@ in {
 
     userName = "Icy-Thought";
     userEmail = "gilganyx@pm.me";
+
+    signing = {
+      signByDefault = true;
+      key = "22CF239720AAD89B";
+    };
   };
 }
