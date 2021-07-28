@@ -22,9 +22,19 @@ in {
   services = {
     blueman.enable = true;
 
+    windowManager = {
+      session = [
+        {
+          name = "xmonad";
+          start = ''
+            /usr/bin/env icy-xmonad &
+            waitPID=$!
+          '';
+        }
+      ];
+    };
     xserver = {
       xkbOptions = "caps:ctrl_modifier";
-      windowManager.xmonad.enable = true;
       displayManager.defaultSession = "none+xmonad";
     };
   };
