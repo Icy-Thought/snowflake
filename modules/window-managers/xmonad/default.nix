@@ -2,7 +2,6 @@
 
 let
   xmonadPkgs = with pkgs; [
-    cabal-install # TUI for Cabal & Haskell.
     (rofi.override { plugins = [ rofi-emoji rofi-calc ]; }) # dmenu alt.
     dunst # Notification tool.
     sxiv # Simple X image viewer.
@@ -12,30 +11,28 @@ let
     shotgun # Minimal X screenshot util.
     scrot # CLI screen-capture util.
     gxmessage # GTK dropin replacement.
-
-    pkgs.haskellPackages.icy-xmonad # xmonad binary
   ];
 
 in {
+  imports = [ ./config/picom ];
   environment.systemPackages = xmonadPkgs;
 
   services = {
     blueman.enable = true;
 
-    windowManager = {
-      session = [
-        {
+    xserver = {
+      xkbOptions = "caps:ctrl_modifier";
+      displayManager.defaultSession = "none+xmonad";
+
+      windowManager = {
+        session = [{
           name = "xmonad";
           start = ''
             /usr/bin/env icy-xmonad &
             waitPID=$!
           '';
-        }
-      ];
-    };
-    xserver = {
-      xkbOptions = "caps:ctrl_modifier";
-      displayManager.defaultSession = "none+xmonad";
+        }];
+      };
     };
   };
 
