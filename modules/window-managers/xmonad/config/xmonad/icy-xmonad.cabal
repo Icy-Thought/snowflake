@@ -11,7 +11,6 @@ executable xmobar
   main-is: xmobar.hs
   build-depends:     base >=4.7
                      , xmobar
-                     , xmobar
                      , xmonad-contrib
   other-modules:
       Theme.Theme
