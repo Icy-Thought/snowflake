@@ -4,8 +4,8 @@
     ../modules/common.nix
     ../modules/nixos/ibus.nix
     ../modules/desktop-managers/gnome
-    ../modules/window-managers/leftwm
-    # ../modules/window-managers/xmonad
+    # ../modules/window-managers/leftwm
+    ../modules/window-managers/xmonad
   ];
 
   hm = { imports = [ ./home-manager/ThinkPad-E595.nix ]; };
@@ -35,11 +35,12 @@
   hardware = {
     cpu.amd = { updateMicrocode = true; };
 
-    opengl.extraPackages = with pkgs; [
-      amdvlk
-      driversi686Linux.amdvlk
-      rocm-opencl-icd
-    ];
+    opengl.extraPackages = with pkgs;
+      [
+        # amdvlk
+        # driversi686Linux.amdvlk
+        rocm-opencl-icd
+      ];
   };
 
   user.name = "sirius";
