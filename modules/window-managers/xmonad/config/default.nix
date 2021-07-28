@@ -3,14 +3,5 @@
 {
   imports = [ ./dunst ./rofi ./xsession ./picom ./scripts ./xresources ];
 
-  xsession.windowManager.xmonad = {
-    enable = true;
-
-    extraPackages = haskellPackages:
-      with haskellPackages; [
-        dbus
-        monad-logger
-        greenclip
-      ];
-  };
+  config.xsession.windowManager.command = "${pkgs.haskellPackages.icy-xmonad}/bin/icy-xmonad";
 }
