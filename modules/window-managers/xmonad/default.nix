@@ -12,6 +12,8 @@ let
     shotgun # Minimal X screenshot util.
     scrot # CLI screen-capture util.
     gxmessage # GTK dropin replacement.
+
+    pkgs.haskellPackages.icy-xmonad # xmonad binary
   ];
 
 in {
