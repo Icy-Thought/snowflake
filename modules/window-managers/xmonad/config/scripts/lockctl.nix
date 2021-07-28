@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  home = config.home.homeDirectory;
+  cache = config.xdg.cacheHome;
   lockctl = pkgs.writeScriptBin "lockctl" ''
     #!${pkgs.stdenv.shell}
     set -e
@@ -20,7 +20,7 @@ let
     locktext='Type password to unlock...'
     time_format='%I:%M %p'
     # LOCK_TIMEOUT=5
-    FOLDER="$HOME/.cache/i3lock"
+    FOLDER="${cache}/i3lock"
 
     update_cache() {
       [ ! -d "$FOLDER" ] && mkdir -p "$FOLDER"
@@ -90,13 +90,13 @@ let
     }
 
     i3lock_cmd() {
-      if [ -d "${HOME}/.cache/i3lock" ]; then
+      if [ -d "${cache}/i3lock" ]; then
         style="$"{@:-blur}
         case "$style" in
-          blur) IMAGE="$HOME/.cache/i3lock/lockscreen_blur.png" ;;
-          dim) IMAGE="$HOME/.cache/i3lock/lockscreen_dim.png" ;;
-          dimblur) IMAGE="$HOME/.cache/i3lock/lockscreen_dimblur.png" ;;
-          raw) IMAGE="$HOME/.cache/i3lock/lockscreen_raw.png" ;;
+          blur) IMAGE="${cache}/i3lock/lockscreen_blur.png" ;;
+          dim) IMAGE="${cache}/i3lock/lockscreen_dim.png" ;;
+          dimblur) IMAGE="${cache}/i3lock/lockscreen_dimblur.png" ;;
+          raw) IMAGE="${cache}/i3lock/lockscreen_raw.png" ;;
           *) $style ;;
         esac
       else
