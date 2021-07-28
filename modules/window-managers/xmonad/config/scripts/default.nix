@@ -3,7 +3,6 @@
   imports = [
     ./colorclip.nix
     ./date.nix
-    ./default.nix
     ./lockctl.nix
     ./msclip.nix
     ./playerctl.nix
@@ -12,7 +11,7 @@
     ./ssclip.nix
     ./tray-padding-icon.nix
     ./volctl.nix
-    ./volume.sh
+    ./volume.nix
     ./wall.nix
     ./weather.nix
   ];
