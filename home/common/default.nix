@@ -14,7 +14,7 @@ in {
     ./mpd
     ./ncmpcpp
     ./ungoogled-chromium
-    ../../packages/home-manager
+    ../../modules/packages/home
   ];
 
   programs = {
