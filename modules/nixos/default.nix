@@ -71,7 +71,7 @@
     keyMap = "us";
   };
 
-  time.timeZone = "Europe/Stockholm";
+  time.timeZone = "Europe/Berlin";
 
   users = { # Don't forget to set password through `passwd`!
     defaultUserShell = pkgs.fish;

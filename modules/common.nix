@@ -1,7 +1,6 @@
 { inputs, config, lib, pkgs, ... }: {
 
-  hm = import ./home-manager;
-
+  hm = import ../home;
   imports = [ ./primary.nix ./nixpkgs.nix ./packages ./wireguard ];
 
   environment.etc = {
