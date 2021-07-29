@@ -3,11 +3,11 @@
   imports = [
     ../modules/common.nix
     ../modules/nixos/fcitx5.nix
-    ../modules/desktop-managers/plasma
-    # ../modules/window-managers/xmonad
+    ../modules/desktop-managers/plasma.nix
+    # ../modules/window-managers/xmonad.nix
   ];
 
-  hm = { imports = [ ./home-manager/ProBook-440G3.nix ]; };
+  hm = { imports = [ ./home/ProBook-440G3.nix ]; };
 
   boot = { kernelParams = [ "pcie_aspm.policy=performance" ]; };
 

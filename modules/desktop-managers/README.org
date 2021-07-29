@@ -1,0 +1,20 @@
+#+TITLE: WM-related Configurations
+#+AUTHOR: Icy-Thought
+#+DATE: <2021-07-19 mån>
+
+* Introduction
+The following folder contains several DE's tried throughout the years of my NixOS usage. Hopefully you'll find something that attracts you to NixOS here and start using it.
+
+* Table of Contents :TOC:
+- [[#introduction][Introduction]]
+- [[#gnome][Gnome]]
+- [[#plasma][Plasma]]
+- [[#special-thanks][Special Thanks]]
+
+* Gnome
+[[../../../assets/gnome-desktop.png]]
+
+* Plasma
+
+* Special Thanks
+- Myself.
