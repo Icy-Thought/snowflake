@@ -16,7 +16,8 @@ let
   ];
 
 in {
-  imports = [ ../../home/xmonad/picom ];
+  imports = [ ../../home/xmonad/picom ../display-managers/sddm.nix ];
+
   environment.systemPackages = xmonadPkgs;
 
   services.xserver = {
