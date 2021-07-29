@@ -2,8 +2,8 @@ _: pkgs: rec {
   haskellPackages = pkgs.haskellPackages.override (old: {
     overrides = pkgs.lib.composeExtensions (old.overrides or (_: _: { }))
       (final: prev: rec {
-        icy-xmonad = final.callCabal2nix "icy-xmonad"
-          (../modules/window-managers/xmonad/config/xmonad) { };
+        icy-xmonad =
+          final.callCabal2nix "icy-xmonad" (../home/xmonad/icy-xmonad) { };
         xmonad = final.callCabal2nix "xmonad" (pkgs.fetchFromGitHub {
           owner = "xmonad";
           repo = "xmonad";
