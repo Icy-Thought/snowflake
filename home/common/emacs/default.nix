@@ -11,7 +11,7 @@
   home = {
     sessionVariables = {
       DOOMDIR =
-        "${config.home.homeDirectory}/git/Snowflake/modules/home-manager/emacs/doom.d";
+        "${config.home.homeDirectory}/git/Snowflake/home/common/emacs/doom.d";
     };
 
     file.".doom.d" = {
