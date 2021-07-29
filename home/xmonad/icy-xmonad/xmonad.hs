@@ -558,6 +558,7 @@ myManageHook =
       , resource =? "redshift-gtk" -?> doCenterFloat
       , className =? "Gammastep-indicator" -?> doCenterFloat
       , className =? "ibus-ui-gtk3" -?> doIgnore
+      , className =? "fcitx5-gtk" -?> doIgnore
       , resource =? "gcr-prompter" -?> doCenterFloat
       , className =? "St-float" -?> doFloat
       , transience
