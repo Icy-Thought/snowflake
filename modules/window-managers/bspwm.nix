@@ -1,6 +1,7 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, ... }: {
 
-{
+  imports = [ ../display-managers/sddm.nix ];
+
   services.xersver = {
     xkbOptions = "caps:ctrl_modifier";
     windowManager.bspwm = {
@@ -8,6 +9,7 @@
       # configFile = ;
       # sxhkd.configFile = ;
     };
+
     displayManager.defaultSession = "none+bspwm";
   };
 }
