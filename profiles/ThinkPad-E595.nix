@@ -2,13 +2,12 @@
 
   imports = [
     ../modules/common.nix
-    ../modules/nixos/ibus.nix
-    ../modules/desktop-managers/gnome
-    ../modules/window-managers/xmonad
-    # ../modules/window-managers/leftwm
+    ../modules/nixos/fcitx5.nix
+    # ../modules/desktop-managers/gnome.nix
+    ../modules/window-managers/xmonad.nix
   ];
 
-  hm = { imports = [ ./home-manager/ThinkPad-E595.nix ]; };
+  hm = { imports = [ ./home/ThinkPad-E595.nix ]; };
 
   boot = {
     # extraModulePackages = with config.boot.kernelPackages; [ amdgpu-pro ];
@@ -63,6 +62,11 @@
   environment.variables = {
     VK_ICD_FILENAMES =
       [ "/run/opengl-driver/share/vulkan/icd.d/amd_icd64.json" ];
+  };
+
+  systemd.services = {
+    NetworkManager-wait-online.enable = false;
+    systemd-udev-settle.enable = false;
   };
 
   services = {

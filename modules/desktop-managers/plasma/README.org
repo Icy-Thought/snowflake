@@ -1,9 +1,0 @@
-#+TITLE: Welcome to Plasma!
-#+AUTHOR: Icy-Thought
-#+DATE: <2019-09-19 tor>
-
-* Introduction
-[[../../../assets/plasma-desktop.png]]
-
-* Table of Contents :TOC:
-- [[#introduction][Introduction]]

@@ -1,0 +1,24 @@
+#+TITLE: WM-related Configurations
+#+AUTHOR: Icy-Thought
+#+DATE: <2021-07-19 mån>
+
+* Introduction
+The following folder contains several WM's tried throughout the years of my NixOS usage. Hopefully you'll find something that attracts you to NixOS here and start using it.
+
+* Table of Contents :TOC:
+- [[#introduction][Introduction]]
+- [[#xmonad][Xmonad]]
+- [[#leftwm][LeftWM]]
+- [[#bspwm][BSPWM]]
+- [[#special-thanks][Special Thanks]]
+
+* Xmonad
+
+* LeftWM
+[[../../../assets/leftwm-desktop.png]]
+
+* BSPWM
+
+* Special Thanks
+- [[https://github.com/AtifChy/xmonad][AtifChy]]: Xmonad-atif.
+- [[https://github.com/taylor85345/leftwm-theme-garden][Taylor85345]]: LeftWM Garden.

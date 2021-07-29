@@ -2,7 +2,7 @@
 
   hm = import ./home-manager;
 
-  imports = [ ./primary.nix ./nixpkgs.nix ../packages ./wireguard ];
+  imports = [ ./primary.nix ./nixpkgs.nix ./packages ./wireguard ];
 
   environment.etc = {
     home-manager.source = "${inputs.home-manager}";

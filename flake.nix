@@ -66,7 +66,7 @@
 
       # Generate default Home-Manager conf
       mkHomeConfig = { username, system ? "x86_64-linux"
-        , baseModules ? [ ./modules/home-manager ], extraModules ? [ ] }:
+        , baseModules ? [ ./home/common ], extraModules ? [ ] }:
 
         homeManagerConfiguration rec {
           inherit system username;
@@ -100,12 +100,12 @@
       homeConfigurations = {
         thinkpad = mkHomeConfig {
           username = "sirius";
-          extraModules = [ ./profiles/home-manager/ThinkPad-E595.nix ];
+          extraModules = [ ./profiles/home/ThinkPad-E595.nix ];
         };
 
         probook = mkHomeConfig {
           username = "orca";
-          extraModules = [ ./profiles/home-manager/ProBook-440G3.nix ];
+          extraModules = [ ./profiles/home/ProBook-440G3.nix ];
         };
 
       };
