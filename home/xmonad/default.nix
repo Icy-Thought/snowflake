@@ -14,8 +14,8 @@ in {
   imports =
     [ ./xresources ./screen-locker ./dunst ./rofi ./stalonetray ./scripts ];
 
-  config.systemd.services = {
-    gnome.gnome-keyring.enable = true;
+  config.services = {
+    gnome-keyring.enable = true;
     network-manager-applet.enable = true;
     blueman-applet.enable = true;
 

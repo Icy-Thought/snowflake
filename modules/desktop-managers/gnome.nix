@@ -1,5 +1,7 @@
 { config, lib, pkgs, ... }: {
 
+  imports = [ ../display-managers/gdm.nix ];
+
   programs = { dconf.enable = true; };
 
   services = {
@@ -8,14 +10,7 @@
       chrome-gnome-shell.enable = true;
     };
 
-    xserver = {
-      desktopManager.gnome = { enable = true; };
-
-      displayManager.gdm = {
-        enable = true;
-        wayland = true;
-      };
-    };
+    xserver.desktopManager.gnome.enable = true;
 
     dbus = {
       enable = true;
