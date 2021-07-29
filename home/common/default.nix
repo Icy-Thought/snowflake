@@ -4,17 +4,17 @@ let home = config.home.homeDirectory;
 
 in {
   imports = [
-    ./git
-    ./fish
-    ./alacritty
-    ./tmux
-    ./emacs
-    ./neovim
-    ./zathura
-    ./mpd
-    ./ncmpcpp
-    ./ungoogled-chromium
-    ../../modules/packages/home
+    ./pkgs
+    ./config/git
+    ./config/fish
+    ./config/alacritty
+    ./config/tmux
+    ./config/emacs
+    ./config/neovim
+    ./config/zathura
+    ./config/mpd
+    ./config/ncmpcpp
+    ./config/ungoogled-chromium
   ];
 
   programs = {
