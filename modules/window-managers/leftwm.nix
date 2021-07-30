@@ -12,7 +12,7 @@ let
   ];
 
 in {
-  imports = [ ../../leftwm/picom ../display-managers/sddm.nix ];
+  imports = [ ../../home/leftwm/picom ../display-managers/sddm.nix ];
 
   environment.systemPackages = leftPkgs;
 
