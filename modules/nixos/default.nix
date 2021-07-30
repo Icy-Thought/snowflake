@@ -93,6 +93,7 @@
   security.rtkit.enable = true;
 
   hardware = {
+    bluetooth.enable = true;
     enableRedistributableFirmware = true;
 
     opengl = {
@@ -100,9 +101,6 @@
       driSupport = true;
       driSupport32Bit = true;
     };
-
-    pulseaudio.enable = false;
-    bluetooth.enable = true;
 
     openrazer = {
       enable = true;
