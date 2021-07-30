@@ -3,10 +3,10 @@
 
 module Main (main) where
 
-import           Control.Monad (liftM2)
-import qualified Data.Map as M
-import           Data.Monoid (All)
-import           System.Exit (exitSuccess)
+import           Control.Monad                       (liftM2)
+import qualified Data.Map                            as M
+import           Data.Monoid                         (All)
+import           System.Exit                         (exitSuccess)
 import           Theme.Theme                         (base00, base01, base04,
                                                       base05, base06, base07,
                                                       basebg, basefg, myFont,
@@ -19,12 +19,12 @@ import           XMonad.Actions.CycleWS              (Direction1D (Next, Prev),
                                                       emptyWS, hiddenWS,
                                                       ignoringWSs, moveTo,
                                                       shiftTo, toggleWS')
-import qualified XMonad.Actions.FlexibleResize as Flex
-import           XMonad.Actions.NoBorders (toggleBorder)
-import           XMonad.Actions.Promote (promote)
-import           XMonad.Actions.Submap (submap)
-import           XMonad.Actions.TiledWindowDragging (dragWindow)
-import           XMonad.Actions.WithAll (killAll, sinkAll)
+import qualified XMonad.Actions.FlexibleResize       as Flex
+import           XMonad.Actions.NoBorders            (toggleBorder)
+import           XMonad.Actions.Promote              (promote)
+import           XMonad.Actions.Submap               (submap)
+import           XMonad.Actions.TiledWindowDragging  (dragWindow)
+import           XMonad.Actions.WithAll              (killAll, sinkAll)
 import           XMonad.Hooks.DynamicIcons           (IconConfig (..), appIcon,
                                                       dynamicIconsPP,
                                                       iconsFmtReplace,
@@ -45,20 +45,20 @@ import           XMonad.Hooks.StatusBar.PP           (PP (..), filterOutWsPP,
                                                       xmobarAction,
                                                       xmobarBorder, xmobarColor,
                                                       xmobarFont, xmobarStrip)
-import           XMonad.Hooks.WindowSwallowing (swallowEventHook)
-import           XMonad.Layout.Accordion (Accordion (Accordion))
-import           XMonad.Layout.DraggingVisualizer (draggingVisualizer)
-import           XMonad.Layout.LayoutModifier (ModifiedLayout)
+import           XMonad.Hooks.WindowSwallowing       (swallowEventHook)
+import           XMonad.Layout.Accordion             (Accordion (Accordion))
+import           XMonad.Layout.DraggingVisualizer    (draggingVisualizer)
+import           XMonad.Layout.LayoutModifier        (ModifiedLayout)
 import           XMonad.Layout.MultiToggle           (EOT (EOT),
                                                       Toggle (Toggle), mkToggle,
                                                       (??))
 import           XMonad.Layout.MultiToggle.Instances (StdTransformers (NBFULL, NOBORDERS))
-import           XMonad.Layout.NoBorders (smartBorders)
-import           XMonad.Layout.Renamed (Rename (Replace), renamed)
+import           XMonad.Layout.NoBorders             (smartBorders)
+import           XMonad.Layout.Renamed               (Rename (Replace), renamed)
 import           XMonad.Layout.ResizableThreeColumns (ResizableThreeCol (ResizableThreeColMid))
 import           XMonad.Layout.ResizableTile         (MirrorResize (MirrorExpand, MirrorShrink),
                                                       ResizableTall (ResizableTall))
-import           XMonad.Layout.Simplest (Simplest (Simplest))
+import           XMonad.Layout.Simplest              (Simplest (Simplest))
 import           XMonad.Layout.Spacing               (Border (Border), Spacing,
                                                       decScreenSpacing,
                                                       decScreenWindowSpacing,
@@ -75,19 +75,18 @@ import           XMonad.Layout.SubLayouts            (GroupMsg (MergeAll, UnMerg
 import           XMonad.Layout.Tabbed                (Direction2D (D, L, R, U),
                                                       Theme (..), addTabs,
                                                       shrinkText)
-import           XMonad.Layout.WindowNavigation (windowNavigation)
-import           XMonad.Main (launch)
+import           XMonad.Layout.WindowNavigation      (windowNavigation)
 import           XMonad.Prompt                       (XPConfig (..),
                                                       XPPosition (Top),
                                                       defaultXPKeymap,
                                                       deleteAllDuplicates)
-import           XMonad.Prompt.ConfirmPrompt (confirmPrompt)
-import           XMonad.Prompt.FuzzyMatch (fuzzyMatch, fuzzySort)
-import           XMonad.Prompt.Man (manPrompt)
-import           XMonad.Prompt.Shell (shellPrompt)
-import qualified XMonad.StackSet as W
-import           XMonad.Util.ClickableWorkspaces (clickablePP)
-import           XMonad.Util.Cursor (setDefaultCursor)
+import           XMonad.Prompt.ConfirmPrompt         (confirmPrompt)
+import           XMonad.Prompt.FuzzyMatch            (fuzzyMatch, fuzzySort)
+import           XMonad.Prompt.Man                   (manPrompt)
+import           XMonad.Prompt.Shell                 (shellPrompt)
+import qualified XMonad.StackSet                     as W
+import           XMonad.Util.ClickableWorkspaces     (clickablePP)
+import           XMonad.Util.Cursor                  (setDefaultCursor)
 import           XMonad.Util.DynamicScratchpads      (makeDynamicSP,
                                                       spawnDynamicSP)
 import           XMonad.Util.NamedScratchpad         (NamedScratchpad (NS),
@@ -95,25 +94,15 @@ import           XMonad.Util.NamedScratchpad         (NamedScratchpad (NS),
                                                       namedScratchpadAction,
                                                       namedScratchpadManageHook,
                                                       scratchpadWorkspaceTag)
-import           XMonad.Util.Run (safeSpawn, unsafeSpawn)
-import           XMonad.Util.SpawnOnce (spawnOnce)
-import           XMonad.Util.Ungrab (unGrab)
+import           XMonad.Util.Run                     (safeSpawn, unsafeSpawn)
+import           XMonad.Util.SpawnOnce               (spawnOnce)
+import           XMonad.Util.Ungrab                  (unGrab)
 
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
 myTerminal :: String
 myTerminal = "alacritty"
-
-myBrowser :: String
-myBrowser = "firefox "  -- Sets qutebrowser as browser
-
-myEmacs :: String
-myEmacs = "emacsclient -c -a 'emacs' "  -- Makes emacs keybindings easier to type
-
-myEditor :: String
-myEditor = "emacsclient -c -a 'emacs' "  -- Sets emacs as editor
--- myEditor = myTerminal ++ " -e nvim "    -- Sets nvim as editor
 
 myLauncher :: String
 myLauncher = "rofi -width 624 -lines 12"
