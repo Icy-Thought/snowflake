@@ -6,13 +6,12 @@ let
     (rofi.override { plugins = [ rofi-emoji rofi-calc ]; }) # dmenu alt.
     dunst # Notification tool.
     feh # Simple x Image Viewer.
-    sxiv # Simple X image viewer.
-    gammastep # Screen Color Temp-Manager.
-    stalonetray # Stand-alone Tray.
     shotgun # Minimal X Screenshot Util.
-    scrot # CLI Screen-Capture Util.
     xss-lock # External Locker.
     gxmessage # GTK Drop-in Replacement.
+    pavucontrol # PulseAudio Volume Control.
+    autorandr # X Resize and Rotate protocol.
+    xorg.xkbcomp # Keyboard Codes in X.
   ];
 
 in {
