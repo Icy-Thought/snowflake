@@ -154,7 +154,6 @@
   systemd.services = {
     systemd-resolved.enable = true;
     systemd-machined.enable = false;
-    upower.enable = true;
   };
 
   services = {
@@ -163,6 +162,7 @@
       openFirewall = lib.mkDefault false;
     };
 
+    upower.enable = true;
     printing.enable = true;
 
     xserver = {

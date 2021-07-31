@@ -14,13 +14,14 @@ let
   devPkgs = with pkgs; [
     languagetool # Proof-Reading.
     sumneko-lua-language-server # Lua Language Server.
+    rnix-lsp # Nix-lsp server.
     nodejs-16_x # I/O Framwork for JS v8.
     hugo # Modern Static Web Engine.
     openssl # SSL & TLS Protocols.
   ];
 
   lspPkgs = with pkgs.nodePackages; [
-    # javascript-typescript-langserver                # JavaScript/TypeScript.
+    # javascript-typescript-langserver # JavaScript/TypeScript.
     pyright # Python.
     typescript-language-server # TypeScript.
     bash-language-server # Bash.

@@ -47,8 +47,11 @@ let
         rev = "2fa0a4024bab60b0ba40de274880e0c1aa6eca59";
         sha256 = "jaGQaClD7Hk4eWh+rMX8ZtcGDzb9aCu+NX5gzJ1JXQg=";
       };
+      # themeIni = [
+      #  { section = "General"; key = "background"; value = "bars_background.png"; }
+      # ]; # use a custom background.
     };
-    deps = with pkgs; [ qt5.qtmultimedia ];
+    deps = with pkgs; [ qt5.qtmultimedia libsForQt5.qt5.qtgraphicaleffects ];
   };
 
 in {

@@ -43,7 +43,7 @@ M.config = function()
     -- LSP-Install + LSP-config related configurations
     local function setup_servers()
         local lspconf = require("lspconfig")
-        local servers =  { "bashls", "ccls", "pyright", "tsserver", "nix" }
+        local servers =  { "bashls", "ccls", "pyright", "tsserver", "rnix-lsp" }
     
         for _, lang in pairs(servers) do
             if lang ~= "lua" then
