@@ -20,5 +20,5 @@ The following folder contains several WM's tried throughout the years of my NixO
 * BSPWM
 
 * Special Thanks
-- [[https://github.com/AtifChy/xmonad][AtifChy]]: Xmonad-atif.
+- [[https://github.com/IvanMalison][IvanMalison]]: Xmonad Setup.
 - [[https://github.com/taylor85345/leftwm-theme-garden][Taylor85345]]: LeftWM Garden.

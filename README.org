@@ -177,8 +177,8 @@ Restart your neovim environment and you should be greeted with your newly config
 You have successful installed your/my personally hand-crafted/replicated Nix-Flake environment. I hope it suits your needs, if not then you are always welcome to propose changes or fork the project and customize the repository to your heart's content!
 
 * Special Thanks
-- [[https://github.com/kclejeune/system][Kclejeune]]: NixOS flake structure!
-- [[https://github.com/AtifChy/xmonad][AtifChy]]: Xmonad rice!
+- [[https://github.com/kclejeune/system][Kclejeune]]: NixOS Flake structure!
+- [[https://github.com/IvanMalison][IvanMalison]]: Xmonad Setup.
 
 * Useful Links
 - [[Stable][NixOS Manual]]: A manual for the newcomer to read and understand different parts of the NixOS distribution.
