@@ -14,13 +14,13 @@ The following folder contains several WM's tried throughout the years of my NixO
 - [[#special-thanks][Special Thanks]]
 
 * Xmonad
-[[../../../assets/xmonad-desktop.png]]
+[[../../assets/xmonad-desktop.png]]
 
 ** Keybindings
-- modm = super key (windows key)
-- modalt = super + alt key
-- <kbd>hyper</kbd> = <kbd>super</kbd> + <kbd>ctrl</kbd> + <kbd>shift</kbd> key
-- <kbd>xK_g</kbd> = small letter "g".
+- ~modm~ = ~super~ key (windows key)
+- ~modalt~ = ~super~ + ~alt~ key
+- ~hyper~ = ~super~ + ~ctrl~ + ~shift~ key
+- ~xK_g~ = small letter "g".
 
 |--------------------------------+-----------------------------------------------------------------------------------------|
 | Keybinding                     | Explanation                                                                             |
@@ -35,7 +35,7 @@ The following folder contains several WM's tried throughout the years of my NixO
 | modm + shift + xk_b            | Spawn rofi instance to select application to replace with active window.                |
 | modm + ctrl + space            | Activates/Deactivates fullscreen for active window.                                     |
 | modm + xK_x                    | Sends active window to hidden workspace.                                                |
-| modm + alt + space             | Minimzes everything else but active window class.                                       |
+| modm + alt + space             | Minimizes everything else but active window class.                                       |
 | hyper + xK_g                   | Gather the class of the active window to the current workspace.                         |
 | hyper + xK_l                   | ???                                                                                     |
 | modm + xK_backslash (mod + \)  | Cycles through current workspace history.                                               |
@@ -48,7 +48,7 @@ The following folder contains several WM's tried throughout the years of my NixO
 |--------------------------------+-----------------------------------------------------------------------------------------|
 
 * LeftWM
-[[../../../assets/leftwm-desktop.png]]
+[[../../assets/leftwm-desktop.png]]
 
 * BSPWM
 
