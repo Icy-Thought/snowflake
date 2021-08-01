@@ -8,11 +8,44 @@ The following folder contains several WM's tried throughout the years of my NixO
 * Table of Contents :TOC:
 - [[#introduction][Introduction]]
 - [[#xmonad][Xmonad]]
+  - [[#keybindings][Keybindings]]
 - [[#leftwm][LeftWM]]
 - [[#bspwm][BSPWM]]
 - [[#special-thanks][Special Thanks]]
 
 * Xmonad
+[[../../../assets/xmonad-desktop.png]]
+
+** Keybindings
+- modm = super key (windows key)
+- modalt = super + alt key
+- <kbd>hyper</kbd> = <kbd>super</kbd> + <kbd>ctrl</kbd> + <kbd>shift</kbd> key
+- <kbd>xK_g</kbd> = small letter "g".
+
+|--------------------------------+-----------------------------------------------------------------------------------------|
+| Keybinding                     | Explanation                                                                             |
+|--------------------------------+-----------------------------------------------------------------------------------------|
+| modm + n (1..9)                | Cycles through the 9 available workspaces. (1..9)                                       |
+| modm + shift + n (1..9)        | Brings workspace (1..9) to current screen. (multi-monitor setup)                        |
+| modm + directional keys (hjkl) | Move to window based on the direct of the window.                                       |
+| modm + tab                     | Cycle through active windows in a particular order.                                     |
+| modm + p                       | Spawn rofi instance.                                                                    |
+| modm + xK_g                    | Spawn rofi instance to cycling through open applications and going to their workspaces. |
+| modm + xK_b                    | Spawn rofi instance to bring application to current workspace.                          |
+| modm + shift + xk_b            | Spawn rofi instance to select application to replace with active window.                |
+| modm + ctrl + space            | Activates/Deactivates fullscreen for active window.                                     |
+| modm + xK_x                    | Sends active window to hidden workspace.                                                |
+| modm + alt + space             | Minimzes everything else but active window class.                                       |
+| hyper + xK_g                   | Gather the class of the active window to the current workspace.                         |
+| hyper + xK_l                   | ???                                                                                     |
+| modm + xK_backslash (mod + \)  | Cycles through current workspace history.                                               |
+| modm + shift + xK_z            | Move active window to an empty workspace.                                               |
+| modm + shift + xK_h            | Move active window to an empty workspace and change to that workspace.                  |
+| hyper + e                      | Move to empty workspace.                                                                |
+| modm + alt + xK_f              | Launch Firefox Browser.                                                                 |
+| modm + alt + h                 | Launch htop.                                                                            |
+| modm + alt + s                 | Launch Spotify.                                                                         |
+|--------------------------------+-----------------------------------------------------------------------------------------|
 
 * LeftWM
 [[../../../assets/leftwm-desktop.png]]
