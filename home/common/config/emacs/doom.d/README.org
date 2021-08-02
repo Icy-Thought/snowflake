@@ -216,7 +216,7 @@ Since we don't want to disable org-confirm-babel-evaluate all of the time, do it
 #+begin_src emacs-lisp
 (defun org-babel-tangle-config ()
   (when (string-equal (buffer-file-name)
-                      (expand-file-name "~/git/Snowflake/modules/home-manager/emacs/doom.d/doom-config.org"))
+                      (expand-file-name "~/git/Snowflake/home/common/config/emacs/doom.d/README.org"))
     (let ((org-config-babel-evaluate nil))
       (org-babel-tangle))))
 
@@ -362,6 +362,7 @@ NOTE: Press ~K~ on a module to view its documentation, and ~gd~ to browse its di
               +fold)                            ; Folding ability inside LaTeX.
        ;;ledger                                 ; An accounting system in Emacs.
        lua                                      ; One-based indices? one-based indices.
+       markdown                                 ; Writing docs for people to ignore.
        nix                                      ; I hereby declare "nix geht mehr!"
        (org +pretty                             ; Prettify org-mode.
             +dragndrop                          ; Enables drag & drop in org-mode.
