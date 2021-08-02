@@ -1,4 +1,4 @@
-<img alt="WM-related Configurations" src="../../assets/wm-config.png" align="left">
+<img alt="WM-related Configurations" src="../../assets/wm-related.png" align="left">
 
 # Introduction
 The following folder contains several WM's tried throughout the years of my NixOS usage. Hopefully you'll find something that attracts you to NixOS here and start using it.
