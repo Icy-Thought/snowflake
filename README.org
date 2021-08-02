@@ -1,4 +1,4 @@
-#+TITLE: [[./assets/NixOS.]]png
+#+TITLE: [[./assets/NixOS.png]]
 #+DATE: <2021-06-05 lör>
 
 * Table of Contents :TOC:
