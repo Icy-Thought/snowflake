@@ -99,6 +99,7 @@
               +fold)                            ; Folding ability inside LaTeX.
        ;;ledger                                 ; An accounting system in Emacs.
        lua                                      ; One-based indices? one-based indices.
+       markdown                                 ; Writing docs for people to ignore.
        nix                                      ; I hereby declare "nix geht mehr!"
        (org +pretty                             ; Prettify org-mode.
             +dragndrop                          ; Enables drag & drop in org-mode.
