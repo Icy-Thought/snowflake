@@ -23,7 +23,7 @@ Definitions:
 - <kbd>hyper</kbd> = <kbd>super</kbd> + <kbd>ctrl</kbd> + <kbd>shift</kbd>
 
 ### Action Keybindings
-|--------------------------------------------------------|--------------------------------------------------------------------------------|
+
 | Key binding                                            | Action                                                                         |
 |--------------------------------------------------------|--------------------------------------------------------------------------------|
 | <kbd>modm</kbd> + <kbd>shift</kbd> + <kbd>/</kbd>      | Run xmessage with a summary of the default keybindings. (useful for beginners) |
@@ -39,10 +39,9 @@ Definitions:
 | <kbd>modm</kbd> + <kbd>shift</kbd> + <kbd>c</kbd>      | Close the focused window.                                                      |
 | <kbd>modm</kbd> + <kbd>shift</kbd> + <kbd>q</kbd>      | Quit Xmonad.                                                                   |
 | <kbd>modm</kbd> + <kbd>q</kbd>                         | Restart Xmonad.                                                                |
-|--------------------------------------------------------|--------------------------------------------------------------------------------|
 
 ### Window Movement Keybindings
-|-----------------------------------------------------------|----------------------------------------------------------------------------------|
+
 | Key binding                                               | Action                                                                           |
 |-----------------------------------------------------------|----------------------------------------------------------------------------------|
 | <kbd>modm</kbd> + <kbd>space</kbd>                        | Rotate through the available layout algorithms.                                  |
@@ -63,34 +62,30 @@ Definitions:
 | <kbd>modm</kbd> + <kbd>x</kbd>                            | Sends active window to hidden workspace.                                         |
 | <kbd>modm</kbd> + <kbd>alt</kbd> + <kbd>space</kbd>       | Minimizes everything else but active window class.                               |
 | <kbd>hyper</kbd> + <kbd>g</kbd>                           | Gather the class of the active window to the current workspace.                  |
-|-----------------------------------------------------------|----------------------------------------------------------------------------------|
 
 ### Window Movement Mouse Keybindings
-|--------------------------------------|---------------------------------------------------------|
+
 | Binding                              | Action                                                  |
 |--------------------------------------|---------------------------------------------------------|
 | <kbd>modm</kbd> + <kbd>button1</kbd> | Set the window to floating mode and move by dragging.   |
 | <kbd>modm</kbd> + <kbd>button3</kbd> | Set the window to floating mode and resize by dragging. |
 | <kbd>modm</kbd> + <kbd>button2</kbd> | Raise the window to the top of the stack.               |
-|--------------------------------------|---------------------------------------------------------|
 
 ### Workspace Movement Keybindings
-|--------------------------------------------------------|-------------------------------------------|
+
 | Key binding                                            | Action                                    |
 |--------------------------------------------------------|-------------------------------------------|
 | <kbd>modm</kbd> + <kbd>[1..9]</kbd>                    | Switch to workspace N.                    |
 | <kbd>modm</kbd> + <kbd>shift</kbd> + <kbd>[1..9]</kbd> | Move client to workspace N.               |
 | <kbd>hyper</kbd> + <kbd>e                              | Move to empty workspace.                  |
 | <kbd>modm</kbd> + <kbd>\</kbd>                         | Cycles through current workspace history. |
-|--------------------------------------------------------|-------------------------------------------|
 
 ### Screen Movement Keybindings
-|---------------------------------------------------------|-------------------------------------------------|
+
 | Key binding                                             | Action                                          |
 |---------------------------------------------------------|-------------------------------------------------|
 | <kbd>modm</kbd> + <kbd>{w,e,r}</kbd>                    | Switch to physical/Xinerama screens 1, 2, or 3. |
 | <kbd>modm</kbd> + <kbd>shift</kbd> + <kbd>{w,e,r}</kbd> | Move client to screen 1, 2, or 3.               |
-|---------------------------------------------------------|-------------------------------------------------|
 
 # LeftWM
 <img alt="Xmonad Desktop" src="../../assets/leftwm-desktop.png" align="center">
