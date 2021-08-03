@@ -5,14 +5,14 @@
     backend = "glx";
     experimentalBackends = true;
 
-    inactiveOpacity = 1.0;
-    opacityRules = [ "100:class_g = 'firefox' && argb" ];
+    inactiveOpacity = 0.8;
+    opacityRules = [ "100:class_g = 'firefox'" ];
     menuOpacity = 0.9;
 
     fade = true;
     fadeDelta = 10;
-    fadeExclude = [ ];
-    fadeSteps = [ (0.59) (0.59) ];
+    fadeSteps = [ (0.03) (0.03) ];
+    fadeExclude = [ "class_g = 'slop'" ];
 
     refreshRate = 0;
 
@@ -25,8 +25,6 @@
       "class_g = 'slop'"
       "name = 'hacksaw'"
       "class_g = 'Polybar'"
-      "class_g = 'trayer'"
-      "class_g = 'stalonetray'"
       "fullscreen"
       "! name~=''"
       "!WM_CLASS:s"
@@ -34,20 +32,47 @@
       "_NET_WM_STATE@:32a *= '_NET_WM_STATE_HIDDEN'"
     ];
 
-    shadowOffsets = [ (-8) (-8) ];
-    shadowOpacity = 0.7;
+    shadowOffsets = [ (-7) (-7) ];
+    shadowOpacity = 0.75;
 
     vSync = false;
 
     settings = {
+      ### Background-Blur ###
+      blur = {
+        method = "kawase";
+        strength = "7.0";
+      };
+
+      blur-background = false;
+      blur-background-frame = false;
+      blur-background-fixed = false;
+
+      blur-background-exclude = [ "class_g = 'slop'" "_GTK_FRAME_EXTENTS@:c" ];
+
+      ### Animations ###
+      transition-length = 300;
+      transition-pow-x = 0.1;
+      transition-pow-y = 0.1;
+      transition-pow-w = 0.1;
+      transition-pow-h = 0.1;
+      size-transition = true;
+
       ### Corners ###
-      corner-radius = 12.0;
+      corner-radius = 10.0;
       round-borders = 1;
       round-borders-exclude = [ ];
-      rounded-corners-exclude = [ "class_g = 'Polybar'" ];
+
+      rounded-corners-exclude = [
+        #"window_type = 'normal'"
+        "class_g = 'taffybar'"
+        "class_g = 'Alacritty'"
+        "class_g = 'firefox'"
+        "class_g = 'TelegramDesktop'"
+      ];
 
       ### Shadows ###
-      shadow-radius = 8;
+      shadow-radius = 7;
       shadow-color = "#000000";
 
       ### Fading ###
@@ -55,8 +80,9 @@
       no-fading-destroyed-argb = true;
 
       ### Transparency / Opacity ###
-      frame-opacity = 1.0;
+      frame-opacity = 0.7;
       inactive-opacity-override = false;
+      active-opacity = 1.0;
 
       focus-exclude = [
         "class_g ?= 'rofi'"
@@ -64,18 +90,6 @@
         "class_g ?= 'Steam'"
         "class_g = 'Cairo-clock'"
       ];
-
-      ### Background-Blur ###
-      blur = {
-        method = "kawase";
-        strength = "5.0";
-      };
-
-      blur-background = false;
-      blur-background-frame = true;
-      blur-background-fixed = true;
-
-      blur-background-exclude = [ "class_g = 'slop'" "_GTK_FRAME_EXTENTS@:c" ];
 
       ### General ###
       daemon = false;
@@ -88,11 +102,10 @@
       unredir-if-possible-exclude = [ ];
       detect-transient = true;
       detect-client-leader = true;
-      resize-damage = 1;
 
       invert-color-include = [ ];
       glx-no-stencil = true;
-      use-damage = true;
+      use-damage = false;
       transparent-clipping = false;
 
       log-level = "warn";
@@ -102,8 +115,9 @@
       wintypes = {
         tooltip = {
           fade = true;
+          shadow = true;
+          opacity = 0.75;
           focus = false;
-          opacity = 1;
           full-shadow = false;
         };
 
@@ -116,11 +130,11 @@
         popup_menu = {
           shadow = true;
           focus = false;
-          opacity = 0.9;
+          opacity = 0.8;
         };
 
         dropdown_menu = {
-          opacity = 1.0;
+          opacity = 0.8;
           focus = false;
         };
 
