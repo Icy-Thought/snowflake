@@ -4,8 +4,8 @@
       user-mail-address "gilganyx@pm.me")
 
 (setq
- doom-font (font-spec :family "Iosevka" :size 16 :weight 'Medium)
- doom-big-font (font-spec :family "Iosevka" :size 20 :weight 'Bold)
+ doom-font (font-spec :family "JetBrainsMonoMedium Nerd Font" :size 16 :weight 'Regular)
+ doom-big-font (font-spec :family "JetBrainsMonoMedium Nerd Font" :size 20 :weight 'Regular)
  doom-theme 'doom-horizon)
 
 ;; (doom/set-frame-opacity 95)
@@ -95,6 +95,8 @@
   '(outline-9 :weight semi-bold))
 
 (remove-hook 'text-mode-hook #'spell-fu-mode)
+
+(setq org-download-screenshot-method "shotgun -g $(hacksaw) %s")
 
 (setq org-roam-directory "~/org"
       deft-directory "~/org")

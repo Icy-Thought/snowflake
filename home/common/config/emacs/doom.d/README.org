@@ -44,8 +44,8 @@
 *** Doom-Theme + Doom-Font
 #+begin_src emacs-lisp
 (setq
- doom-font (font-spec :family "Iosevka" :size 16 :weight 'Medium)
- doom-big-font (font-spec :family "Iosevka" :size 20 :weight 'Bold)
+ doom-font (font-spec :family "JetBrainsMonoMedium Nerd Font" :size 16 :weight 'Regular)
+ doom-big-font (font-spec :family "JetBrainsMonoMedium Nerd Font" :size 20 :weight 'Regular)
  doom-theme 'doom-horizon)
 #+end_src
 
@@ -181,6 +181,11 @@ Control the different heading sizes for the sake of achieving a saner interface 
 Disable spell-checking by default to retain performance speed for larger files:
 #+begin_src emacs-lisp
 (remove-hook 'text-mode-hook #'spell-fu-mode)
+#+end_src
+
+Allow org-download-screenshot to work with ~shotgun~ + ~hacksaw~:
+#+begin_src emacs-lisp
+(setq org-download-screenshot-method "shotgun -g $(hacksaw) %s")
 #+end_src
 
 *** Org-Roam
