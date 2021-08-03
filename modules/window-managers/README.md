@@ -52,8 +52,8 @@ Definitions:
 | <kbd>modm</kbd> + <kbd>{h,j,k,l}</kbd>                    | Move to an adjacent window in the direction associated with the pressed vim-key. |
 | <kbd>modm</kbd> + <kbd>m</kbd>                            | Minimize active window.                                                          |
 | <kbd>modm</kbd> + <kbd>shift</kbd> + <kbd>m</kbd>         | Maximize active window.                                                          |
-| <kbd>modm</kbd> + <kbd>return</kbd>                       | Swap the focused window and the master window.                                   |
-| <kbd>modm</kbd> + <kbd>shift</kbd> + <kbd>{h,j,k,l}</kbd> | Swap the focused window with the window found on the given direction.            |
+| <kbd>modm</kbd> + <kbd>return</kbd>                       | Swap focused window with master window.                                          |
+| <kbd>modm</kbd> + <kbd>shift</kbd> + <kbd>{h,j,k,l}</kbd> | Swap focused window with window in the input direction.                          |
 | <kbd>modm</kbd> + <kbd>comma</kbd>                        | Increment the number of windows in the master area.                              |
 | <kbd>modm</kbd> + <kbd>period</kbd>                       | Deincrement the number of windows in the master area.                            |
 | <kbd>modm</kbd> + <kbd>shift</kbd> + <kbd>z</kbd>         | Move active window to an empty workspace.                                        |
@@ -78,7 +78,7 @@ Definitions:
 | <kbd>modm</kbd> + <kbd>[1..9]</kbd>                    | Switch to workspace N.                    |
 | <kbd>modm</kbd> + <kbd>shift</kbd> + <kbd>[1..9]</kbd> | Move client to workspace N.               |
 | <kbd>hyper</kbd> + <kbd>e                              | Move to empty workspace.                  |
-| <kbd>modm</kbd> + <kbd>\</kbd>                         | Cycles through current workspace history. |
+| <kbd>modm</kbd> + <kbd>\\</kbd>                        | Cycles through current workspace history. |
 
 ### Screen Movement Keybindings
 
