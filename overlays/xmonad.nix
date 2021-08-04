@@ -7,6 +7,11 @@ _: pkgs: rec {
             "xmonad.hs"
             "icy-xmonad.cabal"
           ]) { };
+        imalison-taffybar = self.callCabal2nix "imalison-taffybar"
+          (pkgs.lib.sourceByRegex ../home/xmonad/icy-taffybar [
+            "taffybar.hs"
+            "icy-taffybar.cabal"
+          ]) { };
       });
   });
 }

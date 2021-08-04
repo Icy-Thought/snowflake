@@ -33,4 +33,3 @@ executable icy-taffybar
                      , transformers
                      , xdg-basedir
   default-language:    Haskell2010
-
