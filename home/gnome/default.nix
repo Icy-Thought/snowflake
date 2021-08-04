@@ -27,7 +27,7 @@ let
 
 in {
   imports = [
-    # ./appearance
+    # ./gtk
     ./dconf
   ];
 

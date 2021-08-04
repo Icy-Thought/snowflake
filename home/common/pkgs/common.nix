@@ -1,40 +1,38 @@
 { config, lib, pkgs, ... }:
 
 let
-  sysPkgs = with pkgs; [
-    # Polychromatic # GUI to control OpenRazer.
-    gsmartcontrol # HDD Health Inspection Tool.
-    transmission-gtk # BitTorrent Client.
+  sysPkgs = [
+    # pkgs.polychromatic # GUI to control OpenRazer.
+    pkgs.transmission-gtk # BitTorrent Client.
   ];
 
-  utilPkgs = with pkgs; [
-    ueberzug # Display Images in CLI.
-    glade # UI GTK Designer.
-    anki # Spaced Repetition Flashcard.
-    latest.firefox-nightly-bin # Latest Firefox Browser.
-    libreoffice # Better Office Alternative Suit.
-    zathura # Minimal Document Reader.
-    foliate # Minimal E-Book Reader.
-    heimdall-gui # Suit to Flash Android Firmware.
-    qalculate-gtk # Scientific Calculator.
+  utilPkgs = [
+    pkgs.ueberzug # Display Images in CLI.
+    pkgs.anki # Spaced Repetition Flashcard.
+    pkgs.latest.firefox-nightly-bin # Latest Firefox Browser.
+    # pkgs.libreoffice # Better Office Alternative Suit.
+    pkgs.zathura # Minimal Document Reader.
+    pkgs.foliate # Minimal E-Book Reader.
+    pkgs.heimdall-gui # Suit to Flash Android Firmware.
+    pkgs.qalculate-gtk # Scientific Calculator.
   ];
 
-  chatPkgs = with pkgs; [
-    zoom-us # Conferencing Application..
-    discord # Latest Discord Client.
-    tdesktop # Telegram Desktop.
-    signal-desktop # More Secure WA Alternative.
-    element-desktop # Matrix Client by Element.
+  chatPkgs = [
+    pkgs.zoom-us # Conferencing Application..
+    pkgs.discord # Latest Discord Client.
+    pkgs.tdesktop # Telegram Desktop.
+    pkgs.signal-desktop # More Secure WA Alternative.
+    pkgs.element-desktop # Matrix Client by Element.
   ];
 
-  mediaPkgs = with pkgs; [
-    obs-studio # Streaming/Recording.
-    celluloid # GTK Frontend for MPV.
-    freetube # FOSS Private YT App.
-    blender # 3D Creation/Animation.
-    gimp # Better Photoshop Alternative.
-    inkscape # Better Illustrator Alternative.
-    kid3 # Audio Tag Editor.
+  mediaPkgs = [
+    pkgs.obs-studio # Streaming/Recording.
+    # pkgs.blender # 3D Creation/Animation.
+    pkgs.celluloid # GTK Frontend for MPV.
+    pkgs.freetube # FOSS Private YT App.
+    pkgs.gimp # Better Photoshop Alternative.
+    pkgs.inkscape # Better Illustrator Alternative.
+    pkgs.kid3 # Audio Tag Editor.
   ];
 
 in { home.packages = sysPkgs ++ chatPkgs ++ mediaPkgs ++ utilPkgs; }

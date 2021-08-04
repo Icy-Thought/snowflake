@@ -10,40 +10,51 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixos-hardware.url = "github:NixOS/nixos-hardware";
     flake-utils.url = "github:numtide/flake-utils";
+    # nixos-hardware.url = "github:NixOS/nixos-hardware";
+    agenix.url = "github:ryantm/agenix";
+
+    xmonad.url = "github:xmonad/xmonad";
+    xmonad-contrib.url = "github:ivanmalison/xmonad-contrib";
 
     picom-jonaburg = {
       url = "github:jonaburg/picom";
       flake = false;
     };
 
-    emacs.url = "github:nix-community/emacs-overlay";
     rust.url = "github:oxalica/rust-overlay";
+    # emacs.url = "github:nix-community/emacs-overlay";
 
     nixpkgs-mozilla = {
       url = "github:mozilla/nixpkgs-mozilla";
       flake = false;
     };
 
-    agenix.url = "github:ryantm/agenix";
-    # naersk.url = "github:nmattia/naersk";
-
   };
 
-  outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager
-    , nixos-hardware, flake-utils, emacs, rust, nixpkgs-mozilla, agenix, ... }:
+  outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager, flake-utils
+    , agenix, ... }:
 
     let
       pkgs = import nixpkgs { system = "x86_64-linux"; };
 
-      overlays = with inputs;
-        [ agenix.overlay rust.overlay emacs.overlay (import nixpkgs-mozilla) ]
-        ++ map (name: import (./overlays + "/${name}"))
+      overlays = [
+        inputs.xmonad.overlay
+        inputs.xmonad-contrib.overlay
+        inputs.agenix.overlay
+        inputs.rust.overlay
+        # inputs.emacs.overlay
+        (import inputs.nixpkgs-mozilla)
+        (final: prev: {
+          picom =
+            prev.picom.overrideAttrs (_: { src = inputs.picom-jonaburg; });
+        })
+      ] ++ map (name: import (./overlays + "/${name}"))
         (attrNames (readDir ./overlays));
 
       lib = nixpkgs.lib.extend (final: prev: home-manager.lib);
 
+      inherit self inputs;
       inherit (nixpkgs.lib) nixosSystem;
       inherit (home-manager.lib) homeManagerConfiguration;
       inherit (flake-utils.lib) eachDefaultSystem eachSystem;
@@ -107,7 +118,6 @@
           username = "orca";
           extraModules = [ ./profiles/home/ProBook-440G3.nix ];
         };
-
       };
     };
 }

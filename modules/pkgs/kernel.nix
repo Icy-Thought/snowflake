@@ -4,9 +4,9 @@ let
   cpupower = config.boot.kernelPackages.cpupower;
   perf = config.boot.kernelPackages.perf;
 
-  kernelPkgs = with pkgs; [
-    cpupower # Examine/Tool Powersaving Features.
-    perf # Profile & Performance Counter.
+  kernelPkgs = [
+    pkgs.cpupower # Examine/Tool Powersaving Features.
+    pkgs.perf # Profile & Performance Counter.
   ];
 
 in { environment.systemPackages = kernelPkgs; }

@@ -1,14 +1,14 @@
 { config, lib, pkgs, inputs, ... }:
 
 let
-  gamingPkgs = with pkgs; [
-    lutris # WINE Gaming Platform.
-    osu-lazer # FOSS Rythm Game!
+  gamingPkgs = [
+    pkgs.lutris # WINE Gaming Platform.
+    pkgs.osu-lazer # FOSS Rythm Game!
   ];
 
-  winePkgs = with pkgs.winePackages; [
-    staging # Wine-Staging.
-    fonts # MS-fonts by wine-project.
+  winePkgs = [
+    pkgs.winePackages.staging # Wine-Staging.
+    pkgs.winePackages.fonts # MS-fonts by wine-project.
   ];
 
 in { home.packages = gamingPkgs ++ winePkgs; }

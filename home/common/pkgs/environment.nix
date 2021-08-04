@@ -1,23 +1,23 @@
 { config, lib, pkgs, ... }:
 
 let
-  gitPkgs = with pkgs.gitAndTools; [
-    diff-so-fancy # Colored git diff.
-    git-crypt # git File Encryption.
-    tig # diff & commit View.
+  gitPkgs = [
+    pkgs.gitAndTools.diff-so-fancy # Colored git diff.
+    pkgs.gitAndTools.git-crypt # git File Encryption.
+    pkgs.gitAndTools.tig # diff & commit View.
   ];
 
-  dictPkgs = with pkgs; [
-    aspell # Spelling Support.
-    aspellDicts.en # en_US Aspell.
-    aspellDicts.sv # sv_SE Aspell.
-    hunspellDicts.sv_SE # sv_SE Hunspell.
-    hunspellDicts.en_US # en_US Hunspell.
+  dictPkgs = [
+    pkgs.aspell # Spelling Support.
+    pkgs.aspellDicts.en # en_US Aspell.
+    pkgs.aspellDicts.sv # sv_SE Aspell.
+    pkgs.hunspellDicts.sv_SE # sv_SE Hunspell.
+    pkgs.hunspellDicts.en_US # en_US Hunspell.
   ];
 
-  nixPkgs = with pkgs; [
-    any-nix-shell # Fish/ZSH Support.
-    nix-direnv # Fast nix-impl of direnv.
+  nixPkgs = [
+    pkgs.any-nix-shell # Fish/ZSH Support.
+    pkgs.nix-direnv # Fast nix-impl of direnv.
   ];
 
 in { home.packages = gitPkgs ++ dictPkgs ++ nixPkgs; }

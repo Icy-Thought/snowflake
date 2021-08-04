@@ -26,11 +26,11 @@
         sort = "yes";
         idle_threshold = 120;
 
-        font = "JetBrains Mono Medium 10";
+        font = "JetBrainsMonoMedium Nerd Font 10";
         line_height = 4;
         markup = "full";
         format = ''
-          <span size='x-large' font_desc='JetBrains Mono 8' weight='bold' foreground='#d8dee9'>%s</span>
+          <span size='x-large' font_desc='JetBrainsMonoMedium Nerd font 8' weight='bold' foreground='#d8dee9'>%s</span>
           %b'';
 
         alignment = "left";
@@ -68,9 +68,7 @@
 
       };
 
-      experimental = {
-        per_monitor_dpi = false;
-      };
+      experimental = { per_monitor_dpi = false; };
 
       shortcuts = {
         close = "ctrl+space";
@@ -89,7 +87,7 @@
       urgency_normal = {
         background = "#1E2127";
         foreground = "#d8dee9";
-        frame_color = "#ffcb6b";
+        frame_color = "#46d9ff";
         timeout = 7;
         #icon = /path/to/icon
       };
