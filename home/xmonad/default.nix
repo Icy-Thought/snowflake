@@ -12,9 +12,11 @@ in {
   config.services = {
     gnome-keyring.enable = true;
 
+    status-notifier-wacher.enable = true;
+
     taffybar = {
       enable = true;
-      # package = pkgs.haskellPackages.icy-taffybar;
+      package = pkgs.haskellPackages.icy-taffybar;
     };
 
     random-background = {
