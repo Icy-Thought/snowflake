@@ -1,13 +1,13 @@
 { config, lib, pkgs, ... }:
 
 let
-  leftPkgs = with pkgs; [
-    (rofi.override { plugins = [ rofi-emoji rofi-calc ]; })
-    dunst # Notification tool.
-    polybar # Customizable toolbar.
-    trayer # SysTray
-    feh # Image viewer.
-    shotgun # Minimal X screenshot util.
+  leftPkgs = [
+    (pkgs.rofi.override { plugins = [ pkgs.rofi-emoji pkgs.rofi-calc ]; })
+    pkgs.dunst # Notification tool.
+    pkgs.polybar # Customizable toolbar.
+    pkgs.trayer # SysTray
+    pkgs.feh # Image viewer.
+    pkgs.shotgun # Minimal X screenshot util.
   ];
 
 in {
