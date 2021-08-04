@@ -10,20 +10,45 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    flake-utils.url = "github:numtide/flake-utils";
-    # nixos-hardware.url = "github:NixOS/nixos-hardware";
-    agenix.url = "github:ryantm/agenix";
+    flake-utils = {
+      url = "github:numtide/flake-utils";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-    xmonad.url = "github:xmonad/xmonad";
-    xmonad-contrib.url = "github:ivanmalison/xmonad-contrib";
+    # nixos-hardware = {
+    #   url = "github:NixOS/nixos-hardware";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
+
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    xmonad = {
+      url = "github:xmonad/xmonad";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    xmonad-contrib = {
+      url = "github:ivanmalison/xmonad-contrib";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     picom-jonaburg = {
       url = "github:jonaburg/picom";
       flake = false;
     };
 
-    rust.url = "github:oxalica/rust-overlay";
-    # emacs.url = "github:nix-community/emacs-overlay";
+    rust = {
+      url = "github:oxalica/rust-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # emacs = {
+    #  url = "github:nix-community/emacs-overlay";
+    #  inputs.nixpkgs.follows = "nixpkgs";
+    # };
 
     nixpkgs-mozilla = {
       url = "github:mozilla/nixpkgs-mozilla";
@@ -44,6 +69,7 @@
         inputs.agenix.overlay
         inputs.rust.overlay
         # inputs.emacs.overlay
+
         (import inputs.nixpkgs-mozilla)
         (final: prev: {
           picom =

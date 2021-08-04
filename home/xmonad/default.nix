@@ -15,7 +15,7 @@ in {
 
     taffybar = {
       enable = true;
-      # package = pkgs.haskellPackages.icy-taffybar;
+      package = pkgs.haskellPackages.icy-taffybar;
     };
 
     random-background = {

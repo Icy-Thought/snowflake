@@ -1,22 +1,22 @@
 { config, lib, pkgs, ... }:
 
 let
-  defaultPkgs = with pkgs; [
-    autorandr # X Resize and Rotate protocol.
-    xorg.xkbcomp # Keyboard Codes in X.
-    xss-lock # External Locker.
-    pavucontrol # PulseAudio Volume Control.
-    playerctl # Media Player Controller.
-    dolphin # Qt File-Manager.
-    gxmessage # GTK Drop-in Replacement.
-    shotgun # Minimal X Screenshot Util.
-    hacksaw # Selection Tool for Screenshot Scripts.
+  defaultPkgs = [
+    pkgs.autorandr # X Resize and Rotate protocol.
+    pkgs.xorg.xkbcomp # Keyboard Codes in X.
+    pkgs.xss-lock # External Locker.
+    pkgs.pavucontrol # PulseAudio Volume Control.
+    pkgs.playerctl # Media Player Controller.
+    pkgs.dolphin # Qt File-Manager.
+    pkgs.gxmessage # GTK Drop-in Replacement.
+    pkgs.shotgun # Minimal X Screenshot Util.
+    pkgs.hacksaw # Selection Tool for Screenshot Scripts.
   ];
 
-  xmonadPkgs = with pkgs; [
-    haskellPackages.icy-xmonad # xmonad binary
-    dunst # Notification tool.
-    feh # Simple x Image Viewer.
+  xmonadPkgs = [
+    pkgs.haskellPackages.icy-xmonad # xmonad binary
+    pkgs.dunst # Notification tool.
+    pkgs.feh # Simple x Image Viewer.
   ];
 
 in {
