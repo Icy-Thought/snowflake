@@ -11,6 +11,7 @@ let
     pkgs.gxmessage # GTK Drop-in Replacement.
     pkgs.shotgun # Minimal X Screenshot Util.
     pkgs.hacksaw # Selection Tool for Screenshot Scripts.
+    pkgs.dconf # Gsettings-Manager.
   ];
 
   xmonadPkgs = [

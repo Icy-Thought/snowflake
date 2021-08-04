@@ -11,8 +11,7 @@ in {
 
   config.services = {
     gnome-keyring.enable = true;
-
-    status-notifier-wacher.enable = true;
+    status-notifier-watcher.enable = true;
 
     taffybar = {
       enable = true;

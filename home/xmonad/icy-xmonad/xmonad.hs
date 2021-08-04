@@ -109,7 +109,7 @@ myConfig = def
 restartEventHook e@ClientMessageEvent { ev_message_type = mt } = do
   a <- getAtom "XMONAD_RESTART"
   if (mt == a)
-    then XMonad.Operations.restart "imalison-xmonad" True >> return (All True)
+    then XMonad.Operations.restart "icy-xmonad" True >> return (All True)
     else return $ All True
 restartEventHook _ = return $ All True
 
@@ -230,7 +230,6 @@ myStartup = do
   hostName <- io getHostName
   M.findWithDefault (return ()) hostName hostNameToAction
   setToggleActiveAll GAPS True
-  setToggleActiveAll MAGNIFY True
 
 -- Manage hook
 myManageHook = maybeReplaceTargetHook <+>
@@ -252,7 +251,7 @@ data MyToggles
 
 instance Transformer MyToggles Window where
   transform LIMIT x k = k (limitSlice 2 x) unmodifyLayout
-  transform GAPS x k = k (smartSpacing 5 x) unmodifyLayout
+  transform GAPS x k = k (smartSpacing 7 x) unmodifyLayout
   transform MAGICFOCUS x k = k (magicFocus x) unmodifyLayout
   transform MAGNIFY x k = k (magnify (1.3) (AllWins 1) True x) unmodifyLayout
 
