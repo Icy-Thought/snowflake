@@ -7,7 +7,8 @@ _: pkgs: rec {
             "xmonad.hs"
             "icy-xmonad.cabal"
           ]) { };
-        imalison-taffybar = self.callCabal2nix "imalison-taffybar"
+
+        icy-taffybar = self.callCabal2nix "icy-taffybar"
           (pkgs.lib.sourceByRegex ../home/xmonad/icy-taffybar [
             "taffybar.hs"
             "icy-taffybar.cabal"
