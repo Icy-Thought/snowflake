@@ -1,74 +1,56 @@
 { config, lib, pkgs, ... }:
 
 let
-  nixPkgs = with pkgs; [
-    nixfmt # Nix Code Formatter.
-    nixpkgs-fmt # [...] -> for nixpkgs.
-    nix-prefetch-github # Prefetch from GH.
-    nixpkgs-review # Review nixpkgs PR.
-    nix-top # Tracks nix-builds.
-    lorri # Project's nix-env.
-    hydra-check # Hydra Build Status Check.
+  nixPkgs = [
+    pkgs.nixfmt # Nix Code Formatter.
+    pkgs.nixpkgs-fmt # [...] -> for nixpkgs.
+    pkgs.nix-top # Tracks nix-builds.
+    pkgs.nixpkgs-review # Review nixpkgs PR.
+    pkgs.crate2nix # Nix-build File for Rust Crates.
+    pkgs.cabal2nix # Cabal -> .nix Files.
   ];
 
   devPkgs = with pkgs; [
-    languagetool # Proof-Reading.
-    sumneko-lua-language-server # Lua Language Server.
-    rnix-lsp # Nix-lsp server.
-    nodejs-16_x # I/O Framwork for JS v8.
-    hugo # Modern Static Web Engine.
-    openssl # SSL & TLS Protocols.
+    pkgs.languagetool # Proof-Reading.
+    pkgs.gcc11 # GNU Compiler Collection.
+    pkgs.gnumake # Control Exec. Files.
+    pkgs.cmake # Auto Testing & Packaging.
+    pkgs.rnix-lsp # Nix-lsp server.
+    pkgs.rust-bin.nightly.latest.default # Latest Rust Compiler.
+    pkgs.ghc # Glasgow Haskell Compiler.
+    pkgs.sumneko-lua-language-server # Lua Language Server.
+    # pkgs.nodejs-16_x # I/O Framwork for JS v8.
+    pkgs.hugo # Modern Static Web Engine.
+    pkgs.openssl # SSL & TLS Protocols.
   ];
 
-  lspPkgs = with pkgs.nodePackages; [
-    # javascript-typescript-langserver # JavaScript/TypeScript.
-    pyright # Python.
-    typescript-language-server # TypeScript.
-    bash-language-server # Bash.
+  lspPkgs = [
+    pkgs.ccls # C/C++ language Server - Clang.
+    pkgs.rust-analyzer # Rust Completion.
+    pkgs.haskell-language-server # LSP server for GHC
+    pkgs.nodePackages.pyright # Python.
+    pkgs.nodePackages.typescript-language-server # TypeScript.
+    pkgs.nodePackages.bash-language-server # Bash.
   ];
 
-  ccppPkgs = with pkgs; [
-    gcc11 # GNU Compiler Collection.
-    ccls # C/C++ language Server - Clang.
-    gnumake # Control Exec. Files.
-    cmake # Auto Testing & Packaging.
+  pyPkgs = [
+    pkgs.python39 # Py-lang.
+    pkgs.pipenv # Py-dev Workflow for Humans.
+    pkgs.python39Packages.black # Python Code Formatter.
+    pkgs.python39Packages.isort # Sort Py-imports.
+    pkgs.python39Packages.pyflakes # Py-error Check.
+    pkgs.python39Packages.nose-timer # Nosetests Timer.
+    pkgs.python39Packages.nose-exclude # Exclude Dirs from nosetests.
+    pkgs.python39Packages.pytest # Py-test Framework.
   ];
 
-  rsPkgs = with pkgs; [
-    rust-bin.nightly.latest.default # Latest Rust Compiler.
-    rust-analyzer # Rust Completion.
-    crate2nix # Nix-build File for Rust Crates.
+  emacsPkgs = [
+    pkgs.graphviz # Graph Visualization.
+    pkgs.tectonic # LaTeX Support.
+    pkgs.gnuplot # Plotting Through Programming.
+    pkgs.sqlite # Serverless SQL Database.
+    pkgs.jq # Lightweight JSON Processor.
+    pkgs.xsv # Fast CSV Toolkit (Rust).
   ];
 
-  hsPkgs = with pkgs;
-    [
-      # ghc # Glasgow Haskell Compiler.
-      # cabal2nix # Cabal -> .nix Files.
-    ];
-
-  pyPkgs = with pkgs.python39Packages; [
-    black # Python Code Formatter.
-    isort # Sort Py-imports.
-    pyflakes # Py-error Check.
-    nose-timer # Nosetests Timer.
-    nose-exclude # Exclude Dirs from nosetests.
-    pytest # Py-test Framework.
-  ];
-
-  pyExtPkgs = with pkgs; [
-    python39 # Py-lang.
-    pipenv # Py-dev Workflow for Humans.
-  ];
-
-  emacsPkgs = with pkgs; [
-    graphviz # Graph Visualization.
-    tectonic # LaTeX Support.
-    sqlite # Serverless SQL Database.
-    jq # Lightweight JSON Processor.
-    xsv # Fast CSV Toolkit (Rust).
-  ];
-
-in {
-  home.packages = nixPkgs ++ devPkgs ++ lspPkgs ++ ccppPkgs ++ rsPkgs ++ hsPkgs
-    ++ pyPkgs ++ pyExtPkgs ++ emacsPkgs;
-}
+in { home.packages = nixPkgs ++ devPkgs ++ lspPkgs ++ pyPkgs ++ emacsPkgs; }

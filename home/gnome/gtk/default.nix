@@ -5,20 +5,19 @@
 
     iconTheme = {
       package = pkgs.whitesur-icon-theme;
-      name = "Whitesur-dark";
+      name = "WhiteSur-dark";
     };
 
     theme = {
-      package = pkgs.flat-remix-gnome;
-      name = "Flat-Remix-Green";
+      package = pkgs.orchis-theme;
+      name = "orchis-dark-compact";
     };
 
     gtk3.extraConfig = {
-      gtk-icon-theme-name = "Whitesur-dark";
-      gtk-theme-name = "Flat-Remix-Green";
+      gtk-icon-theme-name = "WhiteSur-dark";
+      gtk-theme-name = "orchis-dark-compact";
       gtk-application-prefer-dark-theme = 1;
     };
   };
 
-  services.gnome-keyring.enable = true;
 }

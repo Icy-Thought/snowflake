@@ -11,19 +11,19 @@
     "Xcursor.theme" = "bloom";
     "!Xcursor.size" = 16;
 
-    "xiv.font" = "JetBrains Mono:style=Medium:size=9";
+    "xiv.font" = "JetBrainsMonoMedium Nerd Font:style=Medium:size=9";
 
     "!Xmessage.font" = "FiraCode Nerd Font:pixelsize=14";
 
-    "t.font" = "JetBrainsMono Nerd Font =size=10:weight=90";
+    "t.font" = "JetBrainsMonoMedium Nerd Font=size=10:weight=90";
     "t.borderpx" = 10;
     "t.opacity" = 255;
     "t.alpha" = "1.0";
     "t.cursorshape" = 1;
     "t.blinktimeout" = 900;
 
-    "monad.font" = "xft:JetBrains Mono:size=10:style=Bold";
-    "monad.font.gtk" = "JetBrains Mono Medium, 10";
+    "monad.font" = "xft:JetBrainsMonoMedium Nerd Font:size=10:style=Bold";
+    "monad.font.gtk" = "JetBrainsMonoMedium Nerd Font, 10";
 
     "*.foreground" = "#c8ccd4";
     "*.background" = "#1e2127";

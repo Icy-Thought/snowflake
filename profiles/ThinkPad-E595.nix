@@ -34,19 +34,18 @@
   hardware = {
     cpu.amd = { updateMicrocode = true; };
 
-    opengl.extraPackages = with pkgs;
-      [
-        # amdvlk
-        # driversi686Linux.amdvlk
-        rocm-opencl-icd
-      ];
+    opengl.extraPackages =
+      [ pkgs.amdvlk pkgs.driversi686Linux.amdvlk pkgs.rocm-opencl-icd ];
   };
 
   user.name = "sirius";
   networking.hostName = "ThinkPad-NixOS";
 
   virtualisation = {
-    libvirtd.enable = true;
+    virtualbox.host = {
+      enable = true;
+      enableExtensionPack = true;
+    };
 
     podman = {
       enable = false;
@@ -54,10 +53,10 @@
     };
   };
 
-  environment.systemPackages = with pkgs;
-    [ (steam.override { nativeOnly = true; }).run ];
+  environment.systemPackages =
+    [ (pkgs.steam.override { nativeOnly = true; }).run ];
 
-  programs = { steam.enable = true; };
+  programs.steam.enable = true;
 
   environment.variables = {
     VK_ICD_FILENAMES =

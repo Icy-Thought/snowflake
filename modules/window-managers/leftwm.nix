@@ -2,8 +2,7 @@
 
 let
   leftPkgs = with pkgs; [
-    (nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
-    (rofi.override { plugins = [ rofi-emoji rofi-calc ]; }) # Window switcher.
+    (rofi.override { plugins = [ rofi-emoji rofi-calc ]; })
     dunst # Notification tool.
     polybar # Customizable toolbar.
     trayer # SysTray

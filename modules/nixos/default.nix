@@ -82,7 +82,7 @@
         isNormalUser = true;
         createHome = true;
         useDefaultShell = true;
-        extraGroups = [ "wheel" "network" "plugdev" "adbusers" "libvirtd" ];
+        extraGroups = [ "wheel" "network" "plugdev" "adbusers" "vboxusers" ];
         hashedPassword =
           "$6$DMQjZ0Nn8JAb$2MBYjRZvhACwUJrDXI6GciNglr.KM3Yaza4CMUaG8HCxOJ2EtRqZZKvTBzRhIPQWjKiYeU3cCpntQNkToiUeu0";
       };
@@ -124,8 +124,11 @@
   fonts = {
     enableDefaultFonts = true;
     fonts = with pkgs; [
-      (nerdfonts.override { fonts = [ "Iosevka" "JetBrainsMono" ]; })
+      (nerdfonts.override {
+        fonts = [ "Iosevka" "JetBrainsMono" "FantasqueSansMono" ];
+      })
 
+      comfortaa
       source-code-pro
       emacs-all-the-icons-fonts
       liberation_ttf
@@ -192,7 +195,7 @@
       pulse.enable = true;
 
       # If you want to use JACK applications, uncomment:
-      # #jack.enable = true;
+      # jack.enable = true;
 
       # Bluetooth pipewire settings:
       media-session.config.bluez-monitor.rules = [

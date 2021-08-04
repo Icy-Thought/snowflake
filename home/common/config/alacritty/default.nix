@@ -3,7 +3,10 @@
   programs.alacritty = {
     enable = true;
     settings = {
-      env = { "TERM" = "alacritty-direct"; };
+      env = {
+        "TERM" = "alacritty-direct";
+        "WINIT_HIDPI_FACTOR" = 1;
+      };
 
       window = {
         dynamic_title = true;
@@ -81,7 +84,7 @@
         unfocused_hollow = true;
       };
 
-      background_opacity = 0.95;
+      background_opacity = 1.00;
 
       # One Dark Colorscheme
       colors = {
