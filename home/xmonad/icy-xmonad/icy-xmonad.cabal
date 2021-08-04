@@ -1,7 +1,7 @@
 name:           icy-xmonad
 version:        0.1.0
 synopsis:       Icy-Thought's Xmonad configuration.
-homepage:       https://github.com/Icy-Thought/Snowflake/home/xmonad
+homepage:       https://github.com/Icy-Thought/Snowflake/home/xmonad/icy-xmonad
 author:         Icy-Thought
 maintainer:     Icy-Thought
 build-type:     Simple

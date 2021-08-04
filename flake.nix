@@ -80,7 +80,6 @@
 
       lib = nixpkgs.lib.extend (final: prev: home-manager.lib);
 
-      inherit self inputs;
       inherit (nixpkgs.lib) nixosSystem;
       inherit (home-manager.lib) homeManagerConfiguration;
       inherit (flake-utils.lib) eachDefaultSystem eachSystem;

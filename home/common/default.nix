@@ -5,6 +5,7 @@ let home = config.home.homeDirectory;
 in {
   imports = [
     ./pkgs
+    ./config/fcitx5
     ./config/git
     ./config/fish
     ./config/alacritty
