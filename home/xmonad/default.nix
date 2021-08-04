@@ -7,15 +7,14 @@ let
   '';
 
 in {
-  imports =
-    [ ./xresources ./gtk ./dunst ./rofi ];
+  imports = [ ./xresources ./gtk ./dunst ./rofi ];
 
   config.services = {
     gnome-keyring.enable = true;
 
     taffybar = {
       enable = true;
-      package = pkgs.haskellPackages.icy-taffybar;
+      # package = pkgs.haskellPackages.icy-taffybar;
     };
 
     random-background = {
