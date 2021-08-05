@@ -4,8 +4,9 @@
     enable = true;
     settings = {
       env = {
-        "TERM" = "alacritty-direct";
-        "WINIT_HIDPI_FACTOR" = 1;
+        TERM = "alacritty-direct";
+        WINIT_HIDPI_FACTOR = "1";
+        WINIT_X11_SCALE_FACTOR = "1";
       };
 
       window = {
@@ -62,7 +63,7 @@
           style = "Italic";
         };
 
-        size = 12.0;
+        size = 13.0;
 
         offset = {
           x = 0;
