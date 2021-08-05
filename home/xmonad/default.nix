@@ -32,6 +32,8 @@ in {
     windowManager.command = ''
       ${pkgs.haskellPackages.icy-xmonad}/bin/icy-xmonad
     '';
+
+    importedVariables = [ "GDK_PIXBUF_MODULE_FILE" ];
   };
 
 }
