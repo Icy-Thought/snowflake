@@ -12,6 +12,7 @@ let
     pkgs.shotgun # Minimal X Screenshot Util.
     pkgs.hacksaw # Selection Tool for Screenshot Scripts.
     pkgs.dconf # Gsettings-Manager.
+    pkgs.hicolor-icon-theme # Fallback-theme TaffyBar.
   ];
 
   xmonadPkgs = [
@@ -25,18 +26,26 @@ in {
 
   environment.systemPackages = defaultPkgs ++ xmonadPkgs;
 
-  services.xserver = {
-    xkbOptions = "caps:ctrl_modifier";
-    displayManager.defaultSession = "none+xmonad";
+  services = {
+    blueman.enable = true;
 
-    windowManager = {
-      session = [{
-        name = "xmonad";
-        start = ''
-          /usr/bin/env icy-xmonad &
-          waitPID=$!
-        '';
-      }];
+    xserver = {
+      xkbOptions = "caps:ctrl_modifier";
+      displayManager.defaultSession = "none+xmonad";
+
+      displayManager.sessionCommands = ''
+        systemctl --user import-environment GDK_PIXBUF_MODULE_FILE DBUS_SESSION_BUS_ADDRESS PATH
+      '';
+
+      windowManager = {
+        session = [{
+          name = "xmonad";
+          start = ''
+            /usr/bin/env icy-xmonad &
+            waitPID=$!
+          '';
+        }];
+      };
     };
   };
 
