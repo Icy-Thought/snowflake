@@ -1,7 +1,5 @@
 { config, pkgs, ... }: {
 
-  services.picom.enable = true;
-
   programs.rofi = {
     enable = true;
     plugins = with pkgs; [ rofi-emoji rofi-calc ];
