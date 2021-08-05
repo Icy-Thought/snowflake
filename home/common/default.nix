@@ -7,6 +7,7 @@ in {
     ./pkgs
     ./config/fcitx5
     ./config/git
+    ./config/starship
     ./config/fish
     ./config/alacritty
     ./config/tmux
