@@ -51,7 +51,7 @@
       blur-background-exclude = [ "class_g = 'slop'" "_GTK_FRAME_EXTENTS@:c" ];
 
       ### Animations ###
-      transition-length = 300;
+      transition-length = 150;
       transition-pow-x = 0.1;
       transition-pow-y = 0.1;
       transition-pow-w = 0.1;
@@ -64,11 +64,11 @@
       round-borders-exclude = [ ];
 
       rounded-corners-exclude = [
-        #"window_type = 'normal'"
         "class_g = 'taffybar'"
-        "class_g = 'Alacritty'"
-        "class_g = 'firefox'"
-        "class_g = 'TelegramDesktop'"
+        # "window_type = 'normal'"
+        # "class_g = 'Alacritty'"
+        # "class_g = 'firefox'"
+        # "class_g = 'TelegramDesktop'"
       ];
 
       ### Shadows ###
