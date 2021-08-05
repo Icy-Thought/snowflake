@@ -16,7 +16,6 @@ let
   ];
 
   tuiPkgs = [
-    # pkgs.starship # Minimal + Customizable Prompt.
     pkgs.nnn # TUI File Manager.
     pkgs.glances # Curses-based Monitoring Tool.
     pkgs.neofetch # Fetch System Information.
