@@ -63,13 +63,7 @@
       round-borders = 1;
       round-borders-exclude = [ ];
 
-      rounded-corners-exclude = [
-        "class_g = 'taffybar'"
-        # "window_type = 'normal'"
-        # "class_g = 'Alacritty'"
-        # "class_g = 'firefox'"
-        # "class_g = 'TelegramDesktop'"
-      ];
+      rounded-corners-exclude = [ ];
 
       ### Shadows ###
       shadow-radius = 7;
@@ -109,7 +103,7 @@
       transparent-clipping = false;
 
       log-level = "warn";
-      log-file = "~/.cache/picom-log.log";
+      log-file = "${XDG_CACHE_DIR/.cache}/picom.log";
       show-all-xerrors = true;
 
       wintypes = {

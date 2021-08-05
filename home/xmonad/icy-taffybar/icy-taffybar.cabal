@@ -7,7 +7,7 @@ maintainer:     Icy-Thought
 build-type:     Simple
 cabal-version:  >=1.10
 
-executable icy-taffybar
+executable taffybar
   main-is:             taffybar.hs
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
   -- ghc-options:      -threaded -g -rtsopts

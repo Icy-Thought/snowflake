@@ -13,16 +13,27 @@ in {
     gnome-keyring.enable = true;
     status-notifier-watcher.enable = true;
 
-    taffybar = {
-      enable = true;
-      package = pkgs.haskellPackages.icy-taffybar;
-    };
-
     random-background = {
       enable = true;
       display = "fill";
       imageDirectory = "%h/Pictures/Wallpapers/Randomize";
     };
+
+    taffybar = {
+      enable = true;
+      package = pkgs.haskellPackages.icy-taffybar;
+    };
+
+    # notify-osd = {
+    #   enable = true;
+    #   package = pkgs.notify-osd-customizable;
+    # };
+
+    kdeconnect = {
+      enable = true;
+      indicator = true;
+    };
+
   };
 
   config.xsession = {
