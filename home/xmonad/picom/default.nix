@@ -102,10 +102,6 @@
       use-damage = false;
       transparent-clipping = false;
 
-      log-level = "warn";
-      log-file = "${XDG_CACHE_DIR/.cache}/picom.log";
-      show-all-xerrors = true;
-
       wintypes = {
         tooltip = {
           fade = true;
