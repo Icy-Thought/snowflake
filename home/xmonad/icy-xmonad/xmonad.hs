@@ -63,6 +63,7 @@ import           XMonad.Hooks.TaffybarPagerHints
 import           XMonad.Hooks.WorkspaceHistory
 import           XMonad.Layout.Accordion
 import           XMonad.Layout.BoringWindows
+import           XMonad.Layout.ConditionalModifier
 import           XMonad.Layout.Cross
 import           XMonad.Layout.GridVariants (Grid(Grid))
 import           XMonad.Layout.LayoutCombinators
@@ -77,8 +78,9 @@ import           XMonad.Layout.MultiToggle.Instances
 import           XMonad.Layout.NoBorders
 import qualified XMonad.Layout.Renamed as RN
 import           XMonad.Layout.Spacing
-import qualified XMonad.Operations
+import           XMonad.Layout.Tabbed
 import           XMonad.Main (launch)
+import qualified XMonad.Operations
 import qualified XMonad.StackSet as W
 import           XMonad.Util.CustomKeys
 import qualified XMonad.Util.Dmenu as DM
@@ -87,6 +89,7 @@ import           XMonad.Util.Minimize
 import           XMonad.Util.NamedScratchpad
 import           XMonad.Util.NamedWindows (getName)
 import           XMonad.Util.Run
+import           XMonad.Util.Themes
 import           XMonad.Util.WorkspaceCompare
 
 myConfig = def
@@ -119,10 +122,10 @@ myNavigation2DConfig = def { defaultTiledNavigation = centerNavigation }
 main = do
   dirs <- getDirectories
   (`launch` dirs)
-  . docks 
-  . pagerHints 
-  . ewmh 
-  . withNavigation2DConfig myNavigation2DConfig $ myConfig
+       . docks
+       . pagerHints
+       . ewmh
+       . withNavigation2DConfig myNavigation2DConfig $ myConfig
 
 -- Utility functions
 
@@ -201,10 +204,12 @@ myDmenuArgs = ["-dmenu", "-i", "-show-icons"]
 myDmenu = DM.menuArgs "rofi" myDmenuArgs
 
 getWorkspaceDmenu = myDmenu (workspaces myConfig)
-
+
 -- Selectors
-isHangoutsTitle = isPrefixOf "Google Hangouts"
+
 isGmailTitle t = isInfixOf "@gmail.com" t && isInfixOf "Gmail" t
+isChromeClass = isInfixOf "chrome"
+chromeSelectorBase = isChromeClass <$> className
 
 firefoxSelector = className =? "Firefox"
 chromiumSelector = className =? "Chromium"
@@ -216,33 +221,40 @@ volumeSelector = className =? "Pavucontrol"
 virtualClasses =
   [ (transmissionSelector, "Transmission")
   ]
-
+
 -- Commands
 emacsCommand = "emacsclient -c"
-htopCommand = "alacritty -e htop"
 firefoxCommand = "firefox"
 firefoxPrivCommand = "firefox --profile ~/.mozilla/firefox/qqxa82yf.Private"
 chromiumCommand = "chromium"
+
 spotifyCommand = "spotify"
+htopCommand = "alacritty --title htop -e htop"
 transmissionCommand = "transmission-gtk"
 volumeCommand = "pavucontrol"
-
+
 -- Startup hook
--- A mapping from hostnames to actions that should be taken on those hosts
+
 hostNameToAction =
-  M.fromList [ ("my-hostname", return ())
+  M.fromList [ ("ryzen-shine", return ())
              ]
 
 myStartup = do
   hostName <- io getHostName
   M.findWithDefault (return ()) hostName hostNameToAction
-  setToggleActiveAll GAPS True
+
+-- Magnify
 
--- Manage hook
-myManageHook = maybeReplaceTargetHook <+>
-  composeOne
-  [ isFullscreen -?> doFullFloat ]
+data DisableOnTabbedCondition = DisableOnTabbedCondition deriving (Read, Show)
 
+instance ModifierCondition DisableOnTabbedCondition where
+  shouldApply _ = do
+    not . isInfixOf "Tabbed" . description . W.layout <$> currentWorkspace
+
+disableOnTabbed = ConditionalLayoutModifier DisableOnTabbedCondition
+
+myMagnify = ModifiedLayout $ disableOnTabbed (Mag 1 (1.3, 1.3) On (AllWins 1))
+
 -- Toggles
 unmodifyLayout (ModifiedLayout _ x') =  x'
 
@@ -260,10 +272,10 @@ instance Transformer MyToggles Window where
   transform LIMIT x k = k (limitSlice 2 x) unmodifyLayout
   transform GAPS x k = k (smartSpacing 7 x) unmodifyLayout
   transform MAGICFOCUS x k = k (magicFocus x) unmodifyLayout
-  transform MAGNIFY x k = k (magnify (1.3) (AllWins 1) True x) unmodifyLayout
+  transform MAGNIFY x k = k (myMagnify x) unmodifyLayout
 
 myToggles = [LIMIT, GAPS, MAGICFOCUS, MAGNIFY]
-otherToggles = [NBFULL, MIRROR]
+otherToggles = [NBFULL, MIRROR, NOBORDERS, SMARTBORDERS]
 toggleHandlers = [(Toggle GAPS, toggleAll), (Toggle MAGNIFY, toggleAll)]
 
 instance Eq (Toggle Window) where
@@ -337,9 +349,12 @@ deactivateFullAnd action = sequence_ [deactivateFull, action]
 
 andDeactivateFull action = sequence_ [action, deactivateFull]
 
-goFullscreen = setToggleActiveCurrent NBFULL True
-
+goFullscreen = sendMessage $ JumpToLayout "Tabbed"
+
 -- Layout setup
+
+myTabConfig =
+  def { activeBorderColor = "#66cccc" }
 
 rename newName = RN.renamed [RN.Replace newName]
 
@@ -352,9 +367,11 @@ layoutInfo =
   layoutsStart (rename "Grid" (Grid $ 16/10)) |||!
   rename "Large Main" (Tall 1 (3 / 100) (3 / 4)) |||!
   rename "2 Columns" (Tall 1 (3 / 100) (1 / 2)) |||!
-  rename "3 Columns" (multiCol [1, 1] 2 0.01 (-0.5))
+  rename "3 Columns" (multiCol [1, 1] 2 0.01 (-0.5)) |||!
+  Accordion |||! simpleCross |||! myTabbed
+    where
+      myTabbed = rename "Tabbed" $ tabbed shrinkText (theme robertTheme)
 
-layoutList :: [Layout Window]
 layoutList = snd layoutInfo
 
 layoutNames = [description layout | layout <- layoutList]
@@ -362,19 +379,19 @@ layoutNames = [description layout | layout <- layoutList]
 selectLayout = myDmenu layoutNames >>= (sendMessage . JumpToLayout)
 
 myLayoutHook =
-  avoidStruts
-  . minimizeNoDescription
-  . boringAuto
-  . mkToggle1 MIRROR
-  . mkToggle1 LIMIT
-  . mkToggle1 GAPS
-  . mkToggle1 MAGICFOCUS
-  . mkToggle1 NBFULL
-  . mkToggle1 MAGNIFY
-  . mkToggle1 NOBORDERS
-  . mkToggle1 SMARTBORDERS
-  . lessBorders Screen $ fst layoutInfo
- 
+  avoidStruts .
+  minimizeNoDescription .
+  boringAuto .
+  mkToggle1 MIRROR .
+  mkToggle1 LIMIT .
+  mkToggle1 GAPS .
+  mkToggle1 MAGICFOCUS .
+  mkToggle1 NBFULL .
+  mkToggle1 MAGNIFY .
+  mkToggle1 NOBORDERS .
+  mkToggle1 SMARTBORDERS .
+  lessBorders Screen $ fst layoutInfo
+
 -- WindowBringer
 
 myWindowBringerConfig =
@@ -419,9 +436,11 @@ myDecorateName ws w = do
   classes <- getEWMHClasses w
   classTitle <- getClass w
   workspaceToName <- getWorkspaceNames'
-  let iconName = fromMaybe (map toLower $ head classes) $ lookupIconFromClasses classes
+  let iconName = fromMaybe (map toLower $ head classes) $
+                 lookupIconFromClasses classes
       entryString = printf "%-20s%-40s %+30s in %s \0icon\x1f%s"
-                    classTitle (take 40 name) " " (fromMaybe "" $ workspaceToName (W.tag ws)) iconName
+                    classTitle (take 40 name) " "
+                    (fromMaybe "" $ workspaceToName (W.tag ws)) iconName
   return entryString
 
 menuIndexArgs :: MonadIO m => String -> [String] -> [(String, a)] ->
@@ -460,7 +479,7 @@ myBringWindow = myWindowAction True doBringWindow
 myReplaceWindow =
   swapMinimizeStateAfter $
   myWindowAct myWindowBringerConfig True $ windows . swapFocusedWith
-
+
 -- Workspace Names for EWMH
 
 setWorkspaceNames :: X ()
@@ -478,7 +497,7 @@ setWorkspaceNames = withWindowSet $ \s -> withDisplay $ \dpy -> do
   let names' = map fromIntegral $ concatMap ((++[0]) . UTF8String.encode) names
   io $ changeProperty8 dpy r a c propModeReplace names'
 
-
+
 -- Toggleable fade
 
 newtype ToggleFade a =
@@ -525,7 +544,7 @@ setFading w f = setFading' $ M.insert w f
 
 setFading' f =
   XS.get >>= XS.put . (ToggleFade . f . fadesMap)
-
+
 -- Minimize not in class
 
 restoreFocus action =
@@ -644,68 +663,12 @@ nextClassWindow = nextClass >>= classWindow
 
 focusNextClass' =
   (windows . maybe id greedyFocusWindow) =<< nextClassWindow
-
 focusNextClass = sameClassOnly focusNextClass'
 
 selectClass = myDmenu =<< allClasses
-
-data ReplaceOnNew
-  = NoTarget
-  | DontTarget
-  | Target Window
-  deriving (Typeable, Read, Show)
-
-instance ExtensionClass ReplaceOnNew where
-  initialValue = NoTarget
-  extensionType = PersistentExtension
-
-mapWindows f = W.mapWorkspace workspaceHelper
-  where
-    stackHelper stack = W.Stack
-          { W.focus = f $ W.focus stack
-          , W.up = map f $ W.up stack
-          , W.down = map f $ W.down stack
-          }
-    workspaceHelper ws@W.Workspace {W.stack = stack} =
-      ws { W.stack = stackHelper <$> stack }
-
-swapWindows a b =
-  mapWindows helper
-  where helper w
-          | w == a = b
-          | w == b = a
-          | otherwise = w
-
-getTarget = do
-  t <- XS.get
-  case t of
-    Target w -> return $ Just w
-    DontTarget -> return Nothing
-    NoTarget -> return Nothing
-
-maybeReplaceTarget :: Window -> X ()
-maybeReplaceTarget window = do
-  t <- getTarget
-      -- We have an insertUp here to ensure the target isn't deleted
-  let modifyStackSet target = W.insertUp target . swapWindows window target
-      replaceTarget target =
-        windows (modifyStackSet target) >> minimizeWindow target >>
-        XS.put (initialValue :: ReplaceOnNew)
-  whenJust t replaceTarget
-
-maybeReplaceTargetHook = ask >>= (liftX . maybeReplaceTarget) >> return (Endo id)
-
-setReplaceTarget = withFocused $ XS.put . Target
-
-getWindowWS a = withWindowSet $ \ws -> return $ listToMaybe
-    [ w | w <- W.workspaces ws, has a (W.stack w) ]
-    where has _ Nothing = False
-          has _ (Just _) = True
-
-replaceWindow original replacement =
-  W.delete original . swapWindows original replacement
-
+
 -- Gather windows of same class
+
 allWindows = concat <$> mapWorkspaces (return . W.integrate' . W.stack)
 
 windowsMatchingClass klass =
@@ -715,7 +678,7 @@ gatherClass klass = restoreFocus $
   windowsMatchingClass klass >>= mapM_ doBringWindow
 
 gatherThisClass = thisClass >>= flip whenJust gatherClass
-
+
 -- Window switching
 
 -- Use greedyView to switch to the correct workspace, and then focus on the
@@ -770,8 +733,9 @@ swapMinimizeStateAfter action =
       maybeUnminimizeFocused
       withFocused $ \newWindow ->
         when (newWindow /= originalWindow) $ minimizeWindow originalWindow
-
+
 -- Named Scratchpads
+
 scratchpads =
   [ NS "htop" htopCommand (title =? "htop") nonFloating
   , NS "spotify" spotifyCommand spotifySelector nonFloating
@@ -781,8 +745,9 @@ scratchpads =
 -- TODO: This doesnt work well with minimized windows
 doScratchpad =
   maybeUnminimizeAfter . deactivateFullAnd . namedScratchpadAction scratchpads
-
+
 -- Raise or spawn
+
 myRaiseNextMaybe =
   ((deactivateFullAnd . maybeUnminimizeAfter) .) .
   raiseNextMaybeCustomFocus greedyFocusWindow
@@ -806,8 +771,9 @@ bindBringAndRaise mask sym start query =
 bindBringAndRaiseMany :: [(KeyMask, KeySym, X (), Query Bool)]
                       -> [((KeyMask, KeySym), X ())]
 bindBringAndRaiseMany = concatMap (\(a, b, c, d) -> bindBringAndRaise a b c d)
-
+
 -- Screen shift
+
 shiftToNextScreen ws =
   case W.visible ws of
     W.Screen i _ _:_ -> W.view (W.tag i) $ W.shift (W.tag i) ws
@@ -839,11 +805,12 @@ goToNextScreen ws =
       filter (not . screenEq nScreen) $ W.visible ws
 
 goToNextScreenX = windows goToNextScreen
-
+
 -- Key bindings
-volumeUp = spawn "set_volume.sh --unmute --change-volume +5"
-volumeDown = spawn "set_volume.sh --unmute --change-volume -5"
-mute = spawn "set_volume.sh --toggle-mute"
+
+volumeUp = spawn "set_volume --unmute --change-volume +5"
+volumeDown = spawn "set_volume --unmute --change-volume -5"
+mute = spawn "set_volume --toggle-mute"
 
 shiftToEmptyOnScreen direction =
   followingWindow (windowToScreen direction True) >> shiftToEmptyAndView
@@ -854,17 +821,28 @@ directionalLeft = xK_h
 directionalRight = xK_l
 
 buildDirectionalBindings mask commandFn =
-  [ ((mask, directionalUp   ), commandFn xK_w)
-  , ((mask, directionalDown ), commandFn xK_s)
-  , ((mask, directionalLeft ), commandFn xK_a)
-  , ((mask, directionalRight), commandFn xK_d)
+  [ ((mask, directionalUp   ), commandFn U)
+  , ((mask, directionalDown ), commandFn D)
+  , ((mask, directionalLeft ), commandFn L)
+  , ((mask, directionalRight), commandFn R)
   ]
 
-addKeys conf@XConfig { modMask = modm } =
+myWindowGo direction = do
+  layoutName <- description . W.layout <$> currentWorkspace
+  if "Tabbed" `isInfixOf` layoutName
+  then
+    case direction of
+      D -> windows W.focusUp
+      L -> windows W.focusUp
+      R -> windows W.focusDown
+      U -> windows W.focusDown
+  else windowGo direction True
 
+addKeys conf@XConfig { modMask = modm } =
+
     -- Directional navigation
-    buildDirectionalBindings 
-      modm (`windowGo` True) ++
+
+    buildDirectionalBindings modm myWindowGo ++
     buildDirectionalBindings
      (modm .|. shiftMask) (`windowSwap` True) ++
     buildDirectionalBindings
@@ -884,8 +862,21 @@ addKeys conf@XConfig { modMask = modm } =
     , (modalt, xK_t, spawn transmissionCommand, transmissionSelector)
     ] ++
 
+    -- ScratchPads
+    [ ((modalt, xK_m), doScratchpad "htop")
+    , ((modalt, xK_v), doScratchpad "volume")
+    , ((modalt, xK_s), doScratchpad "spotify")
+    , ((modalt .|. controlMask, xK_s),
+       myRaiseNextMaybe (spawn spotifyCommand) spotifySelector)
+
+    -- Specific program spawning
+
+    , ((modm, xK_p), spawn "rofi -show drun -show-icons")
+    , ((modm .|. shiftMask, xK_p), spawn "rofi -show run")
+
     -- Window manipulation
-    [ ((modm, xK_g), myGoToWindow)
+
+    , ((modm, xK_g), myGoToWindow)
     , ((modm, xK_b), myBringWindow)
     , ((modm .|. shiftMask, xK_b), myReplaceWindow)
     , ((modm .|. controlMask, xK_space), deactivateFullOr goFullscreen)
@@ -909,7 +900,9 @@ addKeys conf@XConfig { modMask = modm } =
     , ((modm .|. shiftMask, xK_p), spawn "rofi -show run")
 
 
+
     -- Focus/Layout manipulation
+
     , ((modm, xK_e), goToNextScreenX)
     , ((modm, xK_slash), sendMessage $ Toggle MIRROR)
     , ((modm, xK_backslash),
@@ -922,8 +915,10 @@ addKeys conf@XConfig { modMask = modm } =
 
     -- These need to be rebound to support boringWindows
     , ((hyper, xK_e), moveTo Next emptyWS)
+
 
     -- Miscellaneous XMonad
+
     , ((hyper, xK_1), toggleFadingForActiveWindow)
     , ((hyper .|. shiftMask, xK_1), toggleFadingForActiveWorkspace)
     , ((hyper .|. controlMask, xK_1), toggleFadingForActiveScreen)
@@ -954,10 +949,15 @@ addKeys conf@XConfig { modMask = modm } =
     , ((modm, xK_i), volumeUp)
     , ((modm, xK_k), volumeDown)
     , ((modm, xK_u), mute)
+    , ((hyper .|. shiftMask, xK_q), spawn "toggle_mute_current_window.sh")
+
+    , ((0, xF86XK_MonBrightnessUp), spawn "brightness.sh 5")
+    , ((0, xF86XK_MonBrightnessDown), spawn "brightness.sh -5")
 
     ] ++
-
+
     -- Replace moving bindings
+
     [((additionalMask .|. modm, key), windows $ function workspace)
          | (workspace, key) <- zip (workspaces conf) [xK_1 .. xK_9]
          , (function, additionalMask) <-
