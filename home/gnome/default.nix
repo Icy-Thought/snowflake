@@ -1,29 +1,25 @@
 { config, lib, pkgs, ... }:
 
 let
-  envPkgs = with pkgs;
-    [
-      dconf2nix # Nixify your dconf-settings.
-    ];
-
-  gappsPkgs = with pkgs.gnome; [
-    geary # Gnome 2nd E-Mail client.
-    zenity # Display Dialogs.
-    polari # Gnome IRC client.
-    meld # Visual merge/diff tool.
-    gnome-boxes # Remove/Virtual management.
-    gnome-dictionary # Look up mispellings.
-    gnome-disk-utility # Manage disks through Gnome.
-    gnome-tweak-tool # Advance Gnome setting control.
+  genvPkgs = [
+    pkgs.dconf2nix # Nixify your dconf-settings.
+    pkgs.gnome.zenity # Display Dialogs.
+    pkgs.gnome.polari # Gnome IRC client.
+    pkgs.gnome.meld # Visual merge/diff tool.
+    pkgs.gnome.gnome-boxes # Remove/Virtual management.
+    pkgs.gnome.gnome-dictionary # Look up mispellings.
+    pkgs.gnome.gnome-disk-utility # Manage disks through Gnome.
+    pkgs.gnome.gnome-tweak-tool # Advance Gnome setting control.
   ];
 
-  gextPkgs = with pkgs.gnomeExtensions; [
-    # pop-os-shell # Gnome Tiling Manager.
-    gsconnect # KDE Connect for Gnome-shell.
-    user-themes # Enable Gnome-shell theming.
+  gextPkgs = [
+    # pkgs.gnomeExtensions.pop-os-shell # Gnome Tiling Manager.
+    pkgs.gnomeExtensions.gsconnect # KDE Connect for Gnome-shell.
+    pkgs.gnomeExtensions.user-themes # Enable Gnome-shell theming.
   ];
 
-  ricePkgs = with pkgs; [ orchis-theme flat-remix-gnome whitesur-icon-theme ];
+  ricePkgs =
+    [ pkgs.orchis-theme pkgs.flat-remix-gnome pkgs.whitesur-icon-theme ];
 
 in {
   imports = [
@@ -33,7 +29,7 @@ in {
 
   home = {
     sessionVariables = { MOZ_ENABLE_WAYLAND = 1; };
-    packages = envPkgs ++ gappsPkgs ++ gextPkgs ++ ricePkgs;
+    packages = genvPkgs ++ gextPkgs ++ ricePkgs;
   };
 
   # Enable chrome-gnome-shell in FireFox nightly (mozilla-overlay):
