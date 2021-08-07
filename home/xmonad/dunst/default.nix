@@ -12,12 +12,12 @@
       global = {
         monitor = 0;
         follow = "mouse";
-        geometry = "350x5-28+58"; # "400x100-10+30";
+        geometry = "400x100-28+58";
         indicate_hidden = "yes";
         shrink = "no";
         transparency = 0;
         notification_height = 0;
-        separator_height = 1;
+        separator_height = 2;
         padding = 8;
         horizontal_padding = 10;
         frame_width = 1;
