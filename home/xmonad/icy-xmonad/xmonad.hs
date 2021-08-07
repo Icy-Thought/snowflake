@@ -204,7 +204,7 @@ myDmenuArgs = ["-dmenu", "-i", "-show-icons"]
 myDmenu = DM.menuArgs "rofi" myDmenuArgs
 
 getWorkspaceDmenu = myDmenu (workspaces myConfig)
-
+
 -- Selectors
 
 isGmailTitle t = isInfixOf "@gmail.com" t && isInfixOf "Gmail" t
@@ -232,17 +232,18 @@ spotifyCommand = "spotify"
 htopCommand = "alacritty --title htop -e htop"
 transmissionCommand = "transmission-gtk"
 volumeCommand = "pavucontrol"
-
+
 -- Startup hook
 
 hostNameToAction =
-  M.fromList [ ("ryzen-shine", return ())
+  M.fromList [ ("my-hostname", return ())
              ]
 
 myStartup = do
   hostName <- io getHostName
   M.findWithDefault (return ()) hostName hostNameToAction
-
+  setToggleActiveAll GAPS True
+
 -- Magnify
 
 data DisableOnTabbedCondition = DisableOnTabbedCondition deriving (Read, Show)
@@ -254,7 +255,7 @@ instance ModifierCondition DisableOnTabbedCondition where
 disableOnTabbed = ConditionalLayoutModifier DisableOnTabbedCondition
 
 myMagnify = ModifiedLayout $ disableOnTabbed (Mag 1 (1.3, 1.3) On (AllWins 1))
-
+
 -- Toggles
 unmodifyLayout (ModifiedLayout _ x') =  x'
 
@@ -350,7 +351,7 @@ deactivateFullAnd action = sequence_ [deactivateFull, action]
 andDeactivateFull action = sequence_ [action, deactivateFull]
 
 goFullscreen = sendMessage $ JumpToLayout "Tabbed"
-
+
 -- Layout setup
 
 myTabConfig =
@@ -391,7 +392,7 @@ myLayoutHook =
   mkToggle1 NOBORDERS .
   mkToggle1 SMARTBORDERS .
   lessBorders Screen $ fst layoutInfo
-
+
 -- WindowBringer
 
 myWindowBringerConfig =
@@ -479,7 +480,7 @@ myBringWindow = myWindowAction True doBringWindow
 myReplaceWindow =
   swapMinimizeStateAfter $
   myWindowAct myWindowBringerConfig True $ windows . swapFocusedWith
-
+
 -- Workspace Names for EWMH
 
 setWorkspaceNames :: X ()
@@ -497,7 +498,7 @@ setWorkspaceNames = withWindowSet $ \s -> withDisplay $ \dpy -> do
   let names' = map fromIntegral $ concatMap ((++[0]) . UTF8String.encode) names
   io $ changeProperty8 dpy r a c propModeReplace names'
 
-
+
 -- Toggleable fade
 
 newtype ToggleFade a =
@@ -544,7 +545,7 @@ setFading w f = setFading' $ M.insert w f
 
 setFading' f =
   XS.get >>= XS.put . (ToggleFade . f . fadesMap)
-
+
 -- Minimize not in class
 
 restoreFocus action =
@@ -666,7 +667,7 @@ focusNextClass' =
 focusNextClass = sameClassOnly focusNextClass'
 
 selectClass = myDmenu =<< allClasses
-
+
 -- Gather windows of same class
 
 allWindows = concat <$> mapWorkspaces (return . W.integrate' . W.stack)
@@ -678,7 +679,7 @@ gatherClass klass = restoreFocus $
   windowsMatchingClass klass >>= mapM_ doBringWindow
 
 gatherThisClass = thisClass >>= flip whenJust gatherClass
-
+
 -- Window switching
 
 -- Use greedyView to switch to the correct workspace, and then focus on the
@@ -733,7 +734,7 @@ swapMinimizeStateAfter action =
       maybeUnminimizeFocused
       withFocused $ \newWindow ->
         when (newWindow /= originalWindow) $ minimizeWindow originalWindow
-
+
 -- Named Scratchpads
 
 scratchpads =
@@ -745,7 +746,7 @@ scratchpads =
 -- TODO: This doesnt work well with minimized windows
 doScratchpad =
   maybeUnminimizeAfter . deactivateFullAnd . namedScratchpadAction scratchpads
-
+
 -- Raise or spawn
 
 myRaiseNextMaybe =
@@ -771,7 +772,7 @@ bindBringAndRaise mask sym start query =
 bindBringAndRaiseMany :: [(KeyMask, KeySym, X (), Query Bool)]
                       -> [((KeyMask, KeySym), X ())]
 bindBringAndRaiseMany = concatMap (\(a, b, c, d) -> bindBringAndRaise a b c d)
-
+
 -- Screen shift
 
 shiftToNextScreen ws =
@@ -805,7 +806,7 @@ goToNextScreen ws =
       filter (not . screenEq nScreen) $ W.visible ws
 
 goToNextScreenX = windows goToNextScreen
-
+
 -- Key bindings
 
 volumeUp = spawn "set_volume --unmute --change-volume +5"
@@ -839,7 +840,7 @@ myWindowGo direction = do
   else windowGo direction True
 
 addKeys conf@XConfig { modMask = modm } =
-
+
     -- Directional navigation
 
     buildDirectionalBindings modm myWindowGo ++
@@ -856,8 +857,8 @@ addKeys conf@XConfig { modMask = modm } =
     -- Specific program spawning
     bindBringAndRaiseMany
     [ (modalt, xK_f, spawn firefoxCommand, firefoxSelector)
-    , (modalt, xK_g, spawn firefoxPrivCommand, firefoxSelector)
-    , (modalt, xK_b, spawn chromiumCommand, chromiumSelector)
+    , (modalt, xK_b, spawn firefoxPrivCommand, firefoxSelector)
+    , (modalt, xK_g, spawn chromiumCommand, chromiumSelector)
     , (modalt, xK_e, spawn emacsCommand, emacsSelector)
     , (modalt, xK_t, spawn transmissionCommand, transmissionSelector)
     ] ++
@@ -868,12 +869,12 @@ addKeys conf@XConfig { modMask = modm } =
     , ((modalt, xK_s), doScratchpad "spotify")
     , ((modalt .|. controlMask, xK_s),
        myRaiseNextMaybe (spawn spotifyCommand) spotifySelector)
-
+
     -- Specific program spawning
 
     , ((modm, xK_p), spawn "rofi -show drun -show-icons")
     , ((modm .|. shiftMask, xK_p), spawn "rofi -show run")
-
+
     -- Window manipulation
 
     , ((modm, xK_g), myGoToWindow)
@@ -899,8 +900,6 @@ addKeys conf@XConfig { modMask = modm } =
     , ((modm, xK_p), spawn "rofi -show drun -show-icons")
     , ((modm .|. shiftMask, xK_p), spawn "rofi -show run")
 
-
-
     -- Focus/Layout manipulation
 
     , ((modm, xK_e), goToNextScreenX)
@@ -915,7 +914,6 @@ addKeys conf@XConfig { modMask = modm } =
 
     -- These need to be rebound to support boringWindows
     , ((hyper, xK_e), moveTo Next emptyWS)
-
 
     -- Miscellaneous XMonad
 
@@ -955,7 +953,7 @@ addKeys conf@XConfig { modMask = modm } =
     , ((0, xF86XK_MonBrightnessDown), spawn "brightness.sh -5")
 
     ] ++
-
+
     -- Replace moving bindings
 
     [((additionalMask .|. modm, key), windows $ function workspace)

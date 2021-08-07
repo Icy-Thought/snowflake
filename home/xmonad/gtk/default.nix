@@ -10,14 +10,8 @@
 
     theme = {
       package = pkgs.orchis-theme;
-      name = "orchis-dark-compact";
+      name = "Orchis-dark-compact";
     };
 
-    gtk3.extraConfig = {
-      gtk-icon-theme-name = "WhiteSur-dark";
-      gtk-theme-name = "orchis-dark-compact";
-      gtk-application-prefer-dark-theme = 1;
-    };
   };
-
 }

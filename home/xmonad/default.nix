@@ -12,6 +12,8 @@ in {
   config.services = {
     gnome-keyring.enable = true;
     status-notifier-watcher.enable = true;
+    network-manager-applet.enable = true;
+    blueman-applet.enable = true;
 
     random-background = {
       enable = true;
@@ -24,11 +26,6 @@ in {
       package = pkgs.haskellPackages.icy-taffybar;
     };
 
-    # notify-osd = {
-    #   enable = true;
-    #   package = pkgs.notify-osd-customizable;
-    # };
-
     kdeconnect = {
       enable = true;
       indicator = true;
@@ -39,6 +36,7 @@ in {
   config.xsession = {
     enable = true;
     numlock.enable = true;
+
     initExtra = xmonad;
     windowManager.command = ''
       ${pkgs.haskellPackages.icy-xmonad}/bin/icy-xmonad

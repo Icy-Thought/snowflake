@@ -2,51 +2,93 @@
 @define-color white #FFFFFF;
 @define-color black #000000;
 @define-color taffy-blue #0c7cd5;
+@define-color taffy-navy rgb(25, 30, 55);
+@define-color taffy-red rgba(255, 65, 81, 1.0);
+@define-color taffy-teal #00695C;
 
 @define-color active-window-color @white;
 @define-color urgent-window-color @taffy-blue;
 @define-color font-color @white;
 @define-color menu-background-color @white;
 @define-color menu-font-color @black;
+@define-color bar-background @taffy-navy;
 
 /* Top level styling */
 
 .taffy-window * {
 	font-family: "Noto Sans", sans-serif;
 	font-size: 10pt;
+	font-weight: bold;
 	color: @font-color;
+	text-shadow: 2px 2px @black;
 }
 
 .taffy-box {
 	border-color: @white;
 	border-style: solid;
-	border-radius: 0px;
-}
-
-.inner-pad {
-	padding: 2px;
+	background-color: @bar-background;
+	padding: 3px;
+	margin: 4px;
+	border-radius: 4px;
 }
 
 .contents {
 	padding: 2px;
 	transition: background-color .5s;
-	border-radius: 6px;
+	opacity: 1;
 }
 
 /* Workspaces styling */
 
+.workspaces .inner-pad {
+	box-shadow: none;
+	border-width: 0;
+}
+
+.workspaces .contents {
+	box-shadow: none;
+	border-radius: 4px;
+}
+
 .workspace-label {
-	padding-right: 3px;
+	padding-right: 4px;
 	padding-left: 2px;
+	padding-top: 0px;
 	font-size: 10pt;
+	color: @white;
+	opacity: 1;
+	font-weight: bold;
+	transition: color .5s;
+	text-shadow: 2px 2px @black;
+}
+
+.contents .window-icon {
+	border-width: 1px;
+}
+
+.active .contents .window-icon {
+	opacity: 1;
 }
 
 .active .contents {
-	background-color: rgba(0.0, 0.0, 0.0, 0.2);
+	background-color: rgba(255.0, 255.0, 255.0, 0.2);
+	opacity: 1;
+}
+
+.overlay-box {
+	transition: background-color .5s;
+}
+
+.active .overlay-box {
+	padding: 0px;
+	/* background-color: rgba(0, 0, 0, 1.0); */
+	border-color: @white;
+	border-width: 3px;
+	opacity: 1;
 }
 
 .visible .contents {
-	background-color: rgba(0.0, 0.0, 0.0, 0.2);
+	border-color: @white;
 }
 
 .window-icon-container {
@@ -64,14 +106,10 @@
 }
 
 .window-icon-container.active {
-	background-color: rgba(255.0, 255.0, 255.0, 0.3);
+	background-color: rgba(255.0, 255.0, 255.0, 0.4);
 }
 
 .window-icon-container.urgent {
-}
-
-.window-icon-container.inactive .window-icon {
-  padding: 0px;
 }
 
 .window-icon-container.minimized .window-icon {
