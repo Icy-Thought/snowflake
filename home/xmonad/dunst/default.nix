@@ -12,43 +12,39 @@
       global = {
         monitor = 0;
         follow = "mouse";
-        geometry = "350x5-28+58";
+        geometry = "350x5-28+58"; # "400x100-10+30";
         indicate_hidden = "yes";
-        shrink = "yes";
+        shrink = "no";
         transparency = 0;
         notification_height = 0;
         separator_height = 1;
-        padding = 12;
-        horizontal_padding = 12;
+        padding = 8;
+        horizontal_padding = 10;
         frame_width = 1;
-        frame_color = "#2c323a";
-        separator_color = "#2c323a";
+        frame_color = "#282a36";
+        separator_color = "frame";
         sort = "yes";
         idle_threshold = 120;
 
         font = "JetBrainsMonoMedium Nerd Font 10";
-        line_height = 4;
+        line_height = 0;
         markup = "full";
-        format = ''
-          <span size='x-large' font_desc='JetBrainsMonoMedium Nerd font 8' weight='bold' foreground='#d8dee9'>%s</span>
-          %b'';
-
+        format = "%s %p\n%b";
         alignment = "left";
-        vertical_alignment = "top";
+        vertical_alignment = "center";
         show_age_threshold = 60;
         word_wrap = "yes";
-        ellipsize = "end";
+        ellipsize = "middle";
         ignore_newline = "no";
         stack_duplicates = true;
-        hide_duplicate_count = true;
+        hide_duplicate_count = false;
         show_indicators = "no";
 
         icon_position = "left";
         min_icon_size = 0;
-        max_icon_size = 128;
-        icon_path = "";
-
-        sticky_history = "yes";
+        max_icon_size = 64;
+        # icon_path = "";
+        sticky_history = "no";
         history_length = 20;
 
         browser = "firefox";
@@ -59,11 +55,10 @@
         verbosity = "mesg";
         corner_radius = 0;
         ignore_dbusclose = false;
-
         force_xinerama = false;
 
-        mouse_left_click = "do_action, close_current";
-        mouse_middle_click = "close_current";
+        mouse_left_click = "close_current";
+        mouse_middle_click = "do_action, close_current";
         mouse_right_click = "close_all";
 
       };
