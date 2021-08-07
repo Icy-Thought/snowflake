@@ -7,10 +7,11 @@ let
   ];
 
   utilPkgs = [
+    pkgs.gnome.geary # GTK Mail Client.
+    # pkgs.libreoffice # Better Office Alternative Suit.
+    pkgs.latest.firefox-nightly-bin # Latest Firefox Browser.
     pkgs.ueberzug # Display Images in CLI.
     pkgs.anki # Spaced Repetition Flashcard.
-    pkgs.latest.firefox-nightly-bin # Latest Firefox Browser.
-    # pkgs.libreoffice # Better Office Alternative Suit.
     pkgs.zathura # Minimal Document Reader.
     pkgs.foliate # Minimal E-Book Reader.
     pkgs.heimdall-gui # Suit to Flash Android Firmware.
