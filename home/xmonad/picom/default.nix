@@ -18,13 +18,8 @@
 
     shadow = true;
     shadowExclude = [
-      "name = 'Notification'"
-      "class_g = 'Conky'"
-      "class_g ?= 'Notify-osd'"
-      "class_g = 'Cairo-clock'"
-      "class_g = 'slop'"
+      #	"class_g ?= 'Dunst'";
       "name = 'hacksaw'"
-      "class_g = 'Polybar'"
       "fullscreen"
       "! name~=''"
       "!WM_CLASS:s"
@@ -47,8 +42,7 @@
       blur-background = false;
       blur-background-frame = false;
       blur-background-fixed = false;
-
-      blur-background-exclude = [ "class_g = 'slop'" "_GTK_FRAME_EXTENTS@:c" ];
+      blur-background-exclude = [ "_GTK_FRAME_EXTENTS@:c" ];
 
       ### Animations ###
       transition-length = 150;
@@ -62,7 +56,6 @@
       corner-radius = 10.0;
       round-borders = 1;
       round-borders-exclude = [ ];
-
       rounded-corners-exclude = [ ];
 
       ### Shadows ###
@@ -80,9 +73,7 @@
 
       focus-exclude = [
         "class_g ?= 'rofi'"
-        "class_g ?= 'slop'"
         "class_g ?= 'Steam'"
-        "class_g = 'Cairo-clock'"
       ];
 
       ### General ###
