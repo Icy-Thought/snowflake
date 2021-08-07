@@ -46,6 +46,7 @@
       overlays = [
         inputs.xmonad.overlay
         inputs.xmonad-contrib.overlay
+        inputs.taffybar.overlay
         inputs.agenix.overlay
         inputs.rust.overlay
         # inputs.emacs.overlay
