@@ -3,62 +3,42 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable-small";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs";
+    home-manager.url = "github:nix-community/home-manager/master";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    home-manager = {
-      url = "github:nix-community/home-manager/master";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    flake-utils.url = "github:numtide/flake-utils";
+    flake-utils.inputs.nixpkgs.follows = "nixpkgs";
 
-    flake-utils = {
-      url = "github:numtide/flake-utils";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # nixos-hardware.url = "github:NixOS/nixos-hardware";
+    # nixos-hardware.inputs.nixpkgs.follows = "nixpkgs";
 
-    # nixos-hardware = {
-    #   url = "github:NixOS/nixos-hardware";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
+    agenix.url = "github:ryantm/agenix";
+    agenix.inputs.nixpkgs.follows = "nixpkgs";
 
-    agenix = {
-      url = "github:ryantm/agenix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    xmonad.url = "github:xmonad/xmonad";
+    xmonad.inputs.nixpkgs.follows = "nixpkgs";
 
-    xmonad = {
-      url = "github:xmonad/xmonad";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    xmonad-contrib.url = "github:ivanmalison/xmonad-contrib";
+    xmonad-contrib.inputs.nixpkgs.follows = "nixpkgs";
 
-    xmonad-contrib = {
-      url = "github:ivanmalison/xmonad-contrib";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    taffybar.url = "github:taffybar/taffybar";
+    taffybar.inputs.nixpkgs.follows = "nixpkgs";
 
-    picom-jonaburg = {
-      url = "github:jonaburg/picom";
-      flake = false;
-    };
+    picom-jonaburg.url = "github:jonaburg/picom";
+    picom-jonaburg.flake = false;
 
-    rust = {
-      url = "github:oxalica/rust-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    rust.url = "github:oxalica/rust-overlay";
+    rust.inputs.nixpkgs.follows = "nixpkgs";
 
-    # emacs = {
-    #  url = "github:nix-community/emacs-overlay";
-    #  inputs.nixpkgs.follows = "nixpkgs";
-    # };
+    # emacs.url = "github:nix-community/emacs-overlay";
+    # emacs.inputs.nixpkgs.follows = "nixpkgs";
 
-    nixpkgs-mozilla = {
-      url = "github:mozilla/nixpkgs-mozilla";
-      flake = false;
-    };
+    nixpkgs-mozilla.url = "github:mozilla/nixpkgs-mozilla";
+    nixpkgs-mozilla.flake = false;
 
   };
 
-  outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager, flake-utils
-    , agenix, ... }:
+  outputs = inputs@{ self, nixpkgs, home-manager, flake-utils, agenix, ... }:
 
     let
       pkgs = import nixpkgs { system = "x86_64-linux"; };
