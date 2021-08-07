@@ -44,8 +44,8 @@
 *** Doom-Theme + Doom-Font
 #+begin_src emacs-lisp
 (setq
- doom-font (font-spec :family "JetBrainsMonoMedium Nerd Font" :size 16 :weight 'Regular)
- doom-big-font (font-spec :family "JetBrainsMonoMedium Nerd Font" :size 20 :weight 'Regular)
+ doom-font (font-spec :family "Iosevka Nerd Font" :size 16 :weight 'Medium)
+ doom-big-font (font-spec :family "Iosevka Nerd Font" :size 20 :weight 'Bold)
  doom-theme 'doom-horizon)
 #+end_src
 
