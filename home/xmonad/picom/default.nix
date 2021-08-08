@@ -11,14 +11,16 @@
 
     fade = true;
     fadeDelta = 10;
-    fadeSteps = [ (0.03) (0.03) ];
+    fadeSteps = [ (3.0e-2) (3.0e-2) ];
     fadeExclude = [ "class_g = 'slop'" ];
 
     refreshRate = 0;
 
     shadow = true;
     shadowExclude = [
-      #	"class_g ?= 'Dunst'";
+      #	"class_g ?= 'Dunst'"
+      "class_g ?= 'taffybar'"
+      "class_g = 'firefox' && window_type = 'utility'"
       "name = 'hacksaw'"
       "fullscreen"
       "! name~=''"
@@ -42,7 +44,11 @@
       blur-background = false;
       blur-background-frame = false;
       blur-background-fixed = false;
-      blur-background-exclude = [ "_GTK_FRAME_EXTENTS@:c" ];
+      blur-background-exclude = [
+        "_GTK_FRAME_EXTENTS@:c"
+        # "class_g ?= 'taffybar'"
+        "class_g = 'firefox' && window_type = 'utility'"
+      ];
 
       ### Animations ###
       transition-length = 150;
@@ -71,10 +77,7 @@
       inactive-opacity-override = false;
       active-opacity = 1.0;
 
-      focus-exclude = [
-        "class_g ?= 'rofi'"
-        "class_g ?= 'Steam'"
-      ];
+      focus-exclude = [ "class_g ?= 'rofi'" "class_g ?= 'Steam'" ];
 
       ### General ###
       daemon = false;

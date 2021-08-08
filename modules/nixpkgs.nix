@@ -31,11 +31,9 @@
       "home-manager=/etc/${config.environment.etc.home-manager.target}"
     ];
 
-    binaryCaches =
-      [ "https://nix-community.cachix.org/" "https://taffy.cachix.org" ];
+    binaryCaches = [ "https://nix-community.cachix.org/" ];
     binaryCachePublicKeys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-      "taffy.cachix.org-1:H0iiOGeXnLOAptADO4i3AiDIOladTcZYxXp+P0lOvHw="
     ];
 
     registry = { nixpkgs.flake = inputs.nixpkgs; };

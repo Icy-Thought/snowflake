@@ -42,10 +42,7 @@
   networking.hostName = "ThinkPad-NixOS";
 
   virtualisation = {
-    virtualbox.host = {
-      enable = false;
-      enableExtensionPack = true;
-    };
+    virtualbox.host.enable = true;
 
     podman = {
       enable = false;

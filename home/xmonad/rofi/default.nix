@@ -2,7 +2,7 @@
 
   programs.rofi = {
     enable = true;
-    plugins = with pkgs; [ rofi-emoji rofi-calc ];
+    plugins = with pkgs; [ rofi-systemd rofi-emoji rofi-calc ];
 
     extraConfig = {
       font = "Noto Sans 10";
