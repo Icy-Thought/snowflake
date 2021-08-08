@@ -45,6 +45,7 @@ import           System.Taffybar.Widget
 import           System.Taffybar.Widget.Generic.Icon
 import           System.Taffybar.Widget.Generic.PollingGraph
 import           System.Taffybar.Widget.Generic.PollingLabel
+import           System.Taffybar.Widget.MPRIS2
 import           System.Taffybar.Widget.Util
 import           System.Taffybar.Widget.Workspaces
 import           Text.Printf
@@ -55,6 +56,13 @@ setClassAndBoundingBoxes klass = buildContentsBox >=> flip widgetSetClassGI klas
 
 deocrateWithSetClassAndBoxes :: MonadIO m => Data.Text.Text -> m Gtk.Widget -> m Gtk.Widget
 deocrateWithSetClassAndBoxes klass builder = builder >>= setClassAndBoundingBoxes klass
+
+makeCombinedWidget constructors = do
+  widgets <- sequence constructors
+  hbox <- Gtk.boxNew Gtk.OrientationHorizontal 0
+  mapM (Gtk.containerAdd hbox) widgets
+
+  Gtk.toWidget hbox
 
 mkRGBA (r, g, b, a) = (r/256, g/256, b/256, a/256)
 blue = mkRGBA (42, 99, 140, 256)
@@ -73,17 +81,17 @@ myGraphConfig =
 
 netCfg = myGraphConfig
   { graphDataColors = [yellow1, yellow2]
-  , graphLabel = Just "net"
+  , graphLabel = Just "NET"
   }
 
 memCfg = myGraphConfig
   { graphDataColors = [(0.129, 0.588, 0.953, 1)]
-  , graphLabel = Just "mem"
+  , graphLabel = Just "MEM"
   }
 
 cpuCfg = myGraphConfig
   { graphDataColors = [red, (1, 0, 1, 0.5)]
-  , graphLabel = Just "cpu"
+  , graphLabel = Just "CPU"
   }
 
 memCallback :: IO [Double]
@@ -126,8 +134,8 @@ logDebug = do
   -- enableLogger "System.Taffybar.Widget.Generic.PollingLabel" DEBUG
 
 cssFileByHostname =
-  [ ("ThinkPad-E595", "taffybar.css")
-  , ("ProBook-440G3", "taffybar.css")
+  [ ("ThinkPad-NixOS", "taffybar.css")
+  , ("ProBook-NixOS", "taffybar.css")
   ]
 
 main = do
@@ -160,7 +168,7 @@ main = do
                 textClockNewWith
                 defaultClockConfig
                 { clockUpdateStrategy = RoundedTargetInterval 60 0.0
-                , clockFormatString = "%a %b %_d, %I:%M %p"
+                , clockFormatString = "%a %b %_d, %H:%M"
                 }
       -- myBTC = deocrateWithSetClassAndBoxes "btc" $ cryptoPriceLabelWithIcon @"BTC-USD"
       -- myETH = deocrateWithSetClassAndBoxes "eth" $ cryptoPriceLabelWithIcon @"ETH-USD"
@@ -169,12 +177,11 @@ main = do
                sniTrayNewFromParams defaultTrayParams { trayLeftClickAction = PopupMenu
                                                       , trayRightClickAction = Activate
                                                       }
-      myMpris = deocrateWithSetClassAndBoxes "mpris" mpris2New
-      myBatteryIcon = deocrateWithSetClassAndBoxes "battery-icon" batteryIconNew
-      myBatteryText =
-        deocrateWithSetClassAndBoxes "battery-text" $ textBatteryNew "$percentage$%"
+      myMpris = mpris2NewWithConfig MPRIS2Config { setNowPlayingLabel = playingText 20 30, mprisWidgetWrapper = deocrateWithSetClassAndBoxes "mpris"  }
+      myBattery = deocrateWithSetClassAndBoxes "battery" $ makeCombinedWidget [batteryIconNew , textBatteryNew "$percentage$%"]
       fullEndWidgets =
-        [ myTray
+        [ myBattery
+        , myTray
         -- , myBTC
         -- , myETH
         -- , myXMR
@@ -184,8 +191,7 @@ main = do
         , myMpris
         ]
       shortLaptopEndWidgets =
-        [ myBatteryIcon
-        , myBatteryText
+        [ myBattery
         , myClock
         , myTray
         -- , myETH
@@ -203,10 +209,10 @@ main = do
         }
       selectedConfig =
         fromMaybe baseConfig $ lookup hostName
-          [ ( "ThinkPad-E595"
-            , baseConfig { endWidgets = fullEndWidgets, barHeight = 45 }
+          [ ( "ThinkPad-NixOS"
+            , baseConfig { endWidgets = fullEndWidgets, barHeight = 42 }
             )
-          , ( "ProBook-440G3"
+          , ( "ProBook-NixOS"
             , baseConfig { endWidgets = shortLaptopEndWidgets, barHeight = 42 }
             )
           ]

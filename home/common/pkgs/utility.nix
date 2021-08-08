@@ -3,6 +3,7 @@
 let
   utilsPkgs = [
     # pkgs.uutils-coreutils # Rust GNU-coreutils Alt.
+    pkgs.coreutils # GNU-coreutils.
     pkgs.wget # TUI Downloader.
     pkgs.unzip # Unzipping Files.
     pkgs.unrar # File Uncompressor.
