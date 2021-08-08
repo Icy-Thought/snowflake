@@ -177,8 +177,12 @@ main = do
                sniTrayNewFromParams defaultTrayParams { trayLeftClickAction = PopupMenu
                                                       , trayRightClickAction = Activate
                                                       }
-      myMpris = mpris2NewWithConfig MPRIS2Config { setNowPlayingLabel = playingText 20 30, mprisWidgetWrapper = deocrateWithSetClassAndBoxes "mpris"  }
-      myBattery = deocrateWithSetClassAndBoxes "battery" $ makeCombinedWidget [batteryIconNew , textBatteryNew "$percentage$%"]
+      myMpris = mpris2NewWithConfig
+                MPRIS2Config { setNowPlayingLabel = playingText 20 30
+                             , mprisWidgetWrapper = deocrateWithSetClassAndBoxes "mpris" . return
+                             }
+      myBattery = deocrateWithSetClassAndBoxes "battery" $
+                  makeCombinedWidget [batteryIconNew , textBatteryNew "$percentage$%"]
       fullEndWidgets =
         [ myBattery
         , myTray
