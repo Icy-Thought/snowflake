@@ -1,12 +1,10 @@
 {
-  description = "A structured and configureable NixOS system!";
+  description = "λ well-tailored and configureable NixOS system!";
 
   nixConfig = {
-    substituters = [ "https://nix-community.cachix.org/" ];
-
-    trusted-public-keys = [
-      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-    ];
+    substituters = [ "https://cache.nixos.org" ];
+    trusted-public-keys =
+      [ "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=" ];
   };
 
   inputs = {
@@ -15,31 +13,18 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     flake-utils.url = "github:numtide/flake-utils";
-    flake-utils.inputs.nixpkgs.follows = "nixpkgs";
-
     # nixos-hardware.url = "github:NixOS/nixos-hardware";
-    # nixos-hardware.inputs.nixpkgs.follows = "nixpkgs";
-
     agenix.url = "github:ryantm/agenix";
-    agenix.inputs.nixpkgs.follows = "nixpkgs";
 
     xmonad.url = "github:xmonad/xmonad";
-    xmonad.inputs.nixpkgs.follows = "nixpkgs";
-
     xmonad-contrib.url = "github:ivanmalison/xmonad-contrib";
-    xmonad-contrib.inputs.nixpkgs.follows = "nixpkgs";
-
     taffybar.url = "github:taffybar/taffybar";
-    taffybar.inputs.nixpkgs.follows = "nixpkgs";
 
     picom-jonaburg.url = "github:jonaburg/picom";
     picom-jonaburg.flake = false;
 
     rust.url = "github:oxalica/rust-overlay";
-    rust.inputs.nixpkgs.follows = "nixpkgs";
-
     # emacs.url = "github:nix-community/emacs-overlay";
-    # emacs.inputs.nixpkgs.follows = "nixpkgs";
 
     nixpkgs-mozilla.url = "github:mozilla/nixpkgs-mozilla";
     nixpkgs-mozilla.flake = false;
