@@ -30,18 +30,17 @@
 }
 
 .taffy-box {
-	border-color: @white;
-	border-style: solid;
 	background-color: @bar-background;
-	padding: 3px;
-	margin: 4px;
+}
+
+
+.inner-pad {
 	border-radius: 4px;
+	padding: 4px;
+	background-color: @taffy-raisin-black;
 }
 
 .contents {
- 	background-color: @taffy-raisin-black;
- 	border-radius: 4px;
- 	padding: 9px;
 	transition: background-color .5s;
 	opacity: 1;
 }
@@ -55,7 +54,6 @@
 
 .workspaces .contents {
 	box-shadow: none;
-	border-radius: 6px;
 }
 
 .workspace-label {
@@ -81,7 +79,7 @@
 	opacity: 1;
 }
 
-.active .contents {
+.active .inner-pad {
 	background-color: @koromiko;
 	opacity: 1;
 }
