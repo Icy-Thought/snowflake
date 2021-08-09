@@ -50,6 +50,7 @@ import           System.Taffybar.Widget.Util
 import           System.Taffybar.Widget.Workspaces
 import           Text.Printf
 import           Text.Read hiding (lift)
+import           Paths_icy_taffybar ( getDataDir )
 
 setClassAndBoundingBoxes :: MonadIO m => Data.Text.Text -> Gtk.Widget -> m Gtk.Widget
 setClassAndBoundingBoxes klass = buildContentsBox >=> flip widgetSetClassGI klass
@@ -141,8 +142,11 @@ cssFileByHostname =
 main = do
   hostName <- getHostName
   homeDirectory <- getHomeDirectory
-  cssFilePath <-
-    traverse (getUserConfigFile "taffybar") $ lookup hostName cssFileByHostname
+  dataDir <- getDataDir
+  let cssFilePath = Just $ dataDir </>
+                    (fromMaybe "taffybar.css" $
+                     lookup hostName cssFileByHostname)
+  logM "What" WARNING $ show cssFilePath
 
   let myCPU = deocrateWithSetClassAndBoxes "cpu" $ pollingGraphNew cpuCfg 5 cpuCallback
       myMem = deocrateWithSetClassAndBoxes "mem" $ pollingGraphNew memCfg 5 memCallback
@@ -177,8 +181,12 @@ main = do
                sniTrayNewFromParams defaultTrayParams { trayLeftClickAction = PopupMenu
                                                       , trayRightClickAction = Activate
                                                       }
-      myMpris = mpris2NewWithConfig MPRIS2Config { setNowPlayingLabel = playingText 20 30, mprisWidgetWrapper = deocrateWithSetClassAndBoxes "mpris"  }
-      myBattery = deocrateWithSetClassAndBoxes "battery" $ makeCombinedWidget [batteryIconNew , textBatteryNew "$percentage$%"]
+      myMpris = mpris2NewWithConfig
+                MPRIS2Config { setNowPlayingLabel = playingText 20 30
+                             , mprisWidgetWrapper = deocrateWithSetClassAndBoxes "mpris" . return
+                             }
+      myBattery = deocrateWithSetClassAndBoxes "battery" $
+                  makeCombinedWidget [batteryIconNew , textBatteryNew "$percentage$%"]
       fullEndWidgets =
         [ myBattery
         , myTray
