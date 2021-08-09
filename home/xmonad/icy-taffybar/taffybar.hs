@@ -182,8 +182,11 @@ main = do
                                                       , trayRightClickAction = Activate
                                                       }
       myMpris = mpris2NewWithConfig
-                MPRIS2Config { setNowPlayingLabel = playingText 20 30
-                             , mprisWidgetWrapper = deocrateWithSetClassAndBoxes "mpris" . return
+                MPRIS2Config { mprisWidgetWrapper = deocrateWithSetClassAndBoxes "mpris" . return
+                             , updatePlayerWidget =
+                               simplePlayerWidget
+                               defaultPlayerConfig
+                               { setNowPlayingLabel = playingText 10 10 }
                              }
       myBattery = deocrateWithSetClassAndBoxes "battery" $
                   makeCombinedWidget [batteryIconNew , textBatteryNew "$percentage$%"]
