@@ -5,6 +5,7 @@ _: pkgs: rec {
         icy-taffybar = self.callCabal2nix "icy-taffybar"
           (pkgs.lib.sourceByRegex ../home/xmonad/icy-taffybar [
             "taffybar.hs"
+            "taffybar.css"
             "icy-taffybar.cabal"
           ]) { };
       });

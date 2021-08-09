@@ -1,13 +1,14 @@
 {
   inputs = {
-    taffybar.url = "github:taffybar/taffybar/cryptoWidget";
+    # taffybar.url = "github:taffybar/taffybar/cryptoWidget";
+    taffybar.url = "github:taffybar/taffybar";
     flake-utils.url = "github:numtide/flake-utils";
   };
 
   outputs = { self, flake-utils, taffybar, nixpkgs }:
 
     let
-      overlay = import ./overlay.nix;
+      overlay = import ../../../overlays/taffybar.nix;
       overlays = taffybar.overlays ++ [ overlay ];
 
     in flake-utils.lib.eachDefaultSystem (system:

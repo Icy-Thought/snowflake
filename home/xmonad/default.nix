@@ -9,8 +9,6 @@ let
 in {
   imports = [ ./xresources ./gtk ./dunst ./rofi ];
 
-  # xdg.configFile."taffybar/taffybar.css".source = ./icy-taffybar/taffybar.css; 
-
   services = {
     gnome-keyring.enable = true;
     status-notifier-watcher.enable = true;
