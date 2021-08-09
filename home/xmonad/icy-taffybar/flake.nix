@@ -1,6 +1,6 @@
 {
   inputs = {
-    taffybar.url = "path:./taffybar";
+    taffybar.url = "github:taffybar/taffybar/cryptoWidget";
     flake-utils.url = "github:numtide/flake-utils";
   };
 
@@ -18,7 +18,7 @@
         };
       in rec {
         devShell = pkgs.haskellPackages.shellFor {
-          packages = p: [ p.icy-taffybar p.taffybar ];
+          packages = p: [ p.icy-taffybar ];
         };
         defaultPackage = pkgs.haskellPackages.icy-taffybar;
       }) // {
