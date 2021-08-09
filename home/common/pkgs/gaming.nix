@@ -3,7 +3,7 @@
 let
   gamingPkgs = [
     pkgs.lutris # WINE Gaming Platform.
-    pkgs.osu-lazer # FOSS Rythm Game!
+    # pkgs.osu-lazer # FOSS Rythm Game!
   ];
 
   winePkgs = [
