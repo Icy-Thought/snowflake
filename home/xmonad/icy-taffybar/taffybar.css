@@ -41,7 +41,7 @@
 .contents {
  	background-color: @taffy-raisin-black;
  	border-radius: 4px;
- 	padding: 10px;
+ 	padding: 9px;
 	transition: background-color .5s;
 	opacity: 1;
 }
@@ -55,7 +55,7 @@
 
 .workspaces .contents {
 	box-shadow: none;
-	border-radius: 4px;
+	border-radius: 6px;
 }
 
 .workspace-label {
@@ -130,6 +130,12 @@
 .window-icon {
 	opacity: 1;
 	transition: opacity .5s;
+}
+
+/* Widget Styling */
+
+.no-visible-children .contents {
+	background-color: @transparent;
 }
 
 /* Button Styling */

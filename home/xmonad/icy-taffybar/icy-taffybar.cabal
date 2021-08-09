@@ -6,8 +6,7 @@ author:         Icy-Thought
 maintainer:     Icy-Thought
 build-type:     Simple
 cabal-version:  >=1.10
-data-files:
-  taffybar.css
+data-files:     taffybar.css
 
 executable taffybar
   main-is:             taffybar.hs

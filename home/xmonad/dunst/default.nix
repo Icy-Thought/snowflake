@@ -12,7 +12,7 @@
       global = {
         monitor = 0;
         follow = "mouse";
-        geometry = "400x100-28+58";
+        geometry = "350x100-28+58";
         indicate_hidden = "yes";
         shrink = "no";
         transparency = 0;
