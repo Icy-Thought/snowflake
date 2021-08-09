@@ -35,8 +35,11 @@
 
 
 .inner-pad {
+	transition: background-color .5s;
+	opacity: 1;
 	border-radius: 4px;
-	padding: 4px;
+	padding: 7px;
+	margin: 4px;
 	background-color: @taffy-raisin-black;
 }
 
@@ -132,7 +135,7 @@
 
 /* Widget Styling */
 
-.no-visible-children .contents {
+.no-visible-children * {
 	background-color: @transparent;
 }
 
