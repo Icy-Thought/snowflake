@@ -1,7 +1,7 @@
 { config, pkgs, ... }: {
 
   imports = [
-    # ../../home/gnome
-    ../../home/xmonad
+    # ../../config/gnome.nix
+    ../../config/xmonad.nix
   ];
 }

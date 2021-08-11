@@ -1,8 +1,8 @@
 { config, pkgs, ... }: {
 
   imports = [
-    ../../home/plasma
-    # ../../home/xmonad
+    ../../config/plasma.nix
+    # ../../config/xmonad.nix
   ];
 
 }

@@ -8,7 +8,7 @@
   };
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable-small";
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -20,14 +20,18 @@
     xmonad-contrib.url = "github:ivanmalison/xmonad-contrib";
     taffybar.url = "github:taffybar/taffybar";
 
-    picom-jonaburg.url = "github:jonaburg/picom";
-    picom-jonaburg.flake = false;
+    picom-jonaburg = {
+      url = "github:jonaburg/picom";
+      flake = false;
+    };
 
     rust.url = "github:oxalica/rust-overlay";
     # emacs.url = "github:nix-community/emacs-overlay";
 
-    nixpkgs-mozilla.url = "github:mozilla/nixpkgs-mozilla";
-    nixpkgs-mozilla.flake = false;
+    nixpkgs-mozilla = {
+      url = "github:mozilla/nixpkgs-mozilla";
+      flake = false;
+    };
 
   };
 
@@ -76,7 +80,7 @@
 
       # Generate default Home-Manager conf
       mkHomeConfig = { username, system ? "x86_64-linux"
-        , baseModules ? [ ./home/common ], extraModules ? [ ] }:
+        , baseModules ? [ ./config ], extraModules ? [ ] }:
 
         homeManagerConfiguration rec {
           inherit system username;

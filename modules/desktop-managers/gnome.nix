@@ -5,7 +5,7 @@
   programs = { dconf.enable = true; };
 
   services = {
-    gnome = { # Remove after fixing gnome/default.nix
+    gnome = { # Remove after fixing config/gnome.nix
       gnome-keyring.enable = true;
       chrome-gnome-shell.enable = true;
     };

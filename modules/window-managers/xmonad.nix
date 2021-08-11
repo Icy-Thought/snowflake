@@ -2,16 +2,16 @@
 
 let
   defaultPkgs = [
-    pkgs.autorandr # X Resize and Rotate protocol.
-    pkgs.xorg.xkbcomp # Keyboard Codes in X.
-    pkgs.xss-lock # External Locker.
-    pkgs.pavucontrol # PulseAudio Volume Control.
-    pkgs.playerctl # Media Player Controller.
-    pkgs.dolphin # Qt File-Manager.
-    pkgs.gxmessage # GTK Drop-in Replacement.
-    pkgs.shotgun # Minimal X Screenshot Util.
-    pkgs.hacksaw # Selection Tool for Screenshot Scripts.
-    pkgs.dconf # Gsettings-Manager.
+    pkgs.autorandr # X resize and rotate protocol.
+    pkgs.xorg.xkbcomp # Keyboard codes in X.
+    pkgs.betterlockscreen # Minimal lockscreen.
+    pkgs.pavucontrol # PulseAudio volume control.
+    pkgs.playerctl # Media player controller.
+    pkgs.dolphin # Qt file-manager.
+    pkgs.gxmessage # GTK drop-in replacement.
+    pkgs.shotgun # Minimal X screenshot util.
+    pkgs.hacksaw # Selection tool for screenshot scripts.
+    pkgs.dconf # Gsettings-manager.
     pkgs.hicolor-icon-theme # Fallback-theme TaffyBar.
   ];
 
@@ -22,7 +22,7 @@ let
   ];
 
 in {
-  imports = [ ../../home/xmonad/picom ../display-managers/sddm.nix ];
+  imports = [ ../../config/picom/xmonad.nix ../display-managers/sddm.nix ];
 
   environment.systemPackages = defaultPkgs ++ xmonadPkgs;
 

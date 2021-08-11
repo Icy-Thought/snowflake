@@ -11,6 +11,7 @@
 
   boot = {
     # extraModulePackages = with config.boot.kernelPackages; [ amdgpu-pro ];
+    kernel.sysctl."abi.vsyscall32" = 0; 
     kernelParams = [ "acpi_backlight=native" ];
   };
 
@@ -69,6 +70,11 @@
     avahi.enable = false;
     gvfs.enable = true;
 
-    xserver = { videoDrivers = [ "amdgpu" ]; };
+    xserver = {
+      videoDrivers = [ "amdgpu" ];
+      deviceSection = ''
+        Option "TearFree" "true"
+      '';
+    };
   };
 }

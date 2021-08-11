@@ -50,17 +50,18 @@
     iproute2.enable = true;
 
     firewall = {
-      allowedTCPPorts = [ 53 ];
-      allowedUDPPorts = [ 53 51820 ]; # Wireguard
+      # 443 = openssl, 51820 = Wireguard, 1714 - 1764 = KDE-Connect
+      allowedTCPPorts = [ 53 443 ];
+      allowedUDPPorts = [ 53 51820 ];
       allowedTCPPortRanges = [{
         from = 1714;
         to = 1764;
-      }]; # KDE-Connect
+      }];
 
       allowedUDPPortRanges = [{
         from = 1714;
         to = 1764;
-      }]; # KDE-Connect
+      }];
     };
   };
 

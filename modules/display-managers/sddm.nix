@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }: {
 
-  imports = [ ../pkgs/sddm ];
+  imports = [ ../../packages/sddm ];
 
   services.xserver.displayManager.sddm.enable = true;
 }
