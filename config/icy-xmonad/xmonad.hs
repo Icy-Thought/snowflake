@@ -97,8 +97,8 @@ myConfig = def
   , terminal = "alacritty"
   , manageHook = composeOne [ isFullscreen -?> doFullFloat ] <+> manageHook def
   , layoutHook = myLayoutHook
-  , borderWidth = 2
-  , normalBorderColor = "#010306"
+  , borderWidth = 1
+  , normalBorderColor = "#0096FF"
   , focusedBorderColor = "#F3F8FE"
   , logHook =
       updatePointer (0.5, 0.5) (0, 0) <>
@@ -906,6 +906,7 @@ addKeys conf@XConfig { modMask = modm } =
     -- Specific program spawning
     , ((modm, xK_p), spawn "rofi -show drun -show-icons")
     , ((modm .|. shiftMask, xK_p), spawn "rofi -show run")
+    , ((modm .|. shiftMask, xK_x), spawn "betterlockscreen -l")
 
     -- Focus/Layout manipulation
 

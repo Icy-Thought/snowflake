@@ -24,16 +24,16 @@ in {
       };
       timers = [
         {
-          delay = 300;
+          delay = 60;
           command = ''xrandr --output "$PRIMARY_DISPLAY" --brightness .1'';
           canceller = ''xrandr --output "$PRIMARY_DISPLAY" --brightness 1'';
         }
         {
-          delay = 600;
+          delay = 180;
           command = "betterlockscreen -l dim";
         }
         {
-          delay = 900;
+          delay = 300;
           command = "systemctl suspend";
         }
       ];

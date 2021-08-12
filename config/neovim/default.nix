@@ -10,7 +10,7 @@
   };
 
   xdg.configFile."nvim" = {
-    source = ./nvim;
+    source = ./config;
     recursive = true;
     # onChange = "nvim -c PackerSync";
   };
