@@ -24,7 +24,7 @@
 /* Top Level Styling */
 
 .taffy-window * {
-	font-family: "Iosevka Nerd Font", sans-serif;
+	font-family: "Iosevka SemiBold", sans-serif;
 	font-size: 10pt;
 	font-weight: normal;
 	color: @font-color;

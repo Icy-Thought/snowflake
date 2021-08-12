@@ -126,9 +126,10 @@
     enableDefaultFonts = true;
     fonts = with pkgs; [
       (nerdfonts.override {
-        fonts = [ "Iosevka" "JetBrainsMono" "FantasqueSansMono" ];
+        fonts = [ "JetBrainsMono" "FantasqueSansMono" ];
       })
 
+      iosevka
       comfortaa
       source-code-pro
       emacs-all-the-icons-fonts

@@ -4,8 +4,8 @@
       user-mail-address "gilganyx@pm.me")
 
 (setq
- doom-font (font-spec :family "Iosevka Nerd Font" :size 16 :weight 'Medium)
- doom-big-font (font-spec :family "Iosevka Nerd Font" :size 20 :weight 'Bold)
+ doom-font (font-spec :family "Iosevka" :size 16 :weight 'SemiBold)
+ doom-big-font (font-spec :family "Iosevka" :size 20 :weight 'SemiBold)
  doom-theme 'doom-one)
 
 ;; (doom/set-frame-opacity 95)

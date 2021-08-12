@@ -57,10 +57,10 @@ let
     # pkgs.gcc11 # GNU Compiler Collection.
     # pkgs.gnumake # Control Exec. Files.
     # pkgs.cmake # Auto Testing & Packaging.
-    pkgs.rnix-lsp # Nix-lsp server.
     pkgs.rust-bin.nightly.latest.default # Latest Rust Compiler.
     pkgs.ghc # Glasgow Haskell Compiler.
     pkgs.cabal-install # Cabal & Hackage CLI.
+    pkgs.stylish-haskell # HS code prettifier.
     pkgs.sumneko-lua-language-server # Lua Language Server.
     # pkgs.nodejs-16_x # I/O Framwork for JS v8.
     pkgs.hugo # Modern Static Web Engine.
@@ -70,6 +70,7 @@ let
   lspPkgs = [
     pkgs.ccls # C/C++ language Server - Clang.
     pkgs.rust-analyzer # Rust Completion.
+    pkgs.rnix-lsp # Nix-lsp server.
     pkgs.haskell-language-server # LSP server for GHC
     # pkgs.nodePackages.pyright # Python.
     # pkgs.nodePackages.typescript-language-server # TypeScript.
