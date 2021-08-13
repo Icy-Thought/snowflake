@@ -11,7 +11,7 @@
 
   boot = {
     # extraModulePackages = with config.boot.kernelPackages; [ amdgpu-pro ];
-    kernel.sysctl."abi.vsyscall32" = 0; 
+    kernel.sysctl."abi.vsyscall32" = 0;
     kernelParams = [ "acpi_backlight=native" ];
   };
 
@@ -75,6 +75,11 @@
       deviceSection = ''
         Option "TearFree" "true"
       '';
+
+      libinput.touchpad = {
+        accelSpeed = "0.5";
+        accelProfile = "adaptive";
+      };
     };
   };
 }

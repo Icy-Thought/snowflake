@@ -1,25 +1,21 @@
 { config, lib, pkgs, ... }:
 
 let
-  defaultPkgs = [
-    pkgs.autorandr # X resize and rotate protocol.
-    pkgs.xorg.xkbcomp # Keyboard codes in X.
-    pkgs.betterlockscreen # Minimal lockscreen.
-    pkgs.pavucontrol # PulseAudio volume control.
-    pkgs.playerctl # Media player controller.
-    pkgs.dolphin # Qt file-manager.
-    pkgs.gxmessage # GTK drop-in replacement.
-    pkgs.shotgun # Minimal X screenshot util.
-    pkgs.hacksaw # Selection tool for screenshot scripts.
-    pkgs.dconf # Gsettings-manager.
-    pkgs.hicolor-icon-theme # Fallback-theme TaffyBar.
+  defaultPkgs = with pkgs; [
+    autorandr
+    xorg.xkbcomp
+    betterlockscreen
+    pavucontrol
+    playerctl
+    gnome.nautilus
+    gxmessage
+    shotgun
+    hacksaw
+    dconf
+    hicolor-icon-theme
   ];
 
-  xmonadPkgs = [
-    pkgs.haskellPackages.icy-xmonad # xmonad binary
-    pkgs.dunst # Notification tool.
-    pkgs.feh # Simple x Image Viewer.
-  ];
+  xmonadPkgs = with pkgs; [ haskellPackages.icy-xmonad dunst feh ];
 
 in {
   imports = [ ../../config/picom/xmonad.nix ../display-managers/sddm.nix ];

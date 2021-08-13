@@ -125,10 +125,7 @@
   fonts = {
     enableDefaultFonts = true;
     fonts = with pkgs; [
-      (nerdfonts.override {
-        fonts = [ "JetBrainsMono" "FantasqueSansMono" ];
-      })
-
+      (nerdfonts.override { fonts = [ "JetBrainsMono" "FantasqueSansMono" ]; })
       iosevka
       comfortaa
       source-code-pro

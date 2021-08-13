@@ -1,14 +1,6 @@
 { config, lib, pkgs, ... }:
 
-let
-  leftPkgs = [
-    (pkgs.rofi.override { plugins = [ pkgs.rofi-emoji pkgs.rofi-calc ]; })
-    pkgs.dunst # Notification tool.
-    pkgs.polybar # Customizable toolbar.
-    pkgs.trayer # SysTray
-    pkgs.feh # Image viewer.
-    pkgs.shotgun # Minimal X screenshot util.
-  ];
+let leftPkgs = with pkgs; [ dunst polybar trayer feh shotgun ];
 
 in {
   imports = [ ../../config/picom/leftwm.nix ../display-managers/sddm.nix ];
