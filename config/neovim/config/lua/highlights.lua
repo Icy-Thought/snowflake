@@ -40,12 +40,6 @@ end
 
 fg("IndentBlanklineChar", line)
 
-
--- transparency
-cmd("hi Normal guibg=NONE ctermbg=NONE")
-cmd "hi LineNr guibg=NONE"
-cmd "hi SignColumn guibg=NONE"
-
 -- misc --
 fg("LineNr", grey)
 fg("Comment", grey_fg)
@@ -75,6 +69,7 @@ fg_bg("DiffModified", nord_blue, "none")
 -- NvimTree
 fg("NvimTreeFolderIcon", blue)
 fg("NvimTreeFolderName", blue)
+fg("NvimTreeGitDirty", red)
 fg("NvimTreeOpenedFolderName", blue)
 fg("NvimTreeEmptyFolderName", blue)
 fg("NvimTreeIndentMarker", one_bg2)
@@ -110,7 +105,6 @@ fg("LspDiagnosticsSignHint", purple)
 fg("LspDiagnosticsVirtualTextHint", purple)
 
 -- packer's floating window
-
 bg("NormalFloat", "NONE")
 fg("FloatBorder", blue)
 

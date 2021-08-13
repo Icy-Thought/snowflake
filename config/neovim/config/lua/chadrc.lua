@@ -18,7 +18,7 @@ local M = {
         shiftwidth = 2,
         smartindent = true,
         mapleader = " ",
-        autosave = true
+        autosave = false
     },
     -- enable / disable plugins (true for disable)
     plugin_status = {
