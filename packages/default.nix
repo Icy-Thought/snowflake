@@ -4,39 +4,15 @@ let
   cpupower = config.boot.kernelPackages.cpupower;
   perf = config.boot.kernelPackages.perf;
 
-  kernelPkgs = [
-    pkgs.cpupower # Examine/Tool Powersaving Features.
-    pkgs.perf # Profile & Performance Counter.
-  ];
+  kernelPkgs = with pkgs; [ cpupower perf ];
+  # Disabled
 
-  sysPkgs = [
-    pkgs.tree # Tree view.
-    pkgs.wireguard # Wireguard Tools.
-    pkgs.killall # Completely Eradicate Processes.
-    pkgs.xclip # Copy/Paste in Xterm.
-    pkgs.wl-clipboard # Wayland c-p/c-v.
-  ];
+  sysPkgs = with pkgs; [ tree wireguard killall xclip wl-clipboard ];
 
-  altPkgs = [
-    pkgs.exa # Better ls.
-    pkgs.pv # Progress-bar.
-    pkgs.fd # Faster Find.
-    pkgs.ripgrep # Faster grep.
-    pkgs.skim # Faster fzf.
-  ];
+  altPkgs = with pkgs; [ exa pv fd ripgrep skim ];
 
-  utilPkgs = [
-    pkgs.gnupg # Encrypt/Decrypt.
-    pkgs.firejail # Namespace-based Sandboxing.
-    pkgs.exiftool # Control File Metadata.
-    pkgs.gh # Official GH Client.
-    pkgs.agenix # age-Encrypted Secrets.
-  ];
+  utilPkgs = with pkgs; [ gnupg firejail exiftool gh agenix ];
 
-  envPkgs = [
-    pkgs.mesa # FOSS 3D Graphics Lib.
-    pkgs.vulkan-headers # Header Files + API Registery.
-    pkgs.appimage-run # AppImages Support.
-  ];
+  envPkgs = with pkgs; [ mesa vulkan-headers appimage-run ];
 
 in { environment.systemPackages = sysPkgs ++ altPkgs ++ utilPkgs ++ envPkgs; }
