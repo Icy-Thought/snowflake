@@ -6,7 +6,7 @@
   environment.etc = {
     home-manager.source = "${inputs.home-manager}";
     nixpkgs.source = "${inputs.nixpkgs}";
-    # "nixos".source = "${config.home.homeDirectory}/git/Snowflake";
+    # "nixos".source = "${config.home.homeDirectory}/git/Icy-Thought/Snowflake";
   };
 
   user = {

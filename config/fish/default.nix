@@ -128,7 +128,7 @@
       genup =
         "sudo nixos-rebuild switch --flake '/etc/nixos#thinkpad' --impure";
       g2nix =
-        "dconf dump / | dconf2nix > ~/git/NixOS-Configurations/home/modules/dconf.nix";
+        "dconf dump / | dconf2nix > ~/git/Icy-Thought/Snowflake/config/dconf/gnome.nix";
 
     };
   };
