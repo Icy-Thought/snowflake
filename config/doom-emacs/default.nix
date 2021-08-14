@@ -11,11 +11,11 @@
   home = {
     sessionVariables = {
       DOOMDIR =
-        "${config.home.homeDirectory}/git/Snowflake/config/doom-emacs/doom.d";
+        "${config.home.homeDirectory}/git/Icy-Thought/Snowflake/config/doom-emacs/config";
     };
 
     file.".doom.d" = {
-      source = ./doom.d;
+      source = ./config;
       recursive = true;
       onChange = "doom -y sync -u";
     };

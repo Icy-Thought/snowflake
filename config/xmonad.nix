@@ -69,4 +69,10 @@ in {
     importedVariables = [ "GDK_PIXBUF_MODULE_FILE" ];
   };
 
+  xdg.configFile = {
+    "betterlockscreenrc".text = ''
+      font="JetBrainsMono Nerd Font"
+    '';
+  };
+
 }

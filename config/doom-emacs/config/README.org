@@ -221,7 +221,7 @@ Since we don't want to disable org-confirm-babel-evaluate all of the time, do it
 #+begin_src emacs-lisp
 (defun org-babel-tangle-config ()
   (when (string-equal (buffer-file-name)
-                      (expand-file-name "~/git/Snowflake/config/doom-emacs/doom.d/README.org"))
+                      (expand-file-name "~/git/Icy-Thought/Snowflake/config/doom-emacs/doom.d/README.org"))
     (let ((org-config-babel-evaluate nil))
       (org-babel-tangle))))
 
@@ -373,12 +373,12 @@ NOTE: Press ~K~ on a module to view its documentation, and ~gd~ to browse its di
             +dragndrop                          ; Enables drag & drop in org-mode.
             +gnuplot                            ; Enables gnu-plotting.
             +present                            ; Org-mode presentations.
-            +jupyter                            ; ipython/jupyter support for babel.
+            ;; +jupyter                          ; ipython/jupyter support for babel.
             ;;+hugo                             ; Enable ox-hugo support.
             +roam)                              ; Note-taking done correct in org-mode.
        ;;perl                                   ; write code no one else can comprehend
-       (python +lsp                             ; Python + LSP support.
-               +pyright)                        ; Beautiful is better than ugly
+       ;; (python +lsp                          ; Python + LSP support.
+       ;;        +pyright)                      ; Beautiful is better than ugly
        ;;qt                                     ; The 'cutest' gui framework ever
        ;;(ruby +rails)                          ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
        (rust +lsp)                              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
