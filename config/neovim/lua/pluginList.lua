@@ -177,11 +177,7 @@ return packer.startup(
                     run = "make"
                 },
                 {
-                    "nvim-telescope/telescope-media-files.nvim",
-                    disable = plugin_status.telescope_media,
-                    setup = function()
-                        require "mappings".telescope_media()
-                    end
+                    "nvim-telescope/telescope-media-files.nvim"
                 }
             },
             config = function()
@@ -215,6 +211,7 @@ return packer.startup(
                 require "mappings".toggleterm()
             end
         }
+
         use {
             "windwp/nvim-autopairs",
             after = "nvim-compe",
@@ -235,8 +232,6 @@ return packer.startup(
             cmd = "CommentToggle",
             config = function()
                 require("plugins.others").comment()
-            end,
-            setup = function()
                 require "mappings".comment_nvim()
             end
         }
@@ -250,6 +245,16 @@ return packer.startup(
             end,
             cond = function()
                 return vim.g.auto_save == true
+            end
+        }
+
+        -- smooth scroll
+        use {
+            "karb94/neoscroll.nvim",
+            disable = plugin_status.neoscroll_nvim,
+            event = "WinScrolled",
+            config = function()
+                require("plugins.others").neoscroll()
             end
         }
 
@@ -270,6 +275,7 @@ return packer.startup(
         }
 
         --   use "alvan/vim-closetag" -- for html autoclosing tag
+
         use {
             "lukas-reineke/indent-blankline.nvim",
             disable = plugin_status.blankline,

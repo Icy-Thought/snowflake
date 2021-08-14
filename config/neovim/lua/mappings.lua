@@ -49,14 +49,14 @@ M.toggleterm = function()
     local m = user_map.toggleterm
 
     -- Open terminals
-    map("n", m.toggle_window, ":lua termW:toggle() <CR>", opt)
-    map("n", m.toggle_vert, ":lua termV:toggle() <CR>", opt)
-    map("n", m.toggle_hori, ":lua termH:toggle() <CR>", opt)
+    map("n", m.toggle_window, ":execute v:count . 'ToggleTerm direction=window' <CR>", opt)
+    map("n", m.toggle_right, ":execute v:count . 'ToggleTerm direction=vertical' <CR>", opt)
+    map("n", m.toggle_bot, ":execute v:count . 'ToggleTerm direction=horizontal' <CR>", opt)
 
-    -- toggle(HIDE) a term from within terminal edit mode
-    map("t", m.hide_term, "<C-\\><C-n> :ToggleTerm <CR>", opt)
-    map("t", m.hide_term, "<C-\\><C-n> :ToggleTerm <CR>", opt)
-    map("t", m.hide_term, "<C-\\><C-n> :ToggleTerm <CR>", opt)
+    -- 'Un' toggle a term from within terminal edit mode
+    map("t", m.toggle_window, "<C-\\><C-n> :ToggleTerm <CR>", opt)
+    map("t", m.toggle_right, "<C-\\><C-n> :ToggleTerm <CR>", opt)
+    map("t", m.toggle_bot, "<C-\\><C-n> :ToggleTerm <CR>", opt)
 end
 
 M.truezen = function()
@@ -93,15 +93,11 @@ M.telescope = function()
     map("n", m.git_status, ":Telescope git_status <CR>", opt)
     map("n", m.git_commits, ":Telescope git_commits <CR>", opt)
     map("n", m.find_files, ":Telescope find_files <CR>", opt)
+    map("n", m.media_files, ":Telescope media_files <CR>", opt)
     map("n", m.buffers, ":Telescope buffers<CR>", opt)
     map("n", m.help_tags, ":Telescope help_tags<CR>", opt)
     map("n", m.oldfiles, ":Telescope oldfiles<CR>", opt)
     map("n", m.themes, ":Telescope themes<CR>", opt)
-end
-
-M.telescope_media = function()
-    local m = user_map.telescope_media
-    map("n", m.media_files, ":Telescope media_files <CR>", opt)
 end
 
 M.bufferline = function()
@@ -134,20 +130,6 @@ M.fugitive = function()
     map("n", m.diffget_2, ":diffget //2<CR>", opt)
     map("n", m.diffget_3, ":diffget //3<CR>", opt)
     map("n", m.git_blame, ":Git blame<CR>", opt)
-end
-
--- navigation within insert mode
-local check_insertNav = require("chadrc").options.enable_insertNav
-
-if check_insertNav == true then
-    local m = user_map.insert_nav
-
-    map("i", m.forward, "<Right>", opt)
-    map("i", m.backward, "<Left>", opt)
-    map("i", m.top_of_line, "<ESC>^i", opt)
-    map("i", m.end_of_line, "<End>", opt)
-    map("i", m.next_line, "<Up>", opt)
-    map("i", m.prev_line, "<Down>", opt)
 end
 
 return M
