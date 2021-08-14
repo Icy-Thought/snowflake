@@ -208,8 +208,8 @@ main = do
         deocrateWithSetClassAndBoxes "tray" $
           sniTrayNewFromParams
             defaultTrayParams
-              { trayLeftClickAction = PopupMenu,
-                trayRightClickAction = Activate
+              { trayRightClickAction = PopupMenu,
+                trayLeftClickAction = Activate
               }
       myMpris =
         mpris2NewWithConfig
