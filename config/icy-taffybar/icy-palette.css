@@ -1,0 +1,16 @@
+@define-color koromiko #FFB26B;
+@define-color moon-raker #D6C5F0;
+@define-color sail #BBE1FA;
+@define-color twilight-blue #F3F8FE;
+
+@define-color navy rgb(25, 30, 55);
+@define-color red rgba(255, 65, 81, 1.0);
+@define-color teal #00695C;
+@define-color raisin-black #1A1B25;
+
+@define-color active-window-color @white;
+@define-color urgent-window-color @raisin-black;
+@define-color font-color @twilight-blue;
+@define-color menu-background-color @white;
+@define-color menu-font-color @black;
+@define-color bar-background @transparent;
