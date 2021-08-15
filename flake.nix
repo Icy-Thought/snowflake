@@ -27,12 +27,6 @@
 
     rust.url = "github:oxalica/rust-overlay";
     # emacs.url = "github:nix-community/emacs-overlay";
-
-    nixpkgs-mozilla = {
-      url = "github:mozilla/nixpkgs-mozilla";
-      flake = false;
-    };
-
   };
 
   outputs = inputs@{ self, nixpkgs, home-manager, flake-utils, agenix, ... }:
@@ -44,11 +38,11 @@
         inputs.xmonad.overlay
         inputs.xmonad-contrib.overlay
         inputs.taffybar.overlay
+
         inputs.agenix.overlay
         inputs.rust.overlay
         # inputs.emacs.overlay
 
-        (import inputs.nixpkgs-mozilla)
         (final: prev: {
           picom =
             prev.picom.overrideAttrs (_: { src = inputs.picom-jonaburg; });
