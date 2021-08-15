@@ -238,9 +238,9 @@ virtualClasses =
 -- Commands
 emacsCommand = "emacsclient -c"
 
-firefoxCommand = "firefox"
+firefoxCommand = "firefox-devedition"
 
-firefoxPrivCommand = "firefox --profile ~/.mozilla/firefox/qqxa82yf.Private"
+firefoxPrivCommand = "firefox-devedition --profile ~/.mozilla/firefox/z5dgw9v6.dev-edition-private"
 
 chromiumCommand = "chromium"
 

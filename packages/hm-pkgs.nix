@@ -77,7 +77,7 @@ let
 
   utilPkgs = with pkgs; [
     gnome.geary
-    latest.firefox-nightly-bin
+    firefox-devedition-bin
     ueberzug
     anki
     zathura

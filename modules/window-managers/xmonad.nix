@@ -7,7 +7,7 @@ let
     betterlockscreen
     pavucontrol
     playerctl
-    gnome.nautilus
+    dolphin
     gxmessage
     shotgun
     hacksaw
