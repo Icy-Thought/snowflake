@@ -18,9 +18,10 @@
 
     shadow = true;
     shadowExclude = [
-      "name = 'hacksaw'"
       "_GTK_FRAME_EXTENTS@:c"
+      "name = 'hacksaw'"
       "class_g ?= 'taffybar'"
+      "class_g = 'Rofi'"
       "class_g = 'Firefox' && window_type = 'utility'"
     ];
 
@@ -41,6 +42,11 @@
       blur-background-fixed = false;
       blur-background-exclude = [
         "_GTK_FRAME_EXTENTS@:c"
+        "window_type = 'menu'"
+        "window_type = 'dropdown_menu'"
+        "window_type = 'popup_menu'"
+        "window_type = 'tooltip'"
+        "name = 'rofi - Search'"
         "class_g = 'Firefox' && window_type = 'utility'"
       ];
 

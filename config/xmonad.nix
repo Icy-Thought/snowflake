@@ -7,7 +7,13 @@ let
   '';
 
 in {
-  imports = [ ./xresources ./gtk/xmonad.nix ./dunst/xmonad.nix ./rofi ];
+  imports = [
+    ./xresources
+    ./gtk/xmonad.nix
+    ./dunst/xmonad.nix
+    ./rofi
+    ./scripts/xmonad.nix
+  ];
 
   services = {
     gnome-keyring.enable = true;
