@@ -5,10 +5,9 @@ let
 
   screenshot = pkgs.writeScriptBin "screenshot" ''
     notifySend="${pkgs.libnotify}/bin/notify-send"
-    current="$(date '+%Y-%m-%d %H:%M:%S')"
     shotgun="${pkgs.shotgun}/bin/shotgun"
-    clipboard="xclip -t 'image/png' -selection clipboard"
-    icon=camera
+    current="$(date '+%Y-%m-%d %H:%M:%S')"
+    icon="${pkgs.whitesur-icon-theme}/share/icons/WhiteSur-dark/apps/scalable/camera.svg"
 
     notify() {
       case "$1" in
@@ -89,16 +88,16 @@ let
     }
 
     copyWorkspace() {
-      shotgun - | $clipboard
+      shotgun - | xclip -t 'image/png' -selection clipboard
       notify -copyWorkspace
     }
     copyActiveWin() {
-      shotgun -i $(xdotool getactivewindow) - | $clipboard
+      shotgun -i $(xdotool getactivewindow) - | xclip -t 'image/png' -selection clipboard
       notify -copyActiveWin
     }
     copySelection() {
       selection=$(hacksaw -f "-i %i -g %g")
-      shotgun $selection - | $clipboard
+      shotgun $selection - | xclip -t 'image/png' -selection clipboard
       notify -copySelection
     }
 
@@ -106,8 +105,8 @@ let
       "workspace") workspace ;;
       "activeWin") activeWin ;;
       "selection") selection ;;
-      "copyWorkspace") copyWorkspace;;
-      "copyActiveWin") copyActiveWin;;
+      "copyWorkspace") copyWorkspace ;;
+      "copyActiveWin") copyActiveWin ;;
       "copySelection") copySelection ;;
       *)
         echo "ERROR: Invalid option $1."
@@ -115,10 +114,6 @@ let
         exit 1
         ;;
     esac
-  '';
-
-  clipScreen = pkgs.writeScriptBin "clip" ''
-    }
   '';
 
 in { home.packages = [ screenshot ]; }
