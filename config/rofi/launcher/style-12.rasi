@@ -1,13 +1,14 @@
 /*
- * Author  : Aditya Shakya
+ * Author: Aditya Shakya
+ * Modified By: Icy-Thought
  */
 
 * {
-  al:  #00000000;
-  bg:  #000000ff;
-  se:  #101010ff;
-  fg:  #FFFFFFff;
-  ac:  #FDD835ff;
+  al:  #1A1B2500;
+  bg:  #1A1B25ff;
+  se:  #21222eff;
+  fg:  #F3F8FEff;
+  ac:  #6C77BBff;
 }
 
 window {
@@ -17,7 +18,7 @@ window {
 	border:							0px;
 	border-color:					@ac;
     border-radius:                  50px;
-	width:							50%;
+	width:							45%;
     location:                       center;
     x-offset:                       0;
     y-offset:                       0;

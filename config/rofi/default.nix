@@ -3,7 +3,7 @@
   programs.rofi = {
     enable = true;
     plugins = with pkgs; [ rofi-systemd ];
-    theme = ./launcher/blurry.rasi;
+    theme = ./launcher/style-12.rasi;
 
     extraConfig = {
       font = "Noto Sans 10";
