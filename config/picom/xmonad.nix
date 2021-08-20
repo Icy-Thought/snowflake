@@ -62,7 +62,7 @@
       corner-radius = 10.0;
       round-borders = 1;
       round-borders-exclude = [ ];
-      rounded-corners-exclude = [ ];
+      rounded-corners-exclude = [ "class_g = 'Dunst'" ];
 
       ### Shadows ###
       shadow-radius = 7;

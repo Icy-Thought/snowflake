@@ -7,10 +7,11 @@ let
     betterlockscreen
     pavucontrol
     playerctl
-    dolphin
+    gnome.nautilus
     gxmessage
     shotgun
     hacksaw
+    xdotool
     dconf
     hicolor-icon-theme
   ];

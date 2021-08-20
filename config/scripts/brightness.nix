@@ -3,39 +3,53 @@
 let
   brightness = pkgs.writeScriptBin "set-brightness" ''
     brightnessctl="${pkgs.brightnessctl}/bin/brightnessctl"
-    notifySend="${pkgs.libnotify}/bin/notify-send"
+    dunstify="${pkgs.dunst}/bin/dunstify"
+    input="cat /dev/stdin"
 
-    showBrightness() {
-      level=$((100 * $($brightnessctl get) / $($brightnessctl max)))
-      if [ $level -eq 100 ]
-      then
-        icon=notification-display-brightness-full
-      elif [ $level -ge 50 ]
-      then
-        icon=notification-display-brightness-high
-      elif [ $level -ge 25 ]
-      then
-        icon=notification-display-brightness-medium
-      elif [ $level -ge 5 ]
-      then
-        icon=notification-display-brightness-low
+    off="${pkgs.whitesur-icon-theme}/share/icons/WhiteSur-dark/status/symbolic/display-brightness-off-symbolic.svg"
+    low="${pkgs.whitesur-icon-theme}/share/icons/WhiteSur-dark/status/symbolic/display-brightness-low-symbolic.svg"
+    medium="${pkgs.whitesur-icon-theme}/share/icons/WhiteSur-dark/status/symbolic/display-brightness-medium-symbolic.svg"
+    high="${pkgs.whitesur-icon-theme}/share/icons/WhiteSur-dark/status/symbolic/display-brightness-symbolic.svg"
+
+    notifyBrightness() {
+      brightness="$1"
+      if [ $brightness -eq 0 ]; then
+        dunstify \
+          -h string:x-canonical-private-synchronous:brightness "Brightness: " \
+          -h int:value:"$brightness" \
+          -t 1500 \
+          -i $off
+      elif [ $brightness -le 30 ]; then
+        dunstify \
+          -h string:x-canonical-private-synchronous:brightness "Brightness: " \
+          -h int:value:"$brightness" \
+          -t 1500 \
+          -i $low
+      elif [ $brightness -le 70 ]; then
+        dunstify \
+          -h string:x-canonical-private-synchronous:brightness "Brightness: " \
+          -h int:value:"$brightness" \
+          -t 1500 \
+          -i $medium
       else
-        icon=notification-display-brightness-off
+        dunstify \
+          -h string:x-canonical-private-synchronous:brightness "Brightness: " \
+          -h int:value:"$brightness" \
+          -t 1500 \
+          -i $high
       fi
-      $notifySend \
-        -R "$XDG_RUNTIME_DIR/brightness.msgid" \
-        -i $icon \
-        -h int:value:$level \
-        ""
     }
+
     raiseBrightness() {
       $brightnessctl set 5%+
-      showBrightness
+      notifyBrightness "$input"
     }
+
     lowerBrightness() {
       $brightnessctl set 5%-
-      showBrightness
+      notifyBrightness "$input"
     }
+
     case "$1" in
       up) raiseBrightness ;;
       down) lowerBrightness ;;

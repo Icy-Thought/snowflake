@@ -881,12 +881,6 @@ goToNextScreen ws =
 goToNextScreenX = windows goToNextScreen
 
 -- Key bindings
-volumeUp = spawn "set_volume --unmute --change-volume +5"
-
-volumeDown = spawn "set_volume --unmute --change-volume -5"
-
-mute = spawn "set_volume --toggle-mute"
-
 shiftToEmptyOnScreen direction =
   followingWindow (windowToScreen direction True) >> shiftToEmptyAndView
 
@@ -944,20 +938,8 @@ addKeys conf@XConfig {modMask = modm} =
       ]
     ++
 
-    -- ScratchPads
-    [ ((modalt, xK_m), doScratchpad "htop"),
-      ((modalt, xK_v), doScratchpad "volume"),
-      ((modalt, xK_s), doScratchpad "spotify"),
-      ( (modalt .|. controlMask, xK_s),
-        myRaiseNextMaybe (spawn spotifyCommand) spotifySelector
-      ),
-
-      -- Specific program spawning
-      ((modm, xK_p), spawn "rofi -show drun -show-icons"),
-      ((modm .|. shiftMask, xK_p), spawn "rofi -show run"),
-
-      -- Window manipulation
-      ((modm, xK_g), myGoToWindow),
+    -- Window manipulation
+    [ ((modm, xK_g), myGoToWindow),
       ((modm, xK_b), myBringWindow),
       ((modm .|. shiftMask, xK_b), myReplaceWindow),
       ((modm .|. controlMask, xK_space), deactivateFullOr goFullscreen),
@@ -969,19 +951,6 @@ addKeys conf@XConfig {modMask = modm} =
       ((modalt, xK_space), deactivateFullOr restoreOrMinimizeOtherClasses),
       ((modalt, xK_Return), deactivateFullAnd restoreAllMinimized),
       ((hyper, xK_g), gatherThisClass),
-
-      -- ScratchPads
-      ((modalt, xK_h), doScratchpad "htop"),
-      ((modalt, xK_v), doScratchpad "volume"),
-      ((modalt, xK_s), doScratchpad "spotify"),
-      ( (modalt .|. controlMask, xK_s),
-        myRaiseNextMaybe (spawn spotifyCommand) spotifySelector
-      ),
-
-      -- Specific program spawning
-      ((modm, xK_p), spawn "rofi -show drun -show-icons"),
-      ((modm .|. shiftMask, xK_p), spawn "rofi -show run"),
-      ((modm .|. shiftMask, xK_x), spawn "betterlockscreen -l"),
 
       -- Focus/Layout manipulation
       ((modm, xK_e), goToNextScreenX),
@@ -1010,25 +979,48 @@ addKeys conf@XConfig {modMask = modm} =
       ((hyper .|. mod1Mask, xK_r), renameWorkspace def),
       ((hyper, xK_l), selectLayout),
 
-      -- Playerctl
-      ((modm, xK_semicolon), spawn "playerctl play-pause"),
-      ((0, xF86XK_AudioPause), spawn "playerctl play-pause"),
-      ((0, xF86XK_AudioPlay), spawn "playerctl play-pause"),
-      ((modm, xK_l), spawn "playerctl next"),
-      ((0, xF86XK_AudioNext), spawn "playerctl next"),
-      ((modm, xK_j), spawn "playerctl previous"),
-      ((0, xF86XK_AudioPrev), spawn "playerctl previous"),
+      -- ScratchPads
+      ((modalt, xK_h), doScratchpad "htop"),
+      ((modalt, xK_v), doScratchpad "volume"),
+      ((modalt, xK_s), doScratchpad "spotify"),
+      ( (modalt .|. controlMask, xK_s),
+        myRaiseNextMaybe (spawn spotifyCommand) spotifySelector
+      ),
 
-      -- Volume control
-      ((0, xF86XK_AudioRaiseVolume), volumeUp),
-      ((0, xF86XK_AudioLowerVolume), volumeDown),
-      ((0, xF86XK_AudioMute), mute),
-      ((modm, xK_i), volumeUp),
-      ((modm, xK_k), volumeDown),
-      ((modm, xK_u), mute),
-      ((hyper .|. shiftMask, xK_q), spawn "toggle_mute_current_window.sh"),
-      ((0, xF86XK_MonBrightnessUp), spawn "brightness.sh 5"),
-      ((0, xF86XK_MonBrightnessDown), spawn "brightness.sh -5")
+      -- Specific program spawning
+      ((modm, xK_p), spawn "rofi -show drun -show-icons"),
+      ((modm .|. shiftMask, xK_p), spawn "rofi -show run"),
+      ((modm .|. shiftMask, xK_x), spawn "betterlockscreen -l"),
+
+      -- Playerctl
+      ((modm, xK_Up), spawn "playerctl play-pause"),
+      ((modm, xK_Down), spawn "playerctl play-pause"),
+      ((modm, xK_Right), spawn "playerctl next"),
+      ((modm, xK_Left), spawn "playerctl previous"),
+
+      -- Volume Control
+      ((0, xF86XK_AudioRaiseVolume), spawn "set-volume up"),
+      ((0, xF86XK_AudioLowerVolume), spawn "set-volume down"),
+      ((0, xF86XK_AudioMute), spawn "set-volume toggle"),
+      -- ((hyper .|. shiftMask, xK_q), spawn "mute-activeWin"),
+      ((0, xF86XK_AudioMicMute), spawn "set-micVol toggle"),
+
+      -- Brightness Control
+      ((0, xF86XK_MonBrightnessUp), spawn "set-brightness up"),
+      ((0, xF86XK_MonBrightnessDown), spawn "set-brightness down"),
+
+      -- PrintSc
+      -- Current Workspace
+      ((0, xK_Print), spawn "screenshot -workspace"),
+      ((controlMask , xK_Print), spawn "screenshot -copyWorkspace"),
+
+      -- Active Window
+      ((mod1Mask, xK_Print), spawn "screenshot -activeWin"),
+      ((controlMask .|. mod1Mask, xK_Print), spawn "screenshot -copyActiveWin"),
+
+      -- Selected Area
+      ((shiftMask, xK_Print), spawn "screenshot -selection"),
+      ((controlMask .|. shiftMask, xK_Print), spawn "screenshot -copySelection")
     ]
     ++
 
