@@ -63,7 +63,7 @@ Enable transparency for emacs frame only + retaining brightness of remaining obj
  x-stretch-cursor t)                                ; Cursor size = glyph width.
 
 (with-eval-after-load 'solaire-mode                 ; Inverted solaire color-schemes.
-  (add-to-list 'solaire-mode-themes-to-face-swap 'doom-horizon))
+  (add-to-list 'solaire-mode-themes-to-face-swap 'doom-one))
 #+end_src
 
 *** Doom-Modeline

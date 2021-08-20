@@ -17,7 +17,7 @@
  x-stretch-cursor t)                                ; Cursor size = glyph width.
 
 (with-eval-after-load 'solaire-mode                 ; Inverted solaire color-schemes.
-  (add-to-list 'solaire-mode-themes-to-face-swap 'doom-horizon))
+  (add-to-list 'solaire-mode-themes-to-face-swap 'doom-one))
 
 (setq
  doom-modeline-height 35
