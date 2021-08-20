@@ -5,28 +5,29 @@
     iconTheme = {
       name = "Whitesur-dark";
       package = pkgs.whitesur-icon-theme;
-      size = "16x16";
+      size = "32x32";
     };
 
     settings = {
       global = {
         monitor = 0;
         follow = "mouse";
-        geometry = "380x100-28+58";
+        geometry = "320x100-12+48";
         indicate_hidden = "yes";
         shrink = "no";
         transparency = 0;
         notification_height = 0;
         separator_height = 2;
-        padding = 8;
-        horizontal_padding = 10;
+        corner_radius = 5;
+        padding = 20;
+        horizontal_padding = 20;
         frame_width = 1;
-        frame_color = "#282a36";
+        frame_color = "#F3F8FE";
         separator_color = "frame";
         sort = "yes";
         idle_threshold = 120;
 
-        font = "JetBrainsMonoMedium Nerd Font 10";
+        font = "JetBrainsMonoMedium Nerd Font 11";
         line_height = 0;
         markup = "full";
         format = "%s %p\n%b";
@@ -53,7 +54,6 @@
         class = "Dunst";
         startup_notification = false;
         verbosity = "mesg";
-        corner_radius = 0;
         ignore_dbusclose = false;
         force_xinerama = false;
 
@@ -74,23 +74,23 @@
 
       urgency_low = {
         background = "#1E2127";
-        foreground = "#d8dee9";
+        foreground = "#F3F8FE";
         timeout = 5;
         #icon = /path/to/icon
       };
 
       urgency_normal = {
         background = "#1E2127";
-        foreground = "#d8dee9";
-        frame_color = "#46d9ff";
+        foreground = "#F3F8FE";
+        frame_color = "#0096FF";
         timeout = 7;
         #icon = /path/to/icon
       };
 
       urgency_critical = {
         background = "#1E2127";
-        foreground = "#d8dee9";
-        frame_color = "#e06c75";
+        foreground = "#F3F8FE";
+        frame_color = "#E06C75";
         timeout = 10;
         #icon = /path/to/icon
       };
