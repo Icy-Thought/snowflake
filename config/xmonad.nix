@@ -66,6 +66,7 @@ in {
   xsession = {
     enable = true;
     numlock.enable = true;
+    preferStatusNotifierItems = true;
 
     initExtra = xmonad;
     windowManager.command = ''

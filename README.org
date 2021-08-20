@@ -1,4 +1,4 @@
-#+TITLE: [[./assets/NixOS.png]]
+#+TITLE: [[./assets/xmonad-desktop.png]]
 #+DATE: <2021-06-05 lör>
 
 * Table of Contents :TOC:
@@ -21,20 +21,18 @@
 - [[#useful-links][Useful Links]]
 
 * Introduction
-[[./assets/gnome-desktop.png]]
-
-This is a hamerspace of a declarative NixOS environment containing several hand-crafted configurations of programs ranging from Alacritty, Neovim (v0.5), Emacs (27.2), Zathura to other configured applications found in the =modules/home-manager= directory.
+A hamerspace containing a declarative NixOS environment consisting of many hand-crafted configurations, ranging from Alacritty, Emacs (27.2), Neovim (v0.5), Zathura to many other applications which can be found in the =./home= directory.
 
 #+begin_quote
-It's worth mentioning that this repository, like other dotfile/configuration repositories, is subjected to change and therefore one should be aware of the changes made to the repository before blindly replacing/updating the necessary files driving their NixOS environment to sanity.
+*WARNING*: this repository, like other dotfile/configuration repositories, is subjected to change. Thus the reader ought to read through the commit history before blindly cloning, fetching or updating the necessary files required to power up their NixOS environment.
 #+end_quote
 
-In this README I will attempt to explain how to replicate my NixOS setup or achieve similar feats. If you find that this guide is not as useful as I intended for it to be, I would kindly ask you to submit an issue requesting for the specific parts you found confusing to be explained in a different manner /or/ submit a PR to the repository and hopefully we can produce better results together!
+In this README I will attempt to explain how to replicate my NixOS setup or achieve similar feats. If you find this guide not as useful as it was designed to be, do submit an issue requesting a change for the specific sections you found to be confusing. /Or/ submit a push request (PR) to this repository and hopefully we can produce better results together!
 
-Throughout my Nix journey I've came across two interesting projects which will be introduced in this README, Nix-Flakes and Home-Manager. These projects have been setup in such manner that allows its users to carefully craft their system environments to their liking!
+Throughout my Nix journey I've came across two interesting projects and among those projects are Nix-Flakes and Home-Manager, which will be introduced later in this README. These projects have been setup in such manner that allows its users to carefully tune their system environments to their liking!
 
 #+begin_quote
-One should note though that this project is still in its early stages, henceforth one should familiarize themselves with the [[https://github.com/nix-community/home-manager#words-of-warning][risks]] that comes with the usage of such experimental features.
+One should note that this project is still in its early stages, henceforth one should familiarize themselves with the [[https://github.com/nix-community/home-manager#words-of-warning][risks]] that comes with the usage of such experimental features.
 #+end_quote
 
 * Getting Started
