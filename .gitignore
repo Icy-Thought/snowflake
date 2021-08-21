@@ -1,2 +1,2 @@
-wg-akkad.nix
-dist-newstyle 
+/modules/wireguard/config
+dist-newstyle

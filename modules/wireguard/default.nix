@@ -1,13 +1,10 @@
-{ config, ... }:
+{ config, ... }: {
 
-let akkadia = ../../secrets/wg-akkad/privateKey.age;
-
-in {
-  imports = [ ./wg-akkad.nix ];
+  imports = [ ./config/Akkadian-VPN.nix ];
 
   age.secrets = {
-    "wg-akkad/privateKey" = {
-      file = akkadia;
+    "Akkadian-VPN/private-key" = {
+      file = ../../secrets/wg-akkad/privateKey.age;
       owner = "${config.user.name}";
       mode = "0440";
     };

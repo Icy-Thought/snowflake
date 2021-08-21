@@ -110,8 +110,8 @@
       yta = "youtube-dl -x --audio-format mp3";
 
       # VPN
-      wup = "systemctl start wg-quick-Akkadian_VPN.service";
-      wud = "systemctl stop wg-quick-Akkadian_VPN.service";
+      wup = "systemctl start wg-quick-Akkadian-VPN.service";
+      wud = "systemctl stop wg-quick-Akkadian-VPN.service";
 
       # Git
       g = "git";
