@@ -1,8 +1,9 @@
 { config, pkgs, ... }: {
 
+  home.packages = with pkgs; [ rofi-systemd ];
+
   programs.rofi = {
     enable = true;
-    plugins = with pkgs; [ rofi-systemd ];
     theme = ./launcher/style-12.rasi;
 
     extraConfig = {

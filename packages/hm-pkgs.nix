@@ -16,7 +16,7 @@ let
     ncdu
   ]; # polychromatic & uutils-coreutils (fix)
 
-  gitPkgs = with pkgs.gitAndTools; [ diff-so-fancy git-crypt tig ];
+  gitPkgs = with pkgs.gitAndTools; [ git-filter-repo git-crypt diff-so-fancy ];
 
   tuiPkgs = with pkgs; [ nnn glances neofetch youtube-dl ];
   # pkgs.spotify-tui
