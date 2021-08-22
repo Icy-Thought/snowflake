@@ -96,7 +96,7 @@ import           XMonad.Util.WorkspaceCompare
 myConfig =
   def
     { modMask = mod4Mask,
-      terminal = "alacritty",
+      terminal = "kitty",
       manageHook = composeOne [isFullscreen -?> doFullFloat] <+> manageHook def,
       layoutHook = myLayoutHook,
       borderWidth = 1,
@@ -246,7 +246,7 @@ chromiumCommand = "chromium"
 
 spotifyCommand = "spotify"
 
-htopCommand = "alacritty --title htop -e htop"
+htopCommand = "kitty -t htop -e htop"
 
 transmissionCommand = "transmission-gtk"
 
