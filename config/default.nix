@@ -4,17 +4,18 @@ let home = config.home.homeDirectory;
 
 in {
   imports = [
-    ./fcitx5
-    ./git
-    ./starship
     ./fish
+    ./starship
     ./alacritty
+    ./kitty
+    ./git
     ./tmux
     ./doom-emacs
     ./neovim
     ./zathura
     ./mpd
     ./ncmpcpp
+    ./fcitx5
     ./ungoogled-chromium
     ../packages/hm-pkgs.nix
   ];
