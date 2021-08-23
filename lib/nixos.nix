@@ -2,9 +2,9 @@
 
 with lib;
 with lib.my;
+
 let sys = "x86_64-linux";
-in
-{
+in {
   mkHost = path:
     attrs@{ system ? sys, ... }:
     nixosSystem {
@@ -25,3 +25,4 @@ in
   mapHosts = dir:
     attrs@{ system ? system, ... }:
     mapModules dir (hostPath: mkHost hostPath attrs);
+}

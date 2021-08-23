@@ -6,4 +6,4 @@
 This is an experimental feature which allows the user to maintain a path system for the configurations directory to ease the amount of referencing required to achieve the same results.
 
 * Special Thanks! 🌉
-- [[https://github.com/Lenivaya/dotfiles][Lenivaya]]
+- [[https://github.com/hlissner/dotfiles][Hlissner]]
