@@ -38,9 +38,6 @@ in {
       gdk-pixbuf.modulePackages = [ pkgs.librsvg ];
       displayManager.sessionCommands = ''
         systemctl --user import-environment GDK_PIXBUF_MODULE_FILE DBUS_SESSION_BUS_ADDRESS PATH
-
-        # (QT -> GTK): GTK2_RC_FILES must be available to the displayManager.
-        export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
       '';
 
       windowManager = {

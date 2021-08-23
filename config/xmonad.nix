@@ -11,7 +11,7 @@ in {
     ./rofi
     ./xresources
     ./gtk/xmonad.nix
-    # ./qt/xmonad.nix <- FIX: fails to follow Orchis-dark-compact..
+    ./qt/xmonad.nix
     ./dunst/xmonad.nix
     ./scripts/xmonad.nix
   ];
