@@ -3,7 +3,6 @@
   imports = [
     ./leftwm
     ./dunst/leftwm.nix
-    ./picom/leftwm.nix
     ./rofi
     ./polybar
     ./xresources

@@ -12,6 +12,6 @@
       package = pkgs.orchis-theme;
       name = "Orchis-dark-compact";
     };
-
   };
-}
+
+ }

@@ -246,7 +246,7 @@ chromiumCommand = "chromium"
 
 spotifyCommand = "spotify"
 
-htopCommand = "kitty -t htop -e htop"
+htopCommand = "kitty --title htop -e htop"
 
 transmissionCommand = "transmission-gtk"
 

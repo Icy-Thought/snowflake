@@ -11,7 +11,6 @@ in {
     ./git
     ./tmux
     ./doom-emacs
-    ./neovim
     ./zathura
     ./mpd
     ./ncmpcpp

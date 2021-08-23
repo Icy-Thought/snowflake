@@ -8,10 +8,11 @@ let
 
 in {
   imports = [
+    ./rofi
     ./xresources
     ./gtk/xmonad.nix
+    # ./qt/xmonad.nix <- FIX: fails to follow Orchis-dark-compact..
     ./dunst/xmonad.nix
-    ./rofi
     ./scripts/xmonad.nix
   ];
 

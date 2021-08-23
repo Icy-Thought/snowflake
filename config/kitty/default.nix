@@ -112,10 +112,6 @@
       "ctrl+shift+delete" = "clear_terminal reset active";
       "middle" = "release ungrabbed paste_from_selection";
 
-      # Scroll-related
-      "page_up" = "scroll_page_up";
-      "page_down" = "scroll_page_down";
-
       # Font-related
       "ctrl+plus" = "change_font_size all +1.0";
       "ctrl+minus" = "change_font_size all -1.0";

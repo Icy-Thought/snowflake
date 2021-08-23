@@ -3,7 +3,7 @@
 let leftPkgs = with pkgs; [ dunst polybar trayer feh shotgun ];
 
 in {
-  imports = [ ../../config/picom/leftwm.nix ../display-managers/sddm.nix ];
+  imports = [ ../../config/picom ../display-managers/sddm.nix ];
 
   environment.systemPackages = leftPkgs;
 

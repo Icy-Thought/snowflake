@@ -6,36 +6,40 @@
     experimentalBackends = true;
 
     inactiveOpacity = 0.8;
-    opacityRules = [ "100:class_g = 'firefox'" ];
+    opacityRules = [
+      "100:class_g = 'VirtualBox Machine'"
+      "100:class_g = 'firefox'"
+      "100:class_g = 'Gimp'"
+      "100:class_g = 'Inkscape'"
+      "100:class_g = 'krita'"
+      "100:class_g = 'feh'"
+      "100:class_g = 'celluloid'"
+      "100:class_g = 'Rofi'"
+      "99:_NET_WM_STATE@:32a = '_NET_WM_STATE_FULLSCREEN'"
+    ];
     menuOpacity = 0.9;
 
     fade = true;
     fadeDelta = 10;
-    fadeSteps = [ (0.03) (0.03) ];
+    fadeSteps = [ (3.0e-2) (3.0e-2) ];
     fadeExclude = [ "class_g = 'slop'" ];
 
     refreshRate = 0;
 
     shadow = true;
     shadowExclude = [
-      "name = 'Notification'"
-      "class_g = 'Conky'"
-      "class_g ?= 'Notify-osd'"
-      "class_g = 'Cairo-clock'"
-      "class_g = 'slop'"
-      "name = 'hacksaw'"
-      "class_g = 'Polybar'"
-      "fullscreen"
-      "! name~=''"
-      "!WM_CLASS:s"
-      "_GTK_FRAME_EXTENTS@:c"
-      "_NET_WM_STATE@:32a *= '_NET_WM_STATE_HIDDEN'"
+      "! name~='(rofi|scratch|Dunst)$'"
+      # "_GTK_FRAME_EXTENTS@:c"
+      # "name = 'hacksaw'"
+      # "class_g ?= 'taffybar'"
+      # "class_g = 'Rofi'"
+      # "class_g = 'Firefox' && window_type = 'utility'"
     ];
 
     shadowOffsets = [ (-7) (-7) ];
     shadowOpacity = 0.75;
 
-    vSync = false;
+    vSync = true;
 
     settings = {
       ### Background-Blur ###
@@ -47,8 +51,17 @@
       blur-background = false;
       blur-background-frame = false;
       blur-background-fixed = false;
-
-      blur-background-exclude = [ "class_g = 'slop'" "_GTK_FRAME_EXTENTS@:c" ];
+      blur-background-exclude = [
+        # "window_type = 'dropdown_menu'"
+        # "window_type = 'popup_menu'"
+        # "window_type = 'tooltip'"
+        "window_type = 'desktop'"
+        "window_type = 'dock'"
+        "window_type = 'menu'"
+        "class_g = 'Rofi'"
+        "class_g = 'Firefox' && window_type = 'utility'"
+        "_GTK_FRAME_EXTENTS@:c"
+      ];
 
       ### Animations ###
       transition-length = 150;
@@ -62,8 +75,7 @@
       corner-radius = 10.0;
       round-borders = 1;
       round-borders-exclude = [ ];
-
-      rounded-corners-exclude = [ ];
+      rounded-corners-exclude = [ "class_g = 'Dunst'" ];
 
       ### Shadows ###
       shadow-radius = 7;
@@ -78,12 +90,7 @@
       inactive-opacity-override = false;
       active-opacity = 1.0;
 
-      focus-exclude = [
-        "class_g ?= 'rofi'"
-        "class_g ?= 'slop'"
-        "class_g ?= 'Steam'"
-        "class_g = 'Cairo-clock'"
-      ];
+      focus-exclude = [ "class_g ?= 'rofi'" "class_g ?= 'Steam'" ];
 
       ### General ###
       daemon = false;
@@ -93,6 +100,7 @@
       detect-rounded-corners = true;
       detect-client-opacity = true;
 
+      unredir-if-possible = false;
       unredir-if-possible-exclude = [ ];
       detect-transient = true;
       detect-client-leader = true;
