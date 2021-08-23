@@ -13,15 +13,13 @@
 - [[#nix-flake-beginning-of-a-journey][Nix-Flake: Beginning of a Journey]]
   - [[#git-clone-snowflake--ln--s-nix-files-to-correct-dir][Git Clone ~Snowflake~ && ~ln -s~ Nix-Files To Correct Dir]]
   - [[#replacing-necessary-configuration-entries][Replacing Necessary Configuration Entries]]
-- [[#doom-emacs--neovim-nightly][Doom Emacs && Neovim Nightly]]
-  - [[#doom-emacs][Doom Emacs]]
-  - [[#neovim-nightly][Neovim Nightly]]
+- [[#doom-emacs][Doom Emacs]]
 - [[#congratulations-][Congratulations! 🎉]]
 - [[#special-thanks][Special Thanks]]
 - [[#useful-links][Useful Links]]
 
 * Introduction
-A hamerspace containing a declarative NixOS environment consisting of many hand-crafted configurations, ranging from Alacritty, Emacs (27.2), Neovim (v0.5), Zathura to many other applications which can be found in the =./home= directory.
+A hamerspace containing a declarative NixOS environment consisting of many hand-crafted configurations, ranging from: Kitty, Alacritty, Doom-Emacs, Zathura to many other applications which can be found in the =./home= directory.
 
 #+begin_quote
 *WARNING*: this repository, like other dotfile/configuration repositories, is subjected to change. Thus the reader ought to read through the commit history before blindly cloning, fetching or updating the necessary files required to power up their NixOS environment.
@@ -133,8 +131,7 @@ sudo nixos-rebuild switch --flake '/etc/nixos#device_name --impure
 reboot
 #+end_src
 
-* Doom Emacs && Neovim Nightly
-** Doom Emacs
+* Doom Emacs
 If you have replicated my setup, you need to do nothing but ~git clone~ doom-emacs repository and proceed with the installation process. If not, add the following packages to your =packages.nix=:
 #+begin_src nix :noeval
 environment.systemPackages = with pkgs; [
@@ -155,21 +152,6 @@ To proceed with the installation of doom-emacs on your newly installed/configure
 git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d
 ~/.emacs.d/bin/doom install
 #+end_src
-
-** Neovim Nightly
-Neovim-nightly attempts to bring forward a new configuration solution to the world of Vim and since this repository is lua-based ([[https://github.com/siduck76/NvChad][siduck76]] + custom modifications) it is required from the user to install =packer.nvim=, compile and sync Neovim-nightly:
-#+begin_src sh :noeval
-git clone https://github.com/wbthomason/packer.nvim\
- ~/.local/share/nvim/site/pack/packer/start/packer.nvim
-#+end_src
-
-Enter neovim environment and execute the following commands:
-#+begin_src sh :noeval
-:PackerCompile
-:PackerSync
-#+end_src
-
-Restart your neovim environment and you should be greeted with your newly configured neovim setup!
 
 * Congratulations! 🎉
 You have successful installed your/my personally hand-crafted/replicated Nix-Flake environment. I hope it suits your needs, if not then you are always welcome to propose changes or fork the project and customize the repository to your heart's content!
