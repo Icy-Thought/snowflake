@@ -7,7 +7,7 @@
     theme = ./launcher/style-12.rasi;
 
     extraConfig = {
-      font = "Noto Sans 10";
+      font = "Iosevka 11";
       show-icons = true;
       icon-theme = "Whitesur-dark";
       terminal = "alacritty";

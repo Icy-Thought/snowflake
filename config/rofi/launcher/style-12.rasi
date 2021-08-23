@@ -29,7 +29,7 @@ prompt {
 	padding: 						1.25% 0.75% 1.25% 0.75%;
 	background-color: 				@ac;
 	text-color: 					@fg;
-	font:							"JetBrainsMono Nerd Font 12";
+	font:							"Iosevka 11";
     border-radius:                  100%;
 }
 
