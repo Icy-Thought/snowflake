@@ -4,8 +4,8 @@
       user-mail-address "gilganyx@pm.me")
 
 (setq
- doom-font (font-spec :family "Iosevka" :size 16 :weight 'SemiBold)
- doom-big-font (font-spec :family "Iosevka" :size 20 :weight 'SemiBold)
+ doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 15 :weight 'Medium)
+ doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 20 :weight 'Medium)
  doom-theme 'doom-one)
 
 ;; (doom/set-frame-opacity 95)
@@ -84,15 +84,15 @@
 
 ;; Increase the size of various headings
 (custom-set-faces!
-  '(org-document-title :height 1.2)
-  '(outline-1 :weight extra-bold :height 1.25)
-  '(outline-2 :weight bold :height 1.15)
-  '(outline-3 :weight bold :height 1.12)
-  '(outline-4 :weight semi-bold :height 1.09)
-  '(outline-5 :weight semi-bold :height 1.06)
-  '(outline-6 :weight semi-bold :height 1.03)
-  '(outline-8 :weight semi-bold)
-  '(outline-9 :weight semi-bold))
+  '(org-document-title :height 1.20)
+  '(outline-1 :weight ExtraBold :height 1.25)
+  '(outline-2 :weight Bold :height 1.15)
+  '(outline-3 :weight Bold :height 1.12)
+  '(outline-4 :weight Medium :height 1.09)
+  '(outline-5 :weight Medium :height 1.06)
+  '(outline-6 :weight Medium :height 1.03)
+  '(outline-8 :weight Medium)
+  '(outline-9 :weight Medium))
 
 (remove-hook 'text-mode-hook #'spell-fu-mode)
 
@@ -116,7 +116,7 @@
 
 (defun org-babel-tangle-config ()
   (when (string-equal (buffer-file-name)
-                      (expand-file-name "~/git/Icy-Thought/Snowflake/config/doom-emacs/doom.d/README.org"))
+                      (expand-file-name "~/git/Icy-Thought/Snowflake/config/doom-emacs/config/README.org"))
     (let ((org-config-babel-evaluate nil))
       (org-babel-tangle))))
 

@@ -31,7 +31,6 @@ in {
     xserver = {
       xkbOptions = "caps:ctrl_modifier";
       displayManager.defaultSession = "none+xmonad";
-      desktopManager.xterm.enable = false;
 
       # 2-Step workaround for https://github.com/taffybar/taffybar/issues/403
       # 1. Causes GDK_PIXBUF_MODULE_FILE to be set in xsession.

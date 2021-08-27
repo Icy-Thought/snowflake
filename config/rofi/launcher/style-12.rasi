@@ -4,19 +4,19 @@
  */
 
 * {
-  al:  #1A1B2500;
-  bg:  #1A1B25ff;
-  se:  #21222eff;
-  fg:  #F3F8FEff;
-  ac:  #6C77BBff;
+  background:                       #1A1B25ff;
+  background-alt:                   #1A1B2500;
+  background-bar:                   #21222eff;
+  foreground:                       #F3F8FEff;
+  accent:                           #A3BE8Cff;
 }
 
 window {
     transparency:                   "real";
-    background-color:               @bg;
-    text-color:                     @fg;
+    background-color:               @background;
+    text-color:                     @foreground;
 	border:							0px;
-	border-color:					@ac;
+	border-color:					@accent;
     border-radius:                  50px;
 	width:							45%;
     location:                       center;
@@ -27,24 +27,24 @@ window {
 prompt {
     enabled: 						true;
 	padding: 						1.25% 0.75% 1.25% 0.75%;
-	background-color: 				@ac;
-	text-color: 					@fg;
+	background-color: 				@accent;
+	text-color: 					@foreground;
 	font:							"Iosevka 11";
     border-radius:                  100%;
 }
 
 textbox-prompt-colon {
 	padding: 						1.40% 0% 1% 0%;
-	background-color: 				@se;
-	text-color: 					@fg;
+	background-color: 				@background-bar;
+	text-color: 					@foreground;
 	expand: false;
 	str: " :: ";
 }
 
 entry {
-    background-color:               @al;
-    text-color:                     @fg;
-    placeholder-color:              @fg;
+    background-color:               @background-alt;
+    text-color:                     @foreground;
+    placeholder-color:              @foreground;
     expand:                         true;
     horizontal-align:               0;
     placeholder:                    "Search";
@@ -54,16 +54,16 @@ entry {
 
 inputbar {
 	children: 						[ prompt, textbox-prompt-colon, entry ];
-    background-color:               @se;
-    text-color:                     @fg;
+    background-color:               @background-bar;
+    text-color:                     @foreground;
     expand:                         false;
 	border:							0%;
     border-radius:                  100%;
-	border-color:					@ac;
+	border-color:					@accent;
 }
 
 listview {
-    background-color:               @al;
+    background-color:               @background-alt;
     padding:                        0px;
     columns:                        6;
     lines:                          3;
@@ -74,18 +74,18 @@ listview {
 }
 
 mainbox {
-    background-color:               @al;
+    background-color:               @background-alt;
 	border:							10px 0px 10px 0px;
     border-radius:                  50px;
-	border-color:					@ac;
+	border-color:					@accent;
     children:                       [ inputbar, listview ];
     spacing:                       	2%;
     padding:                        4% 2% 2% 2%;
 }
 
 element {
-    background-color:               @bg;
-    text-color:                     @fg;
+    background-color:               @background;
+    text-color:                     @foreground;
     orientation:                    vertical;
     border-radius:                  0%;
     padding:                        0%;
@@ -94,9 +94,9 @@ element {
 element-icon {
     size:                           64px;
     border:                         1%;
-    border-color:                  	@se;
+    border-color:                  	@background-bar;
     border-radius:                  15px;
-    background-color:               @se;
+    background-color:               @background-bar;
 	padding: 						2% 1% 2% 1%;
 }
 
@@ -112,7 +112,7 @@ element-text selected {
     expand:                         true;
     horizontal-align:               0.5;
     vertical-align:                 0.5;
-    background-color:               @ac;
-    text-color:                     @bg;
+    background-color:               @accent;
+    text-color:                     @background;
     border-radius:                  100%;
 }

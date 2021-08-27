@@ -3,7 +3,7 @@
 let
   gitConfig = {
     core = {
-      editor = "nvim";
+      editor = "emacsclient -t";
       pager = "diff-so-fancy | less --tabs=4 -RFX";
     };
 

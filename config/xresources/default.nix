@@ -25,40 +25,42 @@
     "monad.font" = "xft:JetBrainsMonoMedium Nerd Font:size=10:style=Bold";
     "monad.font.gtk" = "JetBrainsMonoMedium Nerd Font, 10";
 
-    "*.foreground" = "#c8ccd4";
-    "*.background" = "#1e2127";
-    "*.cursorColor" = "#abb2bf";
+    # Aquarium - FrenzyExists
+    "*.foreground" = "#E1E1E1";
+    "*.background" = "#1B1B23";
+    "*.cursorColor" = "#B8DCEB";
 
-    "*.color0" = "#2c313a";
-    "*.color8" = "#545862";
+    # Black
+    "*.color0" = "#1B1B23";
+    "*.color8" = "#919BA0";
 
     # Red
-    "*.color1" = "#ff6c6b";
-    "*.color9" = "#ff8b92";
+    "*.color1" = "#BF616A";
+    "*.color9" = "#BF616A";
 
     # Green
-    "*.color2" = "#98be65";
-    "*.color10" = "#ddffa7";
+    "*.color2" = "#A3BE8C";
+    "*.color10" = "#A3BE8C";
 
     # Yellow
-    "*.color3" = "#ffcb6b";
-    "*.color11" = "#ffe585";
+    "*.color3" = "#EBCB8B";
+    "*.color11" = "#EBCB8B";
 
     # Blue
-    "*.color4" = "#51aeed";
-    "*.color12" = "#9cc4ff";
+    "*.color4" = "#8fa1b3";
+    "*.color12" = "#8fa1b3";
 
     # Magenta
-    "*.color5" = "#b58fae";
-    "*.color13" = "#e1acff";
+    "*.color5" = "#b48ead";
+    "*.color13" = "#b48ead";
 
     # Cyan
-    "*.color6" = "#56b6c2";
-    "*.color14" = "#a3f7ff";
+    "*.color6" = "#96b5b4";
+    "*.color14" = "#96b5b4";
 
     # White
-    "*.color7" = "#a6aebf";
-    "*.color15" = "#ffffff";
+    "*.color7" = "#e1e1e1";
+    "*.color15" = "#c0c5ce";
   };
 
 }

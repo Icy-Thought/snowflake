@@ -95,6 +95,8 @@
       starship init fish | source
     '';
 
+    shellAliases = { exa = "exa --group-directories-first"; };
+
     shellAbbrs = {
       # General
       ls = "exa -Slhg --icons";

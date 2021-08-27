@@ -9,42 +9,37 @@
       adjust-open = "width";
       window-title-basename = true;
 
-      # Base16 OneDark
-      default-bg = "#1E2127";
-      default-fg = "#ABB2BF";
+      # Aquarium - FrenzyExists
+      default-bg = "#1b1b23";
+      default-fg = "#8791a3";
 
-      statusbar-bg = "#2C323C";
-      statusbar-fg = "#ABB2BF";
-      inputbar-bg = "#1E2127";
-      inputbar-fg = "#ABB2BF";
+      statusbar-bg = "#1b1b23";
+      statusbar-fg = "#8791a3";
 
-      notification-bg = "#98C379";
-      notification-fg = "#1E2127";
-      notification-error-bg = "#E06C75";
-      notification-error-fg = "#1E2127";
-      notification-warning-bg = "#E5C07B";
-      notification-warning-fg = "#1E2127";
+      inputbar-bg = "#1b1b23";
+      inputbar-fg = "#caf6bb";
 
-      highlight-color = "#61AFEF";
-      highlight-active-color = "#C678DD";
+      notification-bg = "#1b1b23";
+      notification-fg = "#8791a3";
 
-      completion-bg = "#2C323C";
-      completion-fg = "#ABB2BF";
-      completion-group-bg = "#2C323C";
-      completion-group-fg = "#ABB2BF";
-      completion-highlight-fg = "#2C323C";
-      completion-highlight-bg = "#61AFEF";
+      notification-error-bg = "#1b1b23";
+      notification-error-fg = "#8791a3";
 
-      index-bg = "#1E2127";
-      index-fg = "#ABB2BF";
-      index-active-bg = "#61AFEF";
-      index-active-fg = "#2C323C";
+      notification-warning-bg = "#1b1b23";
+      notification-warning-fg = "#ebb9b9";
 
-      render-loading-bg = "#2C323C";
-      render-loading-fg = "#61AFEF";
+      highlight-color = "#4c5664";
+      highlight-active-color = "#2c2e3e";
 
-      recolor-lightcolor = "#1E2127";
-      recolor-darkcolor = "#ABB2BF";
+      completion-bg = "#2c2e3e";
+      completion-fg = "#8791a3";
+
+      completion-highlight-fg = "#ebe3b9";
+      completion-highlight-bg = "#2c2e3e";
+
+      recolor-lightcolor = "#1b1b23";
+      recolor-darkcolor = "#8791a3";
+
       recolor = "true";
       recolor-keephue = "true";
     };
