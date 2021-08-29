@@ -6,6 +6,7 @@ in {
   imports = [
     ./fish
     ./starship
+    ./neofetch
     ./alacritty
     ./kitty
     ./git

@@ -46,7 +46,7 @@
 (setq
  doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 15 :weight 'Medium)
  doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 20 :weight 'Medium)
- doom-theme 'doom-one)
+ doom-theme 'doom-ayu-mirage)
 #+end_src
 
 Enable transparency for emacs frame only + retaining brightness of remaining objects:
@@ -63,7 +63,7 @@ Enable transparency for emacs frame only + retaining brightness of remaining obj
  x-stretch-cursor t)                                ; Cursor size = glyph width.
 
 (with-eval-after-load 'solaire-mode                 ; Inverted solaire color-schemes.
-  (add-to-list 'solaire-mode-themes-to-face-swap 'doom-one))
+  (add-to-list 'solaire-mode-themes-to-face-swap 'doom-ayu-mirage))
 #+end_src
 
 *** Doom-Modeline
@@ -148,6 +148,7 @@ Enables window rotation through the usage of =<Space>= + arrow-keys:
 ** Language Server
 #+begin_src emacs-lisp
 (setq rustic-lsp-server 'rust-analyzer)           ; Rust-Analyzer
+(setq haskell-stylish-on-save t)                  ; Haskell-Stylish ;)
 #+end_src
 
 ** Org-Mode
@@ -208,7 +209,7 @@ Allow org-download-screenshot to work with ~shotgun~ + ~hacksaw~:
   :hook (pdf-tools-enabled . pdf-view-midnight-minor-mode)
   :config
 
-  (setq pdf-view-midnight-colors '("#ebdbb2" . "#262626")))             ; Gruvbox UI
+  (setq pdf-view-midnight-colors '("#FFB454" . "#0A0E14")))             ; Gruvbox UI
 #+end_src
 
 ** Which-Key

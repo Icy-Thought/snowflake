@@ -18,7 +18,13 @@ let
 
   gitPkgs = with pkgs.gitAndTools; [ git-filter-repo git-crypt diff-so-fancy ];
 
-  tuiPkgs = with pkgs; [ nnn glances neofetch youtube-dl pipes-rs ];
+  tuiPkgs = with pkgs; [
+    nnn
+    glances
+    neofetch
+    youtube-dl
+    # pipes-rs
+  ];
   # pkgs.spotify-tui
 
   dictPkgs = with pkgs; [
@@ -58,6 +64,7 @@ let
     ccls
     rust-analyzer
     rnix-lsp
+    haskellPackages.hoogle
     haskell-language-server
     nodePackages.bash-language-server
   ]; # nodePackages.[ pyright & typescript-language-server ]

@@ -6,7 +6,7 @@
 (setq
  doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 15 :weight 'Medium)
  doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 20 :weight 'Medium)
- doom-theme 'doom-one)
+ doom-theme 'doom-ayu-mirage)
 
 ;; (doom/set-frame-opacity 95)
 
@@ -17,7 +17,7 @@
  x-stretch-cursor t)                                ; Cursor size = glyph width.
 
 (with-eval-after-load 'solaire-mode                 ; Inverted solaire color-schemes.
-  (add-to-list 'solaire-mode-themes-to-face-swap 'doom-one))
+  (add-to-list 'solaire-mode-themes-to-face-swap 'doom-ayu-mirage))
 
 (setq
  doom-modeline-height 35
@@ -72,6 +72,7 @@
         company-show-numbers t))
 
 (setq rustic-lsp-server 'rust-analyzer)           ; Rust-Analyzer
+(setq haskell-stylish-on-save t)                  ; Haskell-Stylish ;)
 
 (setq org-directory "~/org/")                           ; Default Org-Directories
 
@@ -110,7 +111,7 @@
   :hook (pdf-tools-enabled . pdf-view-midnight-minor-mode)
   :config
 
-  (setq pdf-view-midnight-colors '("#ebdbb2" . "#262626")))             ; Gruvbox UI
+  (setq pdf-view-midnight-colors '("#FFB454" . "#0A0E14")))             ; Gruvbox UI
 
 (setq which-key-idle-delay 0.5)
 

@@ -1,0 +1,27 @@
+schemes:
+  ayu-dark: &ayu-dark
+    primary:
+      foreground: "#B3B1AD"
+      background: "#0A0E14"
+
+    normal:
+      black: "#0A0E14"
+      red: "#F07178"
+      green: "#91B362"
+      yellow: "#E6B450"
+      blue: "#39BAE6"
+      magenta: "#F29668"
+      cyan: "#6994BF"
+      white: "#626A73"
+
+    bright:
+      black: "#3D424D"
+      red: "#D96C75"
+      green: "#C2D94C"
+      yellow: "#FFB454"
+      blue: "#59C2FF"
+      magenta: "#FF8F40"
+      cyan: "#95E6CB"
+      white: "#B3B1AD"
+
+colors: *ayu-dark

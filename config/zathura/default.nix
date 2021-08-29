@@ -9,36 +9,36 @@
       adjust-open = "width";
       window-title-basename = true;
 
-      # Aquarium - FrenzyExists
-      default-bg = "#1b1b23";
-      default-fg = "#8791a3";
+      # Ayu-dark -> dempfi
+      default-fg = "#B3B1AD";
+      default-bg = "#0A0E14";
 
-      statusbar-bg = "#1b1b23";
-      statusbar-fg = "#8791a3";
+      statusbar-fg = "#B3B1AD";
+      statusbar-bg = "#0A0E14";
 
-      inputbar-bg = "#1b1b23";
-      inputbar-fg = "#caf6bb";
+      inputbar-fg = "#FFB454";
+      inputbar-bg = "#0A0E14";
 
-      notification-bg = "#1b1b23";
-      notification-fg = "#8791a3";
+      notification-fg = "#B3B1AD";
+      notification-bg = "#0A0E14";
 
-      notification-error-bg = "#1b1b23";
-      notification-error-fg = "#8791a3";
+      notification-error-fg = "#B3B1AD";
+      notification-error-bg = "#0A0E14";
 
-      notification-warning-bg = "#1b1b23";
-      notification-warning-fg = "#ebb9b9";
+      notification-warning-fg = "#F07178";
+      notification-warning-bg = "#0A0E14";
 
-      highlight-color = "#4c5664";
-      highlight-active-color = "#2c2e3e";
+      highlight-color = "#273747";
+      highlight-active-color = "#1B2733";
 
-      completion-bg = "#2c2e3e";
-      completion-fg = "#8791a3";
+      completion-fg = "#B3B1AD";
+      completion-bg = "#1B2733";
 
-      completion-highlight-fg = "#ebe3b9";
-      completion-highlight-bg = "#2c2e3e";
+      completion-highlight-fg = "#0A0E14";
+      completion-highlight-bg = "#FFB454";
 
-      recolor-lightcolor = "#1b1b23";
-      recolor-darkcolor = "#8791a3";
+      recolor-lightcolor = "#0A0E14";
+      recolor-darkcolor = "#B3B1AD";
 
       recolor = "true";
       recolor-keephue = "true";
