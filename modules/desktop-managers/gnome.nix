@@ -1,6 +1,9 @@
-{ config, lib, pkgs, ... }: {
+{ config, lib, pkgs, ... }:
 
-  imports = [ ../display-managers/gdm.nix ];
+let imports = [ ../display-managers/gdm.nix ];
+
+in {
+  inherit imports;
 
   programs = { dconf.enable = true; };
 

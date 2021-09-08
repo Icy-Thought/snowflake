@@ -1,6 +1,9 @@
-{ config, lib, pkgs, ... }: {
+{ config, lib, pkgs, ... }:
 
-  imports = [ ../../packages/sddm ];
+let imports = [ ../../packages/sddm ];
+
+in {
+  inherit imports;
 
   services.xserver.displayManager.sddm.enable = true;
 }

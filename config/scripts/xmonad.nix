@@ -1,5 +1,6 @@
-{ config, lib, pkgs, ... }: {
+{ config, lib, pkgs, ... }:
 
+let
   imports = [
     ./brightness.nix
     ./screenshot.nix
@@ -7,4 +8,5 @@
     ./microphone.nix
     # ./screen-recording.nix
   ];
-}
+
+in { inherit imports; }

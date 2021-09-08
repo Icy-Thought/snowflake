@@ -1,6 +1,9 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, ... }:
 
-  imports = [ ./ncmpcpp-ueberzug ];
+let imports = [ ./ncmpcpp-ueberzug ];
+
+in {
+  inherit imports;
 
   programs.ncmpcpp = {
     enable = true;

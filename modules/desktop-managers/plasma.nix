@@ -1,7 +1,9 @@
 { config, lib, pkgs, ... }:
 
-{
-  imports = [ ../display-managers/sddm.nix ];
+let imports = [ ../display-managers/sddm.nix ];
+
+in {
+  inherit imports;
 
   services.xserver.desktopManager.plasma5.enable = true;
 }

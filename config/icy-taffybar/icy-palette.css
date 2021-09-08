@@ -1,4 +1,4 @@
-@define-color koromiko #FFB26B;
+@define-color koromiko #FFB454;
 @define-color moon-raker #D6C5F0;
 @define-color sail #BBE1FA;
 @define-color twilight-blue #F3F8FE;
@@ -10,7 +10,7 @@
 
 @define-color active-window-color @white;
 @define-color urgent-window-color @raisin-black;
-@define-color font-color @twilight-blue;
+@define-color font-color @koromiko;
 @define-color menu-background-color @white;
 @define-color menu-font-color @black;
 @define-color bar-background @transparent;

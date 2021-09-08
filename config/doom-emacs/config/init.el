@@ -72,6 +72,7 @@
        (magit +forge)                           ; a git porcelain for Emacs
        make                                     ; run make tasks from Emacs
        pdf                                      ; pdf enhancements
+       rgb                                      ; creating color strings
        )
 
 (doom! :os

@@ -1,7 +1,11 @@
-{ inputs, config, lib, pkgs, ... }: {
+{ inputs, config, lib, pkgs, ... }:
+
+let imports = [ ./primary.nix ./nixpkgs.nix ./wireguard ../packages ];
+
+in {
+  inherit imports;
 
   hm = import ../config;
-  imports = [ ./primary.nix ./nixpkgs.nix ./wireguard ../packages ];
 
   environment.etc = {
     home-manager.source = "${inputs.home-manager}";

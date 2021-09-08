@@ -1,6 +1,8 @@
 { config, lib, pkgs, ... }:
 
 let
+  imports = [ ../../config/picom ../display-managers/sddm.nix ];
+
   defaultPkgs = with pkgs; [
     autorandr
     xorg.xkbcomp
@@ -19,7 +21,7 @@ let
   xmonadPkgs = with pkgs; [ haskellPackages.icy-xmonad dunst feh ];
 
 in {
-  imports = [ ../../config/picom ../display-managers/sddm.nix ];
+  inherit imports;
 
   environment.systemPackages = defaultPkgs ++ xmonadPkgs;
 

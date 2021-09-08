@@ -11,10 +11,10 @@ let
                '  36m' '1;36m' '  37m' '1;37m';
 
       do FG='$'{FGs// /}
-      printf " $FGs \033[$FG  $T  "
+      printf " '$'FGs \033[$FG  $T  "
 
       for BG in 40m 41m 42m 43m 44m 45m 46m 47m;
-        do printf "$EINS \033[$FG\033[$BG  $T  \033[0m";
+        do printf "'$'EINS \033[$FG\033[$BG  '$'T  \033[0m";
       done
       echo;
     done

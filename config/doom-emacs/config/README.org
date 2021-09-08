@@ -57,12 +57,12 @@ Enable transparency for emacs frame only + retaining brightness of remaining obj
 *** Other UI-Related Settings
 #+begin_src emacs-lisp
 (setq
- confirm-kill-emacs nil                             ; Disable Emacs confirm-exit messages.
+ confirm-kill-emacs nil                         ; Disable Emacs confirm-exit messages.
  display-line-numbers-type t
  all-the-icons-dired-monochrome nil
- x-stretch-cursor t)                                ; Cursor size = glyph width.
+ x-stretch-cursor t)                            ; Cursor size = glyph width.
 
-(with-eval-after-load 'solaire-mode                 ; Inverted solaire color-schemes.
+(with-eval-after-load 'solaire-mode             ; Inverted solaire color-schemes.
   (add-to-list 'solaire-mode-themes-to-face-swap 'doom-ayu-mirage))
 #+end_src
 
@@ -204,12 +204,13 @@ Allow org-download-screenshot to work with ~shotgun~ + ~hacksaw~:
 #+end_src
 
 ** PDF-Tools
+PDF-View -> use active theme foreground ++ background:
 #+begin_src emacs-lisp
 (use-package pdf-view
-  :hook (pdf-tools-enabled . pdf-view-midnight-minor-mode)
+  :hook (pdf-tools-enabled . pdf-view-themed-minor-mode)
   :config
 
-  (setq pdf-view-midnight-colors '("#FFB454" . "#0A0E14")))             ; Gruvbox UI
+  (setq-default pdf-view-display-size 'fit-page))
 #+end_src
 
 ** Which-Key
@@ -335,6 +336,7 @@ NOTE: Press ~K~ on a module to view its documentation, and ~gd~ to browse its di
        (magit +forge)                           ; a git porcelain for Emacs
        make                                     ; run make tasks from Emacs
        pdf                                      ; pdf enhancements
+       rgb                                      ; creating color strings
        )
 #+end_src
 

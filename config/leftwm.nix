@@ -1,12 +1,9 @@
-{ config, lib, pkgs, ... }: {
+{ config, lib, pkgs, ... }:
 
-  imports = [
-    ./leftwm
-    ./dunst/leftwm.nix
-    ./rofi
-    ./polybar
-    ./xresources
-  ];
+let imports = [ ./leftwm ./dunst/leftwm.nix ./rofi ./polybar ./xresources ];
+
+in {
+  inherit imports;
 
   xdg.configFile."leftwm/themes/garden/liquid" = {
     source = ./liquid;

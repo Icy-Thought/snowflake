@@ -1,99 +1,97 @@
-{-# LANGUAGE DeriveDataTypeable #-}
+{-# LANGUAGE DeriveDataTypeable        #-}
 {-# LANGUAGE ExistentialQuantification #-}
-{-# LANGUAGE FlexibleContexts #-}
-{-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE PartialTypeSignatures #-}
-{-# LANGUAGE ScopedTypeVariables #-}
-{-# LANGUAGE TupleSections #-}
-{-# LANGUAGE TypeSynonymInstances #-}
+{-# LANGUAGE FlexibleContexts          #-}
+{-# LANGUAGE FlexibleInstances         #-}
+{-# LANGUAGE MultiParamTypeClasses     #-}
+{-# LANGUAGE PartialTypeSignatures     #-}
+{-# LANGUAGE ScopedTypeVariables       #-}
+{-# LANGUAGE TupleSections             #-}
+{-# LANGUAGE TypeSynonymInstances      #-}
 
 module Main where
 
-import Codec.Binary.UTF8.String as UTF8
-import qualified Codec.Binary.UTF8.String as UTF8String (encode)
-import qualified Control.Arrow as A
-import Control.Monad
-import Control.Monad.Trans.Class
-import Control.Monad.Trans.Maybe
-import Data.Aeson
-import qualified Data.ByteString.Lazy as B
-import Data.Char
-import Data.Foldable
-import Data.List
-import Data.List.Split
-import qualified Data.Map as M
-import Data.Maybe
-import Data.Monoid
-import qualified Data.MultiMap as MM
-import Data.Proxy
-import Data.Tuple.Sequence (sequenceT)
-import Data.Typeable
-import Foreign.C.Types
-import Graphics.X11.ExtraTypes.XF86
-import Network.HostName
-import Safe
-import System.Directory
-import System.Environment.XDG.DesktopEntry
-import System.FilePath.Posix
-import System.IO.Unsafe
-import System.Process
-import Text.Printf
-import Unsafe.Coerce
-import XMonad hiding ((|||))
-import XMonad.Actions.CycleWS hiding (nextScreen)
-import XMonad.Actions.CycleWorkspaceByScreen
-import qualified XMonad.Actions.DynamicWorkspaceOrder as DWO
-import XMonad.Actions.DynamicWorkspaces hiding
-  ( renameWorkspace,
-    withWorkspace,
-  )
-import XMonad.Actions.Minimize
-import XMonad.Actions.Navigation2D
-import qualified XMonad.Actions.SwapWorkspaces as SW
-import XMonad.Actions.UpdatePointer
-import XMonad.Actions.WindowBringer
-import XMonad.Actions.WindowGo
-import XMonad.Actions.WorkspaceNames
-import XMonad.Config ()
-import XMonad.Core (getDirectories)
-import XMonad.Hooks.EwmhDesktops
-import XMonad.Hooks.FadeInactive
-import XMonad.Hooks.ManageDocks
-import XMonad.Hooks.ManageHelpers
-import XMonad.Hooks.Minimize
-import XMonad.Hooks.TaffybarPagerHints
-import XMonad.Hooks.WorkspaceHistory
-import XMonad.Layout.BoringWindows
-import XMonad.Layout.CenteredMaster (centerMaster)
-import XMonad.Layout.ConditionalModifier
-import XMonad.Layout.Cross
-import XMonad.Layout.Decoration
-import XMonad.Layout.GridVariants (Grid (Grid))
-import XMonad.Layout.LayoutCombinators
-import XMonad.Layout.LayoutModifier
-import XMonad.Layout.LimitWindows
-import XMonad.Layout.MagicFocus
-import XMonad.Layout.Magnifier hiding (Toggle)
-import XMonad.Layout.Minimize
-import XMonad.Layout.MultiColumns
-import XMonad.Layout.MultiToggle
-import XMonad.Layout.MultiToggle.Instances
-import XMonad.Layout.NoBorders
-import qualified XMonad.Layout.Renamed as RN
-import XMonad.Layout.Spacing
-import XMonad.Layout.Tabbed
-import XMonad.Main (launch)
+import           Codec.Binary.UTF8.String              as UTF8
+import qualified Codec.Binary.UTF8.String              as UTF8String (encode)
+import qualified Control.Arrow                         as A
+import           Control.Monad
+import           Control.Monad.Trans.Class
+import           Control.Monad.Trans.Maybe
+import           Data.Aeson
+import qualified Data.ByteString.Lazy                  as B
+import           Data.Char
+import           Data.Foldable
+import           Data.List
+import           Data.List.Split
+import qualified Data.Map                              as M
+import           Data.Maybe
+import           Data.Monoid
+import qualified Data.MultiMap                         as MM
+import           Data.Proxy
+import           Data.Tuple.Sequence                   (sequenceT)
+import           Data.Typeable
+import           Foreign.C.Types
+import           Graphics.X11.ExtraTypes.XF86
+import           Network.HostName
+import           Safe
+import           System.Directory
+import           System.Environment.XDG.DesktopEntry
+import           System.FilePath.Posix
+import           System.IO.Unsafe
+import           System.Process
+import           Text.Printf
+import           Unsafe.Coerce
+import           XMonad                                hiding ((|||))
+import           XMonad.Actions.CycleWS                hiding (nextScreen)
+import           XMonad.Actions.CycleWorkspaceByScreen
+import qualified XMonad.Actions.DynamicWorkspaceOrder  as DWO
+import           XMonad.Actions.DynamicWorkspaces      hiding (renameWorkspace,
+                                                        withWorkspace)
+import           XMonad.Actions.Minimize
+import           XMonad.Actions.Navigation2D
+import qualified XMonad.Actions.SwapWorkspaces         as SW
+import           XMonad.Actions.UpdatePointer
+import           XMonad.Actions.WindowBringer
+import           XMonad.Actions.WindowGo
+import           XMonad.Actions.WorkspaceNames
+import           XMonad.Config                         ()
+import           XMonad.Core                           (getDirectories)
+import           XMonad.Hooks.EwmhDesktops
+import           XMonad.Hooks.FadeInactive
+import           XMonad.Hooks.ManageDocks
+import           XMonad.Hooks.ManageHelpers
+import           XMonad.Hooks.Minimize
+import           XMonad.Hooks.TaffybarPagerHints
+import           XMonad.Hooks.WorkspaceHistory
+import           XMonad.Layout.BoringWindows
+import           XMonad.Layout.ConditionalModifier
+import           XMonad.Layout.Cross
+import           XMonad.Layout.Decoration
+import           XMonad.Layout.GridVariants            (Grid (Grid))
+import           XMonad.Layout.LayoutCombinators
+import           XMonad.Layout.LayoutModifier
+import           XMonad.Layout.LimitWindows
+import           XMonad.Layout.MagicFocus
+import           XMonad.Layout.Magnifier               hiding (Toggle)
+import           XMonad.Layout.Minimize
+import           XMonad.Layout.MultiColumns
+import           XMonad.Layout.MultiToggle
+import           XMonad.Layout.MultiToggle.Instances
+import           XMonad.Layout.NoBorders
+import qualified XMonad.Layout.Renamed                 as RN
+import           XMonad.Layout.Spacing
+import           XMonad.Layout.Tabbed
+import           XMonad.Layout.ThreeColumns
+import           XMonad.Main                           (launch)
 import qualified XMonad.Operations
-import qualified XMonad.StackSet as W
-import XMonad.Util.CustomKeys
-import qualified XMonad.Util.Dmenu as DM
-import qualified XMonad.Util.ExtensibleState as XS
-import XMonad.Util.Minimize
-import XMonad.Util.NamedScratchpad
-import XMonad.Util.NamedWindows (getName)
-import XMonad.Util.Run
-import XMonad.Util.WorkspaceCompare
+import qualified XMonad.StackSet                       as W
+import           XMonad.Util.CustomKeys
+import qualified XMonad.Util.Dmenu                     as DM
+import qualified XMonad.Util.ExtensibleState           as XS
+import           XMonad.Util.Minimize
+import           XMonad.Util.NamedScratchpad
+import           XMonad.Util.NamedWindows              (getName)
+import           XMonad.Util.Run
+import           XMonad.Util.WorkspaceCompare
 
 myConfig =
   def
@@ -116,12 +114,12 @@ myConfig =
 
 icyTheme =
   def
-    { inactiveBorderColor = "#0096FF",
-      activeBorderColor = "#F3F8FE",
-      activeColor = "#F3F8FE",
-      inactiveColor = "#091F2E",
-      inactiveTextColor = "#0096FF",
-      activeTextColor = "#F3F8FE",
+    { inactiveBorderColor = "#1A1B25",
+      activeBorderColor = "#FFB454",
+      activeColor = "#FFB454",
+      inactiveColor = "#1A1B25",
+      inactiveTextColor = "#1A1B25",
+      activeTextColor = "#FFB454",
       fontName = "xft:JetBrainsMono Nerd Font:style=Medium",
       decoHeight = 25
     }
@@ -172,7 +170,7 @@ findM :: (Monad m) => (a -> m (Maybe b)) -> [a] -> m (Maybe b)
 findM f = runMaybeT . msum . map (MaybeT . f)
 
 if' :: Bool -> a -> a -> a
-if' True x _ = x
+if' True x _  = x
 if' False _ y = y
 
 ifL :: a -> a -> Bool -> a
@@ -302,10 +300,10 @@ data MyToggles
   deriving (Read, Show, Eq, Typeable)
 
 instance Transformer MyToggles Window where
-  transform LIMIT x k = k (limitSlice 2 x) unmodifyLayout
-  transform GAPS x k = k (smartSpacing 7 x) unmodifyLayout
-  transform MAGICFOCUS x k = k (magicFocus x) unmodifyLayout
-  transform MAGNIFY x k = k (myMagnify x) unmodifyLayout
+  transform LIMIT x k       = k (limitSlice 2 x) unmodifyLayout
+  transform GAPS x k        = k (smartSpacing 7 x) unmodifyLayout
+  transform MAGICFOCUS x k  = k (magicFocus x) unmodifyLayout
+  transform MAGNIFY x k     = k (myMagnify x) unmodifyLayout
   transform AVOIDSTRUTS x k = k (avoidStruts x) unmodifyLayout
 
 myToggles = [LIMIT, GAPS, MAGICFOCUS, MAGNIFY, AVOIDSTRUTS]
@@ -410,7 +408,7 @@ layoutInfo =
     |||! rename "Large Main" (Tall 1 (3 / 100) (3 / 4))
     |||! rename "2 Columns" (Tall 1 (3 / 100) (1 / 2))
     |||! rename "3 Columns" (multiCol [1, 1] 2 0.01 (-0.5))
-    |||! rename "Center" (centerMaster $ Grid (16 / 10))
+    |||! rename "Centered" (ThreeCol 1 (3 / 100) (1 / 2))
     |||! simpleCross
     |||! myTabbed
   where
@@ -792,7 +790,7 @@ setFocusedScreen'
 nextScreen ws@W.StackSet {W.visible = visible} =
   case visible of
     next : _ -> setFocusedScreen (W.screen next) ws
-    _ -> ws
+    _        -> ws
 
 viewOtherScreen ws = W.greedyView ws . nextScreen
 
@@ -859,7 +857,7 @@ bindBringAndRaiseMany = concatMap (\(a, b, c, d) -> bindBringAndRaise a b c d)
 shiftToNextScreen ws =
   case W.visible ws of
     W.Screen i _ _ : _ -> W.view (W.tag i) $ W.shift (W.tag i) ws
-    _ -> ws
+    _                  -> ws
 
 shiftToNextScreenX = windows shiftToNextScreen
 
@@ -873,7 +871,7 @@ getNextScreen ws =
     candidates =
       case largerId of
         [] -> W.current ws : otherScreens -- Ensure a value will be selected
-        _ -> largerId
+        _  -> largerId
 
 goToNextScreen ws =
   if screenEq nScreen currScreen
@@ -1033,7 +1031,7 @@ addKeys conf@XConfig {modMask = modm} =
     ]
   where
     modalt = modm .|. mod1Mask
-    hyper = modm .|. controlMask .|. shiftMask
+    hyper = modm .|. xk_Tab
 
 -- Local Variables:
 -- flycheck-ghc-args: ("-Wno-missing-signatures")

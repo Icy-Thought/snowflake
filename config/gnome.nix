@@ -1,6 +1,11 @@
 { config, lib, pkgs, ... }:
 
 let
+  imports = [
+    # ./gtk
+    ./dconf/gnome.nix
+  ];
+
   genvPkgs = [
     pkgs.dconf2nix # Nixify your dconf-settings.
     pkgs.gnome.zenity # Display Dialogs.
@@ -22,10 +27,7 @@ let
     [ pkgs.orchis-theme pkgs.flat-remix-gnome pkgs.whitesur-icon-theme ];
 
 in {
-  imports = [
-    # ./gtk
-    ./dconf/gnome.nix
-  ];
+  inherit imports;
 
   home = {
     sessionVariables = { MOZ_ENABLE_WAYLAND = 1; };

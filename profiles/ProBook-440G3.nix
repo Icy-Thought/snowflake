@@ -1,11 +1,15 @@
-{ config, pkgs, lib, ... }: {
+{ config, pkgs, lib, ... }:
 
+let
   imports = [
     ../modules/common.nix
     ../modules/nixos/fcitx5.nix
     ../modules/desktop-managers/plasma.nix
     # ../modules/window-managers/xmonad.nix
   ];
+
+in {
+  inherit imports;
 
   hm = { imports = [ ./home/ProBook-440G3.nix ]; };
 

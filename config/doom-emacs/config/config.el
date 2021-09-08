@@ -11,12 +11,12 @@
 ;; (doom/set-frame-opacity 95)
 
 (setq
- confirm-kill-emacs nil                             ; Disable Emacs confirm-exit messages.
+ confirm-kill-emacs nil                         ; Disable Emacs confirm-exit messages.
  display-line-numbers-type t
  all-the-icons-dired-monochrome nil
- x-stretch-cursor t)                                ; Cursor size = glyph width.
+ x-stretch-cursor t)                            ; Cursor size = glyph width.
 
-(with-eval-after-load 'solaire-mode                 ; Inverted solaire color-schemes.
+(with-eval-after-load 'solaire-mode             ; Inverted solaire color-schemes.
   (add-to-list 'solaire-mode-themes-to-face-swap 'doom-ayu-mirage))
 
 (setq
@@ -111,7 +111,8 @@
   :hook (pdf-tools-enabled . pdf-view-midnight-minor-mode)
   :config
 
-  (setq pdf-view-midnight-colors '("#FFB454" . "#0A0E14")))             ; Gruvbox UI
+  ;; PDF-View -> use active theme foreground ++ background
+  (setq pdf-view-themed-minor-mode t)
 
 (setq which-key-idle-delay 0.5)
 

@@ -12,6 +12,8 @@ let
   };
 
 in {
+  home.packages = with pkgs; [ gist ];
+
   programs.git = {
     enable = true;
 
@@ -30,6 +32,7 @@ in {
       ca = "commit -am";
       dc = "diff --cached";
     };
+
     extraConfig = gitConfig;
     ignores = [
       "*.bloop"

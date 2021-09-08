@@ -1,12 +1,6 @@
 { config, lib, pkgs, ... }:
 
 let
-  xmonad = ''
-    userresources = "${config.xdg.configHome}"/x11/Xresources
-    [ -f "$userresources" ] && xrdb -merge "$userresources"
-  '';
-
-in {
   imports = [
     ./rofi
     ./xresources
@@ -15,6 +9,14 @@ in {
     ./dunst/xmonad.nix
     ./scripts/xmonad.nix
   ];
+
+  xmonad = ''
+    userresources = "${config.xdg.configHome}"/x11/Xresources
+    [ -f "$userresources" ] && xrdb -merge "$userresources"
+  '';
+
+in {
+  inherit imports;
 
   services = {
     gnome-keyring.enable = true;

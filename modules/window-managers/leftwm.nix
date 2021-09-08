@@ -1,9 +1,12 @@
 { config, lib, pkgs, ... }:
 
-let leftPkgs = with pkgs; [ dunst polybar trayer feh shotgun ];
+let
+  imports = [ ../../config/picom ../display-managers/sddm.nix ];
+
+  leftPkgs = with pkgs; [ dunst polybar trayer feh shotgun ];
 
 in {
-  imports = [ ../../config/picom ../display-managers/sddm.nix ];
+  inherit imports;
 
   environment.systemPackages = leftPkgs;
 

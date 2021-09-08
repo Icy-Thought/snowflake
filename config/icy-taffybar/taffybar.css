@@ -47,7 +47,7 @@
 	padding-left: 3px;
 	padding-top: 0px;
 	font-size: 10pt;
-	color: @twilight-blue;
+	color: @koromiko;
 	opacity: 1;
 	font-weight: bold;
 	transition: color .5s;
@@ -66,7 +66,7 @@
 }
 
 .active .inner-pad {
-	background-color: @twilight-blue;
+	background-color: @koromiko;
 	opacity: 1;
 }
 
