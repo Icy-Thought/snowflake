@@ -31,7 +31,23 @@ in {
     blueman.enable = true;
 
     xserver = {
+      enable = true;
+      layout = "us+hyper";
       xkbOptions = "caps:ctrl_modifier";
+
+      extraLayouts.hyper = {
+        description = "Left-Tab as Hyper-key";
+        languages = [ ];
+
+        symbolsFile = pkgs.writeText "hyper" ''
+          partial modifier_keys
+          xkb_symbols "hyper" {
+            key  <TAB> { [ Hyper_L, Hyper_L ] };
+            modifier_map Mod3 { <HYPR>, Hyper_L };
+          };
+        '';
+      };
+
       displayManager.defaultSession = "none+xmonad";
 
       # 2-Step workaround for https://github.com/taffybar/taffybar/issues/403

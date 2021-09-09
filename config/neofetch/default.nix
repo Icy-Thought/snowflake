@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  nixLogo = ./nix-logo.png;
+  nixLogo = ./nixB-logo.png;
 
   config = ''
     print_info() {
@@ -190,7 +190,7 @@ let
     image_backend="ascii"
 
     # Image Source
-    # image_source="${nixLogo}"
+    image_source="${nixLogo}"
 
     # Ascii distro
     # Which distro's ascii art to display.
@@ -204,9 +204,6 @@ let
 
     # Image loop
     image_loop="off"
-
-    # Thumbnail directory
-    # thumbnail_dir="${config.xdg.cacheDir}/thumbnails/neofetch"
 
     # Crop mode
     crop_mode="normal"

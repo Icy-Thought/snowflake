@@ -17,7 +17,7 @@
     agenix.url = "github:ryantm/agenix";
 
     xmonad.url = "github:xmonad/xmonad";
-    xmonad-contrib.url = "github:xmonad/xmonad-contrib";
+    xmonad-contrib.url = "github:icy-thought/xmonad-contrib";
     taffybar.url = "github:taffybar/taffybar";
 
     picom-jonaburg = {

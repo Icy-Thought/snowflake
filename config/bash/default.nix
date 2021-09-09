@@ -4,7 +4,7 @@
     enable = true;
     historyFileSize = 5000;
     historySize = 5000;
-    hitoryIgnore = [ "nvim" ];
+    historyIgnore = [ "nvim" ];
 
     shellAliases = {
       ls = "exa -Slhg --icons";

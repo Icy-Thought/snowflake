@@ -243,7 +243,7 @@ main = do
           myMpris
         ]
       fullEndWidgets = baseEndWidgets ++ cryptoWidgets
-      laptopEndWidgets = [ myBattery ] ++ baseEndWidgets
+      laptopEndWidgets = [myBattery] ++ baseEndWidgets
       baseConfig =
         defaultSimpleTaffyConfig
           { startWidgets = [myWorkspaces, myLayout, myWindows],
@@ -274,7 +274,6 @@ main = do
           }
 
   startTaffybar $
-    appendHook (void $ getHost False) $
-      withLogServer $
-        withToggleServer $
-          toTaffyConfig simpleTaffyConfig
+    withLogServer $
+      withToggleServer $
+        toTaffyConfig simpleTaffyConfig

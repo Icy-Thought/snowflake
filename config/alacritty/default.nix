@@ -3,7 +3,7 @@
   programs.alacritty = {
     enable = true;
     settings = {
-      import = ./colorschemes/ayu-dark.yml;
+      import = "./colorschemes/ayu-dark.yml";
 
       env = {
         TERM = "alacritty-direct";

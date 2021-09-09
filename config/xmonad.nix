@@ -31,6 +31,7 @@ in {
       environment = {
         "primary-display" = "$(xrandr | awk '/ primary/{print $1}')";
       };
+
       timers = [
         {
           delay = 60;
