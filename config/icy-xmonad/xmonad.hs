@@ -55,6 +55,7 @@ import           XMonad.Actions.WindowGo
 import           XMonad.Actions.WorkspaceNames
 import           XMonad.Config                         ()
 import           XMonad.Core                           (getDirectories)
+import           XMonad.Hooks.DynamicProperty
 import           XMonad.Hooks.EwmhDesktops
 import           XMonad.Hooks.FadeInactive
 import           XMonad.Hooks.ManageDocks
@@ -62,8 +63,9 @@ import           XMonad.Hooks.ManageHelpers
 import           XMonad.Hooks.Minimize
 import           XMonad.Hooks.TaffybarPagerHints
 import           XMonad.Hooks.WorkspaceHistory
+import           XMonad.Layout.Accordion
 import           XMonad.Layout.BoringWindows
-import           XMonad.Layout.ConditionalModifier
+import           XMonad.Layout.ConditionalLayout
 import           XMonad.Layout.Cross
 import           XMonad.Layout.Decoration
 import           XMonad.Layout.GridVariants            (Grid (Grid))
@@ -88,7 +90,7 @@ import           XMonad.Util.CustomKeys
 import qualified XMonad.Util.Dmenu                     as DM
 import qualified XMonad.Util.ExtensibleState           as XS
 import           XMonad.Util.Minimize
-import           XMonad.Util.NamedScratchpad
+import           XMonad.Util.NamedScratchpad           as NS
 import           XMonad.Util.NamedWindows              (getName)
 import           XMonad.Util.Run
 import           XMonad.Util.WorkspaceCompare
@@ -97,7 +99,8 @@ myConfig =
   def
     { modMask = mod4Mask,
       terminal = "kitty",
-      manageHook = composeOne [isFullscreen -?> doFullFloat] <+> manageHook def,
+      manageHook =
+        namedScratchpadManageHook scratchpads,
       layoutHook = myLayoutHook,
       borderWidth = 2,
       logHook =
@@ -105,9 +108,13 @@ myConfig =
           <> toggleFadeInactiveLogHook 0.9
           <> workspaceHistoryHook
           <> setWorkspaceNames
-          <> activateLogHook (reader W.focusWindow >>= doF) <+> logHook def,
+          <> activateLogHook (reader W.focusWindow >>= doF)
+          <> logHook def,
       handleEventHook =
-        followIfNoMagicFocus <> minimizeEventHook <> restartEventHook,
+        followIfNoMagicFocus
+          <> minimizeEventHook
+          <> restartEventHook
+          <> myScratchPadEventHook,
       startupHook = myStartup,
       keys = customKeys (const []) addKeys
     }
@@ -227,36 +234,50 @@ isGmailTitle t = isInfixOf "@gmail.com" t && isInfixOf "Gmail" t
 
 isChromeClass = isInfixOf "chrome"
 
-chromeSelectorBase = isChromeClass <$> className
+noSpecialChromeTitles = helper <$> title
+  where
+    helper t = not $ any ($ t) [isGmailTitle]
 
-firefoxSelector = className =? "Firefox"
+chromeSelectorBase = isChromeClass <$> className
 
 chromiumSelector = className =? "Chromium"
 
-spotifySelector = className =? "Spotify"
+elementSelector = className =? "Element"
 
 emacsSelector = className =? "Emacs"
+
+firefoxSelector = className =? "Firefox"
+
+spotifySelector = className =? "Spotify"
 
 transmissionSelector = fmap (isPrefixOf "Transmission") title
 
 volumeSelector = className =? "Pavucontrol"
 
 virtualClasses =
-  [ (transmissionSelector, "Transmission")
+  [ (gmailSelector, "Gmail"),
+    (chromeSelector, "Chrome"),
+    (transmissionSelector, "Transmission")
   ]
 
 -- Commands
+chromiumCommand = "chromium"
+
+elementCommand = "element-desktop"
+
 emacsCommand = "emacsclient -c"
+
+gmailCommand =
+  "chromium --new-window https://mail.google.com/mail/u/0/#inbox"
 
 firefoxCommand = "firefox-devedition"
 
-firefoxPrivCommand = "firefox-devedition --profile ~/.mozilla/firefox/z5dgw9v6.dev-edition-private"
-
-chromiumCommand = "chromium"
-
-spotifyCommand = "spotify"
+firefoxPrivCommand =
+  "firefox-devedition --profile ~/.mozilla/firefox/z5dgw9v6.dev-edition-private"
 
 htopCommand = "kitty --title htop -e htop"
+
+spotifyCommand = "spotify"
 
 transmissionCommand = "transmission-gtk"
 
@@ -278,8 +299,14 @@ myStartup = do
 data DisableOnTabbedCondition = DisableOnTabbedCondition deriving (Read, Show)
 
 instance ModifierCondition DisableOnTabbedCondition where
-  shouldApply _ = do
-    not . isInfixOf "Tabbed" . description . W.layout <$> currentWorkspace
+  shouldApply _ workspaceId = fromMaybe True <$> final
+    where
+      allWorkspaces = withWindowSet $ return . W.workspaces
+      relevantWorkspace = find idMatches <$> allWorkspaces
+      idMatches ws = W.tag ws == workspaceId
+      final =
+        fmap (not . isInfixOf "Tabbed" . description . W.layout)
+          <$> relevantWorkspace
 
 disableOnTabbed = ConditionalLayoutModifier DisableOnTabbedCondition
 
@@ -301,7 +328,7 @@ data MyToggles
 
 instance Transformer MyToggles Window where
   transform LIMIT x k       = k (limitSlice 2 x) unmodifyLayout
-  transform GAPS x k        = k (smartSpacing 7 x) unmodifyLayout
+  transform GAPS x k        = k (smartSpacing 5 x) unmodifyLayout
   transform MAGICFOCUS x k  = k (magicFocus x) unmodifyLayout
   transform MAGNIFY x k     = k (myMagnify x) unmodifyLayout
   transform AVOIDSTRUTS x k = k (avoidStruts x) unmodifyLayout
@@ -406,13 +433,14 @@ layoutsStart layout = (layout, [Layout layout])
 layoutInfo =
   layoutsStart (rename "Grid" (Grid $ 16 / 10))
     |||! rename "Large Main" (Tall 1 (3 / 100) (3 / 4))
+    |||! rename "Centered" (ThreeCol 1 (3 / 100) (1 / 2))
     |||! rename "2 Columns" (Tall 1 (3 / 100) (1 / 2))
     |||! rename "3 Columns" (multiCol [1, 1] 2 0.01 (-0.5))
-    |||! rename "Centered" (ThreeCol 1 (3 / 100) (1 / 2))
+    |||! Accordion
     |||! simpleCross
     |||! myTabbed
   where
-    myTabbed = rename "Tabbed" $ tabbed shrinkText (theme icyTheme)
+    myTabbed = rename "Tabbed" $ tabbed shrinkText icyTheme
 
 layoutList = snd layoutInfo
 
@@ -815,15 +843,45 @@ swapMinimizeStateAfter action =
         when (newWindow /= originalWindow) $ minimizeWindow originalWindow
 
 -- Named Scratchpads
+nearFullFloat = customFloating $ W.RationalRect l t w h
+  where
+    h = 0.9
+    w = 0.9
+    t = 0.95 - h
+    l = 0.95 - w
+
 scratchpads =
-  [ NS "htop" htopCommand (title =? "htop") nonFloating,
-    NS "spotify" spotifyCommand spotifySelector nonFloating,
+  [ NS "element" elementCommand elementSelector nonFloating,
+    NS "htop" htopCommand (title =? "htop") nonFloating,
+    NS "spotify" spotifyCommand spotifySelector nearFullFloat,
+    NS "Picture-in-Picture" "Picture-in-Picture" (title =? "Picture-in-Picture") defaultFloating,
+    NS "transmission" transmissionCommand transmissionSelector nearFullFloat,
     NS "volume" volumeCommand volumeSelector nonFloating
   ]
 
+myScratchPadManageHook = namedScratchpadManageHook scratchpads
+
+-- We need this event hook because some scratchpad applications (Spotify) don't
+-- actually properly set their class at startup.
+myScratchPadEventHook =
+  dynamicPropertyChange "WM_CLASS" myScratchPadManageHook
+    <> dynamicPropertyChange "WM_NAME" myScratchPadManageHook
+
+runScratchPadManageHookOnCurrent =
+  join (withFocusedD (Endo id) $ runQuery myScratchPadManageHook) >>= windows . appEndo
+
+scratchPadIsDisplayed name = join $ withFocusedD False query
+  where
+    query = maybe (const $ return False) (runQuery . NS.query) scratchpadInfo
+    scratchpadInfo = find ((name ==) . NS.name) scratchpads
+
+manageIfScratchPadIsDisplayed name =
+  scratchPadIsDisplayed name >>= (`when` runScratchPadManageHookOnCurrent)
+
 -- TODO: This doesnt work well with minimized windows
-doScratchpad =
-  maybeUnminimizeAfter . deactivateFullAnd . namedScratchpadAction scratchpads
+doScratchpad name = do
+  maybeUnminimizeAfter $ deactivateFullAnd $ namedScratchpadAction scratchpads name
+  manageIfScratchPadIsDisplayed name
 
 -- Raise or spawn
 myRaiseNextMaybe =
@@ -940,9 +998,7 @@ addKeys conf@XConfig {modMask = modm} =
     bindBringAndRaiseMany
       [ (modalt, xK_f, spawn firefoxCommand, firefoxSelector),
         (modalt, xK_b, spawn firefoxPrivCommand, firefoxSelector),
-        (modalt, xK_g, spawn chromiumCommand, chromiumSelector),
-        (modalt, xK_e, spawn emacsCommand, emacsSelector),
-        (modalt, xK_t, spawn transmissionCommand, transmissionSelector)
+        (modalt, xK_g, spawn chromiumCommand, chromiumSelector)
       ]
     ++
     -- Window manipulation
@@ -983,12 +1039,13 @@ addKeys conf@XConfig {modMask = modm} =
       ((hyper .|. mod1Mask, xK_r), renameWorkspace def),
       ((hyper, xK_l), selectLayout),
       -- ScratchPads
+      ((modalt, xK_l), doScratchpad "element"),
+      ((modalt, xK_e), doScratchpad "emacs"),
+      ((modalt, xK_g), doScratchpad "gmail"),
       ((modalt, xK_h), doScratchpad "htop"),
-      ((modalt, xK_v), doScratchpad "volume"),
       ((modalt, xK_s), doScratchpad "spotify"),
-      ( (modalt .|. controlMask, xK_s),
-        myRaiseNextMaybe (spawn spotifyCommand) spotifySelector
-      ),
+      ((modalt, xK_t), doScratchpad "transmission"),
+      ((modalt, xK_v), doScratchpad "volume"),
       -- Specific program spawning
       ((modm, xK_p), spawn "rofi -show drun -show-icons"),
       ((modm .|. shiftMask, xK_p), spawn "rofi -show run"),
@@ -1008,14 +1065,13 @@ addKeys conf@XConfig {modMask = modm} =
       -- Brightness Control
       ((0, xF86XK_MonBrightnessUp), spawn "set-brightness up"),
       ((0, xF86XK_MonBrightnessDown), spawn "set-brightness down"),
-      -- PrintSc
-      -- Current Workspace
+      -- Screenshot: Current Workspace
       ((0, xK_Print), spawn "screenshot -workspace"),
       ((controlMask, xK_Print), spawn "screenshot -copyWorkspace"),
-      -- Active Window
+      -- Screenshot: Active Window
       ((mod1Mask, xK_Print), spawn "screenshot -activeWin"),
       ((controlMask .|. mod1Mask, xK_Print), spawn "screenshot -copyActiveWin"),
-      -- Selected Area
+      -- Screenshot: Selected Area
       ((shiftMask, xK_Print), spawn "screenshot -selection"),
       ((controlMask .|. shiftMask, xK_Print), spawn "screenshot -copySelection")
     ]
@@ -1031,7 +1087,7 @@ addKeys conf@XConfig {modMask = modm} =
     ]
   where
     modalt = modm .|. mod1Mask
-    hyper = modm .|. xk_Tab
+    hyper = mod3Mask
 
 -- Local Variables:
 -- flycheck-ghc-args: ("-Wno-missing-signatures")
