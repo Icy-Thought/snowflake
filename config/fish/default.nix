@@ -2,23 +2,21 @@
 
 let
   print-colors = pkgs.writeScriptBin "print-colors" ''
-    T='gYw'   # The test text
+    T='•••'   # The test text
 
-    printf "\n         def     40m     41m     42m     43m     44m     45m     46m     47m\n";
+    echo -e "\n                 40m     41m     42m     43m\
+         44m     45m     46m     47m";
 
     for FGs in '    m' '   1m' '  30m' '1;30m' '  31m' '1;31m' '  32m' \
                '1;32m' '  33m' '1;33m' '  34m' '1;34m' '  35m' '1;35m' \
                '  36m' '1;36m' '  37m' '1;37m';
-
       do FG='$'{FGs// /}
-      printf " '$'FGs \033[$FG  $T  "
-
+      echo -en " $FGs \033[$FG  $T  "
       for BG in 40m 41m 42m 43m 44m 45m 46m 47m;
-        do printf "'$'EINS \033[$FG\033[$BG  '$'T  \033[0m";
+        do echo -en "$EINS \033[$FG\033[$BG  $T  \033[0m";
       done
       echo;
     done
-    echo
   '';
 
 in {
@@ -53,31 +51,31 @@ in {
 
       # Colorscheme: Ayu-dark
       if test "$TERM" != "linux"
-         fish_color_normal B3B1AD
-         fish_color_command 39BAE6
-         fish_color_quote C2D94C
-         fish_color_redirection FFEE99
-         fish_color_end F29668
-         fish_color_error FF3333
-         fish_color_param B3B1AD
-         fish_color_comment 626A73
-         fish_color_match F07178
-         fish_color_selection --background=E6B450
-         fish_color_search_match --background=E6B450
-         fish_color_history_current --bold
-         fish_color_operator E6B450
-         fish_color_escape 95E6CB
-         fish_color_cwd 59C2FF
-         fish_color_cwd_root red
-         fish_color_valid_path --underline
-         fish_color_autosuggestion 4D5566
-         fish_color_user brgreen
-         fish_color_host normal
-         fish_color_cancel -r
-         fish_pager_color_completion normal
-         fish_pager_color_description B3A06D yellow
-         fish_pager_color_prefix normal --bold --underline
-         fish_pager_color_progress brwhite --background=cyan
+         set -U fish_color_autosuggestion 4D5566
+         set -U fish_color_cancel -r
+         set -U fish_color_command 39BAE6
+         set -U fish_color_comment 626A73
+         set -U fish_color_cwd 59C2FF
+         set -U fish_color_cwd_root red
+         set -U fish_color_end F29668
+         set -U fish_color_error FF3333
+         set -U fish_color_escape 95E6CB
+         set -U fish_color_history_current --bold
+         set -U fish_color_host normal
+         set -U fish_color_match F07178
+         set -U fish_color_normal B3B1AD
+         set -U fish_color_operator E6B450
+         set -U fish_color_param B3B1AD
+         set -U fish_color_quote C2D94C
+         set -U fish_color_redirection FFEE99
+         set -U fish_color_search_match --background=E6B450
+         set -U fish_color_selection --background=E6B450
+         set -U fish_color_user brgreen
+         set -U fish_color_valid_path --underline
+         set -U fish_pager_color_completion normal
+         set -U fish_pager_color_description B3A06D yellow
+         set -U fish_pager_color_prefix normal --bold --underline
+         set -U fish_pager_color_progress brwhite --background=cyan
       end
 
       # Emacs: Vterm

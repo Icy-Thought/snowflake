@@ -4,7 +4,7 @@ let
   homeDir = config.home.homeDirectory;
   fallback-img = ./fallback-img.jpg;
 
-  ncmpcpp-ueberzug = pkgs.writeScriptBin "ncmpcpp-ueberzug" ''
+  ncmpcpp-ueberzug = ''
     export FIFO_UEBERZUG="/tmp/mpd-ueberzug-'$'{PPID}"
 
     cleanup() {
@@ -24,7 +24,7 @@ let
     cleanup
   '';
 
-  ncmpcpp-cover-art = pkgs.writeScriptBin "ncmpcpp-cover-art" ''
+  ncmpcpp-cover-art = ''
     # SETTINGS
     music_library="${homeDir}/Music"
     fallback_image="${fallback-img}"
@@ -271,4 +271,20 @@ let
     main
   '';
 
-in { home.packages = with pkgs; [ ncmpcpp-ueberzug ncmpcpp-cover-art ]; }
+in {
+  home.file = {
+    ncmpcpp-ueberzug = {
+      target = ".config/ncmpcpp/ncmpcpp-ueberzug/ncmpcpp-ueberzug";
+      text = ncmpcpp-ueberzug;
+      executable = true;
+    };
+
+    ncmpcpp-cover-art = {
+      target = ".config/ncmpcpp/ncmpcpp-ueberzug/ncmpcpp-cover-art.sh";
+      text = ncmpcpp-cover-art;
+      executable = true;
+    };
+
+  };
+
+}

@@ -67,8 +67,8 @@
       bind-key -T copy-mode-vi r send-keys -X rectangle-toggle
 
       # Statusline theming
-      set -g status-bg '#20202a'
-      set -g status-fg white
+      set -g status-fg 'colour7'
+      set -g status-bg 'colour0'
 
       set -g status-position 'bottom'
       set -g status-justify 'left'
@@ -79,24 +79,21 @@
       set -g status-left "$flash #S "
       set -g status-right "$batt$date$time"
 
+      music='#[fg=colour8,bg=colour0] #(music-status) '
       batt='#[fg=colour8,bg=colour0] #(battery-charge) '
       date='#[fg=colour7,bg=colour8] %a %d '
       time='#[fg=colour0,bg=colour2] %H:%M '
+      hostname='#[fg=colour0,bg=colour2] #h '
 
-      flash='#{?client_prefix,#[fg=#20202a]#[bg=#20202a],#[fg=#20202a]#[bg=#20202a]}'
-
-      # Pane-related theming
-
-      set -g pane-active-border-style bg='#20202a',fg='#20202a'
-      set -g pane-border-style fg='#20202a'
+      flash='#{?client_prefix,#[fg=colour2]#[bg=colour0],#[fg=colour0]#[bg=colour2]}'
 
       # Windows-related theming
       setw -g window-status-style fg='colour2',bg='colour0'
-      setw -g window-status-activity-style fg='#20202a',bg='#20202a'
+      setw -g window-status-activity-style fg='colour2',bg='colour0'
 
       setw -g window-status-separator ' '
-      setw -g window-status-format "#[fg=magenta]#[fg=black]#[bg=magenta]#I #[bg=#414560]#[fg=white] #W#[fg=#414560]#[bg=#20202a] "
-      setw -g window-status-current-format "#[fg=cyan]#[fg=black]#[bg=cyan]#I #[bg=#414560]#[fg=white] #W#[fg=#414560]#[bg=#20202a] #[bg=default] #[fg=magenta]#[fg=black]#[bg=magenta]λ #[fg=white]#[bg=#414560] %a %d %b #[fg=magenta]%R#[fg=#414560]#[bg=#202020] "
+      setw -g window-status-format '#[fg=colour7,bg=colour0] #W '
+      setw -g window-status-current-format '#[fg=colour7,bg=colour8] #W '
     '';
   };
 }

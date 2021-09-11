@@ -1,6 +1,13 @@
 { config, pkgs, ... }:
 
-let imports = [ ./ncmpcpp-ueberzug ];
+let
+  imports = [ ./ncmpcpp-ueberzug ];
+  cover-art =
+    "${config.home.homeDirectory}/.config/ncmpcpp/ncmpcpp-ueberzug/ncmpcpp-cover-art.sh";
+
+  notify = ''
+    dunstify "Now Playing ♫" "$(ncmpcpp -q --current-song="{%a - }{%t}|{%f}")"
+  '';
 
 in {
   inherit imports;
@@ -20,15 +27,14 @@ in {
       autocenter_mode = "yes";
       centered_cursor = "yes";
       ignore_leading_the = "yes";
+      empty_tag_marker = "";
 
       cyclic_scrolling = "yes";
       header_text_scrolling = "yes";
       jump_to_now_playing_song_at_start = "yes";
       lines_scrolled = "1";
 
-      fancy_scrolling = "yes";
       follow_now_playing_lyrics = "yes";
-      display_screens_numbers_on_start = "yes";
       default_place_to_search_in = "database";
       display_bitrate = "no";
 
@@ -47,15 +53,14 @@ in {
       titles_visibility = "yes";
       header_visibility = "no";
       browser_display_mode = "columns";
-      lyrics_database = "1";
       colors_enabled = "yes";
 
-      main_window_color = "white";
-      main_window_highlight_color = "blue";
-      header_window_color = "cyan";
-      volume_color = "red";
-      active_column_color = "cyan";
+      main_window_color = "yellow";
+      header_window_color = "white";
+      volume_color = "green";
       active_window_border = "blue";
+      current_item_inactive_column_prefix = "$(cyan)$r";
+      current_item_inactive_column_suffix = "$/r$(end)";
 
       progressbar_color = "black";
       progressbar_elapsed_color = "red";
@@ -85,8 +90,14 @@ in {
       visualizer_type = "spectrum";
       visualizer_look = "●●";
 
+      # Startup
+      startup_screen = "visualizer";
+      startup_slave_screen = "playlist";
+      startup_slave_screen_focus = "yes";
+      locked_screen_width_part = 31;
+
       # ncmpcpp-ueberzug
-      execute_on_song_change = "ncmpcpp-cover-art";
+      execute_on_song_change = "${cover-art} & ${notify}";
     };
   };
 }

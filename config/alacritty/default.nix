@@ -1,9 +1,13 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, ... }:
+
+let active-palette = ./colorschemes/ayu-dark.yml;
+
+in {
 
   programs.alacritty = {
     enable = true;
     settings = {
-      import = "./colorschemes/ayu-dark.yml";
+      import = [ "${active-palette}" ];
 
       env = {
         TERM = "alacritty-direct";

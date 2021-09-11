@@ -100,7 +100,7 @@ let
     freetube
     gimp
     inkscape
-    kid3
+    easytag
   ]; # obs-studio & blender
 
   gamingPkgs = with pkgs; [ lutris ];

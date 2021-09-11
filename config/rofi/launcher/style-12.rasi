@@ -4,11 +4,11 @@
  */
 
 * {
+  foreground:                       #626A73ff;
   background:                       #1A1B25ff;
   background-alt:                   #1A1B2500;
   background-bar:                   #21222eff;
-  foreground:                       #F3F8FEff;
-  accent:                           #A3BE8Cff;
+  accent:                           #FFB454ff;
 }
 
 window {
@@ -37,8 +37,8 @@ textbox-prompt-colon {
 	padding: 						1.40% 0% 1% 0%;
 	background-color: 				@background-bar;
 	text-color: 					@foreground;
-	expand: false;
-	str: " :: ";
+	expand:                         false;
+	str:                            " :: ";
 }
 
 entry {

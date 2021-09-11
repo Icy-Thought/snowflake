@@ -1,27 +1,24 @@
-schemes:
-  ayu-dark: &ayu-dark
-    primary:
-      foreground: "#B3B1AD"
-      background: "#0A0E14"
+colors:
+  primary:
+    foreground: '0xE6E1CF'
+    background: '0x0F1419'
 
-    normal:
-      black: "#0A0E14"
-      red: "#F07178"
-      green: "#91B362"
-      yellow: "#E6B450"
-      blue: "#39BAE6"
-      magenta: "#F29668"
-      cyan: "#6994BF"
-      white: "#626A73"
+  normal:
+    black:      '0x1D242C'
+    red:        '0xFF7733'
+    green:      '0xB8CC52'
+    yellow:     '0xFFB454'
+    blue:       '0x36A3D9'
+    magenta:    '0xCA30C7'
+    cyan:       '0x95E6CB'
+    white:      '0xC7C7C7'
 
-    bright:
-      black: "#3D424D"
-      red: "#D96C75"
-      green: "#C2D94C"
-      yellow: "#FFB454"
-      blue: "#59C2FF"
-      magenta: "#FF8F40"
-      cyan: "#95E6CB"
-      white: "#B3B1AD"
-
-colors: *ayu-dark
+  bright:
+    black:      '0x686868'
+    red:        '0xF07178'
+    green:      '0xCBE645'
+    yellow:     '0xFFEE99'
+    blue:       '0x6871FF'
+    magenta:    '0xFF77FF'
+    cyan:       '0xA6FDE1'
+    white:      '0xFFFFFF'

@@ -1,27 +1,24 @@
-schemes:
-  onedark: &onedark
-    primary:
-      foreground: "#abb2bf"
-      background: "#1e2127"
+colors:
+  primary:
+    foreground: '0xABB2BF'
+    background: '0x1E2127'
 
-    normal:
-      black: "#1e2127"
-      red: "#e06c75"
-      green: "#98c379"
-      yellow: "#d19a66"
-      blue: "#61afef"
-      magenta: "#c678dd"
-      cyan: "#56b6c2"
-      white: "#abb2bf"
+  normal:
+    black:      '0x1E2127'
+    red:        '0xE06C75'
+    green:      '0x98C379'
+    yellow:     '0xD19A66'
+    blue:       '0x61AFEF'
+    magenta:    '0xC678DD'
+    cyan:       '0x56B6C2'
+    white:      '0xABB2BF'
 
-    bright:
-      black: "#5c6370"
-      red: "#e06c75"
-      green: "#98c379"
-      yellow: "#d19a66"
-      blue: "#61afef"
-      magenta: "#c678dd"
-      cyan: "#56b6c2"
-      white: "#ffffff"
-
-colors: *onedark
+  bright:
+    black:      '0x5C6370'
+    red:        '0xE06C75'
+    green:      '0x98C379'
+    yellow:     '0xD19A66'
+    blue:       '0x61AFEF'
+    magenta:    '0xC678DD'
+    cyan:       '0x56B6C2'
+    white:      '0xFFFFFF'

@@ -1,5 +1,8 @@
-{ config, lib, pkgs, ... }: {
+{ config, lib, pkgs, ... }:
 
+let active-palette = ./colorschemes/ayu-dark.conf;
+
+in {
   programs.kitty = {
     enable = true;
     font = {
@@ -11,7 +14,7 @@
       term = "xterm-kitty";
       disable_ligatures = false;
       inactive_text_alpha = "1.0";
-      include = "./colorschemes/ayu-dark.conf";
+      include = "${active-palette}";
 
       scrollback_lines = 5000;
       wheel_scroll_multiplier = "5.0";

@@ -108,11 +108,10 @@
         "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
 
 (use-package pdf-view
-  :hook (pdf-tools-enabled . pdf-view-midnight-minor-mode)
+  :hook (pdf-tools-enabled . pdf-view-themed-minor-mode)
   :config
 
-  ;; PDF-View -> use active theme foreground ++ background
-  (setq pdf-view-themed-minor-mode t)
+  (setq-default pdf-view-display-size 'fit-page))
 
 (setq which-key-idle-delay 0.5)
 

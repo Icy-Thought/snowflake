@@ -103,6 +103,8 @@ myConfig =
         namedScratchpadManageHook scratchpads,
       layoutHook = myLayoutHook,
       borderWidth = 2,
+      normalBorderColor = icyInactive,
+      focusedBorderColor = icyActive,
       logHook =
         updatePointer (0.5, 0.5) (0, 0)
           <> toggleFadeInactiveLogHook 0.9
@@ -121,15 +123,19 @@ myConfig =
 
 icyTheme =
   def
-    { inactiveBorderColor = "#1A1B25",
-      activeBorderColor = "#FFB454",
-      activeColor = "#FFB454",
-      inactiveColor = "#1A1B25",
-      inactiveTextColor = "#1A1B25",
-      activeTextColor = "#FFB454",
-      fontName = "xft:JetBrainsMono Nerd Font:style=Medium",
-      decoHeight = 25
+    { activeColor = icyActive,
+      activeBorderColor = icyActive,
+      activeTextColor = icyInactive,
+      decoHeight = 20,
+      inactiveColor = icyInactive,
+      inactiveBorderColor = icyInactive,
+      inactiveTextColor = icyActive,
+      fontName = "xft:JetBrainsMono Nerd Font:style=Medium"
     }
+
+icyActive = "#FFB454"
+
+icyInactive = "#1A1B25"
 
 restartEventHook e@ClientMessageEvent {ev_message_type = mt} = do
   a <- getAtom "XMONAD_RESTART"
@@ -232,13 +238,13 @@ getWorkspaceDmenu = myDmenu (workspaces myConfig)
 -- Selectors
 isGmailTitle t = isInfixOf "@gmail.com" t && isInfixOf "Gmail" t
 
-isChromeClass = isInfixOf "chrome"
+isChromiumClass = isInfixOf "Chromium"
 
-noSpecialChromeTitles = helper <$> title
+noSpecialChromiumTitles = helper <$> title
   where
     helper t = not $ any ($ t) [isGmailTitle]
 
-chromeSelectorBase = isChromeClass <$> className
+chromiumSelectorBase = isChromiumClass <$> className
 
 chromiumSelector = className =? "Chromium"
 
@@ -248,6 +254,8 @@ emacsSelector = className =? "Emacs"
 
 firefoxSelector = className =? "Firefox"
 
+gmailSelector = chromiumSelectorBase <&&> fmap isGmailTitle title
+
 spotifySelector = className =? "Spotify"
 
 transmissionSelector = fmap (isPrefixOf "Transmission") title
@@ -256,7 +264,7 @@ volumeSelector = className =? "Pavucontrol"
 
 virtualClasses =
   [ (gmailSelector, "Gmail"),
-    (chromeSelector, "Chrome"),
+    (chromiumSelector, "Chromium"),
     (transmissionSelector, "Transmission")
   ]
 
@@ -265,7 +273,7 @@ chromiumCommand = "chromium"
 
 elementCommand = "element-desktop"
 
-emacsCommand = "emacsclient -c"
+emacsCommand = "emacsclient -nc"
 
 gmailCommand =
   "chromium --new-window https://mail.google.com/mail/u/0/#inbox"
@@ -449,7 +457,7 @@ layoutNames = [description layout | layout <- layoutList]
 selectLayout = myDmenu layoutNames >>= (sendMessage . JumpToLayout)
 
 myLayoutHook =
-  minimizeNoDescription
+  minimize
     . boringAuto
     . mkToggle1 AVOIDSTRUTS
     . mkToggle1 MIRROR
@@ -545,7 +553,7 @@ myWindowAct
     currentlyFullscreen <- isToggleActiveInCurrent NBFULL
     let actualConfig
           | fromMaybe False currentlyFullscreen = c
-          | filterVisible = c {windowFilter = not . flip elem visible}
+          | filterVisible = c {windowFilter = return . not . flip elem visible}
           | otherwise = c
     ws <- M.toList <$> windowMap' actualConfig
     selection <- menuIndexArgs cmd args ws
@@ -852,6 +860,8 @@ nearFullFloat = customFloating $ W.RationalRect l t w h
 
 scratchpads =
   [ NS "element" elementCommand elementSelector nonFloating,
+    NS "emacs" emacsCommand emacsSelector nonFloating,
+    NS "gmail" gmailCommand gmailSelector nonFloating,
     NS "htop" htopCommand (title =? "htop") nonFloating,
     NS "spotify" spotifyCommand spotifySelector nearFullFloat,
     NS "Picture-in-Picture" "Picture-in-Picture" (title =? "Picture-in-Picture") defaultFloating,
@@ -1041,7 +1051,7 @@ addKeys conf@XConfig {modMask = modm} =
       -- ScratchPads
       ((modalt, xK_l), doScratchpad "element"),
       ((modalt, xK_e), doScratchpad "emacs"),
-      ((modalt, xK_g), doScratchpad "gmail"),
+      ((modalt, xK_m), doScratchpad "gmail"),
       ((modalt, xK_h), doScratchpad "htop"),
       ((modalt, xK_s), doScratchpad "spotify"),
       ((modalt, xK_t), doScratchpad "transmission"),
