@@ -12,7 +12,7 @@ in {
 
   services = {
     xserver = {
-      xkbOptions = "caps:ctrl_modifier";
+      xkbOptions = "ctrl:swapcaps_hyper,shift:both_capslock";
       windowManager.leftwm.enable = true;
       displayManager.defaultSession = "none+leftwm";
     };

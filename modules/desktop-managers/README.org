@@ -1,4 +1,4 @@
-#+TITLE: WM-related Configurations
+#+TITLE: DE-related Configurations
 #+AUTHOR: Icy-Thought
 #+DATE: <2021-07-19 mån>
 
@@ -12,7 +12,7 @@ The following folder contains several DE's tried throughout the years of my NixO
 - [[#special-thanks][Special Thanks]]
 
 * Gnome
-[[../../../assets/gnome-desktop.png]]
+[[../../assets/gnome-desktop.png]]
 
 * Plasma
 

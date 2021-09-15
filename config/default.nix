@@ -7,9 +7,10 @@ let
     ./git
     ./bash
     ./fish
+    ./scripts
     ./starship
-    ./kitty
     ./alacritty
+    ./kitty
     ./tmux
     ./htop
     ./neofetch

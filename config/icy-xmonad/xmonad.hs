@@ -115,7 +115,7 @@ myConfig =
       handleEventHook =
         followIfNoMagicFocus
           <> minimizeEventHook
-          <> restartEventHook
+          -- <> restartEventHook
           <> myScratchPadEventHook,
       startupHook = myStartup,
       keys = customKeys (const []) addKeys
@@ -146,9 +146,8 @@ restartEventHook _ = return $ All True
 
 myNavigation2DConfig = def {defaultTiledNavigation = centerNavigation}
 
-main = do
-  dirs <- getDirectories
-  (`launch` dirs)
+main =
+  xmonad
     . docks
     . pagerHints
     . ewmh
@@ -248,6 +247,8 @@ chromiumSelectorBase = isChromiumClass <$> className
 
 chromiumSelector = className =? "Chromium"
 
+discordSelector = className =? "Discord"
+
 elementSelector = className =? "Element"
 
 emacsSelector = className =? "Emacs"
@@ -257,6 +258,8 @@ firefoxSelector = className =? "Firefox"
 gmailSelector = chromiumSelectorBase <&&> fmap isGmailTitle title
 
 spotifySelector = className =? "Spotify"
+
+telegramSelector = className =? "Telegram"
 
 transmissionSelector = fmap (isPrefixOf "Transmission") title
 
@@ -270,6 +273,8 @@ virtualClasses =
 
 -- Commands
 chromiumCommand = "chromium"
+
+discordCommand = "discord"
 
 elementCommand = "element-desktop"
 
@@ -286,6 +291,8 @@ firefoxPrivCommand =
 htopCommand = "kitty --title htop -e htop"
 
 spotifyCommand = "spotify"
+
+telegramCommand = "telegram-desktop"
 
 transmissionCommand = "transmission-gtk"
 
@@ -323,8 +330,27 @@ myMagnify = ModifiedLayout $ disableOnTabbed (Mag 1 (1.3, 1.3) On (AllWins 1))
 -- Toggles
 unmodifyLayout (ModifiedLayout _ x') = x'
 
-selectLimit =
-  myDmenu ["2", "3", "4"] >>= (setLimit . read)
+unmodifyMuted (MutedModifiedLayout m) = unmodifyLayout m
+
+newtype MutedModifiedLayout m l a
+  = MutedModifiedLayout (ModifiedLayout m l a)
+  deriving (Read, Show)
+
+instance
+  (LayoutModifier m Window, LayoutClass l Window, Typeable m) =>
+  LayoutClass (MutedModifiedLayout m l) Window
+  where
+  runLayout (W.Workspace i (MutedModifiedLayout l) ms) r =
+    fmap (fmap MutedModifiedLayout) `fmap` runLayout (W.Workspace i l ms) r
+  doLayout (MutedModifiedLayout l) r s =
+    fmap (fmap MutedModifiedLayout) `fmap` doLayout l r s
+  emptyLayout (MutedModifiedLayout l) r =
+    fmap (fmap MutedModifiedLayout) `fmap` emptyLayout l r
+  handleMessage (MutedModifiedLayout l) =
+    fmap (fmap MutedModifiedLayout) . handleMessage l
+  description (MutedModifiedLayout (ModifiedLayout m l)) = description l
+
+selectLimit = myDmenu ["2", "3", "4"] >>= (setLimit . read)
 
 data MyToggles
   = LIMIT
@@ -335,11 +361,11 @@ data MyToggles
   deriving (Read, Show, Eq, Typeable)
 
 instance Transformer MyToggles Window where
-  transform LIMIT x k       = k (limitSlice 2 x) unmodifyLayout
-  transform GAPS x k        = k (smartSpacing 5 x) unmodifyLayout
-  transform MAGICFOCUS x k  = k (magicFocus x) unmodifyLayout
-  transform MAGNIFY x k     = k (myMagnify x) unmodifyLayout
-  transform AVOIDSTRUTS x k = k (avoidStruts x) unmodifyLayout
+  transform LIMIT x k = k (MutedModifiedLayout $ limitSlice 2 x) unmodifyMuted
+  transform GAPS x k = k (MutedModifiedLayout $ smartSpacing 5 x) unmodifyMuted
+  transform MAGICFOCUS x k = k (MutedModifiedLayout $ magicFocus x) unmodifyMuted
+  transform MAGNIFY x k = k (MutedModifiedLayout $ myMagnify x) unmodifyMuted
+  transform AVOIDSTRUTS x k = k (MutedModifiedLayout $ avoidStruts x) unmodifyMuted
 
 myToggles = [LIMIT, GAPS, MAGICFOCUS, MAGNIFY, AVOIDSTRUTS]
 
@@ -457,7 +483,8 @@ layoutNames = [description layout | layout <- layoutList]
 selectLayout = myDmenu layoutNames >>= (sendMessage . JumpToLayout)
 
 myLayoutHook =
-  minimize
+  MutedModifiedLayout
+    . minimize
     . boringAuto
     . mkToggle1 AVOIDSTRUTS
     . mkToggle1 MIRROR
@@ -859,12 +886,14 @@ nearFullFloat = customFloating $ W.RationalRect l t w h
     l = 0.95 - w
 
 scratchpads =
-  [ NS "element" elementCommand elementSelector nonFloating,
+  [ NS "discord" discordCommand discordSelector nonFloating,
+    NS "element" elementCommand elementSelector nonFloating,
     NS "emacs" emacsCommand emacsSelector nonFloating,
     NS "gmail" gmailCommand gmailSelector nonFloating,
     NS "htop" htopCommand (title =? "htop") nonFloating,
     NS "spotify" spotifyCommand spotifySelector nearFullFloat,
     NS "Picture-in-Picture" "Picture-in-Picture" (title =? "Picture-in-Picture") defaultFloating,
+    NS "telegram" telegramCommand telegramSelector nonFloating,
     NS "transmission" transmissionCommand transmissionSelector nearFullFloat,
     NS "volume" volumeCommand volumeSelector nonFloating
   ]
@@ -1049,11 +1078,13 @@ addKeys conf@XConfig {modMask = modm} =
       ((hyper .|. mod1Mask, xK_r), renameWorkspace def),
       ((hyper, xK_l), selectLayout),
       -- ScratchPads
-      ((modalt, xK_l), doScratchpad "element"),
+      ((modalt, xK_j), doScratchpad "discord"),
+      ((modalt, xK_k), doScratchpad "element"),
       ((modalt, xK_e), doScratchpad "emacs"),
       ((modalt, xK_m), doScratchpad "gmail"),
       ((modalt, xK_h), doScratchpad "htop"),
       ((modalt, xK_s), doScratchpad "spotify"),
+      ((modalt, xK_l), doScratchpad "telegram"),
       ((modalt, xK_t), doScratchpad "transmission"),
       ((modalt, xK_v), doScratchpad "volume"),
       -- Specific program spawning

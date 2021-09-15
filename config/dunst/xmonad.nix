@@ -15,14 +15,16 @@
         geometry = "320x100-12+48";
         indicate_hidden = "yes";
         shrink = "no";
+
         transparency = 0;
         notification_height = 0;
         separator_height = 2;
         corner_radius = 5;
         padding = 20;
         horizontal_padding = 20;
-        frame_width = 1;
-        frame_color = "#F3F8FE";
+
+        frame_width = 2;
+        frame_color = "#FFB454";
         separator_color = "frame";
         sort = "yes";
         idle_threshold = 120;
@@ -30,7 +32,11 @@
         font = "JetBrainsMonoMedium Nerd Font 11";
         line_height = 0;
         markup = "full";
-        format = "%s %p\n%b";
+        format = ''
+          %s %p
+          %b
+        '';
+
         alignment = "left";
         vertical_alignment = "center";
         show_age_threshold = 60;
@@ -48,7 +54,7 @@
         sticky_history = "no";
         history_length = 20;
 
-        browser = "firefox";
+        browser = "firefox-devedition";
         always_run_script = true;
         title = "Dunst";
         class = "Dunst";
@@ -73,24 +79,24 @@
       };
 
       urgency_low = {
-        background = "#1E2127";
-        foreground = "#F3F8FE";
+        foreground = "#E6E1CF";
+        background = "#1D242C";
         timeout = 5;
         #icon = /path/to/icon
       };
 
       urgency_normal = {
-        background = "#1E2127";
-        foreground = "#F3F8FE";
-        frame_color = "#0096FF";
+        foreground = "#E6E1CF";
+        background = "#1D242C";
+        frame_color = "#FFB454";
         timeout = 7;
         #icon = /path/to/icon
       };
 
       urgency_critical = {
-        background = "#1E2127";
-        foreground = "#F3F8FE";
-        frame_color = "#E06C75";
+        foreground = "#E6E1CF";
+        background = "#1D242C";
+        frame_color = "#FF7733";
         timeout = 10;
         #icon = /path/to/icon
       };

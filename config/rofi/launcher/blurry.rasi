@@ -11,6 +11,8 @@
 }
 
 window {
+    fullscreen:                     false;
+    scrollbar:                      false;
     transparency:                   "real";
     background-color:               @background;
     text-color:                     @foreground;
@@ -84,15 +86,22 @@ element {
 }
 
 element-icon {
+    background-color: 				@background;
+    text-color:       				inherit;
+    horizontal-align:               0.5;
+    vertical-align:                 0.5;
     size:                           64px;
     border:                         0px;
 }
 
 element-text {
+    background-color: 				@background;
+    text-color:       				inherit;
     expand:                         true;
     horizontal-align:               0.5;
     vertical-align:                 0.5;
     margin:                         0.5% 0.5% -0.5% 0.5%;
+    border-radius:                  12px;
 }
 
 element selected {

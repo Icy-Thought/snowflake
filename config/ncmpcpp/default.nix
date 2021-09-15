@@ -2,6 +2,7 @@
 
 let
   imports = [ ./ncmpcpp-ueberzug ];
+
   cover-art =
     "${config.home.homeDirectory}/.config/ncmpcpp/ncmpcpp-ueberzug/ncmpcpp-cover-art.sh";
 

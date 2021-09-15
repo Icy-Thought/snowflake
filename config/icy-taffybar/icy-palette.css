@@ -7,6 +7,11 @@
 @define-color red rgba(255, 65, 81, 1.0);
 @define-color teal #00695C;
 @define-color raisin-black #1A1B25;
+@define-color ebony-clay #1D242C;
+
+@define-color transparent rgba(0.0, 0.0, 0.0, 0.0);
+@define-color black #000000;
+@define-color white #FFFFFF;
 
 @define-color active-window-color @white;
 @define-color urgent-window-color @raisin-black;

@@ -1,7 +1,4 @@
 @import url("icy-palette.css");
-@define-color transparent rgba(0.0, 0.0, 0.0, 0.0);
-@define-color black #000000;
-@define-color white #FFFFFF;
 
 /* Top Level Styling */
 
@@ -18,7 +15,7 @@
 
 
 .inner-pad {
-	background-color: @raisin-black;
+	background-color: @ebony-clay;
 	border-radius: 8px;
 	padding: 6px;
 	margin: 4px;
@@ -54,7 +51,8 @@
 }
 
 .active .workspace-label {
-	color: @transparent;/* @taffy-raisin-black */
+	/* color: @ebony-clay; */
+	color: @transparent;
 }
 
 .contents .window-icon {
@@ -132,7 +130,7 @@ button {
 }
 
 button:checked, button:hover .Contents:hover {
-	box-shadow: inset 0 -3px @raisin-black;
+	box-shadow: inset 0 -3px @ebony-clay;
 }
 
 /* Menu Styling */
@@ -148,7 +146,7 @@ button:checked, button:hover .Contents:hover {
 }
 
 .taffy-window menuitem:hover, menuitem:hover {
-	background-color: @raisin-black;
+	background-color: @ebony-clay;
 }
 
 .taffy-window menuitem:hover > label, menuitem:hover > label {

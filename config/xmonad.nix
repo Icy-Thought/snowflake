@@ -7,7 +7,11 @@ let
     ./gtk/xmonad.nix
     ./qt/xmonad.nix
     ./dunst/xmonad.nix
-    ./scripts/xmonad.nix
+    ./scripts/brightness.nix
+    ./scripts/screenshot.nix
+    ./scripts/volume.nix
+    ./scripts/microphone.nix
+    # ./scripts/screen-recording.nix
   ];
 
   xmonad = ''

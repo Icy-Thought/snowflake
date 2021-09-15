@@ -6,4 +6,5 @@ in {
   inherit imports;
 
   services.xserver.desktopManager.plasma5.enable = true;
+
 }

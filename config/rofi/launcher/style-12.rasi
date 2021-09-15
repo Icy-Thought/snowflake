@@ -4,14 +4,16 @@
  */
 
 * {
-  foreground:                       #626A73ff;
-  background:                       #1A1B25ff;
-  background-alt:                   #1A1B2500;
-  background-bar:                   #21222eff;
+  foreground:                       #E6E1CFff;
+  background:                       #0F1419ff;
+  background-alt:                   #0F141900;
+  background-bar:                   #1D242Cff;
   accent:                           #FFB454ff;
 }
 
 window {
+    fullscreen:                     false;
+    scrollbar:                      false;
     transparency:                   "real";
     background-color:               @background;
     text-color:                     @foreground;
@@ -92,20 +94,26 @@ element {
 }
 
 element-icon {
+    background-color:               @background-bar;
+    text-color:       				inherit;
+    horizontal-align:               0.5;
+    vertical-align:                 0.5;
     size:                           64px;
     border:                         1%;
     border-color:                  	@background-bar;
     border-radius:                  15px;
-    background-color:               @background-bar;
 	padding: 						2% 1% 2% 1%;
 }
 
 element-text {
+    background-color: 				@background-bar;
+    text-color:       				inherit;
     expand:                         true;
     horizontal-align:               0.5;
     vertical-align:                 0.5;
     margin:                         0.5% 0.25% 0.5% 0.25%;
     padding:                        1% 0.5% 1% 0.5%;
+    border-radius:                  100%;
 }
 
 element-text selected {

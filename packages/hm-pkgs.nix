@@ -71,14 +71,13 @@ let
 
   pyPkgs = with pkgs; [
     python39
-    pipenv
     python39Packages.black
     python39Packages.isort
     python39Packages.pyflakes
     python39Packages.nose-timer
     python39Packages.nose-exclude
     python39Packages.pytest
-  ]; # Disabled
+  ];
 
   emacsPkgs = with pkgs; [ graphviz tectonic gnuplot sqlite jq xsv ];
 
@@ -110,6 +109,6 @@ let
 
 in {
   home.packages = sysPkgs ++ gitPkgs ++ tuiPkgs ++ dictPkgs ++ nixPkgs
-    ++ nixPkgs ++ devPkgs ++ lspPkgs ++ emacsPkgs ++ utilPkgs ++ chatPkgs
-    ++ mediaPkgs ++ gamingPkgs ++ winePkgs;
+    ++ nixPkgs ++ devPkgs ++ lspPkgs ++ pyPkgs ++ emacsPkgs ++ utilPkgs
+    ++ chatPkgs ++ mediaPkgs ++ gamingPkgs ++ winePkgs;
 }

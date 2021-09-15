@@ -69,7 +69,7 @@
 
   console = {
     font = "Lat2-Terminus16";
-    keyMap = "us";
+    useXkbConfig = true;
   };
 
   time.timeZone = "Europe/Berlin";
@@ -169,7 +169,7 @@
 
     xserver = {
       enable = true;
-      xkbOptions = "eurosign:e";
+      layout = "us";
 
       libinput = {
         enable = true;

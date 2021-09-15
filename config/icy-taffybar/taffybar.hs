@@ -149,27 +149,36 @@ cssFilesByHostname =
   ]
 
 main = do
+  enableLogger "Graphics.UI.GIGtkStrut" DEBUG
+
   hostName <- getHostName
   homeDirectory <- getHomeDirectory
   dataDir <- getDataDir
+
   let relativeFiles = fromMaybe ["taffybar.css"] $ lookup hostName cssFilesByHostname
+
   let cssFiles = map (dataDir </>) relativeFiles
 
   let myCPU =
         deocrateWithSetClassAndBoxes "cpu" $
           pollingGraphNew cpuCfg 5 cpuCallback
+
       myMem =
         deocrateWithSetClassAndBoxes "mem" $
           pollingGraphNew memCfg 5 memCallback
+
       myNet =
         deocrateWithSetClassAndBoxes "net" $
           networkGraphNew netCfg Nothing
+
       myLayout =
         deocrateWithSetClassAndBoxes "layout" $
           layoutNew defaultLayoutConfig
+
       myWindows =
         deocrateWithSetClassAndBoxes "windows" $
           windowsNew defaultWindowsConfig
+
       myWorkspaces =
         flip widgetSetClassGI "workspaces"
           =<< workspacesNew
@@ -186,6 +195,7 @@ main = do
                 labelSetter = myLabelSetter, -- workspaceNamesLabelSetter
                 widgetBuilder = buildLabelOverlayController
               }
+
       myLabelSetter workspace =
         return $ case workspaceName workspace of
           "1" -> "一"
@@ -198,6 +208,7 @@ main = do
           "8" -> "八"
           "9" -> "九"
           n   -> n
+
       myClock =
         deocrateWithSetClassAndBoxes "clock" $
           textClockNewWith
@@ -205,6 +216,7 @@ main = do
               { clockUpdateStrategy = RoundedTargetInterval 60 0.0,
                 clockFormatString = "%a %b %_d, %H:%M"
               }
+
       myBTC =
         deocrateWithSetClassAndBoxes "BTC" $
           cryptoPriceLabelWithIcon @"BTC-USD"
@@ -214,7 +226,9 @@ main = do
       myADA =
         deocrateWithSetClassAndBoxes "ADA" $
           cryptoPriceLabelWithIcon @"ADA-USD"
+
       cryptoWidgets = [myBTC, myETH, myADA]
+
       myTray =
         deocrateWithSetClassAndBoxes "tray" $
           sniTrayNewFromParams
@@ -222,6 +236,7 @@ main = do
               { trayRightClickAction = PopupMenu,
                 trayLeftClickAction = Activate
               }
+
       myMpris =
         mpris2NewWithConfig
           MPRIS2Config
@@ -232,9 +247,12 @@ main = do
                     { setNowPlayingLabel = playingText 10 10
                     }
             }
+
       myBattery =
-        deocrateWithSetClassAndBoxes "battery" $
-          makeCombinedWidget [batteryIconNew, textBatteryNew "$percentage$%"]
+        [ deocrateWithSetClassAndBoxes "battery" $
+            makeCombinedWidget [batteryIconNew, textBatteryNew "$percentage$%"]
+        ]
+
       baseEndWidgets =
         [ myTray,
           myCPU,
@@ -242,8 +260,11 @@ main = do
           myNet,
           myMpris
         ]
+
       fullEndWidgets = baseEndWidgets ++ cryptoWidgets
-      laptopEndWidgets = [myBattery] ++ baseEndWidgets
+
+      laptopEndWidgets = myBattery ++ baseEndWidgets
+
       baseConfig =
         defaultSimpleTaffyConfig
           { startWidgets = [myWorkspaces, myLayout, myWindows],
@@ -251,21 +272,23 @@ main = do
             barPosition = Top,
             widgetSpacing = 0,
             barPadding = 0,
-            barHeight = 50,
+            barHeight = ScreenRatio (1 / 24),
             cssPaths = cssFiles,
             startupHook = void $ setCMCAPIKey "f9e66366-9d42-4c6e-8d40-4194a0aaa329"
           }
+
       selectedConfig =
         fromMaybe baseConfig $
           lookup
             hostName
             [ ( "ThinkPad-NixOS",
-                baseConfig {endWidgets = laptopEndWidgets, barHeight = 45}
+                baseConfig {endWidgets = laptopEndWidgets}
               ),
               ( "ProBook-NixOS",
-                baseConfig {endWidgets = laptopEndWidgets, barHeight = 42}
+                baseConfig {endWidgets = laptopEndWidgets}
               )
             ]
+
       simpleTaffyConfig =
         selectedConfig
           { centerWidgets = [myClock]

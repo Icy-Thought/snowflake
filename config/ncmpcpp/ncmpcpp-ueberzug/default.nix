@@ -5,7 +5,7 @@ let
   fallback-img = ./fallback-img.jpg;
 
   ncmpcpp-ueberzug = ''
-    export FIFO_UEBERZUG="/tmp/mpd-ueberzug-'$'{PPID}"
+    export FIFO_UEBERZUG="/tmp/mpd-ueberzug-''${PPID}"
 
     cleanup() {
         rm "$FIFO_UEBERZUG" 2>/dev/null
@@ -84,10 +84,10 @@ let
         # If no embedded art was found we look inside the music file's directory
         album="$(mpc --format %album% current)"
         file="$(mpc --format %file% current)"
-        album_dir="'$'{file%/*}"
+        album_dir="''${file%/*}"
         album_dir="$music_library/$album_dir"
         found_covers="$(find "$album_dir" -type d -exec find {} -maxdepth 1 -type f \
-        -iregex ".*/.*\('$'{album}\|cover\|folder\|artwork\|front\).*[.]\\(jpe?g\|png\|gif\|bmp\)" \; )"
+        -iregex ".*/.*\(''${album}\|cover\|folder\|artwork\|front\).*[.]\\(jpe?g\|png\|gif\|bmp\)" \; )"
         cover_path="$(echo "$found_covers" | head -n1)"
         if [ -n "$cover_path" ]; then
             return
@@ -265,7 +265,7 @@ let
         IFS="$(printf "\t")"
         echo "$*" > "$FIFO_UEBERZUG"
 
-        IFS='$'{old_IFS}
+        IFS=''${old_IFS}
     }
 
     main
