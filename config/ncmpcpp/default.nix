@@ -4,7 +4,7 @@ let
   imports = [ ./ncmpcpp-ueberzug ];
 
   cover-art =
-    "${config.home.homeDirectory}/.config/ncmpcpp/ncmpcpp-ueberzug/ncmpcpp-cover-art.sh";
+    "bash -c ${config.home.homeDirectory}/.config/ncmpcpp/ncmpcpp-ueberzug/ncmpcpp-cover-art.sh";
 
   notify = ''
     dunstify "Now Playing ♫" "$(ncmpcpp -q --current-song="{%a - }{%t}|{%f}")"
@@ -88,14 +88,18 @@ in {
       # Visualizer
       visualizer_data_source = "/tmp/mpd.fifo";
       visualizer_output_name = "mpd_visualizer";
+
       visualizer_type = "spectrum";
-      visualizer_look = "●●";
+      visualizer_spectrum_smooth_look = "yes";
+
+      visualizer_fps = "60";
+      visualizer_look = ''"  "''; # "●●";
 
       # Startup
       startup_screen = "visualizer";
       startup_slave_screen = "playlist";
       startup_slave_screen_focus = "yes";
-      locked_screen_width_part = 31;
+      locked_screen_width_part = 30;
 
       # ncmpcpp-ueberzug
       execute_on_song_change = "${cover-art} & ${notify}";

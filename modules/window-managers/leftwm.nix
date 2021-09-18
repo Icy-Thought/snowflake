@@ -1,7 +1,8 @@
 { config, lib, pkgs, ... }:
 
 let
-  imports = [ ../../config/picom ../display-managers/sddm.nix ];
+  imports =
+    [ ../nixos/fcitx5.nix ../display-managers/sddm.nix ../../config/picom ];
 
   leftPkgs = with pkgs; [ dunst polybar trayer feh shotgun ];
 
@@ -13,6 +14,7 @@ in {
   services = {
     xserver = {
       xkbOptions = "ctrl:swapcaps_hyper,shift:both_capslock";
+
       windowManager.leftwm.enable = true;
       displayManager.defaultSession = "none+leftwm";
     };

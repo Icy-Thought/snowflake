@@ -4,59 +4,74 @@ let
   brightness = pkgs.writeScriptBin "set-brightness" ''
     brightnessctl="${pkgs.brightnessctl}/bin/brightnessctl"
     dunstify="${pkgs.dunst}/bin/dunstify"
-    input="cat /dev/stdin"
 
-    off="${pkgs.whitesur-icon-theme}/share/icons/WhiteSur-dark/status/symbolic/display-brightness-off-symbolic.svg"
-    low="${pkgs.whitesur-icon-theme}/share/icons/WhiteSur-dark/status/symbolic/display-brightness-low-symbolic.svg"
-    medium="${pkgs.whitesur-icon-theme}/share/icons/WhiteSur-dark/status/symbolic/display-brightness-medium-symbolic.svg"
-    high="${pkgs.whitesur-icon-theme}/share/icons/WhiteSur-dark/status/symbolic/display-brightness-symbolic.svg"
+    function printHelp() {
+      echo "Usage: $0 [command]
+            - Increase Brightness: [up]
+            - Decrease Brightness: [down]
+            - Mute: [toggle]
+            -n|--notify"
+    }
 
-    notifyBrightness() {
-      brightness="$1"
-      if [ $brightness -eq 0 ]; then
-        dunstify \
-          -h string:x-canonical-private-synchronous:brightness "Brightness: " \
-          -h int:value:"$brightness" \
-          -t 1500 \
-          -i $off
-      elif [ $brightness -le 30 ]; then
-        dunstify \
-          -h string:x-canonical-private-synchronous:brightness "Brightness: " \
-          -h int:value:"$brightness" \
-          -t 1500 \
-          -i $low
-      elif [ $brightness -le 70 ]; then
-        dunstify \
-          -h string:x-canonical-private-synchronous:brightness "Brightness: " \
-          -h int:value:"$brightness" \
-          -t 1500 \
-          -i $medium
+    function get_brightness {
+      $brightnessctl get
+    }
+
+    brightnessIcon() {
+      if [[ $1 == "off" ]]; then
+        icon=off
+      elif (( $1 < 30 )); then
+        icon=low
+      elif (( $1 < 70 )); then
+        icon=medium
       else
-        dunstify \
-          -h string:x-canonical-private-synchronous:brightness "Brightness: " \
-          -h int:value:"$brightness" \
-          -t 1500 \
-          -i $high
+        icon=high
+      fi
+        echo ${pkgs.whitesur-icon-theme}/share/icons/WhiteSur-dark/status/symbolic/display-brightness-$icon-symbolic.svg
+    }
+
+    function notifySend {
+      brightness=$(get_brightness)
+      bar=$(seq -s "█" $(($brightness / 10)) | sed 's/[0-9]//g')
+
+      dunstify \
+        -a Brightness \
+        -i $(brightnessIcon $brightness) \
+        -t 1000 \
+        -h string:x-dunst-stack-tag:brightness \
+        -u low "$bar"
+
+    }
+
+    function brightness() {
+      if [[ $1 == "up" ]]; then
+        $brightnessctl set 5%+
+      elif [[ $1 == "down" ]]; then
+        $brightnessctl set 5%-
       fi
     }
 
-    raiseBrightness() {
-      $brightnessctl set 5%+
-      notifyBrightness "$input"
-    }
-
-    lowerBrightness() {
-      $brightnessctl set 5%-
-      notifyBrightness "$input"
-    }
-
     case "$1" in
-      up) raiseBrightness ;;
-      down) lowerBrightness ;;
+      -h|--help|-\?)
+        printHelp
+        exit
+        ;;
+
+      up)
+        brightness $1
+        notifySend
+        ;;
+
+      down)
+        brightness $1
+        notifySend
+        ;;
+
       *)
-        echo "ERROR: Invalid option $1.  Valid options: up, down." >&2;
+        printHelp
         exit 1
         ;;
+
     esac
   '';
 

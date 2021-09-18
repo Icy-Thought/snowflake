@@ -1,30 +1,6 @@
 { config, lib, pkgs, ... }: {
 
   xresources.properties = {
-    "Xft.antialias" = 1;
-    "Xft.hinting" = 1;
-    "Xft.autohint" = 0;
-    "Xft.hintstyle" = "hintslight";
-    "Xft.rgba" = "rgb";
-    "Xft.lcdfilter" = "lcddefault";
-
-    "Xcursor.theme" = "bloom";
-    "!Xcursor.size" = 16;
-
-    "xiv.font" = "JetBrainsMonoMedium Nerd Font:style=Medium:size=9";
-
-    "!Xmessage.font" = "FiraCode Nerd Font:pixelsize=14";
-
-    "t.font" = "JetBrainsMonoMedium Nerd Font=size=10:weight=90";
-    "t.borderpx" = 10;
-    "t.opacity" = 255;
-    "t.alpha" = "1.0";
-    "t.cursorshape" = 1;
-    "t.blinktimeout" = 900;
-
-    "monad.font" = "xft:JetBrainsMonoMedium Nerd Font:size=10:style=Bold";
-    "monad.font.gtk" = "JetBrainsMonoMedium Nerd Font, 10";
-
     # Ayu-dark -> dempfi
     "*.foreground" = "#E6E1CF";
     "*.background" = "#0F1419";

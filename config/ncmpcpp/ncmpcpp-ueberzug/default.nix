@@ -25,22 +25,24 @@ let
   '';
 
   ncmpcpp-cover-art = ''
+    mpc="${pkgs.mpc_cli}/bin/mpc"
+
     # SETTINGS
     music_library="${homeDir}/Music"
     fallback_image="${fallback-img}"
 
     padding_top=3
     padding_bottom=1
+    padding_left=0
     padding_right=1
-    max_width=31
 
-    reserved_playlist_cols=31
+    reserved_playlist_cols=30
     reserved_cols_in_percent="false"
     force_square="true"
-    square_alignment="top"
 
+    square_alignment="top"
     left_aligned="true"
-    padding_left=0
+    max_width=30
 
     # Only set this if the geometries are wrong or ncmpcpp shouts at you to do it.
     # Visually select/highlight a character on your terminal, zoom in an image
@@ -69,21 +71,21 @@ let
     find_cover_image() {
 
         # First we check if the audio file has an embedded album art
-        ext="$(mpc --format %file% current | sed 's/^.*\.//')"
+        ext="$($mpc --format %file% current | sed 's/^.*\.//')"
         if [ "$ext" = "flac" ]; then
             # since FFMPEG cannot export embedded FLAC art we use metaflac
             metaflac --export-picture-to=/tmp/mpd_cover.jpg \
-                "$(mpc --format "$music_library"/%file% current)" &&
+                "$($mpc --format "$music_library"/%file% current)" &&
                 cover_path="/tmp/mpd_cover.jpg" && return
         else
-            ffmpeg -y -i "$(mpc --format "$music_library"/%file% | head -n 1)" \
+            ffmpeg -y -i "$($mpc --format "$music_library"/%file% | head -n 1)" \
                 /tmp/mpd_cover.jpg &&
                 cover_path="/tmp/mpd_cover.jpg" && return
         fi
 
         # If no embedded art was found we look inside the music file's directory
-        album="$(mpc --format %album% current)"
-        file="$(mpc --format %file% current)"
+        album="$($mpc --format %album% current)"
+        file="$($mpc --format %file% current)"
         album_dir="''${file%/*}"
         album_dir="$music_library/$album_dir"
         found_covers="$(find "$album_dir" -type d -exec find {} -maxdepth 1 -type f \

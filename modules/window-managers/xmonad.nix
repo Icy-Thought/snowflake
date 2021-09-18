@@ -1,7 +1,8 @@
 { config, lib, pkgs, ... }:
 
 let
-  imports = [ ../../config/picom ../display-managers/sddm.nix ];
+  imports =
+    [ ../nixos/fcitx5.nix ../display-managers/sddm.nix ../../config/picom ];
 
   defaultPkgs = with pkgs; [
     autorandr
@@ -20,6 +21,20 @@ let
 
   xmonadPkgs = with pkgs; [ haskellPackages.icy-xmonad dunst feh ];
 
+  myCustomLayout = pkgs.writeText "xkb-layout" ''
+    ! Clear the modifiers concerned
+    clear mod3
+
+    ! Remove R-Ctrl
+    remove control = Control_R
+
+    ! Set the R-Ctrl as Hyper
+    keycode 105 = Hyper_R
+
+    ! Add a new Hyper_R modifier mod3
+    add mod3 = Hyper_R
+  '';
+
 in {
   inherit imports;
 
@@ -31,15 +46,22 @@ in {
     blueman.enable = true;
 
     xserver = {
-      xkbOptions = "ctrl:swapcaps_hyper,shift:both_capslock";
-      displayManager.defaultSession = "none+xmonad";
+      # xkbOptions = "ctrl:swapcaps_hyper,shift:both_capslock";
+
+      displayManager = {
+        defaultSession = "none+xmonad";
+
+        sessionCommands = ''
+          # Taffybar workaround (Step 2)
+          systemctl --user import-environment GDK_PIXBUF_MODULE_FILE DBUS_SESSION_BUS_ADDRESS PATH
+
+          ${pkgs.xorg.xmodmap}/bin/xmodmap ${myCustomLayout}
+        '';
+      };
 
       # 2-Step workaround for https://github.com/taffybar/taffybar/issues/403
-      # 1. Causes GDK_PIXBUF_MODULE_FILE to be set in xsession.
+      # Causes GDK_PIXBUF_MODULE_FILE to be set in xsession. (Step 1)
       gdk-pixbuf.modulePackages = [ pkgs.librsvg ];
-      displayManager.sessionCommands = ''
-        systemctl --user import-environment GDK_PIXBUF_MODULE_FILE DBUS_SESSION_BUS_ADDRESS PATH
-      '';
 
       windowManager = {
         session = [{

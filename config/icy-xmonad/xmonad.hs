@@ -247,23 +247,11 @@ chromiumSelectorBase = isChromiumClass <$> className
 
 chromiumSelector = className =? "Chromium"
 
-discordSelector = className =? "Discord"
-
-elementSelector = className =? "Element"
-
-emacsSelector = className =? "Emacs"
-
 firefoxSelector = className =? "Firefox"
 
 gmailSelector = chromiumSelectorBase <&&> fmap isGmailTitle title
 
-spotifySelector = className =? "Spotify"
-
-telegramSelector = className =? "Telegram"
-
 transmissionSelector = fmap (isPrefixOf "Transmission") title
-
-volumeSelector = className =? "Pavucontrol"
 
 virtualClasses =
   [ (gmailSelector, "Gmail"),
@@ -274,29 +262,15 @@ virtualClasses =
 -- Commands
 chromiumCommand = "chromium"
 
-discordCommand = "discord"
-
-elementCommand = "element-desktop"
-
-emacsCommand = "emacsclient -nc"
-
 gmailCommand =
   "chromium --new-window https://mail.google.com/mail/u/0/#inbox"
 
 firefoxCommand = "firefox-devedition"
 
-firefoxPrivCommand =
+firefoxPrvtCommand =
   "firefox-devedition --profile ~/.mozilla/firefox/z5dgw9v6.dev-edition-private"
 
-htopCommand = "kitty --title htop -e htop"
-
-spotifyCommand = "spotify"
-
-telegramCommand = "telegram-desktop"
-
 transmissionCommand = "transmission-gtk"
-
-volumeCommand = "pavucontrol"
 
 -- Startup hook
 hostNameToAction =
@@ -886,16 +860,16 @@ nearFullFloat = customFloating $ W.RationalRect l t w h
     l = 0.95 - w
 
 scratchpads =
-  [ NS "discord" discordCommand discordSelector nonFloating,
-    NS "element" elementCommand elementSelector nonFloating,
-    NS "emacs" emacsCommand emacsSelector nonFloating,
+  [ NS "discord" "discord" (className =? "discord") nonFloating,
+    NS "element" "element-desktop" (className =? "Element") nonFloating,
+    NS "emacs" "emacsclient -nc" (className =? "Emacs") nonFloating,
     NS "gmail" gmailCommand gmailSelector nonFloating,
-    NS "htop" htopCommand (title =? "htop") nonFloating,
-    NS "spotify" spotifyCommand spotifySelector nearFullFloat,
+    NS "htop" "kitty --title htop -e htop" (title =? "htop") nonFloating,
+    NS "spotify" "spotify" (className =? "Spotify") nearFullFloat,
     NS "Picture-in-Picture" "Picture-in-Picture" (title =? "Picture-in-Picture") defaultFloating,
-    NS "telegram" telegramCommand telegramSelector nonFloating,
+    NS "telegram" "telegram-desktop" (className =? "TelegramDesktop") nonFloating,
     NS "transmission" transmissionCommand transmissionSelector nearFullFloat,
-    NS "volume" volumeCommand volumeSelector nonFloating
+    NS "volume" "pavucontrol" (className =? "Pavucontrol") nonFloating
   ]
 
 myScratchPadManageHook = namedScratchpadManageHook scratchpads
@@ -1036,7 +1010,7 @@ addKeys conf@XConfig {modMask = modm} =
     -- Specific program spawning
     bindBringAndRaiseMany
       [ (modalt, xK_f, spawn firefoxCommand, firefoxSelector),
-        (modalt, xK_b, spawn firefoxPrivCommand, firefoxSelector),
+        (modalt, xK_b, spawn firefoxPrvtCommand, firefoxSelector),
         (modalt, xK_g, spawn chromiumCommand, chromiumSelector)
       ]
     ++

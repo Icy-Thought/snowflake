@@ -1,12 +1,6 @@
 { config, pkgs, lib, ... }:
 
-let
-  imports = [
-    ../modules/common.nix
-    ../modules/nixos/fcitx5.nix
-    # ../modules/desktop-managers/gnome.nix
-    ../modules/window-managers/xmonad.nix
-  ];
+let imports = [ ../modules/common.nix ../modules/window-managers/xmonad.nix ];
 
 in {
   inherit imports;

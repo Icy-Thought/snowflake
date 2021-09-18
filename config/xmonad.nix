@@ -22,6 +22,9 @@ let
 in {
   inherit imports;
 
+  # Fix xkbOptions (not loading) issue in Xmonad because of Home-Manager FUCK-UP...
+  home.keyboard = null;
+
   services = {
     gnome-keyring.enable = true;
     status-notifier-watcher.enable = true;
@@ -75,6 +78,13 @@ in {
     enable = true;
     numlock.enable = true;
     preferStatusNotifierItems = true;
+
+    pointerCursor = {
+      name = "Bibata_Amber";
+      package = pkgs.bibata-cursors;
+      defaultCursor = "left_ptr";
+      size = 24;
+    };
 
     initExtra = xmonad;
     windowManager.command = ''

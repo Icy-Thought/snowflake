@@ -2,84 +2,98 @@
 
 let
   micVol = pkgs.writeScriptBin "set-micVol" ''
-    pamixer="${pkgs.pamixer}/bin/pamixer"
-    dunstify="${pkgs.dunst}/bin/dunstify"
-    input="cat /dev/stdin"
+     pamixer="${pkgs.pamixer}/bin/pamixer"
+     dunstify="${pkgs.dunst}/bin/dunstify"
 
-    notifyMuted() {
-      volume="$1"
-      mute="${pkgs.whitesur-icon-theme}/share/icons/WhiteSur-dark/status/symbolic/audio-input-microphone-muted-symbolic.svg"
+     function printHelp() {
+       echo "Usage: $0 [command]
+             - Increase Volume: [up]
+             - Decrease Volume: [down]
+             - Mute: [toggle]
+             -n|--notify"
+     }
 
-      dunstify \
-        -h string:x-canonical-private-synchronous:audio "Muted" \
-        -h int:value:"$volume" \
-        -t 1500 \
-        -i $mute
-    }
+     function get_volume {
+       $pamixer --default-source --get-volume
+     }
 
-    notifyAudio() {
-      volume="$1"
-      $pamixer --default-source --get-mute && notifyMuted "$volume" && return
+     function is_muted {
+       $pamixer --default-source --get-mute
+     }
 
-      high="${pkgs.whitesur-icon-theme}/share/icons/WhiteSur-dark/status/symbolic/audio-input-microphone-high-symbolic.svg"
-      medium="${pkgs.whitesur-icon-theme}/share/icons/WhiteSur-dark/status/symbolic/audio-input-microphone-medium-symbolic.svg"
-      low="${pkgs.whitesur-icon-theme}/share/icons/WhiteSur-dark/status/symbolic/audio-input-microphone-low-symbolic.svg"
+     volumeIcon() {
+       if [[ $1 == muted ]]; then
+         icon=muted
+       elif (( $1 < 30 )); then
+         icon=low
+       elif (( $1 < 70 )); then
+         icon=medium
+       else
+         icon=high
+       fi
+         echo ${pkgs.whitesur-icon-theme}/share/icons/WhiteSur-dark/status/symbolic/audio-input-microphone-$icon-symbolic.svg
+     }
 
-      if [ $volume -eq 0 ]; then
-        notifyMuted "$volume"
+     function notifySend {
+       if [[ $(is_muted) == true ]]; then
+         dunstify \
+           -a Volume \
+           -i $(volumeIcon muted) \
+           -t 1000 \
+           -h string:x-dunst-stack-tag:volume \
+           -u low "Muted"
+       else
+         volume=$(get_volume)
+         bar=$(seq -s "█" $(($volume / 5)) | sed 's/[0-9]//g')
 
-      elif [ $volume -le 30 ]; then
-        dunstify \
-          -h string:x-canonical-private-synchronous:audio "Volume: " \
-          -h int:value:"$volume" \
-          -t 1500 \
-          -i $low
-      elif [ $volume -le 70 ]; then
-        dunstify \
-          -h string:x-canonical-private-synchronous:audio "Volume: " \
-          -h int:value:"$volume" \
-          -t 1500 \
-          -i $medium
-      else
-        dunstify \
-          -h string:x-canonical-private-synchronous:audio "Volume: " \
-          -h int:value:"$volume" \
-          -t 1500 \
-          -i $high
+         dunstify \
+           -a Volume \
+           -i $(volumeIcon $volume) \
+           -t 1000 \
+           -h string:x-dunst-stack-tag:volume \
+           -u low "$bar"
+       fi
+     }
+
+    function volume() {
+      if [[ $(is_muted) == true ]]; then
+        $pamixer --default-source --toggle-mute
       fi
-    }
 
-    raiseVolume() {
-      $pamixer --default-source --increase 5
-      notifyAudio "$input"
-    }
-
-    lowerVolume() {
-      $pamixer --default-source --decrease 5
-      notifyAudio "$input"
-    }
-
-    toggleMute() {
-      volume="$pamixer --get-mute"
-      $pamixer --default-source --toggle-mute
-
-      if [ "$input" -eq 0 ]
-      then
-        notifyAudio "$volume"
-      else
-        notifyMuted "$volume"
+      if [[ $1 == "up" ]]; then
+        $pamixer --default-source --increase 5
+      elif [[ $1 == "down" ]]; then
+        $pamixer --default-source --decrease 5
       fi
+
     }
 
-    case "$1" in
-      up) raiseVolume ;;
-      down) lowerVolume ;;
-      toggle) toggleMute ;;
-      *)
-        echo "ERROR: Invalid option $1.  Valid options: up, down, toggle." >&2;
-        exit 1
+     case "$1" in
+       -h|--help|-\?)
+         printHelp
+         exit
+         ;;
+
+      up)
+        volume $1
+        notifySend
         ;;
-    esac
+
+      down)
+        volume $1
+        notifySend
+        ;;
+
+      toggle)
+        $pamixer --default-source --toggle-mute
+        notifySend
+        ;;
+
+       *)
+         printHelp
+         exit 1
+         ;;
+     esac
   '';
 
 in { home.packages = [ micVol ]; }
