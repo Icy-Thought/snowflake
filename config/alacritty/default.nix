@@ -84,7 +84,7 @@ in {
         use_thin_strokes = true;
       };
 
-      draw_bold_text_with_bright_colors = true;
+      draw_bold_text_with_bright_colors = false;
 
       cursor = {
         style = "Block";

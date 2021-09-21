@@ -14,8 +14,6 @@ let
     ./tmux
     ./htop
     ./neofetch
-    ./mpd
-    ./ncmpcpp
     ./doom-emacs
     ./zathura
     ./fcitx5

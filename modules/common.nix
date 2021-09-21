@@ -1,6 +1,7 @@
 { inputs, config, lib, pkgs, ... }:
 
-let imports = [ ./primary.nix ./nixpkgs.nix ./wireguard ../packages ];
+let
+  imports = [ ./primary.nix ./nixpkgs.nix ../secrets ./wireguard ../packages ];
 
 in {
   inherit imports;

@@ -12,4 +12,7 @@ let
   users = [ sirius orca ];
   hosts = [ thinkpad-e595 probook-440g3 ];
 
-in { "wg-akkad/privateKey.age".publicKeys = users ++ hosts; }
+in {
+  "Akkadian-VPN/privateKey.age".publicKeys = users ++ hosts;
+  "OpenWeatherMap/privateKey.age".publicKeys = users ++ hosts;
+}

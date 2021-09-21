@@ -25,6 +25,7 @@
   - [[#default-keybindings][Default Keybindings]]
 - [[#packages][Packages]]
   - [[#installation-instructions][Installation Instructions]]
+  - [[#customizations][Customizations]]
 - [[#inspiration][Inspiration]]
 
 * Introduction
@@ -61,7 +62,10 @@ Enable transparency for emacs frame only + retaining brightness of remaining obj
  display-line-numbers-type t
  all-the-icons-dired-monochrome nil
  x-stretch-cursor t)                            ; Cursor size = glyph width.
+#+end_src
 
+**** Solaire Mode
+#+begin_src emacs-lisp
 (with-eval-after-load 'solaire-mode             ; Inverted solaire color-schemes.
   (add-to-list 'solaire-mode-themes-to-face-swap 'doom-ayu-mirage))
 #+end_src
@@ -480,6 +484,18 @@ You can override the recipe of a built in package without having to specify all 
 Specify a ~:branch~ to install a package from a particular branch or tag. This is required for some packages whose default branch isn't 'master' (which our package manager can't deal with; see [[https://github.com/raxod502/straight.el/issues/279][raxod502/straight.el#279]])
 #+begin_src emacs-lisp
 (package! builtin-package :recipe (:branch "develop"))
+#+end_src
+
+** Customizations
+*** Doom-Themes
+Unpinning ~doom-themes~ allows us to access the latest modifications done to the themes available in the ~emacs-doom-themes~ repository!
+
+#+begin_comment
+The reason to why this is important is to access the most recent version of Ayu-Mirage due to it being updated slowly.
+#+end_comment
+
+#+begin_src emacs-lisp :tangle "packages.el"
+(unpin! doom-themes)
 #+end_src
 
 * Inspiration

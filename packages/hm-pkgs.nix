@@ -18,14 +18,7 @@ let
 
   gitPkgs = with pkgs.gitAndTools; [ git-filter-repo git-crypt diff-so-fancy ];
 
-  tuiPkgs = with pkgs; [
-    nnn
-    glances
-    neofetch
-    youtube-dl
-    # pipes-rs
-  ];
-  # pkgs.spotify-tui
+  tuiPkgs = with pkgs; [ nnn glances neofetch youtube-dl pipes-rs ];
 
   dictPkgs = with pkgs; [
     aspell
@@ -51,7 +44,7 @@ let
     gcc11
     gnumake
     cmake
-    rust-bin.nightly.latest.default
+    rust-bin.beta.latest.default
     ghc
     cabal-install
     stylish-haskell
@@ -82,13 +75,14 @@ let
   emacsPkgs = with pkgs; [ graphviz tectonic gnuplot sqlite jq xsv ];
 
   utilPkgs = with pkgs; [
-    gnome.geary
     firefox-devedition-bin
-    ueberzug
-    anki
+    gnome.geary
     zathura
     foliate
     qalculate-gtk
+    ueberzug
+    spotify
+    anki
   ]; # libreoffice & heimdall-gui
 
   chatPkgs = with pkgs; [ discord tdesktop element-desktop ];

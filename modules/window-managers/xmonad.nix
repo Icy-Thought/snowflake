@@ -5,8 +5,6 @@ let
     [ ../nixos/fcitx5.nix ../display-managers/sddm.nix ../../config/picom ];
 
   defaultPkgs = with pkgs; [
-    autorandr
-    xorg.xkbcomp
     betterlockscreen
     pavucontrol
     playerctl
@@ -16,10 +14,10 @@ let
     hacksaw
     xdotool
     dconf
-    hicolor-icon-theme
+    feh
   ];
 
-  xmonadPkgs = with pkgs; [ haskellPackages.icy-xmonad dunst feh ];
+  xmonadPkgs = with pkgs; [ haskellPackages.icy-xmonad ];
 
   myCustomLayout = pkgs.writeText "xkb-layout" ''
     ! Clear the modifiers concerned

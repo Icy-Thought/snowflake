@@ -3,6 +3,14 @@ colors:
     foreground: '0xE6E1CF'
     background: '0x0F1419'
 
+  cursor:
+    text: '0x1F2430'
+    cursor: '0xF29718'
+
+  selection:
+    text: '0x191F26'
+    background: '0x253340'
+
   normal:
     black:      '0x1D242C'
     red:        '0xFF7733'

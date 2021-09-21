@@ -10,14 +10,16 @@
     terminal = "screen-256color";
 
     extraConfig = ''
-      # Terminal
+      # Terminal-related
       set -as terminal-overrides ",*:Tc"
       set -s focus-events on
       set -q -g status-utf8 on
       setw -q -g utf8 on
       set -g history-limit 5000
-      set -g lock-after-time 300
-      set -g lock-command "pipes-rs"
+
+      # Lockscreen
+      # set -g lock-after-time 300
+      # set -g lock-command "pipes-rs"
 
       # General Configurations
       set -g mouse on
@@ -36,6 +38,10 @@
       # Activity
       set -g monitor-activity on
       set -g visual-activity off
+
+      # Prevent Confirm -> Exit!
+      bind & kill-window
+      bind x kill-pane
 
       # Buffers
       bind b list-buffers                                 # list paste buffers
@@ -62,9 +68,9 @@
 
       # Copy/Paste bindings
       bind P paste-buffer                                 # Vi Copy/Paste
-      bind-key -T copy-mode-vi v send-keys -X begin-selection
-      bind-key -T copy-mode-vi y send-keys -X copy-selection
-      bind-key -T copy-mode-vi r send-keys -X rectangle-toggle
+      bind -T copy-mode-vi v send-keys -X begin-selection
+      bind -T copy-mode-vi y send-keys -X copy-selection
+      bind -T copy-mode-vi r send-keys -X rectangle-toggle
 
       # Statusline theming
       set -g status-fg 'colour7'

@@ -32,7 +32,7 @@ let
 
     function notifySend {
       brightness=$(get_brightness)
-      bar=$(seq -s "█" $(($brightness / 10)) | sed 's/[0-9]//g')
+      bar=$(seq -s "█" 0 $((brightness / 10 )) | sed 's/[0-9]//g')
 
       dunstify \
         -a Brightness \
