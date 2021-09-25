@@ -4,6 +4,25 @@ let
   imports =
     [ ../nixos/fcitx5.nix ../display-managers/sddm.nix ../../config/picom ];
 
+  customKeyboardLayout = pkgs.writeText "custom-keyboard-layout" ''
+    xkb_keymap {
+      xkb_keycodes  { include "evdev+aliases(qwerty)" };
+      xkb_types     { include "complete"      };
+      xkb_compat    { include "complete"      };
+
+      partial modifier_keys
+      xkb_symbols "hyper" {
+        include "pc+us+inet(evdev)+terminate(ctrl_alt_bksp)"
+        key  <RCTL> { [ Hyper_R, Hyper_R ] };
+        modifier_map Mod3 { <HYPR>, Hyper_R };
+      };
+
+      xkb_geometry  { include "pc(pc104)"     };
+    };
+  '';
+
+  xmonadPkgs = with pkgs; [ haskellPackages.icy-xmonad ];
+
   defaultPkgs = with pkgs; [
     betterlockscreen
     pavucontrol
@@ -17,26 +36,13 @@ let
     feh
   ];
 
-  xmonadPkgs = with pkgs; [ haskellPackages.icy-xmonad ];
-
-  myCustomLayout = pkgs.writeText "xkb-layout" ''
-    ! Clear the modifiers concerned
-    clear mod3
-
-    ! Remove R-Ctrl
-    remove control = Control_R
-
-    ! Set the R-Ctrl as Hyper
-    keycode 105 = Hyper_R
-
-    ! Add a new Hyper_R modifier mod3
-    add mod3 = Hyper_R
-  '';
-
 in {
   inherit imports;
 
-  environment.systemPackages = defaultPkgs ++ xmonadPkgs;
+  environment = {
+    systemPackages = defaultPkgs ++ xmonadPkgs;
+    etc."X11/keymap.xkb".source = customKeyboardLayout;
+  };
 
   gtk.iconCache.enable = true;
 
@@ -44,7 +50,8 @@ in {
     blueman.enable = true;
 
     xserver = {
-      # xkbOptions = "ctrl:swapcaps_hyper,shift:both_capslock";
+      # Create /etc/X11/xkb symlink for xkbcomp:
+      exportConfiguration = true;
 
       displayManager = {
         defaultSession = "none+xmonad";
@@ -53,7 +60,8 @@ in {
           # Taffybar workaround (Step 2)
           systemctl --user import-environment GDK_PIXBUF_MODULE_FILE DBUS_SESSION_BUS_ADDRESS PATH
 
-          ${pkgs.xorg.xmodmap}/bin/xmodmap ${myCustomLayout}
+          # Set XKB layout = us+hyper on XMonad start:
+          ${pkgs.xorg.xkbcomp}/bin/xkbcomp ${customKeyboardLayout} $DISPLAY
         '';
       };
 
@@ -72,5 +80,4 @@ in {
       };
     };
   };
-
 }

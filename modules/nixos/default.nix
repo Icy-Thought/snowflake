@@ -83,7 +83,8 @@
         isNormalUser = true;
         createHome = true;
         useDefaultShell = true;
-        extraGroups = [ "wheel" "network" "plugdev" "adbusers" "vboxusers" ];
+        extraGroups =
+          [ "wheel" "network" "plugdev" "adbusers" "vboxusers" "openrazer" ];
         hashedPassword =
           "$6$DMQjZ0Nn8JAb$2MBYjRZvhACwUJrDXI6GciNglr.KM3Yaza4CMUaG8HCxOJ2EtRqZZKvTBzRhIPQWjKiYeU3cCpntQNkToiUeu0";
       };

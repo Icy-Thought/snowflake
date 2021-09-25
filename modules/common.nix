@@ -9,8 +9,8 @@ in {
   hm = import ../config;
 
   environment.etc = {
-    home-manager.source = "${inputs.home-manager}";
-    nixpkgs.source = "${inputs.nixpkgs}";
+    home-manager.source = inputs.home-manager;
+    nixpkgs.source = inputs.nixpkgs;
     # "nixos".source = "${config.home.homeDirectory}/git/Icy-Thought/Snowflake";
   };
 

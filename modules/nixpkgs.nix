@@ -22,6 +22,8 @@
       options = "--delete-older-than 3d";
     };
 
+    autoOptimiseStore = true;
+
     buildCores = 8;
     maxJobs = 8;
     readOnlyStore = true;

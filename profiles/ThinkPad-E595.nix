@@ -9,7 +9,7 @@ in {
 
   boot = {
     # extraModulePackages = with config.boot.kernelPackages; [ amdgpu-pro ];
-    kernel.sysctl."abi.vsyscall32" = 0;
+    kernel.sysctl."abi.vsyscall32" = 0; # League of Legends..
     kernelParams = [ "acpi_backlight=native" ];
   };
 
