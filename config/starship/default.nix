@@ -2,6 +2,8 @@
 
   programs.starship = {
     enable = false;
+    package = pkgs.master.starship;
+
     enableBashIntegration = true;
     enableFishIntegration = true;
     enableZshIntegration = false;

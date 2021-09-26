@@ -37,7 +37,24 @@
     binaryCachePublicKeys =
       [ "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=" ];
 
-    registry = { nixpkgs.flake = inputs.nixpkgs; };
+    registry = {
+      nixpkgs = {
+        from = {
+          id = "nixpkgs";
+          type = "indirect";
+        };
+        flake = inputs.nixpkgs;
+      };
+
+      nixpkgs-master = {
+        from = {
+          id = "master";
+          type = "indirect";
+        };
+        flake = inputs.nixpkgs-master;
+      };
+
+    };
 
   };
 

@@ -85,7 +85,7 @@ let
     anki
   ]; # libreoffice & heimdall-gui
 
-  chatPkgs = with pkgs; [ discord tdesktop element-desktop ];
+  chatPkgs = with pkgs; [ master.discord tdesktop element-desktop ];
   # signal-desktop & zoom-us
 
   mediaPkgs = with pkgs; [

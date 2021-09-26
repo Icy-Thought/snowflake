@@ -8,7 +8,9 @@
   };
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs-master.url = "github:nixos/nixpkgs/master";
+
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -32,6 +34,13 @@
   outputs = inputs@{ self, nixpkgs, home-manager, flake-utils, agenix, ... }:
 
     let
+      inherit (nixpkgs.lib) nixosSystem;
+      inherit (home-manager.lib) homeManagerConfiguration;
+      inherit (flake-utils.lib) eachDefaultSystem eachSystem;
+      inherit (builtins) listToAttrs map attrNames readDir;
+
+      lib = nixpkgs.lib.extend (final: prev: home-manager.lib);
+
       pkgs = import nixpkgs { system = "x86_64-linux"; };
 
       overlays = [
@@ -44,21 +53,20 @@
         # inputs.emacs.overlay
 
         (final: prev: {
+          master = import inputs.nixpkgs-master {
+            system = prev.system;
+            config.allowUnfree = true;
+          };
+
           picom =
             prev.picom.overrideAttrs (_: { src = inputs.picom-jonaburg; });
         })
       ] ++ map (name: import (./overlays + "/${name}"))
         (attrNames (readDir ./overlays));
 
-      lib = nixpkgs.lib.extend (final: prev: home-manager.lib);
-
-      inherit (nixpkgs.lib) nixosSystem;
-      inherit (home-manager.lib) homeManagerConfiguration;
-      inherit (flake-utils.lib) eachDefaultSystem eachSystem;
-      inherit (builtins) listToAttrs map attrNames readDir;
-
       # Generate default NixOS config
       mkNixosConfig = { system ? "x86_64-linux", hardwareModules
+        , nixpkgs ? inputs.nixpkgs, master ? inputs.nixpkgs-master
         , baseModules ? [
           agenix.nixosModules.age
           home-manager.nixosModules.home-manager
@@ -69,17 +77,18 @@
           inherit system;
           modules = baseModules ++ hardwareModules ++ extraModules
             ++ [{ nixpkgs.overlays = overlays; }];
-          specialArgs = { inherit inputs lib; };
+          specialArgs = { inherit inputs lib nixpkgs master; };
         };
 
       # Generate default Home-Manager conf
       mkHomeConfig = { username, system ? "x86_64-linux"
+        , nixpkgs ? inputs.nixpkgs, master ? inputs.nixpkgs-master
         , baseModules ? [ ./config ], extraModules ? [ ] }:
 
         homeManagerConfiguration rec {
           inherit system username;
           homeDirectory = "/home/${username}";
-          extraSpecialArgs = { inherit inputs lib; };
+          extraSpecialArgs = { inherit inputs lib nixpkgs master; };
           configuration = {
             imports = baseModules ++ extraModules
               ++ [{ nixpkgs.overlays = overlays; }];

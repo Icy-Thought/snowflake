@@ -60,7 +60,6 @@ in {
           # Set XKB layout = us+hyper on XMonad start:
           ${pkgs.xorg.xkbcomp}/bin/xkbcomp ${customKeyboardLayout} $DISPLAY
         '';
-
       };
 
       # 2-Step workaround for https://github.com/taffybar/taffybar/issues/403
