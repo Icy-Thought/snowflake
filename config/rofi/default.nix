@@ -4,7 +4,7 @@
 
   programs.rofi = {
     enable = true;
-    theme = ./launcher/style-12.rasi;
+    theme = ./launcher/ribbon-left.rasi;
     terminal = "${pkgs.kitty}/bin/kitty";
 
     extraConfig = {

@@ -85,7 +85,8 @@
       # Application-related
       temacs = "emacsclient -t";
       emacs = "emacsclient -c -a";
-      dup = "doom upgrade && doom sync -u";
+      doop = "doom upgrade && doom sync -u";
+      doos = "doom sync -u";
       zoom = "firejail zoom";
       ytv = "youtube-dl --best-quality";
       yta = "youtube-dl -x --audio-format mp3";

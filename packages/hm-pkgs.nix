@@ -3,22 +3,26 @@
 let
   sysPkgs = with pkgs; [
     transmission-gtk
-    coreutils
     wget
     unzip
     unrar
     zstd
+    ncdu
     ffmpeg
     pwgen
     imagemagick
-    winetricks
-    tree-sitter
-    ncdu
   ]; # polychromatic & uutils-coreutils (fix)
 
-  gitPkgs = with pkgs.gitAndTools; [ git-filter-repo git-crypt diff-so-fancy ];
+  gitPkgs = with pkgs.gitAndTools; [
+    gh
+    gist
+    git-crypt
+    git-open
+    git-filter-repo
+    diff-so-fancy
+  ];
 
-  tuiPkgs = with pkgs; [ nnn glances neofetch youtube-dl pipes-rs ];
+  tuiPkgs = with pkgs; [ neofetch youtube-dl pipes-rs ];
 
   dictPkgs = with pkgs; [
     aspell
@@ -30,9 +34,7 @@ let
 
   nixPkgs = with pkgs; [
     nixfmt
-    nixpkgs-fmt
     nix-top
-    nixpkgs-review
     crate2nix
     cabal2nix
     any-nix-shell
@@ -41,65 +43,71 @@ let
 
   devPkgs = with pkgs; [
     languagetool
-    gcc11
+    gcc
     gnumake
     cmake
+    nodejs
     rust-bin.beta.latest.default
     ghc
     cabal-install
     stylish-haskell
-    sumneko-lua-language-server
     hugo
     openssl
-  ]; # nodejs-16_x
+  ];
 
   lspPkgs = with pkgs; [
     ccls
     rust-analyzer
-    rnix-lsp
     haskellPackages.hoogle
     haskell-language-server
     nodePackages.bash-language-server
-  ]; # nodePackages.[ pyright & typescript-language-server ]
+  ]; # nodePackages.javascript-typescript-langserver
 
   pyPkgs = with pkgs; [
     python39
+    python39Packages.pip
+    python39Packages.ipython
     python39Packages.black
-    python39Packages.isort
-    python39Packages.pyflakes
-    python39Packages.nose-timer
-    python39Packages.nose-exclude
-    python39Packages.pytest
+    python39Packages.setuptools
+    python39Packages.pylint
+    python39Packages.poetry
   ];
 
-  emacsPkgs = with pkgs; [ graphviz tectonic gnuplot sqlite jq xsv ];
+  emacsPkgs = with pkgs; [
+    binutils
+    graphviz
+    texlive.combined.scheme-medium
+    gnuplot
+    sqlite
+    jq
+    xsv
+  ];
 
   utilPkgs = with pkgs; [
-    firefox-devedition-bin
+    bitwarden
     gnome.geary
-    zathura
-    foliate
     qalculate-gtk
-    ueberzug
-    spotify
     anki
+    zathura
+    spotify
+    spicetify-cli
+    firefox-devedition-bin
   ]; # libreoffice & heimdall-gui
 
   chatPkgs = with pkgs; [ master.discord tdesktop element-desktop ];
   # signal-desktop & zoom-us
 
-  mediaPkgs = with pkgs; [
-    celluloid
-    freetube
-    gimp
-    inkscape
-    easytag
-  ]; # obs-studio & blender
+  mediaPkgs = with pkgs; [ gimp inkscape celluloid ];
+  # obs-studio & blender
 
   gamingPkgs = with pkgs; [ lutris ];
   # osu-lazer
 
-  winePkgs = with pkgs.winePackages; [ staging fonts ];
+  winePkgs = with pkgs; [
+    wineWowPackages.fonts
+    wineWowPackages.staging
+    (winetricks.override { wine = wineWowPackages.staging; })
+  ];
 
 in {
   home.packages = sysPkgs ++ gitPkgs ++ tuiPkgs ++ dictPkgs ++ nixPkgs

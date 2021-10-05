@@ -99,14 +99,14 @@
               +cdlatex                          ; LaTeX math completions.
               +fold)                            ; Folding ability inside LaTeX.
        ;;ledger                                 ; An accounting system in Emacs.
-       lua                                      ; One-based indices? one-based indices.
+       ;;lua                                    ; One-based indices? one-based indices.
        markdown                                 ; Writing docs for people to ignore.
        nix                                      ; I hereby declare "nix geht mehr!"
        (org +pretty                             ; Prettify org-mode.
             +dragndrop                          ; Enables drag & drop in org-mode.
             +gnuplot                            ; Enables gnu-plotting.
             +present                            ; Org-mode presentations.
-            ;; +jupyter                          ; ipython/jupyter support for babel.
+            ;; +jupyter                         ; ipython/jupyter support for babel.
             ;;+hugo                             ; Enable ox-hugo support.
             +roam)                              ; Note-taking done correct in org-mode.
        ;;perl                                   ; write code no one else can comprehend

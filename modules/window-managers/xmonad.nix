@@ -48,6 +48,7 @@ in {
 
   services = {
     blueman.enable = true;
+    autorandr.enable = true;
 
     xserver = {
       displayManager = {

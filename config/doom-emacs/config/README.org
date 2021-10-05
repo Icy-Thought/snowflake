@@ -157,20 +157,23 @@ Enables window rotation through the usage of =<Space>= + arrow-keys:
 
 ** Org-Mode
 *** Basic Org-Configurations
+**** Appearance
 #+begin_src emacs-lisp
 (setq org-directory "~/org/")                           ; Default Org-Directories
 #+end_src
 
-Control the different heading sizes for the sake of achieving a saner interface in Org-Mode.
+Settings:
 #+begin_src emacs-lisp
-(setq org-ellipsis " ▾"
-      ;; org-hide-emphasis-markers t
+(setq org-ascii-charset 'utf-8
+      org-ellipsis " ▾"
       org-src-fontify-natively t
       org-hide-block-startup nil
       org-startup-folded 'content
       org-cycle-separator-lines 2)
+#+end_src
 
-;; Increase the size of various headings
+Control heading sizes for a saner org-look:
+#+begin_src emacs-lisp
 (custom-set-faces!
   '(org-document-title :height 1.20)
   '(outline-1 :weight ExtraBold :height 1.25)
@@ -183,11 +186,13 @@ Control the different heading sizes for the sake of achieving a saner interface 
   '(outline-9 :weight Medium))
 #+end_src
 
+**** Spell-Checking
 Disable spell-checking by default to retain performance speed for larger files:
 #+begin_src emacs-lisp
 (remove-hook 'text-mode-hook #'spell-fu-mode)
 #+end_src
 
+**** Screenshot (~Shotgun~)
 Allow org-download-screenshot to work with ~shotgun~ + ~hacksaw~:
 #+begin_src emacs-lisp
 (setq org-download-screenshot-method "shotgun -g $(hacksaw) %s")
@@ -373,14 +378,14 @@ NOTE: Press ~K~ on a module to view its documentation, and ~gd~ to browse its di
               +cdlatex                          ; LaTeX math completions.
               +fold)                            ; Folding ability inside LaTeX.
        ;;ledger                                 ; An accounting system in Emacs.
-       lua                                      ; One-based indices? one-based indices.
+       ;;lua                                    ; One-based indices? one-based indices.
        markdown                                 ; Writing docs for people to ignore.
        nix                                      ; I hereby declare "nix geht mehr!"
        (org +pretty                             ; Prettify org-mode.
             +dragndrop                          ; Enables drag & drop in org-mode.
             +gnuplot                            ; Enables gnu-plotting.
             +present                            ; Org-mode presentations.
-            ;; +jupyter                          ; ipython/jupyter support for babel.
+            ;; +jupyter                         ; ipython/jupyter support for babel.
             ;;+hugo                             ; Enable ox-hugo support.
             +roam)                              ; Note-taking done correct in org-mode.
        ;;perl                                   ; write code no one else can comprehend

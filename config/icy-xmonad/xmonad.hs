@@ -860,17 +860,45 @@ nearFullFloat = customFloating $ W.RationalRect l t w h
     l = 0.95 - w
 
 scratchpads =
-  [ NS "discord" "discord" (className =? "discord") nonFloating,
-    NS "element" "element-desktop" (className =? "Element") nonFloating,
-    NS "emacs" "emacsclient -nc" (className =? "Emacs") nonFloating,
+  [ NS "bitwarden" bitwardenCommand bitwardenSelector nonFloating,
+    NS "discord" discordCommand discordSelector nonFloating,
+    NS "element" elementCommand elementSelector nonFloating,
+    NS "emacs" emacsCommand emacsSelector nonFloating,
     NS "gmail" gmailCommand gmailSelector nonFloating,
-    NS "htop" "kitty --title htop -e htop" (title =? "htop") nonFloating,
-    NS "spotify" "spotify" (className =? "Spotify") nearFullFloat,
-    NS "Picture-in-Picture" "Picture-in-Picture" (title =? "Picture-in-Picture") defaultFloating,
-    NS "telegram" "telegram-desktop" (className =? "TelegramDesktop") nonFloating,
+    NS "htop" htopCommand htopSelector nonFloating,
+    NS "spotify" spotifyCommand spotifySelector nearFullFloat,
+    NS "Picture-in-Picture" ffPicCommand ffPicSelector defaultFloating,
+    NS "telegram" telegramCommand telegramSelector nonFloating,
     NS "transmission" transmissionCommand transmissionSelector nearFullFloat,
-    NS "volume" "pavucontrol" (className =? "Pavucontrol") nonFloating
+    NS "volume" volumeCommand volumeSelector nonFloating
   ]
+  where
+    bitwardenCommand = "bitwarden"
+    bitwardenSelector = className =? "Bitwarden"
+
+    discordCommand = "discord"
+    discordSelector = className =? "discord"
+
+    elementCommand = "element-desktop"
+    elementSelector = className =? "Element"
+
+    emacsCommand = "emacsclient -nc"
+    emacsSelector = className =? "Emacs"
+
+    htopCommand = "kitty --title htop -e htop"
+    htopSelector = title =? "htop"
+
+    spotifyCommand = "spotify"
+    spotifySelector = className =? "Spotify"
+
+    ffPicCommand = "Picture-in-Picture"
+    ffPicSelector = title =? "Picture-in-Picture"
+
+    telegramCommand = "telegram-desktop"
+    telegramSelector = className =? "TelegramDesktop"
+
+    volumeCommand = "pavucontrol"
+    volumeSelector = className =? "Pavucontrol"
 
 myScratchPadManageHook = namedScratchpadManageHook scratchpads
 
@@ -1009,9 +1037,9 @@ addKeys conf@XConfig {modMask = modm} =
     ++
     -- Specific program spawning
     bindBringAndRaiseMany
-      [ (modalt, xK_f, spawn firefoxCommand, firefoxSelector),
-        (modalt, xK_b, spawn firefoxPrvtCommand, firefoxSelector),
-        (modalt, xK_g, spawn chromiumCommand, chromiumSelector)
+      [ (modalt, xK_g, spawn chromiumCommand, chromiumSelector),
+        (modalt, xK_f, spawn firefoxCommand, firefoxSelector),
+        (modalt, xK_w, spawn firefoxPrvtCommand, firefoxSelector)
       ]
     ++
     -- Window manipulation
@@ -1052,6 +1080,7 @@ addKeys conf@XConfig {modMask = modm} =
       ((hyper .|. mod1Mask, xK_r), renameWorkspace def),
       ((hyper, xK_l), selectLayout),
       -- ScratchPads
+      ((modalt, xK_b), doScratchpad "bitwarden"),
       ((modalt, xK_j), doScratchpad "discord"),
       ((modalt, xK_k), doScratchpad "element"),
       ((modalt, xK_e), doScratchpad "emacs"),

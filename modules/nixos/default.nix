@@ -121,6 +121,9 @@
     fish.enable = true;
     adb.enable = true;
     gnupg.agent.enable = true;
+
+    # askPass -> terminal (default).
+    ssh.askPassword = "";
   };
 
   fonts = {

@@ -6,14 +6,10 @@
   };
 
   nix = {
-    package = pkgs.nixFlakes;
+    package = pkgs.nixUnstable;
+    autoOptimiseStore = true;
 
-    extraOptions = ''
-      keep-outputs = true
-      keep-derivations = true
-      ${lib.optionalString (config.nix.package == pkgs.nixFlakes)
-      "experimental-features = nix-command flakes"}
-    '';
+    extraOptions = "experimental-features = nix-command flakes";
 
     trustedUsers = [ "${config.user.name}" "root" "@admin" "@wheel" ];
 
@@ -21,8 +17,6 @@
       automatic = true;
       options = "--delete-older-than 3d";
     };
-
-    autoOptimiseStore = true;
 
     buildCores = 8;
     maxJobs = 8;

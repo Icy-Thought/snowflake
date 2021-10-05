@@ -1,21 +1,8 @@
-{ config, pkgs, ... }:
-
-let
-  gitConfig = {
-    core = {
-      editor = "emacsclient -t";
-      pager = "diff-so-fancy | less --tabs=4 -RFX";
-    };
-
-    init.defaultBranch = "main";
-    pull.rebase = false;
-  };
-
-in {
-  home.packages = with pkgs; [ gist ];
+{ config, pkgs, ... }: {
 
   programs.git = {
     enable = true;
+    package = pkgs.gitFull;
 
     aliases = {
       amend = "commit --amend -m";
@@ -33,7 +20,6 @@ in {
       dc = "diff --cached";
     };
 
-    extraConfig = gitConfig;
     ignores = [
       "*.bloop"
       "*.bsp"
@@ -41,18 +27,28 @@ in {
       "*.metals.sbt"
       "*metals.sbt"
       "*.direnv"
-      "*.envrc" # there is lorri, nix-direnv & simple direnv; let people decide
-      "*hie.yaml" # ghcide files
-      "*.mill-version" # used by metals
-      "*.jvmopts" # should be local to every project
+      "*.envrc"
+      "*hie.yaml"
+      "*.mill-version"
+      "*.jvmopts"
     ];
-
-    userName = "Icy-Thought";
-    userEmail = "gilganyx@pm.me";
 
     signing = {
       signByDefault = true;
       key = "22CF239720AAD89B";
+    };
+
+    userName = "Icy-Thought";
+    userEmail = "gilganyx@pm.me";
+
+    extraConfig = {
+      core = {
+        editor = "emacsclient -t";
+        pager = "diff-so-fancy | less --tabs=4 -RFX";
+      };
+
+      init.defaultBranch = "main";
+      pull.rebase = false;
     };
   };
 }

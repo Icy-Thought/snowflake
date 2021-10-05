@@ -76,14 +76,13 @@
 
 (setq org-directory "~/org/")                           ; Default Org-Directories
 
-(setq org-ellipsis " ▾"
-      ;; org-hide-emphasis-markers t
+(setq org-ascii-charset 'utf-8
+      org-ellipsis " ▾"
       org-src-fontify-natively t
       org-hide-block-startup nil
       org-startup-folded 'content
       org-cycle-separator-lines 2)
 
-;; Increase the size of various headings
 (custom-set-faces!
   '(org-document-title :height 1.20)
   '(outline-1 :weight ExtraBold :height 1.25)
