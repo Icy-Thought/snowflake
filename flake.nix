@@ -1,23 +1,22 @@
 {
   description = "λ well-tailored and configureable NixOS system!";
 
-  nixConfig = {
-    substituters = [ "https://cache.nixos.org" ];
-    trusted-public-keys =
-      [ "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=" ];
-  };
-
   inputs = {
+    # Core Dependencies
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixpkgs-master.url = "github:nixos/nixpkgs/master";
 
-    home-manager.url = "github:nix-community/home-manager/master";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager = {
+      url = "github:nix-community/home-manager/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-    flake-utils.url = "github:numtide/flake-utils";
-    # nixos-hardware.url = "github:NixOS/nixos-hardware";
-    agenix.url = "github:ryantm/agenix";
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
+    # Extras
     xmonad.url = "github:xmonad/xmonad";
     xmonad-contrib.url = "github:icy-thought/xmonad-contrib";
     taffybar.url = "github:taffybar/taffybar";

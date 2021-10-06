@@ -1,21 +1,21 @@
 { config, options, lib, home-manager, ... }:
 
 with lib;
-with lib.my;
+with lib.my; {
 
-{
   options = with types; {
     user = mkOpt attrs { };
 
-    dotfiles = {
+    snowflake = {
       dir = mkOpt path (findFirst pathExists (toString ../.) [
-        "${config.user.home}/.config/dotfiles"
-        "/etc/dotfiles"
+        "${config.user.home}/git/Icy-Thought/Snowflake"
+        "/etc/Snowflake"
       ]);
-      binDir = mkOpt path "${config.dotfiles.dir}/bin";
-      configDir = mkOpt path "${config.dotfiles.dir}/config";
-      modulesDir = mkOpt path "${config.dotfiles.dir}/modules";
-      themesDir = mkOpt path "${config.dotfiles.modulesDir}/themes";
+
+      binDir = mkOpt path "${config.snowflake.dir}/bin";
+      configDir = mkOpt path "${config.snowflake.dir}/config";
+      modulesDir = mkOpt path "${config.snowflake.dir}/modules";
+      themesDir = mkOpt path "${config.snowflake.modulesDir}/themes";
     };
 
     home = {
@@ -39,7 +39,7 @@ with lib.my;
   config = {
     user = let
       user = builtins.getEnv "USER";
-      name = if elem user [ "" "root" ] then "sirius" else user;
+      name = if elem user [ "" "root" ] then "icy-thought" else user;
     in {
       inherit name;
       description = "The primary user account";
@@ -50,24 +50,17 @@ with lib.my;
       uid = 1000;
     };
 
-    # Install user packages to /etc/profiles instead. Necessary for
-    # nixos-rebuild build-vm to work.
+    # Necessary for nixos-rebuild build-vm to work.
     home-manager = {
       useUserPackages = true;
 
-      # I only need a subset of home-manager's capabilities. That is, access to
-      # its home.file, home.xdg.configFile and home.xdg.dataFile so I can deploy
-      # files easily to my $HOME, but 'home-manager.users.hlissner.home.file.*'
-      # is much too long and harder to maintain, so I've made aliases in:
-      #
-      #   home.file        ->  home-manager.users.hlissner.home.file
-      #   home.configFile  ->  home-manager.users.hlissner.home.xdg.configFile
-      #   home.dataFile    ->  home-manager.users.hlissner.home.xdg.dataFile
+      #   home.file        ->  home-manager.users.icy-thought.home.file
+      #   home.configFile  ->  home-manager.users.icy-thought.home.xdg.configFile
+      #   home.dataFile    ->  home-manager.users.icy-thought.home.xdg.dataFile
+
       users.${config.user.name} = {
         home = {
           file = mkAliasDefinitions options.home.file;
-          # Necessary for home-manager to work with flakes, otherwise it will
-          # look for a nixpkgs channel.
           stateVersion = config.system.stateVersion;
         };
         xdg = {
@@ -85,9 +78,7 @@ with lib.my;
       allowedUsers = users;
     };
 
-    # must already begin with pre-existing PATH. Also, can't use binDir here,
-    # because it contains a nix store path.
-    env.PATH = [ "$DOTFILES_BIN" "$XDG_BIN_HOME" "$PATH" ];
+    env.PATH = [ "$SNOWFLAKE_BIN" "$XDG_BIN_HOME" "$PATH" ];
 
     environment.extraInit = concatStringsSep "\n"
       (mapAttrsToList (n: v: ''export ${n}="${v}"'') config.env);

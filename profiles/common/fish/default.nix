@@ -80,6 +80,7 @@
       # General
       ls = "exa -Slhg --icons";
       lsa = "exa -Slhga --icons";
+      tree = "exa -SlhgT --icons";
       bat0 = "upower -i /org/freedesktop/UPower/devices/battery_BAT0";
 
       # Application-related

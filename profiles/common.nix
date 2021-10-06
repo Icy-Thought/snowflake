@@ -24,21 +24,15 @@ let
 in {
   inherit imports;
 
-  programs = {
-    home-manager = {
-      enable = true;
-      path = "${home}/.nixpkgs/modules/home-manager";
-    };
+  fonts.fontconfig.enable = true;
 
-    direnv = {
-      enable = true;
-      enableFishIntegration = true;
-      nix-direnv.enable = true;
-    };
+  programs.gnupg.agent.enable = true;
+  programs.adb.enable = true;
+  users.extraGroups = [ "adbusers" ];
 
-  };
-
-  fonts = { fontconfig.enable = true; };
+  programs.direnv.enable = true;
+  programs.direnv.enableFishIntegration = true;
+  programs.direnv.nix-direnv.enable = true;
 
   home.sessionPath = [
     "${home}/.emacs.d/bin"
