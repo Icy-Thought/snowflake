@@ -157,8 +157,8 @@ git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d
 You have successful installed your/my personally hand-crafted/replicated Nix-Flake environment. I hope it suits your needs, if not then you are always welcome to propose changes or fork the project and customize the repository to your heart's content!
 
 * Special Thanks
-- [[https://github.com/hlissner/dotfiles][hlissner/dotfiles]]: NixOS Flake structure! (inspiration)
-- [[https://github.com/IvanMalison][IvanMalison]]: Xmonad!
+- [[https://github.com/hlissner/dotfiles][GitHub - hlissner/dotfiles]]: NixOS Flake structure! (inspiration)
+- [[https://github.com/IvanMalison/dotfiles][GitHub - IvanMalison/dotfiles]]: XMonad + Taffybar!
 
 * Useful Links
 - [[Stable][NixOS Manual]]: A manual for the newcomer to read and understand different parts of the NixOS distribution.
