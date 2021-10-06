@@ -39,43 +39,34 @@ let
 in {
   inherit imports;
 
-  environment = {
-    systemPackages = defaultPkgs ++ xmonadPkgs;
-    etc."X11/keymap.xkb".source = customKeyboardLayout;
-  };
+  environment.systemPackages = defaultPkgs ++ xmonadPkgs;
+  environment.etc."X11/keymap.xkb".source = customKeyboardLayout;
 
   gtk.iconCache.enable = true;
 
-  services = {
-    blueman.enable = true;
-    autorandr.enable = true;
+  services.blueman.enable = true;
+  services.autorandr.enable = true;
 
-    xserver = {
-      displayManager = {
-        defaultSession = "none+xmonad";
+  services.xserver.displayManager.lightdm.enable = true;
+  services.xserver.displayManager.defaultSession = "none+xmonad";
 
-        sessionCommands = ''
-          # Taffybar workaround (Step 2)
-          systemctl --user import-environment GDK_PIXBUF_MODULE_FILE DBUS_SESSION_BUS_ADDRESS PATH
+  services.xserver.displayManager.sessionCommands = ''
+    # 1st-Step Taffybar workaround
+    systemctl --user import-environment GDK_PIXBUF_MODULE_FILE DBUS_SESSION_BUS_ADDRESS PATH
 
-          # Set XKB layout = us+hyper on XMonad start:
-          ${pkgs.xorg.xkbcomp}/bin/xkbcomp ${customKeyboardLayout} $DISPLAY
-        '';
-      };
+    # Set XKB layout = us+hyper on XMonad start:
+    ${pkgs.xorg.xkbcomp}/bin/xkbcomp ${customKeyboardLayout} $DISPLAY
+  '';
 
-      # 2-Step workaround for https://github.com/taffybar/taffybar/issues/403
-      # Causes GDK_PIXBUF_MODULE_FILE to be set in xsession. (Step 1)
-      gdk-pixbuf.modulePackages = [ pkgs.librsvg ];
+  # 2nd-Step workaround for https://github.com/taffybar/taffybar/issues/403
+  # Causes GDK_PIXBUF_MODULE_FILE to be set in xsession. (Step 1)
+  services.xserver.gdk-pixbuf.modulePackages = [ pkgs.librsvg ];
 
-      windowManager = {
-        session = [{
-          name = "xmonad";
-          start = ''
-            /usr/bin/env icy-xmonad &
-            waitPID=$!
-          '';
-        }];
-      };
-    };
-  };
+  services.xserver.windowManager.session = [{
+    name = "xmonad";
+    start = ''
+      /usr/bin/env icy-xmonad &
+      waitPID=$!
+    '';
+  }];
 }

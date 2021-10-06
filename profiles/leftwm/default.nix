@@ -11,11 +11,8 @@ in {
 
   environment.systemPackages = leftPkgs;
 
-  services = {
-    xserver = {
-      windowManager.leftwm.enable = true;
-      displayManager.defaultSession = "none+leftwm";
-    };
-  };
+  services.xserver.displayManager.lightdm.enable = true;
+  services.xserver.windowManager.leftwm.enable = true;
+  services.xserver.displayManager.defaultSession = "none+leftwm";
 
 }

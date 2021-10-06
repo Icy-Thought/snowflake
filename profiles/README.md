@@ -12,7 +12,7 @@ The following folder contains several WM's tried throughout the years of my NixO
 - [Special Thanks](#special-thanks)
 
 # Xmonad
-<img alt="Xmonad Desktop" src="../../assets/xmonad-desktop.png" align="center">
+<img alt="XMonad Desktop" src="../assets/xmonad-desktop.png" align="center">
 
 ## Keybindings
 *Credits:* [micrub](https://gist.github.com)/[xmonad-default-key-bindings.md](https://gist.github.com/micrub/aeebe7eb4d2df9e5e203e76a0fd89542)
@@ -88,9 +88,7 @@ Definitions:
 | <kbd>modm</kbd> + <kbd>shift</kbd> + <kbd>{w,e,r}</kbd> | Move client to screen 1, 2, or 3.               |
 
 # LeftWM
-<img alt="Xmonad Desktop" src="../../assets/leftwm-desktop.png" align="center">
-
-# BSPWM
+<img alt="Xmonad Desktop" src="../assets/leftwm-desktop.png" align="center">
 
 # Special Thanks
 - [IvanMalison](https://github.com/IvanMalison): Xmonad Setup.
