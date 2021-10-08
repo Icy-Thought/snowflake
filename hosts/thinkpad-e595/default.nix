@@ -12,8 +12,13 @@ in {
   boot.kernelParams = [ "acpi_backlight=native" ];
 
   # Remove device entry from file-manager:
-  fileSystems."/".options = [ "noatime, x-gvfs-hide" ];
+  fileSystems."/".device = "/dev/disk/by-label/nixos";
+  filesystems."/".options = [ "noatime, x-gvfs-hide" ];
+
+  fileSystems."/boot".device = "/dev/disk/by-label/boot";
   fileSystems."/boot".options = [ "x-gvfs-hide" ];
+
+  fileSystems."/home".device = "/dev/disk/by-label/home";
   fileSystems."/home".options = [ "noatime, x-gvfs-hide" ];
 
   hardware.cpu.amd.updateMicrocode = true;
@@ -28,18 +33,6 @@ in {
   user.name = "sirius";
   user.extraGroups = [ "vboxusers" ];
   networking.hostName = "ThinkPad-NixOS";
-
-  virtualisation.virtualbox.host.enable = true;
-  virtualisation.podman.enable = false;
-  virtualisation.podman.dockerCompat = true;
-
-  environment.systemPackages =
-    [ (pkgs.steam.override { nativeOnly = true; }).run ];
-
-  environment.variables.VK_ICD_FILENAMES =
-    [ "/run/opengl-driver/share/vulkan/icd.d/amd_icd64.json" ];
-
-  programs.steam.enable = true;
 
   systemd.services = {
     NetworkManager-wait-online.enable = false;

@@ -2,7 +2,6 @@
 
 with lib;
 with lib.my; {
-
   imports = [ inputs.home-manager.nixosModules.home-manager ]
     ++ (mapModulesRec' (toString ./modules) import);
 
@@ -72,5 +71,6 @@ with lib.my; {
     wget
     gnumake
     unzip
+    unrar
   ];
 }

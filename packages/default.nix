@@ -1,16 +1,10 @@
 { config, pkgs, ... }:
 
 let
-  cpupower = config.boot.kernelPackages.cpupower;
-  perf = config.boot.kernelPackages.perf;
-
-  kernelPkgs = with pkgs; [ cpupower perf ];
-  # Disabled
-
   sysPkgs = with pkgs; [ wireguard killall xclip wl-clipboard ];
 
-  altPkgs = with pkgs; [ exa fd ripgrep skim ];
+  altPkgs = with pkgs; [ exa skim ];
 
-  utilPkgs = with pkgs; [ gnutls firejail exiftool agenix ];
+  utilPkgs = with pkgs; [ firejail exiftool ];
 
 in { environment.systemPackages = sysPkgs ++ altPkgs ++ utilPkgs; }

@@ -27,102 +27,70 @@
     };
 
     rust.url = "github:oxalica/rust-overlay";
-    # emacs.url = "github:nix-community/emacs-overlay";
+    emacs.url = "github:nix-community/emacs-overlay";
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, flake-utils, agenix, ... }:
+  outputs = inputs@{ self, nixpkgs, nixpkgs-master, ... }:
 
     let
-      inherit (nixpkgs.lib) nixosSystem;
-      inherit (home-manager.lib) homeManagerConfiguration;
-      inherit (flake-utils.lib) eachDefaultSystem eachSystem;
-      inherit (builtins) listToAttrs map attrNames readDir;
+      inherit (lib.my) mapModules mapModulesRec mapHosts;
 
-      lib = nixpkgs.lib.extend (final: prev: home-manager.lib);
+      system = "x86_64-linux";
 
-      pkgs = import nixpkgs { system = "x86_64-linux"; };
-
-      overlays = [
-        inputs.xmonad.overlay
-        inputs.xmonad-contrib.overlay
-        inputs.taffybar.overlay
-
-        inputs.agenix.overlay
-        inputs.rust.overlay
-        # inputs.emacs.overlay
-
-        (final: prev: {
-          master = import inputs.nixpkgs-master {
-            system = prev.system;
-            config.allowUnfree = true;
-          };
-
-          picom =
-            prev.picom.overrideAttrs (_: { src = inputs.picom-jonaburg; });
-        })
-      ] ++ map (name: import (./overlays + "/${name}"))
-        (attrNames (readDir ./overlays));
-
-      # Generate default NixOS config
-      mkNixosConfig = { system ? "x86_64-linux", hardwareModules
-        , nixpkgs ? inputs.nixpkgs, master ? inputs.nixpkgs-master
-        , baseModules ? [
-          agenix.nixosModules.age
-          home-manager.nixosModules.home-manager
-          ./modules/nixos
-        ], extraModules ? [ ] }:
-
-        nixosSystem {
+      mkPkgs = pkgs: extraOverlays:
+        import pkgs {
           inherit system;
-          modules = baseModules ++ hardwareModules ++ extraModules
-            ++ [{ nixpkgs.overlays = overlays; }];
-          specialArgs = { inherit inputs lib nixpkgs master; };
+          config.allowUnfree = true;
+          overlays = extraOverlays ++ (lib.attrValues self.overlays);
         };
 
-      # Generate default Home-Manager conf
-      mkHomeConfig = { username, system ? "x86_64-linux"
-        , nixpkgs ? inputs.nixpkgs, master ? inputs.nixpkgs-master
-        , baseModules ? [ ./config ], extraModules ? [ ] }:
+      pkgs = mkPkgs nixpkgs [ self.overlay ];
+      pkgs' = mkPkgs nixpkgs-master [ ];
 
-        homeManagerConfiguration rec {
-          inherit system username;
-          homeDirectory = "/home/${username}";
-          extraSpecialArgs = { inherit inputs lib nixpkgs master; };
-          configuration = {
-            imports = baseModules ++ extraModules
-              ++ [{ nixpkgs.overlays = overlays; }];
-          };
+      lib = nixpkgs.lib.extend (self: super: {
+        my = import ./lib {
+          inherit pkgs inputs;
+          lib = self;
         };
+      });
 
     in {
-      nixosConfigurations = {
-        thinkpad = mkNixosConfig {
-          hardwareModules = [
-            ./modules/hardware/ThinkPad-E595.nix
-            # nixos-hardware.nixosModules.lenovo-thinkpad-e595
-          ];
-          extraModules = [ ./profiles/ThinkPad-E595.nix ];
-        };
+      lib = lib.my;
 
-        probook = mkNixosConfig {
-          hardwareModules = [
-            ./modules/hardware/ProBook-440G3.nix
-            # nixos-hardware.nixosModules.hp-probook-440g3
-          ];
-          extraModules = [ ./profiles/ProBook-440G3.nix ];
-        };
+      overlay = final: prev: {
+        master = pkgs';
+        my = self.packages."${system}";
+        picom = prev.picom.overrideAttrs (_: { src = inputs.picom-jonaburg; });
       };
 
-      homeConfigurations = {
-        thinkpad = mkHomeConfig {
-          username = "sirius";
-          extraModules = [ ./profiles/home/ThinkPad-E595.nix ];
-        };
+      overlays = mapModules ./overlays import;
 
-        probook = mkHomeConfig {
-          username = "orca";
-          extraModules = [ ./profiles/home/ProBook-440G3.nix ];
-        };
-      };
+      packages."${system}" = mapModules ./packages (p: pkgs.callPackage p { });
+
+      nixosModules = {
+        snowflake = import ./.;
+      } // mapModulesRec ./modules import;
+
+      nixosConfigurations = mapHosts ./hosts { };
+
+      devShell."${system}" = import ./shell.nix { inherit pkgs; };
+
+      # templates = {
+      #   full = {
+      #     path = ./.;
+      #     description = "A grossly incandescent nixos config";
+      #   };
+      #   minimal = {
+      #     path = ./templates/minimal;
+      #     description = "A grossly incandescent and minimal nixos config";
+      #   };
+      # };
+      # defaultTemplate = self.templates.minimal;
+      #
+      # defaultApp."${system}" = {
+      #   type = "app";
+      #   program = ./bin/bruh;
+      # };
+
     };
 }

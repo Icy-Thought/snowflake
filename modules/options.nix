@@ -2,7 +2,6 @@
 
 with lib;
 with lib.my; {
-
   options = with types; {
     user = mkOpt attrs { };
 
@@ -42,7 +41,7 @@ with lib.my; {
       name = if elem user [ "" "root" ] then "icy-thought" else user;
     in {
       inherit name;
-      description = "The primary user account";
+      description = "Primary user account";
       extraGroups = [ "wheel" ];
       isNormalUser = true;
       home = "/home/${name}";

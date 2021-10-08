@@ -11,8 +11,13 @@ let
 in {
   inherit imports;
 
-  fileSystems."/".options = [ "noatime, x-gvfs-hide" ];
+  fileSystems."/".device = "/dev/disk/by-label/nixos";
+  filesystems."/".options = [ "noatime, x-gvfs-hide" ];
+
+  fileSystems."/boot".device = "/dev/disk/by-label/boot";
   fileSystems."/boot".options = [ "x-gvfs-hide" ];
+
+  fileSystems."/home".device = "/dev/disk/by-label/home";
   fileSystems."/home".options = [ "noatime, x-gvfs-hide" ];
 
   hardware.cpu.intel = { updateMicrocode = true; };
