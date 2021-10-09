@@ -2,9 +2,9 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.desktop.fcitx5;
+let cfg = config.modules.desktop.inputMF.fcitx5;
 in {
-  options.modules.desktop.fcitx5.enable = mkBoolOpt false;
+  options.modules.desktop.inputMF.fcitx5 = { enable = mkBoolOpt false; };
 
   config = mkIf cfg.enable {
     i18n.inputMethod.enabled = "fcitx5";

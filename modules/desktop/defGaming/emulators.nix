@@ -2,9 +2,9 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.desktop.gaming.emulators;
+let cfg = config.modules.desktop.defGaming.emulators;
 in {
-  options.modules.desktop.gaming.emulators = {
+  options.modules.desktop.defGaming.emulators = {
     psx.enable = mkBoolOpt false; # Playstation
     ds.enable = mkBoolOpt false; # Nintendo DS
     gb.enable = mkBoolOpt false; # GameBoy + GameBoy Color

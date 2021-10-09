@@ -5,7 +5,7 @@ with lib.my;
 
 let cfg = config.modules.fonts;
 in {
-  options.modules.fonts.enable = mkBoolOpt false;
+  options.modules.fonts = { enable = mkBoolOpt false; };
 
   config = mkIf cfg.enable {
     fonts.enableDefaultFonts = true;

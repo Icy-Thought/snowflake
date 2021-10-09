@@ -55,10 +55,8 @@ in {
     programs.git.userEmail = "gilganyx@pm.me";
 
     programs.git.extraConfig = {
-      core = {
-        editor = "emacsclient -t";
-        pager = "diff-so-fancy | less --tabs=4 -RFX";
-      };
+      core.editor = "emacsclient -t";
+      core.pager = "diff-so-fancy | less --tabs=4 -RFX";
 
       init.defaultBranch = "main";
       pull.rebase = false;

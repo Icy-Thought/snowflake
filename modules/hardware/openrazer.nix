@@ -1,16 +1,22 @@
-{ config, lib, pkgs, ... }:
+{ config, options, lib, pkgs, ... }:
 
 with lib;
-with lib.my; {
-  hardware.openrazer.enable = true;
-  hardware.openrazer.devicesOffOnScreensaver = false;
-  hardware.openrazer.syncEffectsEnabled = true;
-  hardware.openrazer.mouseBatteryNotifier = true;
+with lib.my;
+let cfg = config.modules.hardware.openrazer;
+in {
+  options.modules.hardware.openrazer = { enable = mkBoolOpt false; };
 
-  user.extraGroups = [ "plugdev" "openrazer" ];
+  config = mkIf cfg.enable {
+    hardware.openrazer.enable = true;
+    hardware.openrazer.devicesOffOnScreensaver = false;
+    hardware.openrazer.syncEffectsEnabled = true;
+    hardware.openrazer.mouseBatteryNotifier = true;
 
-  environment.systemPackages = with pkgs;
-    [
-      # TODO: polychromatic
-    ];
+    user.extraGroups = [ "plugdev" "openrazer" ];
+
+    environment.systemPackages = with pkgs;
+      [
+        # TODO: polychromatic
+      ];
+  };
 }

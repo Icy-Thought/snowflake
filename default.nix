@@ -55,6 +55,7 @@ with lib.my; {
       efi.canTouchEfiVariables = mkDefault true;
       efi.efiSysMountPoint = "/boot";
 
+      # TODO: replace with systemd-boot when theming == possible.
       grub.enable = mkDefault true;
       grub.version = 2;
       grub.device = "nodev";

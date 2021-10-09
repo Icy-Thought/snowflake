@@ -1,12 +1,13 @@
-{ config, lib, pkgs, ... }:
+{ config, options, lib, pkgs, ... }:
 
 with lib;
-with lib.my; {
-  # Reduce boot-time on ThinkPad:
-  systemd.services.systemd-resolved.enable = true;
-  systemd.services.systemd-machined.enable = false;
+with lib.my;
+let cfg = config.modules.services.laptop;
+in {
+  options.modules.services.laptop = { basics = mkBoolOpt false; };
 
-  # Battery control + Printing through CUPS:
-  services.upower.enable = true;
-  services.printing.enable = true;
+  config = mkIf cfg.basics {
+    services.upower.enable = true;
+    services.printing.enable = true;
+  };
 }

@@ -4,9 +4,22 @@ with lib;
 with lib.my;
 let cfg = config.modules.shell.fish;
 in {
-  options.modules.shell.fish.enable = mkBoolOpt false;
+  options.modules.shell.fish = { enable = mkBoolOpt false; };
 
   config = mkIf cfg.enable {
+    user.packages = with pkgs; [
+      nix-top
+      any-nix-shell
+      exa
+      skim
+      ripgrep
+      youtube-dl
+      pipes-rs
+      pwgen
+      bat
+      fd
+    ];
+
     programs.fish.enable = true;
     programs.fish.shellInit = ''
       # General Configurations

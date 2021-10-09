@@ -4,9 +4,9 @@ with lib;
 with lib.my;
 let
   cfg = config.modules.container.arch;
-  configDir = config.dotfiles.configDir;
+  configDir = config.snowflake.configDir;
 in {
-  options.modules.container.arch.enable = mkBoolOpt false;
+  options.modules.container.arch = { enable = mkBoolOpt false; };
 
   config = mkIf cfg.enable {
     virtualisation = {

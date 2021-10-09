@@ -12,12 +12,15 @@ in {
   inherit imports;
 
   fileSystems."/".device = "/dev/disk/by-label/nixos";
+  fileSystems."/".fsType = "ext4";
   filesystems."/".options = [ "noatime, x-gvfs-hide" ];
 
   fileSystems."/boot".device = "/dev/disk/by-label/boot";
+  fileSystems."/boot".fsType = "vfat";
   fileSystems."/boot".options = [ "x-gvfs-hide" ];
 
   fileSystems."/home".device = "/dev/disk/by-label/home";
+  fileSystems."/home".fsType = "ext4";
   fileSystems."/home".options = [ "noatime, x-gvfs-hide" ];
 
   hardware.cpu.intel = { updateMicrocode = true; };
@@ -34,7 +37,7 @@ in {
   time.timeZone = "Europe/Berlin";
 
   user.name = "orca";
-  networking.hostName = "ProBook-NixOS";
+  networking.hostName = "probook-440g3";
 
   services.xserver.videoDrivers = [ "modesetting" ];
   services.xserver.useGlamor = true;

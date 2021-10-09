@@ -6,7 +6,7 @@ let
   cfg = config.modules.shell.htop;
   configDir = config.snowflake.configDir;
 in {
-  options.modules.shell.htop.enable = mkBoolOpt false;
+  options.modules.shell.htop = { enable = mkBoolOpt false; };
 
   config = mkIf cfg.enable {
     user.packages = with pkgs; [ neofetch ];

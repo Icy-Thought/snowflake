@@ -13,6 +13,6 @@ let
   hosts = [ thinkpad-e595 probook-440g3 ];
 
 in {
-  "Akkadian-VPN.age".publicKeys = users ++ hosts;
-  "OpenWeatherMap.age".publicKeys = users ++ hosts;
+  "akkadianVPN.age".publicKeys = users ++ hosts;
+  "openWeatherMap.age".publicKeys = users ++ hosts;
 }

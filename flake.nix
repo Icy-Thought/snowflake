@@ -2,32 +2,27 @@
   description = "λ well-tailored and configureable NixOS system!";
 
   inputs = {
-    # Core Dependencies
+    # Core Dependencies:
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixpkgs-master.url = "github:nixos/nixpkgs/master";
 
-    home-manager = {
-      url = "github:nix-community/home-manager/master";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    home-manager.url = "github:nix-community/home-manager/master";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    agenix = {
-      url = "github:ryantm/agenix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    agenix.url = "github:ryantm/agenix";
+    agenix.inputs.nixpkgs.follows = "nixpkgs";
 
-    # Extras
+    # XMonad:
     xmonad.url = "github:xmonad/xmonad";
     xmonad-contrib.url = "github:icy-thought/xmonad-contrib";
     taffybar.url = "github:taffybar/taffybar";
 
-    picom-jonaburg = {
-      url = "github:jonaburg/picom";
-      flake = false;
-    };
-
-    rust.url = "github:oxalica/rust-overlay";
+    # Extras:
     emacs.url = "github:nix-community/emacs-overlay";
+    rust.url = "github:oxalica/rust-overlay";
+
+    picom-jonaburg.url = "github:jonaburg/picom";
+    picom-jonaburg.flake = false;
   };
 
   outputs = inputs@{ self, nixpkgs, nixpkgs-master, ... }:
@@ -75,21 +70,22 @@
 
       devShell."${system}" = import ./shell.nix { inherit pkgs; };
 
+      # TODO:
       # templates = {
       #   full = {
       #     path = ./.;
-      #     description = "A grossly incandescent nixos config";
+      #     description = "λ well-tailored and configureable NixOS system!";
       #   };
       #   minimal = {
       #     path = ./templates/minimal;
-      #     description = "A grossly incandescent and minimal nixos config";
+      #     description = "λ well-tailored and configureable NixOS system!";
       #   };
       # };
       # defaultTemplate = self.templates.minimal;
       #
       # defaultApp."${system}" = {
       #   type = "app";
-      #   program = ./bin/bruh;
+      #   program = ./bin/hagel;
       # };
 
     };

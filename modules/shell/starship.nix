@@ -2,9 +2,9 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.shell.htop;
+let cfg = config.modules.shell.starship;
 in {
-  options.modules.shell.htop.enable = mkBoolOpt false;
+  options.modules.shell.starship = { enable = mkBoolOpt false; };
 
   config = mkIf cfg.enable {
     programs.starship.enable = true;
