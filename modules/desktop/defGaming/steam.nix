@@ -14,8 +14,10 @@ in {
     {
       # I avoid programs.steam.enable because it installs another steam binary,
       # which the xdesktop package invokes, instead of my steam shims below.
-      hardware.opengl.enable = true;
-      hardware.opengl.driSupport32Bit = true;
+      hardware.opengl = {
+        enable = true;
+        driSupport32Bit = true;
+      };
 
       environment.variables.VK_ICD_FILENAMES =
         [ "/run/opengl-driver/share/vulkan/icd.d/amd_icd64.json" ];

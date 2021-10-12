@@ -7,28 +7,30 @@ in {
   options.modules.shell.starship = { enable = mkBoolOpt false; };
 
   config = mkIf cfg.enable {
-    programs.starship.enable = true;
-    programs.starship.enableBashIntegration = true;
-    programs.starship.enableFishIntegration = true;
-    programs.starship.enableZshIntegration = false;
+    homeManager.starship = {
+      starship.enable = true;
+      starship.enableBashIntegration = true;
+      starship.enableFishIntegration = true;
+      starship.enableZshIntegration = false;
 
-    programs.starship.settings = {
-      add_newline = true;
-      scan_timeout = 10;
+      starship.settings = {
+        add_newline = true;
+        scan_timeout = 10;
 
-      character = {
-        success_symbol = "[λ](bold green)";
-        error_symbol = "[λ](bold red)";
-      };
+        character = {
+          success_symbol = "[λ](bold green)";
+          error_symbol = "[λ](bold red)";
+        };
 
-      battery = {
-        full_symbol = "🔋";
-        charging_symbol = "⚡️";
-        discharging_symbol = "💀";
-        display = [{
-          style = "bold red";
-          threshold = 15;
-        }];
+        battery = {
+          full_symbol = "🔋";
+          charging_symbol = "⚡️";
+          discharging_symbol = "💀";
+          display = [{
+            style = "bold red";
+            threshold = 15;
+          }];
+        };
       };
     };
   };

@@ -3,10 +3,10 @@
 with lib;
 with lib.my;
 let
-  cfg = config.modules.txtEditor.emacs;
+  cfg = config.modules.desktop.txtEditor.emacs;
   configDir = config.snowflake.configDir;
 in {
-  options.modules.txtEditor.emacs = {
+  options.modules.desktop.txtEditor.emacs = {
     enable = mkBoolOpt false;
     doom = {
       enable = mkBoolOpt true;
@@ -15,7 +15,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    nixpkgs.overlays = [ inputs.emacs-overlay.overlay ];
+    nixpkgs.overlays = [ inputs.emacs.overlay ];
 
     user.packages = with pkgs; [
       binutils
@@ -63,8 +63,7 @@ in {
 
     env.PATH = [ "$XDG_CONFIG_HOME/emacs/bin" ];
 
-    home.sessionVariables.DOOMDIR =
-      "${config.home.homeDirectory}/git/Icy-Thought/Snowflake/config/doom-emacs/config";
+    environment.variables.DOOMDIR = "${configDir}/doom-emacs/config";
 
     # home.file.".doom.d" = {
     #   source = "${configDir}/doom-emacs";

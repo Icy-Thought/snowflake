@@ -8,7 +8,7 @@ let cfg = config.modules.desktop.defExtra.docViewer;
 in {
   options.modules.desktop.defExtra.docViewer = {
     enable = mkBoolOpt false;
-    pdf.enable = mkBoolOpt false;
+    pdf.enable = mkBoolOpt true;
     ebook.enable = mkBoolOpt false;
   };
 
@@ -18,7 +18,7 @@ in {
       (mkIf cfg.ebook.enable foliate)
     ];
 
-    programs.zathura = mkIf cfg.pdf.enable {
+    homeManager.programs.zathura = mkIf cfg.pdf.enable {
       enable = true;
       options = {
         font = "Iosevka Bold 10";

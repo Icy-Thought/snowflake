@@ -7,19 +7,25 @@ in {
   options.modules.desktop.envExtra.gtk = { enable = mkBoolOpt false; };
 
   config = mkIf cfg.enable {
-    gtk.enable = true;
-    gtk.font.name = "JetBrainsMonoMedium Nerd Font";
-    gtk.font.size = 10;
+    homeManager = {
+      gtk = {
+        enable = true;
+        font.name = "JetBrainsMonoMedium Nerd Font";
+        font.size = 10;
 
-    gtk.iconTheme.name = "WhiteSur-dark";
-    gtk.iconTheme.package = pkgs.whitesur-icon-theme;
+        iconTheme.name = "WhiteSur-dark";
+        iconTheme.package = pkgs.whitesur-icon-theme;
 
-    gtk.theme.name = "Orchis-dark-compact";
-    gtk.theme.package = pkgs.orchis-theme;
+        theme.name = "Orchis-dark-compact";
+        theme.package = pkgs.orchis-theme;
+      };
 
-    # QT -> GTK
-    qt.enable = true;
-    qt.platformTheme = "gtk";
-    qt.style.name = "gtk2";
+      # QT -> GTK
+      qt = {
+        enable = true;
+        platformTheme = "gtk";
+        style.name = "gtk2";
+      };
+    };
   };
 }

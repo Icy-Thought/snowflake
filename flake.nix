@@ -70,19 +70,20 @@
 
       devShell."${system}" = import ./shell.nix { inherit pkgs; };
 
-      # TODO:
-      # templates = {
-      #   full = {
-      #     path = ./.;
-      #     description = "λ well-tailored and configureable NixOS system!";
-      #   };
-      #   minimal = {
-      #     path = ./templates/minimal;
-      #     description = "λ well-tailored and configureable NixOS system!";
-      #   };
-      # };
-      # defaultTemplate = self.templates.minimal;
-      #
+      # TODO: new struct.
+      templates.full = {
+        path = ./.;
+        description = "λ well-tailored and configureable NixOS system!";
+      };
+
+      template.minimal = {
+        path = ./templates/minimal;
+        description = "λ well-tailored and configureable NixOS system!";
+      };
+
+      defaultTemplate = self.templates.minimal;
+
+      # TODO: deployment + template tool.
       # defaultApp."${system}" = {
       #   type = "app";
       #   program = ./bin/hagel;

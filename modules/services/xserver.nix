@@ -16,10 +16,12 @@ in {
     }
 
     (mkIf touchpad.enable {
-      services.xserver.libinput.enable = true;
-      services.xserver.libinput.touchpad.naturalScrolling = true;
-      services.xserver.libinput.touchpad.tapping = true;
-      services.xserver.libinput.touchpad.disableWhileTyping = true;
+      services.xserver.libinput = {
+        enable = true;
+        touchpad.naturalScrolling = true;
+        touchpad.tapping = true;
+        touchpad.disableWhileTyping = true;
+      };
     })
   ]);
 

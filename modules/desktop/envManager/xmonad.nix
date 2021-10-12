@@ -1,4 +1,4 @@
-{ options, config, lib, pkgs, ... }:
+{ inputs, options, config, lib, pkgs, ... }:
 
 with lib;
 with lib.my;
@@ -29,11 +29,13 @@ in {
         feh
       ];
 
-      services.xserver.displayManager.defaultSession = "none+xmonad";
-      services.xserver.displayManager.sessionCommands = ''
-        # 1st-Step Taffybar workaround
-        systemctl --user import-environment GDK_PIXBUF_MODULE_FILE DBUS_SESSION_BUS_ADDRESS PATH
-      '';
+      services.xserver.displayManager = {
+        defaultSession = "none+xmonad";
+        sessionCommands = ''
+          # 1st-Step Taffybar workaround
+          systemctl --user import-environment GDK_PIXBUF_MODULE_FILE DBUS_SESSION_BUS_ADDRESS PATH
+        '';
+      };
 
       # 2nd-Step workaround for https://github.com/taffybar/taffybar/issues/403
       # Causes GDK_PIXBUF_MODULE_FILE to be set in xsession. (Step 1)
@@ -49,79 +51,88 @@ in {
       }];
 
       # Fix xkbOptions (not loading) issue in Xmonad because of Home-Manager FUCK-UP...
-      home.keyboard = null;
+      homeManager = {
+        home.keyboard = null;
 
-      # Prevent x11 askPass prompt on git push:
-      programs.ssh.askPassword = "";
+        # Prevent x11 askPass prompt on git push:
+        programs.ssh.askPassword = "";
 
-      # Core Services:
-      services.autorandr.enable = true;
-      services.gnome-keyring.enable = true;
+        # Core Services:
+        services = {
+          autorandr.enable = true;
+          gnome-keyring.enable = true;
 
-      services.blueman.enable = true;
-      services.blueman-applet.enable = true;
+          blueman.enable = true;
+          blueman-applet.enable = true;
 
-      services.status-notifier-watcher.enable = true;
-      services.network-manager-applet.enable = true;
+          status-notifier-watcher.enable = true;
+          network-manager-applet.enable = true;
 
-      # Extras:
-      services.xidlehook.enable = true;
-      services.xidlehook.not-when-audio = true;
-      services.xidlehook.not-when-fullscreen = true;
+          # Extras:
+          services.xidlehook = {
+            enable = true;
+            not-when-audio = true;
+            not-when-fullscreen = true;
 
-      services.xidlehook.environment = {
-        "primary-display" = "$(xrandr | awk '/ primary/{print $1}')";
+            environment = {
+              "primary-display" = "$(xrandr | awk '/ primary/{print $1}')";
+            };
+
+            timers = [
+              {
+                delay = 60;
+                command =
+                  ''xrandr --output "$PRIMARY_DISPLAY" --brightness .1'';
+                canceller =
+                  ''xrandr --output "$PRIMARY_DISPLAY" --brightness 1'';
+              }
+              {
+                delay = 180;
+                command = "betterlockscreen -l dim";
+              }
+              {
+                delay = 300;
+                command = "systemctl suspend";
+              }
+            ];
+          };
+
+          random-background.enable = true;
+          random-background.display = "fill";
+          random-background.imageDirectory = "%h/Pictures/Wallpapers/Randomize";
+
+          xsession = {
+            enable = true;
+            numlock.enable = true;
+            preferStatusNotifierItems = true;
+
+            pointerCursor = {
+              name = "Bibata_Amber";
+              package = pkgs.bibata-cursors;
+              defaultCursor = "left_ptr";
+              size = 24;
+            };
+
+            initExtra = ''
+              userresources = "${config.xdg.configHome}"/x11/Xresources
+              [ -f "$userresources" ] && xrdb -merge "$userresources"
+            '';
+
+            windowManager.command = ''
+              ${pkgs.haskellPackages.icy-xmonad}/bin/icy-xmonad
+            '';
+
+            importedVariables = [ "GDK_PIXBUF_MODULE_FILE" ];
+          };
+
+          home.configFile."betterlockscreenrc".text = ''
+            font="JetBrainsMono Nerd Font"
+          '';
+        };
       };
-
-      services.xidlehook.timers = [
-        {
-          delay = 60;
-          command = ''xrandr --output "$PRIMARY_DISPLAY" --brightness .1'';
-          canceller = ''xrandr --output "$PRIMARY_DISPLAY" --brightness 1'';
-        }
-        {
-          delay = 180;
-          command = "betterlockscreen -l dim";
-        }
-        {
-          delay = 300;
-          command = "systemctl suspend";
-        }
-      ];
-
-      services.random-background.enable = true;
-      services.random-background.display = "fill";
-      services.random-background.imageDirectory =
-        "%h/Pictures/Wallpapers/Randomize";
-
-      services.xsession.enable = true;
-      services.xsession.numlock.enable = true;
-      services.xsession.preferStatusNotifierItems = true;
-
-      services.xsession.pointerCursor = {
-        name = "Bibata_Amber";
-        package = pkgs.bibata-cursors;
-        defaultCursor = "left_ptr";
-        size = 24;
-      };
-
-      services.xsession.initExtra = ''
-        userresources = "${config.xdg.configHome}"/x11/Xresources
-        [ -f "$userresources" ] && xrdb -merge "$userresources"
-      '';
-
-      services.xsession.windowManager.command = ''
-        ${pkgs.haskellPackages.icy-xmonad}/bin/icy-xmonad
-      '';
-
-      services.xsession.importedVariables = [ "GDK_PIXBUF_MODULE_FILE" ];
-
-      xdg.configFile."betterlockscreenrc".text = ''
-        font="JetBrainsMono Nerd Font"
-      '';
     }
 
-    (mkIf customLayout.enable (let
+    (mkIf (cfg.customLayout.enable) (let
       customKeyboardLayout = pkgs.writeText "custom-keyboard-layout" ''
         xkb_keymap {
           xkb_keycodes  { include "evdev+aliases(qwerty)" };
@@ -138,11 +149,10 @@ in {
           xkb_geometry  { include "pc(pc104)"     };
         };
       '';
-
     in {
       environment.etc."X11/keymap.xkb".source = customKeyboardLayout;
 
-      services.xsession.windowManager.command = ''
+      homeManager.services.xsession.windowManager.command = ''
         # Set XKB layout = us+hyper on XMonad start:
         ${pkgs.xorg.xkbcomp}/bin/xkbcomp ${customKeyboardLayout} $DISPLAY
       '';

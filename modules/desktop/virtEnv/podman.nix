@@ -7,7 +7,9 @@ in {
   options.modules.desktop.virtEnv.podman = { enable = mkBoolOpt false; };
 
   config = mkIf cfg.enable {
-    virtualisation.podman.enable = false;
-    virtualisation.podman.dockerCompat = true;
+    virtualisation.podman = {
+      enable = false;
+      dockerCompat = true;
+    };
   };
 }

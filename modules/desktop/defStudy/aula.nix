@@ -5,6 +5,7 @@ with lib.my;
 let cfg = config.modules.desktop.defStudy.aula;
 in {
   options.modules.desktop.defStudy.aula = {
+    enable = mkBoolOpt false;
     anki.enable = mkBoolOpt true;
     libre.enable = mkBoolOpt false;
     zoom.enable = mkBoolOpt false;

@@ -17,6 +17,8 @@ with lib.my; {
       themesDir = mkOpt path "${config.snowflake.modulesDir}/themes";
     };
 
+    homeManager = mkOpt' attrs { } "Define home-manager related settings.";
+
     home = {
       file = mkOpt' attrs { } "Files to place directly in $HOME";
       configFile = mkOpt' attrs { } "Files to place in $XDG_CONFIG_HOME";
@@ -53,15 +55,19 @@ with lib.my; {
     home-manager = {
       useUserPackages = true;
 
+      #   homeManager      ->  home-manager.users.icy-thought
       #   home.file        ->  home-manager.users.icy-thought.home.file
       #   home.configFile  ->  home-manager.users.icy-thought.home.xdg.configFile
       #   home.dataFile    ->  home-manager.users.icy-thought.home.xdg.dataFile
 
       users.${config.user.name} = {
+        homeManager = mkAliasDefinitions options.homeManager;
+
         home = {
           file = mkAliasDefinitions options.home.file;
           stateVersion = config.system.stateVersion;
         };
+
         xdg = {
           configFile = mkAliasDefinitions options.home.configFile;
           dataFile = mkAliasDefinitions options.home.dataFile;

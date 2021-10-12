@@ -2,12 +2,12 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.defBrowser.ungoogled;
+let cfg = config.modules.desktop.defBrowser.unGoogled;
 in {
-  options.modules.defBrowser.ungoogled = { enable = mkBoolOpt false; };
+  options.modules.desktop.defBrowser.unGoogled = { enable = mkBoolOpt false; };
 
   config = mkIf cfg.enable {
-    programs.chromium = {
+    homeManager.programs.chromium = {
       enable = true;
       package = pkgs.ungoogled-chromium;
       extensions = [

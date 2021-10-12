@@ -2,7 +2,9 @@
 
 with lib;
 with lib.my; {
-  xdg.portal.enable = true;
-  xdg.portal.extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
-  xdg.portal.gtkUsePortal = true;
+  xdg.portal = {
+    enable = true;
+    extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
+    gtkUsePortal = true;
+  };
 }

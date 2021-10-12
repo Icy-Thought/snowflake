@@ -7,8 +7,10 @@ in {
   options.modules.shell.direnv = { enable = mkBoolOpt false; };
 
   config = mkIf cfg.enable {
-    programs.direnv.enable = true;
-    programs.direnv.enableFishIntegration = true;
-    programs.direnv.nix-direnv.enable = true;
+    homeManager.programs.direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+      enableFishIntegration = true;
+    };
   };
 }

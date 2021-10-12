@@ -4,7 +4,7 @@ with lib;
 with lib.my;
 let cfg = config.modules.desktop.termEmu;
 in {
-  options.modules.desktop.term = { default = mkOpt types.str "xterm"; };
+  options.modules.desktop.termEmu = { default = mkOpt types.str "xterm"; };
 
   config = {
     services.xserver.desktopManager.xterm.enable =

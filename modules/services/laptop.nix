@@ -4,10 +4,12 @@ with lib;
 with lib.my;
 let cfg = config.modules.services.laptop;
 in {
-  options.modules.services.laptop = { basics = mkBoolOpt false; };
+  options.modules.services.laptop = { enable = mkBoolOpt false; };
 
   config = mkIf cfg.basics {
-    services.upower.enable = true;
-    services.printing.enable = true;
+    services = {
+      upower.enable = true;
+      printing.enable = true;
+    };
   };
 }

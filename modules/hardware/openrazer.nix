@@ -7,10 +7,12 @@ in {
   options.modules.hardware.openrazer = { enable = mkBoolOpt false; };
 
   config = mkIf cfg.enable {
-    hardware.openrazer.enable = true;
-    hardware.openrazer.devicesOffOnScreensaver = false;
-    hardware.openrazer.syncEffectsEnabled = true;
-    hardware.openrazer.mouseBatteryNotifier = true;
+    hardware.openrazer = {
+      enable = true;
+      devicesOffOnScreensaver = false;
+      syncEffectsEnabled = true;
+      mouseBatteryNotifier = true;
+    };
 
     user.extraGroups = [ "plugdev" "openrazer" ];
 

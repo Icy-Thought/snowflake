@@ -7,7 +7,9 @@ in {
   options.modules.desktop.envExtra.taffybar = { enable = mkBoolOpt false; };
 
   config = mkIf cfg.enable {
-    services.taffybar.enable = true;
-    services.taffybar.package = pkgs.haskellPackages.icy-taffybar;
+    homeManager.services.taffybar = {
+      enable = true;
+      package = pkgs.haskellPackages.icy-taffybar;
+    };
   };
 }

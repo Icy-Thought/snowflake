@@ -5,6 +5,7 @@ with lib.my;
 let
   cfg = config.modules.desktop.envManager.leftwm;
   configDir = config.snowflake.configDir;
+  leftDir = config.snowflake.configDir/leftwm;
 in {
   options.modules.desktop.envManager.leftwm = { enable = mkBoolOpt false; };
 
@@ -17,22 +18,34 @@ in {
       shotgun
     ];
 
-    services.xserver.displayManager.lightdm.enable = true;
-    services.xserver.windowManager.leftwm.enable = true;
-    services.xserver.displayManager.defaultSession = "none+leftwm";
+    services.xserver = {
+      displayManager.lightdm.enable = true;
+      windowManager.leftwm.enable = true;
+      displayManager.defaultSession = "none+leftwm";
+    };
 
-    xdg.configFile."leftwm/themes/garden/liquid" = {
-      source = ./liquid; # TODO
+    home.configFile = {
+      "leftwm/config.toml".source = "${leftDir}/environment/config.toml";
+
+      "leftwm/themes/garden/theme.toml".source =
+        "${leftDir}/environment/theme.toml";
+
+      "leftwm/default-apps.sh".source =
+        "${leftDir}/environment/default-apps.sh";
+    };
+
+    home.configFile."leftwm/themes/garden/liquid" = {
+      source = "${leftDir}/liquid";
       recursive = true;
     };
 
-    xdg.configFile."leftwm/themes/garden" = {
-      source = ./scripts;
+    home.configFile."leftwm/themes/garden" = {
+      source = "${leftDir}/scripts";
       recursive = true;
     };
 
-    xdg.configFile."leftwm/themes/garden/assets" = {
-      source = ./assets;
+    home.configFile."leftwm/themes/garden/assets" = {
+      source = "${leftDir}/assets";
       recursive = true;
     };
   };

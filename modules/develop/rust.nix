@@ -16,8 +16,10 @@ in {
     })
 
     {
-      env.CARGO_HOME = "$XDG_DATA_HOME/cargo";
-      env.PATH = [ "$CARGO_HOME/bin" ];
+      env = {
+        CARGO_HOME = "$XDG_DATA_HOME/cargo";
+        PATH = [ "$CARGO_HOME/bin" ];
+      };
 
       environment.shellAliases = {
         rs = "rustc";

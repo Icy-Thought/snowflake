@@ -2,127 +2,168 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.desktop.termEmu.alacritty;
+let
+  cfg = config.modules.desktop.termEmu.alacritty;
+  configDir = config.snowflake.configDir;
+
+  ts = import "${configDir}/termTheme.nix";
+  font = ts.fonts.default;
+  colors = ts.colors.default;
 in {
   options.modules.desktop.termEmu.alacritty = {
     enable = mkBoolOpt false;
-    activePalette = mkOpt (nullOr str) null;
+    applyPalette = mkBoolOpt false;
   };
 
   config = mkIf cfg.enable (mkMerge [
     {
-      programs.alacritty.enable = true;
-      programs.alacritty.settings = {
-        env.TERM = "alacritty-direct";
-        env.WINIT_HIDPI_FACTOR = "1";
-        env.WINIT_X11_SCALE_FACTOR = "1";
+      homeManager.programs.alacritty = {
+        enable = true;
+        settings = {
+          env.TERM = "alacritty-direct";
+          env.WINIT_HIDPI_FACTOR = "1";
+          env.WINIT_X11_SCALE_FACTOR = "1";
 
-        window.dynamic_title = true;
-        window.dimensions.columns = 96;
-        window.dimensions.lines = 28;
+          window.dynamic_title = true;
+          window.dimensions.columns = 96;
+          window.dimensions.lines = 28;
 
-        window.position.x = 50;
-        window.position.y = 50;
+          window.position.x = 50;
+          window.position.y = 50;
 
-        window.padding.x = 25;
-        window.padding.y = 25;
+          window.padding.x = 25;
+          window.padding.y = 25;
 
-        window.dynamic_padding = false;
-        window.decorations = "none";
+          window.dynamic_padding = false;
+          window.decorations = "none";
 
-        scrolling.history = 5000;
-        scrolling.multiplier = 3;
-        scrolling.faux_multiplier = 3;
+          scrolling.history = 5000;
+          scrolling.multiplier = 3;
+          scrolling.faux_multiplier = 3;
 
-        selection.semantic_escape_chars = '',│`|:"' ()[]{}<>'';
-        selection.save_to_clipboard = false;
+          selection.semantic_escape_chars = '',│`| = "' ()[]{}<>'';
+          selection.save_to_clipboard = false;
 
-        shell.program = "fish";
+          shell.program = "fish";
 
-        live_config_reload = true;
+          live_config_reload = true;
 
-        font.normal.family = "JetBrainsMonoMedium Nerd Font";
-        font.normal.style = "Medium";
+          font.normal.family = "${font.name}";
+          font.normal.style = "Medium";
 
-        font.bold.family = "JetBrainsMonoMedium Nerd Font";
-        font.bold.style = "Bold";
+          font.bold.family = "${font.name}";
+          font.bold.style = "Bold";
 
-        font.italic.family = "JetBrainsMonoMedium Nerd Font";
-        font.italic.style = "Italic";
+          font.italic.family = "${font.name}";
+          font.italic.style = "Italic";
 
-        font.size = 13.0;
+          font.size = "${font.size}";
 
-        font.offset.x = 0;
-        font.offset.y = 0;
+          font.offset.x = 0;
+          font.offset.y = 0;
 
-        font.glyph_offset.x = 0;
-        font.glyph_offset.y = 0;
+          font.glyph_offset.x = 0;
+          font.glyph_offset.y = 0;
 
-        font.use_thin_strokes = true;
+          font.use_thin_strokes = true;
 
-        draw_bold_text_with_bright_colors = false;
+          draw_bold_text_with_bright_colors = false;
 
-        cursor.style = "Block";
-        cursor.unfocused_hollow = true;
+          cursor.style = "Block";
+          cursor.unfocused_hollow = true;
 
-        background_opacity = 1.0;
+          background_opacity = 1.0;
 
-        key_bindings = [
-          {
-            key = "N";
-            mods = "Control|Shift";
-            action = "SpawnNewInstance";
-          }
-          {
-            key = "Q";
-            mods = "Control";
-            action = "Quit";
-          }
-          {
-            key = "V";
-            mods = "Control|Shift";
-            action = "Paste";
-          }
-          {
-            key = "C";
-            mods = "Control|Shift";
-            action = "Copy";
-          }
-          {
-            key = "NumpadAdd";
-            mods = "Control";
-            action = "IncreaseFontSize";
-          }
-          {
-            key = "NumpadSubtract";
-            mods = "Control";
-            action = "DecreaseFontSize";
-          }
-          {
-            key = "Key0";
-            mods = "Control";
-            action = "ResetFontSize";
-          }
-        ];
+          key_bindings = [
+            {
+              key = "N";
+              mods = "Control|Shift";
+              action = "SpawnNewInstance";
+            }
+            {
+              key = "Q";
+              mods = "Control";
+              action = "Quit";
+            }
+            {
+              key = "V";
+              mods = "Control|Shift";
+              action = "Paste";
+            }
+            {
+              key = "C";
+              mods = "Control|Shift";
+              action = "Copy";
+            }
+            {
+              key = "NumpadAdd";
+              mods = "Control";
+              action = "IncreaseFontSize";
+            }
+            {
+              key = "NumpadSubtract";
+              mods = "Control";
+              action = "DecreaseFontSize";
+            }
+            {
+              key = "Key0";
+              mods = "Control";
+              action = "ResetFontSize";
+            }
+          ];
 
-        mouse_bindings = [{
-          mouse = "Middle";
-          action = "PasteSelection";
-        }];
+          mouse_bindings = [{
+            mouse = "Middle";
+            action = "PasteSelection";
+          }];
 
-        url.launcher = "open";
-        url.modifiers = "shift";
+          url.launcher = "open";
+          url.modifiers = "shift";
+        };
       };
     }
 
-    (mkIf cfg.activePalette == "ayu-dark" {
-      programs.kitty.settings.import =
-        [ "${configDir}/alacritty/ayu-dark.yaml" ];
-    })
+    (mkIf cfg.applyPalette.enable {
+      homeManager.programs.alacritty.settings = {
+        colors = rec {
+          primary = {
+            foreground = colors.foreground;
+            background = colors.background;
+          };
 
-    (mkIf cfg.activePalette == "onedark" {
-      programs.kitty.settings.import =
-        [ "${configDir}/alacritty/onedark.yaml" ];
+          cursor = {
+            text = colors.cursorForeground;
+            cursor = colors.cursorBackground;
+          };
+
+          selection = {
+            text = colors.selectionForeground;
+            background = colors.selectionBackground;
+          };
+
+          normal = {
+            black = colors.black;
+            red = colors.red;
+            green = colors.green;
+            yellow = colors.yellow;
+            blue = colors.blue;
+            magenta = colors.magenta;
+            cyan = colors.cyan;
+            white = colors.white;
+          };
+
+          bright = {
+            black = colors.brightBlack;
+            red = colors.brightRed;
+            green = colors.brightGreen;
+            yellow = colors.brightYellow;
+            blue = colors.brightBlue;
+            magenta = colors.brightMagenta;
+            cyan = colors.brightCyan;
+            white = colors.brightWhite;
+          };
+        };
+      };
     })
   ]);
 }

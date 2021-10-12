@@ -12,18 +12,20 @@ in {
     user.packages = with pkgs; [ rofi-systemd ];
 
     # TODO: proper theme + options after styled properly.. current != good.
-    programs.rofi.enable = true;
-    programs.rofi.theme = "${configDir}/rofi/launcher/ribbon-left.rasi";
-    programs.rofi.terminal = "${pkgs.kitty}/bin/kitty";
+    homeManager.programs.rofi = {
+      enable = true;
+      theme = "${configDir}/rofi/launcher/ribbon-left.rasi";
+      terminal = "${pkgs.kitty}/bin/kitty";
 
-    programs.rofi.extraConfig = {
-      font = "Iosevka 11";
-      show-icons = true;
-      icon-theme = "Whitesur-dark";
-      display-drun = "λ";
-      drun-display-format = "{name}";
-      disable-history = false;
-      sidebar-mode = false;
+      extraConfig = {
+        font = "Iosevka 11";
+        show-icons = true;
+        icon-theme = "Whitesur-dark";
+        display-drun = "λ";
+        drun-display-format = "{name}";
+        disable-history = false;
+        sidebar-mode = false;
+      };
     };
   };
 }

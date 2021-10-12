@@ -2,12 +2,14 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.envDisplay.gdm;
+let cfg = config.modules.desktop.envDisplay.gdm;
 in {
-  options.modules.envDisplay.gdm = { enable = mkBoolOpt false; };
+  options.modules.desktop.envDisplay.gdm = { enable = mkBoolOpt false; };
 
   config = mkIf cfg.enable {
-    services.xserver.displayManager.gdm.enable = true;
-    services.xserver.displayManager.gdm.wayland = true;
+    services.xserver.displayManager = {
+      gdm.enable = true;
+      gdm.wayland = true;
+    };
   };
 }

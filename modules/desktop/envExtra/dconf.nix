@@ -10,7 +10,7 @@ in {
   options.modules.desktop.envExtra.dconf = { enable = mkBoolOpt false; };
 
   config = mkIf cfg.enable {
-    dconf.settings = {
+    homeManager.dconf.settings = {
       "ca/desrt/dconf-editor" = {
         saved-pathbar-path = "/org/gnome/desktop/applications/office/";
         saved-view = "/org/gnome/desktop/applications/office/";

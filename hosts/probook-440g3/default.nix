@@ -1,44 +1,123 @@
-{ config, pkgs, lib, ... }:
+{ pkgs, config, lib, ... }: {
 
-let
-  imports = [
-    ../modules/common.nix
-    ../modules/nixos/fcitx5.nix
-    ../modules/desktop-managers/plasma.nix
-    # ../modules/window-managers/xmonad.nix
-  ];
+  imports = [ ./hwCfg.nix ];
 
-in {
-  inherit imports;
+  # Hardware-related Modules:
+  modules.hardware = {
+    audio.enable = true;
+    # openrazer.enable = true;
+  };
 
-  fileSystems."/".device = "/dev/disk/by-label/nixos";
-  fileSystems."/".fsType = "ext4";
-  filesystems."/".options = [ "noatime, x-gvfs-hide" ];
+  # Networking-related Modules:
+  modules.networking = {
+    enable = true;
+    wireGuard.enable = true;
+    wireGuard.akkadianVPN.enable = true;
+  };
 
-  fileSystems."/boot".device = "/dev/disk/by-label/boot";
-  fileSystems."/boot".fsType = "vfat";
-  fileSystems."/boot".options = [ "x-gvfs-hide" ];
+  # XMonad-related Modules:
+  modules.desktop = {
+    envManager.xmonad.enable = true;
+    envDisplay.sddm.enable = true;
+    envExtra.taffybar.enable = true;
+  };
 
-  fileSystems."/home".device = "/dev/disk/by-label/home";
-  fileSystems."/home".fsType = "ext4";
-  fileSystems."/home".options = [ "noatime, x-gvfs-hide" ];
+  modules.fonts.enable = true;
 
-  hardware.cpu.intel = { updateMicrocode = true; };
-  hardware.opengl.extraPackages = with pkgs; [
-    intel-compute-runtime
-    vaapiIntel
-    vaapiVdpau
-    libvdpau-va-gl
-  ];
+  modules.desktop.inputMF = { spellCheck.enable = true; };
+
+  # Terminal-related Modules:
+  modules.desktop.termEmu = {
+    default = "alacritty";
+    alacritty.enable = true;
+    alacritty.applyPalette.enable = true;
+  };
+
+  # Editor-related Modules:
+  modules.desktop.txtEditor = {
+    default = "emacs";
+    emacs.enable = true;
+    # nvim.enable = true;
+  };
+
+  # Browser-related Modules:
+  modules.desktop.defBrowser = {
+    default = "firefox";
+    firefox.enable = true;
+    unGoogled.enable = true;
+  };
+
+  # Random Application Modules:
+  modules.desktop = {
+    defExtra.chat.enable = true;
+    defExtra.docViewer.enable = true;
+  };
+
+  # Media-related Modules:
+  modules.desktop.defMedia = {
+    mpv.enable = true;
+    spotify.enable = true;
+    # graphics.enable = true;
+  };
+
+  # Services-related Modules:
+  modules.services = {
+    xserver.enable = true;
+    xserver.touch.enable = true;
+
+    kdeconnect.enable = true;
+    laptop.enable = true;
+  };
+
+  # Shell-related Modules:
+  modules.shell = {
+    git.enable = true;
+    bash.enable = true;
+    fish.enable = true;
+    starship.enable = true;
+    htop.enable = true;
+    neofetch.enable = true;
+    printTermColor.enable = true;
+  };
+
+  fileSystems."/" = {
+    device = "/dev/disk/by-label/nixos";
+    fsType = "ext4";
+    options = [ "noatime, x-gvfs-hide" ];
+  };
+
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-label/boot";
+    fsType = "vfat";
+    options = [ "x-gvfs-hide" ];
+  };
+
+  fileSystems."/home" = {
+    device = "/dev/disk/by-label/home";
+    fsType = "ext4";
+    options = [ "noatime, x-gvfs-hide" ];
+  };
+
+  hardware = {
+    cpu.intel = { updateMicrocode = true; };
+    opengl.extraPackages = with pkgs; [
+      intel-compute-runtime
+      vaapiIntel
+      vaapiVdpau
+      libvdpau-va-gl
+    ];
+  };
 
   i18n.defaultLocale = "en_US.UTF-8";
+  time.timeZone = "Europe/Berlin";
   console.font = "Lat2-Terminus16";
   console.useXkbConfig = true;
-  time.timeZone = "Europe/Berlin";
 
   user.name = "orca";
   networking.hostName = "probook-440g3";
 
-  services.xserver.videoDrivers = [ "modesetting" ];
-  services.xserver.useGlamor = true;
+  services.xserver = {
+    videoDrivers = [ "modesetting" ];
+    useGlamor = true;
+  };
 }

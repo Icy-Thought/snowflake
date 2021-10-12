@@ -2,9 +2,9 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.desktop.envScript.screenshot;
+let cfg = config.modules.desktop.envScript.microphone;
 in {
-  options.modules.desktop.envScript.screenshot = { enable = mkBoolOpt false; };
+  options.modules.desktop.envScript.microphone = { enable = mkBoolOpt false; };
 
   config = mkIf cfg.enable {
     user.packages = with pkgs;

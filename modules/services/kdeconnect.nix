@@ -7,8 +7,10 @@ in {
   options.modules.services.kdeconnect = { enable = mkBoolOpt false; };
 
   config = mkIf cfg.enable {
-    services.kdeconnect.enable = true;
-    services.kdeconnect.indicator = true;
+    homeManager.services.kdeconnect = {
+      enable = true;
+      indicator = true;
+    };
 
     networking.firewall.allowedTCPPortRanges = [{
       from = 1714;

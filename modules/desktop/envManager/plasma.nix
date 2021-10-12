@@ -9,8 +9,10 @@ in {
   options.modules.desktop.envManager.plasma = { enable = mkBoolOpt false; };
 
   config = mkIf cfg.enable {
-    services.xserver.desktopManager.plasma5.enable = true;
-    services.xserver.displayManager.sddm.enable = true;
+    services.xserver = {
+      desktopManager.plasma5.enable = true;
+      displayManager.sddm.enable = true;
+    };
 
     user.packages = with pkgs; [
       kdenlive

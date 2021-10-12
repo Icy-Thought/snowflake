@@ -36,7 +36,7 @@ in {
     # See: https://bugzilla.mozilla.org/show_bug.cgi?id=1082717
     env.XDG_DESKTOP_DIR = "$HOME/";
 
-    modules.desktop.browsers.firefox.settings = {
+    modules.desktop.defBrowser.firefox.settings = {
       "devtools.theme" = "dark";
       # Enable userContent.css and userChrome.css for our theme modules:
       "toolkit.legacyUserProfileCustomizations.stylesheets" = true;

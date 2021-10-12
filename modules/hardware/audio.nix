@@ -6,23 +6,25 @@ let cfg = config.modules.hardware.audio;
 in {
   options.modules.hardware.audio = {
     enable = mkBoolOpt false;
-    pulse = mkBoolOpt false;
-    alsa = mkBoolOpt false;
+    pulse = mkBoolOpt true;
+    alsa = mkBoolOpt true;
     jack = mkBoolOpt false;
-    bluetooth = mkBoolOpt false;
+    bluetooth = mkBoolOpt true;
   };
 
   config = mkIf cfg.enable (mkMerge [
     {
       security.rtkit.enable = true;
-      service.pipewire.enable = true;
+      services.pipewire.enable = true;
     }
 
-    (mkIf pulse.enable { service.pipewire.pulse.enable = true; })
+    (mkIf pulse.enable { services.pipewire.pulse.enable = true; })
 
     (mkIf alsa.enable {
-      service.pipewire.alsa.enable = true;
-      services.pipewire.alsa.support32Bit = true;
+      services = {
+        pipewire.alsa.enable = true;
+        pipewire.alsa.support32Bit = true;
+      };
     })
 
     (mkIf jack.enable { services.pipewire.jack.enable = true; })
@@ -30,7 +32,7 @@ in {
     (mkIf bluetooth.enable {
       hardware.bluetooth.enable = true;
 
-      service.pipewire.media-session.config.bluez-monitor.rules = [
+      services.pipewire.media-session.config.bluez-monitor.rules = [
         {
           # Matches all cards
           matches = [{ "device.name" = "~bluez_card.*"; }];

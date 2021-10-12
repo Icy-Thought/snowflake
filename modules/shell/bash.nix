@@ -7,22 +7,24 @@ in {
   options.modules.shell.bash = { enable = mkBoolOpt false; };
 
   config = mkIf cfg.enable {
-    programs.bash.enable = true;
-    programs.bash.historyFileSize = 5000;
-    programs.bash.historySize = 5000;
-    programs.bash.historyIgnore = [ "nvim" ];
+    homeManager.programs.bash = {
+      enable = true;
+      historyFileSize = 5000;
+      historySize = 5000;
+      historyIgnore = [ "nvim" ];
 
-    programs.bash.shellAliases = {
-      ls = "exa -Slhg --icons";
-      lsa = "exa -Slhga --icons";
-      temacs = "emacsclient -t";
+      shellAliases = {
+        ls = "exa -Slhg --icons";
+        lsa = "exa -Slhga --icons";
+        temacs = "emacsclient -t";
 
-      wup = "systemctl start wg-quick-Akkadian-VPN.service";
-      wud = "systemctl stop wg-quick-Akkadian-VPN.service";
+        wup = "systemctl start wg-quick-Akkadian-VPN.service";
+        wud = "systemctl stop wg-quick-Akkadian-VPN.service";
+      };
+
+      bashrcExtra = ''
+        eval "$(starship init bash)"
+      '';
     };
-
-    programs.bash.bashrcExtra = ''
-      eval "$(starship init bash)"
-    '';
   };
 }
