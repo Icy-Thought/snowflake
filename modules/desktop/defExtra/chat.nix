@@ -6,10 +6,10 @@ let cfg = config.modules.desktop.defExtra.chat;
 in {
   options.modules.desktop.defExtra.chat = {
     enable = mkBoolOpt false;
-    discord = mkBoolOpt true;
-    element = mkBoolOpt true;
-    telegram = mkBoolOpt true;
-    signal = mkBoolOpt false;
+    discord.enable = mkBoolOpt true;
+    element.enable = mkBoolOpt true;
+    telegram.enable = mkBoolOpt true;
+    signal.enable = mkBoolOpt false;
   };
 
   config = mkIf cfg.enable {

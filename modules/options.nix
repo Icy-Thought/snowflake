@@ -55,24 +55,24 @@ with lib.my; {
     home-manager = {
       useUserPackages = true;
 
+      #   Allow home-manager access through homeManager:
       #   homeManager      ->  home-manager.users.icy-thought
-      #   home.file        ->  home-manager.users.icy-thought.home.file
-      #   home.configFile  ->  home-manager.users.icy-thought.home.xdg.configFile
-      #   home.dataFile    ->  home-manager.users.icy-thought.home.xdg.dataFile
+      users.${config.user.name} = mkAliasDefinitions options.homeManager;
+    };
 
-      users.${config.user.name} = {
-        homeManager = mkAliasDefinitions options.homeManager;
+    #   Quick access to homeManager without homeManager.home:
+    #   home.file        ->  home-manager.users.icy-thought.home.file
+    #   home.configFile  ->  home-manager.users.icy-thought.home.xdg.configFile
+    #   home.dataFile    ->  home-manager.users.icy-thought.home.xdg.dataFile
 
-        home = {
-          file = mkAliasDefinitions options.home.file;
-          stateVersion = config.system.stateVersion;
-        };
+    homeManager.home = {
+      file = mkAliasDefinitions options.home.file;
+      stateVersion = config.system.stateVersion;
+    };
 
-        xdg = {
-          configFile = mkAliasDefinitions options.home.configFile;
-          dataFile = mkAliasDefinitions options.home.dataFile;
-        };
-      };
+    homeManager.xdg = {
+      configFile = mkAliasDefinitions options.home.configFile;
+      dataFile = mkAliasDefinitions options.home.dataFile;
     };
 
     users.users.${config.user.name} = mkAliasDefinitions options.user;

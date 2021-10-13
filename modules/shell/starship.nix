@@ -7,13 +7,13 @@ in {
   options.modules.shell.starship = { enable = mkBoolOpt false; };
 
   config = mkIf cfg.enable {
-    homeManager.starship = {
-      starship.enable = true;
-      starship.enableBashIntegration = true;
-      starship.enableFishIntegration = true;
-      starship.enableZshIntegration = false;
+    homeManager.programs.starship = {
+      enable = true;
+      enableBashIntegration = true;
+      enableFishIntegration = true;
+      enableZshIntegration = false;
 
-      starship.settings = {
+      settings = {
         add_newline = true;
         scan_timeout = 10;
 

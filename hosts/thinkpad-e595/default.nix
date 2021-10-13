@@ -23,6 +23,7 @@
   };
 
   modules.fonts.enable = true;
+  modules.themes.active = "ayu-dark";
 
   modules.desktop.inputMF = {
     fcitx5.enable = true;
@@ -41,10 +42,7 @@
   modules.desktop.termEmu = {
     default = "kitty";
     kitty.enable = true;
-    kitty.applyPalette.enable = true;
-
     alacritty.enable = true;
-    alacritty.applyPalette.enable = true;
   };
 
   # Editor-related Modules:
@@ -104,6 +102,7 @@
   modules.services = {
     xserver.enable = true;
     xserver.touch.enable = true;
+    ssh.enable = true;
 
     kdeconnect.enable = true;
     laptop.enable = true;
@@ -129,19 +128,19 @@
 
   # Remove device entry from file-manager:
   fileSystems."/" = {
-    device = "/dev/disk/by-label/nixos";
+    device = "/dev/disk/by-uuid/a2ee4473-ef03-4cb9-8103-ba4c3d8afb1e";
     fsType = "ext4";
     options = [ "noatime, x-gvfs-hide" ];
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-label/boot";
+    device = "/dev/disk/by-uuid/3988-91C5";
     fsType = "vfat";
     options = [ "x-gvfs-hide" ];
   };
 
   fileSystems."/home" = {
-    device = "/dev/disk/by-label/home";
+    device = "/dev/disk/by-uuid/4b1d85cf-c670-4e7e-9b4a-02b3657338dd";
     fsType = "ext4";
     options = [ "noatime, x-gvfs-hide" ];
   };
@@ -156,9 +155,6 @@
   console.font = "Lat2-Terminus16";
   console.useXkbConfig = true;
   time.timeZone = "Europe/Berlin";
-
-  user.name = "sirius";
-  networking.hostName = "thinkpad-e595";
 
   systemd.services.systemd-udev-settle.enable = false;
 

@@ -8,6 +8,7 @@ in {
 
   config = mkIf cfg.enable {
     programs.adb.enable = true;
-    users.extraGroups = [ "adbusers" ];
+
+    user.extraGroups = [ "adbusers" ];
   };
 }

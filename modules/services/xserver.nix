@@ -6,7 +6,7 @@ let cfg = config.modules.services.xserver;
 in {
   options.modules.services.xserver = {
     enable = mkBoolOpt false;
-    touch = mkBoolOpt false;
+    touch.enable = mkBoolOpt false;
   };
 
   config = mkIf cfg.enable (mkMerge [
@@ -15,7 +15,7 @@ in {
       services.xserver.layout = "us";
     }
 
-    (mkIf touchpad.enable {
+    (mkIf cfg.touch.enable {
       services.xserver.libinput = {
         enable = true;
         touchpad.naturalScrolling = true;

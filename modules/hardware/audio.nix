@@ -6,10 +6,10 @@ let cfg = config.modules.hardware.audio;
 in {
   options.modules.hardware.audio = {
     enable = mkBoolOpt false;
-    pulse = mkBoolOpt true;
-    alsa = mkBoolOpt true;
-    jack = mkBoolOpt false;
-    bluetooth = mkBoolOpt true;
+    pulse.enable = mkBoolOpt true;
+    alsa.enable = mkBoolOpt true;
+    jack.enable = mkBoolOpt false;
+    bluetooth.enable = mkBoolOpt true;
   };
 
   config = mkIf cfg.enable (mkMerge [
@@ -18,18 +18,18 @@ in {
       services.pipewire.enable = true;
     }
 
-    (mkIf pulse.enable { services.pipewire.pulse.enable = true; })
+    (mkIf cfg.pulse.enable { services.pipewire.pulse.enable = true; })
 
-    (mkIf alsa.enable {
+    (mkIf cfg.alsa.enable {
       services = {
         pipewire.alsa.enable = true;
         pipewire.alsa.support32Bit = true;
       };
     })
 
-    (mkIf jack.enable { services.pipewire.jack.enable = true; })
+    (mkIf cfg.jack.enable { services.pipewire.jack.enable = true; })
 
-    (mkIf bluetooth.enable {
+    (mkIf cfg.bluetooth.enable {
       hardware.bluetooth.enable = true;
 
       services.pipewire.media-session.config.bluez-monitor.rules = [

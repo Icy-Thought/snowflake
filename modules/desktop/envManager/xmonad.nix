@@ -8,7 +8,7 @@ let
 in {
   options.modules.desktop.envManager.xmonad = {
     enable = mkBoolOpt false;
-    customLayout = mkBoolOpt false;
+    customLayout.enable = mkBoolOpt false;
   };
 
   config = mkIf cfg.enable (mkMerge [
@@ -50,86 +50,83 @@ in {
         '';
       }];
 
+      # Prevent x11 askPass prompt on git push:
+      programs.ssh.askPassword = "";
+
+      services = {
+        autorandr.enable = true;
+        blueman.enable = true;
+      };
+
       # Fix xkbOptions (not loading) issue in Xmonad because of Home-Manager FUCK-UP...
       homeManager = {
         home.keyboard = null;
 
-        # Prevent x11 askPass prompt on git push:
-        programs.ssh.askPassword = "";
-
         # Core Services:
         services = {
-          autorandr.enable = true;
           gnome-keyring.enable = true;
-
-          blueman.enable = true;
           blueman-applet.enable = true;
 
           status-notifier-watcher.enable = true;
           network-manager-applet.enable = true;
+        };
 
-          # Extras:
-          services.xidlehook = {
-            enable = true;
-            not-when-audio = true;
-            not-when-fullscreen = true;
+        # Extras:
+        services.xidlehook = {
+          enable = true;
+          not-when-audio = true;
+          not-when-fullscreen = true;
 
-            environment = {
-              "primary-display" = "$(xrandr | awk '/ primary/{print $1}')";
-            };
-
-            timers = [
-              {
-                delay = 60;
-                command =
-                  ''xrandr --output "$PRIMARY_DISPLAY" --brightness .1'';
-                canceller =
-                  ''xrandr --output "$PRIMARY_DISPLAY" --brightness 1'';
-              }
-              {
-                delay = 180;
-                command = "betterlockscreen -l dim";
-              }
-              {
-                delay = 300;
-                command = "systemctl suspend";
-              }
-            ];
+          environment = {
+            "primary-display" = "$(xrandr | awk '/ primary/{print $1}')";
           };
 
-          random-background.enable = true;
-          random-background.display = "fill";
-          random-background.imageDirectory = "%h/Pictures/Wallpapers/Randomize";
+          timers = [
+            {
+              delay = 60;
+              command = ''xrandr --output "$PRIMARY_DISPLAY" --brightness .1'';
+              canceller = ''xrandr --output "$PRIMARY_DISPLAY" --brightness 1'';
+            }
+            {
+              delay = 180;
+              command = "betterlockscreen -l dim";
+            }
+            {
+              delay = 300;
+              command = "systemctl suspend";
+            }
+          ];
+        };
 
-          xsession = {
-            enable = true;
-            numlock.enable = true;
-            preferStatusNotifierItems = true;
+        services.random-background = {
+          enable = true;
+          display = "fill";
+          imageDirectory = "%h/Pictures/Wallpapers/Randomize";
+        };
 
-            pointerCursor = {
-              name = "Bibata_Amber";
-              package = pkgs.bibata-cursors;
-              defaultCursor = "left_ptr";
-              size = 24;
-            };
+        xsession = {
+          enable = true;
+          numlock.enable = true;
+          preferStatusNotifierItems = true;
 
-            initExtra = ''
-              userresources = "${config.xdg.configHome}"/x11/Xresources
-              [ -f "$userresources" ] && xrdb -merge "$userresources"
-            '';
-
-            windowManager.command = ''
-              ${pkgs.haskellPackages.icy-xmonad}/bin/icy-xmonad
-            '';
-
-            importedVariables = [ "GDK_PIXBUF_MODULE_FILE" ];
+          pointerCursor = {
+            name = "Bibata_Amber";
+            package = pkgs.bibata-cursors;
+            defaultCursor = "left_ptr";
+            size = 24;
           };
 
-          home.configFile."betterlockscreenrc".text = ''
-            font="JetBrainsMono Nerd Font"
+          windowManager.command = ''
+            ${pkgs.haskellPackages.icy-xmonad}/bin/icy-xmonad
           '';
+
+          importedVariables = [ "GDK_PIXBUF_MODULE_FILE" ];
         };
       };
+
+      home.configFile."betterlockscreenrc".text = ''
+        font="JetBrainsMono Nerd Font"
+      '';
     }
 
     (mkIf (cfg.customLayout.enable) (let

@@ -6,7 +6,7 @@ let cfg = config.modules.desktop.envDisplay.sddm;
 in {
   options.modules.desktop.envDisplay.sddm = {
     enable = mkBoolOpt false;
-    themeAerial = mkBoolOpt true;
+    themeAerial.enable = mkBoolOpt true;
   };
 
   config = mkIf cfg.enable (mkMerge [
@@ -20,8 +20,10 @@ in {
         sha256 = "jaGQaClD7Hk4eWh+rMX8ZtcGDzb9aCu+NX5gzJ1JXQg=";
       })}";
 
-      environment.systemPackages =
-        [ qt5.qtmultimedia libsForQt5.qt5.qtgraphicaleffects ];
+      environment.systemPackages = with pkgs; [
+        qt5.qtmultimedia
+        libsForQt5.qt5.qtgraphicaleffects
+      ];
     })
   ]);
 
