@@ -100,6 +100,7 @@
 
   hardware = {
     cpu.intel = { updateMicrocode = true; };
+
     opengl.extraPackages = with pkgs; [
       intel-compute-runtime
       vaapiIntel
@@ -108,10 +109,7 @@
     ];
   };
 
-  i18n.defaultLocale = "en_US.UTF-8";
-  time.timeZone = "Europe/Berlin";
-  console.font = "Lat2-Terminus16";
-  console.useXkbConfig = true;
+  networking.hostName = "ProBook-NixOS";
 
   services.xserver = {
     videoDrivers = [ "modesetting" ];

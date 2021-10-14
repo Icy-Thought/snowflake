@@ -9,6 +9,7 @@ in {
   config = mkIf cfg.enable {
     user.packages = with pkgs; [
       lutris
+      openssl
       osu-lazer
       wineWowPackages.fonts
       wineWowPackages.staging

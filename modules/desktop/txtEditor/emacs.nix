@@ -63,13 +63,7 @@ in {
 
     env.PATH = [ "$XDG_CONFIG_HOME/emacs/bin" ];
 
-    environment.variables.DOOMDIR = "${configDir}/doom-emacs/config";
-
-    # home.file.".doom.d" = {
-    #   source = "${configDir}/doom-emacs";
-    #   recursive = true;
-    #   onChange = "doom -y sync -u";
-    # };
+    environment.variables.DOOMDIR = "${configDir}/doom-emacs";
 
     # init.doomEmacs = mkIf cfg.doom.enable ''
     #   if [ -d $HOME/.config/emacs ]; then

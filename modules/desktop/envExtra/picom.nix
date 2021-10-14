@@ -60,6 +60,7 @@ in {
         "window_type = 'utility'"
         "_COMPTON_SHADOW@:32c = 0"
         "class_g = 'Rofi'"
+        "name = 'hacksaw'"
       ];
 
       shadowOffsets = [ (-7) (-7) ];

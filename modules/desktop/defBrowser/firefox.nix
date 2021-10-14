@@ -27,7 +27,8 @@ in {
         desktopName = "Firefox-DevEdition (Private)";
         genericName = "Open a Private Firefox-DevEdition Window";
         icon = "firefox";
-        exec = "${firefox-bin}/bin/firefox-devedition --private-window";
+        exec =
+          "${firefox-devedition-bin}/bin/firefox-devedition --private-window";
         categories = "Network";
       })
     ];
@@ -89,9 +90,9 @@ in {
     in {
       "${cfgPath}/profiles.ini".text = ''
         [Profile0]
-        Name=default
+        Name=dev-edition-default
         IsRelative=1
-        Path=${cfg.profileName}.default
+        Path=${cfg.profileName}.dev-edition-default
         Default=1
 
         [General]
@@ -99,7 +100,7 @@ in {
         Version=2
       '';
 
-      "${cfgPath}/${cfg.profileName}.default/user.js" =
+      "${cfgPath}/${cfg.profileName}.dev-edition-default/user.js" =
         mkIf (cfg.settings != { } || cfg.extraConfig != "") {
           text = ''
             ${concatStrings (mapAttrsToList (name: value: ''
@@ -109,10 +110,10 @@ in {
           '';
         };
 
-      "${cfgPath}/${cfg.profileName}.default/chrome/userChrome.css" =
+      "${cfgPath}/${cfg.profileName}.dev-edition-default/chrome/userChrome.css" =
         mkIf (cfg.userChrome != "") { text = cfg.userChrome; };
 
-      "${cfgPath}/${cfg.profileName}.default/chrome/userContent.css" =
+      "${cfgPath}/${cfg.profileName}.dev-edition-default/chrome/userContent.css" =
         mkIf (cfg.userContent != "") { text = cfg.userContent; };
     };
   }]);

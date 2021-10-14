@@ -20,6 +20,7 @@
     envManager.xmonad.enable = true;
     envDisplay.sddm.enable = true;
     envExtra.taffybar.enable = true;
+    envExtra.customLayout.enable = true;
   };
 
   modules.fonts.enable = true;
@@ -102,7 +103,7 @@
   modules.services = {
     xserver.enable = true;
     xserver.touch.enable = true;
-    ssh.enable = true;
+    # ssh.enable = true;
 
     kdeconnect.enable = true;
     laptop.enable = true;
@@ -112,6 +113,7 @@
   # Shell-related Modules:
   modules.shell = {
     adb.enable = true;
+    gnupg.enable = true;
     git.enable = true;
     bash.enable = true;
     fish.enable = true;
@@ -151,10 +153,7 @@
       [ pkgs.amdvlk pkgs.driversi686Linux.amdvlk pkgs.rocm-opencl-icd ];
   };
 
-  i18n.defaultLocale = "en_US.UTF-8";
-  console.font = "Lat2-Terminus16";
-  console.useXkbConfig = true;
-  time.timeZone = "Europe/Berlin";
+  networking.hostName = "ThinkPad-NixOS";
 
   systemd.services.systemd-udev-settle.enable = false;
 

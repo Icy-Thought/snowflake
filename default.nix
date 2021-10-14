@@ -46,23 +46,29 @@ with lib.my; {
   # hardware-configuration.nix or fileSystem config.
   fileSystems."/".device = mkDefault "/dev/disk/by-label/nixos";
 
-  # Use the latest kernel
   boot = {
     kernelPackages = pkgs.linuxPackages_zen;
     kernelParams = [ "pcie_aspm.policy=performance" ];
 
     loader = {
-      efi.canTouchEfiVariables = mkDefault true;
       efi.efiSysMountPoint = "/boot";
-
-      # TODO: replace with systemd-boot when theming == possible.
-      grub.enable = mkDefault true;
-      grub.version = 2;
-      grub.device = "nodev";
-      grub.efiSupport = mkDefault true;
-      grub.useOSProber = mkDefault true;
+      efi.canTouchEfiVariables = mkDefault true;
     };
   };
+
+  boot.loader.grub = {
+    enable = mkDefault true;
+    version = 2;
+    device = "nodev";
+    efiSupport = mkDefault true;
+    useOSProber = mkDefault true;
+  };
+
+  console.font = mkDefault "Lat2-Terminus16";
+  console.useXkbConfig = mkDefault true;
+
+  time.timeZone = mkDefault "Europe/Berlin";
+  i18n.defaultLocale = mkDefault "en_US.UTF-8";
 
   environment.systemPackages = with pkgs; [
     bind

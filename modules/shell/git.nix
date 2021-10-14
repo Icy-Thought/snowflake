@@ -50,7 +50,7 @@ in {
       ];
 
       signing.signByDefault = true;
-      signing.key = "22CF239720AAD89B";
+      signing.key = "B593E438DDAB3C66";
 
       userName = "Icy-Thought";
       userEmail = "gilganyx@pm.me";

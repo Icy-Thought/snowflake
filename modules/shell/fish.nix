@@ -7,6 +7,8 @@ in {
   options.modules.shell.fish = { enable = mkBoolOpt false; };
 
   config = mkIf cfg.enable {
+    users.defaultUserShell = pkgs.fish;
+
     user.packages = with pkgs; [
       exa
       skim
@@ -19,9 +21,10 @@ in {
       fd
     ];
 
-    homeManager = {
-      programs.fish.enable = true;
-      programs.fish.shellInit = ''
+    homeManager.programs.fish = {
+      enable = true;
+
+      shellInit = ''
         # General Configurations
         set fish_greeting
         set -gx EDITOR nvim
@@ -93,9 +96,9 @@ in {
         starship init fish | source
       '';
 
-      programs.fish.shellAliases = { exa = "exa --group-directories-first"; };
+      shellAliases = { exa = "exa --group-directories-first"; };
 
-      programs.fish.shellAbbrs = {
+      shellAbbrs = {
         # General
         ls = "exa -Slhg --icons";
         lsa = "exa -Slhga --icons";
@@ -112,8 +115,8 @@ in {
         yta = "youtube-dl -x --audio-format mp3";
 
         # VPN
-        wup = "systemctl start wg-quick-Akkadian-VPN.service";
-        wud = "systemctl stop wg-quick-Akkadian-VPN.service";
+        wup = "systemctl start wg-quick-akkadianVPN.service";
+        wud = "systemctl stop wg-quick-akkadianVPN.service";
 
         # Git
         g = "git";

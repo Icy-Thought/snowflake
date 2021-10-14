@@ -41,22 +41,22 @@ in {
 
         live_config_reload = true;
 
-        fonts.normal = {
+        font.normal = {
           family = "JetBrainsMonoMedium Nerd Font";
           style = "Medium";
         };
 
-        fonts.bold = {
+        font.bold = {
           family = "JetBrainsMonoMedium Nerd Font";
           style = "Bold";
         };
 
-        fonts.italic = {
+        font.italic = {
           family = "JetBrainsMonoMedium Nerd Font";
           style = "Italic";
         };
 
-        fonts.size = 13.0;
+        font.size = 13.0;
 
         font.offset = {
           x = 0;
