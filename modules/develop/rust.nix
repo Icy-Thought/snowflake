@@ -6,7 +6,7 @@ let cfg = config.modules.develop.rust;
 in {
   options.modules.develop.rust = {
     enable = mkBoolOpt false;
-    enableGlobally = mkBoolOpt true;
+    enableGlobally = mkBoolOpt false;
   };
 
   config = mkIf cfg.enable (mkMerge [
@@ -14,7 +14,6 @@ in {
       nixpkgs.overlays = [ inputs.rust.overlay ];
 
       user.packages = with pkgs; [ rust-bin.beta.latest.default crate2nix ];
-      # env.PATH = [ "$(${pkgs.yarn}/bin/yarn global bin)" ];
     })
 
     {

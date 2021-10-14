@@ -153,8 +153,6 @@
       [ pkgs.amdvlk pkgs.driversi686Linux.amdvlk pkgs.rocm-opencl-icd ];
   };
 
-  networking.hostName = "ThinkPad-NixOS";
-
   systemd.services.systemd-udev-settle.enable = false;
 
   services = {

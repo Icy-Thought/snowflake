@@ -144,8 +144,8 @@ logDebug = do
 -- enableLogger "System.Taffybar.Widget.Generic.PollingLabel" DEBUG
 
 cssFilesByHostname =
-  [ ("ThinkPad-NixOS", ["taffybar.css"]),
-    ("ProBook-NixOS", ["taffybar.css"])
+  [ ("thinkpad-e595", ["taffybar.css"]),
+    ("probook-440g3", ["taffybar.css"])
   ]
 
 main = do
@@ -281,10 +281,10 @@ main = do
         fromMaybe baseConfig $
           lookup
             hostName
-            [ ( "ThinkPad-NixOS",
+            [ ( "thinkpad-e595",
                 baseConfig {endWidgets = laptopEndWidgets}
               ),
-              ( "ProBook-NixOS",
+              ( "probook-440g3",
                 baseConfig {endWidgets = laptopEndWidgets}
               )
             ]
