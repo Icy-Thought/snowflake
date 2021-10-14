@@ -94,26 +94,31 @@ sudo ln -s flake.lock /etc/nixos
 #+end_src
 
 ** Replacing Necessary Configuration Entries
+*** Create Your =hosts= Dir
+Create a directory inside the =hosts= with the name of the desired hostname for that device; let's call this directory =X=.
+#+begin_src sh :noeval
+mkdir -p hosts/X
+#+end_src
+
+Now create a =default.nix= file inside that folder and for the sake of speeding the process up, I suggest you copy over my =thinkpad-e595/default.nix= to your directory (=X=) and later customize it to your liking.
+#+begin_src sh :noeval
+cd hosts && cp thinkpad-e595/default.nix X
+#+end_src
+
 *** =Hardware-Configuration.nix=
-Place your newly generated =hardware-configuration.nix= inside =modules/hardware= and make sure to update the hardware entry in =flake.nix=.
+Place your newly generated =hardware-configuration.nix= inside your =hosts/X= and make sure to import your =hardware-configuration.nix= in the =default.nix= file of your device folder.
 
 #+CAPTION: Example: ~ThinkPad-E595~ defined as a valid system environment.
 #+begin_src nix :noeval
-nixosConfigurations = {
-  thinkpad = mkNixosConfig {
-    hardwareModules = [
-      ./modules/hardware/ThinkPad-E595.nix
-      # nixos-hardware.nixosModules.lenovo-thinkpad-e595
-    ];
-    extraModules = [ ./profiles/ThinkPad-E595.nix ];
-  };
-};
+import = [ ./hardware-configuration.nix ];
 #+end_src
 
-*** =profiles/X=
-By default, Nautilus & Dolphin does not hide system partitions from mounted devices category. Since this has not been the experience I have been accustomed to, I have chosen to hide those partitions from appearing in the mounted devices category of those file managers. I have also added several kernel parameters and other specific configurations for my setup in this repository.
+*** Hide Your File-System From ~Nautilus~ & ~Dolphin~
+By default, Nautilus & Dolphin does not hide system partitions from mounted devices category. Since this has not been the experience I have been accustomed to, I have chosen to hide those partitions from the mounted devices category of those file managers. I have also added several kernel parameters and other specific configurations for my setup in this repository, which you can find in my =default.nix= file.
 
-What you are required to edit is the ~fileSystems~ entries in =profiles/X= (where =X= stands for host machine) and also the specific parts which you wish to exclude from your setup, such as: kernel parameters, =modules/wireguard/default.nix=, packages to be installed among other home-related configurations.
+What you are required to edit is:
+1. ~fileSystems~ entries in =default.nix=.
+2. The specific parts which you wish to exclude from your setup, such as: kernel parameters, modules to disable, packages to be installed among other configurations.
 
 #+CAPTION: Example: hiding =/boot= from Nautilus mounted devices.
 #+begin_src nix :noeval
@@ -125,26 +130,16 @@ fileSystems."/boot" = {
 #+end_src
 
 *** Installing Nix-Flake System
-After completing your setup, there remains one command to be executed (device = =nixosConfigurations.device_name= entry in =flake.nix=);
+After completing your setup, there remains one command to be executed (device = folder name of your device placed inside =hosts=, which in this case is =X=:
 #+begin_src shell :noeval
-sudo nixos-rebuild switch --flake '/etc/nixos#device_name --impure
+sudo nixos-rebuild switch --flake '/etc/nixos#X --impure
 reboot
 #+end_src
 
 * Doom Emacs
-If you have replicated my setup, you need to do nothing but ~git clone~ doom-emacs repository and proceed with the installation process. If not, add the following packages to your =packages.nix=:
+If you have replicated my setup, you need to do nothing but ~git clone~ doom-emacs repository and enable the =emacs= module in your =X/default.nix=:
 #+begin_src nix :noeval
-environment.systemPackages = with pkgs; [
-  # required dependencies
-  git
-  emacs
-  ripgrep
-
-  # optional dependencies
-  coreutils
-  fd
-  clang
-];
+modules.desktop.txtEditor.emacs.enable = true;
 #+end_src
 
 To proceed with the installation of doom-emacs on your newly installed/configured nix-flake system:
