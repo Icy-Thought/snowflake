@@ -5,6 +5,10 @@ with lib.my;
 let
   cfg = config.modules.desktop.txtEditor.emacs;
   configDir = config.snowflake.configDir;
+
+  emacsWithPackages = with pkgs;
+    ((emacsPackagesNgGen emacsPgtkGcc).emacsWithPackages
+      (epkgs: [ epkgs.vterm epkgs.pdf-tools epkgs.emojify ]));
 in {
   options.modules.desktop.txtEditor.emacs = {
     enable = mkBoolOpt false;
@@ -19,8 +23,7 @@ in {
 
     user.packages = with pkgs; [
       binutils
-      ((emacsPackagesNgGen emacsPgtkGcc).emacsWithPackages
-        (epkgs: [ epkgs.vterm ]))
+      emacsWithPackages
 
       ## Doom Dependencies
       (ripgrep.override { withPCRE2 = true; })
@@ -45,7 +48,6 @@ in {
       ccls
       # :lang haskell
       stylish-haskell
-      haskell-language-server
       # :lang javascript
       nodePackages.javascript-typescript-langserver
       # :lang latex & :lang org (latex previews)
@@ -59,11 +61,20 @@ in {
 
     fonts.fonts = [ pkgs.emacs-all-the-icons-fonts ];
 
-    services.emacs.enable = true;
-
+    # Enable access to doom (tool).
     env.PATH = [ "$XDG_CONFIG_HOME/emacs/bin" ];
 
-    environment.variables.DOOMDIR = "${configDir}/doom-emacs";
+    # Default DOOMDIR => Snowflake/config/doom-emacs.
+    environment.variables = {
+      EMACSDIR = "$XDG_CONFIG_HOME/emacs";
+      DOOMDIR = "${configDir}/doom-emacs";
+    };
+
+    # Enable emacs --daemon on envManager launch.
+    services.emacs = {
+      enable = true;
+      package = emacsWithPackages;
+    };
 
     # init.doomEmacs = mkIf cfg.doom.enable ''
     #   if [ -d $HOME/.config/emacs ]; then

@@ -13,13 +13,16 @@ in {
   };
 
   config = mkIf cfg.enable {
-    user.packages = with pkgs; [
-      (mkIf cfg.discord.enable master.discord)
-      (mkIf cfg.element.enable element-desktop)
-      (mkIf cfg.telegram.enable tdesktop)
-      (mkIf cfg.signal.enable signal-desktop)
-    ];
+    user.packages = with pkgs;
+      (if cfg.discord.enable then [ master.discord ] else [ ])
 
-    #TODO: discord (powercord) + declerative setup.
+      ++ (if cfg.element.enable then [ element-desktop ] else [ ])
+
+      ++ (if cfg.telegram.enable then [ tdesktop ] else [ ])
+
+      ++ (if cfg.signal.enable then [ signal-desktop ] else [ ]);
+
+    # TODO: discord (powercord) + declerative setup.
+
   };
 }

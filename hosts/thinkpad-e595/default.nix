@@ -11,6 +11,8 @@
   # Networking-related Modules:
   modules.networking = {
     enable = true;
+    networkManager.enable = true;
+
     wireGuard.enable = true;
     wireGuard.akkadianVPN.enable = true;
   };

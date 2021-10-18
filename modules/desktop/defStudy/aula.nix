@@ -11,11 +11,12 @@ in {
     zoom.enable = mkBoolOpt false;
   };
 
-  config = {
-    user.packages = with pkgs; [
-      (mkIf cfg.anki.enable anki)
-      (mkIf cfg.libre.enable libreoffice)
-      (mkIf cfg.zoom.enable zoom-us)
-    ];
+  config = mkIf cfg.enable {
+    user.packages = with pkgs;
+      (if cfg.anki.enable then [ anki ] else [ ])
+
+      ++ (if cfg.libre.enable then [ libreoffice ] else [ ])
+
+      ++ (if cfg.zoom.enable then [ zoom-us ] else [ ]);
   };
 }

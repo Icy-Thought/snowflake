@@ -6,7 +6,7 @@ let cfg = config.modules.networking;
 in {
   options.modules.networking = {
     enable = mkBoolOpt false;
-    networkManager.enable = mkBoolOpt true;
+    networkManager.enable = mkBoolOpt false;
     networkD.enable = mkBoolOpt false;
   };
 

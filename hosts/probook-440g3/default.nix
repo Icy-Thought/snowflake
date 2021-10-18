@@ -11,15 +11,15 @@
   # Networking-related Modules:
   modules.networking = {
     enable = true;
+    networkManager.enable = true;
     wireGuard.enable = true;
     wireGuard.akkadianVPN.enable = true;
   };
 
   # XMonad-related Modules:
   modules.desktop = {
-    envManager.xmonad.enable = true;
+    envManager.plasma.enable = true;
     envDisplay.sddm.enable = true;
-    envExtra.taffybar.enable = true;
   };
 
   modules.fonts.enable = true;
@@ -72,6 +72,7 @@
   # Shell-related Modules:
   modules.shell = {
     git.enable = true;
+    gnupg.enable = true;
     bash.enable = true;
     fish.enable = true;
     starship.enable = true;
