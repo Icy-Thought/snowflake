@@ -53,7 +53,7 @@ in {
       signing.key = "B593E438DDAB3C66";
 
       userName = "Icy-Thought";
-      userEmail = "gilganyx@pm.me";
+      userEmail = "icy-thought@pm.me";
 
       extraConfig = {
         core.editor = "emacsclient -t";
