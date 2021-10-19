@@ -116,7 +116,7 @@
 
 (defun org-babel-tangle-config ()
   (when (string-equal (buffer-file-name)
-                      (expand-file-name "~/git/Icy-Thought/Snowflake/config/doom-emacs/config/README.org"))
+                      (expand-file-name "~/git/Icy-Thought/Snowflake/config/doom-emacs/README.org"))
     (let ((org-config-babel-evaluate nil))
       (org-babel-tangle))))
 

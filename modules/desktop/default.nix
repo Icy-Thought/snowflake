@@ -18,7 +18,7 @@ in {
       }
     ];
 
-    user.packages = with pkgs; [ bitwarden gnome.geary qalculate-gtk ];
+    user.packages = with pkgs; [ bitwarden qalculate-gtk ];
 
     # Take care of the garbage:
     system.userActivationScripts.cleanupHome = ''

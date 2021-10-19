@@ -74,7 +74,6 @@ with lib.my; {
     bind
     cached-nix-shell
     git
-    neovim
     wget
     gnumake
     unzip

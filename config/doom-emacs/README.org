@@ -232,7 +232,7 @@ Since we don't want to disable org-confirm-babel-evaluate all of the time, do it
 #+begin_src emacs-lisp
 (defun org-babel-tangle-config ()
   (when (string-equal (buffer-file-name)
-                      (expand-file-name "~/git/Icy-Thought/Snowflake/config/doom-emacs/config/README.org"))
+                      (expand-file-name "~/git/Icy-Thought/Snowflake/config/doom-emacs/README.org"))
     (let ((org-config-babel-evaluate nil))
       (org-babel-tangle))))
 
@@ -501,6 +501,11 @@ The reason to why this is important is to access the most recent version of Ayu-
 
 #+begin_src emacs-lisp :tangle "packages.el"
 (unpin! doom-themes)
+#+end_src
+
+*** (Temporary Fix): xref
+#+begin_src emacs-lisp :tangle "packages.el"
+(package! xref :pin "a82f459b37b31546bf274388baf8aca79e9c30d9")
 #+end_src
 
 * Inspiration
