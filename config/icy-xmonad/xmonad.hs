@@ -66,7 +66,6 @@ import           XMonad.Hooks.WorkspaceHistory
 import           XMonad.Layout.Accordion
 import           XMonad.Layout.BoringWindows
 import           XMonad.Layout.ConditionalLayout
-import           XMonad.Layout.Cross
 import           XMonad.Layout.Decoration
 import           XMonad.Layout.GridVariants            (Grid (Grid))
 import           XMonad.Layout.LayoutCombinators
@@ -82,7 +81,6 @@ import           XMonad.Layout.NoBorders
 import qualified XMonad.Layout.Renamed                 as RN
 import           XMonad.Layout.Spacing
 import           XMonad.Layout.Tabbed
-import           XMonad.Layout.ThreeColumns
 import           XMonad.Main                           (launch)
 import qualified XMonad.Operations
 import qualified XMonad.StackSet                       as W
@@ -441,11 +439,9 @@ layoutsStart layout = (layout, [Layout layout])
 layoutInfo =
   layoutsStart (rename "Grid" (Grid $ 16 / 10))
     |||! rename "Large Main" (Tall 1 (3 / 100) (3 / 4))
-    |||! rename "Centered" (ThreeCol 1 (3 / 100) (1 / 2))
     |||! rename "2 Columns" (Tall 1 (3 / 100) (1 / 2))
     |||! rename "3 Columns" (multiCol [1, 1] 2 0.01 (-0.5))
     |||! Accordion
-    |||! simpleCross
     |||! myTabbed
   where
     myTabbed = rename "Tabbed" $ tabbed shrinkText icyTheme
