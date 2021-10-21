@@ -93,56 +93,50 @@ import           XMonad.Util.NamedWindows              (getName)
 import           XMonad.Util.Run
 import           XMonad.Util.WorkspaceCompare
 
-myConfig =
-  def
-    { modMask = mod4Mask,
-      terminal = "kitty",
-      manageHook =
-        namedScratchpadManageHook scratchpads,
-      layoutHook = myLayoutHook,
-      borderWidth = 2,
-      normalBorderColor = icyInactive,
-      focusedBorderColor = icyActive,
-      logHook =
-        updatePointer (0.5, 0.5) (0, 0)
-          <> toggleFadeInactiveLogHook 0.9
-          <> workspaceHistoryHook
-          <> setWorkspaceNames
-          <> activateLogHook (reader W.focusWindow >>= doF)
-          <> logHook def,
-      handleEventHook =
-        followIfNoMagicFocus
-          <> minimizeEventHook
+myConfig = def
+  { modMask            = mod4Mask
+  , terminal           = "kitty"
+  , manageHook         = namedScratchpadManageHook scratchpads
+  , layoutHook         = myLayoutHook
+  , borderWidth        = 2
+  , normalBorderColor  = icyInactive
+  , focusedBorderColor = icyActive
+  , logHook            = updatePointer (0.5, 0.5) (0, 0)
+                         <> toggleFadeInactiveLogHook 0.9
+                         <> workspaceHistoryHook
+                         <> setWorkspaceNames
+                         <> activateLogHook (reader W.focusWindow >>= doF)
+                         <> logHook def
+  , handleEventHook    = followIfNoMagicFocus
+                         <> minimizeEventHook
           -- <> restartEventHook
-          <> myScratchPadEventHook,
-      startupHook = myStartup,
-      keys = customKeys (const []) addKeys
-    }
+                         <> myScratchPadEventHook
+  , startupHook        = myStartup
+  , keys               = customKeys (const []) addKeys
+  }
 
-icyTheme =
-  def
-    { activeColor = icyActive,
-      activeBorderColor = icyActive,
-      activeTextColor = icyInactive,
-      decoHeight = 20,
-      inactiveColor = icyInactive,
-      inactiveBorderColor = icyInactive,
-      inactiveTextColor = icyActive,
-      fontName = "xft:JetBrainsMono Nerd Font:style=Medium"
-    }
+icyTheme = def { activeColor         = icyActive
+               , activeBorderColor   = icyActive
+               , activeTextColor     = icyInactive
+               , decoHeight          = 20
+               , inactiveColor       = icyInactive
+               , inactiveBorderColor = icyInactive
+               , inactiveTextColor   = icyActive
+               , fontName = "xft:JetBrainsMono Nerd Font:style=Medium"
+               }
 
 icyActive = "#FFB454"
 
 icyInactive = "#1A1B25"
 
-restartEventHook e@ClientMessageEvent {ev_message_type = mt} = do
+restartEventHook e@ClientMessageEvent { ev_message_type = mt } = do
   a <- getAtom "XMONAD_RESTART"
   if mt == a
     then XMonad.Operations.restart "icy-xmonad" True >> return (All True)
     else return $ All True
 restartEventHook _ = return $ All True
 
-myNavigation2DConfig = def {defaultTiledNavigation = centerNavigation}
+myNavigation2DConfig = def { defaultTiledNavigation = centerNavigation }
 
 main =
   xmonad
@@ -156,8 +150,7 @@ main =
 -- Utility functions:
 -- Log to a file from anywhere
 writeToHomeDirLog stuff = io $ getLogFile >>= flip appendFile (stuff ++ "\n")
-  where
-    getLogFile = (</> "temp" </> "xmonad.log") <$> getHomeDirectory
+  where getLogFile = (</> "temp" </> "xmonad.log") <$> getHomeDirectory
 
 logWindowSet message =
   withWindowSet $ \ws -> writeToHomeDirLog $ printf "%s -- " message $ show ws
@@ -180,7 +173,7 @@ findM :: (Monad m) => (a -> m (Maybe b)) -> [a] -> m (Maybe b)
 findM f = runMaybeT . msum . map (MaybeT . f)
 
 if' :: Bool -> a -> a -> a
-if' True x _  = x
+if' True  x _ = x
 if' False _ y = y
 
 ifL :: a -> a -> Bool -> a
@@ -194,7 +187,7 @@ functor <$$> value = ($ value) <$> functor
 toggleInMap' :: Ord k => Bool -> k -> M.Map k Bool -> M.Map k Bool
 toggleInMap' d k m =
   let existingValue = M.findWithDefault d k m
-   in M.insert k (not existingValue) m
+  in  M.insert k (not existingValue) m
 
 toggleInMap :: Ord k => k -> M.Map k Bool -> M.Map k Bool
 toggleInMap = toggleInMap' True
@@ -217,12 +210,11 @@ mapP' f f' = map (f A.&&& f')
 minimizedWindows = withMinimized return
 
 visibleWindows =
-  (\\) <$> withWorkspaceR (return . W.integrate' . W.stack)
-    <*> minimizedWindows
+  (\\) <$> withWorkspaceR (return . W.integrate' . W.stack) <*> minimizedWindows
 
 followingWindow action = do
   orig <- withWindowSet (return . W.peek)
-  res <- action
+  res  <- action
   whenJust orig $ windows . W.focusWindow
   return res
 
@@ -238,8 +230,7 @@ isGmailTitle t = isInfixOf "@gmail.com" t && isInfixOf "Gmail" t
 isChromiumClass = isInfixOf "Chromium"
 
 noSpecialChromiumTitles = helper <$> title
-  where
-    helper t = not $ any ($ t) [isGmailTitle]
+  where helper t = not $ any ($ t) [isGmailTitle]
 
 chromiumSelectorBase = isChromiumClass <$> className
 
@@ -252,16 +243,15 @@ gmailSelector = chromiumSelectorBase <&&> fmap isGmailTitle title
 transmissionSelector = fmap (isPrefixOf "Transmission") title
 
 virtualClasses =
-  [ (gmailSelector, "Gmail"),
-    (chromiumSelector, "Chromium"),
-    (transmissionSelector, "Transmission")
+  [ (gmailSelector       , "Gmail")
+  , (chromiumSelector    , "Chromium")
+  , (transmissionSelector, "Transmission")
   ]
 
 -- Commands
 chromiumCommand = "chromium"
 
-gmailCommand =
-  "chromium --new-window https://mail.google.com/mail/u/0/#inbox"
+gmailCommand = "chromium --new-window https://mail.google.com/mail/u/0/#inbox"
 
 firefoxCommand = "firefox-devedition"
 
@@ -271,29 +261,27 @@ firefoxPrvtCommand =
 transmissionCommand = "transmission-gtk"
 
 -- Startup hook
-hostNameToAction =
-  M.fromList
-    [ ("my-hostname", return ())
-    ]
+hostNameToAction = M.fromList [("my-hostname", return ())]
 
 myStartup = do
-  setToggleActiveAll GAPS True
+  setToggleActiveAll GAPS        True
   setToggleActiveAll AVOIDSTRUTS True
   hostName <- io getHostName
   M.findWithDefault (return ()) hostName hostNameToAction
 
 -- Magnify
-data DisableOnTabbedCondition = DisableOnTabbedCondition deriving (Read, Show)
+data DisableOnTabbedCondition = DisableOnTabbedCondition
+  deriving (Read, Show)
 
 instance ModifierCondition DisableOnTabbedCondition where
   shouldApply _ workspaceId = fromMaybe True <$> final
-    where
-      allWorkspaces = withWindowSet $ return . W.workspaces
-      relevantWorkspace = find idMatches <$> allWorkspaces
-      idMatches ws = W.tag ws == workspaceId
-      final =
-        fmap (not . isInfixOf "Tabbed" . description . W.layout)
-          <$> relevantWorkspace
+   where
+    allWorkspaces     = withWindowSet $ return . W.workspaces
+    relevantWorkspace = find idMatches <$> allWorkspaces
+    idMatches ws = W.tag ws == workspaceId
+    final =
+      fmap (not . isInfixOf "Tabbed" . description . W.layout)
+        <$> relevantWorkspace
 
 disableOnTabbed = ConditionalLayoutModifier DisableOnTabbedCondition
 
@@ -334,29 +322,30 @@ data MyToggles
 
 instance Transformer MyToggles Window where
   transform LIMIT x k = k (MutedModifiedLayout $ limitSlice 2 x) unmodifyMuted
-  transform GAPS x k = k (MutedModifiedLayout $ smartSpacing 5 x) unmodifyMuted
-  transform MAGICFOCUS x k = k (MutedModifiedLayout $ magicFocus x) unmodifyMuted
+  transform GAPS  x k = k (MutedModifiedLayout $ smartSpacing 5 x) unmodifyMuted
+  transform MAGICFOCUS x k =
+    k (MutedModifiedLayout $ magicFocus x) unmodifyMuted
   transform MAGNIFY x k = k (MutedModifiedLayout $ myMagnify x) unmodifyMuted
-  transform AVOIDSTRUTS x k = k (MutedModifiedLayout $ avoidStruts x) unmodifyMuted
+  transform AVOIDSTRUTS x k =
+    k (MutedModifiedLayout $ avoidStruts x) unmodifyMuted
 
 myToggles = [LIMIT, GAPS, MAGICFOCUS, MAGNIFY, AVOIDSTRUTS]
 
 otherToggles = [NBFULL, MIRROR, NOBORDERS, SMARTBORDERS]
 
 toggleHandlers =
-  [ (Toggle GAPS, toggleAll),
-    (Toggle MAGNIFY, toggleAll),
-    (Toggle AVOIDSTRUTS, toggleAll)
+  [ (Toggle GAPS       , toggleAll)
+  , (Toggle MAGNIFY    , toggleAll)
+  , (Toggle AVOIDSTRUTS, toggleAll)
   ]
 
 instance Eq (Toggle Window) where
   (Toggle v) == v2 = Just v == fromToggle v2
 
-fromToggle :: forall t. Typeable t => Toggle Window -> Maybe t
-fromToggle (Toggle v) =
-  if typeOf v == typeRep (Proxy :: Proxy t)
-    then Just $ unsafeCoerce v
-    else Nothing
+fromToggle :: forall t . Typeable t => Toggle Window -> Maybe t
+fromToggle (Toggle v) = if typeOf v == typeRep (Proxy :: Proxy t)
+  then Just $ unsafeCoerce v
+  else Nothing
 
 currentWorkspace = W.workspace . W.current <$> gets windowset
 
@@ -366,32 +355,32 @@ followIfNoMagicFocus =
   followOnlyIf $ maybe False not <$> isToggleActiveInCurrent MAGICFOCUS
 
 togglesMap =
-  fmap M.fromList $
-    sequence $
-      map toggleTuple myToggles ++ map toggleTuple otherToggles
-  where
-    toggleTuple toggle = do
-      toggleString <- toggleToStringWithState toggle
-      return (toggleString, Toggle toggle)
+  fmap M.fromList
+    $  sequence
+    $  map toggleTuple myToggles
+    ++ map toggleTuple otherToggles
+ where
+  toggleTuple toggle = do
+    toggleString <- toggleToStringWithState toggle
+    return (toggleString, Toggle toggle)
 
 toggleStateToString = maybe "N/A" (ifL "ON" "OFF")
 
 toggleToStringWithState :: (Transformer t Window, Show t) => t -> X String
 toggleToStringWithState toggle =
-  printf "%s (%s)" (show toggle) . toggleStateToString
+  printf "%s (%s)" (show toggle)
+    .   toggleStateToString
     <$> isToggleActiveInCurrent toggle
 
 selectToggle =
   togglesMap >>= DM.menuMapArgs "rofi" myDmenuArgs >>= flip whenJust runToggle
 
 runToggle toggle =
-  let f = fromMaybe sendMessage $ lookup toggle toggleHandlers
-   in f toggle
+  let f = fromMaybe sendMessage $ lookup toggle toggleHandlers in f toggle
 
-toggleAll (Toggle toggle) = void $
-  runMaybeT $ do
-    active <- MaybeT $ isToggleActiveInCurrent toggle
-    lift $ setToggleActiveAll toggle (not active)
+toggleAll (Toggle toggle) = void $ runMaybeT $ do
+  active <- MaybeT $ isToggleActiveInCurrent toggle
+  lift $ setToggleActiveAll toggle (not active)
 
 mapWorkspaces f = withWindowSet $ \ws -> do
   let c = W.workspace . W.current $ ws
@@ -415,7 +404,8 @@ setToggleActiveAll t a = void $ mapWorkspaces (setToggleActive t a)
 deactivateFull = setToggleActiveCurrent NBFULL False
 
 toggleOr toggle toState action =
-  (currentWorkspace >>= setToggleActive toggle toState) >>= ((`when` action) . not)
+  (currentWorkspace >>= setToggleActive toggle toState)
+    >>= ((`when` action) . not)
 
 deactivateFullOr = toggleOr NBFULL False
 
@@ -426,8 +416,7 @@ andDeactivateFull action = sequence_ [action, deactivateFull]
 goFullscreen = sendMessage $ JumpToLayout "Tabbed"
 
 -- Layout setup
-myTabConfig =
-  def {activeBorderColor = "#66CCCC"}
+myTabConfig = def { activeBorderColor = "#66CCCC" }
 
 rename newName = RN.renamed [RN.Replace newName]
 
@@ -439,16 +428,15 @@ layoutsStart layout = (layout, [Layout layout])
 layoutInfo =
   layoutsStart (rename "Grid" (Grid $ 16 / 10))
     |||! rename "Large Main" (Tall 1 (3 / 100) (3 / 4))
-    |||! rename "2 Columns" (Tall 1 (3 / 100) (1 / 2))
-    |||! rename "3 Columns" (multiCol [1, 1] 2 0.01 (-0.5))
+    |||! rename "2 Columns"  (Tall 1 (3 / 100) (1 / 2))
+    |||! rename "3 Columns"  (multiCol [1, 1] 2 0.01 (-0.5))
     |||! Accordion
     |||! myTabbed
-  where
-    myTabbed = rename "Tabbed" $ tabbed shrinkText icyTheme
+  where myTabbed = rename "Tabbed" $ tabbed shrinkText icyTheme
 
 layoutList = snd layoutInfo
 
-layoutNames = [description layout | layout <- layoutList]
+layoutNames = [ description layout | layout <- layoutList ]
 
 selectLayout = myDmenu layoutNames >>= (sendMessage . JumpToLayout)
 
@@ -469,15 +457,14 @@ myLayoutHook =
     $ fst layoutInfo
 
 -- WindowBringer
-myWindowBringerConfig =
-  def
-    { menuCommand = "rofi",
-      menuArgs = myDmenuArgs ++ ["-format", "i"],
-      windowTitler = myDecorateName
-    }
+myWindowBringerConfig = def { menuCommand  = "rofi"
+                            , menuArgs     = myDmenuArgs ++ ["-format", "i"]
+                            , windowTitler = myDecorateName
+                            }
 
 classIfMatches window entry =
-  if' <$> runQuery (fst entry) window
+  if'
+    <$> runQuery (fst entry) window
     <*> pure (Just $ snd entry)
     <*> pure Nothing
 
@@ -490,69 +477,61 @@ getClass w = fromMaybe <$> getClassRaw w <*> getVirtualClass w
 {-# NOINLINE desktopEntriesMap #-}
 desktopEntriesMap :: MM.MultiMap String DesktopEntry
 desktopEntriesMap =
-  unsafePerformIO $
-    indexDesktopEntriesByClassName <$> getDirectoryEntriesDefault
+  unsafePerformIO
+    $   indexDesktopEntriesByClassName
+    <$> getDirectoryEntriesDefault
 
 lookupIconFromClasses classes =
-  getFirst $
-    fold $
-      First . deIcon
-        <$> (classes >>= idAndLower >>= flip MM.lookup desktopEntriesMap)
-  where
-    idAndLower value = [value, map toLower value]
+  getFirst
+    $   fold
+    $   First
+    .   deIcon
+    <$> (classes >>= idAndLower >>= flip MM.lookup desktopEntriesMap)
+  where idAndLower value = [value, map toLower value]
 
 xGetWindowProperty8 :: Atom -> Window -> X (Maybe [CChar])
 xGetWindowProperty8 a w = withDisplay $ \dpy -> io $ getWindowProperty8 dpy a w
 
 getEWMHClasses w = do
-  atom <- withDisplay $ \d -> io $ internAtom d "WM_CLASS" False
+  atom   <- withDisplay $ \d -> io $ internAtom d "WM_CLASS" False
   mValue <- fmap (UTF8.decode . map fromIntegral) <$> xGetWindowProperty8 atom w
   pure $ filter (not . null) $ splitOn "\NUL" $ join $ maybeToList mValue
 
 myDecorateName :: WindowSpace -> Window -> X String
 myDecorateName ws w = do
-  name <- show <$> getName w
-  classes <- getEWMHClasses w
-  classTitle <- getClass w
+  name            <- show <$> getName w
+  classes         <- getEWMHClasses w
+  classTitle      <- getClass w
   workspaceToName <- getWorkspaceNames'
   let iconName =
-        fromMaybe (map toLower $ head classes) $
-          lookupIconFromClasses classes
-      entryString =
-        printf
-          "%-20s%-40s %+30s in %s \0icon\x1f%s"
-          classTitle
-          (take 40 name)
-          " "
-          (fromMaybe "" $ workspaceToName (W.tag ws))
-          iconName
+        fromMaybe (map toLower $ head classes) $ lookupIconFromClasses classes
+      entryString = printf "%-20s%-40s %+30s in %s \0icon\x1f%s"
+                           classTitle
+                           (take 40 name)
+                           " "
+                           (fromMaybe "" $ workspaceToName (W.tag ws))
+                           iconName
   return entryString
 
-menuIndexArgs ::
-  MonadIO m =>
-  String ->
-  [String] ->
-  [(String, a)] ->
-  m (Maybe a)
+menuIndexArgs
+  :: MonadIO m => String -> [String] -> [(String, a)] -> m (Maybe a)
 menuIndexArgs menuCmd args selectionPairs = do
   selection <- menuFunction (map fst selectionPairs)
   pure $ snd <$> (readMay selection >>= atMay selectionPairs)
-  where
-    menuFunction = DM.menuArgs menuCmd args
+  where menuFunction = DM.menuArgs menuCmd args
 
 -- This needs access to X in order to unminimize, which means that it can't be
 -- done with the existing window bringer interface
-myWindowAct
-  c@WindowBringerConfig {menuCommand = cmd, menuArgs = args}
-  filterVisible
-  action = do
-    visible <- visibleWindows
+myWindowAct c@WindowBringerConfig { menuCommand = cmd, menuArgs = args } filterVisible action
+  = do
+    visible             <- visibleWindows
     currentlyFullscreen <- isToggleActiveInCurrent NBFULL
     let actualConfig
           | fromMaybe False currentlyFullscreen = c
-          | filterVisible = c {windowFilter = return . not . flip elem visible}
+          | filterVisible = c { windowFilter = return . not . flip elem visible
+                              }
           | otherwise = c
-    ws <- M.toList <$> windowMap' actualConfig
+    ws        <- M.toList <$> windowMap' actualConfig
     selection <- menuIndexArgs cmd args ws
     whenJust selection action
 
@@ -560,31 +539,35 @@ doBringWindow window =
   maximizeWindow window >> windows (W.focusWindow window . bringWindow window)
 
 myWindowAction filterVisible =
-  andDeactivateFull . maybeUnminimizeAfter . myWindowAct myWindowBringerConfig filterVisible
+  andDeactivateFull
+    . maybeUnminimizeAfter
+    . myWindowAct myWindowBringerConfig filterVisible
 
-myGoToWindow =
-  myWindowAction False $ windows . greedyFocusWindow
+myGoToWindow = myWindowAction False $ windows . greedyFocusWindow
 
 myBringWindow = myWindowAction True doBringWindow
 
 myReplaceWindow =
-  swapMinimizeStateAfter $
-    myWindowAct myWindowBringerConfig True $ windows . swapFocusedWith
+  swapMinimizeStateAfter
+    $ myWindowAct myWindowBringerConfig True
+    $ windows
+    . swapFocusedWith
 
 -- Workspace Names for EWMH
 setWorkspaceNames :: X ()
 setWorkspaceNames = withWindowSet $ \s -> withDisplay $ \dpy -> do
   sort' <- getSortByIndex
-  let ws = sort' $ W.workspaces s
+  let ws       = sort' $ W.workspaces s
       tagNames = map W.tag ws
       getName tag = maybe "" (" " ++) <$> getWorkspaceName tag
       getFullName :: String -> X String
       getFullName tag = printf "%s%s" tag <$> getName tag
   names <- mapM getFullName tagNames
-  r <- asks theRoot
-  a <- getAtom "_NET_DESKTOP_FULL_NAMES"
-  c <- getAtom "UTF8_STRING"
-  let names' = map fromIntegral $ concatMap ((++ [0]) . UTF8String.encode) names
+  r     <- asks theRoot
+  a     <- getAtom "_NET_DESKTOP_FULL_NAMES"
+  c     <- getAtom "UTF8_STRING"
+  let names' =
+        map fromIntegral $ concatMap ((++ [0]) . UTF8String.encode) names
   io $ changeProperty8 dpy r a c propModeReplace names'
 
 -- Toggleable fade
@@ -595,7 +578,7 @@ instance
   (Typeable a, Read a, Show a, Ord a) =>
   ExtensionClass (ToggleFade a)
   where
-  initialValue = ToggleFade M.empty
+  initialValue  = ToggleFade M.empty
   extensionType = PersistentExtension
 
 fadeEnabledFor query =
@@ -616,20 +599,21 @@ getWindowWorkspace = flip fromMaybe <$> getWindowWorkspace' <*> pure "1"
 getWorkspaceToScreen =
   M.fromList . mapP' (W.tag . W.workspace) W.screen <$> getScreens
 
-getWindowScreen = M.lookup <$> getWindowWorkspace <*> liftX getWorkspaceToScreen
+getWindowScreen =
+  M.lookup <$> getWindowWorkspace <*> liftX getWorkspaceToScreen
 
 getCurrentScreen = join (withFocusedD Nothing (runQuery getWindowScreen))
 
 fadeCondition =
-  isUnfocused <&&> fadeEnabledForWindow
+  isUnfocused
+    <&&> fadeEnabledForWindow
     <&&> fadeEnabledForWorkspace
     <&&> fadeEnabledForScreen
 
 toggleFadeInactiveLogHook = fadeOutLogHook . fadeIf fadeCondition
 
 toggleFadingForActiveWindow =
-  withWindowSet $
-    maybe (return ()) toggleFading . W.peek
+  withWindowSet $ maybe (return ()) toggleFading . W.peek
 
 toggleFadingForActiveWorkspace =
   withWindowSet $ \ws -> toggleFading $ W.currentTag ws
@@ -640,8 +624,7 @@ toggleFading w = setFading' $ toggleInMap w
 
 setFading w f = setFading' $ M.insert w f
 
-setFading' f =
-  XS.get >>= XS.put . (ToggleFade . f . fadesMap)
+setFading' f = XS.get >>= XS.put . (ToggleFade . f . fadesMap)
 
 -- Minimize not in class
 restoreFocus action =
@@ -661,16 +644,19 @@ getMinMaxWindows =
 maximizedWindows = fmap snd getMinMaxWindows
 
 maximizedOtherClass =
-  intersect <$> maximizedWindows
+  intersect
+    <$> maximizedWindows
     <*> (currentWS >>= maybe (return []) windowsWithUnfocusedClass)
 
 minimizedSameClass =
-  intersect <$> minimizedWindows
+  intersect
+    <$> minimizedWindows
     <*> (currentWS >>= maybe (return []) windowsWithFocusedClass)
 
 getClassMatchesWindow w = (==) <$> getClass w
 
-getClassMatchesCurrent = join $ withFocusedD (`seq` False) getClassMatchesWindow
+getClassMatchesCurrent =
+  join $ withFocusedD (`seq` False) getClassMatchesWindow
 
 minimizeOtherClassesInWorkspace =
   actOnWindowsInWorkspace minimizeWindow windowsWithUnfocusedClass
@@ -679,23 +665,17 @@ maximizeSameClassesInWorkspace =
   actOnWindowsInWorkspace maybeUnminimize windowsWithFocusedClass
 
 -- Type annotation is needed to resolve ambiguity
-actOnWindowsInWorkspace ::
-  (Window -> X ()) ->
-  (W.Stack Window -> X [Window]) ->
-  X ()
+actOnWindowsInWorkspace
+  :: (Window -> X ()) -> (W.Stack Window -> X [Window]) -> X ()
 actOnWindowsInWorkspace windowAction getWindowsAction =
-  restoreFocus $
-    withWorkspace (getWindowsAction >=> mapM_ windowAction)
+  restoreFocus $ withWorkspace (getWindowsAction >=> mapM_ windowAction)
 
 -- XXX: The idea behind this was that the normal fullscreen can be annoying if a
 -- new window opens, but this behavior is even more annoying than that, so
 -- nevermind
-goFullscreenDWIM =
-  withWorkspace $ \ws -> do
-    wins <- windowsWithFocusedClass ws
-    if length wins > 1
-      then goFullscreen
-      else minimizeOtherClassesInWorkspace
+goFullscreenDWIM = withWorkspace $ \ws -> do
+  wins <- windowsWithFocusedClass ws
+  if length wins > 1 then goFullscreen else minimizeOtherClassesInWorkspace
 
 windowsWithUnfocusedClass ws = windowsWithOtherClasses (W.focus ws) ws
 
@@ -742,13 +722,13 @@ restoreAllMinimized = minimizedWindows >>= restoreAll
 
 restoreOrMinimizeOtherClasses =
   maximizedOtherClass
-    >>= ifL restoreAllMinimized minimizeOtherClassesInWorkspace . null
+    >>= ifL restoreAllMinimized minimizeOtherClassesInWorkspace
+    .   null
 
-restoreThisClassOrMinimizeOtherClasses =
-  minimizedSameClass >>= \ws ->
-    if' (null ws) minimizeOtherClassesInWorkspace $ restoreAll ws
+restoreThisClassOrMinimizeOtherClasses = minimizedSameClass
+  >>= \ws -> if' (null ws) minimizeOtherClassesInWorkspace $ restoreAll ws
 
-getClassPair w = (,w) <$> getClass w
+getClassPair w = (, w) <$> getClass w
 
 windowClassPairs = withWindowSet $ mapM getClassPair . W.allWindows
 
@@ -770,8 +750,7 @@ classWindow c = do
 
 nextClassWindow = nextClass >>= classWindow
 
-focusNextClass' =
-  (windows . maybe id greedyFocusWindow) =<< nextClassWindow
+focusNextClass' = (windows . maybe id greedyFocusWindow) =<< nextClassWindow
 
 focusNextClass = sameClassOnly focusNextClass'
 
@@ -784,17 +763,15 @@ windowsMatchingClass klass =
   allWindows >>= filterM (((== klass) <$>) . getClass)
 
 gatherClass klass =
-  restoreFocus $
-    windowsMatchingClass klass >>= mapM_ doBringWindow
+  restoreFocus $ windowsMatchingClass klass >>= mapM_ doBringWindow
 
 gatherThisClass = thisClass >>= flip whenJust gatherClass
 
 -- Window switching:
 -- Use greedyView to switch to the correct workspace, and then focus on the
 -- appropriate window within that workspace.
-greedyFocusWindow w ws =
-  W.focusWindow w $
-    W.greedyView (fromMaybe (W.currentTag ws) $ W.findTag w ws) ws
+greedyFocusWindow w ws = W.focusWindow w
+  $ W.greedyView (fromMaybe (W.currentTag ws) $ W.findTag w ws) ws
 
 shiftThenView i = W.greedyView i . W.shift i
 
@@ -807,23 +784,13 @@ setFocusedScreen :: ScreenId -> WindowSet -> WindowSet
 setFocusedScreen to ws =
   maybe ws (`setFocusedScreen'` ws) $ find ((to ==) . W.screen) (W.visible ws)
 
-setFocusedScreen'
-  to
-  ws@W.StackSet
-    { W.current = prevCurr,
-      W.visible = visible
-    } =
-    ws
-      { W.current = to,
-        W.visible = prevCurr : deleteBy screenEq to visible
-      }
-    where
-      screenEq a b = W.screen a == W.screen b
+setFocusedScreen' to ws@W.StackSet { W.current = prevCurr, W.visible = visible }
+  = ws { W.current = to, W.visible = prevCurr : deleteBy screenEq to visible }
+  where screenEq a b = W.screen a == W.screen b
 
-nextScreen ws@W.StackSet {W.visible = visible} =
-  case visible of
-    next : _ -> setFocusedScreen (W.screen next) ws
-    _        -> ws
+nextScreen ws@W.StackSet { W.visible = visible } = case visible of
+  next : _ -> setFocusedScreen (W.screen next) ws
+  _        -> ws
 
 viewOtherScreen ws = W.greedyView ws . nextScreen
 
@@ -839,62 +806,61 @@ swapFocusedWith w ws = W.modify' (swapFocusedWith' w) (W.delete' w ws)
 
 swapFocusedWith' w (W.Stack current ls rs) = W.Stack w ls (rs ++ [current])
 
-swapMinimizeStateAfter action =
-  withFocused $ \originalWindow -> do
-    _ <- action
-    restoreFocus $ do
-      maybeUnminimizeFocused
-      withFocused $ \newWindow ->
-        when (newWindow /= originalWindow) $ minimizeWindow originalWindow
+swapMinimizeStateAfter action = withFocused $ \originalWindow -> do
+  _ <- action
+  restoreFocus $ do
+    maybeUnminimizeFocused
+    withFocused $ \newWindow ->
+      when (newWindow /= originalWindow) $ minimizeWindow originalWindow
 
 -- Named Scratchpads
 nearFullFloat = customFloating $ W.RationalRect l t w h
-  where
-    h = 0.9
-    w = 0.9
-    t = 0.95 - h
-    l = 0.95 - w
+ where
+  h = 0.9
+  w = 0.9
+  t = 0.95 - h
+  l = 0.95 - w
 
 scratchpads =
-  [ NS "bitwarden" bitwardenCommand bitwardenSelector nonFloating,
-    NS "discord" discordCommand discordSelector nonFloating,
-    NS "element" elementCommand elementSelector nonFloating,
-    NS "emacs" emacsCommand emacsSelector nonFloating,
-    NS "gmail" gmailCommand gmailSelector nonFloating,
-    NS "htop" htopCommand htopSelector nonFloating,
-    NS "spotify" spotifyCommand spotifySelector nearFullFloat,
-    NS "Picture-in-Picture" ffPicCommand ffPicSelector defaultFloating,
-    NS "telegram" telegramCommand telegramSelector nonFloating,
-    NS "transmission" transmissionCommand transmissionSelector nearFullFloat,
-    NS "volume" volumeCommand volumeSelector nonFloating
+  [ NS "bitwarden"          bitwardenCommand    bitwardenSelector    nonFloating
+  , NS "discord"            discordCommand      discordSelector      nonFloating
+  , NS "element"            elementCommand      elementSelector      nonFloating
+  , NS "emacs"              emacsCommand        emacsSelector        nonFloating
+  , NS "gmail"              gmailCommand        gmailSelector        nonFloating
+  , NS "htop"               htopCommand         htopSelector         nonFloating
+  , NS "Picture-in-Picture" ffPicCommand ffPicSelector defaultFloating
+  , NS "spotify" spotifyCommand spotifySelector nearFullFloat
+  , NS "telegram"           telegramCommand     telegramSelector     nonFloating
+  , NS "transmission" transmissionCommand transmissionSelector nearFullFloat
+  , NS "volume"             volumeCommand       volumeSelector       nonFloating
   ]
-  where
-    bitwardenCommand = "bitwarden"
-    bitwardenSelector = className =? "Bitwarden"
+ where
+  bitwardenCommand  = "bitwarden"
+  bitwardenSelector = className =? "Bitwarden"
 
-    discordCommand = "discord"
-    discordSelector = className =? "discord"
+  discordCommand    = "discord"
+  discordSelector   = className =? "discord"
 
-    elementCommand = "element-desktop"
-    elementSelector = className =? "Element"
+  elementCommand    = "element-desktop"
+  elementSelector   = className =? "Element"
 
-    emacsCommand = "emacsclient -nc"
-    emacsSelector = className =? "Emacs"
+  emacsCommand      = "emacsclient -nc"
+  emacsSelector     = className =? "Emacs"
 
-    htopCommand = "kitty --title htop -e htop"
-    htopSelector = title =? "htop"
+  htopCommand       = "kitty --title htop -e htop"
+  htopSelector      = title =? "htop"
 
-    spotifyCommand = "spotify"
-    spotifySelector = className =? "Spotify"
+  spotifyCommand    = "spotify"
+  spotifySelector   = className =? "Spotify"
 
-    ffPicCommand = "Picture-in-Picture"
-    ffPicSelector = title =? "Picture-in-Picture"
+  ffPicCommand      = "Picture-in-Picture"
+  ffPicSelector     = title =? "Picture-in-Picture"
 
-    telegramCommand = "telegram-desktop"
-    telegramSelector = className =? "TelegramDesktop"
+  telegramCommand   = "telegram-desktop"
+  telegramSelector  = className =? "TelegramDesktop"
 
-    volumeCommand = "pavucontrol"
-    volumeSelector = className =? "Pavucontrol"
+  volumeCommand     = "pavucontrol"
+  volumeSelector    = className =? "Pavucontrol"
 
 myScratchPadManageHook = namedScratchpadManageHook scratchpads
 
@@ -905,83 +871,69 @@ myScratchPadEventHook =
     <> dynamicPropertyChange "WM_NAME" myScratchPadManageHook
 
 runScratchPadManageHookOnCurrent =
-  join (withFocusedD (Endo id) $ runQuery myScratchPadManageHook) >>= windows . appEndo
+  join (withFocusedD (Endo id) $ runQuery myScratchPadManageHook)
+    >>= windows
+    .   appEndo
 
 scratchPadIsDisplayed name = join $ withFocusedD False query
-  where
-    query = maybe (const $ return False) (runQuery . NS.query) scratchpadInfo
-    scratchpadInfo = find ((name ==) . NS.name) scratchpads
+ where
+  query = maybe (const $ return False) (runQuery . NS.query) scratchpadInfo
+  scratchpadInfo = find ((name ==) . NS.name) scratchpads
 
 manageIfScratchPadIsDisplayed name =
   scratchPadIsDisplayed name >>= (`when` runScratchPadManageHookOnCurrent)
 
 -- TODO: This doesnt work well with minimized windows
 doScratchpad name = do
-  maybeUnminimizeAfter $ deactivateFullAnd $ namedScratchpadAction scratchpads name
+  maybeUnminimizeAfter $ deactivateFullAnd $ namedScratchpadAction scratchpads
+                                                                   name
   manageIfScratchPadIsDisplayed name
 
 -- Raise or spawn
-myRaiseNextMaybe =
-  ((deactivateFullAnd . maybeUnminimizeAfter) .)
-    . raiseNextMaybeCustomFocus greedyFocusWindow
+myRaiseNextMaybe = ((deactivateFullAnd . maybeUnminimizeAfter) .)
+  . raiseNextMaybeCustomFocus greedyFocusWindow
 
-myBringNextMaybe =
-  ((deactivateFullAnd . maybeUnminimizeAfter) .)
-    . raiseNextMaybeCustomFocus greedyBringWindow
+myBringNextMaybe = ((deactivateFullAnd . maybeUnminimizeAfter) .)
+  . raiseNextMaybeCustomFocus greedyBringWindow
 
-bindBringAndRaise ::
-  KeyMask ->
-  KeySym ->
-  X () ->
-  Query Bool ->
-  [((KeyMask, KeySym), X ())]
+bindBringAndRaise
+  :: KeyMask -> KeySym -> X () -> Query Bool -> [((KeyMask, KeySym), X ())]
 bindBringAndRaise mask sym start query =
-  [ ((mask, sym), doRaiseNext),
-    ((mask .|. controlMask, sym), myBringNextMaybe start query),
-    ((mask .|. shiftMask, sym), doRaiseNext)
+  [ ((mask, sym)                , doRaiseNext)
+  , ((mask .|. controlMask, sym), myBringNextMaybe start query)
+  , ((mask .|. shiftMask, sym)  , doRaiseNext)
   ]
-  where
-    doRaiseNext = myRaiseNextMaybe start query
+  where doRaiseNext = myRaiseNextMaybe start query
 
-bindBringAndRaiseMany ::
-  [(KeyMask, KeySym, X (), Query Bool)] ->
-  [((KeyMask, KeySym), X ())]
+bindBringAndRaiseMany
+  :: [(KeyMask, KeySym, X (), Query Bool)] -> [((KeyMask, KeySym), X ())]
 bindBringAndRaiseMany = concatMap (\(a, b, c, d) -> bindBringAndRaise a b c d)
 
 -- Screen shift
-shiftToNextScreen ws =
-  case W.visible ws of
-    W.Screen i _ _ : _ -> W.view (W.tag i) $ W.shift (W.tag i) ws
-    _                  -> ws
+shiftToNextScreen ws = case W.visible ws of
+  W.Screen i _ _ : _ -> W.view (W.tag i) $ W.shift (W.tag i) ws
+  _                  -> ws
 
 shiftToNextScreenX = windows shiftToNextScreen
 
-getNextScreen ws =
-  minimumBy compareScreen candidates
-  where
-    currentId = W.screen $ W.current ws
-    otherScreens = W.visible ws
-    largerId = filter ((> currentId) . W.screen) otherScreens
-    compareScreen a b = compare (W.screen a) (W.screen b)
-    candidates =
-      case largerId of
-        [] -> W.current ws : otherScreens -- Ensure a value will be selected
-        _  -> largerId
+getNextScreen ws = minimumBy compareScreen candidates
+ where
+  currentId    = W.screen $ W.current ws
+  otherScreens = W.visible ws
+  largerId     = filter ((> currentId) . W.screen) otherScreens
+  compareScreen a b = compare (W.screen a) (W.screen b)
+  candidates = case largerId of
+    [] -> W.current ws : otherScreens -- Ensure a value will be selected
+    _  -> largerId
 
-goToNextScreen ws =
-  if screenEq nScreen currScreen
-    then ws
-    else
-      ws
-        { W.current = nScreen,
-          W.visible = currScreen : trimmedVisible
-        }
-  where
-    currScreen = W.current ws
-    nScreen = getNextScreen ws
-    screenEq a b = W.screen a == W.screen b
-    trimmedVisible =
-      filter (not . screenEq nScreen) $ W.visible ws
+goToNextScreen ws = if screenEq nScreen currScreen
+  then ws
+  else ws { W.current = nScreen, W.visible = currScreen : trimmedVisible }
+ where
+  currScreen = W.current ws
+  nScreen    = getNextScreen ws
+  screenEq a b = W.screen a == W.screen b
+  trimmedVisible = filter (not . screenEq nScreen) $ W.visible ws
 
 goToNextScreenX = windows goToNextScreen
 
@@ -998,10 +950,10 @@ directionalLeft = xK_h
 directionalRight = xK_l
 
 buildDirectionalBindings mask commandFn =
-  [ ((mask, directionalUp), commandFn U),
-    ((mask, directionalDown), commandFn D),
-    ((mask, directionalLeft), commandFn L),
-    ((mask, directionalRight), commandFn R)
+  [ ((mask, directionalUp)   , commandFn U)
+  , ((mask, directionalDown) , commandFn D)
+  , ((mask, directionalLeft) , commandFn L)
+  , ((mask, directionalRight), commandFn R)
   ]
 
 myWindowGo direction = do
@@ -1014,120 +966,129 @@ myWindowGo direction = do
       U -> windows W.focusDown
     else windowGo direction True
 
-addKeys conf@XConfig {modMask = modm} =
+addKeys conf@XConfig { modMask = modm } =
   -- Directional navigation
   buildDirectionalBindings modm myWindowGo
-    ++ buildDirectionalBindings
-      (modm .|. shiftMask)
-      (`windowSwap` True)
-    ++ buildDirectionalBindings
-      (modm .|. controlMask)
-      (followingWindow . (`windowToScreen` True))
+    ++ buildDirectionalBindings (modm .|. shiftMask) (`windowSwap` True)
+    ++ buildDirectionalBindings (modm .|. controlMask)
+                                (followingWindow . (`windowToScreen` True))
     ++ buildDirectionalBindings hyper (`screenGo` True)
-    ++ buildDirectionalBindings
-      (hyper .|. shiftMask)
-      (followingWindow . (`screenSwap` True))
-    ++ buildDirectionalBindings
-      (hyper .|. controlMask)
-      shiftToEmptyOnScreen
+    ++ buildDirectionalBindings (hyper .|. shiftMask)
+                                (followingWindow . (`screenSwap` True))
+    ++ buildDirectionalBindings (hyper .|. controlMask) shiftToEmptyOnScreen
     ++
     -- Specific program spawning
-    bindBringAndRaiseMany
-      [ (modalt, xK_g, spawn chromiumCommand, chromiumSelector),
-        (modalt, xK_f, spawn firefoxCommand, firefoxSelector),
-        (modalt, xK_w, spawn firefoxPrvtCommand, firefoxSelector)
-      ]
+       bindBringAndRaiseMany
+         [ (modalt, xK_g, spawn chromiumCommand   , chromiumSelector)
+         , (modalt, xK_f, spawn firefoxCommand    , firefoxSelector)
+         , (modalt, xK_w, spawn firefoxPrvtCommand, firefoxSelector)
+         ]
     ++
     -- Window manipulation
-    [ ((modm, xK_g), myGoToWindow),
-      ((modm, xK_b), myBringWindow),
-      ((modm .|. shiftMask, xK_b), myReplaceWindow),
-      ((modm .|. controlMask, xK_space), deactivateFullOr goFullscreen),
-      ((modm, xK_m), withFocused minimizeWindow),
-      ( (modm .|. shiftMask, xK_m),
-        deactivateFullOr $ withLastMinimized maximizeWindowAndFocus
-      ),
-      ((modm, xK_x), addHiddenWorkspace "NSP" >> windows (W.shift "NSP")),
-      ((modalt, xK_space), deactivateFullOr restoreOrMinimizeOtherClasses),
-      ((modalt, xK_Return), deactivateFullAnd restoreAllMinimized),
-      ((hyper, xK_g), gatherThisClass),
+       [ ((modm, xK_g), myGoToWindow)
+       , ((modm, xK_b), myBringWindow)
+       , ((modm .|. shiftMask, xK_b), myReplaceWindow)
+       , ((modm .|. controlMask, xK_space), deactivateFullOr goFullscreen)
+       , ((modm, xK_m), withFocused minimizeWindow)
+       , ( (modm .|. shiftMask, xK_m)
+         , deactivateFullOr $ withLastMinimized maximizeWindowAndFocus
+         )
+       , ((modm, xK_x), addHiddenWorkspace "NSP" >> windows (W.shift "NSP"))
+       , ((modalt, xK_space), deactivateFullOr restoreOrMinimizeOtherClasses)
+       , ((modalt, xK_Return), deactivateFullAnd restoreAllMinimized)
+       , ((hyper, xK_g), gatherThisClass)
+       ,
       -- Focus/Layout manipulation
-      ((modm, xK_e), goToNextScreenX),
-      ((modm, xK_slash), sendMessage $ Toggle MIRROR),
-      ( (modm, xK_backslash),
-        cycleWorkspaceOnCurrentScreen [xK_Super_L] xK_backslash xK_slash
-      ),
-      ((modm, xK_space), deactivateFullOr $ sendMessage NextLayout),
-      ((modm, xK_z), shiftToNextScreenX),
-      ((modm .|. shiftMask, xK_z), shiftToEmptyNextScreen),
-      ((modm .|. shiftMask, xK_h), shiftToEmptyAndView),
-      ((hyper, xK_5), getWorkspaceDmenu >>= windows . SW.swapWithCurrent),
+         ((modm, xK_e), goToNextScreenX)
+       , ((modm, xK_slash), sendMessage $ Toggle MIRROR)
+       , ( (modm, xK_backslash)
+         , cycleWorkspaceOnCurrentScreen [xK_Super_L] xK_backslash xK_slash
+         )
+       , ((modm, xK_space), deactivateFullOr $ sendMessage NextLayout)
+       , ((modm, xK_z), shiftToNextScreenX)
+       , ((modm .|. shiftMask, xK_z), shiftToEmptyNextScreen)
+       , ((modm .|. shiftMask, xK_h), shiftToEmptyAndView)
+       , ((hyper, xK_5), getWorkspaceDmenu >>= windows . SW.swapWithCurrent)
+       ,
       -- These need to be rebound to support boringWindows
-      ((hyper, xK_e), moveTo Next emptyWS),
+         ((hyper, xK_e), moveTo Next emptyWS)
+       ,
       -- Miscellaneous XMonad
-      ((hyper, xK_1), toggleFadingForActiveWindow),
-      ((hyper .|. shiftMask, xK_1), toggleFadingForActiveWorkspace),
-      ((hyper .|. controlMask, xK_1), toggleFadingForActiveScreen),
-      ((hyper, xK_t), selectToggle),
-      ((modalt, xK_4), selectLimit),
-      ((hyper, xK_3), addWorkspacePrompt def),
-      ((modalt, xK_3), selectWorkspace def),
-      ((hyper .|. mod1Mask, xK_3), removeWorkspace),
-      ((hyper .|. mod1Mask, xK_r), renameWorkspace def),
-      ((hyper, xK_l), selectLayout),
+         ((hyper, xK_1), toggleFadingForActiveWindow)
+       , ((hyper .|. shiftMask, xK_1), toggleFadingForActiveWorkspace)
+       , ((hyper .|. controlMask, xK_1), toggleFadingForActiveScreen)
+       , ((hyper, xK_t), selectToggle)
+       , ((modalt, xK_4), selectLimit)
+       , ((hyper, xK_3), addWorkspacePrompt def)
+       , ((modalt, xK_3), selectWorkspace def)
+       , ((hyper .|. mod1Mask, xK_3), removeWorkspace)
+       , ((hyper .|. mod1Mask, xK_r), renameWorkspace def)
+       , ((hyper, xK_l), selectLayout)
+       ,
       -- ScratchPads
-      ((modalt, xK_b), doScratchpad "bitwarden"),
-      ((modalt, xK_j), doScratchpad "discord"),
-      ((modalt, xK_k), doScratchpad "element"),
-      ((modalt, xK_e), doScratchpad "emacs"),
-      ((modalt, xK_m), doScratchpad "gmail"),
-      ((modalt, xK_h), doScratchpad "htop"),
-      ((modalt, xK_s), doScratchpad "spotify"),
-      ((modalt, xK_l), doScratchpad "telegram"),
-      ((modalt, xK_t), doScratchpad "transmission"),
-      ((modalt, xK_v), doScratchpad "volume"),
+         ((modalt, xK_b), doScratchpad "bitwarden")
+       , ((modalt, xK_j), doScratchpad "discord")
+       , ((modalt, xK_k), doScratchpad "element")
+       , ((modalt, xK_e), doScratchpad "emacs")
+       , ((modalt, xK_m), doScratchpad "gmail")
+       , ((modalt, xK_h), doScratchpad "htop")
+       , ((modalt, xK_s), doScratchpad "spotify")
+       , ((modalt, xK_l), doScratchpad "telegram")
+       , ((modalt, xK_t), doScratchpad "transmission")
+       , ((modalt, xK_v), doScratchpad "volume")
+       ,
       -- Specific program spawning
-      ((modm, xK_p), spawn "rofi -show drun -show-icons"),
-      ((modm .|. shiftMask, xK_p), spawn "rofi -show run"),
-      ((hyper, xK_p), spawn "rofi-systemd"),
-      ((modm .|. shiftMask, xK_x), spawn "betterlockscreen -l"),
+         ((modm, xK_p), spawn "rofi -show drun -show-icons")
+       , ((modm .|. shiftMask, xK_p), spawn "rofi -show run")
+       , ((hyper, xK_p), spawn "rofi-systemd")
+       , ((modm .|. shiftMask, xK_x), spawn "betterlockscreen -l")
+       ,
       -- Playerctl
-      ((modm, xK_Up), spawn "playerctl play-pause"),
-      ((modm, xK_Down), spawn "playerctl play-pause"),
-      ((modm, xK_Right), spawn "playerctl next"),
-      ((modm, xK_Left), spawn "playerctl previous"),
+         ((modm, xK_Up), spawn "playerctl play-pause")
+       , ((modm, xK_Down), spawn "playerctl play-pause")
+       , ((modm, xK_Right), spawn "playerctl next")
+       , ((modm, xK_Left), spawn "playerctl previous")
+       ,
       -- Volume Control
-      ((0, xF86XK_AudioRaiseVolume), spawn "set-volume up"),
-      ((0, xF86XK_AudioLowerVolume), spawn "set-volume down"),
-      ((0, xF86XK_AudioMute), spawn "set-volume toggle"),
+         ((0, xF86XK_AudioRaiseVolume), spawn "set-volume up")
+       , ((0, xF86XK_AudioLowerVolume), spawn "set-volume down")
+       , ((0, xF86XK_AudioMute), spawn "set-volume toggle")
+       ,
       -- ((hyper .|. shiftMask, xK_q), spawn "mute-activeWin"),
-      ((0, xF86XK_AudioMicMute), spawn "set-micVol toggle"),
+      -- ((halt, xK_q), spawn "mute-activeWin only"),
+         ((0, xF86XK_AudioMicMute), spawn "set-micVol toggle")
+       ,
       -- Brightness Control
-      ((0, xF86XK_MonBrightnessUp), spawn "set-brightness up"),
-      ((0, xF86XK_MonBrightnessDown), spawn "set-brightness down"),
+         ((0, xF86XK_MonBrightnessUp), spawn "set-brightness up")
+       , ((0, xF86XK_MonBrightnessDown), spawn "set-brightness down")
+       ,
       -- Screenshot: Current Workspace
-      ((0, xK_Print), spawn "screenshot -workspace"),
-      ((controlMask, xK_Print), spawn "screenshot -copyWorkspace"),
+         ((0, xK_Print), spawn "screenshot -workspace")
+       , ((controlMask, xK_Print), spawn "screenshot -copyWorkspace")
+       ,
       -- Screenshot: Active Window
-      ((mod1Mask, xK_Print), spawn "screenshot -activeWin"),
-      ((controlMask .|. mod1Mask, xK_Print), spawn "screenshot -copyActiveWin"),
+         ((mod1Mask, xK_Print), spawn "screenshot -activeWin")
+       , ( (controlMask .|. mod1Mask, xK_Print)
+         , spawn "screenshot -copyActiveWin"
+         )
+       ,
       -- Screenshot: Selected Area
-      ((shiftMask, xK_Print), spawn "screenshot -selection"),
-      ((controlMask .|. shiftMask, xK_Print), spawn "screenshot -copySelection")
-    ]
+         ((shiftMask, xK_Print), spawn "screenshot -selection")
+       , ( (controlMask .|. shiftMask, xK_Print)
+         , spawn "screenshot -copySelection"
+         )
+       ]
     ++
     -- Replace moving bindings
-    [ ((additionalMask .|. modm, key), windows $ function workspace)
-      | (workspace, key) <- zip (workspaces conf) [xK_1 .. xK_9],
-        (function, additionalMask) <-
-          [ (W.greedyView, 0),
-            (W.shift, shiftMask),
-            (shiftThenView, controlMask)
-          ]
-    ]
-  where
-    modalt = modm .|. mod1Mask
-    hyper = mod3Mask
+       [ ((additionalMask .|. modm, key), windows $ function workspace)
+       | (workspace, key) <- zip (workspaces conf) [xK_1 .. xK_9]
+       , (function, additionalMask) <-
+         [(W.greedyView, 0), (W.shift, shiftMask), (shiftThenView, controlMask)]
+       ]
+ where
+  modalt = modm .|. mod1Mask
+  hyper  = mod3Mask
+  halt   = hyper .|. mod1Mask
 
 -- Local Variables:
 -- flycheck-ghc-args: ("-Wno-missing-signatures")

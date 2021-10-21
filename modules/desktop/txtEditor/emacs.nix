@@ -5,10 +5,6 @@ with lib.my;
 let
   cfg = config.modules.desktop.txtEditor.emacs;
   configDir = config.snowflake.configDir;
-
-  emacsWithPackages = with pkgs;
-    ((emacsPackagesNgGen emacsPgtkGcc).emacsWithPackages
-      (epkgs: [ epkgs.vterm epkgs.pdf-tools epkgs.emojify ]));
 in {
   options.modules.desktop.txtEditor.emacs = {
     enable = mkBoolOpt false;
@@ -18,7 +14,12 @@ in {
     };
   };
 
-  config = mkIf cfg.enable {
+  config = let
+    emacsWithPackages = with pkgs;
+      ((emacsPackagesNgGen emacsPgtkGcc).emacsWithPackages
+        (epkgs: [ epkgs.vterm epkgs.pdf-tools epkgs.emojify ]));
+
+  in mkIf cfg.enable {
     nixpkgs.overlays = [ inputs.emacs.overlay ];
 
     user.packages = with pkgs; [
@@ -47,7 +48,7 @@ in {
       # :lang cc
       ccls
       # :lang haskell
-      stylish-haskell
+      haskellPackages.ormolu
       # :lang javascript
       nodePackages.javascript-typescript-langserver
       # :lang latex & :lang org (latex previews)

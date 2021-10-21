@@ -24,11 +24,13 @@ in {
         noto-fonts-emoji
       ];
 
-      fontconfig.enable = true;
-      fontconfig.defaultFonts = {
-        serif = [ "Cantarell" "Noto Kufi Arabic" ];
-        sansSerif = [ "Cantarell" "Noto Kufi Arabic" ];
-        monospace = [ "Cantarell" "Noto Kufi Arabic" ];
+      fontconfig = {
+        enable = true;
+        defaultFonts = {
+          serif = [ "Cantarell" "Noto Kufi Arabic" ];
+          sansSerif = [ "Cantarell" "Noto Kufi Arabic" ];
+          monospace = [ "Cantarell" "Noto Kufi Arabic" ];
+        };
       };
     };
   };
