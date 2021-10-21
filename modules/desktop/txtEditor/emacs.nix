@@ -22,6 +22,12 @@ in {
   in mkIf cfg.enable {
     nixpkgs.overlays = [ inputs.emacs.overlay ];
 
+    # Enable emacs --daemon on envManager launch.
+    services.emacs = {
+      enable = true;
+      package = emacsWithPackages;
+    };
+
     user.packages = with pkgs; [
       binutils
       emacsWithPackages
@@ -47,8 +53,10 @@ in {
       gnuplot
       # :lang cc
       ccls
+      # :lang dhall
+      # haskellPackages.dhall-lsp-server
       # :lang haskell
-      haskellPackages.ormolu
+      haskell-language-server
       # :lang javascript
       nodePackages.javascript-typescript-langserver
       # :lang latex & :lang org (latex previews)
@@ -69,12 +77,6 @@ in {
     environment.variables = {
       EMACSDIR = "$XDG_CONFIG_HOME/emacs";
       DOOMDIR = "${configDir}/doom-emacs";
-    };
-
-    # Enable emacs --daemon on envManager launch.
-    services.emacs = {
-      enable = true;
-      package = emacsWithPackages;
     };
 
     # init.doomEmacs = mkIf cfg.doom.enable ''

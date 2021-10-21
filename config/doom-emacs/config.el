@@ -71,8 +71,12 @@
         company-minimum-prefix-length 1
         company-show-numbers t))
 
-(setq rustic-lsp-server 'rust-analyzer)           ; Rust-Analyzer
-(setq haskell-stylish-on-save t)                  ; Haskell-Stylish ;)
+(after! haskell-mode
+  (set-formatter! 'stylish-haskell "stylish-haskell"
+    :modes '(haskell-mode)))
+
+(after! rustic
+  (setq rustic-lsp-server 'rust-analyzer))
 
 (setq org-directory "~/org/")                           ; Default Org-Directories
 
