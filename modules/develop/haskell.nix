@@ -7,12 +7,17 @@ in {
   options.modules.develop.haskell = { enable = mkBoolOpt false; };
 
   config = mkIf cfg.enable {
-    user.packages = with pkgs; [
-      ghc
-      cabal-install
-      haskell-language-server
-      haskellPackages.hoogle
-      cabal2nix
-    ];
+    user.packages = with pkgs;
+      [
+        (ghc.withHoogle (self:
+          with self; [
+            cabal2nix
+            cabal-install
+            hie-bios
+            hlint
+            implicit-hie
+            # stack
+          ]))
+      ];
   };
 }
