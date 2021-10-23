@@ -132,21 +132,21 @@
 
   # Remove device entry from file-manager:
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/a2ee4473-ef03-4cb9-8103-ba4c3d8afb1e";
+    device = "/dev/disk/by-label/nixos";
+    fsType = "ext4";
+    options = [ "noatime, x-gvfs-hide" ];
+  };
+
+  fileSystems."/home" = {
+    device = "/dev/disk/by-label/home";
     fsType = "ext4";
     options = [ "noatime, x-gvfs-hide" ];
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/3988-91C5";
+    device = "/dev/disk/by-label/boot";
     fsType = "vfat";
     options = [ "x-gvfs-hide" ];
-  };
-
-  fileSystems."/home" = {
-    device = "/dev/disk/by-uuid/4b1d85cf-c670-4e7e-9b4a-02b3657338dd";
-    fsType = "ext4";
-    options = [ "noatime, x-gvfs-hide" ];
   };
 
   hardware = {

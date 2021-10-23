@@ -82,21 +82,21 @@
   };
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/42c5c3e5-38df-4007-9fff-5c9841c93a0a";
+    device = "/dev/disk/by-label/nixos";
+    fsType = "ext4";
+    options = [ "noatime, x-gvfs-hide" ];
+  };
+
+  fileSystems."/home" = {
+    device = "/dev/disk/by-label/home";
     fsType = "ext4";
     options = [ "noatime, x-gvfs-hide" ];
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/097C-54E2";
+    device = "/dev/disk/by-label/boot";
     fsType = "vfat";
     options = [ "x-gvfs-hide" ];
-  };
-
-  fileSystems."/home" = {
-    device = "/dev/disk/by-uuid/e688ecea-6ebd-4740-bd65-6bc27ae2c0db";
-    fsType = "ext4";
-    options = [ "noatime, x-gvfs-hide" ];
   };
 
   hardware = {
