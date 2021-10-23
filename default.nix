@@ -33,9 +33,6 @@ with lib.my; {
 
     registry = registryInputs // { snowflake.flake = inputs.self; };
     autoOptimiseStore = true;
-
-    gc.automatic = true;
-    gc.options = "--delete-older-than 3d";
   };
 
   system.configurationRevision = with inputs; mkIf (self ? rev) self.rev;
