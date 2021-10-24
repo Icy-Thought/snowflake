@@ -3,10 +3,10 @@
 with lib;
 with lib.my;
 let
-  cfg = config.modules.desktop.txtEditor.emacs;
+  cfg = config.modules.appliances.editors.emacs;
   configDir = config.snowflake.configDir;
 in {
-  options.modules.desktop.txtEditor.emacs = {
+  options.modules.appliances.editors.emacs = {
     enable = mkBoolOpt false;
     doom = {
       enable = mkBoolOpt true;

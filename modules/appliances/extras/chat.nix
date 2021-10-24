@@ -2,9 +2,9 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.desktop.defExtra.chat;
+let cfg = config.modules.appliances.extras.chat;
 in {
-  options.modules.desktop.defExtra.chat = {
+  options.modules.appliances.extras.chat = {
     enable = mkBoolOpt false;
     discord.enable = mkBoolOpt true;
     element.enable = mkBoolOpt true;

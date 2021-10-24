@@ -2,9 +2,9 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.desktop.txtEditor;
+let cfg = config.modules.appliances.editors;
 in {
-  options.modules.desktop.txtEditor = { default = mkOpt types.str "emacs"; };
+  options.modules.appliances.editors = { default = mkOpt types.str "emacs"; };
 
   config = mkIf (cfg.default != null) { env.EDITOR = cfg.default; };
 }

@@ -2,9 +2,9 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.desktop.defMedia.spotify;
+let cfg = config.modules.appliances.media.spotify;
 in {
-  options.modules.desktop.defMedia.spotify = { enable = mkBoolOpt false; };
+  options.modules.appliances.media.spotify = { enable = mkBoolOpt false; };
 
   config = mkIf cfg.enable {
     user.packages = with pkgs; [ spotify ];

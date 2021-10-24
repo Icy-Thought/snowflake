@@ -2,9 +2,9 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.desktop.defBrowser;
+let cfg = config.modules.appliances.browsers;
 in {
-  options.modules.desktop.defBrowser = {
+  options.modules.appliances.browsers = {
     default = mkOpt (with types; nullOr str) null;
   };
 

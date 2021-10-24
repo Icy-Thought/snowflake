@@ -3,10 +3,10 @@
 with lib;
 with lib.my;
 let
-  cfg = config.modules.desktop.defMedia.graphics;
+  cfg = config.modules.appliances.media.graphics;
   configDir = config.snowflake.configDir;
 in {
-  options.modules.desktop.defMedia.graphics = {
+  options.modules.appliances.media.graphics = {
     enable = mkBoolOpt false;
     tools.enable = mkBoolOpt true;
     raster.enable = mkBoolOpt true;

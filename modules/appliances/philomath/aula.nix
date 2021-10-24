@@ -2,9 +2,9 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.desktop.defStudy.aula;
+let cfg = config.modules.appliances.philomath.aula;
 in {
-  options.modules.desktop.defStudy.aula = {
+  options.modules.appliances.philomath.aula = {
     enable = mkBoolOpt false;
     anki.enable = mkBoolOpt true;
     libre.enable = mkBoolOpt false;

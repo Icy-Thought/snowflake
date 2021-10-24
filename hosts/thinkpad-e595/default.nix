@@ -19,76 +19,78 @@
 
   # XMonad-related Modules:
   modules.desktop = {
-    envManager.xmonad.enable = true;
     envDisplay.sddm.enable = true;
-    envExtra.taffybar.enable = true;
-    envExtra.customLayout.enable = true;
+    envManager.xmonad.enable = true;
+
+    inputMF = {
+      fcitx5.enable = true;
+      spellCheck.enable = true;
+    };
+
+    # Extras Modules for XMonad:
+    envExtra = {
+      picom.enable = true;
+      taffybar.enable = true;
+      customLayout.enable = true;
+      gtk.enable = true;
+      rofi.enable = true;
+      dunst.enable = true;
+    };
+
+    # WM-Script Modules:
+    envScript = {
+      brightness.enable = true;
+      microphone.enable = true;
+      screenshot.enable = true;
+      volume.enable = true;
+    };
   };
 
-  modules.fonts.enable = true;
+  modules.fonts.entry.enable = true;
+
   modules.themes.active = "ayu-dark";
 
-  modules.desktop.inputMF = {
-    fcitx5.enable = true;
-    spellCheck.enable = true;
-  };
+  modules.appliance = {
+    termEmu = {
+      default = "kitty";
+      kitty.enable = true;
+      alacritty.enable = true;
+    };
 
-  # Extras Modules for XMonad:
-  modules.desktop.envExtra = {
-    picom.enable = true;
-    gtk.enable = true;
-    rofi.enable = true;
-    dunst.enable = true;
-  };
+    editors = {
+      default = "emacs";
+      emacs.enable = true;
+      # nvim.enable = true;
+    };
 
-  # Terminal-related Modules:
-  modules.desktop.termEmu = {
-    default = "kitty";
-    kitty.enable = true;
-    alacritty.enable = true;
-  };
+    browsers = {
+      default = "firefox";
+      firefox.enable = true;
+      unGoogled.enable = true;
+    };
 
-  # Editor-related Modules:
-  modules.desktop.txtEditor = {
-    default = "emacs";
-    emacs.enable = true;
-    # nvim.enable = true;
-  };
+    extras = {
+      chat.enable = true;
+      docViewer.enable = true;
+      aula.anki.enable = true;
+    };
 
-  # WM-Script Modules:
-  modules.desktop.envScript = {
-    brightness.enable = true;
-    microphone.enable = true;
-    screenshot.enable = true;
-    volume.enable = true;
-  };
+    media = {
+      mpv.enable = true;
+      spotify.enable = true;
+      graphics.enable = true;
+    };
 
-  # Browser-related Modules:
-  modules.desktop.defBrowser = {
-    default = "firefox";
-    firefox.enable = true;
-    unGoogled.enable = true;
-  };
+    philomath.aula = {
+      anki.enable = true;
+      # libre.enable = true;
+      # zoom.enable = true;
+    };
 
-  # Random Application Modules:
-  modules.desktop = {
-    defExtra.chat.enable = true;
-    defExtra.docViewer.enable = true;
-    defStudy.aula.anki.enable = true;
-    # virtEnv.vbox.enable = true;
-  };
-
-  # Media-related Modules:
-  modules.desktop.defMedia = {
-    mpv.enable = true;
-    spotify.enable = true;
-    graphics.enable = true;
-  };
-
-  # Gaming-related Modules:
-  modules.desktop.defGaming = {
-    steam.enable = true;
-    lutris.enable = true;
+    gaming = {
+      steam.enable = true;
+      lutris.enable = true;
+    };
   };
 
   # Development-related Modules:
@@ -141,6 +143,9 @@
     device = "/dev/disk/by-label/home";
     fsType = "ext4";
     options = [ "noatime, x-gvfs-hide" ];
+
+    # TODO: temporary solution for agenix not finding key.
+    neededForBoot = true;
   };
 
   fileSystems."/boot" = {

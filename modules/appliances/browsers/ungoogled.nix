@@ -2,9 +2,9 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.desktop.defBrowser.unGoogled;
+let cfg = config.modules.appliances.browsers.unGoogled;
 in {
-  options.modules.desktop.defBrowser.unGoogled = { enable = mkBoolOpt false; };
+  options.modules.appliances.browsers.unGoogled = { enable = mkBoolOpt false; };
 
   config = mkIf cfg.enable {
     homeManager.programs.chromium = {

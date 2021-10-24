@@ -3,10 +3,10 @@
 with lib;
 with lib.my;
 let
-  cfg = config.modules.desktop.termEmu.alacritty;
+  cfg = config.modules.appliances.termEmu.alacritty;
   colors = config.modules.themes.colors;
 in {
-  options.modules.desktop.termEmu.alacritty = { enable = mkBoolOpt false; };
+  options.modules.appliances.termEmu.alacritty = { enable = mkBoolOpt false; };
 
   config = mkIf cfg.enable {
     homeManager.programs.alacritty = {

@@ -16,48 +16,48 @@
     wireGuard.akkadianVPN.enable = true;
   };
 
-  # XMonad-related Modules:
   modules.desktop = {
-    envManager.plasma.enable = true;
     envDisplay.sddm.enable = true;
+    envManager.plasma.enable = true;
+    inputMF = { spellCheck.enable = true; };
   };
 
-  modules.fonts.enable = true;
+  modules.fonts.entry.enable = true;
+
   modules.themes.active = "one-dark";
 
-  modules.desktop.inputMF = { spellCheck.enable = true; };
+  modules.appliances = {
+    termEmu = {
+      default = "alacritty";
+      alacritty.enable = true;
+    };
 
-  # Terminal-related Modules:
-  modules.desktop.termEmu = {
-    default = "alacritty";
-    alacritty.enable = true;
-  };
+    # Editor-related Modules:
+    editors = {
+      default = "emacs";
+      emacs.enable = true;
+      # nvim.enable = true;
+    };
 
-  # Editor-related Modules:
-  modules.desktop.txtEditor = {
-    default = "emacs";
-    emacs.enable = true;
-    # nvim.enable = true;
-  };
+    # Browser-related Modules:
+    browsers = {
+      default = "firefox";
+      firefox.enable = true;
+      unGoogled.enable = true;
+    };
 
-  # Browser-related Modules:
-  modules.desktop.defBrowser = {
-    default = "firefox";
-    firefox.enable = true;
-    unGoogled.enable = true;
-  };
+    # Random Application Modules:
+    extras = {
+      chat.enable = true;
+      docViewer.enable = true;
+    };
 
-  # Random Application Modules:
-  modules.desktop = {
-    defExtra.chat.enable = true;
-    defExtra.docViewer.enable = true;
-  };
-
-  # Media-related Modules:
-  modules.desktop.defMedia = {
-    mpv.enable = true;
-    spotify.enable = true;
-    # graphics.enable = true;
+    # Media-related Modules:
+    media = {
+      mpv.enable = true;
+      spotify.enable = true;
+      # graphics.enable = true;
+    };
   };
 
   # Services-related Modules:

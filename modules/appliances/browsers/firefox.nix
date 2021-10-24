@@ -2,9 +2,9 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.desktop.defBrowser.firefox;
+let cfg = config.modules.appliances.browsers.firefox;
 in {
-  options.modules.desktop.defBrowser.firefox = with types; {
+  options.modules.appliances.browsers.firefox = with types; {
     enable = mkBoolOpt false;
     profileName = mkOpt types.str config.user.name;
 
@@ -37,7 +37,7 @@ in {
     # See: https://bugzilla.mozilla.org/show_bug.cgi?id=1082717
     env.XDG_DESKTOP_DIR = "$HOME/";
 
-    modules.desktop.defBrowser.firefox.settings = {
+    modules.appliances.browsers.firefox.settings = {
       "devtools.theme" = "dark";
       # Enable userContent.css and userChrome.css for our theme modules:
       "toolkit.legacyUserProfileCustomizations.stylesheets" = true;

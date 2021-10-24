@@ -2,9 +2,9 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.desktop.defGaming.steam;
+let cfg = config.modules.appliances.gaming.steam;
 in {
-  options.modules.desktop.defGaming.steam = with types; {
+  options.modules.appliances.gaming.steam = with types; {
     enable = mkBoolOpt false;
     hardware.enable = mkBoolOpt false;
     libDir = mkOpt str "$XDG_DATA_HOME/steamlib";

@@ -2,9 +2,9 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.desktop.termEmu;
+let cfg = config.modules.appliances.termEmu;
 in {
-  options.modules.desktop.termEmu = { default = mkOpt types.str "xterm"; };
+  options.modules.appliances.termEmu = { default = mkOpt types.str "xterm"; };
 
   config = {
     services.xserver.desktopManager.xterm.enable =

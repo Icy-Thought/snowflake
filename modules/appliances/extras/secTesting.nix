@@ -2,9 +2,9 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.desktop.defExtra.secTesting;
+let cfg = config.modules.appliances.extras.secTesting;
 in {
-  options.modules.desktop.defExtra.secTesting = {
+  options.modules.appliances.extras.secTesting = {
     enable = mkBoolOpt false;
     metadata = mkBoolOpt false;
     sandbox = mkBoolOpt false;

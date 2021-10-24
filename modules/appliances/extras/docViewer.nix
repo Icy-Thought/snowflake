@@ -4,9 +4,9 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.desktop.defExtra.docViewer;
+let cfg = config.modules.appliances.extras.docViewer;
 in {
-  options.modules.desktop.defExtra.docViewer = {
+  options.modules.appliances.extras.docViewer = {
     enable = mkBoolOpt false;
     pdf.enable = mkBoolOpt true;
     ebook.enable = mkBoolOpt false;

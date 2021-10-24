@@ -2,9 +2,9 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.desktop.defGaming.lutris;
+let cfg = config.modules.appliances.gaming.lutris;
 in {
-  options.modules.desktop.defGaming.lutris = { enable = mkBoolOpt false; };
+  options.modules.appliances.gaming.lutris = { enable = mkBoolOpt false; };
 
   config = mkIf cfg.enable {
     user.packages = with pkgs; [

@@ -3,10 +3,10 @@
 with lib;
 with lib.my;
 let
-  cfg = config.modules.desktop.termEmu.kitty;
+  cfg = config.modules.appliances.termEmu.kitty;
   colors = config.modules.themes.colors;
 in {
-  options.modules.desktop.termEmu.kitty = with types; {
+  options.modules.appliances.termEmu.kitty = with types; {
     enable = mkBoolOpt false;
   };
 
