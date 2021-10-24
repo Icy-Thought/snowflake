@@ -510,9 +510,6 @@ The reason to why this is important is to access the most recent version of Ayu-
 *** (Temporary Fix): xref & Others..
 #+begin_src emacs-lisp :tangle "packages.el"
 (package! xref :pin "a82f459b37b31546bf274388baf8aca79e9c30d9")
-(package! gitconfig-mode :disable t)
-(package! gitignore-mode :disable t)
-(package! git-modes :pin "433e1c57a63c88855fc41a942e29d7bc8c9c16c7")
 #+end_src
 
 * Inspiration

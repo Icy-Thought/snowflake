@@ -123,11 +123,16 @@ What you are required to edit is:
 #+CAPTION: Example: hiding =/boot= from Nautilus mounted devices.
 #+begin_src nix :noeval
 fileSystems."/boot" = {
-  device = "/dev/disk/by-uuid/insert-your-boot-uuid-here";
+  device = "/dev/disk/by-label/boot";
   fsType = "vfat";
   options = [ "x-gvfs-hide" ]; # For hiding boot partition entry in Nautilus.
 };
 #+end_src
+
+#+begin_comment
+Make sure to replace ~/dev/disk/by-uuid/xyz~ (or ~partuuid~) with ~/dev/disk/by-label/X~, where ~X~ follows the label you have choosen to name your partitions with during your partition setup.
+#+end_comment
+
 
 *** Installing Nix-Flake System
 After completing your setup, there remains one command to be executed (device = folder name of your device placed inside =hosts=, which in this case is =X=:
