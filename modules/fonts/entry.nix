@@ -3,9 +3,9 @@
 with lib;
 with lib.my;
 
-let cfg = config.modules.fonts;
+let cfg = config.modules.fonts.entry;
 in {
-  options.modules.fonts = { enable = mkBoolOpt false; };
+  options.modules.fonts.entry = { enable = mkBoolOpt false; };
 
   config = mkIf cfg.enable {
     fonts = {

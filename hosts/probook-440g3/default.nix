@@ -2,13 +2,11 @@
 
   imports = [ ./hwCfg.nix ];
 
-  # Hardware-related Modules:
   modules.hardware = {
     audio.enable = true;
     # openrazer.enable = true;
   };
 
-  # Networking-related Modules:
   modules.networking = {
     enable = true;
     networkManager.enable = true;
@@ -32,27 +30,23 @@
       alacritty.enable = true;
     };
 
-    # Editor-related Modules:
     editors = {
       default = "emacs";
       emacs.enable = true;
       # nvim.enable = true;
     };
 
-    # Browser-related Modules:
     browsers = {
       default = "firefox";
       firefox.enable = true;
       unGoogled.enable = true;
     };
 
-    # Random Application Modules:
     extras = {
       chat.enable = true;
       docViewer.enable = true;
     };
 
-    # Media-related Modules:
     media = {
       mpv.enable = true;
       spotify.enable = true;
@@ -60,7 +54,6 @@
     };
   };
 
-  # Services-related Modules:
   modules.services = {
     xserver.enable = true;
     xserver.touch.enable = true;
@@ -69,7 +62,6 @@
     laptop.enable = true;
   };
 
-  # Shell-related Modules:
   modules.shell = {
     git.enable = true;
     gnupg.enable = true;
@@ -81,6 +73,7 @@
     printTermColor.enable = true;
   };
 
+  # Hide device entry from file-manager:
   fileSystems."/" = {
     device = "/dev/disk/by-label/nixos";
     fsType = "ext4";

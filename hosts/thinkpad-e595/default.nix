@@ -2,13 +2,11 @@
 
   imports = [ ./hwCfg.nix ];
 
-  # Hardware-related Modules:
   modules.hardware = {
     audio.enable = true;
     openrazer.enable = true;
   };
 
-  # Networking-related Modules:
   modules.networking = {
     enable = true;
     networkManager.enable = true;
@@ -17,7 +15,6 @@
     wireGuard.akkadianVPN.enable = true;
   };
 
-  # XMonad-related Modules:
   modules.desktop = {
     envDisplay.sddm.enable = true;
     envManager.xmonad.enable = true;
@@ -27,7 +24,6 @@
       spellCheck.enable = true;
     };
 
-    # Extras Modules for XMonad:
     envExtra = {
       picom.enable = true;
       taffybar.enable = true;
@@ -37,7 +33,6 @@
       dunst.enable = true;
     };
 
-    # WM-Script Modules:
     envScript = {
       brightness.enable = true;
       microphone.enable = true;
@@ -50,7 +45,7 @@
 
   modules.themes.active = "ayu-dark";
 
-  modules.appliance = {
+  modules.appliances = {
     termEmu = {
       default = "kitty";
       kitty.enable = true;
@@ -72,7 +67,6 @@
     extras = {
       chat.enable = true;
       docViewer.enable = true;
-      aula.anki.enable = true;
     };
 
     media = {
@@ -93,17 +87,14 @@
     };
   };
 
-  # Development-related Modules:
   modules.develop = {
     cc.enable = true;
     haskell.enable = true;
     rust.enable = true;
     nixLang.enable = true;
     # python.enable = true;
-    # shell.enable = true;
   };
 
-  # Services-related Modules:
   modules.services = {
     xserver.enable = true;
     xserver.touch.enable = true;
@@ -114,7 +105,6 @@
     transmission.enable = true;
   };
 
-  # Shell-related Modules:
   modules.shell = {
     adb.enable = true;
     gnupg.enable = true;
@@ -132,7 +122,7 @@
   boot.kernel.sysctl."abi.vsyscall32" = 0; # League of Legends..
   boot.kernelParams = [ "acpi_backlight=native" ];
 
-  # Remove device entry from file-manager:
+  # Hide device entry from file-manager:
   fileSystems."/" = {
     device = "/dev/disk/by-label/nixos";
     fsType = "ext4";
@@ -143,9 +133,6 @@
     device = "/dev/disk/by-label/home";
     fsType = "ext4";
     options = [ "noatime, x-gvfs-hide" ];
-
-    # TODO: temporary solution for agenix not finding key.
-    neededForBoot = true;
   };
 
   fileSystems."/boot" = {
