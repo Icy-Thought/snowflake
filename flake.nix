@@ -21,8 +21,8 @@
     emacs.url = "github:nix-community/emacs-overlay";
     rust.url = "github:oxalica/rust-overlay";
 
-    picom-jonaburg.url = "github:jonaburg/picom";
-    picom-jonaburg.flake = false;
+    picom.url = "github:yshui/picom/next";
+    picom.flake = false;
   };
 
   outputs = inputs@{ self, nixpkgs, nixpkgs-master, ... }:
@@ -55,7 +55,7 @@
       overlay = final: prev: {
         master = pkgs';
         my = self.packages."${system}";
-        picom = prev.picom.overrideAttrs (_: { src = inputs.picom-jonaburg; });
+        picom = prev.picom.overrideAttrs (_: { src = inputs.picom; });
       };
 
       overlays = mapModules ./overlays import;

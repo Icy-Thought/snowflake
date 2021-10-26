@@ -12,8 +12,11 @@ in {
       enable = true;
       backend = "glx";
       experimentalBackends = true;
+      vSync = true;
 
+      menuOpacity = 0.9;
       inactiveOpacity = 0.8;
+
       opacityRules = [
         "100:window_type = 'combo'"
         "100:window_type = 'desktop'"
@@ -32,11 +35,10 @@ in {
         "100:window_type = 'unknown'"
       ];
 
-      menuOpacity = 0.9;
-
       fade = true;
       fadeDelta = 10;
       fadeSteps = [ (3.0e-2) (3.0e-2) ];
+
       fadeExclude = [
         "window_type = 'combo'"
         "window_type = 'desktop'"
@@ -50,6 +52,9 @@ in {
       refreshRate = 0;
 
       shadow = true;
+      shadowOffsets = [ (-7) (-7) ];
+      shadowOpacity = 0.75;
+
       shadowExclude = [
         "_GTK_FRAME_EXTENTS@:c"
         "window_type = 'desktop'"
@@ -63,20 +68,16 @@ in {
         "name = 'hacksaw'"
       ];
 
-      shadowOffsets = [ (-7) (-7) ];
-      shadowOpacity = 0.75;
-      vSync = true;
-
       settings = {
-        ### Background-Blur ###
         blur = {
-          method = "kawase";
+          method = "dual_kawase";
           strength = "7.0";
         };
 
         blur-background = false;
         blur-background-frame = false;
         blur-background-fixed = false;
+
         blur-background-exclude = [
           "_GTK_FRAME_EXTENTS@:c"
           "window_type = 'combo'"
@@ -94,32 +95,22 @@ in {
           "class_g = 'Firefox' && window_type = 'utility'"
         ];
 
-        ### Animations ###
-        transition-length = 150;
-        transition-pow-x = 0.1;
-        transition-pow-y = 0.1;
-        transition-pow-w = 0.1;
-        transition-pow-h = 0.1;
-        size-transition = true;
+        # transition-length = 150;
+        # transition-pow-x = 0.1;
+        # transition-pow-y = 0.1;
+        # transition-pow-w = 0.1;
+        # transition-pow-h = 0.1;
+        # size-transition = true;
 
-        ### Corners ###
-        corner-radius = 10.0;
-        round-borders = 1;
-        round-borders-exclude = [ ];
-        rounded-corners-exclude = [ "class_g = 'Dunst'" ];
-
-        ### Shadows ###
         shadow-radius = 7;
         shadow-color = "#000000";
 
-        ### Fading ###
         no-fading-openclose = false;
         no-fading-destroyed-argb = true;
 
-        ### Transparency / Opacity ###
-        frame-opacity = 0.7;
-        inactive-opacity-override = false;
+        frame-opacity = 0.9;
         active-opacity = 1.0;
+        inactive-opacity-override = false;
 
         focus-exclude = [ "class_g ?= 'rofi'" "class_g ?= 'Steam'" ];
 
@@ -142,34 +133,41 @@ in {
         transparent-clipping = false;
 
         wintypes = {
-          tooltip.fade = true;
-          tooltip.shadow = true;
-          tooltip.opacity = 0.75;
-          tooltip.focus = false;
-          tooltip.full-shadow = false;
-
           normal = { };
-          dock.shadow = true;
-          dock.opacity = 1.0;
-
-          popup_menu.shadow = true;
-          popup_menu.focus = false;
-          popup_menu.opacity = 0.8;
-
-          dropdown_menu.opacity = 0.8;
-          dropdown_menu.focus = false;
-
-          above = { };
-          splash = { };
-
-          utility.focus = false;
-          utility.opacity = 1.0;
-          utility.blur-background = false;
-
           notification = { };
           desktop = { blur-background = false; };
           menu = { focus = false; };
           dialog = { };
+
+          tooltip = {
+            fade = true;
+            shadow = true;
+            opacity = 0.75;
+            focus = false;
+            full-shadow = false;
+          };
+
+          dock = {
+            shadow = true;
+            opacity = 1.0;
+          };
+
+          popup_menu = {
+            shadow = true;
+            focus = false;
+            opacity = 0.8;
+          };
+
+          dropdown_menu = {
+            opacity = 0.8;
+            focus = false;
+          };
+
+          utility = {
+            focus = false;
+            opacity = 1.0;
+            blur-background = false;
+          };
         };
       };
     };

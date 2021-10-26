@@ -581,18 +581,19 @@
         "type": "indirect"
       }
     },
-    "picom-jonaburg": {
+    "picom": {
       "flake": false,
       "locked": {
-        "lastModified": 1606582992,
-        "narHash": "sha256-R+YUGBrLst6CpUgG9VCwaZ+LiBSDWTp0TLt1Ou4xmpQ=",
-        "owner": "jonaburg",
+        "lastModified": 1635183748,
+        "narHash": "sha256-fdg0q6DWnweduWsmCGvru3CTae44tL+1Y8yJYoIHthA=",
+        "owner": "yshui",
         "repo": "picom",
-        "rev": "a8445684fe18946604848efb73ace9457b29bf80",
+        "rev": "d5f3079a433777965021f659d861870ab506bcc5",
         "type": "github"
       },
       "original": {
-        "owner": "jonaburg",
+        "owner": "yshui",
+        "ref": "next",
         "repo": "picom",
         "type": "github"
       }
@@ -604,7 +605,7 @@
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
         "nixpkgs-master": "nixpkgs-master",
-        "picom-jonaburg": "picom-jonaburg",
+        "picom": "picom",
         "rust": "rust",
         "taffybar": "taffybar",
         "xmonad": "xmonad",

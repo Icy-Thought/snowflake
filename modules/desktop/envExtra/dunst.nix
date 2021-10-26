@@ -24,11 +24,10 @@ in {
           transparency = 0;
           notification_height = 0;
           separator_height = 2;
-          corner_radius = 5;
           padding = 20;
           horizontal_padding = 20;
 
-          frame_width = 2;
+          frame_width = 3;
           frame_color = "#FFB454";
           separator_color = "frame";
           sort = "yes";
