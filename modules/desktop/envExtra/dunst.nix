@@ -28,7 +28,7 @@ in {
           horizontal_padding = 20;
 
           frame_width = 3;
-          frame_color = "#FFB454";
+          frame_color = "#EDA954";
           separator_color = "frame";
           sort = "yes";
           idle_threshold = 120;
@@ -92,7 +92,7 @@ in {
         urgency_normal = {
           foreground = "#E6E1CF";
           background = "#1D242C";
-          frame_color = "#FFB454";
+          frame_color = "#EDA954";
           timeout = 7;
           #icon = /path/to/icon
         };

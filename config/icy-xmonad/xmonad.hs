@@ -125,7 +125,7 @@ icyTheme = def { activeColor         = icyActive
                , fontName = "xft:JetBrainsMono Nerd Font:style=Medium"
                }
 
-icyActive = "#FFB454"
+icyActive = "#EDA954"
 
 icyInactive = "#1A1B25"
 

@@ -12,6 +12,8 @@ in {
       enable = true;
       backend = "glx";
       experimentalBackends = true;
+
+      refreshRate = 0;
       vSync = true;
 
       menuOpacity = 0.9;
@@ -34,22 +36,6 @@ in {
         "100:window_type = 'utility'"
         "100:window_type = 'unknown'"
       ];
-
-      fade = true;
-      fadeDelta = 10;
-      fadeSteps = [ (3.0e-2) (3.0e-2) ];
-
-      fadeExclude = [
-        "window_type = 'combo'"
-        "window_type = 'desktop'"
-        "window_type = 'dock'"
-        "window_type = 'dnd'"
-        "window_type = 'notification'"
-        "class_g = 'Rofi'"
-        "class_g = 'slop'"
-      ];
-
-      refreshRate = 0;
 
       shadow = true;
       shadowOffsets = [ (-7) (-7) ];
@@ -105,16 +91,6 @@ in {
         shadow-radius = 7;
         shadow-color = "#000000";
 
-        no-fading-openclose = false;
-        no-fading-destroyed-argb = true;
-
-        frame-opacity = 0.9;
-        active-opacity = 1.0;
-        inactive-opacity-override = false;
-
-        focus-exclude = [ "class_g ?= 'rofi'" "class_g ?= 'Steam'" ];
-
-        ### General ###
         daemon = false;
         dbus = false;
         mark-wmwin-focused = true;
@@ -131,6 +107,9 @@ in {
         glx-no-stencil = true;
         use-damage = false;
         transparent-clipping = false;
+        inactive-opacity-override = false;
+
+        focus-exclude = [ "class_g ?= 'rofi'" "class_g ?= 'Steam'" ];
 
         wintypes = {
           normal = { };
@@ -140,7 +119,6 @@ in {
           dialog = { };
 
           tooltip = {
-            fade = true;
             shadow = true;
             opacity = 0.75;
             focus = false;
