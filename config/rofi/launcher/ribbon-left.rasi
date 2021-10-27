@@ -76,7 +76,7 @@ mainbox {
     border-radius:                      0% 0% 0% 2.5%;
     border-color:                       @border-alt;
     children:                           [ inputbar, listview ];
-    spacing:                            2%;
+    spacing:                            3%;
     padding:                            2.5% 2% 2.5% 2%;
 }
 

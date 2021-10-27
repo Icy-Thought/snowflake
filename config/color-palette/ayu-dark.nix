@@ -1,5 +1,6 @@
 # TODO: ayu-dark module.
 {
+  # Base Colors
   foreground = "#E6E1CF";
   background = "#0F1419";
 
@@ -32,4 +33,7 @@
 
   white = "#C7C7C7";
   brightWhite = "#FFFFFF";
+
+  # Zathura-related Colors
+  zathuraBlack = "#171B24";
 }

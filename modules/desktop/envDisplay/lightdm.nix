@@ -8,9 +8,13 @@ in {
 
   config = mkIf cfg.enable {
     # TODO: lightdm-webkit2 greeter + theming.
-    services.xserver.displayManager = {
-      lightdm.enable = true;
-      lightdm.greeter.enable = true;
+    services.xserver = {
+      enable = true;
+
+      displayManager.lightdm = {
+        enable = true;
+        greeter.enable = true;
+      };
     };
   };
 }

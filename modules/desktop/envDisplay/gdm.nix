@@ -7,9 +7,13 @@ in {
   options.modules.desktop.envDisplay.gdm = { enable = mkBoolOpt false; };
 
   config = mkIf cfg.enable {
-    services.xserver.displayManager = {
-      gdm.enable = true;
-      gdm.wayland = true;
+    services.xserver = {
+      enable = true;
+
+      displayManager.gdm = {
+        enable = true;
+        wayland = true;
+      };
     };
   };
 }

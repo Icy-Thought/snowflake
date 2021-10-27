@@ -4,6 +4,7 @@
 
   modules.hardware = {
     audio.enable = true;
+    touchpad.enable = true;
     openrazer.enable = true;
   };
 
@@ -41,7 +42,10 @@
     };
   };
 
-  modules.fonts.entry.enable = true;
+  modules.fonts = {
+    entry.enable = true;
+    nerdFonts.enable = true;
+  };
 
   modules.themes.active = "ayu-dark";
 
@@ -96,10 +100,7 @@
   };
 
   modules.services = {
-    xserver.enable = true;
-    xserver.touch.enable = true;
     # ssh.enable = true;
-
     kdeconnect.enable = true;
     laptop.enable = true;
     transmission.enable = true;

@@ -4,7 +4,9 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.appliances.extras.docViewer;
+let
+  cfg = config.modules.appliances.extras.docViewer;
+  colors = config.modules.themes.colors;
 in {
   options.modules.appliances.extras.docViewer = {
     enable = mkBoolOpt false;
@@ -27,36 +29,36 @@ in {
         adjust-open = "width";
         window-title-basename = true;
 
-        # Ayu-dark -> dempfi
-        default-fg = "#B3B1AD";
-        default-bg = "#0A0E14";
+        # Colorscheme -> modules/themes/default.nix
+        default-fg = colors.foreground;
+        default-bg = colors.background;
 
-        statusbar-fg = "#B3B1AD";
-        statusbar-bg = "#0A0E14";
+        statusbar-fg = colors.white;
+        statusbar-bg = colors.zathuraBlack;
 
-        inputbar-fg = "#FFB454";
-        inputbar-bg = "#0A0E14";
+        inputbar-fg = colors.yellow;
+        inputbar-bg = colors.zathuraBlack;
 
-        notification-fg = "#B3B1AD";
-        notification-bg = "#0A0E14";
+        notification-fg = colors.white;
+        notification-bg = colors.black;
 
-        notification-error-fg = "#B3B1AD";
-        notification-error-bg = "#0A0E14";
+        notification-error-fg = colors.white;
+        notification-error-bg = colors.black;
 
-        notification-warning-fg = "#F07178";
-        notification-warning-bg = "#0A0E14";
+        notification-warning-fg = colors.red;
+        notification-warning-bg = colors.black;
 
-        highlight-color = "#273747";
-        highlight-active-color = "#1B2733";
+        highlight-active-color = colors.selectionForeground;
+        highlight-color = colors.selectionBackground;
 
-        completion-fg = "#B3B1AD";
-        completion-bg = "#1B2733";
+        completion-fg = colors.yellow;
+        completion-bg = colors.zathuraBlack;
 
-        completion-highlight-fg = "#0A0E14";
-        completion-highlight-bg = "#FFB454";
+        completion-highlight-fg = colors.zathuraBlack;
+        completion-highlight-bg = colors.yellow;
 
-        recolor-lightcolor = "#0A0E14";
-        recolor-darkcolor = "#B3B1AD";
+        recolor-lightcolor = colors.zathuraBlack;
+        recolor-darkcolor = colors.white;
 
         recolor = "true";
         recolor-keephue = "true";
