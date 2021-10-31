@@ -65,32 +65,6 @@ in {
       };
 
       # Extras:
-      services.xidlehook = {
-        enable = true;
-        not-when-audio = true;
-        not-when-fullscreen = true;
-
-        environment = {
-          "primary-display" = "$(xrandr | awk '/ primary/{print $1}')";
-        };
-
-        timers = [
-          {
-            delay = 60;
-            command = ''xrandr --output "$PRIMARY_DISPLAY" --brightness .1'';
-            canceller = ''xrandr --output "$PRIMARY_DISPLAY" --brightness 1'';
-          }
-          {
-            delay = 180;
-            command = "betterlockscreen -l dim";
-          }
-          {
-            delay = 300;
-            command = "systemctl suspend";
-          }
-        ];
-      };
-
       services.random-background = {
         enable = true;
         display = "fill";
