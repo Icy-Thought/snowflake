@@ -257,7 +257,7 @@ NOTE: Press ~K~ on a module to view its documentation, and ~gd~ to browse its di
 *** Doom Input
 #+begin_src emacs-lisp :tangle "init.el"
 (doom! :input
-       chinese
+       ;;chinese
        ;;japanese
        )
 #+end_src

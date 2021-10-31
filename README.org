@@ -1,5 +1,5 @@
 #+TITLE: [[./assets/xmonad-desktop.png]]
-#+DATE: <2021-06-05 lör>
+#+DATE: <2021-06-05 Sat>
 
 * Table of Contents :TOC:
 - [[#introduction][Introduction]]

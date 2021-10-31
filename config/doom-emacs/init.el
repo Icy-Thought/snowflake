@@ -1,7 +1,7 @@
 ;;; init.el -*- lexical-binding: t; -*-
 
 (doom! :input
-       chinese
+       ;;chinese
        ;;japanese
        )
 
