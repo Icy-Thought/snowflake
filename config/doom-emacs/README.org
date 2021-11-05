@@ -507,6 +507,11 @@ The reason to why this is important is to access the most recent version of Ayu-
 (unpin! doom-themes)
 #+end_src
 
+*** Prefer Local Packages (Nix)
+#+begin_src emacs-lisp :tangle "packages.el"
+(package! pdf-tools :built-in 'prefer)
+#+end_src
+
 *** (Temporary Fix): xref & Others..
 #+begin_src emacs-lisp :tangle "packages.el"
 (package! xref :pin "a82f459b37b31546bf274388baf8aca79e9c30d9")

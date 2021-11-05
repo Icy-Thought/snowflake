@@ -17,7 +17,7 @@ in {
   config = let
     emacsWithPackages = with pkgs;
       ((emacsPackagesNgGen emacsPgtkGcc).emacsWithPackages
-        (epkgs: [ epkgs.vterm epkgs.pdf-tools epkgs.emojify ]));
+        (epkgs: with epkgs; [ vterm pdf-tools emojify ]));
 
   in mkIf cfg.enable {
     nixpkgs.overlays = [ inputs.emacs.overlay ];
@@ -57,6 +57,7 @@ in {
       # haskellPackages.dhall-lsp-server
       # :lang haskell
       haskell-language-server
+      stylish-haskell
       # :lang javascript
       nodePackages.javascript-typescript-langserver
       # :lang latex & :lang org (latex previews)
