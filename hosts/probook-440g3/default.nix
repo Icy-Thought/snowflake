@@ -11,6 +11,7 @@
   modules.networking = {
     enable = true;
     networkManager.enable = true;
+
     wireGuard.enable = true;
     wireGuard.akkadianVPN.enable = true;
   };
@@ -18,6 +19,7 @@
   modules.desktop = {
     envDisplay.sddm.enable = true;
     envManager.plasma.enable = true;
+
     inputMF = { spellCheck.enable = true; };
   };
 
@@ -100,8 +102,6 @@
       libvdpau-va-gl
     ];
   };
-
-  networking.hostName = "ProBook-NixOS";
 
   services.xserver = {
     videoDrivers = [ "modesetting" ];

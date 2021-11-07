@@ -32,4 +32,7 @@
 
   white = "#ABB2BF";
   brightWhite = "#FFFFFF";
+
+  # Zathura-related Colors
+  zathuraBlack = "#1E2127";
 }
