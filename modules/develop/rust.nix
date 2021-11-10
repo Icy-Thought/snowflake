@@ -14,6 +14,8 @@ in {
       nixpkgs.overlays = [ inputs.rust.overlay ];
 
       user.packages = with pkgs; [ rust-bin.beta.latest.default crate2nix ];
+
+      env.PATH = [ "$(${pkgs.yarn}/bin/yarn global bin)" ];
     })
 
     {
