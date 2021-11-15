@@ -66,7 +66,7 @@ in {
       nixfmt
       rnix-lsp
       # :lang rust
-      rust-analyzer
+      unstable.rust-analyzer
     ];
 
     fonts.fonts = [ pkgs.emacs-all-the-icons-fonts ];

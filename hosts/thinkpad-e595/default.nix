@@ -85,10 +85,10 @@
       # zoom.enable = true;
     };
 
-    gaming = {
-      steam.enable = true;
-      lutris.enable = true;
-    };
+    # gaming = {
+    #   steam.enable = true;
+    #   lutris.enable = true;
+    # };
   };
 
   modules.develop = {

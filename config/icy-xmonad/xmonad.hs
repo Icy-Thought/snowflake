@@ -105,8 +105,8 @@ myConfig = def
                          <> toggleFadeInactiveLogHook 0.9
                          <> workspaceHistoryHook
                          <> setWorkspaceNames
-                         <> activateLogHook (reader W.focusWindow >>= doF)
-                         <> logHook def
+                         -- <> setExwmhActivateHook (reader W.focusWindow >>= doF)
+                         -- <> logHook def
   , handleEventHook    = followIfNoMagicFocus
                          <> minimizeEventHook
           -- <> restartEventHook

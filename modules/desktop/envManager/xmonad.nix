@@ -23,26 +23,17 @@ in {
       feh
     ];
 
-    services.xserver.displayManager = {
-      defaultSession = "none+xmonad";
-      sessionCommands = ''
-        # 1st-Step Taffybar workaround
-        systemctl --user import-environment GDK_PIXBUF_MODULE_FILE DBUS_SESSION_BUS_ADDRESS PATH
-      '';
+    services.xserver = {
+      displayManager.defaultSession = "none+xmonad";
+
+      windowManager.session = [{
+        name = "xmonad";
+        start = ''
+          /usr/bin/env icy-xmonad &
+          waitPID=$!
+        '';
+      }];
     };
-
-    # 2nd-Step workaround for https://github.com/taffybar/taffybar/issues/403
-    # Causes GDK_PIXBUF_MODULE_FILE to be set in xsession. (Step 1)
-    gtk.iconCache.enable = true;
-    services.xserver.gdk-pixbuf.modulePackages = [ pkgs.librsvg ];
-
-    services.xserver.windowManager.session = [{
-      name = "xmonad";
-      start = ''
-        /usr/bin/env icy-xmonad &
-        waitPID=$!
-      '';
-    }];
 
     # GTK Theming:
     programs.dconf.enable = true;

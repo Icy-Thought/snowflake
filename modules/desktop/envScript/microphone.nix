@@ -52,7 +52,7 @@ in {
                  -u low "Muted"
              else
                volume=$(get_volume)
-               bar=$(seq -s "█" $(($volume / 5)) | sed 's/[0-9]//g')
+               bar=$(seq -s "─" $(($volume / 4)) | sed 's/[0-9]//g')
 
                dunstify \
                  -a Volume \
