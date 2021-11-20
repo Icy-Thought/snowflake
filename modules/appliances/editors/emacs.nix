@@ -59,7 +59,7 @@ in {
       haskell-language-server
       stylish-haskell
       # :lang javascript
-      nodePackages.javascript-typescript-langserver
+      nodePackages.typescript-language-server
       # :lang latex & :lang org (latex previews)
       texlive.combined.scheme-medium
       # :lang nix

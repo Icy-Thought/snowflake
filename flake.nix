@@ -13,6 +13,7 @@
     agenix.inputs.nixpkgs.follows = "nixpkgs";
 
     # XMonad:
+    # (remove) xmonad & contrib after "ConditionalLayoutModifier" merger
     xmonad.url = "github:xmonad/xmonad";
     xmonad-contrib.url = "github:icy-thought/xmonad-contrib";
     taffybar.url = "github:taffybar/taffybar";
