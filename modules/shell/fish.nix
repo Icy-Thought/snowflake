@@ -107,7 +107,7 @@ in {
 
         # Application-related
         temacs = "emacsclient -t";
-        emacs = "emacsclient -c -a";
+        emacs = "emacsclient -c";
         doop = "doom upgrade && doom sync -u";
         doos = "doom sync -u";
         zoom = "firejail zoom";
@@ -129,10 +129,13 @@ in {
         gs = "git status";
 
         # NixOS
-        flup = "nix flake update";
-        genup =
+        flkUp = "nix flake update";
+        tenUp =
           "sudo nixos-rebuild switch --flake '/etc/nixos#thinkpad-e595' --impure";
-        g2nix =
+        penUp =
+          "sudo nixos-rebuild switch --flake '/etc/nixos#probook-440g3' --impure";
+        garCold = "sudo nix-collect-garbage -d";
+        g2Nix =
           "dconf dump / | dconf2nix > ~/git/Icy-Thought/Snowflake/config/dconf/gnome.nix";
       };
     };
