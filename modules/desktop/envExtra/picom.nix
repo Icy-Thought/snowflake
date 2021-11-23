@@ -74,8 +74,8 @@ in {
           "window_type = 'menu'"
           "window_type = 'notification'"
           "window_type = 'utility'"
-          # "window_type = 'dock'"
-          # "window_type = 'dialog'"
+          "window_type = 'dock'"
+          "window_type = 'dialog'"
 
           "class_g = 'Rofi'"
           "class_g = 'Firefox' && window_type = 'utility'"

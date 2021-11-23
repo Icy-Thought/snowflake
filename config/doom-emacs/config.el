@@ -6,7 +6,7 @@
 (setq
  doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 15 :weight 'Medium)
  doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 20 :weight 'Medium)
- doom-theme 'doom-ayu-mirage)
+ doom-theme 'doom-horizon)
 
 ;; (doom/set-frame-opacity 95)
 
@@ -17,7 +17,7 @@
  x-stretch-cursor t)                            ; Cursor size = glyph width.
 
 (with-eval-after-load 'solaire-mode             ; Inverted solaire color-schemes.
-  (add-to-list 'solaire-mode-themes-to-face-swap 'doom-ayu-mirage))
+  (add-to-list 'solaire-mode-themes-to-face-swap 'doom-horizon))
 
 (setq
  doom-modeline-height 35

@@ -44,7 +44,7 @@
 	padding-left: 3px;
 	padding-top: 0px;
 	font-size: 10pt;
-	color: @koromiko;
+	color: @vivid-tangerine;
 	opacity: 1;
 	font-weight: bold;
 	transition: color .5s;
@@ -64,7 +64,7 @@
 }
 
 .active .inner-pad {
-	background-color: @koromiko;
+	background-color: @vivid-tangerine;
 	opacity: 1;
 }
 

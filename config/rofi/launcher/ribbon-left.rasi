@@ -9,9 +9,9 @@
     background-alt:                     #0F141900;
     background-bar:                     #1D242Cff;
 
-    border:                             #FFA93Bff;
-    border-alt:                         #FF9E21ff;
-    selected:                           #FFA63599;
+    border:                             #254365ff;
+    border-alt:                         #168AB9ff;
+    selected:                           #0F589D99;
     urgent:                             #FFAA00FF;
 }
 

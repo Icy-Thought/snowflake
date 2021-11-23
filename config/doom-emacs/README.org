@@ -47,7 +47,7 @@
 (setq
  doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 15 :weight 'Medium)
  doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 20 :weight 'Medium)
- doom-theme 'doom-ayu-mirage)
+ doom-theme 'doom-horizon)
 #+end_src
 
 Enable transparency for emacs frame only + retaining brightness of remaining objects:
@@ -67,7 +67,7 @@ Enable transparency for emacs frame only + retaining brightness of remaining obj
 **** Solaire Mode
 #+begin_src emacs-lisp
 (with-eval-after-load 'solaire-mode             ; Inverted solaire color-schemes.
-  (add-to-list 'solaire-mode-themes-to-face-swap 'doom-ayu-mirage))
+  (add-to-list 'solaire-mode-themes-to-face-swap 'doom-horizon))
 #+end_src
 
 *** Doom-Modeline
