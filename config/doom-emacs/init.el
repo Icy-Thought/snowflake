@@ -24,7 +24,7 @@
        ophints                                  ; highlight the region an operation acts on
        (popup +all                              ; tame sudden yet inevitable temporary windows
               +defaults)
-       tabs                                     ; a tab bar for Emacs
+       (tabs +centaur-tabs)                     ; a tab bar for Emacs
        (emoji +unicode
               +github)
        vc-gutter                                ; vcs diff in the fringe
