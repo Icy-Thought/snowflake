@@ -108,7 +108,7 @@ in {
         # Application-related
         temacs = "emacsclient -t";
         emacs = "emacsclient -c";
-        doop = "doom upgrade && doom sync -u";
+        doop = "doom sync -u && doom build";
         doos = "doom sync -u";
         zoom = "firejail zoom";
         ytv = "youtube-dl --best-quality";
