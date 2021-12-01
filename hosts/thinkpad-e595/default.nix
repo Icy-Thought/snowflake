@@ -69,8 +69,12 @@
     };
 
     extras = {
-      chat.enable = true;
       docViewer.enable = true;
+
+      chat = {
+        enable = true;
+        mobile.enable = true;
+      };
     };
 
     media = {

@@ -6,17 +6,28 @@ let cfg = config.modules.appliances.extras.chat;
 in {
   options.modules.appliances.extras.chat = {
     enable = mkBoolOpt false;
-    signal.enable = mkBoolOpt false;
+    essential.enable = mkBoolOpt true;
+    mobile.enable = mkBoolOpt false;
   };
 
   config = mkIf cfg.enable {
-    user.packages = with pkgs; [
-      # TODO: discord (powercord) + declerative setup.
-      unstable.discord
-      element-desktop
-      tdesktop
+    user.packages = with pkgs;
+      (if cfg.essential.enable then [
+        element-desktop
+        unstable.discord
+      ] else
+        [ ]) ++
 
-      (mkIf cfg.signal.enable signal-desktop)
-    ];
+      (if cfg.mobile.enable then [
+        signal-desktop
+        tdesktop
+        whatsapp-for-linux
+      ] else
+        [ ]);
+
+    # TODO: discord (powercord) + declerative setup.
+    # home.configFile = mkIf cfg.essential.enable {
+    #   Powercord-related settings..
+    # };
   };
 }
