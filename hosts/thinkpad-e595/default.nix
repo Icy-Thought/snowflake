@@ -96,10 +96,10 @@
   };
 
   modules.develop = {
-    cc.enable = true;
+    # cc.enable = true;
     nixLang.enable = true;
     python.enable = true;
-    # haskell.enable = true;
+    haskell.enable = true;
 
     rust = {
       enable = true;
