@@ -80,7 +80,7 @@
        )
 
 (doom! :lang
-       cc                                       ; C/C++/Obj-C madness.
+       ;;cc                                     ; C/C++/Obj-C madness.
        ;;common-lisp                            ; If you've seen one lisp, you've seen them all.
        ;;coq                                    ; Proofs-as-programs.
        ;;data                                   ; Config/data formats.
@@ -100,7 +100,7 @@
               +fold)                            ; Folding ability inside LaTeX.
        ;;ledger                                 ; An accounting system in Emacs.
        ;;lua                                    ; One-based indices? one-based indices.
-       markdown                                 ; Writing docs for people to ignore.
+       ;;markdown                               ; Writing docs for people to ignore.
        nix                                      ; I hereby declare "nix geht mehr!"
        (org +pretty                             ; Prettify org-mode.
             +dragndrop                          ; Enables drag & drop in org-mode.
@@ -110,7 +110,7 @@
             ;;+hugo                             ; Enable ox-hugo support.
             +roam)                              ; Note-taking done correct in org-mode.
        ;;perl                                   ; write code no one else can comprehend
-       ;; (python +lsp                          ; Python + LSP support.
+       ;;(python +lsp                           ; Python + LSP support.
        ;;        +pyright)                      ; Beautiful is better than ugly
        ;;qt                                     ; The 'cutest' gui framework ever
        ;;(ruby +rails)                          ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}

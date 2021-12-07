@@ -47,32 +47,19 @@
 #+end_src
 
 ** Appearance
-*** Doom-Theme + Doom-Font
+*** General
+#+begin_src emacs-lisp
+(setq confirm-kill-emacs nil
+      display-line-numbers-type 'relative
+      all-the-icons-dired-monochrome nil
+      x-stretch-cursor t)
+#+end_src
+
+*** Doom-Theme & Font
 #+begin_src emacs-lisp
 (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 15 :weight 'Medium)
       doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 20 :weight 'Medium)
-      doom-theme 'doom-horizon
-      doom-themes-treemacs-theme "doom-horizon")
-#+end_src
-
-Enable transparency for emacs frame only + retaining brightness of remaining objects:
-#+begin_src emacs-lisp
-;; (doom/set-frame-opacity 95)
-#+end_src
-
-*** Other UI-Related Settings
-#+begin_src emacs-lisp
-(setq confirm-kill-emacs nil                      ; Disable Emacs confirm-exit messages.
-      display-line-numbers-type 'relative
-      treemacs-width 25
-      all-the-icons-dired-monochrome nil
-      x-stretch-cursor t)                         ; Cursor size = glyph width.
-#+end_src
-
-**** Solaire Mode
-#+begin_src emacs-lisp
-(with-eval-after-load 'solaire-mode ; Invert -> Darker Colorscheme.
-  (add-to-list 'solaire-mode-themes-to-face-swap 'doom-horizon))
+      doom-theme 'doom-horizon)
 #+end_src
 
 *** Doom-Modeline
@@ -103,6 +90,19 @@ Enable transparency for emacs frame only + retaining brightness of remaining obj
   (setq doom-modeline-enable-word-count t))
 #+end_src
 
+*** Transparency
+Enable transparency for emacs frame only + retaining brightness of remaining objects:
+#+begin_src emacs-lisp :tangle no
+(doom/set-frame-opacity 95)
+#+end_src
+
+*** Solaire Mode
+Invert colors -> darker theming:
+#+begin_src emacs-lisp
+(with-eval-after-load 'solaire-mode
+  (add-to-list 'solaire-mode-themes-to-face-swap 'doom-horizon))
+#+end_src
+
 *** Centaur-Tabs
 #+begin_src emacs-lisp
 (after! centaur-tabs
@@ -110,11 +110,13 @@ Enable transparency for emacs frame only + retaining brightness of remaining obj
   (centaur-tabs-headline-match)
   (centaur-tabs-change-fonts "JetBrainsMono Nerd Font" 125)
 
-  (setq centaur-tabs-style "wave"
-        centaur-tabs-set-icons t
+  (setq centaur-tabs-height 30
+        centaur-tabs-style "wave"
         centaur-tabs-set-bar 'nil
+        centaur-tabs-set-icons t
         centaur-tabs-gray-out-icons 'buffer
-        centaur-tabs-height 30
+        centaur-tabs-modified-marker nil
+        centaur-tabs-show-navigation-buttons nil
         centaur-tabs-close-button ""
         centaur-tabs-down-tab-text "✦"
         centaur-tabs-backward-tab-text "⏴"
@@ -123,11 +125,79 @@ Enable transparency for emacs frame only + retaining brightness of remaining obj
   (custom-set-faces!
     `(tab-line :background ,(doom-color 'base1) :foreground ,(doom-color 'base1))
     `(centaur-tabs-default :background ,(doom-color 'base1) :foreground ,(doom-color 'base1))
+    `(centaur-tabs-active-bar-face :background ,(doom-color 'base1) :foreground ,(doom-color 'base1))
+    `(centaur-tabs-unselected-modified :background ,(doom-color 'base1) :foreground ,(doom-color 'fg))
     `(centaur-tabs-unselected :background ,(doom-color 'base1) :foreground ,(doom-color 'base4))
+    `(centaur-tabs-selected-modified :background ,(doom-color 'bg) :foreground ,(doom-color 'fg))
     `(centaur-tabs-selected :background ,(doom-color 'bg) :foreground ,(doom-color 'blue))))
 #+end_src
 
+*** Treemacs
+**** Appearance
+#+begin_src emacs-lisp
+(setq treemacs-width 27
+      doom-themes-treemacs-theme "doom-colors")
+
+(doom-themes-treemacs-config)
+#+end_src
+
+**** Ignore Useless Files
+#+begin_src emacs-lisp
+(after! treemacs
+  (defvar treemacs-file-ignore-extensions '()
+    "File extension which `treemacs-ignore-filter' will ensure are ignored")
+  (defvar treemacs-file-ignore-globs '()
+    "Globs which will are transformed to `treemacs-file-ignore-regexps' which `treemacs-ignore-filter' will ensure are ignored")
+  (defvar treemacs-file-ignore-regexps '()
+    "RegExps to be tested to ignore files, generated from `treeemacs-file-ignore-globs'")
+  (defun treemacs-file-ignore-generate-regexps ()
+    "Generate `treemacs-file-ignore-regexps' from `treemacs-file-ignore-globs'"
+    (setq treemacs-file-ignore-regexps (mapcar 'dired-glob-regexp treemacs-file-ignore-globs)))
+  (if (equal treemacs-file-ignore-globs '()) nil (treemacs-file-ignore-generate-regexps))
+  (defun treemacs-ignore-filter (file full-path)
+    "Ignore files specified by `treemacs-file-ignore-extensions', and `treemacs-file-ignore-regexps'"
+    (or (member (file-name-extension file) treemacs-file-ignore-extensions)
+        (let ((ignore-file nil))
+          (dolist (regexp treemacs-file-ignore-regexps ignore-file)
+            (setq ignore-file (or ignore-file (if (string-match-p regexp full-path) t nil)))))))
+  (add-to-list 'treemacs-ignored-file-predicates #'treemacs-ignore-filter))
+#+end_src
+
+Extension of files to be ignored:
+#+begin_src emacs-lisp
+(setq treemacs-file-ignore-extensions
+      '(;; LaTeX
+        "aux"
+        "ptc"
+        "fdb_latexmk"
+        "fls"
+        "synctex.gz"
+        "toc"
+        ;; LaTeX - glossary
+        "glg"
+        "glo"
+        "gls"
+        "glsdefs"
+        "ist"
+        "acn"
+        "acr"
+        "alg"
+        ;; LaTeX - pgfplots
+        "mw"
+        ;; LaTeX - pdfx
+        "pdfa.xmpi"
+        ))
+(setq treemacs-file-ignore-globs
+      '(;; LaTeX
+        "*/_minted-*"
+        ;; AucTeX
+        "*/.auctex-auto"
+        "*/_region_.log"
+        "*/_region_.tex"))
+#+end_src
+
 ** Behaviour
+*** General
 #+begin_src emacs-lisp
 (setq scroll-margin 2)
 
@@ -549,7 +619,7 @@ NOTE: Press ~K~ on a module to view its documentation, and ~gd~ to browse its di
 *** Doom LANG
 #+begin_src emacs-lisp :tangle "init.el"
 (doom! :lang
-       cc                                       ; C/C++/Obj-C madness.
+       ;;cc                                     ; C/C++/Obj-C madness.
        ;;common-lisp                            ; If you've seen one lisp, you've seen them all.
        ;;coq                                    ; Proofs-as-programs.
        ;;data                                   ; Config/data formats.
@@ -569,7 +639,7 @@ NOTE: Press ~K~ on a module to view its documentation, and ~gd~ to browse its di
               +fold)                            ; Folding ability inside LaTeX.
        ;;ledger                                 ; An accounting system in Emacs.
        ;;lua                                    ; One-based indices? one-based indices.
-       markdown                                 ; Writing docs for people to ignore.
+       ;;markdown                               ; Writing docs for people to ignore.
        nix                                      ; I hereby declare "nix geht mehr!"
        (org +pretty                             ; Prettify org-mode.
             +dragndrop                          ; Enables drag & drop in org-mode.
@@ -579,7 +649,7 @@ NOTE: Press ~K~ on a module to view its documentation, and ~gd~ to browse its di
             ;;+hugo                             ; Enable ox-hugo support.
             +roam)                              ; Note-taking done correct in org-mode.
        ;;perl                                   ; write code no one else can comprehend
-       ;; (python +lsp                          ; Python + LSP support.
+       (python +lsp                             ; Python + LSP support.
        ;;        +pyright)                      ; Beautiful is better than ugly
        ;;qt                                     ; The 'cutest' gui framework ever
        ;;(ruby +rails)                          ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}

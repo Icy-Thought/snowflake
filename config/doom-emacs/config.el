@@ -3,21 +3,15 @@
 (setq user-full-name "Icy-Thought"
       user-mail-address "gilganyx@pm.me")
 
+(setq confirm-kill-emacs nil
+      display-line-numbers-type 'relative
+      all-the-icons-dired-monochrome nil
+      x-stretch-cursor t)
+
 (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 15 :weight 'Medium)
       doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 20 :weight 'Medium)
-      doom-theme 'doom-horizon
-      doom-themes-treemacs-theme "doom-horizon")
-
-;; (doom/set-frame-opacity 95)
-
-(setq confirm-kill-emacs nil                      ; Disable Emacs confirm-exit messages.
-      display-line-numbers-type 'relative
-      treemacs-width 25
-      all-the-icons-dired-monochrome nil
-      x-stretch-cursor t)                         ; Cursor size = glyph width.
-
-(with-eval-after-load 'solaire-mode ; Invert -> Darker Colorscheme.
-  (add-to-list 'solaire-mode-themes-to-face-swap 'doom-horizon))
+      doom-variable-pitch-font (font-spec :family "JetBrainsMono Nerd Font" :size 15 :weight 'Medium)
+      doom-theme 'doom-horizon)
 
 (after! doom-modeline
  (setq evil-normal-state-tag "λ"
@@ -44,16 +38,21 @@
   (display-battery-mode 1)
   (setq doom-modeline-enable-word-count t))
 
+(with-eval-after-load 'solaire-mode
+  (add-to-list 'solaire-mode-themes-to-face-swap 'doom-horizon))
+
 (after! centaur-tabs
   (centaur-tabs-mode -1)
   (centaur-tabs-headline-match)
   (centaur-tabs-change-fonts "JetBrainsMono Nerd Font" 125)
 
-  (setq centaur-tabs-style "wave"
-        centaur-tabs-set-icons t
+  (setq centaur-tabs-height 30
+        centaur-tabs-style "wave"
         centaur-tabs-set-bar 'nil
+        centaur-tabs-set-icons t
         centaur-tabs-gray-out-icons 'buffer
-        centaur-tabs-height 30
+        centaur-tabs-modified-marker nil
+        centaur-tabs-show-navigation-buttons nil
         centaur-tabs-close-button ""
         centaur-tabs-down-tab-text "✦"
         centaur-tabs-backward-tab-text "⏴"
@@ -62,8 +61,63 @@
   (custom-set-faces!
     `(tab-line :background ,(doom-color 'base1) :foreground ,(doom-color 'base1))
     `(centaur-tabs-default :background ,(doom-color 'base1) :foreground ,(doom-color 'base1))
+    `(centaur-tabs-active-bar-face :background ,(doom-color 'base1) :foreground ,(doom-color 'base1))
+    `(centaur-tabs-unselected-modified :background ,(doom-color 'base1) :foreground ,(doom-color 'fg))
     `(centaur-tabs-unselected :background ,(doom-color 'base1) :foreground ,(doom-color 'base4))
+    `(centaur-tabs-selected-modified :background ,(doom-color 'bg) :foreground ,(doom-color 'fg))
     `(centaur-tabs-selected :background ,(doom-color 'bg) :foreground ,(doom-color 'blue))))
+
+(setq treemacs-width 27
+      doom-themes-treemacs-theme "doom-colors")
+
+(after! treemacs
+  (defvar treemacs-file-ignore-extensions '()
+    "File extension which `treemacs-ignore-filter' will ensure are ignored")
+  (defvar treemacs-file-ignore-globs '()
+    "Globs which will are transformed to `treemacs-file-ignore-regexps' which `treemacs-ignore-filter' will ensure are ignored")
+  (defvar treemacs-file-ignore-regexps '()
+    "RegExps to be tested to ignore files, generated from `treeemacs-file-ignore-globs'")
+  (defun treemacs-file-ignore-generate-regexps ()
+    "Generate `treemacs-file-ignore-regexps' from `treemacs-file-ignore-globs'"
+    (setq treemacs-file-ignore-regexps (mapcar 'dired-glob-regexp treemacs-file-ignore-globs)))
+  (if (equal treemacs-file-ignore-globs '()) nil (treemacs-file-ignore-generate-regexps))
+  (defun treemacs-ignore-filter (file full-path)
+    "Ignore files specified by `treemacs-file-ignore-extensions', and `treemacs-file-ignore-regexps'"
+    (or (member (file-name-extension file) treemacs-file-ignore-extensions)
+        (let ((ignore-file nil))
+          (dolist (regexp treemacs-file-ignore-regexps ignore-file)
+            (setq ignore-file (or ignore-file (if (string-match-p regexp full-path) t nil)))))))
+  (add-to-list 'treemacs-ignored-file-predicates #'treemacs-ignore-filter))
+
+(setq treemacs-file-ignore-extensions
+      '(;; LaTeX
+        "aux"
+        "ptc"
+        "fdb_latexmk"
+        "fls"
+        "synctex.gz"
+        "toc"
+        ;; LaTeX - glossary
+        "glg"
+        "glo"
+        "gls"
+        "glsdefs"
+        "ist"
+        "acn"
+        "acr"
+        "alg"
+        ;; LaTeX - pgfplots
+        "mw"
+        ;; LaTeX - pdfx
+        "pdfa.xmpi"
+        ))
+(setq treemacs-file-ignore-globs
+      '(;; LaTeX
+        "*/_minted-*"
+        ;; AucTeX
+        "*/.auctex-auto"
+        "*/_region_.log"
+        "*/_region_.tex"))
 
 (setq scroll-margin 2)
 
