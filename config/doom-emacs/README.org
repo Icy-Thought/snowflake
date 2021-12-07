@@ -110,14 +110,14 @@ Invert colors -> darker theming:
   (centaur-tabs-headline-match)
   (centaur-tabs-change-fonts "JetBrainsMono Nerd Font" 125)
 
-  (setq centaur-tabs-height 30
+  (setq centaur-tabs-height 32
         centaur-tabs-style "wave"
-        centaur-tabs-set-bar 'nil
+        centaur-tabs-set-bar nil
         centaur-tabs-set-icons t
         centaur-tabs-gray-out-icons 'buffer
-        centaur-tabs-modified-marker nil
+        centaur-tabs-modified-marker "◉"
+        centaur-tabs-close-button "✕"
         centaur-tabs-show-navigation-buttons nil
-        centaur-tabs-close-button ""
         centaur-tabs-down-tab-text "✦"
         centaur-tabs-backward-tab-text "⏴"
         centaur-tabs-forward-tab-text "⏵")
@@ -126,9 +126,9 @@ Invert colors -> darker theming:
     `(tab-line :background ,(doom-color 'base1) :foreground ,(doom-color 'base1))
     `(centaur-tabs-default :background ,(doom-color 'base1) :foreground ,(doom-color 'base1))
     `(centaur-tabs-active-bar-face :background ,(doom-color 'base1) :foreground ,(doom-color 'base1))
-    `(centaur-tabs-unselected-modified :background ,(doom-color 'base1) :foreground ,(doom-color 'fg))
+    `(centaur-tabs-unselected-modified :background ,(doom-color 'base1) :foreground ,(doom-color 'violet))
     `(centaur-tabs-unselected :background ,(doom-color 'base1) :foreground ,(doom-color 'base4))
-    `(centaur-tabs-selected-modified :background ,(doom-color 'bg) :foreground ,(doom-color 'fg))
+    `(centaur-tabs-selected-modified :background ,(doom-color 'bg) :foreground ,(doom-color 'violet))
     `(centaur-tabs-selected :background ,(doom-color 'bg) :foreground ,(doom-color 'blue))))
 #+end_src
 
@@ -649,7 +649,7 @@ NOTE: Press ~K~ on a module to view its documentation, and ~gd~ to browse its di
             ;;+hugo                             ; Enable ox-hugo support.
             +roam)                              ; Note-taking done correct in org-mode.
        ;;perl                                   ; write code no one else can comprehend
-       (python +lsp                             ; Python + LSP support.
+       (python +lsp)                            ; Python + LSP support.
        ;;        +pyright)                      ; Beautiful is better than ugly
        ;;qt                                     ; The 'cutest' gui framework ever
        ;;(ruby +rails)                          ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}

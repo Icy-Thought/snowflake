@@ -10,7 +10,6 @@
 
 (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 15 :weight 'Medium)
       doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 20 :weight 'Medium)
-      doom-variable-pitch-font (font-spec :family "JetBrainsMono Nerd Font" :size 15 :weight 'Medium)
       doom-theme 'doom-horizon)
 
 (after! doom-modeline
@@ -46,14 +45,14 @@
   (centaur-tabs-headline-match)
   (centaur-tabs-change-fonts "JetBrainsMono Nerd Font" 125)
 
-  (setq centaur-tabs-height 30
+  (setq centaur-tabs-height 32
         centaur-tabs-style "wave"
-        centaur-tabs-set-bar 'nil
+        centaur-tabs-set-bar nil
         centaur-tabs-set-icons t
         centaur-tabs-gray-out-icons 'buffer
-        centaur-tabs-modified-marker nil
+        centaur-tabs-modified-marker "◉"
+        centaur-tabs-close-button "✕"
         centaur-tabs-show-navigation-buttons nil
-        centaur-tabs-close-button ""
         centaur-tabs-down-tab-text "✦"
         centaur-tabs-backward-tab-text "⏴"
         centaur-tabs-forward-tab-text "⏵")
@@ -62,13 +61,15 @@
     `(tab-line :background ,(doom-color 'base1) :foreground ,(doom-color 'base1))
     `(centaur-tabs-default :background ,(doom-color 'base1) :foreground ,(doom-color 'base1))
     `(centaur-tabs-active-bar-face :background ,(doom-color 'base1) :foreground ,(doom-color 'base1))
-    `(centaur-tabs-unselected-modified :background ,(doom-color 'base1) :foreground ,(doom-color 'fg))
+    `(centaur-tabs-unselected-modified :background ,(doom-color 'base1) :foreground ,(doom-color 'violet))
     `(centaur-tabs-unselected :background ,(doom-color 'base1) :foreground ,(doom-color 'base4))
-    `(centaur-tabs-selected-modified :background ,(doom-color 'bg) :foreground ,(doom-color 'fg))
+    `(centaur-tabs-selected-modified :background ,(doom-color 'bg) :foreground ,(doom-color 'violet))
     `(centaur-tabs-selected :background ,(doom-color 'bg) :foreground ,(doom-color 'blue))))
 
 (setq treemacs-width 27
       doom-themes-treemacs-theme "doom-colors")
+
+(doom-themes-treemacs-config)
 
 (after! treemacs
   (defvar treemacs-file-ignore-extensions '()
