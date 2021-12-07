@@ -106,10 +106,8 @@ in {
         bat0 = "upower -i /org/freedesktop/UPower/devices/battery_BAT0";
 
         # Application-related
-        temacs = "emacsclient -t";
-        emacs = "emacsclient -c";
-        doop = "doom sync -u && doom build";
-        doos = "doom sync -u";
+        tmc = "emacsclient -t";
+        emc = "emacsclient -c";
         zoom = "firejail zoom";
         ytv = "youtube-dl --best-quality";
         yta = "youtube-dl -x --audio-format mp3";
@@ -129,13 +127,12 @@ in {
         gs = "git status";
 
         # NixOS
-        flkUp = "nix flake update";
-        tenUp =
+        flkup = "pushd ~/git/Icy-Thought/Snowflake ; nix flake update ; popd";
+        thkup =
           "sudo nixos-rebuild switch --flake '/etc/nixos#thinkpad-e595' --impure";
-        penUp =
+        proup =
           "sudo nixos-rebuild switch --flake '/etc/nixos#probook-440g3' --impure";
-        garCold = "sudo nix-collect-garbage -d";
-        g2Nix =
+        g2nix =
           "dconf dump / | dconf2nix > ~/git/Icy-Thought/Snowflake/config/dconf/gnome.nix";
       };
     };
