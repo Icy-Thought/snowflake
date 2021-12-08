@@ -38,6 +38,9 @@ in {
     env.XDG_DESKTOP_DIR = "$HOME/";
 
     modules.appliances.browsers.firefox.settings = {
+      # Enable dark-themed flash before page-load:
+      "ui.systemUsesDarkTheme" = "1";
+      # Enable dark-theming for developer tools:
       "devtools.theme" = "dark";
       # Enable userContent.css and userChrome.css for our theme modules:
       "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
