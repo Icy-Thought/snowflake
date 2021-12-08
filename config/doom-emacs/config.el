@@ -10,7 +10,21 @@
 
 (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 15 :weight 'Medium)
       doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 20 :weight 'Medium)
+      doom-variable-pitch-font (font-spec :family "JetBrainsMono Nerd Font" :size 15 :weight 'Medium)
       doom-theme 'doom-horizon)
+
+(defun apply-theme ()
+  (interactive)
+  (load-theme 'doom-horizon t))
+
+(if (daemonp)
+    (add-hook 'after-make-frame-functions
+              (lambda (frame)
+                (with-selected-frame frame (apply-theme))))
+  (apply-theme))
+
+(with-eval-after-load 'solaire-mode
+  (add-to-list 'solaire-mode-themes-to-face-swap 'doom-horizon))
 
 (after! doom-modeline
  (setq evil-normal-state-tag "λ"
@@ -36,96 +50,6 @@
   ;; (display-time-mode 1)
   (display-battery-mode 1)
   (setq doom-modeline-enable-word-count t))
-
-(defvar fancy-splash-image-template
-  (expand-file-name "misc/splash-images/blackhole-lines-template.svg" doom-private-dir)
-  "Default svg-template -> splash image + substitutions from")
-
-(defvar fancy-splash-sizes
-  `((:height 300 :min-height 50 :padding (0 . 2))
-    (:height 250 :min-height 42 :padding (2 . 4))
-    (:height 200 :min-height 35 :padding (3 . 3))
-    (:height 150 :min-height 28 :padding (3 . 3))
-    (:height 100 :min-height 20 :padding (2 . 2))
-    (:height 75  :min-height 15 :padding (2 . 1))
-    (:height 50  :min-height 10 :padding (1 . 0))
-    (:height 1   :min-height 0  :padding (0 . 0)))
-  ":height    -> Image height
-  :min-height -> Minimum image `frame-height'
-  :padding    -> Applied `+doom-dashboard-banner-padding'
-  :template   -> Non-default template file
-  :file       -> File to replace template")
-
-(defvar fancy-splash-template-colours
-  '(("$colour1" . keywords) ("$colour2" . type) ("$colour3" . base5) ("$colour4" . base8)))
-
-(unless (file-exists-p (expand-file-name "theme-splashes" doom-cache-dir))
-  (make-directory (expand-file-name "theme-splashes" doom-cache-dir) t))
-
-(defun fancy-splash-filename (theme-name height)
-  (expand-file-name (concat (file-name-as-directory "theme-splashes")
-                            theme-name
-                            "-" (number-to-string height) ".svg")
-                    doom-cache-dir))
-
-(defun fancy-splash-clear-cache ()
-  (interactive)
-  (delete-directory (expand-file-name "theme-splashes" doom-cache-dir) t)
-  (message "Cache cleared!"))
-
-(defun fancy-splash-generate-image (template height)
-  (with-temp-buffer
-    (insert-file-contents template)
-    (re-search-forward "$height" nil t)
-    (replace-match (number-to-string height) nil nil)
-    (dolist (substitution fancy-splash-template-colours)
-      (goto-char (point-min))
-      (while (re-search-forward (car substitution) nil t)
-        (replace-match (doom-color (cdr substitution)) nil nil)))
-    (write-region nil nil
-                  (fancy-splash-filename (symbol-name doom-theme) height) nil nil)))
-
-(defun fancy-splash-generate-images ()
-  "Perform `fancy-splash-generate-image' in bulk"
-  (dolist (size fancy-splash-sizes)
-    (unless (plist-get size :file)
-      (fancy-splash-generate-image (or (plist-get size :template)
-                                       fancy-splash-image-template)
-                                   (plist-get size :height)))))
-
-(defun ensure-theme-splash-images-exist (&optional height)
-  (unless (file-exists-p (fancy-splash-filename
-                          (symbol-name doom-theme)
-                          (or height
-                              (plist-get (car fancy-splash-sizes) :height))))
-    (fancy-splash-generate-images)))
-
-(defun get-appropriate-splash ()
-  (let ((height (frame-height)))
-    (cl-some (lambda (size) (when (>= height (plist-get size :min-height)) size))
-             fancy-splash-sizes)))
-
-(setq fancy-splash-last-size nil)
-(setq fancy-splash-last-theme nil)
-(defun set-appropriate-splash (&rest _)
-  (let ((appropriate-image (get-appropriate-splash)))
-    (unless (and (equal appropriate-image fancy-splash-last-size)
-                 (equal doom-theme fancy-splash-last-theme)))
-    (unless (plist-get appropriate-image :file)
-      (ensure-theme-splash-images-exist (plist-get appropriate-image :height)))
-    (setq fancy-splash-image
-          (or (plist-get appropriate-image :file)
-              (fancy-splash-filename (symbol-name doom-theme) (plist-get appropriate-image :height))))
-    (setq +doom-dashboard-banner-padding (plist-get appropriate-image :padding))
-    (setq fancy-splash-last-size appropriate-image)
-    (setq fancy-splash-last-theme doom-theme)
-    (+doom-dashboard-reload)))
-
-(add-hook 'window-size-change-functions #'set-appropriate-splash)
-(add-hook 'doom-load-theme-hook #'set-appropriate-splash)
-
-(with-eval-after-load 'solaire-mode
-  (add-to-list 'solaire-mode-themes-to-face-swap 'doom-horizon))
 
 (after! centaur-tabs
   (centaur-tabs-mode -1)

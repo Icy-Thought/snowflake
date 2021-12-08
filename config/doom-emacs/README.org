@@ -59,7 +59,28 @@
 #+begin_src emacs-lisp
 (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 15 :weight 'Medium)
       doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 20 :weight 'Medium)
+      doom-variable-pitch-font (font-spec :family "JetBrainsMono Nerd Font" :size 15 :weight 'Medium)
       doom-theme 'doom-horizon)
+#+end_src
+
+**** FIX: Broken Emacsclient Theme
+#+begin_src emacs-lisp
+(defun apply-theme ()
+  (interactive)
+  (load-theme 'doom-horizon t))
+
+(if (daemonp)
+    (add-hook 'after-make-frame-functions
+              (lambda (frame)
+                (with-selected-frame frame (apply-theme))))
+  (apply-theme))
+#+end_src
+
+*** Solaire Mode
+Invert colors -> darker theming:
+#+begin_src emacs-lisp
+(with-eval-after-load 'solaire-mode
+  (add-to-list 'solaire-mode-themes-to-face-swap 'doom-horizon))
 #+end_src
 
 *** Doom-Modeline
@@ -90,21 +111,20 @@
   (setq doom-modeline-enable-word-count t))
 #+end_src
 
-*** Splash Screen
-#+begin_src emacs-lisp
+*** Transparency
+Enable transparency for emacs frame only + retaining brightness of remaining objects:
+#+begin_src emacs-lisp :tangle no
+(doom/set-frame-opacity 95)
+#+end_src
+
+*** Splash Screen (WIP)
+#+begin_src emacs-lisp :tangle no
 (defvar fancy-splash-image-template
   (expand-file-name "misc/splash-images/blackhole-lines-template.svg" doom-private-dir)
   "Default svg-template -> splash image + substitutions from")
 
 (defvar fancy-splash-sizes
-  `((:height 300 :min-height 50 :padding (0 . 2))
-    (:height 250 :min-height 42 :padding (2 . 4))
-    (:height 200 :min-height 35 :padding (3 . 3))
-    (:height 150 :min-height 28 :padding (3 . 3))
-    (:height 100 :min-height 20 :padding (2 . 2))
-    (:height 75  :min-height 15 :padding (2 . 1))
-    (:height 50  :min-height 10 :padding (1 . 0))
-    (:height 1   :min-height 0  :padding (0 . 0)))
+  `((:height 300 :min-height 50 :padding (0 . 4)))
   ":height    -> Image height
   :min-height -> Minimum image `frame-height'
   :padding    -> Applied `+doom-dashboard-banner-padding'
@@ -178,18 +198,6 @@
 
 (add-hook 'window-size-change-functions #'set-appropriate-splash)
 (add-hook 'doom-load-theme-hook #'set-appropriate-splash)
-#+end_src
-*** Transparency
-Enable transparency for emacs frame only + retaining brightness of remaining objects:
-#+begin_src emacs-lisp :tangle no
-(doom/set-frame-opacity 95)
-#+end_src
-
-*** Solaire Mode
-Invert colors -> darker theming:
-#+begin_src emacs-lisp
-(with-eval-after-load 'solaire-mode
-  (add-to-list 'solaire-mode-themes-to-face-swap 'doom-horizon))
 #+end_src
 
 *** Centaur-Tabs
