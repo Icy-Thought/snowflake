@@ -68,7 +68,7 @@ in {
         preferStatusNotifierItems = true;
 
         pointerCursor = {
-          name = "Bibata_Amber";
+          name = "Bibata-Modern-Amber";
           package = pkgs.bibata-cursors;
           defaultCursor = "left_ptr";
           size = 24;
