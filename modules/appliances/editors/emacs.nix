@@ -32,7 +32,7 @@ in {
       binutils
       emacsWithPackages
 
-      ## Doom Dependencies
+      # Doom Dependencies
       (ripgrep.override { withPCRE2 = true; })
       gnutls
 
@@ -41,31 +41,26 @@ in {
       imagemagick
       (mkIf (config.programs.gnupg.agent.enable) pinentry_emacs)
       zstd
-      # :checkers spell
+
+      # Module dependencies:
+      ## :checkers spell
       (aspellWithDicts (ds: with ds; [ en en-computers en-science ]))
-      # :checkers grammar
-      languagetool
-      # :tools editorconfig
+      ## :tools editorconfig
       editorconfig-core-c
-      # :tools lookup & :lang org (roam + gnuplot + latex)
+      ## :tools lookup & :lang Org-Roam & Gnuplot
       sqlite
-      graphviz
       gnuplot
-      # :lang cc
-      ccls
-      # :lang dhall
-      # haskellPackages.dhall-lsp-server
-      # :lang haskell
+      ## :lang haskell
       haskell-language-server
       stylish-haskell
-      # :lang javascript
+      ## :lang javascript
       nodePackages.typescript-language-server
-      # :lang latex & :lang org (latex previews)
+      ## :lang latex & :lang org (latex previews)
       texlive.combined.scheme-medium
-      # :lang nix
+      ## :lang nix
       nixfmt
       rnix-lsp
-      # :lang rust
+      ## :lang rust
       unstable.rust-analyzer
     ];
 
