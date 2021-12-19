@@ -22,11 +22,11 @@
     },
     "emacs": {
       "locked": {
-        "lastModified": 1639537111,
-        "narHash": "sha256-/hGG2/UPIitnZ5HmuNFtcTba4+5pEMm7bK6uS6sc+wo=",
+        "lastModified": 1639915649,
+        "narHash": "sha256-8ygMVY2AgS7R0/yGUyolmzdFgj6LGZ5fJyKzR1orRGI=",
         "owner": "nix-community",
         "repo": "emacs-overlay",
-        "rev": "83988dee4ecba89f5b459859dc889ccd073c1ace",
+        "rev": "1d40515d8ca7bb3bac4b7405c4bd19b2a41f200c",
         "type": "github"
       },
       "original": {
@@ -338,11 +338,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1639506187,
-        "narHash": "sha256-6wcFhEaA14bHbbr7xgpMv2QEXOEp1vleW7pB6siJXrQ=",
+        "lastModified": 1639891275,
+        "narHash": "sha256-2IMLVTtOHV9kBsirGPRpo8NE48Mjq20iXN7l7uy0YjE=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "c61fc1c288bd1fdf96261ba5574a12cf8f9be70b",
+        "rev": "3db603677509eb0b8c396a3234b1d4b70d023894",
         "type": "github"
       },
       "original": {
@@ -354,11 +354,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1639435656,
-        "narHash": "sha256-wy29523wQL5M45lOAhHmr2Fprr2BpB6AV8AnwRmyO6c=",
+        "lastModified": 1639699734,
+        "narHash": "sha256-tlX6WebGmiHb2Hmniff+ltYp+7dRfdsBxw9YczLsP60=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "cfdb99fe18ac0c01872c5fbebfae6202d7a75ab2",
+        "rev": "03ec468b14067729a285c2c7cfa7b9434a04816c",
         "type": "github"
       },
       "original": {
@@ -369,11 +369,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1639505474,
-        "narHash": "sha256-lnu8bPuJL/ayG4JaZO6wt3y6f1nDeAB380hmFwAMnhQ=",
+        "lastModified": 1639895371,
+        "narHash": "sha256-eAUPDd7YODbYbQ+sya3vS3TH9SavHV/2o46FZCqRRsE=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "fc58c3761e9b9b3aee635bb2894bab97aa1b6ff6",
+        "rev": "3e4c1337b93152e42f53c8fcd2e0d9077c6523b1",
         "type": "github"
       },
       "original": {
@@ -384,10 +384,10 @@
     },
     "nixpkgs_10": {
       "locked": {
-        "lastModified": 1638286143,
-        "narHash": "sha256-A+rgjbIpz3uPRKHPXwdmouVcVn5pZqLnaZHymjkraG4=",
-        "path": "/nix/store/3by5vj093fkh7z5138czz0a8ps0hdqp4-source",
-        "rev": "29d1f6e1f625d246dcf84a78ef97b4da3cafc6ea",
+        "lastModified": 1639435656,
+        "narHash": "sha256-wy29523wQL5M45lOAhHmr2Fprr2BpB6AV8AnwRmyO6c=",
+        "path": "/nix/store/fl2amzf0ki331cg8dx4wkni5cvkrk8z4-source",
+        "rev": "cfdb99fe18ac0c01872c5fbebfae6202d7a75ab2",
         "type": "path"
       },
       "original": {
@@ -397,10 +397,10 @@
     },
     "nixpkgs_11": {
       "locked": {
-        "lastModified": 1638286143,
-        "narHash": "sha256-A+rgjbIpz3uPRKHPXwdmouVcVn5pZqLnaZHymjkraG4=",
-        "path": "/nix/store/3by5vj093fkh7z5138czz0a8ps0hdqp4-source",
-        "rev": "29d1f6e1f625d246dcf84a78ef97b4da3cafc6ea",
+        "lastModified": 1639435656,
+        "narHash": "sha256-wy29523wQL5M45lOAhHmr2Fprr2BpB6AV8AnwRmyO6c=",
+        "path": "/nix/store/fl2amzf0ki331cg8dx4wkni5cvkrk8z4-source",
+        "rev": "cfdb99fe18ac0c01872c5fbebfae6202d7a75ab2",
         "type": "path"
       },
       "original": {
@@ -410,10 +410,10 @@
     },
     "nixpkgs_12": {
       "locked": {
-        "lastModified": 1638286143,
-        "narHash": "sha256-A+rgjbIpz3uPRKHPXwdmouVcVn5pZqLnaZHymjkraG4=",
-        "path": "/nix/store/3by5vj093fkh7z5138czz0a8ps0hdqp4-source",
-        "rev": "29d1f6e1f625d246dcf84a78ef97b4da3cafc6ea",
+        "lastModified": 1639435656,
+        "narHash": "sha256-wy29523wQL5M45lOAhHmr2Fprr2BpB6AV8AnwRmyO6c=",
+        "path": "/nix/store/fl2amzf0ki331cg8dx4wkni5cvkrk8z4-source",
+        "rev": "cfdb99fe18ac0c01872c5fbebfae6202d7a75ab2",
         "type": "path"
       },
       "original": {
@@ -423,10 +423,10 @@
     },
     "nixpkgs_13": {
       "locked": {
-        "lastModified": 1638286143,
-        "narHash": "sha256-A+rgjbIpz3uPRKHPXwdmouVcVn5pZqLnaZHymjkraG4=",
-        "path": "/nix/store/3by5vj093fkh7z5138czz0a8ps0hdqp4-source",
-        "rev": "29d1f6e1f625d246dcf84a78ef97b4da3cafc6ea",
+        "lastModified": 1639435656,
+        "narHash": "sha256-wy29523wQL5M45lOAhHmr2Fprr2BpB6AV8AnwRmyO6c=",
+        "path": "/nix/store/fl2amzf0ki331cg8dx4wkni5cvkrk8z4-source",
+        "rev": "cfdb99fe18ac0c01872c5fbebfae6202d7a75ab2",
         "type": "path"
       },
       "original": {
@@ -436,10 +436,10 @@
     },
     "nixpkgs_14": {
       "locked": {
-        "lastModified": 1638286143,
-        "narHash": "sha256-A+rgjbIpz3uPRKHPXwdmouVcVn5pZqLnaZHymjkraG4=",
-        "path": "/nix/store/3by5vj093fkh7z5138czz0a8ps0hdqp4-source",
-        "rev": "29d1f6e1f625d246dcf84a78ef97b4da3cafc6ea",
+        "lastModified": 1639435656,
+        "narHash": "sha256-wy29523wQL5M45lOAhHmr2Fprr2BpB6AV8AnwRmyO6c=",
+        "path": "/nix/store/fl2amzf0ki331cg8dx4wkni5cvkrk8z4-source",
+        "rev": "cfdb99fe18ac0c01872c5fbebfae6202d7a75ab2",
         "type": "path"
       },
       "original": {
@@ -449,10 +449,10 @@
     },
     "nixpkgs_15": {
       "locked": {
-        "lastModified": 1638286143,
-        "narHash": "sha256-A+rgjbIpz3uPRKHPXwdmouVcVn5pZqLnaZHymjkraG4=",
-        "path": "/nix/store/3by5vj093fkh7z5138czz0a8ps0hdqp4-source",
-        "rev": "29d1f6e1f625d246dcf84a78ef97b4da3cafc6ea",
+        "lastModified": 1639435656,
+        "narHash": "sha256-wy29523wQL5M45lOAhHmr2Fprr2BpB6AV8AnwRmyO6c=",
+        "path": "/nix/store/fl2amzf0ki331cg8dx4wkni5cvkrk8z4-source",
+        "rev": "cfdb99fe18ac0c01872c5fbebfae6202d7a75ab2",
         "type": "path"
       },
       "original": {
@@ -462,10 +462,10 @@
     },
     "nixpkgs_16": {
       "locked": {
-        "lastModified": 1638286143,
-        "narHash": "sha256-A+rgjbIpz3uPRKHPXwdmouVcVn5pZqLnaZHymjkraG4=",
-        "path": "/nix/store/3by5vj093fkh7z5138czz0a8ps0hdqp4-source",
-        "rev": "29d1f6e1f625d246dcf84a78ef97b4da3cafc6ea",
+        "lastModified": 1639435656,
+        "narHash": "sha256-wy29523wQL5M45lOAhHmr2Fprr2BpB6AV8AnwRmyO6c=",
+        "path": "/nix/store/fl2amzf0ki331cg8dx4wkni5cvkrk8z4-source",
+        "rev": "cfdb99fe18ac0c01872c5fbebfae6202d7a75ab2",
         "type": "path"
       },
       "original": {
@@ -491,10 +491,10 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1638286143,
-        "narHash": "sha256-A+rgjbIpz3uPRKHPXwdmouVcVn5pZqLnaZHymjkraG4=",
-        "path": "/nix/store/3by5vj093fkh7z5138czz0a8ps0hdqp4-source",
-        "rev": "29d1f6e1f625d246dcf84a78ef97b4da3cafc6ea",
+        "lastModified": 1639435656,
+        "narHash": "sha256-wy29523wQL5M45lOAhHmr2Fprr2BpB6AV8AnwRmyO6c=",
+        "path": "/nix/store/fl2amzf0ki331cg8dx4wkni5cvkrk8z4-source",
+        "rev": "cfdb99fe18ac0c01872c5fbebfae6202d7a75ab2",
         "type": "path"
       },
       "original": {
@@ -504,10 +504,10 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1638286143,
-        "narHash": "sha256-A+rgjbIpz3uPRKHPXwdmouVcVn5pZqLnaZHymjkraG4=",
-        "path": "/nix/store/3by5vj093fkh7z5138czz0a8ps0hdqp4-source",
-        "rev": "29d1f6e1f625d246dcf84a78ef97b4da3cafc6ea",
+        "lastModified": 1639435656,
+        "narHash": "sha256-wy29523wQL5M45lOAhHmr2Fprr2BpB6AV8AnwRmyO6c=",
+        "path": "/nix/store/fl2amzf0ki331cg8dx4wkni5cvkrk8z4-source",
+        "rev": "cfdb99fe18ac0c01872c5fbebfae6202d7a75ab2",
         "type": "path"
       },
       "original": {
@@ -517,10 +517,10 @@
     },
     "nixpkgs_5": {
       "locked": {
-        "lastModified": 1638286143,
-        "narHash": "sha256-A+rgjbIpz3uPRKHPXwdmouVcVn5pZqLnaZHymjkraG4=",
-        "path": "/nix/store/3by5vj093fkh7z5138czz0a8ps0hdqp4-source",
-        "rev": "29d1f6e1f625d246dcf84a78ef97b4da3cafc6ea",
+        "lastModified": 1639435656,
+        "narHash": "sha256-wy29523wQL5M45lOAhHmr2Fprr2BpB6AV8AnwRmyO6c=",
+        "path": "/nix/store/fl2amzf0ki331cg8dx4wkni5cvkrk8z4-source",
+        "rev": "cfdb99fe18ac0c01872c5fbebfae6202d7a75ab2",
         "type": "path"
       },
       "original": {
@@ -530,10 +530,10 @@
     },
     "nixpkgs_6": {
       "locked": {
-        "lastModified": 1638286143,
-        "narHash": "sha256-A+rgjbIpz3uPRKHPXwdmouVcVn5pZqLnaZHymjkraG4=",
-        "path": "/nix/store/3by5vj093fkh7z5138czz0a8ps0hdqp4-source",
-        "rev": "29d1f6e1f625d246dcf84a78ef97b4da3cafc6ea",
+        "lastModified": 1639435656,
+        "narHash": "sha256-wy29523wQL5M45lOAhHmr2Fprr2BpB6AV8AnwRmyO6c=",
+        "path": "/nix/store/fl2amzf0ki331cg8dx4wkni5cvkrk8z4-source",
+        "rev": "cfdb99fe18ac0c01872c5fbebfae6202d7a75ab2",
         "type": "path"
       },
       "original": {
@@ -543,10 +543,10 @@
     },
     "nixpkgs_7": {
       "locked": {
-        "lastModified": 1638286143,
-        "narHash": "sha256-A+rgjbIpz3uPRKHPXwdmouVcVn5pZqLnaZHymjkraG4=",
-        "path": "/nix/store/3by5vj093fkh7z5138czz0a8ps0hdqp4-source",
-        "rev": "29d1f6e1f625d246dcf84a78ef97b4da3cafc6ea",
+        "lastModified": 1639435656,
+        "narHash": "sha256-wy29523wQL5M45lOAhHmr2Fprr2BpB6AV8AnwRmyO6c=",
+        "path": "/nix/store/fl2amzf0ki331cg8dx4wkni5cvkrk8z4-source",
+        "rev": "cfdb99fe18ac0c01872c5fbebfae6202d7a75ab2",
         "type": "path"
       },
       "original": {
@@ -556,10 +556,10 @@
     },
     "nixpkgs_8": {
       "locked": {
-        "lastModified": 1638286143,
-        "narHash": "sha256-A+rgjbIpz3uPRKHPXwdmouVcVn5pZqLnaZHymjkraG4=",
-        "path": "/nix/store/3by5vj093fkh7z5138czz0a8ps0hdqp4-source",
-        "rev": "29d1f6e1f625d246dcf84a78ef97b4da3cafc6ea",
+        "lastModified": 1639435656,
+        "narHash": "sha256-wy29523wQL5M45lOAhHmr2Fprr2BpB6AV8AnwRmyO6c=",
+        "path": "/nix/store/fl2amzf0ki331cg8dx4wkni5cvkrk8z4-source",
+        "rev": "cfdb99fe18ac0c01872c5fbebfae6202d7a75ab2",
         "type": "path"
       },
       "original": {
@@ -569,10 +569,10 @@
     },
     "nixpkgs_9": {
       "locked": {
-        "lastModified": 1638286143,
-        "narHash": "sha256-A+rgjbIpz3uPRKHPXwdmouVcVn5pZqLnaZHymjkraG4=",
-        "path": "/nix/store/3by5vj093fkh7z5138czz0a8ps0hdqp4-source",
-        "rev": "29d1f6e1f625d246dcf84a78ef97b4da3cafc6ea",
+        "lastModified": 1639435656,
+        "narHash": "sha256-wy29523wQL5M45lOAhHmr2Fprr2BpB6AV8AnwRmyO6c=",
+        "path": "/nix/store/fl2amzf0ki331cg8dx4wkni5cvkrk8z4-source",
+        "rev": "cfdb99fe18ac0c01872c5fbebfae6202d7a75ab2",
         "type": "path"
       },
       "original": {
@@ -617,11 +617,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1639534642,
-        "narHash": "sha256-Id6MajrGvH3WO1IP36oGQ82GLS/1T63nE12ZfTSsUdU=",
+        "lastModified": 1639880499,
+        "narHash": "sha256-/BibDmFwgWuuTUkNVO6YlvuTSWM9dpBvlZoTAPs7ORI=",
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "rev": "712446b06015f7f51e60a440949357c6f18ea25f",
+        "rev": "c6c83589ae048af20d93d01eb07a4176012093d0",
         "type": "github"
       },
       "original": {
