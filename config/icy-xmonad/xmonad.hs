@@ -240,12 +240,9 @@ firefoxSelector = className =? "Firefox"
 
 gmailSelector = chromiumSelectorBase <&&> fmap isGmailTitle title
 
-transmissionSelector = fmap (isPrefixOf "Transmission") title
-
 virtualClasses =
   [ (gmailSelector       , "Gmail")
   , (chromiumSelector    , "Chromium")
-  , (transmissionSelector, "Transmission")
   ]
 
 -- Commands
@@ -257,8 +254,6 @@ firefoxCommand = "firefox-devedition"
 
 firefoxPrvtCommand =
   "firefox-devedition --profile ~/.mozilla/firefox/z5dgw9v6.dev-edition-private"
-
-transmissionCommand = "transmission-gtk"
 
 -- Startup hook
 hostNameToAction = M.fromList [("my-hostname", return ())]
@@ -828,39 +823,42 @@ scratchpads =
   , NS "emacs"              emacsCommand        emacsSelector        nonFloating
   , NS "gmail"              gmailCommand        gmailSelector        nonFloating
   , NS "htop"               htopCommand         htopSelector         nonFloating
-  , NS "Picture-in-Picture" ffPicCommand ffPicSelector defaultFloating
-  , NS "spotify" spotifyCommand spotifySelector nearFullFloat
+  , NS "Picture-in-Picture" ffPicCommand        ffPicSelector        defaultFloating
+  , NS "spotify"            spotifyCommand      spotifySelector      nearFullFloat
   , NS "telegram"           telegramCommand     telegramSelector     nonFloating
-  , NS "transmission" transmissionCommand transmissionSelector nearFullFloat
+  , NS "transmission"       transmissionCommand transmissionSelector nearFullFloat
   , NS "volume"             volumeCommand       volumeSelector       nonFloating
   ]
  where
-  bitwardenCommand  = "bitwarden"
-  bitwardenSelector = className =? "Bitwarden"
+  bitwardenCommand     = "bitwarden"
+  bitwardenSelector    = className =? "Bitwarden"
 
-  discordCommand    = "discord"
-  discordSelector   = className =? "discord"
+  discordCommand       = "discord"
+  discordSelector      = className =? "discord"
 
-  elementCommand    = "element-desktop"
-  elementSelector   = className =? "Element"
+  elementCommand       = "element-desktop"
+  elementSelector      = className =? "Element"
 
-  emacsCommand      = "emacsclient -nc"
-  emacsSelector     = className =? "Emacs"
+  emacsCommand         = "emacsclient -nc"
+  emacsSelector        = className =? "Emacs"
 
-  htopCommand       = "kitty --title htop -e htop"
-  htopSelector      = title =? "htop"
+  htopCommand          = "kitty --title htop -e htop"
+  htopSelector         = title =? "htop"
 
-  spotifyCommand    = "spotify"
-  spotifySelector   = className =? "Spotify"
+  spotifyCommand       = "spotify"
+  spotifySelector      = className =? "Spotify"
 
-  ffPicCommand      = "Picture-in-Picture"
-  ffPicSelector     = title =? "Picture-in-Picture"
+  ffPicCommand         = "Picture-in-Picture"
+  ffPicSelector        = title =? "Picture-in-Picture"
 
-  telegramCommand   = "telegram-desktop"
-  telegramSelector  = className =? "TelegramDesktop"
+  telegramCommand      = "telegram-desktop"
+  telegramSelector     = className =? "TelegramDesktop"
 
-  volumeCommand     = "pavucontrol"
-  volumeSelector    = className =? "Pavucontrol"
+  transmissionCommand  = "transmission-remote-gtk"
+  transmissionSelector = className =? "Transmission-remote-gtk"
+
+  volumeCommand        = "pavucontrol"
+  volumeSelector       = className =? "Pavucontrol"
 
 myScratchPadManageHook = namedScratchpadManageHook scratchpads
 
