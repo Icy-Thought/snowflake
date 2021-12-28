@@ -88,11 +88,6 @@
       # libre.enable = true;
       # zoom.enable = true;
     };
-
-    # gaming = {
-    #   steam.enable = true;
-    #   lutris.enable = true;
-    # };
   };
 
   modules.develop = {
@@ -102,11 +97,15 @@
     python.enable = true;
   };
 
+  modules.containers = {
+    transmission.enable = true;
+    # archlinux.enable = true;
+  };
+
   modules.services = {
     # ssh.enable = true;
     kdeconnect.enable = true;
     laptop.enable = true;
-    transmission.enable = true;
   };
 
   modules.shell = {
