@@ -12,8 +12,10 @@
     enable = true;
     networkManager.enable = true;
 
-    wireGuard.enable = true;
-    wireGuard.akkadianVPN.enable = true;
+    wireGuard = {
+      enable = true;
+      akkadianVPN.enable = true;
+    };
   };
 
   modules.desktop = {
@@ -70,6 +72,7 @@
 
     extras = {
       docViewer.enable = true;
+      transmission.enable = true;
 
       chat = {
         enable = true;
@@ -97,15 +100,11 @@
     python.enable = true;
   };
 
-  modules.containers = {
-    transmission = {
-      enable = true;
-      username = "alonzo";
-      password = builtins.readFile config.age.secrets.torBylon.path;
-    };
-
-    # archlinux.enable = true;
-  };
+  # modules.containers.transmission = {
+  #   enable = true;
+  #   username = "alonzo";
+  #   password = builtins.readFile config.age.secrets.torBylon.path;
+  # };
 
   modules.services = {
     # ssh.enable = true;

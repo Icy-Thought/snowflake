@@ -4,6 +4,7 @@ with lib;
 with lib.my;
 let
   cfg = config.modules.containers.transmission;
+  configDir = config.snowflake.configDir;
   torrentDir = "${config.user.home}/Downloads/Torrents";
 in {
   options.modules.containers.transmission = {
@@ -52,6 +53,7 @@ in {
     };
 
     containers.transmission.config = {
+      # FIXME: after enough nix knowledge has been obtained.
       # TODO: config file /= existant
       # + wg-quick-akkadianVPN /= exist + no pinging.
       # + nixos-container root-login transmission => only way to access (currently).
