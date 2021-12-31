@@ -27,7 +27,10 @@ in {
         Hostname = "Arch";
         SystemCallFilter = "modify_ldt";
       };
+
       filesConfig = {
+        Volatile = false;
+        BindReadOnly = [ "/home/icy-thought:/mnt/icy-thought" ];
         Bind = [
           "/home/icy-thought/.container-arch:/home/icy-thought"
           "/run/user/1000/wayland-1"
@@ -37,9 +40,8 @@ in {
           "/dev/dri"
           "/dev/shm"
         ];
-        BindReadOnly = [ "/home/icy-thought:/mnt/icy-thought" ];
-        Volatile = false;
       };
+
       networkConfig = {
         Private = true;
         VirtualEthernet = true;
