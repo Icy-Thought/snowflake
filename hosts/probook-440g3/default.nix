@@ -12,8 +12,10 @@
     enable = true;
     networkManager.enable = true;
 
-    wireGuard.enable = true;
-    wireGuard.akkadianVPN.enable = true;
+    wireGuard = {
+      enable = true;
+      akkadianVPN.enable = true;
+    };
   };
 
   modules.desktop = {
