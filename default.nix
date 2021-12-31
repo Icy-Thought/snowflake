@@ -38,9 +38,9 @@ with lib.my; {
   system.configurationRevision = with inputs; mkIf (self ? rev) self.rev;
   system.stateVersion = "21.11";
 
-  ## Some reasonable, global defaults
-  # This is here to appease 'nix flake check' for generic hosts with no
-  # hardware-configuration.nix or fileSystem config.
+  # Some reasonable, global defaults
+  ## This is here to appease 'nix flake check' for generic hosts with no
+  ## hardware-configuration.nix or fileSystem config.
   fileSystems."/".device = mkDefault "/dev/disk/by-label/nixos";
 
   boot = {

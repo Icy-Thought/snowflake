@@ -28,19 +28,20 @@
     };
 
     envExtra = {
-      picom.enable = true;
-      taffybar.enable = true;
-      customLayout.enable = true;
       gtk.enable = true;
       rofi.enable = true;
       dunst.enable = true;
+
+      picom.enable = true;
+      taffybar.enable = true;
+      customLayout.enable = true;
     };
 
     envScript = {
+      volume.enable = true;
       brightness.enable = true;
       microphone.enable = true;
       screenshot.enable = true;
-      volume.enable = true;
     };
   };
 
@@ -100,11 +101,11 @@
     python.enable = true;
   };
 
-  # modules.containers.transmission = {
-  #   enable = true;
-  #   username = "alonzo";
-  #   password = builtins.readFile config.age.secrets.torBylon.path;
-  # };
+  modules.containers.transmission = {
+    enable = false; # TODO: Once fixed -> enable = true;
+    username = "alonzo";
+    password = builtins.readFile config.age.secrets.torBylon.path;
+  };
 
   modules.services = {
     # ssh.enable = true;
@@ -129,7 +130,7 @@
   boot.kernel.sysctl."abi.vsyscall32" = 0; # League of Legends..
   boot.kernelParams = [ "acpi_backlight=native" ];
 
-  # Hide device entry from file-manager:
+  # Hide HW-Devices from Nautilus:
   fileSystems."/" = {
     device = "/dev/disk/by-label/nixos";
     fsType = "ext4";

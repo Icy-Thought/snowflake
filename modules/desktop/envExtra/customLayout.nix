@@ -27,8 +27,8 @@ in {
     environment.etc."X11/keymap.xkb".source = customKeyboardLayout;
 
     homeManager = {
-      # Fix xkbOptions not loading due to home-manager design choices..
       home.keyboard = null;
+      # Home-Manager (null) -> fixes fuck-up.
 
       xsession.initExtra = ''
         # Set XKB layout = us+hyper on XMonad start:
