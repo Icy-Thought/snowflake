@@ -9,11 +9,6 @@ in {
   config = mkIf cfg.enable {
     user.packages = with pkgs; [ wireguard ];
 
-    systemd.services = {
-      systemd-resolved.enable = true;
-      systemd-machined.enable = false;
-    };
-
     networking = {
       iproute2.enable = true;
       firewall.allowedTCPPorts = [ 53 ];
