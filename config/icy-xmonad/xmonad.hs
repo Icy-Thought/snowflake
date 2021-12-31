@@ -854,8 +854,8 @@ scratchpads =
   telegramCommand      = "telegram-desktop"
   telegramSelector     = className =? "TelegramDesktop"
 
-  transmissionCommand  = "transmission-remote-gtk"
-  transmissionSelector = className =? "Transmission-remote-gtk"
+  transmissionCommand  = "transmission-gtk"
+  transmissionSelector = className =? "Transmission-gtk"
 
   volumeCommand        = "pavucontrol"
   volumeSelector       = className =? "Pavucontrol"

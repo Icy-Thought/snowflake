@@ -2,9 +2,11 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.services.transmission;
+let cfg = config.modules.appliances.extras.transmission;
 in {
-  options.modules.services.transmission = { enable = mkBoolOpt false; };
+  options.modules.appliances.extras.transmission = {
+    enable = mkBoolOpt false;
+  };
 
   config = mkIf cfg.enable {
     user = {
