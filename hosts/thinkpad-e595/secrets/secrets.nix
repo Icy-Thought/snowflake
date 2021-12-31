@@ -4,5 +4,5 @@ let
 
 in {
   "akkadianVPN.age".publicKeys = [ icyThought ];
-  "transmission.age".publicKeys = [ icyThought ];
+  "torBylon.age".publicKeys = [ icyThought ];
 }

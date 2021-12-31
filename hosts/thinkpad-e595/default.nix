@@ -98,7 +98,12 @@
   };
 
   modules.containers = {
-    transmission.enable = true;
+    transmission = {
+      enable = true;
+      username = "alonzo";
+      password = builtins.readFile config.age.secrets.torBylon.path;
+    };
+
     # archlinux.enable = true;
   };
 

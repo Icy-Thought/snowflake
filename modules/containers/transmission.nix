@@ -2,22 +2,23 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.containers.transmission;
+let
+  cfg = config.modules.containers.transmission;
+  torrentDir = "${config.user.home}/Downloads/Torrents";
 in {
   options.modules.containers.transmission = {
     enable = mkBoolOpt false;
 
     username = mkOption {
       type = types.str;
-      default = "Alonzo";
-      example = "Username";
+      default = "alonzo";
+      example = "username";
       description = "Transmission RPC User-Name";
     };
 
     password = mkOption {
       type = types.str;
-      default = builtins.readFile config.age.secrets.transmission.path;
-      example = "Password";
+      example = "password";
       description = "Transmission RPC User-Password";
     };
   };
@@ -34,36 +35,37 @@ in {
       enableTun = true;
 
       privateNetwork = true;
-      hostAddress = "192.168.17.10";
-      localAddress = "192.168.17.11";
+      hostAddress = "192.168.102.10";
+      localAddress = "192.168.102.11";
 
       bindMounts = {
-        "/run/agenix/akkadianVPN" = {
-          hostPath = config.age.secrets.akkadianVPN.path;
-          isReadOnly = true;
-        };
-
         "/var/lib/transmission" = {
           hostPath = "/var/lib/transmission";
+          isReadOnly = false;
+        };
+
+        "/home/torrents" = {
+          hostPath = "${torrentDir}";
           isReadOnly = false;
         };
       };
     };
 
     containers.transmission.config = {
+      # TODO: config file /= existant
+      # + wg-quick-akkadianVPN /= exist + no pinging.
+      # + nixos-container root-login transmission => only way to access (currently).
+      # (?) web-app status unknown due to failed login attempt.
+      # + fish completion (?)
+
       systemd.services.transmission = {
         bindsTo = [ "wg-quick-akkadianVPN" ];
         after = [ "wg-quick-akkadianVPN" ];
       };
 
-      networking.nat = {
-        enable = lib.mkDefault true;
-        internalInterfaces = [ "ve-transmission" ];
-      };
-
       networking.firewall = {
         enable = true;
-        allowedTCPPorts = [ 51413 ];
+        allowedTCPPorts = [ 9091 51413 ];
         allowedUDPPorts = [ 51413 ];
       };
 
@@ -71,8 +73,8 @@ in {
         enable = true;
         settings = {
           # Manage transmisson file locations:
-          download-dir = "/torrents";
-          incomplete-dir = "/torrents/.incomplete";
+          download-dir = "/home/torrents/completed";
+          incomplete-dir = "/home/torrents/.incomplete";
           incomplete-dir-enabled = true;
           watch-dir-enabled = false;
           rename-partial-files = true;
@@ -83,9 +85,9 @@ in {
           rpc-whitelist = "127.0.0.1,192.168.*.*";
           rpc-bind-address = "0.0.0.0";
 
-          rpc-authentication-required = true;
           rpc-username = cfg.username;
           rpc-password = cfg.password;
+          rpc-authentication-required = true;
 
           peer-port = 51413;
           peer-socket-tos = "lowcost";
