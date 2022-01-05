@@ -96,9 +96,13 @@
 
   modules.develop = {
     nixLang.enable = true;
-    haskell.enable = true;
-    rust.enable = true;
     python.enable = true;
+    haskell.enable = true;
+
+    rust = {
+      enable = true;
+      enableGlobally = true;
+    };
   };
 
   modules.containers.transmission = {
