@@ -575,7 +575,6 @@ PDF-View -> use active theme foreground ++ background:
 (use-package pdf-view
   :hook (pdf-tools-enabled . pdf-view-themed-minor-mode)
   :config
-
   (setq-default pdf-view-display-size 'fit-page))
 #+end_src
 

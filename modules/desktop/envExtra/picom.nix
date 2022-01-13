@@ -81,12 +81,12 @@ in {
           "class_g = 'Firefox' && window_type = 'utility'"
         ];
 
-        # transition-length = 150;
-        # transition-pow-x = 0.1;
-        # transition-pow-y = 0.1;
-        # transition-pow-w = 0.1;
-        # transition-pow-h = 0.1;
-        # size-transition = true;
+        transition-length = 200;
+        transition-pow-x = 5.0e-2;
+        transition-pow-y = 5.0e-2;
+        transition-pow-w = 5.0e-2;
+        transition-pow-h = 5.0e-2;
+        size-transition = true;
 
         shadow-radius = 7;
         shadow-color = "#000000";

@@ -95,7 +95,6 @@
   };
 
   modules.develop = {
-    nixLang.enable = true;
     python.enable = true;
     haskell.enable = true;
 

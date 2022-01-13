@@ -72,6 +72,7 @@ with lib.my; {
     cached-nix-shell
     git
     wget
+    gcc
     gnumake
     unzip
     unrar

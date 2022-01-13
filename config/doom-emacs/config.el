@@ -338,7 +338,6 @@
 (use-package pdf-view
   :hook (pdf-tools-enabled . pdf-view-themed-minor-mode)
   :config
-
   (setq-default pdf-view-display-size 'fit-page))
 
 (setq which-key-idle-delay 0.5)
