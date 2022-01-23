@@ -17,8 +17,8 @@ in {
             echo "Usage: $0 [command]
                   - Increase Volume: [up]
                   - Decrease Volume: [down]
-                  - Mute: [toggle]
-                  -n|--notify"
+                  - Mute:            [toggle]
+                  - Volume Status:   [status]"
           }
 
           function get_volume {
@@ -29,24 +29,28 @@ in {
             $pamixer --get-mute
           }
 
-          volumeIcon() {
-            if [[ $1 == muted ]]; then
-              icon=muted
-            elif (( $1 < 30 )); then
-              icon=low
-            elif (( $1 < 70 )); then
-              icon=medium
+          function volume_icon {
+            vol=$(get_volume)
+
+            if [[ "$vol" -ge "0" && "$vol" -lt "30" ]]; then
+              icon=""
+            elif [[ "$vol" -ge "30" && "$vol" -lt "60" ]]; then
+              icon="奔"
+            elif [[ "$vol" -ge "60" && "$vol" -lt "90" ]]; then
+              icon="墳"
+            elif [[ "$vol" -ge "90" && "$vol" -le "100" ]]; then
+              icon="墳"
             else
-              icon=high
+              icon="墳"
             fi
-              echo ${pkgs.whitesur-icon-theme}/share/icons/WhiteSur-dark/status/symbolic/audio-volume-$icon-symbolic.svg
+
+            echo "$icon"
           }
 
           function notifySend {
             if [[ $(is_muted) == true ]]; then
-              dunstify \
+              dunstify "$(volume_icon) 0%" \
                 -a Volume \
-                -i $(volumeIcon muted) \
                 -t 1000 \
                 -h string:x-dunst-stack-tag:volume \
                 -u low "Muted"
@@ -54,9 +58,8 @@ in {
               volume=$(get_volume)
               bar=$(seq -s "─" $(($volume / 4)) | sed 's/[0-9]//g')
 
-              dunstify \
+              dunstify "$(volume_icon) ''${volume}%" \
                 -a Volume \
-                -i $(volumeIcon $volume) \
                 -t 1000 \
                 -h string:x-dunst-stack-tag:volume \
                 -u low "$bar"
@@ -66,14 +69,24 @@ in {
           function volume() {
             if [[ $(is_muted) == true ]]; then
               $pamixer --toggle-mute
-            fi
-
-            if [[ $1 == "up" ]]; then
+            elif [[ $1 == "up" ]]; then
               $pamixer --increase 5
             elif [[ $1 == "down" ]]; then
               $pamixer --decrease 5
             fi
+          }
 
+          function volume_status() {
+            volume=$(get_volume)
+
+            echo "$(volume_icon) ''${volume}%"
+            sleep infinity & pid=$!
+            wait
+          }
+
+          function volumeStat_update {
+            kill $pid
+            volume_status
           }
 
           case "$1" in
@@ -97,11 +110,15 @@ in {
               notifySend
               ;;
 
+            status)
+              trap '$volumeStat_update' USR1
+              volume_status
+              ;;
+
             *)
               printHelp
               exit 1
               ;;
-
           esac
         '')
       ];
