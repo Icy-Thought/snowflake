@@ -12,13 +12,10 @@ in {
       enableDefaultFonts = true;
 
       fonts = with pkgs; [
-        iosevka
-        comfortaa
-        source-code-pro
-        liberation_ttf
         noto-fonts
         noto-fonts-cjk
         noto-fonts-emoji
+        source-code-pro
       ];
 
       fontconfig = {
