@@ -3,10 +3,12 @@
 with lib;
 with lib.my;
 let
-  cfg = config.modules.shell.printTermColor;
+  cfg = config.modules.appliances.termUI.printTermColor;
   screenDir = "${config.user.home}/Pictures/Screenshots";
 in {
-  options.modules.shell.printTermColor = { enable = mkBoolOpt false; };
+  options.modules.appliances.termUI.printTermColor = {
+    enable = mkBoolOpt false;
+  };
 
   config = mkIf cfg.enable {
     user.packages = with pkgs;

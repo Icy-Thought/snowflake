@@ -3,10 +3,10 @@
 with lib;
 with lib.my;
 let
-  cfg = config.modules.shell.neofetch;
+  cfg = config.modules.appliances.termUI.neofetch;
   configDir = config.snowflake.configDir;
 in {
-  options.modules.shell.neofetch = { enable = mkBoolOpt false; };
+  options.modules.appliances.termUI.neofetch = { enable = mkBoolOpt false; };
 
   config = mkIf cfg.enable {
     user.packages = with pkgs; [ neofetch ];
