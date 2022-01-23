@@ -9,13 +9,26 @@ in {
   options.modules.themes = {
     active = mkOption {
       type = types.str;
-      description = "The active theme.";
+      example = "ayu-dark";
+      description = "System-wide theme to be applied";
     };
 
     colors = mkOption {
       type = types.attrs;
-      description = "Active color set.";
+      description = "Applies active color-palette";
       apply = v: import ("${configDir}/color-palette" + "/${cfg.active}.nix");
+    };
+
+    font = mkOption {
+      type = types.str;
+      example = "VictorMono Nerd Font Mono";
+      description = "System-wide font to be applied";
+    };
+
+    fontStyle = mkOption {
+      type = types.str;
+      example = "SemiBold";
+      description = "Font-style to use";
     };
   };
 }
