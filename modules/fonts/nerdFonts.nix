@@ -10,9 +10,7 @@ in {
   config = mkIf cfg.enable {
     fonts.fonts = with pkgs;
       [
-        (nerdfonts.override {
-          fonts = [ "JetBrainsMono" "FantasqueSansMono" ];
-        })
+        (nerdfonts.override { fonts = [ "VictorMono" "FantasqueSansMono" ]; })
       ];
   };
 }
