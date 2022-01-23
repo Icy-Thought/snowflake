@@ -2,53 +2,46 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.shell.tmux;
+let
+  cfg = config.modules.shell.tmux;
+  colors = config.modules.themes.colors;
 in {
   options.modules.shell.tmux = { enable = mkBoolOpt false; };
 
   config = mkIf cfg.enable {
     homeManager.programs.tmux = {
       enable = true;
-      baseIndex = 1;
-
-      escapeTime = 0;
-      keyMode = "vi";
-      shortcut = "a";
+      secureSocket = true;
+      prefix = "C-a";
       terminal = "screen-256color";
 
+      baseIndex = 1;
+      escapeTime = 0;
+      keyMode = "vi";
+      disableConfirmationPrompt = true;
+
+      clock24 = true;
+      resizeAmount = 2;
+      historyLimit = 5000;
+
       extraConfig = ''
-        # Terminal-related
-        set -as terminal-overrides ",*:Tc"
-        set -s focus-events on
-        set -q -g status-utf8 on
-        setw -q -g utf8 on
-        set -g history-limit 5000
-
-        # Lockscreen
-        # set -g lock-after-time 300
-        # set -g lock-command "pipes-rs"
-
-        # General Configurations
+        # --------=== General-Configurations
         set -g mouse on
-        setw -g mode-keys vi
-        set -g status 'on'
-        set -g status-keys vi
-        set -s escape-time 0
-
-        # Display
-        set -g base-index 1
-        set -g pane-base-index 1
-        setw -g automatic-rename on
+        set -s focus-events on
         set -g renumber-windows on
+        set-option -g allow-rename off
+
+        # Automatic Term-Window Title Change
         set -g set-titles on
+        set -g set-titles-string 'tmux - #S'
+        setw -g automatic-rename
 
-        # Activity
-        set -g monitor-activity on
+        # Activity/Sound
         set -g visual-activity off
-
-        # Prevent Confirm -> Exit!
-        bind & kill-window
-        bind x kill-pane
+        set -g visual-bell off
+        set -g visual-silence off
+        setw -g monitor-activity off
+        set -g bell-action none
 
         # Buffers
         bind b list-buffers
@@ -60,53 +53,35 @@ in {
         bind - split-window -v -c '#{pane_current_path}'
         bind c new-window -c '#{pane_current_path}'
 
-        # Movement binding
-        bind -n M-Left select-pane -L
-        bind -n M-Right select-pane -R
-        bind -n M-Up select-pane -U
-        bind -n M-Down select-pane -D
+        # --------=== Status-bar
+        set -g status on
+        set -g status-interval 1
+        set -g status-position top
+        set -g status-justify left
 
-        # Resize binding
-        bind -r h resize-pane -L 2
-        bind -r k resize-pane -U 2
-        bind -r j resize-pane -D 2
-        bind -r l resize-pane -R 2
-        set -s escape-time 1
+        set -g status-left-length "100"
+        set -g status-right-length "100"
 
-        # Copy/Paste bindings
-        bind P paste-buffer
-        bind -T copy-mode-vi v send-keys -X begin-selection
-        bind -T copy-mode-vi y send-keys -X copy-selection
-        bind -T copy-mode-vi r send-keys -X rectangle-toggle
+        # Messages
+        set -g message-style fg="${colors.cyan}",bg="${colors.white}",align="centre"
+        set -g message-command-style fg="${colors.cyan}",bg="${colors.white}",align="centre"
 
-        # Statusline theming
-        set -g status-fg 'colour7'
-        set -g status-bg 'colour0'
+        # Panes
+        set -g pane-border-style fg="${colors.white}"
+        set -g pane-active-border-style fg="${colors.blue}"
 
-        set -g status-position 'bottom'
-        set -g status-justify 'left'
+        # Windows
+        set -g window-status-format "#[fg=${colors.foreground}] #W#[noitalics,nobold]|#{window_panes}#[italics,bold] "
+        set -g window-status-current-format "#[bg=${colors.background}]#{?client_prefix,#[fg=${colors.foreground}],}#{?client_prefix,#[bg=${colors.background}],} #W#[noitalics,nobold]|#{window_panes}#[italics,bold] "
 
-        set -g status-left-length 50
-        set -g status-right-length 100
+        # --------=== Status-line
+        set -g status-left '🦊'
+        set -g status-bg "${colors.background}"
+        set -g status-right "#[noitalics]#(set-volume status)  #(batStat)  #[noitalics,nobold]| %b %d, %H:%M:%S  #[fg=${colors.foreground},bg=${colors.background},bold,italics] #S "
 
-        set -g status-left "$flash #S "
-        set -g status-right "$batt$date$time"
-
-        music='#[fg=colour8,bg=colour0] #(music-status) '
-        batt='#[fg=colour8,bg=colour0] #(battery-charge) '
-        date='#[fg=colour7,bg=colour8] %a %d '
-        time='#[fg=colour0,bg=colour2] %H:%M '
-        hostname='#[fg=colour0,bg=colour2] #h '
-
-        flash='#{?client_prefix,#[fg=colour2]#[bg=colour0],#[fg=colour0]#[bg=colour2]}'
-
-        # Windows-related theming
-        setw -g window-status-style fg='colour2',bg='colour0'
-        setw -g window-status-activity-style fg='colour2',bg='colour0'
-
-        setw -g window-status-separator ' '
-        setw -g window-status-format '#[fg=colour7,bg=colour0] #W '
-        setw -g window-status-current-format '#[fg=colour7,bg=colour8] #W '
+        # --------=== Modes
+        setw -g clock-mode-colour "${colors.blue}"
+        setw -g mode-style "fg=${colors.magenta} bg=${colors.black} bold"
       '';
     };
   };
