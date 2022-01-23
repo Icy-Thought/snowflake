@@ -4,6 +4,8 @@ with lib;
 with lib.my;
 let
   cfg = config.modules.appliances.termEmu.kitty;
+  font = config.modules.themes.font;
+  fontStyle = config.modules.themes.fontStyle;
   colors = config.modules.themes.colors;
 in {
   options.modules.appliances.termEmu.kitty = with types; {
@@ -13,8 +15,8 @@ in {
   config = mkIf cfg.enable {
     homeManager.programs.kitty = {
       enable = true;
-      font.name = "JetBrainsMonoMedium Nerd Font";
-      font.size = 13;
+      font.name = "${font} ${fontStyle}";
+      font.size = 12;
 
       settings = {
         term = "xterm-kitty";

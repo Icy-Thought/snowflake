@@ -39,6 +39,7 @@
 
     envScript = {
       volume.enable = true;
+      battery.enable = true;
       brightness.enable = true;
       microphone.enable = true;
       screenshot.enable = true;
@@ -50,13 +51,23 @@
     nerdFonts.enable = true;
   };
 
-  modules.themes.active = "ayu-dark";
+  modules.themes = {
+    active = "catppuccin";
+    font = "VictorMono Nerd Font";
+    fontStyle = "SemiBold";
+  };
 
   modules.appliances = {
     termEmu = {
       default = "kitty";
       kitty.enable = true;
       alacritty.enable = true;
+    };
+
+    termUI = {
+      htop.enable = true;
+      neofetch.enable = true;
+      printTermColor.enable = true;
     };
 
     editors = {
@@ -117,17 +128,11 @@
   };
 
   modules.shell = {
-    adb.enable = true;
-    gnupg.enable = true;
     git.enable = true;
-    bash.enable = true;
     fish.enable = true;
     tmux.enable = true;
-    starship.enable = true;
+    gnupg.enable = true;
     direnv.enable = true;
-    htop.enable = true;
-    neofetch.enable = true;
-    printTermColor.enable = true;
   };
 
   boot.kernel.sysctl."abi.vsyscall32" = 0; # League of Legends..

@@ -2,7 +2,10 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.desktop.envExtra.dunst;
+let
+  cfg = config.modules.desktop.envExtra.dunst;
+  font = config.modules.themes.font;
+  fontStyle = config.modules.themes.fontStyle;
 in {
   options.modules.desktop.envExtra.dunst = { enable = mkBoolOpt false; };
 
@@ -33,7 +36,7 @@ in {
           sort = "yes";
           idle_threshold = 120;
 
-          font = "JetBrainsMonoMedium Nerd Font 11";
+          font = "${font} 10";
           line_height = 0;
           markup = "full";
           format = ''

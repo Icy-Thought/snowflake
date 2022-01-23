@@ -3,8 +3,8 @@
 /* Top Level Styling */
 
 .taffy-window * {
-	font-family: "Iosevka SemiBold", sans-serif;
-	font-size: 10pt;
+	font-family: "VictorMono Nerd Font SemiBold", sans-serif;
+	font-size: 12px;
 	font-weight: normal;
 	color: @font-color;
 }

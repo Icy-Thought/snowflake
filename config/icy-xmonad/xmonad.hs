@@ -122,7 +122,7 @@ icyTheme = def { activeColor         = icyActive
                , inactiveColor       = icyInactive
                , inactiveBorderColor = icyInactive
                , inactiveTextColor   = icyActive
-               , fontName = "xft:JetBrainsMono Nerd Font:style=Medium"
+               , fontName = "xft:VictorMono Nerd Font:style=SemiBold"
                }
 
 icyActive = "#FF977A"

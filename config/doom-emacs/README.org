@@ -16,7 +16,6 @@
   - [[#company-mode][Company Mode]]
   - [[#language-server][Language Server]]
   - [[#org-mode][Org-Mode]]
-  - [[#pdf-tools][PDF-Tools]]
   - [[#which-key][Which-Key]]
   - [[#automatically-tangle-on-save][Automatically "Tangle" on Save]]
 - [[#initel][Init.el]]
@@ -27,7 +26,7 @@
 - [[#packagesel][Packages.el]]
   - [[#doomdir-2][DOOMDIR]]
   - [[#installation-instructions][Installation Instructions]]
-  - [[#customizations][Customizations]]
+  - [[#pdf-tools][PDF-Tools]]
   - [[#org-roam][Org-Roam]]
 - [[#inspiration][Inspiration]]
 
@@ -57,11 +56,14 @@
 
 *** Doom-Theme & Font
 #+begin_src emacs-lisp
-(setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 15 :weight 'Medium)
-      doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 20 :weight 'Medium)
-      doom-variable-pitch-font (font-spec :family "JetBrainsMono Nerd Font" :size 15 :weight 'Medium)
+(setq doom-font (font-spec :family "VictorMono Nerd Font" :size 12.0 :weight 'SemiBold)
+      doom-big-font (font-spec :family "VictorMono Nerd Font" :size 15.0 :weight 'SemiBold)
+      doom-variable-pitch-font (font-spec :family "VictorMono Nerd Font" :size 12.0 :weight 'SemiBold)
       doom-theme 'doom-horizon)
 #+end_src
+
+#+RESULTS:
+: doom-horizon
 
 **** FIX: Broken Emacsclient Theme
 #+begin_src emacs-lisp
@@ -205,7 +207,7 @@ Enable transparency for emacs frame only + retaining brightness of remaining obj
 (after! centaur-tabs
   (centaur-tabs-mode -1)
   (centaur-tabs-headline-match)
-  (centaur-tabs-change-fonts "JetBrainsMono Nerd Font" 125)
+  (centaur-tabs-change-fonts "VictorMono Nerd Font" 125)
 
   (setq centaur-tabs-height 32
         centaur-tabs-style "wave"
@@ -569,15 +571,6 @@ Allow org-download-screenshot to work with ~shotgun~ + ~hacksaw~:
         "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
 #+end_src
 
-** PDF-Tools
-PDF-View -> use active theme foreground ++ background:
-#+begin_src emacs-lisp
-(use-package pdf-view
-  :hook (pdf-tools-enabled . pdf-view-themed-minor-mode)
-  :config
-  (setq-default pdf-view-display-size 'fit-page))
-#+end_src
-
 ** Which-Key
 #+begin_src emacs-lisp
 (setq which-key-idle-delay 0.5)
@@ -845,7 +838,15 @@ Specify a ~:branch~ to install a package from a particular branch or tag. This i
 (package! builtin-package :recipe (:branch "develop"))
 #+end_src
 
-** Customizations
+** PDF-Tools
+PDF-View -> use active theme foreground ++ background:
+#+begin_src emacs-lisp
+(use-package pdf-view
+  :hook (pdf-tools-enabled . pdf-view-themed-minor-mode)
+  :config
+  (setq-default pdf-view-display-size 'fit-page))
+#+end_src
+
 *** Prefer Local Packages (Nix)
 #+begin_src emacs-lisp :tangle "packages.el"
 (package! pdf-tools :built-in 'prefer)

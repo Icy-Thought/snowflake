@@ -8,9 +8,9 @@
       all-the-icons-dired-monochrome nil
       x-stretch-cursor t)
 
-(setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 15 :weight 'Medium)
-      doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 20 :weight 'Medium)
-      doom-variable-pitch-font (font-spec :family "JetBrainsMono Nerd Font" :size 15 :weight 'Medium)
+(setq doom-font (font-spec :family "VictorMono Nerd Font" :size 12.0 :weight 'SemiBold)
+      doom-big-font (font-spec :family "VictorMono Nerd Font" :size 15.0 :weight 'SemiBold)
+      doom-variable-pitch-font (font-spec :family "VictorMono Nerd Font" :size 12.0 :weight 'SemiBold)
       doom-theme 'doom-horizon)
 
 (defun apply-theme ()
@@ -54,7 +54,7 @@
 (after! centaur-tabs
   (centaur-tabs-mode -1)
   (centaur-tabs-headline-match)
-  (centaur-tabs-change-fonts "JetBrainsMono Nerd Font" 125)
+  (centaur-tabs-change-fonts "VictorMono Nerd Font" 125)
 
   (setq centaur-tabs-height 32
         centaur-tabs-style "wave"
@@ -335,9 +335,9 @@
         "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
         "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
 
+(setq which-key-idle-delay 0.5)
+
 (use-package pdf-view
   :hook (pdf-tools-enabled . pdf-view-themed-minor-mode)
   :config
   (setq-default pdf-view-display-size 'fit-page))
-
-(setq which-key-idle-delay 0.5)

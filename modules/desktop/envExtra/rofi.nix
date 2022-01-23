@@ -5,6 +5,8 @@ with lib.my;
 let
   cfg = config.modules.desktop.envExtra.rofi;
   configDir = config.snowflake.configDir;
+  font = config.modules.themes.font;
+  fontStyle = config.modules.themes.fontStyle;
 in {
   options.modules.desktop.envExtra.rofi = { enable = mkBoolOpt false; };
 
@@ -18,7 +20,7 @@ in {
       terminal = "${pkgs.kitty}/bin/kitty";
 
       extraConfig = {
-        font = "Iosevka 11";
+        font = "${font} ${fontStyle} 10";
         show-icons = true;
         icon-theme = "Whitesur-dark";
         display-drun = "λ";

@@ -4,11 +4,11 @@
   foreground = "#E6E1CF";
   background = "#0F1419";
 
-  cursorForeground = "#F29718";
-  cursorBackground = "#1F2430";
-
   selectionForeground = "#191F26";
   selectionBackground = "#253340";
+
+  cursorForeground = "#F29718";
+  cursorBackground = "#1F2430";
 
   black = "#1D242C";
   brightBlack = "#686868";

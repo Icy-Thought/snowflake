@@ -2,7 +2,10 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.desktop.envExtra.gtk;
+let
+  cfg = config.modules.desktop.envExtra.gtk;
+  font = config.modules.themes.font;
+  fontStyle = config.modules.themes.fontStyle;
 in {
   options.modules.desktop.envExtra.gtk = { enable = mkBoolOpt false; };
 
@@ -10,7 +13,7 @@ in {
     homeManager = {
       gtk = {
         enable = true;
-        font.name = "JetBrainsMonoMedium Nerd Font";
+        font.name = "${font}";
         font.size = 10;
 
         iconTheme.name = "WhiteSur-dark";

@@ -4,6 +4,8 @@ with lib;
 with lib.my;
 let
   cfg = config.modules.appliances.termEmu.alacritty;
+  font = config.modules.themes.font;
+  fontStyle = config.modules.themes.fontStyle;
   colors = config.modules.themes.colors;
 in {
   options.modules.appliances.termEmu.alacritty = { enable = mkBoolOpt false; };
@@ -42,17 +44,17 @@ in {
         live_config_reload = true;
 
         font.normal = {
-          family = "JetBrainsMonoMedium Nerd Font";
-          style = "Medium";
+          family = "${font}";
+          style = "${fontStyle}";
         };
 
         font.bold = {
-          family = "JetBrainsMonoMedium Nerd Font";
+          family = "${font}";
           style = "Bold";
         };
 
         font.italic = {
-          family = "JetBrainsMonoMedium Nerd Font";
+          family = "${font}";
           style = "Italic";
         };
 
