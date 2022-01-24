@@ -25,9 +25,13 @@
     inputMF = { spellCheck.enable = true; };
   };
 
-  modules.fonts.entry.enable = true;
+  modules.fonts.minimal.enable = true;
 
-  modules.themes.active = "one-dark";
+  modules.themes = {
+    active = "one-dark";
+    font = "VictorMono Nerd Font";
+    fontStyle = "SemiBold";
+  };
 
   modules.appliances = {
     termEmu = {
