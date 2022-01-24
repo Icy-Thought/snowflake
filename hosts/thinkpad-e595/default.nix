@@ -47,7 +47,7 @@
   };
 
   modules.fonts = {
-    entry.enable = true;
+    minimal.enable = true;
     nerdFonts.enable = true;
   };
 
