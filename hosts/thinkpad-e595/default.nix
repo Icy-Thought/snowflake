@@ -3,7 +3,8 @@
   imports = [ ./hwCfg.nix ];
 
   modules.hardware = {
-    audio.enable = true;
+    pipewire.enable = true;
+    bluetooth.enable = true;
     touchpad.enable = true;
     openrazer.enable = true;
   };

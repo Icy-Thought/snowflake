@@ -3,7 +3,7 @@
   imports = [ ./hwCfg.nix ];
 
   modules.hardware = {
-    audio.enable = true;
+    pipewire.enable = true;
     touchpad.enable = true;
     # openrazer.enable = true;
   };
