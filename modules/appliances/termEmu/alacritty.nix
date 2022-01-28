@@ -15,69 +15,77 @@ in {
       enable = true;
 
       settings = {
-        env.TERM = "alacritty-direct";
-        env.WINIT_HIDPI_FACTOR = "1";
-        env.WINIT_X11_SCALE_FACTOR = "1";
-
-        window.dynamic_title = true;
-        window.dimensions.columns = 96;
-        window.dimensions.lines = 28;
-
-        window.position.x = 50;
-        window.position.y = 50;
-
-        window.padding.x = 25;
-        window.padding.y = 25;
-
-        window.dynamic_padding = false;
-        window.decorations = "none";
-
-        scrolling.history = 5000;
-        scrolling.multiplier = 3;
-        scrolling.faux_multiplier = 3;
-
-        selection.semantic_escape_chars = '',│`| = "' ()[]{}<>'';
-        selection.save_to_clipboard = false;
-
         shell.program = "fish";
-
         live_config_reload = true;
-
-        font.normal = {
-          family = "${font}";
-          style = "${fontStyle}";
-        };
-
-        font.bold = {
-          family = "${font}";
-          style = "Bold";
-        };
-
-        font.italic = {
-          family = "${font}";
-          style = "Italic";
-        };
-
-        font.size = 13.0;
-
-        font.offset = {
-          x = 0;
-          y = 0;
-        };
-
-        font.glyph_offset = {
-          x = 0;
-          y = 0;
-        };
-
-        font.use_thin_strokes = true;
-
         draw_bold_text_with_bright_colors = false;
 
-        cursor.style = "Block";
-        cursor.unfocused_hollow = true;
+        env = {
+          TERM = "alacritty-direct";
+          WINIT_HIDPI_FACTOR = "1";
+          WINIT_X11_SCALE_FACTOR = "1";
+        };
 
-        background_opacity = 1.0;
+        window = {
+          opacity = 1.0;
+          decorations = "none";
+          dynamic_title = true;
+          dynamic_padding = false;
+
+          dimensions.lines = 28;
+          dimensions.columns = 96;
+
+          position.x = 50;
+          position.y = 50;
+
+          padding.x = 25;
+          padding.y = 25;
+        };
+
+        scrolling = {
+          history = 5000;
+          multiplier = 3;
+          faux_multiplier = 3;
+        };
+
+        selection = {
+          semantic_escape_chars = '',│`| = "' ()[]{}<>'';
+          save_to_clipboard = false;
+        };
+
+        font = {
+          size = 13.0;
+          use_thin_strokes = true;
+
+          normal = {
+            family = "${font}";
+            style = "${fontStyle}";
+          };
+
+          bold = {
+            family = "${font}";
+            style = "Bold";
+          };
+
+          italic = {
+            family = "${font}";
+            style = "Italic";
+          };
+
+          font.offset = {
+            x = 0;
+            y = 0;
+          };
+
+          font.glyph_offset = {
+            x = 0;
+            y = 0;
+          };
+        };
+
+        cursor = {
+          style = "Block";
+          unfocused_hollow = true;
+        };
 
         colors.primary = {
           foreground = colors.foreground;
@@ -159,8 +167,10 @@ in {
           action = "PasteSelection";
         }];
 
-        url.launcher = "open";
-        url.modifiers = "shift";
+        url = {
+          launcher = "open";
+          modifiers = "shift";
+        };
       };
     };
   };
