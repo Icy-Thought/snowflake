@@ -13,7 +13,7 @@ in {
       enable = true;
       secureSocket = true;
       prefix = "C-a";
-      terminal = "screen-256color";
+      terminal = "tmux-256color";
 
       baseIndex = 1;
       escapeTime = 0;
@@ -31,11 +31,6 @@ in {
         set -g renumber-windows on
         set-option -g allow-rename off
 
-        # Automatic Term-Window Title Change
-        set -g set-titles on
-        set -g set-titles-string 'tmux - #S'
-        setw -g automatic-rename
-
         # Activity/Sound
         set -g visual-activity off
         set -g visual-bell off
@@ -43,6 +38,7 @@ in {
         setw -g monitor-activity off
         set -g bell-action none
 
+        # --------=== Keybindings
         # Buffers
         bind b list-buffers
         bind p paste-buffer
@@ -56,28 +52,30 @@ in {
         # --------=== Status-bar
         set -g status on
         set -g status-interval 1
+        set -g status-style fg="${colors.white}",bg="${colors.black}",bold,italics
+
         set -g status-position top
         set -g status-justify left
 
-        set -g status-left-length "100"
-        set -g status-right-length "100"
+        set -g status-left-length "40"
+        set -g status-right-length "80"
 
         # Messages
-        set -g message-style fg="${colors.cyan}",bg="${colors.white}",align="centre"
-        set -g message-command-style fg="${colors.cyan}",bg="${colors.white}",align="centre"
+        set -g message-style fg="${colors.background}",bg="${colors.magenta}",align="centre"
+        set -g message-command-style fg="${colors.background}",bg="${colors.magenta}",align="centre"
 
         # Panes
         set -g pane-border-style fg="${colors.white}"
         set -g pane-active-border-style fg="${colors.blue}"
 
         # Windows
-        set -g window-status-format "#[fg=${colors.foreground}] #W#[noitalics,nobold]|#{window_panes}#[italics,bold] "
-        set -g window-status-current-format "#[bg=${colors.background}]#{?client_prefix,#[fg=${colors.foreground}],}#{?client_prefix,#[bg=${colors.background}],} #W#[noitalics,nobold]|#{window_panes}#[italics,bold] "
+        set -g window-status-format "#[fg="${colors.white}"] #W/#{window_panes} "
+        set -g window-status-current-format "#[bg="${colors.brightBlack}"]#{?client_prefix,#[fg="${colors.black}"],}#{?client_prefix,#[bg="${colors.green}"],} #W "
 
         # --------=== Status-line
-        set -g status-left '🦊'
+        set -g status-left "🦊 "
         set -g status-bg "${colors.background}"
-        set -g status-right "#[noitalics]#(set-volume status)  #(batStat)  #[noitalics,nobold]| %b %d, %H:%M:%S  #[fg=${colors.foreground},bg=${colors.background},bold,italics] #S "
+        set -g status-right "#[noitalics]#(set-volume status)  #(batStat)  #[noitalics,nobold]| %b %d, %H:%M:%S  #[fg="${colors.black}",bg="${colors.white}",bold,italics] #S "
 
         # --------=== Modes
         setw -g clock-mode-colour "${colors.blue}"

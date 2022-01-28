@@ -1,39 +1,39 @@
 # TODO: ayu-dark module.
 {
   # Base Colors
-  foreground = "#D9E0EE";
-  background = "#1E1E2E";
+  foreground = "#d9e0ee";
+  background = "#1e1e2e";
 
-  selectionForeground = "#D9E0EE";
+  selectionForeground = "#d9e0ee";
   selectionBackground = "#575268";
 
-  cursorForeground = "#F5E0DC";
-  cursorBackground = "#1E1E2E";
+  cursorForeground = "#f5e0dc";
+  cursorBackground = "#1e1e2e";
 
-  black = "#6E6C7E";
-  brightBlack = "#988BA2";
+  black = "#6e6c7e";
+  brightBlack = "#988ba2";
 
-  red = "#F28FAD";
-  brightRed = "#F28FAD";
+  red = "#f28fad";
+  brightRed = "#f28fad";
 
-  green = "#ABE9B3";
-  brightGreen = "#ABE9B3";
+  green = "#abe9b3";
+  brightGreen = "#abe9b3";
 
-  yellow = "#FAE3B0";
-  brightYellow = "#FAE3B0";
+  yellow = "#fae3b0";
+  brightYellow = "#fae3b0";
 
-  blue = "#96CDFB";
-  brightBlue = "#96CDFB";
+  blue = "#96cdfb";
+  brightBlue = "#96cdfb";
 
-  magenta = "#F5C2E7";
-  brightMagenta = "#F5C2E7";
+  magenta = "#f5c2e7";
+  brightMagenta = "#f5c2e7";
 
-  cyan = "#89DCEB";
-  brightCyan = "#89DCEB";
+  cyan = "#89dceb";
+  brightCyan = "#89dceb";
 
-  white = "#D9E0EE";
-  brightWhite = "#D9E0EE";
+  white = "#d9e0ee";
+  brightWhite = "#d9e0ee";
 
   # Zathura-related Colors
-  zathuraBlack = "#1E1D2F";
+  zathuraBlack = "#1e1d2f";
 }

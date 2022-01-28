@@ -1,38 +1,38 @@
 # TODO: one-dark module.
 {
-  foreground = "#ABB2BF";
-  background = "#1E2127";
+  foreground = "#abb2bf";
+  background = "#1e2127";
 
-  selectionForeground = "#2C323C";
-  selectionBackground = "#3E4451";
+  selectionForeground = "#2c323c";
+  selectionBackground = "#3e4451";
 
-  cursorForeground = "#5C6370";
-  cursorBackground = "#2C323C";
+  cursorForeground = "#5c6370";
+  cursorBackground = "#2c323c";
 
-  black = "#1E2127";
-  brightBlack = "#5C6370";
+  black = "#1e2127";
+  brightBlack = "#5c6370";
 
-  red = "#E06C75";
-  brightRed = "#E06C75";
+  red = "#e06c75";
+  brightRed = "#e06c75";
 
-  green = "#98C379";
-  brightGreen = "#98C379";
+  green = "#98c379";
+  brightGreen = "#98c379";
 
-  yellow = "#D19A66";
-  brightYellow = "#D19A66";
+  yellow = "#d19a66";
+  brightYellow = "#d19a66";
 
-  blue = "#61AFEF";
-  brightBlue = "#61AFEF";
+  blue = "#61afef";
+  brightBlue = "#61afef";
 
-  magenta = "#C678DD";
-  brightMagenta = "#C678DD";
+  magenta = "#c678dd";
+  brightMagenta = "#c678dd";
 
-  cyan = "#56B6C2";
-  brightCyan = "#56B6C2";
+  cyan = "#56b6c2";
+  brightCyan = "#56b6c2";
 
-  white = "#ABB2BF";
-  brightWhite = "#FFFFFF";
+  white = "#abb2bf";
+  brightWhite = "#ffffff";
 
   # Zathura-related Colors
-  zathuraBlack = "#1E2127";
+  zathuraBlack = "#1e2127";
 }
