@@ -4,15 +4,15 @@
  */
 
 * {
-    foreground:                         #E6E1CFff;
-    background:                         #0F1419ff;
-    background-alt:                     #0F141900;
-    background-bar:                     #1D242Cff;
+    foreground:                         #e6e1cfff;
+    background:                         #0f1419ff;
+    background-alt:                     #0f141900;
+    background-bar:                     #1d242cff;
 
     border:                             #254365ff;
-    border-alt:                         #168AB9ff;
-    selected:                           #0F589D99;
-    urgent:                             #FFAA00FF;
+    border-alt:                         #168ab9ff;
+    selected:                           #0f589d99;
+    urgent:                             #ffaa00ff;
 }
 
 window {

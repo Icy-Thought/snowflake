@@ -86,24 +86,24 @@ in {
         };
 
         urgency_low = {
-          foreground = "#E6E1CF";
-          background = "#1D242C";
+          foreground = "#e6e1cf";
+          background = "#1d242c";
           timeout = 5;
           #icon = /path/to/icon
         };
 
         urgency_normal = {
-          foreground = "#E6E1CF";
-          background = "#1D242C";
-          frame_color = "#FF977A";
+          foreground = "#e6e1cf";
+          background = "#1d242c";
+          frame_color = "#ff977a";
           timeout = 7;
           #icon = /path/to/icon
         };
 
         urgency_critical = {
-          foreground = "#E6E1CF";
-          background = "#1D242C";
-          frame_color = "#FF7733";
+          foreground = "#e6e1cf";
+          background = "#1d242c";
+          frame_color = "#ff7733";
           timeout = 10;
           #icon = /path/to/icon
         };

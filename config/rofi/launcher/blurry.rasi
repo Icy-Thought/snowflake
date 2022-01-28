@@ -6,8 +6,8 @@
     background:                         #00000000;
     background-alt:              	    #00000000;
     background-bar:                     #f2f2f215;
-    foreground:                         #f2f2f2EE;
-    accent:                             #3DAEE966;
+    foreground:                         #f2f2f2ee;
+    accent:                             #3daee966;
 }
 
 window {

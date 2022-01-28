@@ -3,9 +3,9 @@
 /* Top Level Styling */
 
 .taffy-window * {
-	font-family: "VictorMono Nerd Font SemiBold", sans-serif;
+	font-family: "VictorMono Nerd Font";
 	font-size: 12px;
-	font-weight: normal;
+	font-weight: 600; /* SemiBold */
 	color: @font-color;
 }
 

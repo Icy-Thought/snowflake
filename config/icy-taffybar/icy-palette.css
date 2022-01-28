@@ -1,18 +1,18 @@
-@define-color koromiko #FFB454;
-@define-color moon-raker #D6C5F0;
-@define-color sail #BBE1FA;
-@define-color twilight-blue #F3F8FE;
-@define-color vivid-tangerine #FF977A;
+@define-color koromiko #ffb454;
+@define-color moon-raker #d6c5f0;
+@define-color sail #bbe1fa;
+@define-color twilight-blue #f3f8fe;
+@define-color vivid-tangerine #ff977a;
 
 @define-color navy rgb(25, 30, 55);
 @define-color red rgba(255, 65, 81, 1.0);
 @define-color teal #00695C;
-@define-color raisin-black #1A1B25;
-@define-color ebony-clay #1D242C;
+@define-color raisin-black #1a1b25;
+@define-color ebony-clay #1d242c;
 
 @define-color transparent rgba(0.0, 0.0, 0.0, 0.0);
 @define-color black #000000;
-@define-color white #FFFFFF;
+@define-color white #ffffff;
 
 @define-color active-window-color @white;
 @define-color urgent-window-color @raisin-black;

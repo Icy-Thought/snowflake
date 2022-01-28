@@ -4,11 +4,11 @@
  */
 
 * {
-    foreground:                         #E6E1CFff;
-    background:                         #0F1419ff;
-    background-alt:                     #0F141900;
-    background-bar:                     #1D242Cff;
-    accent:                             #FFB454ff;
+    foreground:                         #e6e1cfff;
+    background:                         #0f1419ff;
+    background-alt:                     #0f141900;
+    background-bar:                     #1d242cff;
+    accent:                             #ffb454ff;
 }
 
 window {
