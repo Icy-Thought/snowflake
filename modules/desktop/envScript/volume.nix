@@ -56,7 +56,7 @@ in {
                 -u low "Muted"
             else
               volume=$(get_volume)
-              bar=$(seq -s "─" $(($volume / 4)) | sed 's/[0-9]//g')
+              bar=$(seq -s "─" $(($volume / 3)) | sed 's/[0-9]//g')
 
               dunstify "$(volume_icon) ''${volume}%" \
                 -a Volume \
@@ -77,16 +77,12 @@ in {
           }
 
           function volume_status() {
-            volume=$(get_volume)
+            while :; do
+              volume=$(get_volume)
 
-            echo "$(volume_icon) ''${volume}%"
-            sleep infinity & pid=$!
-            wait
-          }
-
-          function volumeStat_update {
-            kill $pid
-            volume_status
+              echo "$(volume_icon) ''${volume}%"
+              sleep 60
+            done
           }
 
           case "$1" in
@@ -111,7 +107,7 @@ in {
               ;;
 
             status)
-              trap '$volumeStat_update' USR1
+              trap 'volume_status' USR1
               volume_status
               ;;
 
