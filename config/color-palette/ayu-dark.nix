@@ -1,6 +1,4 @@
-# TODO: ayu-dark module.
 {
-  # Base Colors
   foreground = "#e6e1cf";
   background = "#0f1419";
 

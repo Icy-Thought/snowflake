@@ -1,4 +1,3 @@
-# TODO: one-dark module.
 {
   foreground = "#abb2bf";
   background = "#1e2127";
