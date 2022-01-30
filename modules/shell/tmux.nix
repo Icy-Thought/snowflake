@@ -61,8 +61,8 @@ in {
         set -g status-right-length "80"
 
         # Messages
-        set -g message-style fg="${colors.background}",bg="${colors.magenta}",align="centre"
-        set -g message-command-style fg="${colors.background}",bg="${colors.magenta}",align="centre"
+        set -g message-style fg="${colors.black}",bg="${colors.magenta}",align="centre"
+        set -g message-command-style fg="${colors.black}",bg="${colors.magenta}",align="centre"
 
         # Panes
         set -g pane-border-style fg="${colors.white}"
@@ -70,15 +70,15 @@ in {
 
         # Windows
         set -g window-status-format "#[fg="${colors.white}"] #W/#{window_panes} "
-        set -g window-status-current-format "#[bg="${colors.brightBlack}"]#{?client_prefix,#[fg="${colors.black}"],}#{?client_prefix,#[bg="${colors.green}"],} #W "
+        set -g window-status-current-format "#[fg="${colors.black}",bg="${colors.yellow}"]#{?client_prefix,#[fg="${colors.black}"],}#{?client_prefix,#[bg="${colors.magenta}"],} #W "
 
         # --------=== Status-line
         set -g status-left "🦊 "
         set -g status-bg "${colors.background}"
-        set -g status-right "#[noitalics]#(set-volume status)  #(batStat)  #[noitalics,nobold]| %b %d, %H:%M:%S  #[fg="${colors.black}",bg="${colors.white}",bold,italics] #S "
+        set -g status-right "#[noitalics]#(set-volume status)  #(batStat)  #[noitalics,nobold]| %b %d, %H:%M:%S  #[fg="${colors.black}",bg="${colors.green}",bold,italics] #S "
 
         # --------=== Modes
-        setw -g clock-mode-colour "${colors.blue}"
+        setw -g clock-mode-colour "${colors.cyan}"
         setw -g mode-style "fg=${colors.magenta} bg=${colors.black} bold"
       '';
     };
