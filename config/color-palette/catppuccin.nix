@@ -1,39 +1,37 @@
-# TODO: ayu-dark module.
 {
-  # Base Colors
   foreground = "#d9e0ee";
-  background = "#1e1e2e";
+  background = "#161320";
 
   selectionForeground = "#d9e0ee";
-  selectionBackground = "#575268";
+  selectionBackground = "#f2cdcd";
 
-  cursorForeground = "#f5e0dc";
-  cursorBackground = "#1e1e2e";
+  cursorForeground = "#f8bd96";
+  cursorBackground = "#1e1d2f";
 
-  black = "#6e6c7e";
-  brightBlack = "#988ba2";
+  black = "#1e1e28";
+  brightBlack = "#302d41";
 
   red = "#f28fad";
-  brightRed = "#f28fad";
+  brightRed = "#e8a2af";
 
   green = "#abe9b3";
-  brightGreen = "#abe9b3";
+  brightGreen = "#b5e8e0";
 
-  yellow = "#fae3b0";
+  yellow = "#f8bd96";
   brightYellow = "#fae3b0";
 
   blue = "#96cdfb";
-  brightBlue = "#96cdfb";
+  brightBlue = "#c9cbff";
 
-  magenta = "#f5c2e7";
+  magenta = "#ddb6f2";
   brightMagenta = "#f5c2e7";
 
   cyan = "#89dceb";
-  brightCyan = "#89dceb";
+  brightCyan = "#96cdfb";
 
   white = "#d9e0ee";
   brightWhite = "#d9e0ee";
 
   # Zathura-related Colors
-  zathuraBlack = "#1e1d2f";
+  zathuraBlack = "#1a1826";
 }
