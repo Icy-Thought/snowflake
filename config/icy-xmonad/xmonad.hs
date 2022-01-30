@@ -58,6 +58,7 @@ import           XMonad.Core                           (getDirectories)
 import           XMonad.Hooks.DynamicProperty
 import           XMonad.Hooks.EwmhDesktops
 import           XMonad.Hooks.FadeInactive
+import           XMonad.Hooks.Focus                    hiding (currentWorkspace)
 import           XMonad.Hooks.ManageDocks
 import           XMonad.Hooks.ManageHelpers
 import           XMonad.Hooks.Minimize
@@ -105,8 +106,7 @@ myConfig = def
                          <> toggleFadeInactiveLogHook 0.9
                          <> workspaceHistoryHook
                          <> setWorkspaceNames
-                         -- <> setExwmhActivateHook (reader W.focusWindow >>= doF)
-                         -- <> logHook def
+                         <> logHook def
   , handleEventHook    = followIfNoMagicFocus
                          <> minimizeEventHook
           -- <> restartEventHook
@@ -142,6 +142,7 @@ main =
   xmonad
     . docks
     . pagerHints
+    . setEwmhActivateHook activateSwitchWs
     . ewmh
     . ewmhFullscreen
     . withNavigation2DConfig myNavigation2DConfig
