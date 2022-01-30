@@ -15,10 +15,7 @@ in {
 
       services.xserver.displayManager.sddm = {
         enable = true;
-        extraConfig = ''
-          [General]
-          InputMethod=
-        '';
+        settings = { General.InputMethod = ""; };
       };
     }
 
