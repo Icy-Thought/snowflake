@@ -31,10 +31,10 @@
     minimal.enable = true;
 
     settings = {
-      family = "VictorMono Nerd Font";
-      monospace = "VictorMono Nerd Font Mono";
-      style = "SemiBold";
-      size = 13;
+      family = "Noto Sans";
+      monospace = "Noto Sans Mono";
+      style = "Regular";
+      size = 10;
     };
   };
 
