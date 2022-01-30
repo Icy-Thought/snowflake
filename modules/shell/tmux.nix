@@ -32,11 +32,11 @@ in {
         set-option -g allow-rename off
 
         # Activity/Sound
-        set -g visual-activity off
+        set -g bell-action none
         set -g visual-bell off
         set -g visual-silence off
+        set -g visual-activity off
         setw -g monitor-activity off
-        set -g bell-action none
 
         # --------=== Keybindings
         # Buffers

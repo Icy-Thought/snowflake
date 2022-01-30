@@ -2,8 +2,8 @@
   foreground = "#d9e0ee";
   background = "#161320";
 
-  selectionForeground = "#d9e0ee";
-  selectionBackground = "#f2cdcd";
+  selectionForeground = "#161320";
+  selectionBackground = "#f8bd96";
 
   cursorForeground = "#f8bd96";
   cursorBackground = "#1e1d2f";
@@ -17,7 +17,7 @@
   green = "#abe9b3";
   brightGreen = "#b5e8e0";
 
-  yellow = "#f8bd96";
+  yellow = "#f8db98";
   brightYellow = "#fae3b0";
 
   blue = "#96cdfb";
