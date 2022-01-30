@@ -25,11 +25,11 @@ in {
       SDL_IM_MODULE = "fcitx";
     };
 
-    home.file.".local/share/fcitx5/themes".source = "${(pkgs.fetchFromGitHub {
-      owner = "tonyfettes";
-      repo = "fcitx5-nord";
-      rev = "bdaa8fb723b8d0b22f237c9a60195c5f9c9d74d1";
-      sha256 = "qVo/0ivZ5gfUP17G29CAW0MrRFUO0KN1ADl1I/rvchE=";
-    })}";
+    home.file.".local/share/fcitx5/themes".source = pkgs.fetchFromGitHub {
+      owner = "icy-thought";
+      repo = "fcitx5-catppuccin";
+      rev = "3b699870fb2806404e305fe34a3d2541d8ed5ef5";
+      sha256 = "hOAcjgj6jDWtCGMs4Gd49sAAOsovGXm++TKU3NhZt8w=";
+    };
   };
 }
