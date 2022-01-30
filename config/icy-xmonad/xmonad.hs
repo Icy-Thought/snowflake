@@ -96,7 +96,7 @@ import           XMonad.Util.WorkspaceCompare
 
 myConfig = def
   { modMask            = mod4Mask
-  , terminal           = "kitty"
+  , terminal           = "alacritty"
   , manageHook         = namedScratchpadManageHook scratchpads
   , layoutHook         = myLayoutHook
   , borderWidth        = 2
@@ -843,7 +843,7 @@ scratchpads =
   emacsCommand         = "emacsclient -nc"
   emacsSelector        = className =? "Emacs"
 
-  htopCommand          = "kitty --title htop -e htop"
+  htopCommand          = "alacritty --title htop -e htop"
   htopSelector         = title =? "htop"
 
   spotifyCommand       = "spotify"
