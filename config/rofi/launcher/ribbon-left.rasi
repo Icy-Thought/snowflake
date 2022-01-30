@@ -32,7 +32,6 @@ window {
 prompt {
     enabled:                            true;
     padding:                            0% 1% 0% 0%;
-    font:                               "VictorMono Nerd Font SemiBold 11";
     background-color:                   @background-bar;
     text-color:                         @foreground;
 }
