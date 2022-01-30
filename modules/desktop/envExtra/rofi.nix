@@ -5,8 +5,7 @@ with lib.my;
 let
   cfg = config.modules.desktop.envExtra.rofi;
   configDir = config.snowflake.configDir;
-  font = config.modules.themes.font;
-  fontStyle = config.modules.themes.fontStyle;
+  font = config.modules.fonts.settings;
 in {
   options.modules.desktop.envExtra.rofi = { enable = mkBoolOpt false; };
 
@@ -17,10 +16,10 @@ in {
     homeManager.programs.rofi = {
       enable = true;
       theme = "${configDir}/rofi/launcher/ribbon-left.rasi";
-      terminal = "${pkgs.kitty}/bin/kitty";
+      terminal = "${pkgs.alacritty}/bin/alacritty";
 
       extraConfig = {
-        font = "${font} ${fontStyle} 10";
+        font = "${font.family} ${font.style} 10";
         show-icons = true;
         icon-theme = "Whitesur-dark";
         display-drun = "λ";

@@ -5,8 +5,7 @@ with lib.my;
 let
   cfg = config.modules.desktop.envManager.xmonad;
   configDir = config.snowflake.configDir;
-  font = config.modules.themes.font;
-  fontStyle = config.modules.themes.fontStyle;
+  font = config.modules.fonts.settings;
 in {
   options.modules.desktop.envManager.xmonad = { enable = mkBoolOpt false; };
 
@@ -85,7 +84,7 @@ in {
     };
 
     home.configFile."betterlockscreenrc".text = ''
-      font="${font} ${fontStyle}"
+      font="${font.family} ${font.style}"
     '';
   };
 }

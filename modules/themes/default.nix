@@ -18,17 +18,5 @@ in {
       description = "Applies active color-palette";
       apply = v: import ("${configDir}/color-palette" + "/${cfg.active}.nix");
     };
-
-    font = mkOption {
-      type = types.str;
-      example = "VictorMono Nerd Font Mono";
-      description = "System-wide font to be applied";
-    };
-
-    fontStyle = mkOption {
-      type = types.str;
-      example = "SemiBold";
-      description = "Font-style to use";
-    };
   };
 }

@@ -4,8 +4,7 @@ with lib;
 with lib.my;
 let
   cfg = config.modules.appliances.termEmu.alacritty;
-  font = config.modules.themes.font;
-  fontStyle = config.modules.themes.fontStyle;
+  font = config.modules.fonts.settings;
   colors = config.modules.themes.colors;
 in {
   options.modules.appliances.termEmu.alacritty = { enable = mkBoolOpt false; };
@@ -53,21 +52,21 @@ in {
         };
 
         font = {
-          size = 13.0;
+          size = font.size;
           use_thin_strokes = true;
 
           normal = {
-            family = "${font}";
-            style = "${fontStyle}";
+            family = "${font.family}";
+            style = "${font.style}";
           };
 
           bold = {
-            family = "${font}";
+            family = "${font.family}";
             style = "Bold";
           };
 
           italic = {
-            family = "${font}";
+            family = "${font.family}";
             style = "Italic";
           };
 

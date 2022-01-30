@@ -5,7 +5,7 @@ with lib.my;
 
 let
   cfg = config.modules.fonts.minimal;
-  font = config.modules.themes.font;
+  font = config.modules.fonts.settings;
 in {
   options.modules.fonts.minimal = { enable = mkBoolOpt false; };
 
@@ -18,9 +18,9 @@ in {
       fontconfig = {
         enable = true;
         defaultFonts = {
-          serif = [ "${font}" "Noto Kufi Arabic" ];
-          sansSerif = [ "${font}" "Noto Kufi Arabic" ];
-          monospace = [ "${font}" "Noto Kufi Arabic" ];
+          serif = [ "${font.family}" "Noto Kufi Arabic" ];
+          sansSerif = [ "${font.family}" "Noto Kufi Arabic" ];
+          monospace = [ "${font.monospace}" "Noto Kufi Arabic" ];
         };
       };
     };

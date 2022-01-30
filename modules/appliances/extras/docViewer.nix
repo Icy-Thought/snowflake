@@ -6,8 +6,7 @@ with lib;
 with lib.my;
 let
   cfg = config.modules.appliances.extras.docViewer;
-  font = config.modules.themes.font;
-  fontStyle = config.modules.themes.fontStyle;
+  font = config.modules.fonts.settings;
   colors = config.modules.themes.colors;
 in {
   options.modules.appliances.extras.docViewer = {
@@ -25,7 +24,7 @@ in {
     homeManager.programs.zathura = mkIf cfg.pdf.enable {
       enable = true;
       options = {
-        font = "${font} ${fontStyle} 10";
+        font = "${font.family} ${font.style} 10";
         selection-clipboard = "clipboard";
         first-page-column = "1:1";
         adjust-open = "width";

@@ -25,18 +25,29 @@
     inputMF = { spellCheck.enable = true; };
   };
 
-  modules.fonts.minimal.enable = true;
+  modules.themes = { active = "one-dark"; };
 
-  modules.themes = {
-    active = "one-dark";
-    font = "VictorMono Nerd Font";
-    fontStyle = "SemiBold";
+  modules.fonts = {
+    minimal.enable = true;
+
+    settings = {
+      family = "VictorMono Nerd Font";
+      monospace = "VictorMono Nerd Font Mono";
+      style = "SemiBold";
+      size = 13;
+    };
   };
 
   modules.appliances = {
     termEmu = {
       default = "alacritty";
       alacritty.enable = true;
+    };
+
+    termUI = {
+      htop.enable = true;
+      neofetch.enable = true;
+      printTermColor.enable = true;
     };
 
     editors = {
@@ -70,13 +81,10 @@
 
   modules.shell = {
     git.enable = true;
-    gnupg.enable = true;
-    bash.enable = true;
     fish.enable = true;
-    starship.enable = true;
-    htop.enable = true;
-    neofetch.enable = true;
-    printTermColor.enable = true;
+    tmux.enable = true;
+    gnupg.enable = true;
+    direnv.enable = true;
   };
 
   # Hide device entry from file-manager:

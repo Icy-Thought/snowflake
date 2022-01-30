@@ -4,8 +4,7 @@ with lib;
 with lib.my;
 let
   cfg = config.modules.desktop.envExtra.gtk;
-  font = config.modules.themes.font;
-  fontStyle = config.modules.themes.fontStyle;
+  font = config.modules.fonts.settings;
 in {
   options.modules.desktop.envExtra.gtk = { enable = mkBoolOpt false; };
 
@@ -13,8 +12,10 @@ in {
     homeManager = {
       gtk = {
         enable = true;
-        font.name = "${font}";
-        font.size = 10;
+        font = {
+          name = "${font.family}";
+          size = 10;
+        };
 
         iconTheme.name = "WhiteSur-dark";
         iconTheme.package = pkgs.whitesur-icon-theme;

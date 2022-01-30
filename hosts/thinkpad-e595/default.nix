@@ -47,21 +47,23 @@
     };
   };
 
+  modules.themes = { active = "catppuccin"; };
+
   modules.fonts = {
     minimal.enable = true;
     nerdFonts.enable = true;
-  };
 
-  modules.themes = {
-    active = "catppuccin";
-    font = "VictorMono Nerd Font";
-    fontStyle = "SemiBold";
+    settings = {
+      family = "VictorMono Nerd Font";
+      monospace = "VictorMono Nerd Font Mono";
+      style = "SemiBold";
+      size = 13;
+    };
   };
 
   modules.appliances = {
     termEmu = {
-      default = "kitty";
-      kitty.enable = true;
+      default = "alacritty";
       alacritty.enable = true;
     };
 
