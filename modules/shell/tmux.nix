@@ -49,6 +49,12 @@ in {
         bind - split-window -v -c '#{pane_current_path}'
         bind c new-window -c '#{pane_current_path}'
 
+        # Copy/Paste bindings
+        bind P paste-buffer
+        bind -T copy-mode-vi v send-keys -X begin-selection
+        bind -T copy-mode-vi y send-keys -X copy-selection
+        bind -T copy-mode-vi r send-keys -X rectangle-toggle
+
         # --------=== Status-bar
         set -g status on
         set -g status-interval 1
