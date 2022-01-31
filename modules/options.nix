@@ -77,10 +77,10 @@ with lib.my; {
 
     users.users.${config.user.name} = mkAliasDefinitions options.user;
 
-    nix = let users = [ "root" config.user.name ];
+    nix.settings = let users = [ "root" config.user.name ];
     in {
-      trustedUsers = users;
-      allowedUsers = users;
+      trusted-users = users;
+      allowed-users = users;
     };
 
     env.PATH = [ "$SNOWFLAKE_BIN" "$XDG_BIN_HOME" "$PATH" ];
