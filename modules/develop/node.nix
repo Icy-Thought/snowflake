@@ -3,17 +3,18 @@
 with lib;
 with lib.my;
 let
-  cfg = config.modules.develop.node;
-  node = pkgs.nodejs_latest;
+  devCfg = config.modules.develop;
+  cfg = devCfg.node;
 in {
   options.modules.develop.node = {
     enable = mkBoolOpt false;
-    enableGlobally = mkBoolOpt false;
+    xdg.enable = mkBoolOpt devCfg.xdg.enable;
   };
 
-  config = mkIf cfg.enable (mkMerge [
-    (mkIf cfg.enableGlobally {
-      user.packages = with pkgs; [ node yarn ];
+  config = mkMerge [
+    (let node = pkgs.nodejs_latest;
+    in mkIf cfg.enable {
+      user.packages = [ node pkgs.yarn ];
 
       # Run locally installed bin-script, e.g. n coffee file.coffee
       environment.shellAliases = {
@@ -24,7 +25,7 @@ in {
       env.PATH = [ "$(${pkgs.yarn}/bin/yarn global bin)" ];
     })
 
-    {
+    (mkIf cfg.xdg.enable {
       env = {
         NPM_CONFIG_USERCONFIG = "$XDG_CONFIG_HOME/npm/config";
         NPM_CONFIG_CACHE = "$XDG_CACHE_HOME/npm";
@@ -37,6 +38,6 @@ in {
         cache=$XDG_CACHE_HOME/npm
         prefix=$XDG_DATA_HOME/npm
       '';
-    }
-  ]);
+    })
+  ];
 }

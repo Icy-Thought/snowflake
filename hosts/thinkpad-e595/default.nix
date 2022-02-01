@@ -111,11 +111,7 @@
   modules.develop = {
     python.enable = true;
     haskell.enable = true;
-
-    rust = {
-      enable = true;
-      enableGlobally = true;
-    };
+    rust.enable = true;
   };
 
   modules.containers.transmission = {

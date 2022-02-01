@@ -2,15 +2,17 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.develop.haskell;
+let
+  devCfg = config.modules.develop;
+  cfg = devCfg.haskell;
 in {
   options.modules.develop.haskell = {
     enable = mkBoolOpt false;
-    dhall.enable = mkBoolOpt false;
+    xdg.enable = mkBoolOpt devCfg.xdg.enable;
   };
 
-  config = mkIf cfg.enable (mkMerge [
-    {
+  config = mkMerge [
+    (mkIf cfg.enable {
       user.packages = with pkgs;
         [
           (ghc.withHoogle (self:
@@ -23,13 +25,10 @@ in {
               # stack
             ]))
         ];
-    }
-
-    (mkIf cfg.dhall.enable {
-      user.packages = with pkgs; [
-        haskellPackages.dhall
-        haskellPackages.dhall-json
-      ];
     })
-  ]);
+
+    (mkIf cfg.xdg.enable {
+      # TODO
+    })
+  ];
 }

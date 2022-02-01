@@ -2,11 +2,22 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.develop.cc;
+let
+  devCfg = config.modules.develop;
+  cfg = devCfg.cc;
 in {
-  options.modules.develop.cc = { enable = mkBoolOpt false; };
-
-  config = mkIf cfg.enable {
-    user.packages = with pkgs; [ clang bear gdb cmake llvmPackages.libcxx ];
+  options.modules.develop.cc = {
+    enable = mkBoolOpt false;
+    xdg.enable = mkBoolOpt devCfg.xdg.enable;
   };
+
+  config = mkMerge [
+    (mkIf cfg.enable {
+      user.packages = with pkgs; [ clang bear gdb cmake llvmPackages.libcxx ];
+    })
+
+    (mkIf cfg.xdg.enable {
+      # TODO
+    })
+  ];
 }

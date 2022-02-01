@@ -2,32 +2,34 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.develop.rust;
+let
+  devCfg = config.modules.develop;
+  cfg = devCfg.rust;
 in {
   options.modules.develop.rust = {
     enable = mkBoolOpt false;
-    enableGlobally = mkBoolOpt false;
+    xdg.enable = mkBoolOpt devCfg.xdg.enable;
   };
 
-  config = mkIf cfg.enable (mkMerge [
-    (mkIf cfg.enableGlobally {
+  config = mkMerge [
+    (mkIf cfg.enable {
       nixpkgs.overlays = [ inputs.rust.overlay ];
 
       user.packages = with pkgs; [ rust-bin.beta.latest.default crate2nix ];
 
       env.PATH = [ "$(${pkgs.yarn}/bin/yarn global bin)" ];
-    })
-
-    {
-      env = {
-        CARGO_HOME = "$XDG_DATA_HOME/cargo";
-        PATH = [ "$CARGO_HOME/bin" ];
-      };
 
       environment.shellAliases = {
         rs = "rustc";
         ca = "cargo";
       };
-    }
-  ]);
+    })
+
+    (mkIf cfg.xdg.enable {
+      env = {
+        CARGO_HOME = "$XDG_DATA_HOME/cargo";
+        PATH = [ "$CARGO_HOME/bin" ];
+      };
+    })
+  ];
 }

@@ -2,9 +2,20 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.develop.shell;
+let
+  devCfg = config.modules.develop;
+  cfg = devCfg.shell;
 in {
-  options.modules.develop.shell = { enable = mkBoolOpt false; };
+  options.modules.develop.shell = {
+    enable = mkBoolOpt false;
+    xdg.enable = mkBoolOpt devCfg.xdg.enable;
+  };
 
-  config = mkIf cfg.enable { user.packages = with pkgs; [ shellcheck ]; };
+  config = mkMerge [
+    (mkIf cfg.enable { user.packages = with pkgs; [ shellcheck ]; })
+
+    (mkIf cfg.xdg.enable {
+      # TODO
+    })
+  ];
 }

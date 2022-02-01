@@ -2,15 +2,17 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.develop.python;
+let
+  devCfg = config.modules.develop;
+  cfg = devCfg.python;
 in {
   options.modules.develop.python = {
     enable = mkBoolOpt false;
-    enableGlobally = mkBoolOpt false;
+    xdg.enable = mkBoolOpt devCfg.xdg.enable;
   };
 
-  config = mkIf cfg.enable (mkMerge [
-    (mkIf cfg.enableGlobally {
+  config = mkMerge [
+    (mkIf cfg.enable {
       user.packages = with pkgs; [
         python39
         python39Packages.pip
@@ -31,7 +33,7 @@ in {
       };
     })
 
-    {
+    (mkIf cfg.xdg.enable {
       env = {
         IPYTHONDIR = "$XDG_CONFIG_HOME/ipython";
         PIP_CONFIG_FILE = "$XDG_CONFIG_HOME/pip/pip.conf";
@@ -42,6 +44,6 @@ in {
         PYTHON_EGG_CACHE = "$XDG_CACHE_HOME/python-eggs";
         JUPYTER_CONFIG_DIR = "$XDG_CONFIG_HOME/jupyter";
       };
-    }
-  ]);
+    })
+  ];
 }
