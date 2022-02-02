@@ -840,7 +840,7 @@ scratchpads =
   elementCommand       = "element-desktop"
   elementSelector      = className =? "Element"
 
-  emacsCommand         = "emacsclient -nc"
+  emacsCommand         = "emacsclient -c"
   emacsSelector        = className =? "Emacs"
 
   htopCommand          = "alacritty --title htop -e htop"
