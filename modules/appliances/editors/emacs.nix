@@ -14,23 +14,14 @@ in {
     };
   };
 
-  config = let
-    emacsWithPackages = with pkgs;
-      ((emacsPackagesNgGen emacsPgtkGcc).emacsWithPackages
-        (epkgs: with epkgs; [ vterm pdf-tools emojify ]));
-
-  in mkIf cfg.enable {
+  config = mkIf cfg.enable {
     nixpkgs.overlays = [ inputs.emacs.overlay ];
 
-    # Enable emacs --daemon on envManager launch.
-    services.emacs = {
-      enable = true;
-      package = emacsWithPackages;
-    };
-
     user.packages = with pkgs; [
+      # Emacs Dependencies:
       binutils
-      emacsWithPackages
+      ((emacsPackagesNgGen emacsPgtkGcc).emacsWithPackages
+        (epkgs: with epkgs; [ vterm pdf-tools emojify ]))
 
       # Doom Dependencies
       (ripgrep.override { withPCRE2 = true; })
@@ -64,6 +55,7 @@ in {
       unstable.rust-analyzer
     ];
 
+    # Fonts -> icons + ligatures when specified:
     fonts.fonts = [ pkgs.emacs-all-the-icons-fonts ];
 
     # Enable access to doom (tool).
