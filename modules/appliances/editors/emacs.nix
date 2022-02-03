@@ -72,6 +72,7 @@ in {
     #      ${optionalString cfg.doom.fromSSH ''
     #         git clone git@github.com:hlissner/doom-emacs.git $HOME/.config/emacs
     #      ''}
+    #
     #      ${optionalString (cfg.doom.fromSSH == false) ''
     #         git clone https://github.com/hlissner/doom-emacs $HOME/.config/emacs
     #      ''}

@@ -76,7 +76,7 @@
     editors = {
       default = "emacs";
       emacs.enable = true;
-      # nvim.enable = true;
+      neovim.enable = true;
     };
 
     browsers = {
