@@ -159,6 +159,7 @@ You have successful installed your/my personally hand-crafted/replicated Nix-Fla
 * Special Thanks
 - [[https://github.com/hlissner/dotfiles][GitHub - hlissner/dotfiles]]: NixOS Flake structure! (inspiration)
 - [[https://github.com/IvanMalison/dotfiles][GitHub - IvanMalison/dotfiles]]: XMonad + Taffybar!
+- [[https://github.com/LunarVim/Neovim-from-scratch][GitHub - LunarVim/NFS]] (Neovim Template) & [[github:ayamir/nvimdots][Ayamir/nvimdots]] (Inspiration)!
 
 * Useful Links
 - [[Stable][NixOS Manual]]: A manual for the newcomer to read and understand different parts of the NixOS distribution.

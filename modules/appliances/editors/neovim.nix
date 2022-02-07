@@ -8,18 +8,19 @@ let
 in {
   options.modules.appliances.editors.neovim = {
     enable = mkBoolOpt false;
-    lunarVim = {
-      enable = mkBoolOpt true;
-      fromSSH = mkBoolOpt false;
-    };
   };
 
   config = mkIf cfg.enable {
     user.packages = with pkgs; [
       # Neovim (TUI + GUI) dependencies:
       unstable.neovim
+      unstable.neovide
 
-      # Other dependencies:
+      # LSP-Dependencies:
+      stylua
+      nodePackages.prettier
+
+      # Extra Dependencies:
       editorconfig-core-c
     ];
 
@@ -29,18 +30,8 @@ in {
       vimdiff = "nvim -d";
     };
 
-    # TODO: style neovim first -> make a module for installing lunar vim.
-    # init.lunarVim = mkIf cfg.lunarVim.enable ''
-    #   if [ -d $HOME/.config/nvim ]; then
-    #      ${optionalString cfg.lunarVim.fromSSH ''
-    #         git clone git@github.com:LunarVim/LunarVim.git $HOME/.config/nvim
-    #      ''}
-    #
-    #      ${optionalString (cfg.lunarVim.fromSSH == false) ''
-    #         git clone https://github.com/LunarVim/LunarVim $HOME/.config/nvim --depth 1
-    #      ''}
-    #   fi
-    # '';
-
+    # TODO: style neovim first -> make a module for installing LunarVim
+    # + also, setup neovide properly without dpi issues.
+    # + proper shellAliases when lvim.enable = true; such as lv alias.
   };
 }
