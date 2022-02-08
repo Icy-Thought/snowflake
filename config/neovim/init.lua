@@ -2,9 +2,8 @@
 vim.cmd("colorscheme catppuccin")
 
 -- Core functionality:
-require "core.alpha"
-require "core.options"
 require "core.plugins"
+require "core.options"
 
 -- Keymaps:
 require "keymaps"
@@ -27,6 +26,7 @@ require "modules.editor.nvim-tree"
 require "modules.editor.toggleterm"
 
 -- UI-related Settings:
+require "modules.ui.alpha"
 require "modules.ui.lualine"
 require "modules.ui.bufferline"
 require "modules.ui.gitsigns"

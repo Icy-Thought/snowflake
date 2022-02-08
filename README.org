@@ -156,11 +156,6 @@ git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d
 * Congratulations! 🎉
 You have successful installed your/my personally hand-crafted/replicated Nix-Flake environment. I hope it suits your needs, if not then you are always welcome to propose changes or fork the project and customize the repository to your heart's content!
 
-* Special Thanks
-- [[https://github.com/hlissner/dotfiles][GitHub - hlissner/dotfiles]]: NixOS Flake structure! (inspiration)
-- [[https://github.com/IvanMalison/dotfiles][GitHub - IvanMalison/dotfiles]]: XMonad + Taffybar!
-- [[https://github.com/LunarVim/Neovim-from-scratch][GitHub - LunarVim/NFS]] (Neovim Template) & [[github:ayamir/nvimdots][Ayamir/nvimdots]] (Inspiration)!
-
 * Useful Links
 - [[Stable][NixOS Manual]]: A manual for the newcomer to read and understand different parts of the NixOS distribution.
 - [[https://github.com/nix-community/home-manager][Home-Manager]]: Helps you manage your =~/home= related configurations.
@@ -168,3 +163,8 @@ You have successful installed your/my personally hand-crafted/replicated Nix-Fla
 - [[https://nixos.org/manual/nix/unstable/][Nixpkgs Unstable]]: A manual which introduces the Nix-language to people unfamiliar with the wonders of this language.
 - [[https://gist.github.com/edolstra/40da6e3a4d4ee8fd019395365e0772e7][Nix Flake MVP]]: A written Nix guide by [[https://github.com/edolstra][edolstra]].
 - [[https://nixcloud.io/tour/?id=1][A Tour of Nix]]: a beautifully crafted introduction into the Nix programming language.
+
+* Special Thanks
+- [[https://github.com/hlissner/dotfiles][hlissner/dotfiles]]: NixOS Flake structure! (inspiration)
+- [[https://github.com/IvanMalison/dotfiles][IvanMalison/dotfiles]]: XMonad + Taffybar!
+- [[https://github.com/LunarVim/Neovim-from-scratch][LunarVim/NFS]] (Neovim Template) & [[https://github.com/ayamir/nvimdots][ayamir/nvimdots]] (Inspiration)!
