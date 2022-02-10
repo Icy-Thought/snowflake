@@ -18,7 +18,7 @@ in {
 
       # LSP-Dependencies:
       stylua
-      nodePackages.prettier
+      efm-langserver
 
       # Extra Dependencies:
       editorconfig-core-c

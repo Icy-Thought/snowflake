@@ -1,46 +1,126 @@
-local options = {
-  backup = false,                          -- creates a backup file
-  clipboard = "unnamedplus",               -- allows neovim to access the system clipboard
-  cmdheight = 2,                           -- more space in the neovim command line for displaying messages
-  completeopt = { "menuone", "noselect" }, -- mostly just for cmp
-  conceallevel = 0,                        -- so that `` is visible in markdown files
-  fileencoding = "utf-8",                  -- the encoding written to a file
-  hlsearch = true,                         -- highlight all matches on previous search pattern
-  ignorecase = true,                       -- ignore case in search patterns
-  mouse = "a",                             -- allow the mouse to be used in neovim
-  pumheight = 10,                          -- pop up menu height
-  showmode = false,                        -- we don't need to see things like -- INSERT -- anymore
-  showtabline = 2,                         -- always show tabs
-  smartcase = true,                        -- smart case
-  smartindent = true,                      -- make indenting smarter again
-  splitbelow = true,                       -- force all horizontal splits to go below current window
-  splitright = true,                       -- force all vertical splits to go to the right of current window
-  swapfile = false,                        -- creates a swapfile
-  termguicolors = true,                    -- set term gui colors (most terminals support this)
-  timeoutlen = 100,                        -- time to wait for a mapped sequence to complete (in milliseconds)
-  undofile = true,                         -- enable persistent undo
-  updatetime = 300,                        -- faster completion (4000ms default)
-  writebackup = false,                     -- if a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited
-  expandtab = true,                        -- convert tabs to spaces
-  shiftwidth = 2,                          -- the number of spaces inserted for each indentation
-  tabstop = 2,                             -- insert 2 spaces for a tab
-  cursorline = true,                       -- highlight the current line
-  number = true,                           -- set numbered lines
-  relativenumber = false,                  -- set relative numbered lines
-  numberwidth = 4,                         -- set number column width to 2 {default 4}
-  signcolumn = "yes",                      -- always show the sign column, otherwise it would shift the text each time
-  wrap = false,                            -- display lines as one long line
-  scrolloff = 8,                           -- is one of my fav
-  sidescrolloff = 8,
-  guifont = "VictorMono Nerd Font:h12",    -- the font used in graphical neovim applications
-}
+local global = require("core.global")
 
-vim.opt.shortmess:append "c"
-
-for k, v in pairs(options) do
-  vim.opt[k] = v
+local function bind_option(options)
+	for k, v in pairs(options) do
+		if v == true then
+			vim.cmd("set " .. k)
+		elseif v == false then
+			vim.cmd("set no" .. k)
+		else
+			vim.cmd("set " .. k .. "=" .. v)
+		end
+	end
 end
 
-vim.cmd "set whichwrap+=<,>,[,],h,l"
-vim.cmd [[set iskeyword+=-]]
-vim.cmd [[au BufEnter * set fo-=c fo-=r fo-=o]] -- Stop newline comments.
+local function load_options()
+	local global_local = {
+		autoread = true,
+		autowrite = true,
+		backspace = "indent,eol,start",
+		backup = false,
+		breakat = [[\ \	;:,!?]],
+		clipboard = "unnamedplus",
+		cmdheight = 2,
+		cmdwinheight = 5,
+		complete = ".,w,b,k",
+		completeopt = "menuone,noselect",
+		cursorcolumn = true,
+		cursorline = true,
+		diffopt = "filler,iwhite,internal,algorithm:patience",
+		display = "lastline",
+		encoding = "utf-8",
+		equalalways = false,
+		foldlevelstart = 99,
+		grepformat = "%f:%l:%c:%m",
+		grepprg = "rg --hidden --vimgrep --smart-case --",
+		helpheight = 12,
+		hidden = true,
+		ignorecase = true,
+		inccommand = "nosplit",
+		incsearch = true,
+		infercase = true,
+		jumpoptions = "stack",
+		laststatus = 2,
+		list = true,
+		listchars = "tab:»·,nbsp:+,trail:·,extends:→,precedes:←",
+		magic = true,
+		mouse = "a",
+		previewheight = 12,
+		pumblend = 10,
+		pumheight = 15,
+		redrawtime = 1500,
+		ruler = true,
+		scrolloff = 2,
+		sessionoptions = "curdir,help,tabpages,winsize",
+		shada = "!,'300,<50,@100,s10,h",
+		shiftround = true,
+		shortmess = "aoOTIcF",
+		showbreak = "↳  ",
+		showcmd = false,
+		showmode = false,
+		showtabline = 2,
+		sidescrolloff = 5,
+		smartcase = true,
+		smarttab = true,
+		splitbelow = true,
+		splitright = true,
+		startofline = false,
+		swapfile = false,
+		switchbuf = "useopen",
+		termguicolors = true,
+		timeout = true,
+		timeoutlen = 500,
+		ttimeout = true,
+		ttimeoutlen = 0,
+		undodir = global.cache_dir .. "undo/",
+		updatetime = 100,
+		viewoptions = "folds,cursor,curdir,slash,unix",
+		virtualedit = "block",
+		whichwrap = "h,l,<,>,[,],~",
+		wildignore = ".git,.hg,.svn,*.pyc,*.o,*.out,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**",
+		wildignorecase = true,
+		winblend = 10,
+		winminwidth = 10,
+		winwidth = 30,
+		wrapscan = true,
+		writebackup = false,
+	}
+
+	local bw_local = {
+		autoindent = true,
+		breakindentopt = "shift:2,min:20",
+		concealcursor = "niv",
+		conceallevel = 0,
+		expandtab = false,
+		foldenable = true,
+		formatoptions = "1jcroql",
+		linebreak = true,
+		number = true,
+		relativenumber = true,
+		shiftwidth = 4,
+		signcolumn = "yes",
+		softtabstop = -1,
+		synmaxcol = 2500,
+		tabstop = 4,
+		textwidth = 80,
+		undofile = true,
+		wrap = false,
+	}
+
+	if global.is_mac then
+		vim.g.clipboard = {
+			name = "macOS-clipboard",
+			copy = { ["+"] = "pbcopy", ["*"] = "pbcopy" },
+			paste = { ["+"] = "pbpaste", ["*"] = "pbpaste" },
+			cache_enabled = 0,
+		}
+		vim.g.python_host_prog = "/usr/bin/python"
+		vim.g.python3_host_prog = "/usr/local/bin/python3"
+	end
+	for name, value in pairs(global_local) do
+		vim.o[name] = value
+	end
+	bind_option(bw_local)
+end
+
+load_options()
