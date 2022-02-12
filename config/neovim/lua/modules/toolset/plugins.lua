@@ -6,7 +6,8 @@ end
 
 toolset["folke/which-key.nvim"] = {
 	opt = false,
-	event = "BufRead",
+    event = "BufWinEnter",
+	keys = "<space>",
 	config = get_config("which-key"),
 }
 toolset["nvim-telescope/telescope.nvim"] = {
@@ -18,6 +19,11 @@ toolset["nvim-telescope/telescope.nvim"] = {
 		{ "nvim-lua/plenary.nvim", opt = false },
 		{ "nvim-lua/popup.nvim", opt = true },
 	},
+}
+toolset["nvim-telescope/telescope-fzf-native.nvim"] = {
+	opt = true,
+	run = "make",
+	after = "telescope.nvim",
 }
 toolset["nvim-telescope/telescope-project.nvim"] = {
 	opt = true,

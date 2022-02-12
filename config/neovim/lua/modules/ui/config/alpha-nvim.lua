@@ -24,12 +24,12 @@ dashboard.section.header.val = {
 }
 
 dashboard.section.buttons.val = {
-	dashboard.button("SPC f e", "  New file", ":ene <BAR> startinsert <CR>"),
-	dashboard.button("SPC f f", "  Find file", ":Telescope find_files <CR>"),
-	dashboard.button("SPC f d", "  Find project", ":Telescope projects <CR>"),
-	dashboard.button("SPC f r", "  Recently used files", ":Telescope oldfiles <CR>"),
-	dashboard.button("SPC f t", "  Find text", ":Telescope live_grep <CR>"),
-	dashboard.button("SPC f p", "  Configuration", ":e ~/.config/nvim/init.lua <CR>"),
+	dashboard.button("SPC f f", "  Find File", "DashboardFindFile"),
+	dashboard.button("SPC f d", "  Find Project", "Telescope project"),
+	dashboard.button("SPC f r", "  Smart File Finder", "Telescope frecency"),
+	dashboard.button("SPC f e", "  Recently Edited Files", "DashboardFindHistory"),
+	dashboard.button("SPC f p", "  Neovim Configuration", ":e ~/.config/nvim/lua/core/init.lua <CR>"),
+	dashboard.button("SPC s c", "	Change Colorscheme", "DashboardChangeColorscheme"),
 	dashboard.button("SPC q q", "  Quit Neovim", ":qa<CR>"),
 }
 
@@ -46,5 +46,5 @@ dashboard.section.header.opts.hl = "Include"
 dashboard.section.buttons.opts.hl = "Keyword"
 
 dashboard.opts.opts.noautocmd = true
--- vim.cmd([[autocmd User AlphaReady echo 'ready']])
+
 alpha.setup(dashboard.opts)

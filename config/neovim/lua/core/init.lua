@@ -47,7 +47,7 @@ local disable_distribution_plugins = function()
 end
 
 local leader_map = function()
-	vim.g.mapleader = ","
+	vim.g.mapleader = " "
 	vim.api.nvim_set_keymap("n", " ", "", { noremap = true })
 	vim.api.nvim_set_keymap("x", " ", "", { noremap = true })
 end
@@ -76,8 +76,9 @@ local load_core = function()
 	neovide_config()
 
 	require("core.options")
-	require("core.event")
+	require("core.mapping")
 	require("keymaps")
+	require("core.event")
 	pack.load_compile()
 
 	vim.cmd([[colorscheme catppuccin]])

@@ -4,10 +4,18 @@ function get_config(name)
 	return string.format("require(\"modules.completion.config.%s\")", name)
 end
 
+function get_lspConf(name)
+	return string.format("require(\"modules.completion.lsp.%s\")", name)
+end
+
+completion["windwp/nvim-autopairs"] = {
+	after = "nvim-cmp",
+	config = get_config("autopairs"),
+}
 completion["neovim/nvim-lspconfig"] = {
 	opt = true,
 	event = "BufReadPre",
-	config = get_config("nvim-lsp"),
+	config = get_lspConf("handlers"),
 }
 completion["creativenull/efmls-configs-nvim"] = {
 	opt = false,
@@ -20,7 +28,7 @@ completion["williamboman/nvim-lsp-installer"] = {
 completion["RishabhRD/nvim-lsputils"] = {
 	opt = true,
 	after = "nvim-lspconfig",
-	config = get_config("nvim-lsputils"),
+	config = get_lspConf("lsputils"),
 }
 completion["tami5/lspsaga.nvim"] = { 
 	opt = true,
@@ -29,6 +37,11 @@ completion["tami5/lspsaga.nvim"] = {
 completion["ray-x/lsp_signature.nvim"] = {
 	opt = true,
 	after = "nvim-lspconfig"
+}
+completion["L3MON4D3/LuaSnip"] = {
+	after = "nvim-cmp",
+	config = get_config("luasnip"),
+	requires = "rafamadriz/friendly-snippets",
 }
 completion["hrsh7th/nvim-cmp"] = {
 	config = get_config("nvim-cmp"),
@@ -43,15 +56,6 @@ completion["hrsh7th/nvim-cmp"] = {
 		{ "hrsh7th/cmp-buffer", after = "cmp-spell" },
 		{ "kdheepak/cmp-latex-symbols", after = "cmp-buffer" },
 	},
-}
-completion["L3MON4D3/LuaSnip"] = {
-	after = "nvim-cmp",
-	config = get_config("luasnip"),
-	requires = "rafamadriz/friendly-snippets",
-}
-completion["windwp/nvim-autopairs"] = {
-	after = "nvim-cmp",
-	config = get_config("autopairs"),
 }
 completion["github/copilot.vim"] = { opt = true, cmd = "Copilot" }
 

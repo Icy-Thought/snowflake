@@ -1,16 +1,3 @@
-vim.cmd([[highlight CmpItemAbbrDeprecated guifg=#D8DEE9 guibg=NONE gui=strikethrough]])
-vim.cmd([[highlight CmpItemKindSnippet guifg=#BF616A guibg=NONE]])
-vim.cmd([[highlight CmpItemKindUnit guifg=#D08770 guibg=NONE]])
-vim.cmd([[highlight CmpItemKindProperty guifg=#A3BE8C guibg=NONE]])
-vim.cmd([[highlight CmpItemKindKeyword guifg=#EBCB8B guibg=NONE]])
-vim.cmd([[highlight CmpItemAbbrMatch guifg=#5E81AC guibg=NONE]])
-vim.cmd([[highlight CmpItemAbbrMatchFuzzy guifg=#5E81AC guibg=NONE]])
-vim.cmd([[highlight CmpItemKindVariable guifg=#8FBCBB guibg=NONE]])
-vim.cmd([[highlight CmpItemKindInterface guifg=#88C0D0 guibg=NONE]])
-vim.cmd([[highlight CmpItemKindText guifg=#81A1C1 guibg=NONE]])
-vim.cmd([[highlight CmpItemKindFunction guifg=#B48EAD guibg=NONE]])
-vim.cmd([[highlight CmpItemKindMethod guifg=#B48EAD guibg=NONE]])
-
 local t = function(str)
 	return vim.api.nvim_replace_termcodes(str, true, true, true)
 end
@@ -140,7 +127,12 @@ cmp.setup({
 		select = false,
 	},
 	documentation = {
-		border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+		border = "rounded",
+		winhighlight = "NormalFloat:CompeDocumentation,FloatBorder:CompeDocumentationBorder",
+		max_width = 50,
+		min_width = 50,
+		max_height = math.floor(vim.o.lines * 0.4),
+		min_height = 3,
 	},
 	experimental = {
 		ghost_text = false,

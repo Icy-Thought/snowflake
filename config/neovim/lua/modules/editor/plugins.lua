@@ -20,10 +20,6 @@ editor["norcalli/nvim-colorizer.lua"] = {
 	event = "BufRead",
 	config = get_config("colorizer"),
 }
-editor["numToStr/Comment.nvim"] = {
-	opt = true,
-	config = get_config("comment"),
-}
 editor["rcarriga/nvim-dap-ui"] = {
 	opt = false,
 	config = get_config("nvim-dap").ui,
@@ -36,6 +32,26 @@ editor["rcarriga/nvim-dap-ui"] = {
 			config = get_config("nvim-dap").install,
 		},
 	},
+}
+editor["numToStr/Comment.nvim"] = {
+	opt = true,
+    event = "BufRead",
+	config = get_config("comment"),
+}
+editor["phaazon/hop.nvim"] = {
+	opt = true,
+	branch = "v1",
+	cmd = {
+		"HopLine",
+		"HopLineStart",
+		"HopWord",
+		"HopPattern",
+		"HopChar1",
+		"HopChar2",
+	},
+	config = function()
+		require("hop").setup({ keys = "etovxqpdygfblzhckisuran" })
+	end,
 }
 editor["edluffy/specs.nvim"] = {
 	opt = true,

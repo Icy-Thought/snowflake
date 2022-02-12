@@ -1,4 +1,4 @@
-require("modules.completion.formatting")
+require("modules.completion.lsp.formatting")
 
 vim.cmd([[packadd nvim-lsp-installer]])
 vim.cmd([[packadd lsp_signature.nvim]])
@@ -322,5 +322,5 @@ efmls.setup({
 	scss = { formatter = prettier },
 	sh = { formatter = shfmt, linter = shellcheck },
 	markdown = { formatter = prettier },
-	-- rust = {formatter = rustfmt},
+	rust = {formatter = rustfmt},
 })

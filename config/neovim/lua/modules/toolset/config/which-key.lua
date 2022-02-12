@@ -70,7 +70,7 @@ local opts = {
 }
 
 local mappings = {
-	a = { "<cmd>Alpha<cr>", "Alpha" },
+	a = { "<cmd>Dashboard<cr>", "Launch Dashboard" },
 	b = {
 		name = "Buffers",
 		b = {
@@ -156,10 +156,13 @@ local mappings = {
 
 	p = {
 		name = "Project",
-		p = { "<cmd>lua require('telescope').extensions.projects.projects()<cr>", "Switch Projects" },
+		p = { "<cmd>lua require('telescope').extensions.project.project{}<cr>", "Switch Projects" },
 	},
 
-	q = { "<cmd>q!<CR>", "Quit" },
+	q = { 
+		name = "Exit Neovim!",
+		q = { "<cmd>q!<CR>", "Farewell, Neovim!" },
+	},
 
 	s = {
 		name = "Search",
@@ -175,10 +178,6 @@ local mappings = {
 
 	t = {
 		name = "Terminal",
-		n = { "<cmd>lua _NODE_TOGGLE()<cr>", "Node" },
-		u = { "<cmd>lua _NCDU_TOGGLE()<cr>", "NCDU" },
-		t = { "<cmd>lua _HTOP_TOGGLE()<cr>", "Htop" },
-		p = { "<cmd>lua _PYTHON_TOGGLE()<cr>", "Python" },
 		f = { "<cmd>ToggleTerm direction=float<cr>", "Float" },
 		h = { "<cmd>ToggleTerm size=10 direction=horizontal<cr>", "Horizontal" },
 		v = { "<cmd>ToggleTerm size=80 direction=vertical<cr>", "Vertical" },

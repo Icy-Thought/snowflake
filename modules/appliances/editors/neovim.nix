@@ -17,8 +17,8 @@ in {
       unstable.neovide
 
       # LSP-Dependencies:
-      stylua
       efm-langserver
+      stylua
 
       # Extra Dependencies:
       editorconfig-core-c

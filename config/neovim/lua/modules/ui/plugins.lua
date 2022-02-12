@@ -16,11 +16,17 @@ ui["catppuccin/nvim"] = {
 }
 ui["RishabhRD/popfix"] = { opt = false }
 ui["nvim-lua/popup.nvim"] = { opt = true }
-ui["goolord/alpha-nvim"] = {
+ui["glepnir/dashboard-nvim"] = { 
 	opt = true,
 	event = "BufWinEnter",
-	config = get_config("alpha-nvim"),
+	config = get_config("remove-later"),
 }
+-- ui["startup-nvim/startup.nvim"] = {
+-- 	opt = true,
+-- 	event = "BufWinEnter",
+-- 	config = get_config("dashboard"),
+-- 	requires = {"nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim"},
+-- }
 ui["kyazdani42/nvim-tree.lua"] = {
 	opt = true,
 	event = "BufRead",
@@ -33,6 +39,7 @@ ui["akinsho/bufferline.nvim"] = {
 }
 ui["hoob3rt/lualine.nvim"] = {
 	opt = true,
+	event = "BufRead",
 	config = get_config("lualine"),
 }
 ui["lewis6991/gitsigns.nvim"] = {

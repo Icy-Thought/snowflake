@@ -1,11 +1,56 @@
 local telescope = require("telescope")
 local actions = require("telescope.actions")
 
+vim.cmd([[packadd telescope-fzf-native.nvim]])
+vim.cmd([[packadd telescope-project.nvim]])
+-- vim.cmd([[packadd telescope-frecency.nvim]])
+-- vim.cmd([[packadd sqlite.lua]])
+
 telescope.setup({
 	defaults = {
 		prompt_prefix = " ",
 		selection_caret = " ",
+		layout_config = {
+			horizontal = { prompt_position = "bottom", results_width = 0.6 },
+			vertical = { mirror = false },
+		},
+
+		file_previewer = require("telescope.previewers").vim_buffer_cat.new,
+		grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
+		qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
+		file_sorter = require("telescope.sorters").get_fuzzy_file,
+		file_ignore_patterns = {},
+		generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
+
 		path_display = { "smart" },
+		winblend = 0,
+		border = {},
+		borderchars = {
+			"─",
+			"│",
+			"─",
+			"│",
+			"╭",
+			"╮",
+			"╯",
+			"╰",
+		},
+		color_devicons = true,
+		use_less = true,
+		set_env = { ["COLORTERM"] = "truecolor" },
+		extensions = {
+			fzf = {
+				fuzzy = false,
+				override_generic_sorter = true,
+				override_file_sorter = true,
+				case_mode = "smart_case",
+			},
+			-- frecency = {
+			-- 	show_scores = true,
+			-- 	show_unindexed = true,
+			-- 	ignore_patterns = { "*.git/*", "*/tmp/*" },
+			-- },
+		},
 
 		mappings = {
 			i = {
@@ -74,3 +119,6 @@ telescope.setup({
 	},
 })
 
+require("telescope").load_extension("fzf")
+require("telescope").load_extension("project")
+-- require("telescope").load_extension("frecency")
