@@ -109,8 +109,9 @@
   };
 
   modules.develop = {
-    python.enable = true;
     haskell.enable = true;
+    node.enable = true;
+    python.enable = true;
     rust.enable = true;
   };
 

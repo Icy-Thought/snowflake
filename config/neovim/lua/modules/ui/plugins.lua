@@ -46,7 +46,7 @@ ui["lewis6991/gitsigns.nvim"] = {
 	opt = true,
 	event = { "BufRead", "BufNewFile" },
 	config = get_config("gitsigns"),
-	requires = { "nvim-lua/plenary.nvim", opt = true },
+	requires = { "nvim-lua/plenary.nvim" },
 }
 ui["j-hui/fidget.nvim"] = {
 	opt = true,

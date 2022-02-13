@@ -20,7 +20,7 @@ in {
     user.packages = with pkgs; [
       # Emacs Dependencies:
       binutils
-      ((emacsPackagesNgGen emacsPgtkGcc).emacsWithPackages
+      ((emacsPackagesFor emacsPgtkGcc).emacsWithPackages
         (epkgs: with epkgs; [ vterm pdf-tools emojify ]))
 
       # Doom Dependencies

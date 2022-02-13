@@ -11,7 +11,7 @@ in {
 
     services.openssh = {
       enable = true;
-      challengeResponseAuthentication = false;
+      kbdInteractiveAuthentication = false;
       passwordAuthentication = false;
       startWhenNeeded = true;
     };

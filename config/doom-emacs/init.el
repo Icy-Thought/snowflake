@@ -110,8 +110,8 @@
             ;;+hugo                             ; Enable ox-hugo support.
             +roam)                              ; Note-taking done correct in org-mode.
        ;;perl                                   ; write code no one else can comprehend
-       (python +lsp)                            ; Python + LSP support.
-       ;;        +pyright)                      ; Beautiful is better than ugly
+       (python +lsp                             ; Python + LSP support.
+               +pyright)                        ; Beautiful is better than ugly
        ;;qt                                     ; The 'cutest' gui framework ever
        ;;(ruby +rails)                          ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
        (rust +lsp)                              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
