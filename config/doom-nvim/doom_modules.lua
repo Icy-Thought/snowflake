@@ -49,7 +49,7 @@ M.modules = {
     -- "css",             			-- CSS support
     -- "elixir",          			-- Build scalable and maintainable software
     -- "go",              			-- Hello, gopher
-    "haskell +lsp",							-- Because Functional programming is fun, isn't it?
+    "haskell",									-- Because Functional programming is fun, isn't it?
     -- "html",            			-- HTML support
     -- "java",            			-- Java support
     -- "javascript",      			-- JavaScript support

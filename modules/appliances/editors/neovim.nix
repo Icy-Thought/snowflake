@@ -14,9 +14,12 @@ in {
     user.packages = with pkgs; [
       # Neovim (TUI + GUI) dependencies:
       unstable.neovim
-      unstable.neovide
+
+      # LSP Dependencies:
+      sumneko-lua-language-server
 
       # Extra Dependencies:
+      stylua
       editorconfig-core-c
     ];
 
@@ -26,8 +29,7 @@ in {
       vimdiff = "nvim -d";
     };
 
-    # TODO: style neovim first -> make a module for installing LunarVim
-    # + also, setup neovide properly without dpi issues.
-    # + proper shellAliases when lvim.enable = true; such as lv alias.
+    # TODO: clone doom-nvim -> ln -s config files to configDir/doom-nvim
+    # (temporary) ln -s settings ~/.config/nvim/lua 
   };
 }

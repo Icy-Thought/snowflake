@@ -92,8 +92,8 @@ in {
         };
 
         colors.cursor = {
-          cursor = colors.cursorForeground;
-          text = colors.cursorBackground;
+          text = colors.cursorForeground;
+          cursor = colors.cursorBackground;
         };
 
         colors.selection = {

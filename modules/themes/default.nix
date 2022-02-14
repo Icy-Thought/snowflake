@@ -16,7 +16,7 @@ in {
     colors = mkOption {
       type = types.attrs;
       description = "Applies active color-palette";
-      apply = v: import ("${configDir}/color-palette" + "/${cfg.active}.nix");
+      apply = v: import ("${configDir}/colorschemes" + "/${cfg.active}.nix");
     };
   };
 }

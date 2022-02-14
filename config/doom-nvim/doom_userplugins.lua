@@ -13,11 +13,28 @@
 
 local M = {}
 
+function get_config(name)
+	return string.format("require(\"settings/%s\")", name)
+end
+
 M.source = debug.getinfo(1, "S").source:sub(2)
 
 M.plugins = {
-	{ "rebelot/kanagawa.nvim" },
-	{ "catppuccin/nvim", as = "catppuccin" }
+	{ 
+		"rebelot/kanagawa.nvim",
+		config = get_config("colorscheme").kanagawa,
+	},
+	{ 
+		"catppuccin/nvim",
+		as = "catppuccin",
+		config = get_config("colorscheme").catppuccin,
+	},
+	{
+		"gelguy/wilder.nvim",
+		event = "CmdlineEnter",
+		config = get_config("wilder"),
+		requires = { { "romgrk/fzy-lua-native", after = "wilder.nvim" } },
+	},
 }
 
 return M

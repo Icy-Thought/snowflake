@@ -158,7 +158,7 @@ M.config = {
       -- Movement keybindings, jump between your windows, buffers and code
       movement = true,
       -- Leader keybindings, a bunch of useful keybindings managed by space key
-      -- WARNING: disabling this will break which-key plugin if the plugin is enabled
+      -- WARNING: disabling this will break which-key if plugin = enabled
       leader = true,
       -- Completion and snippets keybindings
       completion = true,
@@ -273,7 +273,7 @@ M.config = {
     -- Change Which Key background color
     -- Use hex | color names, eg: Red, Gree, Blue
     -- @default = #202328
-    -- whichkey_bg = "#202328",
+    whichkey_bg = "#202328",
 
     -- Set your custom lsp diagnostic symbols below
     lsp_error = "",
@@ -375,7 +375,9 @@ M.config = {
     --   {
     --      ['shiftwidth'] = 4
     --   }
-    options = {},
+    options = {
+    	['smartcase'] = true
+    },
   },
 }
 
