@@ -1,42 +1,43 @@
 { colors, font, ... }: ''
 
-  adjust-open             "width"
-  first-page-column       "1:1"
-  window-title-basename   true
-  selection-clipboard     "clipboard"
-  font                    "${font.sans.family} ${font.sans.style} ${toString (font.sans.size)}"
+  set adjust-open             width
+  set first-page-column       "1:1"
+  set window-title-basename   true
+  set selection-clipboard     clipboard
+  set font                    "${font.sans.family} ${font.sans.style} ${toString (font.mono.size)}"
 
   # Colors:
-  default-fg              "${colors.types.fg}"
-  default-bg              "${colors.types.bg}"
+  set default-fg              "${colors.types.fg}"
+  set default-bg              "${colors.types.bg}"
 
-  statusbar-fg            "${colors.white}"
-  statusbar-bg            "${colors.types.panelbg}"
+  set statusbar-fg            "${colors.white}"
+  set statusbar-bg            "${colors.types.panelbg}"
 
-  inputbar-fg             "${colors.yellow}"
-  inputbar-bg             "${colors.types.bg}"
+  set inputbar-fg             "${colors.yellow}"
+  set inputbar-bg             "${colors.types.bg}"
 
-  notification-fg         "${colors.white}"
-  notification-bg         "${colors.black}"
+  set notification-fg         "${colors.white}"
+  set notification-bg         "${colors.black}"
 
-  notification-error-fg   "${colors.white}"
-  notification-error-bg   "${colors.black}"
+  set notification-error-fg   "${colors.white}"
+  set notification-error-bg   "${colors.black}"
 
-  notification-warning-fg "${colors.red}"
-  notification-warning-bg "${colors.black}"
+  set notification-warning-fg "${colors.red}"
+  set notification-warning-bg "${colors.black}"
 
-  highlight-active-color  "${colors.types.fg}"
-  highlight-color         "${colors.types.highlight}"
+  set highlight-active-color  "${colors.types.fg}"
+  set highlight-color         "${colors.types.highlight}"
 
-  completion-fg           "${colors.yellow}"
-  completion-bg           "${colors.types.panelbg}"
+  set completion-fg           "${colors.yellow}"
+  set completion-bg           "${colors.types.panelbg}"
 
-  completion-highlight-fg "${colors.types.panelbg}"
-  completion-highlight-bg "${colors.yellow}"
+  set completion-highlight-fg "${colors.types.panelbg}"
+  set completion-highlight-bg "${colors.yellow}"
 
-  recolor-lightcolor      "${colors.types.panelbg}"
-  recolor-darkcolor       "${colors.white}"
+  set recolor-lightcolor      "${colors.types.panelbg}"
+  set recolor-darkcolor       "${colors.white}"
 
-  recolor                 "true"
-  recolor-keephue         "true"
+  set recolor                 true
+  set recolor-keephue         true
+  set recolor-reverse-video   true
 ''

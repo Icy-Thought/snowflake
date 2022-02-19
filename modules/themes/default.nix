@@ -40,12 +40,12 @@ in {
       mono = {
         family = mkOpt str "Monospace";
         style = mkOpt str "SemiBold";
-        size = mkOpt float 12.0;
+        size = mkOpt float 13.0;
       };
       sans = {
         family = mkOpt str "Sans";
         style = mkOpt str "SemiBold";
-        size = mkOpt float 13.0;
+        size = mkOpt float 10.0;
       };
       # arabic = mkOpt str "";
       # chinese = mkOpt str "";

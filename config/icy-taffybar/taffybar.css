@@ -15,7 +15,7 @@
 
 
 .inner-pad {
-	background-color: @ebony-clay;
+	background-color: @sambucus;
 	border-radius: 8px;
 	padding: 6px;
 	margin: 4px;
@@ -44,14 +44,14 @@
 	padding-left: 3px;
 	padding-top: 0px;
 	font-size: 10pt;
-	color: @vivid-tangerine;
+	color: @patina-green;
 	opacity: 1;
 	font-weight: bold;
 	transition: color .5s;
 }
 
 .active .workspace-label {
-	/* color: @ebony-clay; */
+	/* color: @sambucus; */
 	color: @transparent;
 }
 
@@ -64,7 +64,7 @@
 }
 
 .active .inner-pad {
-	background-color: @vivid-tangerine;
+	background-color: @patina-green;
 	opacity: 1;
 }
 
@@ -130,7 +130,7 @@ button {
 }
 
 button:checked, button:hover .Contents:hover {
-	box-shadow: inset 0 -3px @ebony-clay;
+	box-shadow: inset 0 -3px @sambucus;
 }
 
 /* Menu Styling */
@@ -146,7 +146,7 @@ button:checked, button:hover .Contents:hover {
 }
 
 .taffy-window menuitem:hover, menuitem:hover {
-	background-color: @ebony-clay;
+	background-color: @sambucus;
 }
 
 .taffy-window menuitem:hover > label, menuitem:hover > label {

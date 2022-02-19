@@ -1,0 +1,10 @@
+#+TITLE: Catppuccin
+#+AUTHOR: Icy-Thought
+#+DATE: <2022-02-19 Sat>
+
+* Showcase
+[[./../../../assets/themes/catppuccin.png]]
+
+* Useful Links
+1. [[https://github.com/catppuccin/catppuccin][Catppuccin Repository]] (GitHub)
+2. [[https://www.artstation.com/artwork/QrbGn4][Oskar Woinski - Rebirth]] (Wallpaper)

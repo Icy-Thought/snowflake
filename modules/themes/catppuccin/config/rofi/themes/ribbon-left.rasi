@@ -11,7 +11,7 @@
 
     border:                             #7aa2f7ff;
     border-alt:                         #abe9b3ff;
-    selected:                           #ecf9ae99;
+    selected:                           #a9e8d199;
     urgent:                             #f28fadff;
 }
 

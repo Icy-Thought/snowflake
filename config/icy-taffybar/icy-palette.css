@@ -1,3 +1,6 @@
+/**/
+/* Colors gathered throughout my hunt after vivid colors.
+ */
 @define-color koromiko #ffb454;
 @define-color moon-raker #d6c5f0;
 @define-color sail #bbe1fa;
@@ -10,13 +13,24 @@
 @define-color raisin-black #1a1b25;
 @define-color ebony-clay #1d242c;
 
+/**/
+/* Catppuccin colors.
+ */
+@define-color patina-green #abe9b3;
+@define-color sambucus #161320;
+@define-color black-howl #1e1d2f;
+
+/**/
+/* Application of earlier defined colors.
+ */
+
 @define-color transparent rgba(0.0, 0.0, 0.0, 0.0);
 @define-color black #000000;
 @define-color white #ffffff;
 
 @define-color active-window-color @white;
-@define-color urgent-window-color @raisin-black;
-@define-color font-color @vivid-tangerine;
+@define-color urgent-window-color @black-howl;
+@define-color font-color @patina-green;
 @define-color menu-background-color @white;
 @define-color menu-font-color @black;
 @define-color bar-background @transparent;

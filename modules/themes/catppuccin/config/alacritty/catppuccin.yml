@@ -17,7 +17,7 @@
       family: "${font.sans.family}"
       style: "Italic"
 
-    size: ${toString (font.sans.size)}
+    size: ${toString (font.mono.size)}
 
     offset:
       x: 0

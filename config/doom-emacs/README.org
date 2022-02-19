@@ -59,14 +59,14 @@
 (setq doom-font (font-spec :family "VictorMono Nerd Font" :size 12.0 :weight 'SemiBold)
       doom-big-font (font-spec :family "VictorMono Nerd Font" :size 15.0 :weight 'SemiBold)
       doom-variable-pitch-font (font-spec :family "VictorMono Nerd Font" :size 12.0 :weight 'SemiBold)
-      doom-theme 'doom-horizon)
+      doom-theme 'doom-city-lights)
 #+end_src
 
 **** FIX: Broken Emacsclient Theme
 #+begin_src emacs-lisp
 (defun apply-theme ()
   (interactive)
-  (load-theme 'doom-horizon t))
+  (load-theme 'doom-city-lights t))
 
 (if (daemonp)
     (add-hook 'after-make-frame-functions
@@ -79,7 +79,7 @@
 Invert colors -> darker theming:
 #+begin_src emacs-lisp
 (with-eval-after-load 'solaire-mode
-  (add-to-list 'solaire-mode-themes-to-face-swap 'doom-horizon))
+  (add-to-list 'solaire-mode-themes-to-face-swap 'doom-city-lights))
 #+end_src
 
 *** Doom-Modeline

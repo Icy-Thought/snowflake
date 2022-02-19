@@ -11,11 +11,11 @@
 (setq doom-font (font-spec :family "VictorMono Nerd Font" :size 12.0 :weight 'SemiBold)
       doom-big-font (font-spec :family "VictorMono Nerd Font" :size 15.0 :weight 'SemiBold)
       doom-variable-pitch-font (font-spec :family "VictorMono Nerd Font" :size 12.0 :weight 'SemiBold)
-      doom-theme 'doom-horizon)
+      doom-theme 'doom-city-lights)
 
 (defun apply-theme ()
   (interactive)
-  (load-theme 'doom-horizon t))
+  (load-theme 'doom-city-lights t))
 
 (if (daemonp)
     (add-hook 'after-make-frame-functions
@@ -24,7 +24,7 @@
   (apply-theme))
 
 (with-eval-after-load 'solaire-mode
-  (add-to-list 'solaire-mode-themes-to-face-swap 'doom-horizon))
+  (add-to-list 'solaire-mode-themes-to-face-swap 'doom-city-lights))
 
 (after! doom-modeline
  (setq evil-normal-state-tag "λ"

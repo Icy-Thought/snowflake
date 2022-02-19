@@ -125,9 +125,9 @@ icyTheme = def { activeColor         = icyActive
                , fontName = "xft:VictorMono Nerd Font:style=SemiBold"
                }
 
-icyActive = "#FF977A"
+icyActive = "#abe9b3"
 
-icyInactive = "#1A1B25"
+icyInactive = "#1a1b25"
 
 restartEventHook e@ClientMessageEvent { ev_message_type = mt } = do
   a <- getAtom "XMONAD_RESTART"
