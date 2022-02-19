@@ -1,0 +1,130 @@
+super + t
+	bspc desktop -l next
+
+super + w; super + b
+	bspc window -s last
+
+# Attach to a detached session. If none is available create a new one, rather
+# than attach to one that is already attached to elsewhere.
+super + Return
+	xst -e bash -c "(tmux ls | grep -qEv 'attached|scratch' && tmux at) || tmux"
+# Start a plain ol' terminal
+super + ctrl + Return
+	xst
+super + ctrl + alt + Return
+	xterm
+
+# Open a disposable, floating terminal window, for quick shell commands.
+super + grave
+	scratch
+
+# Open a disposable scratch buffer in a floating Emacs window, to run arbitrary
+# code or quickly note something down.
+super + shift + grave
+	emacsclient --eval "(open-scratch-frame)"
+
+# Invoke emacs-everywhere at point.
+super + e
+    emacsclient --eval "(emacs-everywhere)"
+
+super + space
+	$DOTFILES_BIN/rofi/appmenu
+
+super + Tab
+	$DOTFILES_BIN/rofi/windowmenu
+
+super + p
+	$DOTFILES_BIN/rofi/bwmenu
+
+super + shift + p
+	$DOTFILES_BIN/rofi/bwmenu -r
+
+super + slash
+	$DOTFILES_BIN/rofi/filemenu -x
+
+super + Escape
+	pkill -USR1 -x sxhkd
+
+super + alt + Escape
+	bspc quit
+
+
+#
+##
+
+## Toggle floating/fullscreen
+super + w; super + {_,shift + }f
+	bspc node -t ~{floating,fullscreen}
+
+# Focus window directionally; w/ ctrl = move by monitor
+super + {_,ctrl +}{h,j,k,l}
+	$DOTFILES_BIN/bspwm/focus {_,-m }{west,south,north,east}
+
+# Swap windows directionally; w/ ctrl = across monitors
+super + shift + {_,ctrl +}{h,j,k,l}
+	$DOTFILES_BIN/bspwm/swap {_,-m }{west,south,north,east}
+
+
+#
+##
+
+# Close window or force-kill it!
+super + q; super + {_,shift + }q
+	bspc node -{c,k}
+
+# expand a window by moving one of its side outward
+super + {Left,Down,Up,Right}
+	bspc node -z {left -40 0,bottom 0 40,top 0 -40,right 40 0}
+
+# contract a window by moving one of its side inward
+super + shift + {Left,Down,Up,Right}
+	bspc node -z {right -40 0,top 0 40,bottom 0 -40,left 40 0}
+
+# move a floating window
+super + ctrl + {Left,Down,Up,Right}
+	bspc node -v {-40 0,0 40,0 -40,40 0}
+
+
+#
+## Desktops
+
+# Switch to numbered desktop
+super + {1-9,0}
+	bspc desktop -f {1-9,10};
+
+# On shift = move current node to numbered desktop
+super + shift + {1-9,0}
+	bspc node -d {1-9,10};
+
+
+#
+## Media keys
+
+# screenshot region
+Print
+	scrcap
+# screencast region to mp4
+super + Print
+	scrrec -s ~/recordings/$(date +%F-%T).mp4
+# screencast region to gif
+super + ctrl + Print
+	scrrec -s ~/recordings/$(date +%F-%T).gif
+
+XF86MonBrightnessUp
+	light -A 5
+XF86MonBrightnessDown
+	light -U 5
+
+XF86AudioMute
+	amixer -q set Master toggle
+XF86AudioLowerVolume
+	amixer -q set Master 10%- unmute
+XF86AudioRaiseVolume
+	amixer -q set Master 10%+ unmute
+
+XF86Audio{Play,Pause}
+	spt-send toggle
+XF86AudioNext
+	spt-send next
+XF86AudioPrev
+	spt-send prev

@@ -1040,7 +1040,7 @@ addKeys conf@XConfig { modMask = modm } =
          ((modm, xK_p), spawn "rofi -show drun -show-icons")
        , ((modm .|. shiftMask, xK_p), spawn "rofi -show run")
        , ((hyper, xK_p), spawn "rofi-systemd")
-       , ((modm .|. shiftMask, xK_x), spawn "betterlockscreen -l")
+       -- , ((modm .|. shiftMask, xK_x), spawn "") insert lockscreen when found!
        ,
       -- Playerctl
          ((modm, xK_Up), spawn "playerctl play-pause")

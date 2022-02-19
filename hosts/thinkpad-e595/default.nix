@@ -19,92 +19,43 @@
     };
   };
 
-  modules.desktop = {
-    envDisplay.sddm.enable = true;
-    envManager.xmonad.enable = true;
-
-    inputMF = {
-      fcitx5.enable = true;
-      spellCheck.enable = true;
-    };
-
-    envExtra = {
-      gtk.enable = true;
-      rofi.enable = true;
-      dunst.enable = true;
-
-      picom.enable = true;
-      taffybar.enable = true;
-      customLayout.enable = true;
-    };
-
-    envScript = {
-      volume.enable = true;
-      battery.enable = true;
-      brightness.enable = true;
-      microphone.enable = true;
-      screenshot.enable = true;
-    };
-  };
-
   modules.themes = { active = "catppuccin"; };
 
-  modules.fonts = {
-    minimal.enable = true;
-    nerdFonts.enable = true;
+  modules.desktop = {
+    xmonad.enable = true;
 
-    settings = {
-      family = "VictorMono Nerd Font";
-      monospace = "VictorMono Nerd Font Mono";
-      style = "SemiBold";
-      size = 13;
-    };
-  };
-
-  modules.appliances = {
-    termEmu = {
-      default = "alacritty";
-      alacritty.enable = true;
-    };
-
-    termUI = {
-      htop.enable = true;
-      neofetch.enable = true;
-      printTermColor.enable = true;
-    };
-
-    editors = {
-      default = "emacs";
-      emacs.enable = true;
-      neovim.enable = true;
-    };
-
-    browsers = {
-      default = "firefox";
-      firefox.enable = true;
-      unGoogled.enable = true;
-    };
-
-    extras = {
-      docViewer.enable = true;
-      transmission.enable = true;
-
-      chat = {
-        enable = true;
-        mobile.enable = true;
+    appliances = {
+      termEmu = {
+        default = "alacritty";
+        alacritty.enable = true;
       };
-    };
+      editors = {
+        default = "emacs";
+        emacs.enable = true;
+        neovim.enable = true;
+      };
+      browsers = {
+        default = "firefox";
+        firefox.enable = true;
+        unGoogled.enable = true;
+      };
+      media = {
+        mpv.enable = true;
+        spotify.enable = true;
+        graphics.enable = true;
+        docViewer.enable = true;
+        transmission.enable = true;
 
-    media = {
-      mpv.enable = true;
-      spotify.enable = true;
-      graphics.enable = true;
-    };
-
-    philomath.aula = {
-      anki.enable = true;
-      # libre.enable = true;
-      # zoom.enable = true;
+        chat = {
+          enable = true;
+          mobile.enable = true;
+        };
+      };
+      philomath.aula = {
+        anki.enable = true;
+        # libre.enable = true;
+        # zoom.enable = true;
+      };
     };
   };
 
@@ -123,14 +74,13 @@
 
   modules.services = {
     # ssh.enable = true;
-    kdeconnect.enable = true;
     laptop.enable = true;
+    kdeconnect.enable = true;
   };
 
   modules.shell = {
     git.enable = true;
     fish.enable = true;
-    tmux.enable = true;
     gnupg.enable = true;
     direnv.enable = true;
   };

@@ -8,9 +8,7 @@
 (doom! :completion
        (company +auto                           ; the ultimate code completion backend
                 +childframe)                    ; Better UI!
-       (ivy +icons                              ; a search engine for love and life
-            +fuzzy                              ; fuzzy matching.
-            +prescient)                         ; for sorting/filtering.
+       (vertico +icons)                         ; the search engine of the future
        )
 
 (doom! :ui

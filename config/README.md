@@ -7,9 +7,7 @@ The following folder contains several WM's tried throughout the years of my NixO
 - [Introduction](#introduction)
 - [Xmonad](#xmonad)
   - [Keybindings](#keybindings)
-- [LeftWM](#leftwm)
 - [Gnome](#gnome)
-- [Plasma](#plasma)
 - [Special Thanks](#special-thanks)
 
 # Xmonad
@@ -88,14 +86,8 @@ Definitions:
 | <kbd>modm</kbd> + <kbd>{w,e,r}</kbd>                    | Switch to physical/Xinerama screens 1, 2, or 3. |
 | <kbd>modm</kbd> + <kbd>shift</kbd> + <kbd>{w,e,r}</kbd> | Move client to screen 1, 2, or 3.               |
 
-# LeftWM
-<img alt="LeftWM Desktop" src="../assets/leftwm-desktop.png" align="center">
-
 # Gnome
 <img alt="Gnome Desktop" src="../assets/gnome-desktop.png" align="center">
-
-# KDE Plasma
-<img alt="Plasma Desktop" src="../assets/plasma-desktop.png" align="center">
 
 # Special Thanks
 - [IvanMalison](https://github.com/IvanMalison): Xmonad Setup.

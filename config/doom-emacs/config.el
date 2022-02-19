@@ -140,16 +140,8 @@
   :around #'org-superstar-mode
   (ignore-errors (apply orig-fn args)))
 
+;; Resize windows for optimal window space
 (setq window-combination-resize t)
-
-(setq evil-vsplit-window-right t
-      evil-split-window-below t)                        ; Enter new window.
-
-(defadvice! prompt-for-buffer (&rest _)
-  :after '(evil-window-split evil-window-vsplit)
-  (+ivy/switch-buffer))                                 ; Call forward ivy.
-
-(setq +ivy-buffer-preview t)                            ; Preview new buffer.
 
 (map! :map evil-window-map
       "SPC" #'rotate-layout

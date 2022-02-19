@@ -2,12 +2,8 @@
 
 with lib;
 with lib.my;
-let
-  cfg = config.modules.shell.tmux;
-  colors = config.modules.themes.colors;
+let cfg = config.modules.shell.fish;
 in {
-  options.modules.shell.tmux = { enable = mkBoolOpt false; };
-
   config = mkIf cfg.enable {
     homeManager.programs.tmux = {
       enable = true;
@@ -58,7 +54,7 @@ in {
         # --------=== Status-bar
         set -g status on
         set -g status-interval 1
-        set -g status-style fg="${colors.white}",bg="${colors.black}",bold,italics
+        set -g status-style fg="colour7",bg="colour0",bold,italics
 
         set -g status-position top
         set -g status-justify left
@@ -67,25 +63,25 @@ in {
         set -g status-right-length "80"
 
         # Messages
-        set -g message-style fg="${colors.black}",bg="${colors.magenta}",align="centre"
-        set -g message-command-style fg="${colors.black}",bg="${colors.magenta}",align="centre"
+        set -g message-style fg=colour0,bg=colour5,align="centre"
+        set -g message-command-style fg=colour0,bg=colour5,align="centre"
 
         # Panes
-        set -g pane-border-style fg="${colors.white}"
-        set -g pane-active-border-style fg="${colors.blue}"
+        set -g pane-border-style fg=colour7
+        set -g pane-active-border-style fg=colour4
 
         # Windows
-        set -g window-status-format "#[fg="${colors.white}"] #W/#{window_panes} "
-        set -g window-status-current-format "#[fg="${colors.black}",bg="${colors.yellow}"]#{?client_prefix,#[fg="${colors.black}"],}#{?client_prefix,#[bg="${colors.magenta}"],} #W "
+        set -g window-status-format "#[fg=colour7] #W/#{window_panes} "
+        set -g window-status-current-format "#[fg=colour0,bg=colour3]#{?client_prefix,#[fg=colour0],}#{?client_prefix,#[bg=colour5],} #W "
 
         # --------=== Status-line
         set -g status-left "🦊 "
-        set -g status-bg "${colors.background}"
-        set -g status-right "#[noitalics]#(set-volume status)  #(batStat)  #[noitalics,nobold]| %b %d, %H:%M:%S  #[fg="${colors.black}",bg="${colors.green}",bold,italics] #S "
+        set -g status-bg default
+        set -g status-right "#[noitalics]#(set-volume status)  #(batStat)  #[noitalics,nobold]| %b %d, %H:%M:%S  #[fg=colour0,bg=colour2,bold,italics] #S "
 
         # --------=== Modes
-        setw -g clock-mode-colour "${colors.cyan}"
-        setw -g mode-style "fg=${colors.magenta} bg=${colors.black} bold"
+        setw -g clock-mode-colour colour6
+        setw -g mode-style "fg=colour5 bg=colour0 bold"
       '';
     };
   };

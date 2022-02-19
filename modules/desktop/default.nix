@@ -18,7 +18,41 @@ in {
       }
     ];
 
-    user.packages = with pkgs; [ bitwarden qalculate-gtk ];
+    user.packages = with pkgs; [
+      bitwarden
+      libqalculate
+      (makeDesktopItem {
+        name = "scratch-calc";
+        desktopName = "Calculator";
+        icon = "calc";
+        exec = ''scratch "${tmux}/bin/tmux new-session -s calc -n calc qalc"'';
+        categories = "Development";
+      })
+      qgnomeplatform
+      libsForQt5.qtstyleplugin-kvantum
+    ];
+
+    modules.desktop.appliances.termIce = {
+      colorPanes.enable = true;
+      htop.enable = true;
+      neofetch.enable = true;
+    };
+
+    fonts = {
+      fontDir.enable = true;
+      enableGhostscriptFonts = true;
+      fonts = with pkgs; [ noto-fonts noto-fonts-emoji source-code-pro ];
+    };
+
+    # Try really hard to get QT to respect my GTK theme.
+    env.GTK_DATA_PREFIX = [ "${config.system.path}" ];
+    env.QT_QPA_PLATFORMTHEME = "gnome";
+    env.QT_STYLE_OVERRIDE = "kvantum";
+
+    services.xserver.displayManager.sessionCommands = ''
+      # GTK2_RC_FILES must be available to the display manager.
+      export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
+    '';
 
     # Take care of the garbage:
     system.userActivationScripts.cleanupHome = ''

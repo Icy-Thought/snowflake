@@ -1,0 +1,42 @@
+{ colors, font, ... }: ''
+
+  adjust-open             "width"
+  first-page-column       "1:1"
+  window-title-basename   true
+  selection-clipboard     "clipboard"
+  font                    "${font.sans.family} ${font.sans.style} ${toString (font.sans.size)}"
+
+  # Colors:
+  default-fg              "${colors.types.fg}"
+  default-bg              "${colors.types.bg}"
+
+  statusbar-fg            "${colors.white}"
+  statusbar-bg            "${colors.types.panelbg}"
+
+  inputbar-fg             "${colors.yellow}"
+  inputbar-bg             "${colors.types.bg}"
+
+  notification-fg         "${colors.white}"
+  notification-bg         "${colors.black}"
+
+  notification-error-fg   "${colors.white}"
+  notification-error-bg   "${colors.black}"
+
+  notification-warning-fg "${colors.red}"
+  notification-warning-bg "${colors.black}"
+
+  highlight-active-color  "${colors.types.fg}"
+  highlight-color         "${colors.types.highlight}"
+
+  completion-fg           "${colors.yellow}"
+  completion-bg           "${colors.types.panelbg}"
+
+  completion-highlight-fg "${colors.types.panelbg}"
+  completion-highlight-bg "${colors.yellow}"
+
+  recolor-lightcolor      "${colors.types.panelbg}"
+  recolor-darkcolor       "${colors.white}"
+
+  recolor                 "true"
+  recolor-keephue         "true"
+''

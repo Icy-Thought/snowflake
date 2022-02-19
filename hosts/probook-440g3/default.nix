@@ -18,59 +18,35 @@
     };
   };
 
-  modules.desktop = {
-    envDisplay.sddm.enable = true;
-    envManager.plasma.enable = true;
-
-    inputMF = { spellCheck.enable = true; };
-  };
-
   modules.themes = { active = "one-dark"; };
 
-  modules.fonts = {
-    minimal.enable = true;
+  modules.desktop = {
+    gnome.enable = true;
 
-    settings = {
-      family = "Noto Sans";
-      monospace = "Noto Sans Mono";
-      style = "Regular";
-      size = 10;
-    };
-  };
-
-  modules.appliances = {
-    termEmu = {
-      default = "alacritty";
-      alacritty.enable = true;
-    };
-
-    termUI = {
-      htop.enable = true;
-      neofetch.enable = true;
-      printTermColor.enable = true;
-    };
-
-    editors = {
-      default = "emacs";
-      emacs.enable = true;
-      # nvim.enable = true;
-    };
-
-    browsers = {
-      default = "firefox";
-      firefox.enable = true;
-      unGoogled.enable = true;
-    };
-
-    extras = {
-      chat.enable = true;
-      docViewer.enable = true;
-    };
-
-    media = {
-      mpv.enable = true;
-      spotify.enable = true;
-      # graphics.enable = true;
+    appliances = {
+      termEmu = {
+        default = "alacritty";
+        alacritty.enable = true;
+      };
+      editors = {
+        default = "emacs";
+        emacs.enable = true;
+        # nvim.enable = true;
+      };
+      browsers = {
+        default = "firefox";
+        firefox.enable = true;
+        unGoogled.enable = true;
+      };
+      extras = {
+        chat.enable = true;
+        docViewer.enable = true;
+      };
+      media = {
+        mpv.enable = true;
+        spotify.enable = true;
+        # graphics.enable = true;
+      };
     };
   };
 
@@ -82,7 +58,6 @@
   modules.shell = {
     git.enable = true;
     fish.enable = true;
-    tmux.enable = true;
     gnupg.enable = true;
     direnv.enable = true;
   };

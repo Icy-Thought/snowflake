@@ -11,13 +11,13 @@
   - [[#personal-info][Personal Info]]
   - [[#appearance][Appearance]]
   - [[#behaviour][Behaviour]]
-  - [[#window][Window]]
+  - [[#window-general][Window (General)]]
   - [[#key-mapping][Key-Mapping]]
   - [[#company-mode][Company Mode]]
   - [[#language-server][Language Server]]
   - [[#org-mode][Org-Mode]]
   - [[#which-key][Which-Key]]
-  - [[#automatically-tangle-on-save][Automatically "Tangle" on Save]]
+  - [[#tangle-on-save-disabled][Tangle on Save (Disabled)]]
 - [[#initel][Init.el]]
   - [[#doomdir-1][DOOMDIR]]
   - [[#structure][Structure]]
@@ -61,9 +61,6 @@
       doom-variable-pitch-font (font-spec :family "VictorMono Nerd Font" :size 12.0 :weight 'SemiBold)
       doom-theme 'doom-horizon)
 #+end_src
-
-#+RESULTS:
-: doom-horizon
 
 **** FIX: Broken Emacsclient Theme
 #+begin_src emacs-lisp
@@ -312,22 +309,10 @@ When one of the org-mode-hook functions errors -> halts the hook execution.
   (ignore-errors (apply orig-fn args)))
 #+end_src
 
-** Window
-*** Resize all Windows for Optimal Window Space
+** Window (General)
 #+begin_src emacs-lisp
+;; Resize windows for optimal window space
 (setq window-combination-resize t)
-#+end_src
-
-*** Shift Focus to New Window Split
-#+begin_src emacs-lisp
-(setq evil-vsplit-window-right t
-      evil-split-window-below t)                        ; Enter new window.
-
-(defadvice! prompt-for-buffer (&rest _)
-  :after '(evil-window-split evil-window-vsplit)
-  (+ivy/switch-buffer))                                 ; Call forward ivy.
-
-(setq +ivy-buffer-preview t)                            ; Preview new buffer.
 #+end_src
 
 ** Key-Mapping
@@ -576,7 +561,7 @@ Allow org-download-screenshot to work with ~shotgun~ + ~hacksaw~:
 (setq which-key-idle-delay 0.5)
 #+end_src
 
-** Automatically "Tangle" on Save
+** Tangle on Save (Disabled)
 Since we don't want to disable org-confirm-babel-evaluate all of the time, do it around the after-save-hook:
 #+begin_src emacs-lisp :tangle no
 (defun org-babel-tangle-config ()
@@ -612,9 +597,7 @@ NOTE: Press ~K~ on a module to view its documentation, and ~gd~ to browse its di
 (doom! :completion
        (company +auto                           ; the ultimate code completion backend
                 +childframe)                    ; Better UI!
-       (ivy +icons                              ; a search engine for love and life
-            +fuzzy                              ; fuzzy matching.
-            +prescient)                         ; for sorting/filtering.
+       (vertico +icons)                         ; the search engine of the future
        )
 #+end_src
 

@@ -2,10 +2,7 @@
 
 with lib;
 with lib.my;
-let
-  cfg = config.modules.shell.fish;
-  configDir = config.snowflake.configDir;
-  palette = config.modules.themes.active;
+let cfg = config.modules.shell.fish;
 in {
   options.modules.shell.fish = { enable = mkBoolOpt false; };
 
@@ -23,11 +20,6 @@ in {
       bat
       fd
     ];
-
-    home.configFile = {
-      "fish/conf.d/${palette}.fish".source =
-        "${configDir}/fish/${palette}.fish";
-    };
 
     homeManager.programs.fish = {
       enable = true;
