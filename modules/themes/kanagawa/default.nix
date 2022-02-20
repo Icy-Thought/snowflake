@@ -75,7 +75,7 @@ in {
         mkMerge [
           {
             # Sourced from sessionCommands in modules/themes/default.nix
-            "xtheme/90-theme".source = ./config/Xresources cfg;
+            "xtheme/90-theme".text = import ./config/Xresources cfg;
             "fish/conf.d/kanagawa.fish".source = ./config/fish/kanagawa.fish;
           }
           (mkIf bspwm.enable {

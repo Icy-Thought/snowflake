@@ -75,7 +75,7 @@ in {
         mkMerge [
           {
             # Sourced from sessionCommands in modules/themes/default.nix
-            "xtheme/90-theme".source = ./config/Xresources cfg;
+            "xtheme/90-theme".text = import ./config/Xresources cfg;
             "fish/conf.d/ayu-dark.fish".source = ./config/fish/ayu-dark.fish;
           }
           (mkIf bspwm.enable {
