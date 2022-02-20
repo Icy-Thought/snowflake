@@ -54,7 +54,7 @@ in {
         # --------=== Status-bar
         set -g status on
         set -g status-interval 1
-        set -g status-style fg="colour7",bg="colour0",bold,italics
+        set -g status-style bg=default,bold,italics
 
         set -g status-position top
         set -g status-justify left
