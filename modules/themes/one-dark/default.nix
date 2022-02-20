@@ -4,13 +4,12 @@ with lib;
 with lib.my;
 let cfg = config.modules.themes;
 in {
-  config = mkIf (cfg.active == "catppuccin") (mkMerge [
+  config = mkIf (cfg.active == "one-dark") (mkMerge [
     {
       modules = {
         themes = {
           wallpaper = mkDefault ./config/wallpaper.jpg;
           gtk = {
-            # theme = "Catppuccin";
             theme = "Orchis-dark-compact";
             iconTheme = "WhiteSur-dark";
             cursor = {
@@ -24,32 +23,32 @@ in {
           };
           colors = {
             # Normal Colors:
-            black = "#6e6c7e";
-            red = "#f28fad";
-            green = "#abe9b3";
-            yellow = "#fae3b0";
-            blue = "#96cdfb";
-            magenta = "#f5c2e7";
-            cyan = "#89dceb";
-            white = "#d9e0ee";
+            black = "#1e2127";
+            red = "#e06c75";
+            green = "#98c379";
+            yellow = "#d19a66";
+            blue = "#61afef";
+            magenta = "#c678dd";
+            cyan = "#56b6c2";
+            white = "#abb2bf";
 
             # Bright Colors
-            brightBlack = "#988ba2";
-            brightRed = "#f28fad";
-            brightGreen = "#abe9b3";
-            brightYellow = "#fae3b0";
-            brightBlue = "#96cdfb";
-            brightMagenta = "#f5c2e7";
-            brightCyan = "#89dceb";
-            brightWhite = "#d9e0ee";
+            brightBlack = "#5c6370";
+            brightRed = "#e06c75";
+            brightGreen = "#98c379";
+            brightYellow = "#d19a66";
+            brightBlue = "#61afef";
+            brightMagenta = "#c678dd";
+            brightCyan = "#56b6c2";
+            brightWhite = "#ffffff";
 
             # Extra Colors:
             types = {
-              fg = "#d9e0ee";
-              bg = "#1e1d2f";
-              panelbg = "#161320";
-              border = "#abe9b3";
-              highlight = "#575268";
+              fg = "#abb2bf";
+              bg = "#1e2127";
+              panelbg = "#1e2127";
+              border = "#5c6370"; # TODO: change later..
+              highlight = "#3e4451";
             };
           };
         };
@@ -77,8 +76,7 @@ in {
           {
             # Sourced from sessionCommands in modules/themes/default.nix
             "xtheme/90-theme".source = ./config/Xresources cfg;
-            "fish/conf.d/catppuccin.fish".source =
-              ./config/fish/catppuccin.fish;
+            "fish/conf.d/one-dark.fish".source = ./config/fish/one-dark.fish;
           }
           (mkIf bspwm.enable {
             "bspwm/rc.d/00-theme".source = ./config/bspwmrc;
@@ -96,12 +94,12 @@ in {
             };
           })
           (mkIf appliances.termEmu.alacritty.enable {
-            "alacritty/config/catppuccin.yml".text =
-              import ./config/alacritty/catppuccin.yml cfg;
+            "alacritty/config/one-dark.yml".text =
+              import ./config/alacritty/one-dark.yml cfg;
           })
           (mkIf appliances.termEmu.kitty.enable {
-            "kitty/config/catppuccin.conf".text =
-              import ./config/kitty/catppuccin.conf cfg;
+            "kitty/config/one-dark.conf".text =
+              import ./config/kitty/one-dark.conf cfg;
           })
           (mkIf appliances.media.docViewer.enable {
             "zathura/zathurarc".text = import ./config/zathura/zathurarc cfg;

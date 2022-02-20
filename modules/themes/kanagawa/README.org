@@ -1,0 +1,10 @@
+#+TITLE: Kanagawa
+#+AUTHOR: Icy-Thought
+#+DATE: <2022-02-19 Sat>
+
+* Showcase
+[[./../../../assets/themes/kanagawa.png]]
+
+* Useful Links
+1. [[https://github.com/catppuccin/catppuccin][Kanagawa Repository]] (GitHub)
+2.  (Wallpaper)

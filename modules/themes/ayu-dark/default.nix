@@ -4,13 +4,12 @@ with lib;
 with lib.my;
 let cfg = config.modules.themes;
 in {
-  config = mkIf (cfg.active == "catppuccin") (mkMerge [
+  config = mkIf (cfg.active == "ayu-dark") (mkMerge [
     {
       modules = {
         themes = {
           wallpaper = mkDefault ./config/wallpaper.jpg;
           gtk = {
-            # theme = "Catppuccin";
             theme = "Orchis-dark-compact";
             iconTheme = "WhiteSur-dark";
             cursor = {
@@ -24,32 +23,32 @@ in {
           };
           colors = {
             # Normal Colors:
-            black = "#6e6c7e";
-            red = "#f28fad";
-            green = "#abe9b3";
-            yellow = "#fae3b0";
-            blue = "#96cdfb";
-            magenta = "#f5c2e7";
-            cyan = "#89dceb";
-            white = "#d9e0ee";
+            black = "#1d242c";
+            red = "#ff7733";
+            green = "#b8cc52";
+            yellow = "#ffb454";
+            blue = "#36a3d9";
+            magenta = "#ca30c7";
+            cyan = "#95e6cb";
+            white = "#c7c7c7";
 
             # Bright Colors
-            brightBlack = "#988ba2";
-            brightRed = "#f28fad";
-            brightGreen = "#abe9b3";
-            brightYellow = "#fae3b0";
-            brightBlue = "#96cdfb";
-            brightMagenta = "#f5c2e7";
-            brightCyan = "#89dceb";
-            brightWhite = "#d9e0ee";
+            brightBlack = "#686868";
+            brightRed = "#f07178";
+            brightGreen = "#cbe645";
+            brightYellow = "#ffee99";
+            brightBlue = "#6871ff";
+            brightMagenta = "#ff77ff";
+            brightCyan = "#a6fde1";
+            brightWhite = "#ffffff";
 
             # Extra Colors:
             types = {
-              fg = "#d9e0ee";
-              bg = "#1e1d2f";
-              panelbg = "#161320";
-              border = "#abe9b3";
-              highlight = "#575268";
+              fg = "#e6e1cf";
+              bg = "#0f1419";
+              panelbg = "#171b24";
+              border = "#f29718";
+              highlight = "#e6e1cf";
             };
           };
         };
@@ -77,8 +76,7 @@ in {
           {
             # Sourced from sessionCommands in modules/themes/default.nix
             "xtheme/90-theme".source = ./config/Xresources cfg;
-            "fish/conf.d/catppuccin.fish".source =
-              ./config/fish/catppuccin.fish;
+            "fish/conf.d/ayu-dark.fish".source = ./config/fish/ayu-dark.fish;
           }
           (mkIf bspwm.enable {
             "bspwm/rc.d/00-theme".source = ./config/bspwmrc;
@@ -96,12 +94,12 @@ in {
             };
           })
           (mkIf appliances.termEmu.alacritty.enable {
-            "alacritty/config/catppuccin.yml".text =
-              import ./config/alacritty/catppuccin.yml cfg;
+            "alacritty/config/ayu-dark.yml".text =
+              import ./config/alacritty/ayu-dark.yml cfg;
           })
           (mkIf appliances.termEmu.kitty.enable {
-            "kitty/config/catppuccin.conf".text =
-              import ./config/kitty/catppuccin.conf cfg;
+            "kitty/config/ayu-dark.conf".text =
+              import ./config/kitty/ayu-dark.conf cfg;
           })
           (mkIf appliances.media.docViewer.enable {
             "zathura/zathurarc".text = import ./config/zathura/zathurarc cfg;

@@ -5,7 +5,6 @@ with lib.my;
 let
   cfg = config.modules.desktop.xmonad;
   configDir = config.snowflake.configDir;
-  activeT = config.modules.themes.active;
 in {
   options.modules.desktop.xmonad = { enable = mkBoolOpt false; };
 
@@ -29,9 +28,6 @@ in {
         defaultSession = "none+xmonad";
         sddm.enable = true;
         sddm.settings = { General.InputMethod = ""; };
-        sessionCommands = ''
-          ${pkgs.xorg.xsetroot}/bin/xsetroot -cursor_name left_ptr
-        '';
       };
 
       windowManager.session = [{

@@ -28,6 +28,7 @@ in {
       theme = mkOpt str "";
       iconTheme = mkOpt str "";
       cursor = {
+        default = mkOpt str "left_ptr";
         name = mkOpt str "";
         size = mkOpt int "";
       };

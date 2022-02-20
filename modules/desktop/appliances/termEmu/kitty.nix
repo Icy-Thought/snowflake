@@ -5,7 +5,7 @@ with lib.my;
 let
   cfg = config.modules.desktop.appliances.termEmu.kitty;
   configDir = config.snowflake.configDir;
-  activeT = config.modules.themes.active;
+  acs = config.modules.themes.active;
 in {
   options.modules.desktop.appliances.termEmu.kitty = with types; {
     enable = mkBoolOpt false;
@@ -16,8 +16,8 @@ in {
 
     home.configFile."kitty/kitty.conf" = {
       text = ''
-        ${optionalString (activeT != null) ''
-          include ~/.config/kitty/config/${activeT}.conf
+        ${optionalString (acs != null) ''
+          include ~/.config/kitty/config/${acs}.conf
         ''}
 
         # Xterm

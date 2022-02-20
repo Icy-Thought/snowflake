@@ -36,10 +36,10 @@ in {
         end
 
         # Tmux on terminal start
-        if status is-interactive
-        and not set -q TMUX
-            exec tmux
-        end
+        # if status is-interactive
+        # and not set -q TMUX
+        #     exec tmux
+        # end
 
         # Colored man-pages
         set -xU LESS_TERMCAP_md (printf "\e[01;31m")

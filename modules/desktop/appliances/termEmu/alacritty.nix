@@ -5,7 +5,7 @@ with lib.my;
 let
   cfg = config.modules.desktop.appliances.termEmu.alacritty;
   configDir = config.snowflake.configDir;
-  activeT = config.modules.themes.active;
+  acs = config.modules.themes.active;
 in {
   options.modules.desktop.appliances.termEmu.alacritty = {
     enable = mkBoolOpt false;
@@ -16,9 +16,9 @@ in {
 
     home.configFile."alacritty/alacritty.yml" = {
       text = ''
-        ${optionalString (activeT != null) ''
+        ${optionalString (acs != null) ''
           import:
-            - ~/.config/alacritty/config/${activeT}.yml
+            - ~/.config/alacritty/config/${acs}.yml
         ''}
 
         env:
