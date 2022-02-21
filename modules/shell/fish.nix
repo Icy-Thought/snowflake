@@ -10,15 +10,16 @@ in {
     users.defaultUserShell = pkgs.fish;
 
     user.packages = with pkgs; [
-      exa
-      skim
-      ripgrep
-      youtube-dl
       any-nix-shell
+      bat
+      exa
+      fd
+      fzf
       pipes-rs
       pwgen
-      bat
-      fd
+      ripgrep
+      tldr
+      youtube-dl
     ];
 
     homeManager.programs.fish = {
@@ -88,22 +89,12 @@ in {
         wup = "systemctl start wg-quick-akkadianVPN.service";
         wud = "systemctl stop wg-quick-akkadianVPN.service";
 
-        # Git
-        g = "git";
-        gc = "git clone";
-        ga = "git add";
-        gaa = "git add -A";
-        gcm = "git commit -m";
-        gps = "git push";
-        gpl = "git pull";
-        gs = "git status";
-
         # NixOS
         flkup = "pushd ~/git/Icy-Thought/Snowflake ; nix flake update ; popd";
         thkup =
-          "sudo nixos-rebuild switch --flake '/etc/nixos#thinkpad-e595' --impure";
+          "pushd ~/git/Icy-Thought/Snowflake ; sudo nixos-rebuild switch --flake '.#thinkpad-e595' --impure ; popd";
         proup =
-          "sudo nixos-rebuild switch --flake '/etc/nixos#probook-440g3' --impure";
+          "pushd ~/git/Icy-Thought/Snowflake ; sudo nixos-rebuild switch --flake '.#probook-440g3' --impure ; popd";
         g2nix =
           "dconf dump / | dconf2nix > ~/git/Icy-Thought/Snowflake/config/dconf/gnome.nix";
       };
