@@ -24,6 +24,27 @@ in {
 
     homeManager.programs.fish = {
       enable = true;
+      plugins = with config.modules.shell; [
+        {
+          name = "fzf";
+          src = pkgs.fetchFromGitHub {
+            owner = "PatrickF1";
+            repo = "fzf.fish";
+            rev = "628f04bf239bc6b820c090b8c814ca3c242142d7";
+            sha256 = "EiNaEhqJbisv/gA5th2IWh4XIQ3zlGrXTpMMTaUb0Ag=";
+          };
+        }
+
+        (mkIf git.enable {
+          name = "git";
+          src = pkgs.fetchFromGitHub {
+            owner = "jhillyerd";
+            repo = "plugin-git";
+            rev = "1a0357c1f13a9c5f18a5d773e9c0c963f1ff23b6";
+            sha256 = "d1Mcn+u9aLI3PLDXth0VyoqZiO6Z6R/yL7f/RwIR0/o=";
+          };
+        })
+      ];
 
       shellInit = ''
         # General Configurations
