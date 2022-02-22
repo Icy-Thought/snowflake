@@ -14,6 +14,7 @@ in {
     environment.systemPackages = with pkgs; [
       haskellPackages.icy-xmonad
       dunst
+      libnotify
       pavucontrol
       playerctl
       gnome.nautilus

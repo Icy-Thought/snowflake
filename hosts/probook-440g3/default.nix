@@ -59,7 +59,6 @@
     git.enable = true;
     fish.enable = true;
     gnupg.enable = true;
-    direnv.enable = true;
   };
 
   # Hide device entry from file-manager:

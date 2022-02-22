@@ -82,7 +82,6 @@
     git.enable = true;
     fish.enable = true;
     gnupg.enable = true;
-    direnv.enable = true;
   };
 
   boot.kernel.sysctl."abi.vsyscall32" = 0; # League of Legends..

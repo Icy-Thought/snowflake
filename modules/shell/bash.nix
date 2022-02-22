@@ -8,19 +8,27 @@ in {
 
   config = mkIf cfg.enable (mkMerge [
     {
-      homeManager.programs.bash = {
-        enable = true;
-        historySize = 5000;
-        historyFileSize = 5000;
-        historyIgnore = [ "nvim" "neofetch" ];
+      homeManager = {
+        programs.direnv = {
+          enable = true;
+          nix-direnv.enable = true;
+          config.whitelist.prefix = [ "/home" ];
+        };
 
-        shellAliases = {
-          ls = "exa -Slhg --icons";
-          lsa = "exa -Slhga --icons";
-          temacs = "emacsclient -t";
+        programs.bash = {
+          enable = true;
+          historySize = 5000;
+          historyFileSize = 5000;
+          historyIgnore = [ "nvim" "neofetch" ];
 
-          wup = "systemctl start wg-quick-Akkadian-VPN.service";
-          wud = "systemctl stop wg-quick-Akkadian-VPN.service";
+          shellAliases = {
+            ls = "exa -Slhg --icons";
+            lsa = "exa -Slhga --icons";
+            temacs = "emacsclient -t";
+
+            wup = "systemctl start wg-quick-Akkadian-VPN.service";
+            wud = "systemctl stop wg-quick-Akkadian-VPN.service";
+          };
         };
       };
     }
