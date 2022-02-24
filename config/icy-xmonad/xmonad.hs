@@ -122,7 +122,7 @@ icyTheme = def { activeColor         = icyActive
                , inactiveColor       = icyInactive
                , inactiveBorderColor = icyInactive
                , inactiveTextColor   = icyActive
-               , fontName = "xft:VictorMono Nerd Font:style=SemiBold"
+               , fontName            = "xft:VictorMono Nerd Font:style=SemiBold"
                }
 
 icyActive = "#abe9b3"
@@ -242,14 +242,13 @@ firefoxSelector = className =? "Firefox"
 protonMailSelector = chromiumSelectorBase <&&> fmap isProtonMailTitle title
 
 virtualClasses =
-  [ (protonMailSelector  , "ProtonMail")
-  , (chromiumSelector    , "Chromium")
-  ]
+  [(protonMailSelector, "ProtonMail"), (chromiumSelector, "Chromium")]
 
 -- Commands
 chromiumCommand = "chromium"
 
-protonMailCommand = "chromium --new-window https://mail.protonmail.com/u/5/inbox"
+protonMailCommand =
+  "chromium --new-window https://mail.protonmail.com/u/5/inbox"
 
 firefoxCommand = "firefox-devedition"
 
@@ -990,100 +989,100 @@ addKeys conf@XConfig { modMask = modm } =
          , (modalt, xK_w, spawn firefoxPrvtCommand, firefoxSelector)
          ]
     ++
-    -- Window manipulation
-       [ ((modm, xK_g), myGoToWindow)
-       , ((modm, xK_b), myBringWindow)
-       , ((modm .|. shiftMask, xK_b), myReplaceWindow)
-       , ((modm .|. controlMask, xK_space), deactivateFullOr goFullscreen)
-       , ((modm, xK_m), withFocused minimizeWindow)
-       , ( (modm .|. shiftMask, xK_m)
-         , deactivateFullOr $ withLastMinimized maximizeWindowAndFocus
-         )
-       , ((modm, xK_x), addHiddenWorkspace "NSP" >> windows (W.shift "NSP"))
-       , ((modalt, xK_space), deactivateFullOr restoreOrMinimizeOtherClasses)
-       , ((modalt, xK_Return), deactivateFullAnd restoreAllMinimized)
-       , ((hyper, xK_g), gatherThisClass)
-       ,
-      -- Focus/Layout manipulation
-         ((modm, xK_e), goToNextScreenX)
-       , ((modm, xK_slash), sendMessage $ Toggle MIRROR)
-       , ( (modm, xK_backslash)
-         , cycleWorkspaceOnCurrentScreen [xK_Super_L] xK_backslash xK_slash
-         )
-       , ((modm, xK_space), deactivateFullOr $ sendMessage NextLayout)
-       , ((modm, xK_z), shiftToNextScreenX)
-       , ((modm .|. shiftMask, xK_z), shiftToEmptyNextScreen)
-       , ((modm .|. shiftMask, xK_h), shiftToEmptyAndView)
-       , ((hyper, xK_5), getWorkspaceDmenu >>= windows . SW.swapWithCurrent)
-       ,
-      -- These need to be rebound to support boringWindows
-         ((hyper, xK_e), moveTo Next emptyWS)
-       ,
-      -- Miscellaneous XMonad
-         ((hyper, xK_1), toggleFadingForActiveWindow)
-       , ((hyper .|. shiftMask, xK_1), toggleFadingForActiveWorkspace)
-       , ((hyper .|. controlMask, xK_1), toggleFadingForActiveScreen)
-       , ((hyper, xK_t), selectToggle)
-       , ((modalt, xK_4), selectLimit)
-       , ((hyper, xK_3), addWorkspacePrompt def)
-       , ((modalt, xK_3), selectWorkspace def)
-       , ((hyper .|. mod1Mask, xK_3), removeWorkspace)
-       , ((hyper .|. mod1Mask, xK_r), renameWorkspace def)
-       , ((hyper, xK_l), selectLayout)
-       ,
-      -- ScratchPads
-         ((modalt, xK_b), doScratchpad "bitwarden")
-       , ((modalt, xK_j), doScratchpad "discord")
-       , ((modalt, xK_k), doScratchpad "element")
-       , ((modalt, xK_e), doScratchpad "emacs")
-       , ((modalt, xK_m), doScratchpad "protonmail")
-       , ((modalt, xK_h), doScratchpad "htop")
-       , ((modalt, xK_s), doScratchpad "spotify")
-       , ((modalt, xK_l), doScratchpad "telegram")
-       , ((modalt, xK_t), doScratchpad "transmission")
-       , ((modalt, xK_v), doScratchpad "volume")
-       ,
-      -- Specific program spawning
-         ((modm, xK_p), spawn "rofi -show drun -show-icons")
-       , ((modm .|. shiftMask, xK_p), spawn "rofi -show run")
-       , ((hyper, xK_p), spawn "rofi-systemd")
-       -- , ((modm .|. shiftMask, xK_x), spawn "") insert lockscreen when found!
-       ,
-      -- Playerctl
-         ((modm, xK_Up), spawn "playerctl play-pause")
-       , ((modm, xK_Down), spawn "playerctl play-pause")
-       , ((modm, xK_Right), spawn "playerctl next")
-       , ((modm, xK_Left), spawn "playerctl previous")
-       ,
-      -- Volume Control
-         ((0, xF86XK_AudioRaiseVolume), spawn "set-volume up")
-       , ((0, xF86XK_AudioLowerVolume), spawn "set-volume down")
-       , ((0, xF86XK_AudioMute), spawn "set-volume toggle")
-       ,
-      -- ((hyper .|. shiftMask, xK_q), spawn "mute-activeWin"),
-      -- ((halt, xK_q), spawn "mute-activeWin only"),
-         ((0, xF86XK_AudioMicMute), spawn "set-micVol toggle")
-       ,
-      -- Brightness Control
-         ((0, xF86XK_MonBrightnessUp), spawn "set-brightness up")
-       , ((0, xF86XK_MonBrightnessDown), spawn "set-brightness down")
-       ,
-      -- Screenshot: Current Workspace
-         ((0, xK_Print), spawn "screenshot -workspace")
-       , ((controlMask, xK_Print), spawn "screenshot -copyWorkspace")
-       ,
-      -- Screenshot: Active Window
-         ((mod1Mask, xK_Print), spawn "screenshot -activeWin")
-       , ( (controlMask .|. mod1Mask, xK_Print)
-         , spawn "screenshot -copyActiveWin"
-         )
-       ,
-      -- Screenshot: Selected Area
-         ((shiftMask, xK_Print), spawn "screenshot -selection")
-       , ( (controlMask .|. shiftMask, xK_Print)
-         , spawn "screenshot -copySelection"
-         )
-       ]
+    -- Window Manipulation
+         [ ((modm, xK_g)                    , myGoToWindow)
+         , ((modm, xK_b)                    , myBringWindow)
+         , ((modm .|. shiftMask, xK_b)      , myReplaceWindow)
+         , ((modm .|. controlMask, xK_space), deactivateFullOr goFullscreen)
+         , ((modm, xK_m)                    , withFocused minimizeWindow)
+         , ( (modm .|. shiftMask, xK_m)
+           , deactivateFullOr $ withLastMinimized maximizeWindowAndFocus
+           )
+         , ((modm, xK_x), addHiddenWorkspace "NSP" >> windows (W.shift "NSP"))
+         , ((modalt, xK_space), deactivateFullOr restoreOrMinimizeOtherClasses)
+         , ((modalt, xK_Return), deactivateFullAnd restoreAllMinimized)
+         , ((hyper, xK_g)      , gatherThisClass)
+         ,
+         -- Focus/Layout Manipulation
+           ((modm, xK_e)       , goToNextScreenX)
+         , ((modm, xK_slash)   , sendMessage $ Toggle MIRROR)
+         , ( (modm, xK_backslash)
+           , cycleWorkspaceOnCurrentScreen [xK_Super_L] xK_backslash xK_slash
+           )
+         , ((modm, xK_space), deactivateFullOr $ sendMessage NextLayout)
+         , ((modm, xK_z)                 , shiftToNextScreenX)
+         , ((modm .|. shiftMask, xK_z)   , shiftToEmptyNextScreen)
+         , ((modm .|. shiftMask, xK_h)   , shiftToEmptyAndView)
+         , ((hyper, xK_5), getWorkspaceDmenu >>= windows . SW.swapWithCurrent)
+         ,
+         -- These ought to be rebound for boringWindows support
+           ((hyper, xK_e)                , moveTo Next emptyWS)
+         ,
+         -- Miscellaneous XMonad
+           ((hyper, xK_1)                , toggleFadingForActiveWindow)
+         , ((hyper .|. shiftMask, xK_1)  , toggleFadingForActiveWorkspace)
+         , ((hyper .|. controlMask, xK_1), toggleFadingForActiveScreen)
+         , ((hyper, xK_t)                , selectToggle)
+         , ((modalt, xK_4)               , selectLimit)
+         , ((hyper, xK_3)                , addWorkspacePrompt def)
+         , ((modalt, xK_3)               , selectWorkspace def)
+         , ((hyper .|. mod1Mask, xK_3)   , removeWorkspace)
+         , ((hyper .|. mod1Mask, xK_r)   , renameWorkspace def)
+         , ((hyper, xK_l)                , selectLayout)
+         ,
+         -- ScratchPad(s)
+           ((modalt, xK_b)               , doScratchpad "bitwarden")
+         , ((modalt, xK_j)               , doScratchpad "discord")
+         , ((modalt, xK_k)               , doScratchpad "element")
+         , ((modalt, xK_e)               , doScratchpad "emacs")
+         , ((modalt, xK_m)               , doScratchpad "protonmail")
+         , ((modalt, xK_h)               , doScratchpad "htop")
+         , ((modalt, xK_s)               , doScratchpad "spotify")
+         , ((modalt, xK_l)               , doScratchpad "telegram")
+         , ((modalt, xK_t)               , doScratchpad "transmission")
+         , ((modalt, xK_v)               , doScratchpad "volume")
+         ,
+         -- Specific program spawning
+           ((modm, xK_p)                 , spawn "rofi -show drun -show-icons")
+         , ((modm .|. shiftMask, xK_p)   , spawn "rofi -show run")
+         , ((hyper, xK_p)                , spawn "rofi-systemd")
+         -- , ((modm .|. shiftMask, xK_x), spawn "") insert lockscreen when found!
+         ,
+         -- Playerctl
+           ((modm, xK_Up)                , spawn "playerctl play-pause")
+         , ((modm, xK_Down)              , spawn "playerctl play-pause")
+         , ((modm, xK_Right)             , spawn "playerctl next")
+         , ((modm, xK_Left)              , spawn "playerctl previous")
+         ,
+         -- Volume Control
+           ((0, xF86XK_AudioRaiseVolume) , spawn "set-volume up")
+         , ((0, xF86XK_AudioLowerVolume) , spawn "set-volume down")
+         , ((0, xF86XK_AudioMute)        , spawn "set-volume toggle")
+         ,
+         -- , ((hyper .|. shiftMask, xK_q), spawn "mute-activeWin"),
+         -- , ((halt, xK_q), spawn "mute-activeWin only"),
+           ((0, xF86XK_AudioMicMute)     , spawn "set-micVol toggle")
+         ,
+         -- Brightness Control
+           ((0, xF86XK_MonBrightnessUp)  , spawn "set-brightness up")
+         , ((0, xF86XK_MonBrightnessDown), spawn "set-brightness down")
+         ,
+         -- Screenshot: Current Workspace
+           ((0, xK_Print)                , spawn "screenshot -workspace")
+         , ((controlMask, xK_Print)      , spawn "screenshot -copyWorkspace")
+         ,
+         -- Screenshot: Active Window
+           ((mod1Mask, xK_Print)         , spawn "screenshot -activeWin")
+         , ( (controlMask .|. mod1Mask, xK_Print)
+           , spawn "screenshot -copyActiveWin"
+           )
+         ,
+         -- Screenshot: Selected Area
+           ((shiftMask, xK_Print), spawn "screenshot -selection")
+         , ( (controlMask .|. shiftMask, xK_Print)
+           , spawn "screenshot -copySelection"
+           )
+         ]
     ++
     -- Replace moving bindings
        [ ((additionalMask .|. modm, key), windows $ function workspace)

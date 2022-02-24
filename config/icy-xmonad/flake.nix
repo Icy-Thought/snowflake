@@ -8,7 +8,7 @@
     };
 
     xmonad-contrib = {
-      url = "github:ivanmalison/xmonad-contrib";
+      url = "github:icy-thought/xmonad-contrib";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

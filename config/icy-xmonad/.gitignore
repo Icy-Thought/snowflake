@@ -1,0 +1,10 @@
+/.stack-work*
+/dist/
+/icy-xmonad
+/xmonad-x86_64-linux
+/xmonad.errors
+/xmonad.hi
+/xmonad.o
+/xmonad.state
+/prompt-history
+/.cached-stack-install-path
