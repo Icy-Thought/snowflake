@@ -2,7 +2,10 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.themes;
+let
+  cfg = config.modules.themes;
+  dsk = config.modules.desktop;
+  dapl = config.modules.desktop.appliances;
 in {
   config = mkIf (cfg.active == "catppuccin") (mkMerge [
     {
@@ -72,76 +75,64 @@ in {
       fonts.fonts = with pkgs;
         [ (nerdfonts.override { fonts = [ "VictorMono" ]; }) ];
 
-      home.configFile = with config.modules.desktop;
-        mkMerge [
-          {
-            # Sourced from sessionCommands in modules/themes/default.nix
-            "xtheme/90-theme".text = import ./config/Xresources cfg;
-            "fish/conf.d/catppuccin.fish".source =
-              ./config/fish/catppuccin.fish;
-          }
-          (mkIf bspwm.enable {
-            "bspwm/rc.d/00-theme".source = ./config/bspwmrc;
-            "bspwm/rc.d/95-polybar".source = ./config/polybar/run.sh;
-            "polybar" = {
-              source = ./config/polybar;
-              recursive = true;
-            };
-          })
-          (mkIf (xmonad.enable || bspwm.enable) {
-            "dunst/dunstrc".text = import ./config/dunst/dunstrc cfg;
-            "rofi" = {
-              source = ./config/rofi;
-              recursive = true;
-            };
-          })
-          (mkIf appliances.termEmu.alacritty.enable {
-            "alacritty/config/catppuccin.yml".text =
-              import ./config/alacritty/catppuccin.yml cfg;
-          })
-          (mkIf appliances.termEmu.kitty.enable {
-            "kitty/config/catppuccin.conf".text =
-              import ./config/kitty/catppuccin.conf cfg;
-          })
-          (mkIf appliances.media.docViewer.enable {
-            "zathura/zathurarc".text = import ./config/zathura/zathurarc cfg;
-          })
-          # (mkIf appliances.media.graphics.vector.enable {
-          #   "inkscape/templates/default.svg".source =
-          #     ./config/inkscape/default-template.svg;
-          # })
-        ];
+      home.configFile = mkMerge [
+        {
+          # Sourced from sessionCommands in modules/themes/default.nix
+          "xtheme/90-theme".text = import ./config/Xresources cfg;
+          "fish/conf.d/catppuccin.fish".source = ./config/fish/catppuccin.fish;
+        }
+        (mkIf (dsk.xmonad.enable || dsk.qtile.enable) {
+          "dunst/dunstrc".text = import ./config/dunst/dunstrc cfg;
+          "rofi" = {
+            source = ./config/rofi;
+            recursive = true;
+          };
+        })
+        (mkIf dapl.termEmu.alacritty.enable {
+          "alacritty/config/catppuccin.yml".text =
+            import ./config/alacritty/catppuccin.yml cfg;
+        })
+        (mkIf dapl.termEmu.kitty.enable {
+          "kitty/config/catppuccin.conf".text =
+            import ./config/kitty/catppuccin.conf cfg;
+        })
+        (mkIf dapl.media.docViewer.enable {
+          "zathura/zathurarc".text = import ./config/zathura/zathurarc cfg;
+        })
+        # (mkIf dapl.media.graphics.vector.enable {
+        #   "inkscape/templates/default.svg".source =
+        #     ./config/inkscape/default-template.svg;
+        # })
+      ];
     })
 
-    (mkIf (config.modules.desktop.xmonad.enable
-      || config.moudles.desktop.bspwm.enable) {
+    (mkIf (dsk.xmonad.enable || dsk.qtile.enable) {
+      services.xserver.displayManager = {
+        sessionCommands = with cfg.gtk; ''
+          ${pkgs.xorg.xsetroot}/bin/xsetroot -xcf ${pkgs.bibata-cursors}/share/icons/${cursor.name}/cursors/${cursor.default} ${
+            toString (cursor.size)
+          }
+        '';
 
-        services.xserver.displayManager = {
-          sessionCommands = with cfg.gtk; ''
-            ${pkgs.xorg.xsetroot}/bin/xsetroot -xcf ${pkgs.bibata-cursors}/share/icons/${cursor.name}/cursors/${cursor.default} ${
-              toString (cursor.size)
-            }
-          '';
+        sddm.theme = "${(pkgs.fetchFromGitHub {
+          owner = "3ximus";
+          repo = "aerial-sddm-theme";
+          rev = "2fa0a4024bab60b0ba40de274880e0c1aa6eca59";
+          sha256 = "jaGQaClD7Hk4eWh+rMX8ZtcGDzb9aCu+NX5gzJ1JXQg=";
+        })}";
+      };
 
-          sddm.theme = "${(pkgs.fetchFromGitHub {
-            owner = "3ximus";
-            repo = "aerial-sddm-theme";
-            rev = "2fa0a4024bab60b0ba40de274880e0c1aa6eca59";
-            sha256 = "jaGQaClD7Hk4eWh+rMX8ZtcGDzb9aCu+NX5gzJ1JXQg=";
-          })}";
-        };
+      environment.systemPackages = with pkgs; [
+        qt5.qtmultimedia
+        libsForQt5.qt5.qtgraphicaleffects
+      ];
 
-        environment.systemPackages = with pkgs; [
-          qt5.qtmultimedia
-          libsForQt5.qt5.qtgraphicaleffects
-        ];
-
-        home.file.".local/share/fcitx5/themes".source = pkgs.fetchFromGitHub {
-          owner = "icy-thought";
-          repo = "fcitx5-catppuccin";
-          rev = "3b699870fb2806404e305fe34a3d2541d8ed5ef5";
-          sha256 = "hOAcjgj6jDWtCGMs4Gd49sAAOsovGXm++TKU3NhZt8w=";
-        };
-      })
+      home.file.".local/share/fcitx5/themes".source = pkgs.fetchFromGitHub {
+        owner = "icy-thought";
+        repo = "fcitx5-catppuccin";
+        rev = "3b699870fb2806404e305fe34a3d2541d8ed5ef5";
+        sha256 = "hOAcjgj6jDWtCGMs4Gd49sAAOsovGXm++TKU3NhZt8w=";
+      };
+    })
   ]);
 }

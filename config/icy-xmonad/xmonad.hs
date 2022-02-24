@@ -226,12 +226,12 @@ myDmenu = DM.menuArgs "rofi" myDmenuArgs
 getWorkspaceDmenu = myDmenu (workspaces myConfig)
 
 -- Selectors
-isGmailTitle t = isInfixOf "@gmail.com" t && isInfixOf "Gmail" t
+isProtonMailTitle t = isInfixOf "@protonmail.com" t && isInfixOf "ProtonMail" t
 
 isChromiumClass = isInfixOf "Chromium"
 
 noSpecialChromiumTitles = helper <$> title
-  where helper t = not $ any ($ t) [isGmailTitle]
+  where helper t = not $ any ($ t) [isProtonMailTitle]
 
 chromiumSelectorBase = isChromiumClass <$> className
 
@@ -239,17 +239,17 @@ chromiumSelector = className =? "Chromium"
 
 firefoxSelector = className =? "Firefox"
 
-gmailSelector = chromiumSelectorBase <&&> fmap isGmailTitle title
+protonMailSelector = chromiumSelectorBase <&&> fmap isProtonMailTitle title
 
 virtualClasses =
-  [ (gmailSelector       , "Gmail")
+  [ (protonMailSelector  , "ProtonMail")
   , (chromiumSelector    , "Chromium")
   ]
 
 -- Commands
 chromiumCommand = "chromium"
 
-gmailCommand = "chromium --new-window https://mail.google.com/mail/u/0/#inbox"
+protonMailCommand = "chromium --new-window https://mail.protonmail.com/u/5/inbox"
 
 firefoxCommand = "firefox-devedition"
 
@@ -817,14 +817,21 @@ nearFullFloat = customFloating $ W.RationalRect l t w h
   t = 0.95 - h
   l = 0.95 - w
 
+termFloat = customFloating $ W.RationalRect l t w h
+ where
+  h = 0.5
+  w = 0.5
+  t = 0.55 - h
+  l = 0.55 - w
+
 scratchpads =
   [ NS "bitwarden"          bitwardenCommand    bitwardenSelector    nonFloating
+  , NS "Picture-in-Picture" ffPicCommand        ffPicSelector        defaultFloating
   , NS "discord"            discordCommand      discordSelector      nonFloating
   , NS "element"            elementCommand      elementSelector      nonFloating
   , NS "emacs"              emacsCommand        emacsSelector        nonFloating
-  , NS "gmail"              gmailCommand        gmailSelector        nonFloating
-  , NS "htop"               htopCommand         htopSelector         nonFloating
-  , NS "Picture-in-Picture" ffPicCommand        ffPicSelector        defaultFloating
+  , NS "protonmail"         protonMailCommand   protonMailSelector   nonFloating
+  , NS "qalc"               qalcCommand         qalcSelector         termFloat
   , NS "spotify"            spotifyCommand      spotifySelector      nearFullFloat
   , NS "telegram"           telegramCommand     telegramSelector     nonFloating
   , NS "transmission"       transmissionCommand transmissionSelector nearFullFloat
@@ -843,14 +850,14 @@ scratchpads =
   emacsCommand         = "emacsclient -c"
   emacsSelector        = className =? "Emacs"
 
-  htopCommand          = "alacritty --title htop -e htop"
-  htopSelector         = title =? "htop"
+  ffPicCommand         = "Picture-in-Picture"
+  ffPicSelector        = title =? "Picture-in-Picture"
+
+  qalcCommand          = "alacritty -t qalc -e qalc"
+  qalcSelector         = title =? "Qalculator"
 
   spotifyCommand       = "spotify"
   spotifySelector      = className =? "Spotify"
-
-  ffPicCommand         = "Picture-in-Picture"
-  ffPicSelector        = title =? "Picture-in-Picture"
 
   telegramCommand      = "telegram-desktop"
   telegramSelector     = className =? "TelegramDesktop"
@@ -1029,7 +1036,7 @@ addKeys conf@XConfig { modMask = modm } =
        , ((modalt, xK_j), doScratchpad "discord")
        , ((modalt, xK_k), doScratchpad "element")
        , ((modalt, xK_e), doScratchpad "emacs")
-       , ((modalt, xK_m), doScratchpad "gmail")
+       , ((modalt, xK_m), doScratchpad "protonmail")
        , ((modalt, xK_h), doScratchpad "htop")
        , ((modalt, xK_s), doScratchpad "spotify")
        , ((modalt, xK_l), doScratchpad "telegram")

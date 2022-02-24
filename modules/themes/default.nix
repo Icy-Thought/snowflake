@@ -37,7 +37,6 @@ in {
     onReload = mkOpt (attrsOf lines) { };
 
     font = {
-      # TODO Use submodules
       mono = {
         family = mkOpt str "Monospace";
         style = mkOpt str "SemiBold";
@@ -48,8 +47,6 @@ in {
         style = mkOpt str "SemiBold";
         size = mkOpt float 10.0;
       };
-      # arabic = mkOpt str "";
-      # chinese = mkOpt str "";
     };
 
     colors = {
@@ -101,13 +98,6 @@ in {
       modules.themes.onReload.xtheme = xrdb;
     })
 
-    (mkIf config.modules.desktop.bspwm.enable {
-      home.configFile."bspwm/rc.d/05-init" = {
-        text = "$XDG_CONFIG_HOME/xtheme.init";
-        executable = true;
-      };
-    })
-
     {
       home.configFile = {
         "xtheme/00-init".text = with cfg.colors; ''
@@ -130,6 +120,7 @@ in {
           #define bcyn ${brightCyan}
           #define bwht ${brightWhite}
         '';
+
         "xtheme/05-colors".text = ''
           *.foreground: fg
           *.background: bg
@@ -150,10 +141,12 @@ in {
           *.color14: bcyn
           *.color15: bwht
         '';
+
         "xtheme/05-fonts".text = with cfg.font.mono; ''
-          *.font: xft:${family}:pixelsize=${toString (size)}
-          Emacs.font: ${family}:pixelsize=${toString (size)}
+          *.font: xft:${family}:style=${style}:pixelsize=${toString (size)}
+          Emacs.font: ${family}:style=${style}:pixelsize=${toString (size)}
         '';
+
         # GTK
         "gtk-3.0/settings.ini".text = ''
           [Settings]
@@ -171,6 +164,7 @@ in {
           gtk-xft-hintstyle=hintfull
           gtk-xft-rgba=none
         '';
+
         # GTK2 global theme (widget and icon theme)
         "gtk-2.0/gtkrc".text = ''
           ${optionalString (cfg.gtk.theme != "")
@@ -179,6 +173,7 @@ in {
           ''gtk-icon-theme-name="${cfg.gtk.iconTheme}"''}
           gtk-font-name="Sans ${toString (cfg.font.sans.size)}"
         '';
+
         # QT4/5 global theme
         "Trolltech.conf".text = ''
           [Qt]

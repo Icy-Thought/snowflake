@@ -22,10 +22,10 @@ in {
       bitwarden
       libqalculate
       (makeDesktopItem {
-        name = "scratch-calc";
-        desktopName = "Calculator";
+        name = "qalc";
+        desktopName = "Qalculator";
         icon = "calc";
-        exec = ''scratch "${tmux}/bin/tmux new-session -s calc -n calc qalc"'';
+        exec = "${alacritty}/bin/alacritty -t Qalculator -e qalc";
         categories = "Development";
       })
       qgnomeplatform
@@ -41,7 +41,7 @@ in {
     fonts = {
       fontDir.enable = true;
       enableGhostscriptFonts = true;
-      fonts = with pkgs; [ noto-fonts noto-fonts-emoji source-code-pro ];
+      fonts = with pkgs; [ scheherazade-new sarasa-gothic ];
     };
 
     # Try really hard to get QT to respect my GTK theme.

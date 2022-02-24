@@ -1,9 +1,12 @@
 final: prev: {
   ungoogled-chromium = prev.ungoogled-chromium.override {
     commandLineArgs = toString [
-      # Ungoogled flags
+      # Ungoogled features
       "--disable-search-engine-collection"
       "--extension-mime-request-handling=always-prompt-for-install"
+      "--fingerprinting-canvas-image-data-noise"
+      "--fingerprinting-canvas-measuretext-noise"
+      "--fingerprinting-client-rects-noise"
       "--popups-to-tabs"
       "--show-avatar-button=incognito-and-guest"
 
@@ -18,7 +21,7 @@ final: prev: {
         ]
       }"
 
-      # Dark mode
+      # Aesthetics
       "--force-dark-mode"
 
       # Performance

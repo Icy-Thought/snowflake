@@ -13,15 +13,15 @@ in {
 
   config = mkMerge [
     (mkIf cfg.enable {
-      user.packages = with pkgs; [
-        python39
-        python39Packages.pip
-        python39Packages.ipython
-        python39Packages.black
-        python39Packages.setuptools
-        python39Packages.pylint
-        python39Packages.poetry
-      ];
+      user.packages = with pkgs;
+        [ python39 ] ++ (with python39Packages; [
+          pip
+          ipython
+          black
+          setuptools
+          pylint
+          poetry
+        ]);
 
       environment.shellAliases = {
         py = "python";

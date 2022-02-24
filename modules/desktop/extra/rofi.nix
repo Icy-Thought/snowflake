@@ -6,7 +6,7 @@ let cfg = config.modules.desktop;
 in {
   options.modules.desktop.extra.rofi = { enable = mkBoolOpt false; };
 
-  config = mkIf (cfg.xmonad.enable || cfg.bspwm.enable) {
+  config = mkIf (cfg.xmonad.enable || cfg.qtile.enable) {
     user.packages = with pkgs; [
       rofi-systemd
 

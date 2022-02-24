@@ -4,7 +4,7 @@ with lib;
 with lib.my;
 let cfg = config.modules.desktop;
 in {
-  config = mkIf (cfg.xmonad.enable || cfg.bspwm.enable) {
+  config = mkIf (cfg.xmonad.enable || cfg.qtile.enable) {
     # TODO: after wintypes merge -> homeManager.
     services.picom = {
       enable = true;

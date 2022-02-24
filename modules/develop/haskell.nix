@@ -14,17 +14,14 @@ in {
   config = mkMerge [
     (mkIf cfg.enable {
       user.packages = with pkgs;
-        [
-          (ghc.withHoogle (self:
-            with self; [
-              cabal2nix
-              cabal-install
-              hie-bios
-              hlint
-              implicit-hie
-              # stack
-            ]))
-        ];
+        [ ghc ] ++ (with haskellPackages; [
+          cabal2nix
+          cabal-install
+          # stack
+          hpack
+          hasktags
+          hoogle
+        ]);
     })
 
     (mkIf cfg.xdg.enable {

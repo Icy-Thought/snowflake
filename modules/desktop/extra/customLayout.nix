@@ -22,7 +22,7 @@ in {
       };
     '';
 
-  in mkIf (cfg.xmonad.enable || cfg.bspwm.enable) {
+  in mkIf (cfg.xmonad.enable || cfg.qtile.enable) {
     homeManager = {
       # Home-Manager (null) -> fixes fuck-up.
       home.keyboard = null;
