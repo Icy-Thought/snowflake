@@ -109,7 +109,7 @@ myConfig = def
                          <> logHook def
   , handleEventHook    = followIfNoMagicFocus
                          <> minimizeEventHook
-          -- <> restartEventHook
+                         -- <> restartEventHook
                          <> myScratchPadEventHook
   , startupHook        = myStartup
   , keys               = customKeys (const []) addKeys
@@ -821,7 +821,7 @@ termFloat = customFloating $ W.RationalRect l t w h
   h = 0.5
   w = 0.5
   t = 0.55 - h
-  l = 0.55 - w
+  l = 0.1 - w
 
 scratchpads =
   [ NS "bitwarden"          bitwardenCommand    bitwardenSelector    nonFloating
@@ -834,7 +834,6 @@ scratchpads =
   , NS "spotify"            spotifyCommand      spotifySelector      nearFullFloat
   , NS "telegram"           telegramCommand     telegramSelector     nonFloating
   , NS "transmission"       transmissionCommand transmissionSelector nearFullFloat
-  , NS "volume"             volumeCommand       volumeSelector       nonFloating
   ]
  where
   bitwardenCommand     = "bitwarden"
@@ -863,9 +862,6 @@ scratchpads =
 
   transmissionCommand  = "transmission-gtk"
   transmissionSelector = className =? "Transmission-gtk"
-
-  volumeCommand        = "pavucontrol"
-  volumeSelector       = className =? "Pavucontrol"
 
 myScratchPadManageHook = namedScratchpadManageHook scratchpads
 
@@ -989,7 +985,7 @@ addKeys conf@XConfig { modMask = modm } =
          , (modalt, xK_w, spawn firefoxPrvtCommand, firefoxSelector)
          ]
     ++
-    -- Window Manipulation
+    -- Window manipulation
          [ ((modm, xK_g)                    , myGoToWindow)
          , ((modm, xK_b)                    , myBringWindow)
          , ((modm .|. shiftMask, xK_b)      , myReplaceWindow)
@@ -1003,7 +999,7 @@ addKeys conf@XConfig { modMask = modm } =
          , ((modalt, xK_Return), deactivateFullAnd restoreAllMinimized)
          , ((hyper, xK_g)      , gatherThisClass)
          ,
-         -- Focus/Layout Manipulation
+         -- Focus/layout manipulation
            ((modm, xK_e)       , goToNextScreenX)
          , ((modm, xK_slash)   , sendMessage $ Toggle MIRROR)
          , ( (modm, xK_backslash)
@@ -1036,16 +1032,18 @@ addKeys conf@XConfig { modMask = modm } =
          , ((modalt, xK_k)               , doScratchpad "element")
          , ((modalt, xK_e)               , doScratchpad "emacs")
          , ((modalt, xK_m)               , doScratchpad "protonmail")
-         , ((modalt, xK_h)               , doScratchpad "htop")
          , ((modalt, xK_s)               , doScratchpad "spotify")
          , ((modalt, xK_l)               , doScratchpad "telegram")
          , ((modalt, xK_t)               , doScratchpad "transmission")
-         , ((modalt, xK_v)               , doScratchpad "volume")
          ,
-         -- Specific program spawning
+         -- Rofi(s)
            ((modm, xK_p)                 , spawn "rofi -show drun -show-icons")
          , ((modm .|. shiftMask, xK_p)   , spawn "rofi -show run")
          , ((hyper, xK_p)                , spawn "rofi-systemd")
+         ,
+         -- Specific program spawning
+           ((modalt, xK_h)               , spawn "alacritty -t htop -e htop")
+         , ((modalt, xK_v)               , spawn "pavucontrol")
          -- , ((modm .|. shiftMask, xK_x), spawn "") insert lockscreen when found!
          ,
          -- Playerctl
@@ -1054,30 +1052,29 @@ addKeys conf@XConfig { modMask = modm } =
          , ((modm, xK_Right)             , spawn "playerctl next")
          , ((modm, xK_Left)              , spawn "playerctl previous")
          ,
-         -- Volume Control
+         -- Volume control
            ((0, xF86XK_AudioRaiseVolume) , spawn "set-volume up")
          , ((0, xF86XK_AudioLowerVolume) , spawn "set-volume down")
          , ((0, xF86XK_AudioMute)        , spawn "set-volume toggle")
+         -- , ((hyper .|. shiftMask, xK_q), spawn "mute-activeWin")
+         -- , ((halt, xK_q), spawn "mute-activeWin only")
+         , ((0, xF86XK_AudioMicMute)     , spawn "set-micVol toggle")
          ,
-         -- , ((hyper .|. shiftMask, xK_q), spawn "mute-activeWin"),
-         -- , ((halt, xK_q), spawn "mute-activeWin only"),
-           ((0, xF86XK_AudioMicMute)     , spawn "set-micVol toggle")
-         ,
-         -- Brightness Control
+         -- Brightness control
            ((0, xF86XK_MonBrightnessUp)  , spawn "set-brightness up")
          , ((0, xF86XK_MonBrightnessDown), spawn "set-brightness down")
          ,
-         -- Screenshot: Current Workspace
+         -- (Sc) current workspace
            ((0, xK_Print)                , spawn "screenshot -workspace")
          , ((controlMask, xK_Print)      , spawn "screenshot -copyWorkspace")
          ,
-         -- Screenshot: Active Window
+         -- (Sc) active window
            ((mod1Mask, xK_Print)         , spawn "screenshot -activeWin")
          , ( (controlMask .|. mod1Mask, xK_Print)
            , spawn "screenshot -copyActiveWin"
            )
          ,
-         -- Screenshot: Selected Area
+         -- (Sc) selected area
            ((shiftMask, xK_Print), spawn "screenshot -selection")
          , ( (controlMask .|. shiftMask, xK_Print)
            , spawn "screenshot -copySelection"
