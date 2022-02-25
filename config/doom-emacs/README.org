@@ -54,12 +54,12 @@
       x-stretch-cursor t)
 #+end_src
 
-*** Doom-Theme & Font
+*** (Doom) Theme + Font
 #+begin_src emacs-lisp
-(setq doom-font (font-spec :family "VictorMono Nerd Font" :size 12.0 :weight 'SemiBold)
+(setq doom-theme 'doom-moonlight
+      doom-font (font-spec :family "VictorMono Nerd Font" :size 12.0 :weight 'SemiBold)
       doom-big-font (font-spec :family "VictorMono Nerd Font" :size 15.0 :weight 'SemiBold)
-      doom-variable-pitch-font (font-spec :family "VictorMono Nerd Font" :size 12.0 :weight 'SemiBold)
-      doom-theme 'doom-moonlight)
+      doom-variable-pitch-font (font-spec :family "VictorMono Nerd Font" :size 12.0 :weight 'SemiBold))
 #+end_src
 
 **** FIX: Broken Emacsclient Theme

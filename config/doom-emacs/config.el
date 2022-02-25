@@ -8,10 +8,10 @@
       all-the-icons-dired-monochrome nil
       x-stretch-cursor t)
 
-(setq doom-font (font-spec :family "VictorMono Nerd Font" :size 12.0 :weight 'SemiBold)
+(setq doom-theme 'doom-moonlight
+      doom-font (font-spec :family "VictorMono Nerd Font" :size 12.0 :weight 'SemiBold)
       doom-big-font (font-spec :family "VictorMono Nerd Font" :size 15.0 :weight 'SemiBold)
-      doom-variable-pitch-font (font-spec :family "VictorMono Nerd Font" :size 12.0 :weight 'SemiBold)
-      doom-theme 'doom-moonlight)
+      doom-variable-pitch-font (font-spec :family "VictorMono Nerd Font" :size 12.0 :weight 'SemiBold))
 
 (defun apply-theme ()
   (interactive)
