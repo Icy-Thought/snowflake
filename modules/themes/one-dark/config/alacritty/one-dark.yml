@@ -3,7 +3,7 @@
   font:
     normal:
       family: "${font.sans.family}"
-      style: "${font.sans.style}"
+      style: "${font.sans.weight}"
 
     bold:
       family: "${font.sans.family}"
@@ -11,11 +11,11 @@
 
     italic:
       family: "${font.sans.family}"
-      style: "Italic"
+      style: "${font.sans.weight} Italic"
 
     bold_italics:
       family: "${font.sans.family}"
-      style: "Italic"
+      style: "${font.sans.weight} Italic"
 
     size: ${toString (font.mono.size)}
 

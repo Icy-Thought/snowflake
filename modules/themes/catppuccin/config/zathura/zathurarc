@@ -4,7 +4,7 @@
   set first-page-column       "1:1"
   set window-title-basename   true
   set selection-clipboard     clipboard
-  set font                    "${font.sans.family} ${font.sans.style} ${toString (font.mono.size)}"
+  set font                    "${font.sans.family} ${font.sans.weight} ${toString (font.mono.size)}"
 
   # Colors:
   set default-fg              "${colors.types.fg}"

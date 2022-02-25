@@ -39,13 +39,13 @@ in {
     font = {
       mono = {
         family = mkOpt str "Monospace";
-        style = mkOpt str "SemiBold";
-        size = mkOpt float 13.0;
+        weight = mkOpt str "SemiBold";
+        size = mkOpt int 13;
       };
       sans = {
         family = mkOpt str "Sans";
-        style = mkOpt str "SemiBold";
-        size = mkOpt float 10.0;
+        weight = mkOpt str "SemiBold";
+        size = mkOpt int 10;
       };
     };
 
@@ -142,9 +142,9 @@ in {
           *.color15: bwht
         '';
 
-        "xtheme/05-fonts".text = with cfg.font.mono; ''
-          *.font: xft:${family}:style=${style}:pixelsize=${toString (size)}
-          Emacs.font: ${family}:style=${style}:pixelsize=${toString (size)}
+        "xtheme/05-fonts".text = with cfg.font.sans; ''
+          *.font: xft:${family}:style=${weight}:pixelsize=${toString (size)}
+          Emacs.font: ${family}:style=${weight}:pixelsize=${toString (size)}
         '';
 
         # GTK

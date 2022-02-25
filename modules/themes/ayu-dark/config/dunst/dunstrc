@@ -16,7 +16,7 @@
     frame_width = 2
     frame_color = "${colors.types.border}"
     separator_color = "frame"
-    font = "${font.sans.family} ${font.sans.style} 11"
+    font = "${font.sans.family} ${font.sans.weight} 11"
 
     sort = "yes"
     line_height = 0
