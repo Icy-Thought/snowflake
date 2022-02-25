@@ -1,6 +1,5 @@
-# General Configurations
+# General configurations
 set fish_greeting
-set -gx EDITOR nvim
 set -g fish_key_bindings fish_vi_key_bindings
 
 # Customizable fish_title
@@ -8,7 +7,7 @@ function fish_title
     echo $argv[1]
 end
 
-# Tmux on terminal start
+# Tmux on fish start
 if status is-interactive
 and not set -q TMUX
     exec tmux

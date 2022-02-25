@@ -24,6 +24,9 @@ in {
       youtube-dl
     ];
 
+    # Enables vendor completion: https://nixos.wiki/wiki/Fish
+    programs.fish.enable = true;
+
     homeManager.programs.fish = {
       enable = true;
       interactiveShellInit = ''
