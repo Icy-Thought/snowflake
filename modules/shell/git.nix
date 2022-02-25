@@ -8,12 +8,12 @@ in {
 
   config = mkIf cfg.enable {
     user.packages = with pkgs; [
+      act
+      git-filter-repo
+      gitAndTools.diff-so-fancy
       gitAndTools.gh
       gitAndTools.git-open
-      gitAndTools.diff-so-fancy
-      git-filter-repo
       (mkIf config.modules.shell.gnupg.enable gitAndTools.git-crypt)
-      act
     ];
 
     homeManager.programs.git = {
@@ -115,12 +115,9 @@ in {
         };
 
         diff = {
-          "lisp".xfuncname = ''
-            "^(((;;;+ )|\\(|([ \t]+\\(((cl-|el-patch-)?def(un|var|macro|method|custom)|gb/))).*)$"
-          '';
-          "org".xfuncname = ''
-            "^(\\*+ +.*)$"
-          '';
+          "lisp".xfuncname =
+            "^(((;;;+ )|\\(|([ 	]+\\(((cl-|el-patch-)?def(un|var|macro|method|custom)|gb/))).*)$";
+          "org".xfuncname = "^(\\*+ +.*)$";
         };
       };
     };
