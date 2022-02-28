@@ -17,11 +17,20 @@ in {
   config = mkIf cfg.enable {
     nixpkgs.overlays = [ inputs.emacs.overlay ];
 
+    homeManager.services.emacs = {
+      enable = true;
+      client.enable = true;
+    };
+
+    homeManager.programs.emacs = {
+      enable = true;
+      package = pkgs.emacsPgtkGcc;
+      extraPackages = epkgs: with epkgs; [ vterm pdf-tools emojify ];
+    };
+
     user.packages = with pkgs; [
       # Emacs Dependencies:
       binutils
-      ((emacsPackagesFor emacsPgtkGcc).emacsWithPackages
-        (epkgs: with epkgs; [ vterm pdf-tools emojify ]))
 
       # Doom Dependencies
       (ripgrep.override { withPCRE2 = true; })

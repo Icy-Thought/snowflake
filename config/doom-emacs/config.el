@@ -131,6 +131,8 @@
         "*/_region_.log"
         "*/_region_.tex"))
 
+(setq which-key-idle-delay 0.5)
+
 (setq scroll-margin 2)
 
 (setq-default delete-by-moving-to-trash t)              ; Move file tot trash when deleted.
@@ -287,7 +289,12 @@
 
 (remove-hook 'text-mode-hook #'spell-fu-mode)
 
-(setq org-download-screenshot-method "shotgun -g $(hacksaw) %s")
+(use-package! org-download
+  :after org
+  :config
+  (setq-default org-download-method 'directory
+                org-download-image-dir "~/Pictures/Screenshots"
+                org-download-screenshot-method "shotgun -g $(hacksaw) %s"))
 
 (setq org-roam-directory "~/org/roam/"
       deft-directory "~/org/roam/")
@@ -327,7 +334,62 @@
         "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
         "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
 
-(setq which-key-idle-delay 0.5)
+(defvar +literate-tangle--proc nil)
+(defvar +literate-tangle--proc-start-time nil)
+
+(defadvice! +literate-tangle-async-h ()
+  "A very simplified version of `+literate-tangle-h', but async."
+  :override #'+literate-tangle-h
+  (unless (getenv "__NOTANGLE")
+    (let ((default-directory doom-private-dir))
+      (when +literate-tangle--proc
+        (message "Killing outdated tangle process...")
+        (set-process-sentinel +literate-tangle--proc #'ignore)
+        (kill-process +literate-tangle--proc)
+        (sit-for 0.3)) ; ensure the message is seen for a bit
+      (setq +literate-tangle--proc-start-time (float-time)
+            +literate-tangle--proc
+            (start-process "tangle-config"
+                           (get-buffer-create " *tangle config*")
+                           "emacs" "--batch" "--eval"
+                           (format "(progn \
+(require 'ox) \
+(require 'ob-tangle) \
+(setq org-confirm-babel-evaluate nil \
+      org-inhibit-startup t \
+      org-mode-hook nil \
+      write-file-functions nil \
+      before-save-hook nil \
+      after-save-hook nil \
+      vc-handled-backends nil \
+      org-startup-folded nil \
+      org-startup-indented nil) \
+(org-babel-tangle-file \"%s\" \"%s\"))"
+                                   +literate-config-file
+                                   (expand-file-name (concat doom-module-config-file ".el")))))
+      (set-process-sentinel +literate-tangle--proc #'+literate-tangle--sentinel)
+      (run-at-time nil nil (lambda () (message "Tangling config.org"))) ; ensure shown after a save message
+      "Tangling config.org...")))
+
+(defun +literate-tangle--sentinel (process signal)
+  (cond
+   ((and (eq 'exit (process-status process))
+         (= 0 (process-exit-status process)))
+    (message "Tangled config.org sucessfully (took %.1fs)"
+             (- (float-time) +literate-tangle--proc-start-time))
+    (setq +literate-tangle--proc nil))
+   ((memq (process-status process) (list 'exit 'signal))
+    (+popup-buffer (get-buffer " *tangle config*"))
+    (message "Failed to tangle config.org (after %.1fs)"
+             (- (float-time) +literate-tangle--proc-start-time))
+    (setq +literate-tangle--proc nil))))
+
+(defun +literate-tangle-check-finished ()
+  (when (and (process-live-p +literate-tangle--proc)
+             (yes-or-no-p "Config is currently retangling, would you please wait a few seconds?"))
+    (switch-to-buffer " *tangle config*")
+    (signal 'quit nil)))
+(add-hook! 'kill-emacs-hook #'+literate-tangle-check-finished)
 
 (use-package pdf-view
   :hook (pdf-tools-enabled . pdf-view-themed-minor-mode)
