@@ -39,7 +39,7 @@ end
 alias exa 'exa --group-directories-first'
 
 # Abbreviations
-## OS-related
+## Sys-Management
 abbr --add --global -- bat0 'upower -i /org/freedesktop/UPower/devices/battery_BAT0'
 abbr --add --global -- flkup 'pushd ~/git/Icy-Thought/Snowflake ; nix flake update ; popd'
 abbr --add --global -- thkup 'pushd ~/git/Icy-Thought/Snowflake ; sudo nixos-rebuild switch --flake '\''.#thinkpad-e595'\'' --impure ; popd'
@@ -53,6 +53,9 @@ abbr --add --global -- tree 'exa -SlhgT --icons'
 abbr --add --global -- emc 'emacsclient -c'
 abbr --add --global -- tmc 'emacsclient -t'
 abbr --add --global -- usbStat 'watch rg -e Dirty: -e Writeback: /proc/meminfo'
+
+## Nix
+abbr --add --global -- nb 'nix-build -E \'with import <nixpkgs> {}; callPackage ./. {}\''
 
 ## Other
 abbr --add --global -- wud 'systemctl stop wg-quick-akkadianVPN.service'
