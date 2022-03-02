@@ -289,13 +289,6 @@
 
 (remove-hook 'text-mode-hook #'spell-fu-mode)
 
-(use-package! org-download
-  :after org
-  :config
-  (setq-default org-download-method 'directory
-                org-download-image-dir "~/Pictures/Screenshots"
-                org-download-screenshot-method "shotgun -g $(hacksaw) %s"))
-
 (setq org-roam-directory "~/org/roam/"
       deft-directory "~/org/roam/")
 

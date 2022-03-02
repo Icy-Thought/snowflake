@@ -499,17 +499,6 @@ Disable spell-checking by default to retain performance speed for larger files:
 (remove-hook 'text-mode-hook #'spell-fu-mode)
 #+end_src
 
-**** Screenshot (~Shotgun~)
-Allow org-download-screenshot to work with ~shotgun~ + ~hacksaw~:
-#+begin_src emacs-lisp
-(use-package! org-download
-  :after org
-  :config
-  (setq-default org-download-method 'directory
-                org-download-image-dir "~/Pictures/Screenshots"
-                org-download-screenshot-method "shotgun -g $(hacksaw) %s"))
-#+end_src
-
 *** Org-Roam
 #+begin_src emacs-lisp
 (setq org-roam-directory "~/org/roam/"
