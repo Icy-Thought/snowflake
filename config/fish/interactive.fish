@@ -56,6 +56,7 @@ abbr --add --global -- usbStat 'watch rg -e Dirty: -e Writeback: /proc/meminfo'
 
 ## Nix
 abbr --add --global -- nb 'nix-build -E \'with import <nixpkgs> {}; callPackage ./. {}\''
+abbr --add --global -- np 'nix-shell -p '
 
 ## Other
 abbr --add --global -- wud 'systemctl stop wg-quick-akkadianVPN.service'
