@@ -1,0 +1,17 @@
+#!/usr/bin/env cached-nix-shell
+#! nix-shell -i bash -p tesseract-ocr imagemagick maim
+
+# https://tesseract-ocr.github.io/tessdoc/Data-Files-in-different-versions.html
+select tesseract_lang in eng swe ara chi_sim equ ;do break;done
+
+SCR_IMG=`mktemp`
+trap "rm $SCR_IMG*" EXIT
+
+# increase image quality (-q) from 75 -> 100
+main -s $SCR_IMG.png -q 100
+
+# Should increase detection rate
+mogrify -modulate 100,0 -resize 400% $SCR_IMG.png
+
+tesseract $SCR_IMG.png $SCR_IMG &> /dev/null
+cat $SCR_IMG.txt | xlip -selection clipboard

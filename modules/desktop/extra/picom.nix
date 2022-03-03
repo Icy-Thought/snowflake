@@ -49,7 +49,7 @@ in {
         "window_type = 'utility'"
         "_COMPTON_SHADOW@:32c = 0"
         "class_g = 'Rofi'"
-        "name = 'hacksaw'"
+        "class_g = 'slop'" # Maim
       ];
 
       settings = {

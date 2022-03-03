@@ -1,0 +1,46 @@
+#!/usr/bin/env cached-nix-shell
+#! nix-shell -i bash -p maim slop
+
+show_help() {
+    echo "Valid Options:
+        -c|--clipboard     Copies captured screenshot to clipboard
+        -w|--workspace     Capture active screen
+        -a|--active-window Capture active window
+        -r|--region        Select region to capture
+        -o|--ocr           Select region to copy text form via OCR
+    "
+}
+
+while [[ "$#" > 0 ]]; do case $1 in
+    -h|--help) show_help; exit 0;shift;;
+    -c|--clipboard) CLIPBOARD=1;shift;;
+    -w|--workspace) PARAM=''; TYPE='Workspace'; shift;;
+    -a|--active-window) PARAM="-i $(xdotool getactivewindow)"; TYPE='Active-Window'; shift;;
+    -r|--region) PARAM='-s'; TYPE='Selected-Region'; shift;;
+    -o|--ocr) OCR=1;shift;;
+    *) show_help; echo "Unknown parameter passed: $1"; exit 1; shift; shift;;
+esac; done
+
+notify() {
+    notify-send "$1: "$TYPE "$2" \
+        -t 1000 \
+        -h string:synchronous:screenshot \
+        -i "$3" \
+        -u low
+}
+
+if [ "$OCR" = 1 ]; then
+    ./ocr-region
+    notify "Copied to clipboard:" "" "$(xclip -selection clipboard)"
+else
+    DATE="$(date '+%Y-%m-%d %H:%M:%S')"
+    FILENAME="$TYPE $DATE".png
+
+    if [ "$CLIPBOARD" = 1 ]; then
+        maim $PARAM /tmp/"$FILENAME"; xclip -selection clipboard -t image/png < /tmp/"$FILENAME"
+        notify "Clipped" "($DATE)" "/tmp/$FILENAME"
+    else
+        maim $PARAM ~/Pictures/Screenshots/"$FILENAME"
+        notify "Capture" "($DATE)" "~/Pictures/Screenshots/$FILENAME"
+    fi
+fi

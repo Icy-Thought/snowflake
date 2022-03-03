@@ -77,7 +77,7 @@ in {
         # --------=== Status-line
         set -g status-left "🦊 "
         set -g status-bg default
-        set -g status-right "#[noitalics]#(set-volume status)  #(batStat)  #[noitalics,nobold]| %b %d, %H:%M:%S  #[fg=colour0,bg=colour2,bold,italics] #S "
+        set -g status-right "#[noitalics]#(volctl --status)  #(batstat)  #[noitalics,nobold]| %b %d, %H:%M:%S  #[fg=colour0,bg=colour2,bold,italics] #S "
 
         # --------=== Modes
         setw -g clock-mode-colour colour6

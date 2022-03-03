@@ -1,0 +1,54 @@
+#!/usr/bin/env cached-nix-shell
+#! nix-shell -i bash -p pamixer
+
+show_help() {
+    echo "Valid Options:
+        -u|--up     Increase microphone volume level
+        -d|--down   Decrease microphone volume level
+        -t|--mute   Toggle microphone mute
+        -s|--status Return current microphone level
+    "
+}
+
+while [[ "$#" > 0 ]]; do case $1 in
+    -h|--help) show_help; exit 0;shift;;
+    -u|--up) PARAM='-i'; STEP='5';shift;;
+    -d|--down) PARAM='-d'; STEP='5';shift;;
+    -t|--mute) TOGGLE=1; PARAM='-t'; STEP='';shift;;
+    -s|--status) STATUS=1;shift;;
+    *) show_help; echo "Unknown parameter passed: $1"; exit 1; shift; shift;;
+esac; done
+
+MUTE=$(pamixer --default-source --get-mute)
+MICVOL=$(pamixer --default-source --get-volume)
+
+# TODO: icon-theme icons.. nix solution = ???
+notify() {
+    if [ "$MUTE" = true ]; then
+        ICON=''
+    elif [ "$MICVOL" -lt 30 ]; then
+        ICON=''
+    elif [ "$MICVOL" -lt 70 ]; then
+        ICON=''
+    fi
+    
+    notify-send "$ICON $1" \
+        -t 500 \
+        -h string:synchronous:volume \
+        -h "int:value:$2" \
+        -i "$ICON" \
+        -u low
+}
+
+if [ "$STATUS" = 1 ]; then
+    while sleep 1; do
+        MVOL=$(pamixer --default-source --get-volume)
+        echo "$ICON${MVOL}%"
+    done
+elif [ "$MUTE" = false ] && [ "$TOGGLE" = 1 ]; then
+    pamixer --default-source $PARAM $STEP
+    notify "Muted! (0%)" "0"
+else
+    pamixer --default-source $PARAM $STEP
+    notify "MicVol: ${MICVOL}%" "${MICVOL}"
+fi

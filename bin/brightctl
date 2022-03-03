@@ -1,0 +1,52 @@
+#!/usr/bin/env cached-nix-shell
+#! nix-shell -i bash -p bc
+
+show_help() {
+    echo "Valid Options:
+        --up   Increase brightness level
+        --down Decrease brightness level
+    "
+}
+
+while [[ "$#" > 0 ]]; do case $1 in
+    -h|--help) show_help; exit 0;shift;;
+    -u|--up) PARAM='+'; OPRT='>'; STEP='0.05'; VAL='1.0';shift;;
+    -d|--down) PARAM='-'; OPRT='<'; STEP='0.05'; VAL=0.1;shift;;
+    *) show_help; echo "Unknown parameter passed: $1"; exit 1; shift; shift;;
+esac; done
+
+monitor_xpos=$(xdotool getactivewindow getwindowgeometry | grep Position | grep -o '[0-9]*,' | sed 's/,//')
+active_monitor=$(xrandr | grep -w connected | grep "+$monitor_xpos+" | head -n 1 | cut -d " " -f1)
+
+# use primary monitor as fallback
+[ -z $active_monitor ] && active_monitor=$(xrandr | grep -w 'connected primary' | head -n 1 | cut -d " " -f1)
+BRIGHT=$(stdbuf -o0 xrandr --verbose | grep "^$active_monitor" -A 5 | awk '/Brightness/ { print $2; exit }')
+
+NEWBRIGHT=$(echo "$BRIGHT $PARAM $STEP" | bc)
+if [ "$(echo "$NEWBRIGHT $OPRT $VAL" | bc)" -eq 1 ]; then
+    NEWBRIGHT="$VAL"
+fi
+
+# first_monitor=$(xrandr | grep -w connected | head -n 1 | cut -d " " -f1)
+# xrandr --output "$first_monitor" --brightness "$NEWBRIGHT"
+
+xrandr --output "$active_monitor" --brightness "$NEWBRIGHT"
+
+# TODO: icon-theme icons.. nix solution = ???
+if [ "$BRIGHTNESS" -lt 30 ]; then
+    ICON=''
+elif [ "$BRIGHTNESS" -lt 70 ]; then
+    ICON=''
+elif [ "$BRIGHTNESS" -lt 100 ]; then
+    ICON=''
+else
+    ICON=''
+fi
+
+BRIGHTNESS=$(echo "$NEWBRIGHT * 100" | bc | sed 's/\.00//')
+
+notify-send "$ICON ${BRIGHTNESS}%" \
+    -t 500 \
+    -h string:synchronous:brightness \
+    -h "int:value:${BRIGHTNESS}" \
+    -u low

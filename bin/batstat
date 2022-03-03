@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+while :; do
+    BATTERY="$(cat /sys/class/power_supply/BAT0/capacity)"
+    STATE="$(upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep state | tr -d "[:space:]" | cut -c 7-)"
+    
+    # TODO: icon-theme icons.. nix solution = ???
+    if [ "$BATTERY" -lt 20 ]; then
+        ICON=""
+    elif [ "$BATTERY" -ge "20" ] && [ "$BATTERY" -lt "40" ]; then
+        ICON=""
+    elif [ "$BATTERY" -ge "40" ] && [ "$BATTERY" -lt "60" ]; then
+        ICON=""
+    elif [ "$BATTERY" -ge "60" ] && [ "$BATTERY" -lt "90" ]; then
+        ICON=""
+    elif [ "$BATTERY" -eq "100" ]; then
+        ICON=""
+    fi
+    
+    case "$bat_state" in
+      charging) BATTERY="$BATTERY%"; ICON="";;
+      *) BATTERY="${BATTERY}%";;
+    esac
+    
+    echo "$ICON $BATTERY"
+    sleep 120
+done

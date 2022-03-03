@@ -1053,32 +1053,28 @@ addKeys conf@XConfig { modMask = modm } =
          , ((modm, xK_Left)              , spawn "playerctl previous")
          ,
          -- Volume control
-           ((0, xF86XK_AudioRaiseVolume) , spawn "set-volume up")
-         , ((0, xF86XK_AudioLowerVolume) , spawn "set-volume down")
-         , ((0, xF86XK_AudioMute)        , spawn "set-volume toggle")
-         -- , ((hyper .|. shiftMask, xK_q), spawn "mute-activeWin")
-         -- , ((halt, xK_q), spawn "mute-activeWin only")
-         , ((0, xF86XK_AudioMicMute)     , spawn "set-micVol toggle")
+           ((0, xF86XK_AudioRaiseVolume) , spawn "volctl --up")
+         , ((0, xF86XK_AudioLowerVolume) , spawn "volctl --down")
+         , ((0, xF86XK_AudioMute)        , spawn "volctl --mute")
+         -- , ((hyper .|. shiftMask, xK_q)  , spawn "volctl --mute-active")
+         -- , ((halt, xK_q)                 , spawn "volctl --mute-active only")
+         , ((0, xF86XK_AudioMicMute)     , spawn "micvol --mute")
          ,
          -- Brightness control
-           ((0, xF86XK_MonBrightnessUp)  , spawn "set-brightness up")
-         , ((0, xF86XK_MonBrightnessDown), spawn "set-brightness down")
+           ((0, xF86XK_MonBrightnessUp)  , spawn "brightctl --up")
+         , ((0, xF86XK_MonBrightnessDown), spawn "brightctl --down")
          ,
          -- (Sc) current workspace
-           ((0, xK_Print)                , spawn "screenshot -workspace")
-         , ((controlMask, xK_Print)      , spawn "screenshot -copyWorkspace")
+           ((0, xK_Print)                , spawn "scrcap -w")
+         , ((controlMask, xK_Print)      , spawn "scrcap -c -w")
          ,
          -- (Sc) active window
-           ((mod1Mask, xK_Print)         , spawn "screenshot -activeWin")
-         , ( (controlMask .|. mod1Mask, xK_Print)
-           , spawn "screenshot -copyActiveWin"
-           )
+           ((mod1Mask, xK_Print)         , spawn "scrcap -a")
+         , ((controlMask .|. mod1Mask, xK_Print) , spawn "scrcap -c -a")
          ,
          -- (Sc) selected area
-           ((shiftMask, xK_Print), spawn "screenshot -selection")
-         , ( (controlMask .|. shiftMask, xK_Print)
-           , spawn "screenshot -copySelection"
-           )
+           ((shiftMask, xK_Print)        , spawn "scrcap -r")
+         , ((controlMask .|. shiftMask, xK_Print), spawn "scrcap -c -r")
          ]
     ++
     -- Replace moving bindings
