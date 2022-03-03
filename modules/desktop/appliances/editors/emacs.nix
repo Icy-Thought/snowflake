@@ -24,7 +24,7 @@ in {
 
     homeManager.programs.emacs = {
       enable = true;
-      package = pkgs.emacsPgtkGcc;
+      package = pkgs.emacsGcc;
       extraPackages = epkgs: with epkgs; [ vterm pdf-tools emojify ];
     };
 
