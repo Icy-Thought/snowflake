@@ -61,35 +61,12 @@
     gnupg.enable = true;
   };
 
-  # Hide device entry from file-manager:
-  fileSystems."/" = {
-    device = "/dev/disk/by-label/nixos";
-    fsType = "ext4";
-    options = [ "noatime, x-gvfs-hide" ];
-  };
-
-  fileSystems."/home" = {
-    device = "/dev/disk/by-label/home";
-    fsType = "ext4";
-    options = [ "noatime, x-gvfs-hide" ];
-  };
-
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-label/boot";
-    fsType = "vfat";
-    options = [ "x-gvfs-hide" ];
-  };
-
-  hardware = {
-    cpu.intel = { updateMicrocode = true; };
-
-    opengl.extraPackages = with pkgs; [
-      intel-compute-runtime
-      vaapiIntel
-      vaapiVdpau
-      libvdpau-va-gl
-    ];
-  };
+  hardware.opengl.extraPackages = with pkgs; [
+    intel-compute-runtime
+    vaapiIntel
+    vaapiVdpau
+    libvdpau-va-gl
+  ];
 
   services.xserver = {
     videoDrivers = [ "modesetting" ];

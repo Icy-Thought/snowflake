@@ -87,30 +87,8 @@
   boot.kernel.sysctl."abi.vsyscall32" = 0; # League of Legends..
   boot.kernelParams = [ "acpi_backlight=native" ];
 
-  # Hide HW-Devices from Nautilus:
-  fileSystems."/" = {
-    device = "/dev/disk/by-label/nixos";
-    fsType = "ext4";
-    options = [ "noatime, x-gvfs-hide" ];
-  };
-
-  fileSystems."/home" = {
-    device = "/dev/disk/by-label/home";
-    fsType = "ext4";
-    options = [ "noatime, x-gvfs-hide" ];
-  };
-
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-label/boot";
-    fsType = "vfat";
-    options = [ "x-gvfs-hide" ];
-  };
-
-  hardware = {
-    cpu.amd.updateMicrocode = true;
-    opengl.extraPackages =
-      [ pkgs.amdvlk pkgs.driversi686Linux.amdvlk pkgs.rocm-opencl-icd ];
-  };
+  hardware.opengl.extraPackages =
+    [ pkgs.amdvlk pkgs.driversi686Linux.amdvlk pkgs.rocm-opencl-icd ];
 
   systemd.services.systemd-udev-settle.enable = false;
 
