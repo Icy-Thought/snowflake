@@ -76,6 +76,7 @@ in {
           "window_type = 'dialog'"
 
           "class_g = 'Rofi'"
+          "class_g = 'slop'" # Maim
           "class_g = 'Firefox' && window_type = 'utility'"
         ];
 

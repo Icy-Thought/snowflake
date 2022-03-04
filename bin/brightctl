@@ -45,8 +45,9 @@ fi
 
 BRIGHTNESS=$(echo "$NEWBRIGHT * 100" | bc | sed 's/\.00//')
 
-notify-send "$ICON ${BRIGHTNESS}%" \
+notify-send "$ICON Brightness: ${BRIGHTNESS}%" \
     -t 500 \
     -h string:synchronous:brightness \
     -h "int:value:${BRIGHTNESS}" \
+    -i "$ICON" \
     -u low

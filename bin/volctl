@@ -14,7 +14,7 @@ while [[ "$#" > 0 ]]; do case $1 in
     -h|--help) show_help; exit 0;shift;;
     -u|--up) PARAM='-i'; STEP='5';shift;;
     -d|--down) PARAM='-d'; STEP='5';shift;;
-    -t|--mute) TOGGLE=1; PARAM='-t'; STEP='';shift;;
+    -t|--mute) TOGGLE=1; PARAM='-t';shift;;
     -s|--status) STATUS=1;shift;;
     *) show_help; echo "Unknown parameter passed: $1"; exit 1; shift; shift;;
 esac; done
@@ -22,16 +22,18 @@ esac; done
 MUTE=$(pamixer --get-mute)
 VOLUME=$(pamixer --get-volume)
 
-# TODO: icon-theme icons.. nix solution = ???
-if [ "$MUTE" = true ]; then
-    ICON=''
-elif [ "$VOLUME" -lt 30 ]; then
-    ICON='奔'
-elif [ "$VOLUME" -lt 70 ]; then
-    ICON='墳'
-fi
-
 notify() {
+    # TODO: icon-theme icons.. nix solution = ???
+    if [[ "$VOLUME" -ge "0" && "$VOLUME" -lt "30" ]]; then
+        ICON=""
+    elif [[ "$VOLUME" -ge "30" && "$VOLUME" -lt "60" ]]; then
+        ICON="奔"
+    elif [[ "$VOLUME" -ge "60" && "$VOLUME" -lt "90" ]]; then
+        ICON="墳"
+    elif [[ "$VOLUME" -ge "90" && "$VOLUME" -le "100" ]]; then
+        ICON="墳"
+    fi
+
     notify-send "$ICON $1" \
         -t 500 \
         -h string:synchronous:volume \
@@ -46,9 +48,10 @@ if [ "$STATUS" = 1 ]; then
         echo "$ICON${VOL}%"
     done
 elif [ "$MUTE" = false ] && [ "$TOGGLE" = 1 ]; then
-    pamixer $PARAM $STEP
+    pamixer $PARAM
     notify "Muted! (0%)" "0"
 else
     pamixer $PARAM $STEP
+    VOLUME=$(pamixer --get-volume)
     notify "Volume: ${VOLUME}%" "${VOLUME}"
 fi

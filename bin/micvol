@@ -14,7 +14,7 @@ while [[ "$#" > 0 ]]; do case $1 in
     -h|--help) show_help; exit 0;shift;;
     -u|--up) PARAM='-i'; STEP='5';shift;;
     -d|--down) PARAM='-d'; STEP='5';shift;;
-    -t|--mute) TOGGLE=1; PARAM='-t'; STEP='';shift;;
+    -t|--mute) TOGGLE=1; PARAM='-t';shift;;
     -s|--status) STATUS=1;shift;;
     *) show_help; echo "Unknown parameter passed: $1"; exit 1; shift; shift;;
 esac; done
@@ -24,14 +24,16 @@ MICVOL=$(pamixer --default-source --get-volume)
 
 # TODO: icon-theme icons.. nix solution = ???
 notify() {
-    if [ "$MUTE" = true ]; then
+    if [[ "$MICVOL" -ge "0" && "$MICVOL" -lt "30" ]]; then
         ICON=''
-    elif [ "$MICVOL" -lt 30 ]; then
+    elif [[ "$MICVOL" -ge "30" && "$MICVOL" -lt "60" ]]; then
         ICON=''
-    elif [ "$MICVOL" -lt 70 ]; then
+    elif [[ "$MICVOL" -ge "60" && "$MICVOL" -lt "90" ]]; then
+        ICON=""
+    elif [[ "$MICVOL" -ge "90" && "$MICVOL" -le "100" ]]; then
         ICON=''
     fi
-    
+
     notify-send "$ICON $1" \
         -t 500 \
         -h string:synchronous:volume \
@@ -46,9 +48,10 @@ if [ "$STATUS" = 1 ]; then
         echo "$ICON${MVOL}%"
     done
 elif [ "$MUTE" = false ] && [ "$TOGGLE" = 1 ]; then
-    pamixer --default-source $PARAM $STEP
+    pamixer --default-source $PARAM
     notify "Muted! (0%)" "0"
 else
     pamixer --default-source $PARAM $STEP
+    MICVOL=$(pamixer --default-source --get-volume)
     notify "MicVol: ${MICVOL}%" "${MICVOL}"
 fi
