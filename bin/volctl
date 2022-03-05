@@ -23,22 +23,20 @@ MUTE=$(pamixer --get-mute)
 VOLUME=$(pamixer --get-volume)
 
 notify() {
-    # TODO: icon-theme icons.. nix solution = ???
-    if [[ "$VOLUME" -ge "0" && "$VOLUME" -lt "30" ]]; then
-        ICON=""
-    elif [[ "$VOLUME" -ge "30" && "$VOLUME" -lt "60" ]]; then
-        ICON="奔"
-    elif [[ "$VOLUME" -ge "60" && "$VOLUME" -lt "90" ]]; then
-        ICON="墳"
-    elif [[ "$VOLUME" -ge "90" && "$VOLUME" -le "100" ]]; then
-        ICON="墳"
+    if [[ "$MUTE" = false && "$TOGGLE" = 1 ]]; then
+        ICON='婢'
+    elif (( "$VOLUME" >= 0 && "$VOLUME" < 30 )); then
+        ICON=''
+    elif (( "$VOLUME" >= 30 && "$VOLUME" < 70 )); then
+        ICON='墳'
+    elif (( "$VOLUME" >= 70 )); then
+        ICON=''
     fi
 
     notify-send "$ICON $1" \
         -t 500 \
         -h string:synchronous:volume \
         -h "int:value:$2" \
-        -i "$ICON" \
         -u low
 }
 
@@ -49,7 +47,10 @@ if [ "$STATUS" = 1 ]; then
     done
 elif [ "$MUTE" = false ] && [ "$TOGGLE" = 1 ]; then
     pamixer $PARAM
-    notify "Muted! (0%)" "0"
+    notify 'Muted! (0%)' '0'
+elif [ "$MUTE" = true ] || [ "$TOGGLE" = 0 ]; then
+    pamixer -t
+    notify "Volume: ${VOLUME}%" "${VOLUME}"
 else
     pamixer $PARAM $STEP
     VOLUME=$(pamixer --get-volume)

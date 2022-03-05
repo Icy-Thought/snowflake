@@ -32,22 +32,19 @@ fi
 
 xrandr --output "$active_monitor" --brightness "$NEWBRIGHT"
 
-# TODO: icon-theme icons.. nix solution = ???
-if [ "$BRIGHTNESS" -lt 30 ]; then
-    ICON=''
-elif [ "$BRIGHTNESS" -lt 70 ]; then
-    ICON=''
-elif [ "$BRIGHTNESS" -lt 100 ]; then
-    ICON=''
-else
-    ICON=''
-fi
+notify() {
+    BRIGHTNESS=$(echo "$NEWBRIGHT * 100" | bc | sed 's/\.00//')
+    if [[ "$PARAM" = '+' ]]; then
+        ICON=' '
+    else
+        ICON=' '
+    fi
+    
+    notify-send "$ICON Brightness: ${BRIGHTNESS}%" \
+        -t 500 \
+        -h string:synchronous:brightness \
+        -h "int:value:${BRIGHTNESS}" \
+        -u low
+}
 
-BRIGHTNESS=$(echo "$NEWBRIGHT * 100" | bc | sed 's/\.00//')
-
-notify-send "$ICON Brightness: ${BRIGHTNESS}%" \
-    -t 500 \
-    -h string:synchronous:brightness \
-    -h "int:value:${BRIGHTNESS}" \
-    -i "$ICON" \
-    -u low
+notify

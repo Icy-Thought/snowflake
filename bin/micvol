@@ -22,23 +22,17 @@ esac; done
 MUTE=$(pamixer --default-source --get-mute)
 MICVOL=$(pamixer --default-source --get-volume)
 
-# TODO: icon-theme icons.. nix solution = ???
 notify() {
-    if [[ "$MICVOL" -ge "0" && "$MICVOL" -lt "30" ]]; then
-        ICON=''
-    elif [[ "$MICVOL" -ge "30" && "$MICVOL" -lt "60" ]]; then
-        ICON=''
-    elif [[ "$MICVOL" -ge "60" && "$MICVOL" -lt "90" ]]; then
-        ICON=""
-    elif [[ "$MICVOL" -ge "90" && "$MICVOL" -le "100" ]]; then
-        ICON=''
+    if [ "$MUTE" = false ] && [ "$TOGGLE" = 1 ]; then
+        ICON=''
+    else 
+        ICON=''
     fi
 
     notify-send "$ICON $1" \
         -t 500 \
         -h string:synchronous:volume \
         -h "int:value:$2" \
-        -i "$ICON" \
         -u low
 }
 
@@ -49,7 +43,10 @@ if [ "$STATUS" = 1 ]; then
     done
 elif [ "$MUTE" = false ] && [ "$TOGGLE" = 1 ]; then
     pamixer --default-source $PARAM
-    notify "Muted! (0%)" "0"
+    notify 'Muted! (0%)' '0'
+elif [ "$MUTE" = true ] || [ "$TOGGLE" = 0 ]; then
+    pamixer --default-source -t
+    notify "Volume: ${MICVOL}%" "${MICVOL}"
 else
     pamixer --default-source $PARAM $STEP
     MICVOL=$(pamixer --default-source --get-volume)
