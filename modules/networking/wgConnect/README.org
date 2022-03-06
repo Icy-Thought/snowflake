@@ -40,22 +40,22 @@ Henceforth I have choosen to write both a template and an example showcasing how
       }];
 
       postUp = ''
-        ${pkgs.iptables}/bin/iptables -I OUTPUT ! -o wg0 \
-          -m mark ! --mark $(${pkgs.wireguard-tools}/bin/wg show wg0 fwmark) \
+        iptables -I OUTPUT ! -o wg0 \
+          -m mark ! --mark $(wg show wg0 fwmark) \
           -m addrtype ! --dst-type LOCAL -j REJECT
 
-        ${pkgs.iptables}/bin/ip6tables -I OUTPUT ! -o wg0 \
-          -m mark ! --mark $(${pkgs.wireguard-tools}/bin/wg show wg0 fwmark) \
+        ip6tables -I OUTPUT ! -o wg0 \
+          -m mark ! --mark $(wg show wg0 fwmark) \
           -m addrtype ! --dst-type LOCAL -j REJECT
       '';
 
       preDown = ''
-        ${pkgs.iptables}/bin/iptables -D OUTPUT ! -o wg0 \
-          -m mark ! --mark $(${pkgs.wireguard-tools}/bin/wg show wg0 fwmark) \
+        iptables -D OUTPUT ! -o wg0 \
+          -m mark ! --mark $(wg show wg0 fwmark) \
           -m addrtype ! --dst-type LOCAL -j REJECT
 
-        ${pkgs.iptables}/bin/ip6tables -D OUTPUT ! -o wg0 \
-          -m mark ! --mark $(${pkgs.wireguard-tools}/bin/wg show wg0 fwmark) \
+        ip6tables -D OUTPUT ! -o wg0 \
+          -m mark ! --mark $(wg show wg0 fwmark) \
           -m addrtype ! --dst-type LOCAL -j REJECT
       '';
     };
