@@ -39,23 +39,23 @@
         firefox.enable = true;
         unGoogled.enable = true;
       };
+      philomath.aula = {
+        anki.enable = true;
+        # libre.enable = true;
+        # zoom.enable = true;
+      };
       media = {
         mpv.enable = true;
         spotify.enable = true;
         graphics.enable = true;
         docViewer.enable = true;
         transmission.enable = true;
-
         chat = {
           enable = true;
           mobile.enable = true;
         };
       };
-      philomath.aula = {
-        anki.enable = true;
-        # libre.enable = true;
-        # zoom.enable = true;
-      };
+      gaming = { steam.enable = true; };
     };
   };
 
