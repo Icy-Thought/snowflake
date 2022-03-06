@@ -2,9 +2,9 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.hardware.pipewire;
+let cfg = config.modules.hardware.audio;
 in {
-  options.modules.hardware.pipewire = {
+  options.modules.hardware.audio = {
     enable = mkBoolOpt false;
 
     lowLatency = {
@@ -28,12 +28,15 @@ in {
     qr = "${toString cfg.lowLatency.quantum}/${toString cfg.lowLatency.rate}";
   in mkIf cfg.enable (mkMerge [
     {
+      environment.systemPackages = with pkgs; [ easyeffects ];
+
+      security.rtkit.enable = true;
+
       services.pipewire = {
         enable = true;
-        pulse.enable = true;
-        jack.enable = true;
         alsa.enable = true;
         alsa.support32Bit = true;
+        pulse.enable = true;
       };
     }
 
@@ -45,7 +48,6 @@ in {
               "default.clock.min-quantum" = cfg.lowLatency.quantum;
             };
           };
-
           pipewire-pulse = {
             "context.properties" = { };
             "context.modules" = [
@@ -73,14 +75,12 @@ in {
                 };
               }
             ];
-
             "stream.properties" = {
               "node.latency" = qr;
               "resample.quality" = 1;
             };
           };
         };
-
         media-session.config.alsa-monitor = {
           rules = [{
             matches = [{ node.name = "alsa_output.*"; }];
@@ -95,6 +95,5 @@ in {
         };
       };
     })
-
   ]);
 }
