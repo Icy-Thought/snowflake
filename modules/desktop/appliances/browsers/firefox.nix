@@ -29,7 +29,7 @@ in {
         icon = "firefox";
         exec =
           "${firefox-devedition-bin}/bin/firefox-devedition --private-window";
-        categories = "Network";
+        categories = [ "Network" ];
       })
     ];
 

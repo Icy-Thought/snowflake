@@ -39,9 +39,9 @@ in {
           desktopName = "Steam";
           icon = "steam";
           exec = "steam";
-          terminal = "false";
+          terminal = false;
           mimeTypes = [ "x-scheme-handler/steam" ];
-          categories = [ "Network;FileTransfer;Game" ];
+          categories = [ "Network" "FileTransfer" "Game" ];
         })
       ];
       system.userActivationScripts.setupSteamDir = ''mkdir -p "${cfg.libDir}"'';

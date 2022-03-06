@@ -26,7 +26,7 @@ in {
         desktopName = "Qalculator";
         icon = "calc";
         exec = "${alacritty}/bin/alacritty -t Qalculator -e qalc";
-        categories = "Development";
+        categories = [ "Development" ];
       })
       qgnomeplatform
       libsForQt5.qtstyleplugin-kvantum
