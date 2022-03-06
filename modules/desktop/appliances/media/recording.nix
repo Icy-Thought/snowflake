@@ -11,11 +11,21 @@ in {
   };
 
   config = mkIf cfg.enable {
+    services.pipewire.jack.enable = true;
+
     user.packages = with pkgs;
     # Audio recording + Mastering:
-      (if cfg.audio.enable then [ audacity ] else [ ]) ++
+      (if cfg.audio.enable then [
+        unstable.audacity-gtk3
+        unstable.helvum
+      ] else
+        [ ]) ++
 
       # Streaming + Screen-recodring:
-      (if cfg.video.enable then [ obs-studio handbrake ] else [ ]);
+      (if cfg.video.enable then [
+        unstable.obs-studio
+        unstable.handbrake
+      ] else
+        [ ]);
   };
 }

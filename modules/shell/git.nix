@@ -12,6 +12,7 @@ in {
       git-filter-repo
       gitAndTools.diff-so-fancy
       gitAndTools.gh
+      gitAndTools.git-annex
       gitAndTools.git-open
       (mkIf config.modules.shell.gnupg.enable gitAndTools.git-crypt)
     ];

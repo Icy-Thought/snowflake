@@ -7,7 +7,7 @@ in {
   options.modules.networking.wireGuard = { enable = mkBoolOpt false; };
 
   config = mkIf cfg.enable {
-    user.packages = with pkgs; [ wireguard ];
+    user.packages = with pkgs; [ wireguard-tools ];
 
     networking = {
       iproute2.enable = true;
