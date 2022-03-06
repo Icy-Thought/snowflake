@@ -22,17 +22,17 @@ esac; done
 MUTE=$(pamixer --get-mute)
 VOLUME=$(pamixer --get-volume)
 
-notify() {
-    if [[ "$MUTE" = false && "$TOGGLE" = 1 ]]; then
-        ICON='婢'
-    elif (( "$VOLUME" >= 0 && "$VOLUME" < 30 )); then
-        ICON=''
-    elif (( "$VOLUME" >= 30 && "$VOLUME" < 70 )); then
-        ICON='墳'
-    elif (( "$VOLUME" >= 70 )); then
-        ICON=''
-    fi
+if [[ "$MUTE" = false && "$TOGGLE" = 1 ]]; then
+    ICON='婢'
+elif (( "$VOLUME" >= 0 && "$VOLUME" < 30 )); then
+    ICON=''
+elif (( "$VOLUME" >= 30 && "$VOLUME" < 70 )); then
+    ICON='墳'
+elif (( "$VOLUME" >= 70 )); then
+    ICON=''
+fi
 
+notify() {
     notify-send "$ICON $1" \
         -t 500 \
         -h string:synchronous:volume \
@@ -43,7 +43,7 @@ notify() {
 if [ "$STATUS" = 1 ]; then
     while sleep 1; do
         VOL=$(pamixer --get-volume)
-        echo "$ICON${VOL}%"
+        echo "$ICON ${VOL}%"
     done
 elif [ "$MUTE" = false ] && [ "$TOGGLE" = 1 ]; then
     pamixer $PARAM

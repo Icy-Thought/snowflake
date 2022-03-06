@@ -22,13 +22,13 @@ esac; done
 MUTE=$(pamixer --default-source --get-mute)
 MICVOL=$(pamixer --default-source --get-volume)
 
-notify() {
-    if [ "$MUTE" = false ] && [ "$TOGGLE" = 1 ]; then
-        ICON=''
-    else 
-        ICON=''
-    fi
+if [ "$MUTE" = false ] && [ "$TOGGLE" = 1 ]; then
+    ICON=''
+else 
+    ICON=''
+fi
 
+notify() {
     notify-send "$ICON $1" \
         -t 500 \
         -h string:synchronous:volume \
@@ -39,14 +39,14 @@ notify() {
 if [ "$STATUS" = 1 ]; then
     while sleep 1; do
         MVOL=$(pamixer --default-source --get-volume)
-        echo "$ICON${MVOL}%"
+        echo "$ICON ${MVOL}%"
     done
 elif [ "$MUTE" = false ] && [ "$TOGGLE" = 1 ]; then
     pamixer --default-source $PARAM
     notify 'Muted! (0%)' '0'
 elif [ "$MUTE" = true ] || [ "$TOGGLE" = 0 ]; then
     pamixer --default-source -t
-    notify "Volume: ${MICVOL}%" "${MICVOL}"
+    notify "MicVol: ${MICVOL}%" "${MICVOL}"
 else
     pamixer --default-source $PARAM $STEP
     MICVOL=$(pamixer --default-source --get-volume)
