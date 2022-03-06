@@ -22,11 +22,11 @@
     },
     "emacs": {
       "locked": {
-        "lastModified": 1646499853,
-        "narHash": "sha256-SqIyQ27+5fmWHyeb+mMktRaL9kxWyApjBqelcwcDbOM=",
+        "lastModified": 1646531828,
+        "narHash": "sha256-MpYtXyxVWnWfXeuttJdoI9zb2z/W1N3q8oEc5jQpOSI=",
         "owner": "nix-community",
         "repo": "emacs-overlay",
-        "rev": "8d5080490a0018b80e394f69a5cafd104b4bb765",
+        "rev": "97e756f4391490a97c8dc920c8db5a14228f200c",
         "type": "github"
       },
       "original": {
@@ -610,11 +610,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1646447076,
-        "narHash": "sha256-iGA3OueLeVPjyFM6LjDK1wIIci1DwsLh7CUCRc1qRbA=",
+        "lastModified": 1646533330,
+        "narHash": "sha256-JwtPZekfbIwUFO5xza9sDHOxKsT5E2PFBkJxtvNOI7M=",
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "rev": "6923045c7b80aba6c81fe3eca7824a20c8724c0f",
+        "rev": "1a459694c46b984f4f55bfe4a59d874c828fb1e8",
         "type": "github"
       },
       "original": {
@@ -694,11 +694,11 @@
         "xmonad": "xmonad_2"
       },
       "locked": {
-        "lastModified": 1643226595,
-        "narHash": "sha256-QLzYgXuM9ztbQ8FzySs/sy/qUq6IzCWRE7/WkgZGLAU=",
+        "lastModified": 1646540538,
+        "narHash": "sha256-auBy8Bx3FzNuj0UTHiKjPIif9r8AWox1doPtozL8ZnU=",
         "owner": "icy-thought",
         "repo": "xmonad-contrib",
-        "rev": "f153e159c86f0ee218b095d77a8101e2a1fdaf6f",
+        "rev": "61940fa89ffc300e501acb512c6a2f832d41cac7",
         "type": "github"
       },
       "original": {
