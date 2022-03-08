@@ -13,8 +13,9 @@ in {
 
     environment.systemPackages = with pkgs; [
       haskellPackages.icy-xmonad
-      dunst
+      lightdm
       libnotify
+      dunst
       pavucontrol
       playerctl
       gnome.nautilus
@@ -27,8 +28,10 @@ in {
       enable = true;
       displayManager = {
         defaultSession = "none+xmonad";
-        sddm.enable = true;
-        sddm.settings = { General.InputMethod = ""; };
+        lightdm = {
+          enable = true;
+          greeters.mini.enable = true;
+        };
       };
 
       windowManager.session = [{

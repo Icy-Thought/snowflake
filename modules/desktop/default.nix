@@ -44,6 +44,10 @@ in {
       fonts = with pkgs; [ scheherazade-new sarasa-gothic ];
     };
 
+    # LightDM
+    services.xserver.displayManager.lightdm.greeters.mini.user =
+      config.user.name;
+
     # Try really hard to get QT to respect my GTK theme.
     env.GTK_DATA_PREFIX = [ "${config.system.path}" ];
     env.QT_QPA_PLATFORMTHEME = "gnome";

@@ -113,19 +113,16 @@ in {
           }
         '';
 
-        sddm.theme = "${(pkgs.fetchFromGitHub {
-          owner = "3ximus";
-          repo = "aerial-sddm-theme";
-          rev = "2fa0a4024bab60b0ba40de274880e0c1aa6eca59";
-          sha256 = "jaGQaClD7Hk4eWh+rMX8ZtcGDzb9aCu+NX5gzJ1JXQg=";
-        })}";
+        # LightDM: Replace with LightDM-Web-Greeter theme
+        lightdm.greeters.mini.extraConfig = ''
+          text-color = "${cfg.colors.magenta}"
+          password-background-color = "${cfg.colors.black}"
+          window-color = "${cfg.colors.types.border}"
+          border-color = "${cfg.colors.types.border}"
+        '';
       };
 
-      environment.systemPackages = with pkgs; [
-        qt5.qtmultimedia
-        libsForQt5.qt5.qtgraphicaleffects
-      ];
-
+      # Fcitx5
       home.file.".local/share/fcitx5/themes".source = pkgs.fetchFromGitHub {
         owner = "icy-thought";
         repo = "fcitx5-catppuccin";

@@ -208,10 +208,9 @@ in {
           mkIf (cfg.wallpaper != null) { "wallpaper".source = cfg.wallpaper; };
       }))
 
-    # TODO: when empty sddm theme -> background blur as bg
-    # (mkIf (cfg.loginWallpaper != null) {
-    #   services.xserver.displayManager.lightdm.background = cfg.loginWallpaper;
-    # })
+    (mkIf (cfg.loginWallpaper != null) {
+      services.xserver.displayManager.lightdm.background = cfg.loginWallpaper;
+    })
 
     (mkIf (cfg.onReload != { }) (let
       reloadTheme = with pkgs;
