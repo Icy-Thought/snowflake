@@ -22,7 +22,7 @@ while [[ "$#" > 0 ]]; do case $1 in
 esac; done
 
 notify() {
-    notify-send "$1: "$TYPE "$2" \
+    notify-send "$1 " "$TYPE $2" \
         -t 1000 \
         -h string:synchronous:screenshot \
         -i "$3" \

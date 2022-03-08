@@ -46,9 +46,9 @@ elif [ "$MUTE" = false ] && [ "$TOGGLE" = 1 ]; then
     notify 'Muted! (0%)' '0'
 elif [ "$MUTE" = true ] || [ "$TOGGLE" = 0 ]; then
     pamixer --default-source -t
-    notify "MicVol: ${MICVOL}%" "${MICVOL}"
+    notify "MicVol (${MICVOL}%)" "${MICVOL}"
 else
     pamixer --default-source $PARAM $STEP
     MICVOL=$(pamixer --default-source --get-volume)
-    notify "MicVol: ${MICVOL}%" "${MICVOL}"
+    notify "MicVol (${MICVOL}%)" "${MICVOL}"
 fi

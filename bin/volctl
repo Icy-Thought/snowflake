@@ -50,9 +50,9 @@ elif [ "$MUTE" = false ] && [ "$TOGGLE" = 1 ]; then
     notify 'Muted! (0%)' '0'
 elif [ "$MUTE" = true ] || [ "$TOGGLE" = 0 ]; then
     pamixer -t
-    notify "Volume: ${VOLUME}%" "${VOLUME}"
+    notify "Volume (${VOLUME}%)" "${VOLUME}"
 else
     pamixer $PARAM $STEP
     VOLUME=$(pamixer --get-volume)
-    notify "Volume: ${VOLUME}%" "${VOLUME}"
+    notify "Volume (${VOLUME}%)" "${VOLUME}"
 fi
