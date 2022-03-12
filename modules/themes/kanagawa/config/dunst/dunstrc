@@ -6,8 +6,8 @@
     indicate_hidden = yes
 
     # Geometry
-    width = 320
-    height = 175
+    width = 300
+    height = 200
     origin = top-right
     offset = 12+48
 
