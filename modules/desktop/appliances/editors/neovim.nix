@@ -7,7 +7,6 @@ let
   cfg = config.modules.desktop.appliances.editors.neovim;
   configDir = "${config.snowflake.configDir}/nvim/lua/user";
   lspDir = "${configDir}/lsp";
-  themesDir = "${configDir}/themes";
 in {
   options.modules.desktop.appliances.editors.neovim = {
     enable = mkBoolOpt false;
