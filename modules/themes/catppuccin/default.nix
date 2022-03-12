@@ -106,6 +106,15 @@ in {
       ];
     })
 
+    # Activate Neovim Colorscheme
+    (mkIf dapl.editors.neovim.enable {
+      homeManager.programs.neovim.plugins = with pkgs.vimPlugins; [{
+        plugin = catppuccin-nvim;
+        type = "lua";
+        config = builtins.readFile ./config/nvim/catppuccin.lua;
+      }];
+    })
+
     (mkIf (dsk.xmonad.enable || dsk.qtile.enable) {
       services.xserver.displayManager = {
         sessionCommands = with cfg.gtk; ''
