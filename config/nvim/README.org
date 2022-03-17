@@ -1,23 +1,17 @@
-#+TITLE: Welcome to NVIM! 🌒
+#+TITLE: [[../../assets/neovim.png]]
 #+DATE: <2022-03-11 Fri>
 #+AUTHOR: Icy-Thought
 
 * Table of Contents :TOC:
-- [[#introduction][Introduction]]
+- [[#greetings-from-nvim-][Greetings from NVIM! 🌒]]
 - [[#sections][Sections]]
 - [[#inspiration][Inspiration]]
 
-* Introduction
-# Insert screenshot here..
-
-A simple neovim configuration I setup by using the default listed lua-configurations in the designated plugins + minor modifications done to the settings.
-
-For the time being, it mostly consists of the default configurations for the installed plugins + modifications done by others (such as: nvimdots, lunarvim/nfs and abzcoding's lvim) placed in their respective files.
-
-I do not intend to keep the settings from other configuration files, so for now it will look like this until I bother to make it more original.
+* Greetings from NVIM! 🌒
+At the time of writing, the Neovim configuration files contained within the =lua= folder mostly consists of the recommended settings mentioned in the =README.md= of the installed plugins, while the remaining modifications belong to myself and other Neovim users. (=Ayamir's nvimdots=, =Abzcoding's lvim= & =Neovim From Scratch (LunarVim)=)
 
 * Sections
-Safety feature has been defined in Ayu theme due to it being placed first in the list. Why? Because home-manager generates *ONE* large file containing all the plugin configurations written inside ~config/nvim~ -> no need to re-define it and create a non-useful boilerplate block.
+Safety feature was added to the first configuration file that attempted to called ~local x = require('x)~ because of how Nix (Home-Manager) handles the Neovim config. To explain this, using Neovim through Home-Manager will generate *ONE* large file containing all the plugin configurations placed inside ~config/nvim~ -> omits the need to re-define it and create a non-useful boilerplate block.
 #+begin_src lua
 local function prequire(...)
     local status, lib = pcall(require, ...)
@@ -26,9 +20,8 @@ local function prequire(...)
 end
 #+end_src
 
-
 * Inspiration
-- [[https:github.com/LunarVim/Neovim-from-scratch][LunarVim/Neovim-from-scratch]]
-- [[https:github.com/abzcoding/lvim][ABZCoding/lvim]]
 - [[https:github.com/ayamir/nvimdots][Ayamir/nvimdots]]
 - [[https:github.com/NTBBloodbath/doom-nvim][NTBBloodbath/doom-nvim]]
+- [[https:github.com/abzcoding/lvim][ABZCoding/lvim]]
+- [[https:github.com/LunarVim/Neovim-from-scratch][LunarVim/Neovim-from-scratch]]
