@@ -54,7 +54,7 @@
 
 *** (Doom) Theme + Font
 #+begin_src emacs-lisp
-(setq doom-theme 'doom-moonlight
+(setq doom-theme 'doom-city-lights
       doom-font (font-spec :family "VictorMono Nerd Font" :size 12.0 :weight 'SemiBold)
       doom-big-font (font-spec :family "VictorMono Nerd Font" :size 15.0 :weight 'SemiBold)
       doom-variable-pitch-font (font-spec :family "VictorMono Nerd Font" :size 12.0 :weight 'SemiBold))
@@ -64,7 +64,7 @@
 #+begin_src emacs-lisp
 (defun apply-theme ()
   (interactive)
-  (load-theme 'doom-moonlight t))
+  (load-theme 'doom-city-lights t))
 
 (if (daemonp)
     (add-hook 'after-make-frame-functions
