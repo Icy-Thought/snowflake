@@ -21,6 +21,7 @@ in {
       gnome.nautilus
       gxmessage
       xdotool
+      xclip
       feh
     ];
 

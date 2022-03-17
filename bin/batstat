@@ -9,11 +9,11 @@ while :; do
         ICON=""
     elif [ "$BATTERY" -ge "20" ] && [ "$BATTERY" -lt "40" ]; then
         ICON=""
-    elif [ "$BATTERY" -ge "40" ] && [ "$BATTERY" -lt "60" ]; then
+    elif [ "$BATTERY" -ge "40" ] && [ "$BATTERY" -lt "65" ]; then
         ICON=""
-    elif [ "$BATTERY" -ge "60" ] && [ "$BATTERY" -lt "90" ]; then
+    elif [ "$BATTERY" -ge "65" ] && [ "$BATTERY" -lt "95" ]; then
         ICON=""
-    elif [ "$BATTERY" -eq "100" ]; then
+    else
         ICON=""
     fi
     
