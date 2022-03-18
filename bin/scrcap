@@ -37,10 +37,10 @@ else
     FILENAME="$TYPE $DATE".png
 
     if [ "$CLIPBOARD" = 1 ]; then
-        maim $PARAM /tmp/"$FILENAME"; xclip -selection clipboard -t image/png < /tmp/"$FILENAME"
+        maim -u $PARAM /tmp/"$FILENAME"; xclip -selection clipboard -t image/png < /tmp/"$FILENAME"
         notify "Clipped" "($DATE)" "/tmp/$FILENAME"
     else
-        maim $PARAM ~/Pictures/Screenshots/"$FILENAME"
+        maim -u $PARAM ~/Pictures/Screenshots/"$FILENAME"
         notify "Capture" "($DATE)" "~/Pictures/Screenshots/$FILENAME"
     fi
 fi
