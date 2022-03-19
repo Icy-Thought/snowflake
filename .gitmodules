@@ -1,0 +1,9 @@
+[submodule "config/doom-emacs/lisp/LaTeX-auto-activating-snippets"]
+	path = config/doom-emacs/lisp/LaTeX-auto-activating-snippets
+	url = https://github.com/tecosaur/LaTeX-auto-activating-snippets.git
+[submodule "config/doom-emacs/lisp/screenshot"]
+	path = config/doom-emacs/lisp/screenshot
+	url = https://github.com/tecosaur/screenshot.git
+[submodule "config/doom-emacs/lisp/org-pandoc-import"]
+	path = config/doom-emacs/lisp/org-pandoc-import
+	url = https://github.com/tecosaur/org-pandoc-import.git
