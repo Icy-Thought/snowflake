@@ -1,6 +1,5 @@
-#+TITLE: [[../../assets/doom-emacs.png]]
+#+TITLE: [[../../assets/emacs.png]]
 #+DATE:    March 20, 2022
-#+SINCE:   <replace with next tagged release version>
 #+STARTUP: inlineimages nofold
 
 * Table of Contents :TOC_3:noexport:
