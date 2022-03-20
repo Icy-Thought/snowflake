@@ -3,8 +3,8 @@
 
 show_help() {
     echo "Valid Options:
-        --up   Increase brightness level
-        --down Decrease brightness level
+        -u|--up     Increase brightness level
+        -d|--down   Decrease brightness level
     "
 }
 
@@ -14,23 +14,6 @@ while [[ "$#" > 0 ]]; do case $1 in
     -d|--down) PARAM='-'; OPRT='<'; STEP='0.05'; VAL=0.1;shift;;
     *) show_help; echo "Unknown parameter passed: $1"; exit 1; shift; shift;;
 esac; done
-
-monitor_xpos=$(xdotool getactivewindow getwindowgeometry | grep Position | grep -o '[0-9]*,' | sed 's/,//')
-active_monitor=$(xrandr | grep -w connected | grep "+$monitor_xpos+" | head -n 1 | cut -d " " -f1)
-
-# use primary monitor as fallback
-[ -z $active_monitor ] && active_monitor=$(xrandr | grep -w 'connected primary' | head -n 1 | cut -d " " -f1)
-BRIGHT=$(stdbuf -o0 xrandr --verbose | grep "^$active_monitor" -A 5 | awk '/Brightness/ { print $2; exit }')
-
-NEWBRIGHT=$(echo "$BRIGHT $PARAM $STEP" | bc)
-if [ "$(echo "$NEWBRIGHT $OPRT $VAL" | bc)" -eq 1 ]; then
-    NEWBRIGHT="$VAL"
-fi
-
-# first_monitor=$(xrandr | grep -w connected | head -n 1 | cut -d " " -f1)
-# xrandr --output "$first_monitor" --brightness "$NEWBRIGHT"
-
-xrandr --output "$active_monitor" --brightness "$NEWBRIGHT"
 
 notify() {
     BRIGHTNESS=$(echo "$NEWBRIGHT * 100" | bc | sed 's/\.00//')
@@ -47,4 +30,20 @@ notify() {
         -u low
 }
 
+monitor_xpos=$(xdotool getactivewindow getwindowgeometry | rg Position | rg -o '[0-9]*,' | sed 's/,//')
+active_monitor=$(xrandr | rg -w connected | rg "+$monitor_xpos+" | head -n 1 | cut -d " " -f1)
+
+# use primary monitor as fallback
+[ -z $active_monitor ] && active_monitor=$(xrandr | rg -w 'connected primary' | head -n 1 | cut -d " " -f1)
+BRIGHT=$(stdbuf -o0 xrandr --verbose | rg "^$active_monitor" -A 5 | awk '/Brightness/ { print $2; exit }')
+
+NEWBRIGHT=$(echo "$BRIGHT $PARAM $STEP" | bc)
+if [ "$(echo "$NEWBRIGHT $OPRT $VAL" | bc)" -eq 1 ]; then
+    NEWBRIGHT="$VAL"
+fi
+
+# first_monitor=$(xrandr | rg -w connected | head -n 1 | cut -d " " -f1)
+# xrandr --output "$first_monitor" --brightness "$NEWBRIGHT"
+
+xrandr --output "$active_monitor" --brightness "$NEWBRIGHT"
 notify
