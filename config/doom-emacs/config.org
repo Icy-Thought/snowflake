@@ -381,7 +381,7 @@ yaml                                    ; JSON, but readable.
        :weight 'semi-bold))
 #+end_src
 
-Allow /Victor Mono/ to render as expected through ~custom-set-faces~:
+Allow /Victor Mono/ to render as expected through ~set-face-attribute~:
 #+begin_src emacs-lisp
 (set-face-attribute 'font-lock-builtin-face nil
                     :slant 'italic)
