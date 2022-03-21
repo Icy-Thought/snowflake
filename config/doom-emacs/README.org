@@ -11,7 +11,7 @@
 Doom is a configuration framework for GNU Emacs tailored for Emacs bankruptcy veterans who want less framework in their frameworks, a modicum of stability (and reproducibility) from their package manager, and the performance of a hand rolled config (or better). - Hlissner, founder of Doom Emacs!
 #+end_quote
 
-This configuration has been built on top of other doom-emacs user's work, such as [[https://tecosaur.github.io/][Tecosaur]] and other inspiring doom configurations mentioned in the "Inspiration" section of this ==README=.
+This configuration has been built on top of other doom-emacs user's work, such as [[https://tecosaur.github.io/][Tecosaur]] and other inspiring doom configurations mentioned in the "Inspiration" section of this =README=.
 
 * Inspiration
 - [[https://config.daviwil.com/emacs][David Wilson]]

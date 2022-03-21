@@ -381,16 +381,13 @@ yaml                                    ; JSON, but readable.
        :weight 'semi-bold))
 #+end_src
 
-Allow /Victor Mono/ to render as expected through ~set-face-attribute~:
+Allow /Victor Mono/ to render as expected through ~custom-set-faces!~:
 #+begin_src emacs-lisp
-(set-face-attribute 'font-lock-builtin-face nil
-                    :slant 'italic)
-(set-face-attribute 'font-lock-comment-face nil
-                    :slant 'italic)
-(set-face-attribute 'font-lock-function-name-face nil
-                    :weight 'bold :slant 'italic)
-(set-face-attribute 'font-lock-keyword-face nil
-                    :slant 'italic)
+(custom-set-faces!
+  '(font-lock-builtin-face :slant italic)
+  '(font-lock-comment-face :slant italic)
+  '(font-lock-function-name-face :weight bold :slane italic)
+  '(font-lock-keyword-face :slant italic))
 #+end_src
 
 *** Theme & Modeline

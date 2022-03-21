@@ -91,14 +91,11 @@
 ;; Font-face:1 ends here
 
 ;; [[file:config.org::*Font-face][Font-face:2]]
-(set-face-attribute 'font-lock-builtin-face nil
-                    :slant 'italic)
-(set-face-attribute 'font-lock-comment-face nil
-                    :slant 'italic)
-(set-face-attribute 'font-lock-function-name-face nil
-                    :weight 'bold :slant 'italic)
-(set-face-attribute 'font-lock-keyword-face nil
-                    :slant 'italic)
+(custom-set-faces!
+  '(font-lock-builtin-face :slant italic)
+  '(font-lock-comment-face :slant italic)
+  '(font-lock-function-name-face :weight bold :slane italic)
+  '(font-lock-keyword-face :slant italic))
 ;; Font-face:2 ends here
 
 ;; [[file:config.org::*Theme & Modeline][Theme & Modeline:1]]
