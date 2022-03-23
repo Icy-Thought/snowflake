@@ -56,7 +56,9 @@ in {
       ## :lang javascript
       nodePackages.typescript-language-server
       ## :lang latex & :lang org (latex previews)
+      biber
       texlive.combined.scheme-medium
+      my.bmc-math
       ## :lang nix
       nixfmt
       rnix-lsp

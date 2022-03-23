@@ -1,17 +1,41 @@
 #+TITLE: [[../../assets/emacs.png]]
-#+DATE:    March 20, 2022
+#+DATE: March 20, 2022
 #+STARTUP: inlineimages nofold
 
 * Table of Contents :TOC_3:noexport:
 - [[#greetings-from-doom-emacs-][Greetings from Doom Emacs! 🔥]]
+- [[#installation][Installation]]
+  - [[#doom-emacs][Doom-Emacs]]
+  - [[#bmc-math][BMC (Math)]]
 - [[#inspiration][Inspiration]]
 
 * Greetings from Doom Emacs! 🔥
 #+begin_quote
-Doom is a configuration framework for GNU Emacs tailored for Emacs bankruptcy veterans who want less framework in their frameworks, a modicum of stability (and reproducibility) from their package manager, and the performance of a hand rolled config (or better). - Hlissner, founder of Doom Emacs!
+Doom is a configuration framework for GNU Emacs tailored for Emacs bankruptcy
+veterans who want less framework in their frameworks, a modicum of stability
+(and reproducibility) from their package manager, and the performance of a hand
+rolled config (or better). - Hlissner, founder of Doom Emacs!
 #+end_quote
 
-This configuration has been built on top of other doom-emacs user's work, such as [[https://tecosaur.github.io/][Tecosaur]] and other inspiring doom configurations mentioned in the "Inspiration" section of this =README=.
+This configuration has been built on top of other doom-emacs user's work, such
+as [[https://tecosaur.github.io/][Tecosaur]] and other inspiring doom configurations mentioned in the
+"Inspiration" section of this =README=.
+
+* Installation
+** Doom-Emacs
+#+begin_src sh
+git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d
+~/.emacs.d/bin/doom install
+#+end_src
+
+** BMC (Math)
+#+begin_src sh
+if [[ ! -d "/path/to/dir" ]]; then
+   mkdir -p ~/texmf
+fi
+git clone --depth 1 https://github.com/tecosaur/BMC.git ~/texmf
+texhash
+#+end_src
 
 * Inspiration
 - [[https://config.daviwil.com/emacs][David Wilson]]
