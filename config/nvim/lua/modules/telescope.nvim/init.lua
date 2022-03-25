@@ -25,7 +25,16 @@ telescope.setup({
             preview_cutoff = 120,
         },
         border = {},
-        borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+        borderchars = {
+            "─",
+            "│",
+            "─",
+            "│",
+            "╭",
+            "╮",
+            "╯",
+            "╰",
+        },
         buffer_previewer_maker = require("telescope.previewers").buffer_previewer_maker,
         color_devicons = true,
         file_ignore_patterns = { "node_modules" },
@@ -40,7 +49,7 @@ telescope.setup({
     },
     extensions = {
         fzf = {
-            fuzzy = false,
+            fuzzy = true,
             override_generic_sorter = true,
             override_file_sorter = true,
             case_mode = "smart_case",
@@ -50,8 +59,9 @@ telescope.setup({
             show_unindexed = true,
             ignore_patterns = { "*.git/*", "*/tmp/*" },
         },
-    }
+    },
 })
 
 telescope.load_extension("fzf")
 telescope.load_extension("frecency")
+telescope.load_extension("file_browser")

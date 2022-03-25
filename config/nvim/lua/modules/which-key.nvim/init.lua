@@ -38,7 +38,7 @@ local setup = {
         position = "bottom",
         margin = { 1, 0, 1, 0 },
         padding = { 1, 1, 1, 1 },
-        winblend = 0
+        winblend = 0,
     },
     layout = {
         height = { min = 4, max = 25 },
@@ -47,12 +47,21 @@ local setup = {
         align = "left",
     },
     ignore_missing = true,
-    hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ "},
+    hidden = {
+        "<silent>",
+        "<cmd>",
+        "<Cmd>",
+        "<CR>",
+        "call",
+        "lua",
+        "^:",
+        "^ ",
+    },
     show_help = true,
     triggers = "auto",
     triggers_blacklist = {
-      i = { "j", "k" },
-      v = { "j", "k" },
+        i = { "j", "k" },
+        v = { "j", "k" },
     },
 }
 
@@ -66,93 +75,106 @@ local opts = {
 }
 
 local mappings = {
-    ["b"] = {
-        "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{previewer = false})<cr>",
-        "Buffers",
+    ["/"] = { "<CMD>Telescope live_grep<CR>", "Search Project" },
+    [" "] = { "<CMD>Telescope find_files<CR>", "Find File" },
+    ["d"] = { "<CMD>Dashboard<CR>", "Dashboard" },
+    ["e"] = { "<CMD>NvimTreeToggle<CR>", "Explorer" },
+    ["n"] = { "<CMD>nohlsearch<CR>", "No Highlight" },
+    b = {
+        name = "Buffer",
+        ["["] = { "<CMD><CR>", "Previous Buffer" },
+        ["]"] = { "<CMD><CR>", "Next Buffer" },
+        b = { "<CMD>Telescope buffers<CR>", "Switch Buffer" },
+        d = { "<CMD>bd!<CR>", "Close Buffer" },
+        O = { "<CMD>%bd|e#<CR>", "Close Buffers Except Current Buf" },
     },
-    ["c"] = { "<cmd>Bdelete!<CR>", "Close Buffer" },
-    ["d"] = { "<cmd>Dashboard<cr>", "Dashboard" },
-    ["f"] = {
-        "<cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown{previewer = false})<cr>",
-        "Find files",
+    f = {
+        name = "Find",
+        f = { "<CMD>Telescope file_browser<CR>", "Browse Files" },
+        r = { "<CMD>Telescope frequency<CR>", "List Frequent File" },
+        R = { "<CMD>Telescope oldfiles<CR>", "Open Recent File" },
+        s = { "<CMD>w!<CR>", "Save" },
     },
-    ["F"] = { "<cmd>Telescope live_grep theme=ivy<cr>", "Find Text" },
-    ["P"] = { "<cmd>lua require('telescope').extensions.projects.projects()<cr>", "Projects" },
-    ["h"] = { "<cmd>nohlsearch<CR>", "No Highlight" },
-    ["q"] = { "<cmd>q!<CR>", "Quit" },
-    ["t"] = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
-    ["w"] = { "<cmd>w!<CR>", "Save" },
     g = {
         name = "Git",
-        j = { "<cmd>lua require 'gitsigns'.next_hunk()<cr>", "Next Hunk" },
-        k = { "<cmd>lua require 'gitsigns'.prev_hunk()<cr>", "Prev Hunk" },
-        l = { "<cmd>lua require 'gitsigns'.blame_line()<cr>", "Blame" },
-        p = { "<cmd>lua require 'gitsigns'.preview_hunk()<cr>", "Preview Hunk" },
-        r = { "<cmd>lua require 'gitsigns'.reset_hunk()<cr>", "Reset Hunk" },
-        R = { "<cmd>lua require 'gitsigns'.reset_buffer()<cr>", "Reset Buffer" },
-        s = { "<cmd>lua require 'gitsigns'.stage_hunk()<cr>", "Stage Hunk" },
-        u = {
-            "<cmd>lua require 'gitsigns'.undo_stage_hunk()<cr>",
-            "Undo Stage Hunk",
-        },
-        o = { "<cmd>Telescope git_status<cr>", "Open changed file" },
-        b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
-        c = { "<cmd>Telescope git_commits<cr>", "Checkout commit" },
-        d = {
-            "<cmd>Gitsigns diffthis HEAD<cr>",
-            "Diff",
-        },
+        b = { "<CMD>Telescope git_branches<CR>", "Checkout Branch" },
+        c = { "<CMD>Telescope git_commits<CR>", "Checkout Commit" },
+        d = { "<CMD>Gitsigns diffthis HEAD<CR>", "Diff" },
+        j = { "<CMD>Gitsigns next_hunk<CR>", "Next Change" },
+        k = { "<CMD>Gitsigns prev_hunk<CR>", "Prev Change" },
+        l = { "<CMD>Gitsigns blame_line<CR>", "Blame" },
+        o = { "<CMD>Telescope git_status<CR>", "Open Changed File" },
+        p = { "<CMD>Gitsigns preview_hunk<CR>", "Preview Changes" },
+        r = { "<CMD>Gitsigns reset_hunk<CR>", "Restore File" },
+        R = { "<CMD>Gitsigns reset_buffer<CR>", "Reset Buffer" },
+        s = { "<CMD>Gitsigns stage_hunk<CR>", "Stage Changes" },
+        u = { "<CMD>Gitsigns undo_stage_hunk<CR>", "Undo Stage Hunk" },
+    },
+    h = {
+        name = "Help",
+        c = { "<CMD>Telescope commands<CR>", "List Available Commands" },
+        h = { "<CMD>Telescope help_tags<CR>", "Find Help" },
+        k = { "<CMD>Telescope keymaps<CR>", "List Keybindings" },
+        m = { "<CMD>Telescope man_pages<CR>", "Man Pages" },
+        s = { "<CMD>Telescope colorscheme<CR>", "Change Colorscheme" },
     },
     l = {
         name = "LSP",
-        a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
+        a = { "<CMD>lua vim.lsp.buf.code_action()<CR>", "Code Action" },
         d = {
-            "<cmd>Telescope lsp_document_diagnostics<cr>",
+            "<CMD>Telescope lsp_document_diagnostics<CR>",
             "Document Diagnostics",
         },
         w = {
-            "<cmd>Telescope lsp_workspace_diagnostics<cr>",
+            "<CMD>Telescope lsp_workspace_diagnostics<CR>",
             "Workspace Diagnostics",
         },
-        f = { "<cmd>lua vim.lsp.buf.formatting()<cr>", "Format" },
-        i = { "<cmd>LspInfo<cr>", "Info" },
-        I = { "<cmd>LspInstallInfo<cr>", "Installer Info" },
+        f = { "<CMD>lua vim.lsp.buf.formatting()<CR>", "Format" },
+        i = { "<CMD>LspInfo<CR>", "Info" },
+        I = { "<CMD>LspInstallInfo<CR>", "Installer Info" },
         j = {
-            "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>",
+            "<CMD>lua vim.lsp.diagnostic.goto_next()<CR>",
             "Next Diagnostic",
         },
         k = {
-            "<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>",
+            "<CMD>lua vim.lsp.diagnostic.goto_prev()<CR>",
             "Prev Diagnostic",
         },
-        l = { "<cmd>lua vim.lsp.codelens.run()<cr>", "CodeLens Action" },
-        q = { "<cmd>lua vim.lsp.diagnostic.set_loclist()<cr>", "Quickfix" },
-        r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
-        s = { "<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols" },
+        l = { "<CMD>lua vim.lsp.codelens.run()<CR>", "CodeLens Action" },
+        q = { "<CMD>lua vim.lsp.diagnostic.set_loclist()<CR>", "Quickfix" },
+        r = { "<CMD>lua vim.lsp.buf.rename()<CR>", "Rename" },
+        s = { "<CMD>Telescope lsp_document_symbols<CR>", "Document Symbols" },
         S = {
-            "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
+            "<CMD>Telescope lsp_dynamic_workspace_symbols<CR>",
             "Workspace Symbols",
         },
     },
-    s = {
-        name = "Search",
-        b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
-        c = { "<cmd>Telescope colorscheme<cr>", "Colorscheme" },
-        h = { "<cmd>Telescope help_tags<cr>", "Find Help" },
-        M = { "<cmd>Telescope man_pages<cr>", "Man Pages" },
-        r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
-        R = { "<cmd>Telescope registers<cr>", "Registers" },
-        k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
-        C = { "<cmd>Telescope commands<cr>", "Commands" },
+    m = {
+        name = "Markdown Preview",
+        p = { "<CMD>MarkdownPreview<CR>", "Preview Markdown" },
+        s = { "<CMD>MarkdownPreviewStop<CR>", "Stop Markdown Preview" },
+        t = { "<CMD>MarkdownPreviewToggle<CR>", "Toggle Markdown Preview" },
+    },
+    p = {
+        name = "Project",
+        p = { "<CMD>Telescope projects<CR>", "Select Project" },
+        t = { "<CMD>TodoTelescope<CR>", "List Project Tasks" },
+    },
+    q = {
+        d = { "<CMD>%bd|Dashboard<CR>", "Close All Buffers" },
+        q = { "<CMD>q!<CR>", "Quit Nvim Without Saving" },
     },
     t = {
         name = "Terminal",
-        p = { "<cmd>lua _PYTHON_TOGGLE()<cr>", "Python" },
-        f = { "<cmd>ToggleTerm direction=float<cr>", "Float" },
-        h = { "<cmd>ToggleTerm size=10 direction=horizontal<cr>", "Horizontal" },
-        t = { "<cmd>ToggleTerm direction=tab<cr>", "Tab" },
-        v = { "<cmd>ToggleTerm size=80 direction=vertical<cr>", "Vertical" },
-  },
+        p = { "<CMD>lua _PYTHON_TOGGLE()<CR>", "Python" },
+        f = { "<CMD>ToggleTerm direction=float<CR>", "Float" },
+        h = {
+            "<CMD>ToggleTerm size=10 direction=horizontal<CR>",
+            "Horizontal",
+        },
+        t = { "<CMD>ToggleTerm direction=tab<CR>", "Tab" },
+        v = { "<CMD>ToggleTerm size=80 direction=vertical<CR>", "Vertical" },
+    },
 }
 
 local vopts = {
@@ -165,7 +187,14 @@ local vopts = {
 }
 
 local vmappings = {
-    ["/"] = { "<ESC><CMD>lua require('Comment.api').gc(vim.fn.visualmode())<CR>", "Comment" },
+    ["/"] = {
+        "<ESC><CMD>lua require('Comment.api').toggle_linewise_op(vim.fn.visualmode())<CR>",
+        "Comment Linewise",
+    },
+    ["["] = {
+        "<ESC><CMD>lua require('Comment.api').toggle_blockwise_op(vim.fn.visualmode())<CR>",
+        "Comment Blockwise",
+    },
 }
 
 which_key.setup(setup)

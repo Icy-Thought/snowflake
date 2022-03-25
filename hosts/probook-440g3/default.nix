@@ -29,9 +29,8 @@
         alacritty.enable = true;
       };
       editors = {
-        default = "emacs";
-        emacs.enable = true;
-        # nvim.enable = true;
+        default = "nvim";
+        nvim.enable = true;
       };
       browsers = {
         default = "firefox";

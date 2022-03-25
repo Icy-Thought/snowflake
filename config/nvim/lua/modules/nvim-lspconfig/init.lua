@@ -84,3 +84,10 @@ lspconfig.hls.setup {
     }
   }
 }
+
+lspconfig.rnix.setup {
+    on_attach = on_attach,
+    settings = {
+        formattingProvider = "nixfmt"
+    }
+}

@@ -30,9 +30,9 @@
         alacritty.enable = true;
       };
       editors = {
-        default = "emacs";
+        default = "nvim";
         emacs.enable = true;
-        neovim.enable = true;
+        nvim.enable = true;
       };
       browsers = {
         default = "firefox";

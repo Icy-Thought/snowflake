@@ -107,7 +107,7 @@ in {
     })
 
     # Activate Neovim Colorscheme
-    (mkIf dapl.editors.neovim.enable {
+    (mkIf dapl.editors.nvim.enable {
       homeManager.programs.neovim.plugins = with pkgs.vimPlugins; [{
         plugin = catppuccin-nvim;
         type = "lua";

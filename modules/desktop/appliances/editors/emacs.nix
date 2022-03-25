@@ -5,7 +5,8 @@ with lib.my;
 let
   cfg = config.modules.desktop.appliances.editors.emacs;
   configDir = config.snowflake.configDir;
-in {
+in
+{
   options.modules.desktop.appliances.editors.emacs = {
     enable = mkBoolOpt false;
     doom = {
@@ -29,41 +30,16 @@ in {
     };
 
     user.packages = with pkgs; [
-      # Emacs Dependencies:
+      # emacsPkgs:
       binutils
-
-      # Doom Dependencies
-      (ripgrep.override { withPCRE2 = true; })
+      # doomPkgs
       gnutls
-
-      # Extra Dependencies:
-      fd
-      imagemagick
-      (mkIf (config.programs.gnupg.agent.enable) pinentry_emacs)
+      # extraPkgs
       zstd
-
-      # Module dependencies:
-      ## :checkers spell
-      (aspellWithDicts (ds: with ds; [ en en-computers en-science ]))
-      ## :tools editorconfig
-      editorconfig-core-c
-      ## :tools lookup & :lang Org-Roam & Gnuplot
+      (mkIf (config.programs.gnupg.agent.enable) pinentry_emacs)
+      # Module dependencies
+      ## :tools lookup
       sqlite
-      gnuplot
-      ## :lang haskell
-      haskell-language-server
-      stylish-haskell
-      ## :lang javascript
-      nodePackages.typescript-language-server
-      ## :lang latex & :lang org (latex previews)
-      biber
-      texlive.combined.scheme-medium
-      my.bmc-math
-      ## :lang nix
-      nixfmt
-      rnix-lsp
-      ## :lang rust
-      unstable.rust-analyzer
     ];
 
     # Fonts -> icons + ligatures when specified:

@@ -41,7 +41,12 @@ in {
     fonts = {
       fontDir.enable = true;
       enableGhostscriptFonts = true;
-      fonts = with pkgs; [ scheherazade-new sarasa-gothic ];
+      fonts = with pkgs; [
+        sarasa-gothic
+        scheherazade-new
+        source-code-pro
+        times-newer-roman
+      ];
     };
 
     # LightDM
