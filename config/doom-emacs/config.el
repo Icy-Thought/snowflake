@@ -215,9 +215,7 @@
 
 ;; [[file:config.org::*EVIL][EVIL:1]]
 (after! evil
-  (setq evil-ex-substitute-global t     ; I like my s/../.. to by global by default
-        evil-move-cursor-back nil       ; Don't move the block cursor when toggling insert mode
-        evil-kill-on-visual-paste nil)) ; Don't put overwritten text in the kill ring
+  (setq evil-ex-substitute-global t))     ; I like my s/../.. to by global by default
 ;; EVIL:1 ends here
 
 ;; [[file:config.org::*Consult][Consult:1]]
@@ -306,7 +304,7 @@
     `(centaur-tabs-selected :background ,(doom-color 'bg) :foreground ,(doom-color 'blue))))
 ;; Centaur-tabs:1 ends here
 
-;; [[file:config.org::*Doom modeline][Doom modeline:1]]
+;; [[file:config.org::*Doom-Modeline][Doom-Modeline:1]]
 (after! doom-modeline
  (setq evil-normal-state-tag "λ"
        evil-insert-state-tag ""
@@ -330,15 +328,14 @@
 
   ;; (display-time-mode 1)
   (display-battery-mode 1)
-
+  
   (setq doom-modeline-enable-word-count t)
     (doom-modeline-def-segment buffer-name
     "Display the current buffer's name, without any other information."
     (concat
      (doom-modeline-spc)
      (doom-modeline--buffer-name)))
-
-
+  
   ;; PDF-modeline = buffer name + icon.
   (doom-modeline-def-segment pdf-icon
     "PDF icon from all-the-icons."
@@ -370,66 +367,9 @@
   (doom-modeline-def-modeline 'pdf
     '(bar window-number pdf-pages pdf-icon buffer-name)
     '(misc-info matches major-mode process vcs)))
-;; Doom modeline:1 ends here
+;; Doom-Modeline:1 ends here
 
-;; [[file:config.org::*Keycast][Keycast:2]]
-(use-package! keycast
-  :commands keycast-mode
-  :config
-  (define-minor-mode keycast-mode
-    "Show current command and its key binding in the mode line."
-    :global t
-    (if keycast-mode
-        (progn
-          (add-hook 'pre-command-hook 'keycast--update t)
-          (add-to-list 'global-mode-string '("" mode-line-keycast " ")))
-      (remove-hook 'pre-command-hook 'keycast--update)
-      (setq global-mode-string (remove '("" mode-line-keycast " ") global-mode-string))))
-  (custom-set-faces!
-    '(keycast-command :inherit doom-modeline-debug
-                      :height 0.9)
-    '(keycast-key :inherit custom-modified
-                  :height 1.1
-                  :weight bold)))
-;; Keycast:2 ends here
-
-;; [[file:config.org::*Marginalia][Marginalia:1]]
-(after! marginalia
-  (setq marginalia-censor-variables nil)
-
-  (defadvice! +marginalia--anotate-local-file-colorful (cand)
-    "Just a more colourful version of `marginalia--anotate-local-file'."
-    :override #'marginalia--annotate-local-file
-    (when-let (attrs (file-attributes (substitute-in-file-name
-                                       (marginalia--full-candidate cand))
-                                      'integer))
-      (marginalia--fields
-       ((marginalia--file-owner attrs)
-        :width 12 :face 'marginalia-file-owner)
-       ((marginalia--file-modes attrs))
-       ((+marginalia-file-size-colorful (file-attribute-size attrs))
-        :width 7)
-       ((+marginalia--time-colorful (file-attribute-modification-time attrs))
-        :width 12))))
-
-  (defun +marginalia--time-colorful (time)
-    (let* ((seconds (float-time (time-subtract (current-time) time)))
-           (color (doom-blend
-                   (face-attribute 'marginalia-date :foreground nil t)
-                   (face-attribute 'marginalia-documentation :foreground nil t)
-                   (/ 1.0 (log (+ 3 (/ (+ 1 seconds) 345600.0)))))))
-      ;; 1 - log(3 + 1/(days + 1)) % grey
-      (propertize (marginalia--time time) 'face (list :foreground color))))
-
-  (defun +marginalia-file-size-colorful (size)
-    (let* ((size-index (/ (log10 (+ 1 size)) 7.0))
-           (color (if (< size-index 10000000) ; 10m
-                      (doom-blend 'orange 'green size-index)
-                    (doom-blend 'red 'orange (- size-index 1)))))
-      (propertize (file-size-human-readable size) 'face (list :foreground color)))))
-;; Marginalia:1 ends here
-
-;; [[file:config.org::*Prettier page breaks][Prettier page breaks:2]]
+;; [[file:config.org::*Prettier Page Breaks][Prettier Page Breaks:2]]
 (use-package! page-break-lines
   :commands page-break-lines-mode
   :init
@@ -439,31 +379,7 @@
   (map! :prefix "g"
         :desc "Prev page break" :nv "[" #'backward-page
         :desc "Next page break" :nv "]" #'forward-page))
-;; Prettier page breaks:2 ends here
-
-;; [[file:config.org::*Screencast][Screencast:2]]
-(use-package! gif-screencast
-  :commands gif-screencast-mode
-  :config
-  (map! :map gif-screencast-mode-map
-        :g "<f8>" #'gif-screencast-toggle-pause
-        :g "<f9>" #'gif-screencast-stop)
-  (setq gif-screencast-program "maim"
-        gif-screencast-args `("--quality" "3" "-i" ,(string-trim-right
-                                                     (shell-command-to-string
-                                                      "xdotool getactivewindow")))
-        gif-screencast-optimize-args '("--batch" "--optimize=3" "--usecolormap=/tmp/doom-color-theme"))
-  (defun gif-screencast-write-colormap ()
-    (f-write-text
-     (replace-regexp-in-string
-      "\n+" "\n"
-      (mapconcat (lambda (c) (if (listp (cdr c))
-                                 (cadr c))) doom-themes--colors "\n"))
-     'utf-8
-     "/tmp/doom-color-theme" ))
-  (gif-screencast-write-colormap)
-  (add-hook 'doom-load-theme-hook #'gif-screencast-write-colormap))
-;; Screencast:2 ends here
+;; Prettier Page Breaks:2 ends here
 
 ;; [[file:config.org::*Treemacs][Treemacs:1]]
 (after! treemacs
@@ -524,14 +440,6 @@
 (set-file-template! "/LICEN[CS]E$" :trigger '+file-templates/insert-license)
 ;; File Templates:1 ends here
 
-;; [[file:config.org::*Plain-text][Plain-text:1]]
-(after! text-mode
-  (add-hook! 'text-mode-hook
-             ;; Apply ANSI color codes
-             (with-silent-modifications
-               (ansi-color-apply-on-region (point-min) (point-max) t))))
-;; Plain-text:1 ends here
-
 (after! org
   (setq org-directory "~/.org"                      ; let's put files here
         org-use-property-inheritance t              ; it's convenient to have properties inherited
@@ -557,48 +465,8 @@
         :n "g <down>" #'org-forward-heading-same-level
         :n "g <left>" #'org-up-element
         :n "g <right>" #'org-down-element)
-  (map! :map org-mode-map
-        :nie "M-SPC M-SPC" (cmd! (insert "\u200B")))
-  (defun +org-export-remove-zero-width-space (text _backend _info)
-    "Remove zero width spaces from TEXT."
-    (unless (org-export-derived-backend-p 'org)
-      (replace-regexp-in-string "\u200B" "" text)))
-  
-  (after! ox
-    (add-to-list 'org-export-filter-final-output-functions #'+org-export-remove-zero-width-space t))
   (setq org-list-demote-modify-bullet
         '(("+" . "-") ("-" . "+") ("1)" . "a)") ("1." . "a.")))
-  (after! oc
-    (defun org-ref-to-org-cite ()
-      "Attempt to convert org-ref citations to org-cite syntax."
-      (interactive)
-      (let* ((cite-conversions '(("cite" . "//b") ("Cite" . "//bc")
-                                 ("nocite" . "/n")
-                                 ("citep" . "") ("citep*" . "//f")
-                                 ("parencite" . "") ("Parencite" . "//c")
-                                 ("citeauthor" . "/a/f") ("citeauthor*" . "/a")
-                                 ("citeyear" . "/na/b")
-                                 ("Citep" . "//c") ("Citealp" . "//bc")
-                                 ("Citeauthor" . "/a/cf") ("Citeauthor*" . "/a/c")
-                                 ("autocite" . "") ("Autocite" . "//c")
-                                 ("notecite" . "/l/b") ("Notecite" . "/l/bc")
-                                 ("pnotecite" . "/l") ("Pnotecite" . "/l/bc")))
-             (cite-regexp (rx (regexp (regexp-opt (mapcar #'car cite-conversions) t))
-                              ":" (group (+ (not (any "\n 	,.)]}")))))))
-        (save-excursion
-          (goto-char (point-min))
-          (while (re-search-forward cite-regexp nil t)
-            (message (format "[cite%s:@%s]"
-                                   (cdr (assoc (match-string 1) cite-conversions))
-                                   (match-string 2)))
-            (replace-match (format "[cite%s:@%s]"
-                                   (cdr (assoc (match-string 1) cite-conversions))
-                                   (match-string 2))))))))
-  (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
-  (defadvice! org-edit-latex-emv-after-insert ()
-    :after #'org-cdlatex-environment-indent
-    (org-edit-latex-environment))
-  (add-hook 'org-mode-hook 'turn-on-flyspell)
   (cl-defmacro lsp-org-babel-enable (lang)
     "Support LANG in org source code block."
     (setq centaur-lsp 'lsp-mode)
@@ -627,33 +495,6 @@
     '("go" "python" "ipython" "bash" "sh"))
   (dolist (lang org-babel-lang-list)
     (eval `(lsp-org-babel-enable ,lang)))
-  (map! :map org-mode-map
-        :localleader
-        :desc "View exported file" "v" #'org-view-output-file)
-  
-  (defun org-view-output-file (&optional org-file-path)
-    "Visit buffer open on the first output file (if any) found, using `org-view-output-file-extensions'"
-    (interactive)
-    (let* ((org-file-path (or org-file-path (buffer-file-name) ""))
-           (dir (file-name-directory org-file-path))
-           (basename (file-name-base org-file-path))
-           (output-file nil))
-      (dolist (ext org-view-output-file-extensions)
-        (unless output-file
-          (when (file-exists-p
-                 (concat dir basename "." ext))
-            (setq output-file (concat dir basename "." ext)))))
-      (if output-file
-          (if (member (file-name-extension output-file) org-view-external-file-extensions)
-              (browse-url-xdg-open output-file)
-            (pop-to-buffer (or (find-buffer-visiting output-file)
-                               (find-file-noselect output-file))))
-        (message "No exported file found"))))
-  
-  (defvar org-view-output-file-extensions '("pdf" "md" "rst" "txt" "tex" "html")
-    "Search for output files with these extensions, in order, viewing the first that matches")
-  (defvar org-view-external-file-extensions '("html")
-    "File formats that should be opened externally.")
   (setq org-roam-directory "~/org/Roam/")
   (defadvice! doom-modeline--buffer-file-name-roam-aware-a (orig-fun)
     :around #'doom-modeline-buffer-file-name ; takes no args
@@ -785,119 +626,15 @@
           (?C . 'all-the-icons-yellow)
           (?D . 'all-the-icons-green)
           (?E . 'all-the-icons-blue)))
-  (appendq! +ligatures-extra-symbols
-            `(:checkbox      "☐"
-              :pending       "◼"
-              :checkedbox    "☑"
-              :list_property "∷"
-              :em_dash       "—"
-              :ellipses      "…"
-              :arrow_right   "→"
-              :arrow_left    "←"
-              :title         "𝙏"
-              :subtitle      "𝙩"
-              :author        "𝘼"
-              :date          "𝘿"
-              :property      "☸"
-              :options       "⌥"
-              :startup       "⏻"
-              :macro         "𝓜"
-              :html_head     "🅷"
-              :html          "🅗"
-              :latex_class   "🄻"
-              :latex_header  "🅻"
-              :beamer_header "🅑"
-              :latex         "🅛"
-              :attr_latex    "🄛"
-              :attr_html     "🄗"
-              :attr_org      "⒪"
-              :begin_quote   "❝"
-              :end_quote     "❞"
-              :caption       "☰"
-              :header        "›"
-              :results       "🠶"
-              :begin_export  "⏩"
-              :end_export    "⏪"
-              :properties    "⚙"
-              :end           "∎"
-              :priority_a   ,(propertize "⚑" 'face 'all-the-icons-red)
-              :priority_b   ,(propertize "⬆" 'face 'all-the-icons-orange)
-              :priority_c   ,(propertize "■" 'face 'all-the-icons-yellow)
-              :priority_d   ,(propertize "⬇" 'face 'all-the-icons-green)
-              :priority_e   ,(propertize "❓" 'face 'all-the-icons-blue)))
-  (set-ligatures! 'org-mode
-    :merge t
-    :checkbox      "[ ]"
-    :pending       "[-]"
-    :checkedbox    "[X]"
-    :list_property "::"
-    :em_dash       "---"
-    :ellipsis      "..."
-    :arrow_right   "->"
-    :arrow_left    "<-"
-    :title         "#+title:"
-    :subtitle      "#+subtitle:"
-    :author        "#+author:"
-    :date          "#+date:"
-    :property      "#+property:"
-    :options       "#+options:"
-    :startup       "#+startup:"
-    :macro         "#+macro:"
-    :html_head     "#+html_head:"
-    :html          "#+html:"
-    :latex_class   "#+latex_class:"
-    :latex_header  "#+latex_header:"
-    :beamer_header "#+beamer_header:"
-    :latex         "#+latex:"
-    :attr_latex    "#+attr_latex:"
-    :attr_html     "#+attr_html:"
-    :attr_org      "#+attr_org:"
-    :begin_quote   "#+begin_quote"
-    :end_quote     "#+end_quote"
-    :caption       "#+caption:"
-    :header        "#+header:"
-    :begin_export  "#+begin_export"
-    :end_export    "#+end_export"
-    :results       "#+RESULTS:"
-    :property      ":PROPERTIES:"
-    :end           ":END:"
-    :priority_a    "[#A]"
-    :priority_b    "[#B]"
-    :priority_c    "[#C]"
-    :priority_d    "[#D]"
-    :priority_e    "[#E]")
-  (plist-put +ligatures-extra-symbols :name "⁍")
-  ;; (package! org-pretty-tags
-  ;;   :pin "5c7521651b35ae9a7d3add4a66ae8cc176ae1c76")
-  ;; (use-package org-pretty-tags
-  ;; :config
-  ;;  (setq org-pretty-tags-surrogate-strings
-  ;;        `(("uni"        . ,(all-the-icons-faicon   "graduation-cap" :face 'all-the-icons-purple  :v-adjust 0.01))
-  ;;          ("ucc"        . ,(all-the-icons-material "computer"       :face 'all-the-icons-silver  :v-adjust 0.01))
-  ;;          ("assignment" . ,(all-the-icons-material "library_books"  :face 'all-the-icons-orange  :v-adjust 0.01))
-  ;;          ("test"       . ,(all-the-icons-material "timer"          :face 'all-the-icons-red     :v-adjust 0.01))
-  ;;          ("lecture"    . ,(all-the-icons-fileicon "keynote"        :face 'all-the-icons-orange  :v-adjust 0.01))
-  ;;          ("email"      . ,(all-the-icons-faicon   "envelope"       :face 'all-the-icons-blue    :v-adjust 0.01))
-  ;;          ("read"       . ,(all-the-icons-octicon  "book"           :face 'all-the-icons-lblue   :v-adjust 0.01))
-  ;;          ("article"    . ,(all-the-icons-octicon  "file-text"      :face 'all-the-icons-yellow  :v-adjust 0.01))
-  ;;          ("web"        . ,(all-the-icons-faicon   "globe"          :face 'all-the-icons-green   :v-adjust 0.01))
-  ;;          ("info"       . ,(all-the-icons-faicon   "info-circle"    :face 'all-the-icons-blue    :v-adjust 0.01))
-  ;;          ("issue"      . ,(all-the-icons-faicon   "bug"            :face 'all-the-icons-red     :v-adjust 0.01))
-  ;;          ("someday"    . ,(all-the-icons-faicon   "calendar-o"     :face 'all-the-icons-cyan    :v-adjust 0.01))
-  ;;          ("idea"       . ,(all-the-icons-octicon  "light-bulb"     :face 'all-the-icons-yellow  :v-adjust 0.01))
-  ;;          ("emacs"      . ,(all-the-icons-fileicon "emacs"          :face 'all-the-icons-lpurple :v-adjust 0.01))))
-  ;;  (org-pretty-tags-global-mode))
   (setq org-highlight-latex-and-related '(native script entities))
   (require 'org-src)
   (add-to-list 'org-src-block-faces '("latex" (:inherit default :extend t)))
   (setq org-format-latex-header "\\documentclass{article}
   \\usepackage[usenames]{xcolor}
-  
   \\usepackage[T1]{fontenc}
-  
   \\usepackage{booktabs}
-  
   \\pagestyle{empty}             % do not remove
+  
   % The settings below are copied from fullpage.sty
   \\setlength{\\textwidth}{\\paperwidth}
   \\addtolength{\\textwidth}{-3cm}
@@ -911,119 +648,13 @@
   \\addtolength{\\textheight}{-3cm}
   \\setlength{\\topmargin}{1.5cm}
   \\addtolength{\\topmargin}{-2.54cm}
+  
   % my custom stuff
   \\usepackage[nofont,plaindd]{bmc-maths}
-  \\usepackage{arev}
+  \\usepackage{gfsartemisia-euler}
   ")
   (setq org-format-latex-options
         (plist-put org-format-latex-options :background "Transparent"))
-  (defun scimax-org-latex-fragment-justify (justification)
-    "Justify the latex fragment at point with JUSTIFICATION.
-  JUSTIFICATION is a symbol for 'left, 'center or 'right."
-    (interactive
-     (list (intern-soft
-            (completing-read "Justification (left): " '(left center right)
-                             nil t nil nil 'left))))
-    (let* ((ov (ov-at))
-           (beg (ov-beg ov))
-           (end (ov-end ov))
-           (shift (- beg (line-beginning-position)))
-           (img (overlay-get ov 'display))
-           (img (and (and img (consp img) (eq (car img) 'image)
-                          (image-type-available-p (plist-get (cdr img) :type)))
-                     img))
-           space-left offset)
-      (when (and img
-                 ;; This means the equation is at the start of the line
-                 (= beg (line-beginning-position))
-                 (or
-                  (string= "" (s-trim (buffer-substring end (line-end-position))))
-                  (eq 'latex-environment (car (org-element-context)))))
-        (setq space-left (- (window-max-chars-per-line) (car (image-size img)))
-              offset (floor (cond
-                             ((eq justification 'center)
-                              (- (/ space-left 2) shift))
-                             ((eq justification 'right)
-                              (- space-left shift))
-                             (t
-                              0))))
-        (when (>= offset 0)
-          (overlay-put ov 'before-string (make-string offset ?\ ))))))
-  
-  (defun scimax-org-latex-fragment-justify-advice (beg end image imagetype)
-    "After advice function to justify fragments."
-    (scimax-org-latex-fragment-justify (or (plist-get org-format-latex-options :justify) 'left)))
-  
-  
-  (defun scimax-toggle-latex-fragment-justification ()
-    "Toggle if LaTeX fragment justification options can be used."
-    (interactive)
-    (if (not (get 'scimax-org-latex-fragment-justify-advice 'enabled))
-        (progn
-          (advice-add 'org--format-latex-make-overlay :after 'scimax-org-latex-fragment-justify-advice)
-          (put 'scimax-org-latex-fragment-justify-advice 'enabled t)
-          (message "Latex fragment justification enabled"))
-      (advice-remove 'org--format-latex-make-overlay 'scimax-org-latex-fragment-justify-advice)
-      (put 'scimax-org-latex-fragment-justify-advice 'enabled nil)
-      (message "Latex fragment justification disabled")))
-  ;; Numbered equations all have (1) as the number for fragments with vanilla
-  ;; org-mode. This code injects the correct numbers into the previews so they
-  ;; look good.
-  (defun scimax-org-renumber-environment (orig-func &rest args)
-    "A function to inject numbers in LaTeX fragment previews."
-    (let ((results '())
-          (counter -1)
-          (numberp))
-      (setq results (cl-loop for (begin . env) in
-                             (org-element-map (org-element-parse-buffer) 'latex-environment
-                               (lambda (env)
-                                 (cons
-                                  (org-element-property :begin env)
-                                  (org-element-property :value env))))
-                             collect
-                             (cond
-                              ((and (string-match "\\\\begin{equation}" env)
-                                    (not (string-match "\\\\tag{" env)))
-                               (cl-incf counter)
-                               (cons begin counter))
-                              ((string-match "\\\\begin{align}" env)
-                               (prog2
-                                   (cl-incf counter)
-                                   (cons begin counter)
-                                 (with-temp-buffer
-                                   (insert env)
-                                   (goto-char (point-min))
-                                   ;; \\ is used for a new line. Each one leads to a number
-                                   (cl-incf counter (count-matches "\\\\$"))
-                                   ;; unless there are nonumbers.
-                                   (goto-char (point-min))
-                                   (cl-decf counter (count-matches "\\nonumber")))))
-                              (t
-                               (cons begin nil)))))
-  
-      (when (setq numberp (cdr (assoc (point) results)))
-        (setf (car args)
-              (concat
-               (format "\\setcounter{equation}{%s}\n" numberp)
-               (car args)))))
-  
-    (apply orig-func args))
-  
-  
-  (defun scimax-toggle-latex-equation-numbering ()
-    "Toggle whether LaTeX fragments are numbered."
-    (interactive)
-    (if (not (get 'scimax-org-renumber-environment 'enabled))
-        (progn
-          (advice-add 'org-create-formula-image :around #'scimax-org-renumber-environment)
-          (put 'scimax-org-renumber-environment 'enabled t)
-          (message "Latex numbering enabled"))
-      (advice-remove 'org-create-formula-image #'scimax-org-renumber-environment)
-      (put 'scimax-org-renumber-environment 'enabled nil)
-      (message "Latex numbering disabled.")))
-  
-  (advice-add 'org-create-formula-image :around #'scimax-org-renumber-environment)
-  (put 'scimax-org-renumber-environment 'enabled t)
   (after! org-plot
     (defun org-plot/generate-theme (_type)
       "Use the current Doom theme colours to generate a GnuPlot preamble."
@@ -1104,20 +735,6 @@
   (ox-extras-activate '(ignore-headlines))
   ;; org-latex-compilers = ("pdflatex" "xelatex" "lualatex"), which are the possible values for %latex
   (setq org-latex-pdf-process '("latexmk -f -pdf -%latex -shell-escape -interaction=nonstopmode -output-directory=%o %f"))
-  (defun +org-export-latex-fancy-item-checkboxes (text backend info)
-    (when (org-export-derived-backend-p backend 'latex)
-      (replace-regexp-in-string
-       "\\\\item\\[{$\\\\\\(\\w+\\)$}\\]"
-       (lambda (fullmatch)
-         (concat "\\\\item[" (pcase (substring fullmatch 9 -3) ; content of capture group
-                               ("square"   "\\\\checkboxUnchecked")
-                               ("boxminus" "\\\\checkboxTransitive")
-                               ("boxtimes" "\\\\checkboxChecked")
-                               (_ (substring fullmatch 9 -3))) "]"))
-       text)))
-  
-  (add-to-list 'org-export-filter-item-functions
-               '+org-export-latex-fancy-item-checkboxes)
   (after! ox-latex
     (let* ((article-sections '(("\\section{%s}" . "\\section*{%s}")
                                ("\\subsection{%s}" . "\\subsection*{%s}")
@@ -1442,7 +1059,7 @@
           ("T1" "fontenc" t ("pdflatex"))
           ("" "xcolor" nil) ; Generally useful
           ("" "hyperref" nil)))
-  (defvar org-latex-default-fontset 'alegreya
+  (defvar org-latex-default-fontset 'artemisia
     "Fontset from `org-latex-fontsets' to use by default.
   As cm (computer modern) is TeX's default, that causes nothing
   to be added to the document.
@@ -1490,47 +1107,19 @@
   (add-to-list 'org-latex-feature-implementations '(custom-font :snippet (org-latex-fontset :serif :sans :mono) :order 0) t)
   (add-to-list 'org-latex-feature-implementations '(.custom-maths-font :eager t :when (custom-font maths) :snippet (org-latex-fontset :maths) :order 0.3) t)
   (defvar org-latex-fontsets
-    '((cm nil) ; computer modern
-      (## nil) ; no font set
-      (fira
-       :sans "\\usepackage[sfdefault,scale=0.85]{FiraSans}"
-       :mono "\\usepackage[scale=0.80]{FiraMono}"
-       :maths "\\usepackage{newtxsf} % change to firamath in future?")
+    '((cm nil) ; Computer Modern
+      (## nil) ; no-font set
+      (artemisia
+       :sans "\\usepackage{gfsartemisia}"
+       :maths "\\usepackage{gfsartemisia-euler}")
       (source
        :serif "\\usepackage[osf,semibold]{sourceserifpro}"
        :sans "\\usepackage[osf,semibold]{sourcesanspro}"
        :mono "\\usepackage[scale=0.92]{sourcecodepro}"
-       :maths "\\usepackage{newtxmath}") ; may be sourceserifpro-based in future
-      (times
-       :serif "\\usepackage{newtxtext}"
-       :maths "\\usepackage{newtxmath}"))
-    "Alist of fontset specifications.
-  Each car is the name of the fontset (which cannot include \"-\").
-  
-  Each cdr is a plist with (optional) keys :serif, :sans, :mono, and :maths.
-  A key's value is a LaTeX snippet which loads such a font.")
-  (add-to-list 'org-latex-conditional-features '((string= (car (org-latex-fontset-entry)) "alegreya") . alegreya-typeface))
-  (add-to-list 'org-latex-feature-implementations '(alegreya-typeface) t)
-  (add-to-list 'org-latex-feature-implementations'(.alegreya-tabular-figures :eager t :when (alegreya-typeface table) :order 0.5 :snippet "
-  \\makeatletter
-  % tabular lining figures in tables
-  \\renewcommand{\\tabular}{\\AlegreyaTLF\\let\\@halignto\\@empty\\@tabular}
-  \\makeatother\n") t)
-  (add-to-list 'org-latex-conditional-features '("LaTeX" . latex-symbol))
-  (add-to-list 'org-latex-feature-implementations '(latex-symbol :when alegreya-typeface :order 0.5 :snippet "
-  \\makeatletter
-  % Kerning around the A needs adjusting
-  \\DeclareRobustCommand{\\LaTeX}{L\\kern-.24em%
-          {\\sbox\\z@ T%
-           \\vbox to\\ht\\z@{\\hbox{\\check@mathfonts
-                                \\fontsize\\sf@size\\z@
-                                \\math@fontsfalse\\selectfont
-                                A}%
-                          \\vss}%
-          }%
-          \\kern-.10em%
-          \\TeX}
-  \\makeatother\n") t)
+       :maths "\\usepackage{gfsartemisia-euler}")
+      (times ; Times Newer Roman
+       :serif "\\setmainfont{Times Newer Roman}"
+       :maths "\\usepackage{newtxmath}")))
   (defvar org-latex-cover-page 'auto
     "When t, use a cover page by default.
   When auto, use a cover page when the document's wordcount exceeds
@@ -1791,158 +1380,6 @@
       (if (eq 'engraved (plist-get info :latex-listings))
           (format "\\begin{Code}[alt]\n%s\n\\end{Code}" output-block)
         output-block)))
-  (defun emojify-emoji-in-buffer-p ()
-    "Determine if any emojis are present in the current buffer, using `emojify-mode'."
-    (unless emojify-mode
-      (emojify-mode 1)
-      (emojify-display-emojis-in-region (point-min) (point-max)))
-    (let (emoji-found end)
-      (save-excursion
-        (goto-char (point-min))
-        (while (not (or emoji-found end))
-          (if-let ((pos (re-search-forward "[^[:ascii:]]" nil t)))
-              (when (get-text-property (1- pos) 'emojified)
-                (setq emoji-found t))
-            (setq end t))))
-      emoji-found))
-  (defun org-latex-emoji-setup ()
-    (format "\\newcommand\\emoji[1]{\\raisebox{-0.3ex}{\\includegraphics[height=1.8ex]{%s/#1}}}" (emojify-image-dir)))
-  
-  (add-to-list 'org-latex-conditional-features '((emojify-emoji-in-buffer-p) . emoji) t)
-  (add-to-list 'org-latex-feature-implementations '(emoji :requires image :snippet (org-latex-emoji-setup) :order 3 ))
-  (defun emojify-latexify-emoji-in-buffer ()
-    (unless emojify-mode
-      (emojify-mode 1)
-      (emojify-display-emojis-in-region (point-min) (point-max)))
-    (let (end)
-      (save-excursion
-        (goto-char (point-min))
-        (while (not end)
-          (if-let ((pos (re-search-forward "[^[:ascii:]]\\{1,2\\}" nil t)))
-              (when-let ((char (get-text-property (1- pos) 'emojify-text))
-                         (emoji (emojify-get-emoji char)))
-                (replace-match (format "\\\\emoji{%s}" (file-name-sans-extension (ht-get emoji "image")))))
-            (setq end t))))))
-  (defun +org-latex-convert-emojis (text backend _info)
-    (when (org-export-derived-backend-p backend 'latex)
-      (with-temp-buffer
-        (insert text)
-        (when (emojify-emoji-in-buffer-p)
-          (emojify-latexify-emoji-in-buffer)
-          (buffer-string)))))
-  
-  (add-to-list 'org-export-filter-final-output-functions #'+org-latex-convert-emojis)
-  (defun org-latex-emoji-install-vector-graphics ()
-    "Dowload, convert, and install vector emojis for use with LaTeX."
-    (interactive)
-    (let ((dir (org-latex-emoji-install-vector-graphics--download)))
-      (org-latex-emoji-install-vector-graphics--convert dir)
-      (org-latex-emoji-install-vector-graphics--install dir))
-    (message "Vector emojis installed."))
-  
-  (defun org-latex-emoji-install-vector-graphics--download ()
-    (message "Locating latest emojis...")
-    (let* ((twemoji-url (substring (shell-command-to-string "echo \"https://github.com$(curl -sL https://github.com/twitter/twemoji/releases/latest | grep '.zip\"' | cut -d '\"' -f 2)\"") 0 -1))
-           (twemoji-version (replace-regexp-in-string "^.*tags/v\\(.*\\)\\.zip" "\\1" twemoji-url))
-           (twemoji-dest-folder (make-temp-file "twemoji-" t)))
-      (message "Downloading Twemoji v%s" twemoji-version)
-      (let ((default-directory twemoji-dest-folder))
-        (call-process "curl" nil nil nil "-L" twemoji-url "--output" "twemoji.zip")
-        (message "Unzipping")
-        (call-process "unzip" nil nil nil "twemoji.zip")
-        (concat twemoji-dest-folder "/twemoji-" twemoji-version "/assets/svg"))))
-  
-  (defun org-latex-emoji-install-vector-graphics--convert (dir)
-    (let ((default-directory dir))
-      (if (executable-find "cairosvg") ; cairo's PDFs are ~10% smaller
-          (let* ((images (directory-files dir nil ".*.svg"))
-                 (num-images (length images))
-                 (index 0)
-                 (max-threads (1- (string-to-number (shell-command-to-string "nproc"))))
-                 (threads 0))
-            (while (< index num-images)
-              (setf threads (1+ threads))
-              (message "Converting emoji %d/%d (%s)" (1+ index) num-images (nth index images))
-              (make-process :name "cairosvg"
-                            :command (list "cairosvg" (nth index images) "-o" (concat (file-name-sans-extension (nth index images)) ".pdf"))
-                            :sentinel (lambda (proc msg)
-                                        (when (memq (process-status proc) '(exit signal))
-                                          (setf threads (1- threads)))))
-              (setq index (1+ index))
-              (while (> threads max-threads)
-                (sleep-for 0.01)))
-            (while (> threads 0)
-              (sleep-for 0.01))
-            (message "Finished conversion!")))
-      (shell-command "inkscape --batch-process --export-type='pdf' *.svg")))
-  
-  (defun org-latex-emoji-install-vector-graphics--install (dir)
-    (message "Installing vector emojis into emoji directory")
-    (let ((images (directory-files dir t ".*.pdf"))
-          (emoji-dir (concat (emojify-image-dir) "/")))
-      (mapcar
-       (lambda (image)
-         (rename-file image emoji-dir t))
-       images)))
-  (defvar +org-pdflatex-inputenc-encoded-chars
-    "[[:ascii:]\u00A0-\u01F0\u0218-\u021BȲȳȷˆˇ˜˘˙˛˝\u0400-\u04FFḂḃẞ\u200C\u2010-\u201E†‡•…‰‱‹›※‽⁄⁎⁒₡₤₦₩₫€₱℃№℗℞℠™Ω℧℮←↑→↓〈〉␢␣◦◯♪⟨⟩Ḡḡ\uFB00-\uFB06]")
-  
-  (defun +org-latex-replace-non-ascii-chars (text backend info)
-    "Replace non-ascii chars with \\char\"XYZ forms."
-    (when (and (org-export-derived-backend-p backend 'latex)
-               (string= (plist-get info :latex-compiler) "pdflatex"))
-      (let (case-replace)
-        (replace-regexp-in-string "[^[:ascii:]]"
-                                  (lambda (nonascii)
-                                    (if (string-match-p +org-pdflatex-inputenc-encoded-chars nonascii) nonascii
-                                      (or (cdr (assoc nonascii +org-latex-non-ascii-char-substitutions)) "¿")))
-                                  text))))
-  
-  (add-to-list 'org-export-filter-final-output-functions #'+org-latex-replace-non-ascii-chars t)
-  (defvar +org-latex-non-ascii-char-substitutions
-     '(("ɑ" . "\\\\(\\\\alpha\\\\)")
-       ("β" . "\\\\(\\\\beta\\\\)")
-       ("γ" . "\\\\(\\\\gamma\\\\)")
-       ("δ" . "\\\\(\\\\delta\\\\)")
-       ("ε" . "\\\\(\\\\epsilon\\\\)")
-       ("ϵ" . "\\\\(\\\\varepsilon\\\\)")
-       ("ζ" . "\\\\(\\\\zeta\\\\)")
-       ("η" . "\\\\(\\\\eta\\\\)")
-       ("θ" . "\\\\(\\\\theta\\\\)")
-       ("ϑ" . "\\\\(\\\\vartheta\\\\)")
-       ("ι" . "\\\\(\\\\iota\\\\)")
-       ("κ" . "\\\\(\\\\kappa\\\\)")
-       ("λ" . "\\\\(\\\\lambda\\\\)")
-       ("μ" . "\\\\(\\\\mu\\\\)")
-       ("ν" . "\\\\(\\\\nu\\\\)")
-       ("ξ" . "\\\\(\\\\xi\\\\)")
-       ("π" . "\\\\(\\\\pi\\\\)")
-       ("ϖ" . "\\\\(\\\\varpi\\\\)")
-       ("ρ" . "\\\\(\\\\rho\\\\)")
-       ("ϱ" . "\\\\(\\\\varrho\\\\)")
-       ("σ" . "\\\\(\\\\sigma\\\\)")
-       ("ς" . "\\\\(\\\\varsigma\\\\)")
-       ("τ" . "\\\\(\\\\tau\\\\)")
-       ("υ" . "\\\\(\\\\upsilon\\\\)")
-       ("ϕ" . "\\\\(\\\\phi\\\\)")
-       ("φ" . "\\\\(\\\\varphi\\\\)")
-       ("ψ" . "\\\\(\\\\psi\\\\)")
-       ("ω" . "\\\\(\\\\omega\\\\)")
-       ("Γ" . "\\\\(\\\\Gamma\\\\)")
-       ("Δ" . "\\\\(\\\\Delta\\\\)")
-       ("Θ" . "\\\\(\\\\Theta\\\\)")
-       ("Λ" . "\\\\(\\\\Lambda\\\\)")
-       ("Ξ" . "\\\\(\\\\Xi\\\\)")
-       ("Π" . "\\\\(\\\\Pi\\\\)")
-       ("Σ" . "\\\\(\\\\Sigma\\\\)")
-       ("Υ" . "\\\\(\\\\Upsilon\\\\)")
-       ("Φ" . "\\\\(\\\\Phi\\\\)")
-       ("Ψ" . "\\\\(\\\\Psi\\\\)")
-       ("Ω" . "\\\\(\\\\Omega\\\\)")
-       ("א" . "\\\\(\\\\aleph\\\\)")
-       ("ב" . "\\\\(\\\\beth\\\\)")
-       ("ד" . "\\\\(\\\\daleth\\\\)")
-       ("ג" . "\\\\(\\\\gimel\\\\)")))
   (defvar +org-latex-abbreviations
     '(;; Latin
       "cf." "e.g." "etc." "et al." "i.e." "v." "vs." "viz." "n.b."
@@ -1968,53 +1405,6 @@
                                 text)))
   
   (add-to-list 'org-export-filter-paragraph-functions #'+org-latex-correct-latin-abbreviation-spaces t)
-  (defvar org-latex-extra-special-string-regexps
-    '(("->" . "\\\\textrightarrow{}")
-      ("<-" . "\\\\textleftarrow{}")))
-  
-  (defun org-latex-convert-extra-special-strings (string)
-    "Convert special characters in STRING to LaTeX."
-    (dolist (a org-latex-extra-special-string-regexps string)
-      (let ((re (car a))
-            (rpl (cdr a)))
-        (setq string (replace-regexp-in-string re rpl string t)))))
-  
-  (defadvice! org-latex-plain-text-extra-special-a (orig-fn text info)
-    "Make `org-latex-plain-text' handle some extra special strings."
-    :around #'org-latex-plain-text
-    (let ((output (funcall orig-fn text info)))
-      (when (plist-get info :with-special-strings)
-        (setq output (org-latex-convert-extra-special-strings output)))
-      output))
-  (defadvice! +org-latex-link (orig-fn link desc info)
-    "Acts as `org-latex-link', but supports remote images."
-    :around #'org-latex-link
-    (setq o-link link
-          o-desc desc
-          o-info info)
-    (if (and (member (plist-get (cadr link) :type) '("http" "https"))
-             (member (file-name-extension (plist-get (cadr link) :path))
-                     '("png" "jpg" "jpeg" "pdf" "svg")))
-        (org-latex-link--remote link desc info)
-      (funcall orig-fn link desc info)))
-  
-  (defun org-latex-link--remote (link _desc info)
-    (let* ((url (plist-get (cadr link) :raw-link))
-           (ext (file-name-extension url))
-           (target (format "%s%s.%s"
-                           (temporary-file-directory)
-                           (replace-regexp-in-string "[./]" "-"
-                                                     (file-name-sans-extension (substring (plist-get (cadr link) :path) 2)))
-                           ext)))
-      (unless (file-exists-p target)
-        (url-copy-file url target))
-      (setcdr link (--> (cadr link)
-                     (plist-put it :type "file")
-                     (plist-put it :path target)
-                     (plist-put it :raw-link (concat "file:" target))
-                     (list it)))
-      (concat "% fetched from " url "\n"
-              (org-latex--inline-image link info))))
   (setq org-latex-text-markup-alist
         '((bold . "\\textbf{%s}")
           (code . protectedtexttt)
@@ -2022,67 +1412,7 @@
           (strike-through . "\\sout{%s}")
           (underline . "\\uline{%s}")
           (verbatim . verb)))
-  (add-transient-hook! #'org-babel-execute-src-block
-    (require 'ob-async))
-  
-  (defvar org-babel-auto-async-languages '()
-    "Babel languages which should be executed asyncronously by default.")
-  
-  (defadvice! org-babel-get-src-block-info-eager-async-a (orig-fn &optional light datum)
-    "Eagarly add an :async parameter to the src information, unless it seems problematic.
-  This only acts o languages in `org-babel-auto-async-languages'.
-  Not added when either:
-  + session is not \"none\"
-  + :sync is set"
-    :around #'org-babel-get-src-block-info
-    (let ((result (funcall orig-fn light datum)))
-      (when (and (string= "none" (cdr (assoc :session (caddr result))))
-                 (member (car result) org-babel-auto-async-languages)
-                 (not (assoc :async (caddr result))) ; don't duplicate
-                 (not (assoc :sync (caddr result))))
-        (push '(:async) (caddr result)))
-      result))
-  (after! cdlatex
-    (setq cdlatex-env-alist
-          '(("bmatrix" "\\begin{bmatrix}\n?\n\\end{bmatrix}" nil)
-            ("equation*" "\\begin{equation*}\n?\n\\end{equation*}" nil)))
-    (setq ;; cdlatex-math-symbol-prefix ?\; ;; doesn't work at the moment :(
-     cdlatex-math-symbol-alist
-     '( ;; adding missing functions to 3rd level symbols
-       (?_    ("\\downarrow"  ""           "\\inf"))
-       (?2    ("^2"           "\\sqrt{?}"     ""     ))
-       (?3    ("^3"           "\\sqrt[3]{?}"  ""     ))
-       (?^    ("\\uparrow"    ""           "\\sup"))
-       (?k    ("\\kappa"      ""           "\\ker"))
-       (?m    ("\\mu"         ""           "\\lim"))
-       (?c    (""             "\\circ"     "\\cos"))
-       (?d    ("\\delta"      "\\partial"  "\\dim"))
-       (?D    ("\\Delta"      "\\nabla"    "\\deg"))
-       ;; no idea why \Phi isnt on 'F' in first place, \phi is on 'f'.
-       (?F    ("\\Phi"))
-       ;; now just convenience
-       (?.    ("\\cdot" "\\dots"))
-       (?:    ("\\vdots" "\\ddots"))
-       (?*    ("\\times" "\\star" "\\ast")))
-     cdlatex-math-modify-alist
-     '( ;; my own stuff
-       (?B    "\\mathbb"        nil          t    nil  nil)
-       (?a    "\\abs"           nil          t    nil  nil))))
-  (package! laas
-    :recipe (:host github :repo "tecosaur/LaTeX-auto-activating-snippets"
-             :files ("*.el"))
-    :pin "b372f9a44bea03cce09b20cd2409e3ae3fa2d651")
-  (use-package! laas
-    :hook (LaTeX-mode . laas-mode)
-    :config
-    (defun laas-tex-fold-maybe ()
-      (unless (equal "/" aas-transient-snippet-key)
-        (+latex-fold-last-macro-a)))
-    (add-hook 'aas-post-snippet-expand-hook #'laas-tex-fold-maybe))
 )
-
-(use-package! org-pretty-table
-  :commands (org-pretty-table-mode global-org-pretty-table-mode))
 
 (use-package! org-appear
   :hook (org-mode . org-appear-mode)
@@ -2109,96 +1439,6 @@
 
 (use-package! org-pandoc-import
   :after org)
-
-(evil-define-command evil-buffer-org-new (count file)
-  "Creates a new ORG buffer replacing the current window, optionally
-   editing a certain FILE"
-  :repeat nil
-  (interactive "P<f>")
-  (if file
-      (evil-edit file)
-    (let ((buffer (generate-new-buffer "*new org*")))
-      (set-window-buffer nil buffer)
-      (with-current-buffer buffer
-        (org-mode)))))
-(map! :leader
-      (:prefix "b"
-       :desc "New empty ORG buffer" "o" #'evil-buffer-org-new))
-
-(use-package! citar
-  :when (featurep! :completion vertico)
-  :custom
-  (org-cite-insert-processor 'citar)
-  (org-cite-follow-processor 'citar)
-  (org-cite-activate-processor 'citar)
-  :config
-  (setq citar-bibliography
-        (let ((libfile-search-names '("library.json" "Library.json" "library.bib" "Library.bib"))
-              (libfile-dir "~/Zotero")
-              paths)
-          (dolist (libfile libfile-search-names)
-            (when (and (not paths)
-                       (file-exists-p (expand-file-name libfile libfile-dir)))
-              (setq paths (list (expand-file-name libfile libfile-dir)))))
-          paths))
-  (setq citar-symbols
-      `((file ,(all-the-icons-faicon "file-o" :face 'all-the-icons-green :v-adjust -0.1) . " ")
-        (note ,(all-the-icons-material "speaker_notes" :face 'all-the-icons-blue :v-adjust -0.3) . " ")
-        (link ,(all-the-icons-octicon "link" :face 'all-the-icons-orange :v-adjust 0.01) . " "))))
-
-(use-package! citeproc
-  :defer t)
-
-;;; Org-Cite configuration
-
-(map! :after org
-      :map org-mode-map
-      :localleader
-      :desc "Insert citation" "@" #'org-cite-insert)
-
-(use-package! oc
-  :after org citar
-  :config
-  (require 'ox)
-  (setq org-cite-global-bibliography
-        (let ((paths (or citar-bibliography
-                         (bound-and-true-p bibtex-completion-bibliography))))
-          ;; Always return bibliography paths as list for org-cite.
-          (if (stringp paths) (list paths) paths)))
-  ;; setup export processor; default csl/citeproc-el, with biblatex for latex
-  (setq org-cite-export-processors
-        '((t csl))))
-
-  ;;; Org-cite processors
-(use-package! oc-biblatex
-  :after oc)
-
-(use-package! oc-csl
-  :after oc
-  :config
-  (setq org-cite-csl-styles-dir "~/Zotero/styles"))
-
-(use-package! oc-natbib
-  :after oc)
-
-(use-package! oc-csl-activate
-  :after oc
-  :config
-  (setq org-cite-csl-activate-use-document-style t)
-  (defun +org-cite-csl-activate/enable ()
-    (interactive)
-    (setq org-cite-activate-processor 'csl-activate)
-    (add-hook! 'org-mode-hook '((lambda () (cursor-sensor-mode 1)) org-cite-csl-activate-render-all))
-    (defadvice! +org-cite-csl-activate-render-all-silent (orig-fn)
-      :around #'org-cite-csl-activate-render-all
-      (with-silent-modifications (funcall orig-fn)))
-    (when (eq major-mode 'org-mode)
-      (with-silent-modifications
-        (save-excursion
-          (goto-char (point-min))
-          (org-cite-activate (point-max)))
-        (org-cite-csl-activate-render-all)))
-    (fmakunbound #'+org-cite-csl-activate/enable)))
 
 (use-package! websocket
   :after org-roam)

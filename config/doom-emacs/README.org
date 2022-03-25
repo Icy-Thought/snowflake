@@ -6,7 +6,6 @@
 - [[#greetings-from-doom-emacs-][Greetings from Doom Emacs! 🔥]]
 - [[#installation][Installation]]
   - [[#doom-emacs][Doom-Emacs]]
-  - [[#bmc-math][BMC (Math)]]
 - [[#inspiration][Inspiration]]
 
 * Greetings from Doom Emacs! 🔥
@@ -26,15 +25,6 @@ as [[https://tecosaur.github.io/][Tecosaur]] and other inspiring doom configurat
 #+begin_src sh
 git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d
 ~/.emacs.d/bin/doom install
-#+end_src
-
-** BMC (Math)
-#+begin_src sh
-if [[ ! -d "/path/to/dir" ]]; then
-   mkdir -p ~/texmf
-fi
-git clone --depth 1 https://github.com/tecosaur/BMC.git ~/texmf
-texhash
 #+end_src
 
 * Inspiration

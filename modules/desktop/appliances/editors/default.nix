@@ -30,7 +30,8 @@ in {
         gnuplot
         (texlive.combine {
           inherit (texlive)
-            scheme-medium cancel gfsartemisia svg transparent trimspaces;
+            scheme-medium cancel currfile embedall embedfile gfsartemisia hanging svg transparent
+            trimspaces wrapfig;
           BMC = { pkgs = [ my.bmc-math ]; };
         })
         ## :lang javascript
