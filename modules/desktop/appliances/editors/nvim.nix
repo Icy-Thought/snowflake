@@ -40,8 +40,6 @@ in {
       ''];
 
       extraPackages = with pkgs; [
-        # extraPkgs
-        lazygit
         ## lsp: lua
         stylua
         sumneko-lua-language-server
@@ -84,17 +82,17 @@ in {
         (plugWithLuaCfg wilder-nvim)
 
         # Git
+        (plugWithLuaCfg neogit)
         (plugWithLuaCfg octo-nvim)
-        lazygit-nvim
 
         # Behaviour
         (plugWithLuaCfg nvim-spectre)
+        (plugWithLuaCfg project-nvim)
         (plugWithLuaCfg telescope-nvim)
         telescope-file-browser-nvim
         telescope-frecency-nvim
         telescope-fzf-native-nvim
         fzy-lua-native
-        (plugWithLuaCfg project-nvim)
         (plugWithLuaCfg toggleterm-nvim)
 
         # Editor
@@ -102,10 +100,11 @@ in {
         (plugWithLuaCfg comment-nvim)
         (plugWithLuaCfg copilot-vim)
         (plugWithLuaCfg indent-blankline-nvim)
+        (plugWithLuaCfg neorg)
         (plugWithLuaCfg nvim-autopairs)
         (plugWithLuaCfg nvim-tree-lua)
-        (plugWithLuaCfg todo-comments-nvim)
         (plugWithLuaCfg markdown-preview-nvim)
+        (plugWithLuaCfg todo-comments-nvim)
 
         # LSP-related
         (plugWithLuaCfg nvim-treesitter)

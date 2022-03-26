@@ -100,6 +100,7 @@ local mappings = {
         b = { "<CMD>Telescope git_branches<CR>", "Checkout Branch" },
         c = { "<CMD>Telescope git_commits<CR>", "Checkout Commit" },
         d = { "<CMD>Gitsigns diffthis HEAD<CR>", "Diff" },
+        g = { "<CMD>Neogit<CR>", "Launch Neogit" },
         j = { "<CMD>Gitsigns next_hunk<CR>", "Next Change" },
         k = { "<CMD>Gitsigns prev_hunk<CR>", "Prev Change" },
         l = { "<CMD>Gitsigns blame_line<CR>", "Blame" },

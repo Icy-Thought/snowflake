@@ -8,6 +8,15 @@
 - [[#inspiration][Inspiration]]
 
 * Greetings from NVIM! 🌒
+#+BEGIN_QUOTE
+*Announcement for the future*:
+My nvim configuration will be re-written in Fennel because of lisp being a more
+appealing language than Lua.
+
+Whenever that occurs -> say your farewell to our beloved Emacs.
+Why? Because Emacs is not a text editor and what I want is a text editor.
+#+END_QUOTE
+
 At the time of writing, the Neovim configuration files contained within the =lua= folder mostly consists of the recommended settings mentioned in the =README.md= of the installed plugins, while the remaining modifications belong to myself and other Neovim users. (=Ayamir's nvimdots=, =Abzcoding's lvim= & =Neovim From Scratch (LunarVim)=)
 
 * Sections
