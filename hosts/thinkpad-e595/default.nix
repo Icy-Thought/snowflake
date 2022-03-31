@@ -41,8 +41,7 @@
       };
       philomath.aula = {
         anki.enable = true;
-        # libre.enable = true;
-        # zoom.enable = true;
+        zoom.enable = true;
       };
       media = {
         mpv.enable = true;

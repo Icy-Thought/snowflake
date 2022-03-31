@@ -7,15 +7,13 @@ in {
   options.modules.desktop.appliances.philomath.aula = {
     enable = mkBoolOpt false;
     anki.enable = mkBoolOpt true;
-    libre.enable = mkBoolOpt false;
     zoom.enable = mkBoolOpt false;
   };
 
   config = mkIf cfg.enable (mkMerge [
     {
-      user.packages = with pkgs;
-        (if cfg.anki.enable then [ anki ] else [ ])
-        ++ (if cfg.libre.enable then [ libreoffice ] else [ ]);
+      # Configure anki OR replace with other software
+      user.packages = with pkgs; (if cfg.anki.enable then [ anki ] else [ ]);
     }
     (mkIf zoom.enable {
       programs.firejail = {
