@@ -2,7 +2,6 @@
   description = "λ well-tailored and configureable NixOS system!";
 
   inputs = {
-    # Core Dependencies:
     nixpkgs.url = "nixpkgs/nixos-unstable";
     nixpkgs-unstable.url = "nixpkgs/nixpkgs-unstable";
 
@@ -12,18 +11,14 @@
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
 
-    # XMonad:
-    # (remove) xmonad & contrib after "ConditionalLayoutModifier" merger
+    ## (remove) xmonad & contrib after "ConditionalLayoutModifier" merger
     xmonad.url = "github:xmonad/xmonad";
     xmonad-contrib.url = "github:icy-thought/xmonad-contrib";
     taffybar.url = "github:taffybar/taffybar";
 
-    # Extras:
     emacs.url = "github:nix-community/emacs-overlay";
+    neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
     rust.url = "github:oxalica/rust-overlay";
-
-    picom.url = "github:yshui/picom/next";
-    picom.flake = false;
   };
 
   outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, ... }:
@@ -56,7 +51,6 @@
       overlay = final: prev: {
         unstable = pkgs';
         my = self.packages."${system}";
-        picom = prev.picom.overrideAttrs (_: { src = inputs.picom; });
       };
 
       overlays = mapModules ./overlays import;
