@@ -21,19 +21,23 @@ vim.g.nvim_tree_icons = {
 
 local nvim_tree = prequire("nvim-tree")
 
-nvim_tree.setup {
-	disable_netrw = true,
-	hijack_netrw = true,
+nvim_tree.setup({
+    disable_netrw = true,
+    hijack_netrw = true,
     open_on_setup = false,
     ignore_ft_on_setup = {},
-    auto_close = true,
     open_on_tab = false,
     hijack_cursor = true,
     update_cwd = false,
     update_to_buf_dir = { enable = true, auto_open = true },
     diagnostics = {
         enable = false,
-        icons = { hint = "", info = "", warning = "", error = "" },
+        icons = {
+            hint = "",
+            info = "",
+            warning = "",
+            error = "",
+        },
     },
     update_focused_file = {
         enable = true,
@@ -55,4 +59,8 @@ nvim_tree.setup {
         signcolumn = "yes",
     },
     trash = { cmd = "trash", require_confirm = true },
-}
+})
+-- Prevent auto-close hickup:
+vim.cmd(
+    [[autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif]]
+)

@@ -31,8 +31,8 @@ in {
       package = pkgs.neovim-nightly;
       extraConfig = builtins.concatStringsSep "\n" [''
         lua vim.cmd([[colorscheme ${acs}]])
-        luafile ${builtins.toString "${configDir}/lua/core/options.lua"}
-        luafile ${builtins.toString "${configDir}/lua/keymaps/init.lua"}
+        luafile ${builtins.toString "${configDir}/lua/options.lua"}
+        luafile ${builtins.toString "${configDir}/lua/keymaps.lua"}
       ''];
       extraPackages = with pkgs; [ stylua sumneko-lua-language-server ];
       plugins = pkgs.callPackage "${configDir}/plugins.nix" plugins;

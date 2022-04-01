@@ -13,4 +13,14 @@ in with pkgs; {
       sha256 = "ieZ/2n7NXpJuS094gSArX6s5UGTKIlG36ZZNOdMSyIo=";
     };
   };
+  fzy-lua-native = buildPlugin rec {
+    pname = "fzy-lua-native";
+    version = "2021-08-02";
+    src = pkgs.fetchFromGitHub {
+      owner = "romgrk";
+      repo = pname;
+      rev = "aa00feb01128c4d279c8471898e15898e75d5df5";
+      sha256 = "JTldjJz5XnG9bgPfAYvjUaHYm0PtJ0MiDBQ9DfjSTQ8=";
+    };
+  };
 }

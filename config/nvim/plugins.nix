@@ -5,7 +5,7 @@ let
   plugWithLuaCfg = plugin: {
     inherit plugin;
     type = "lua";
-    config = readLuaFile "lua/modules/${plugin.pname}/init";
+    config = readLuaFile "lua/config/${plugin.pname}/init";
   };
 in with plugins; [
   # UI
@@ -17,6 +17,7 @@ in with plugins; [
   (plugWithLuaCfg bufferline-nvim)
   (plugWithLuaCfg which-key-nvim)
   (plugWithLuaCfg wilder-nvim)
+  fzy-lua-native # wilder dep.
 
   # Utility
   (plugWithLuaCfg neogit)
@@ -50,7 +51,6 @@ in with plugins; [
   (plugWithLuaCfg comment-nvim)
   (plugWithLuaCfg copilot-vim)
   (plugWithLuaCfg indent-blankline-nvim)
-  (plugWithLuaCfg neorg)
   (plugWithLuaCfg nvim-autopairs)
   (plugWithLuaCfg nvim-tree-lua)
   (plugWithLuaCfg markdown-preview-nvim)
