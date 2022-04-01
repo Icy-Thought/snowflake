@@ -14,7 +14,7 @@ with lib.my; {
       binDir = mkOpt path "${config.snowflake.dir}/bin";
       configDir = mkOpt path "${config.snowflake.dir}/config";
       modulesDir = mkOpt path "${config.snowflake.dir}/modules";
-      themeDir = mkOpt path "${config.snowflake.modulesDir}/theme";
+      themesDir = mkOpt path "${config.snowflake.modulesDir}/themes";
     };
 
     homeManager = mkOpt' attrs { } "Define home-manager related settings.";
