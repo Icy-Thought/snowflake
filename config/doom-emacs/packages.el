@@ -32,24 +32,20 @@
   :recipe (:host github :repo "tecosaur/org-pandoc-import"
            :files ("*.el" "filters" "preprocessors")))
 
+;; [[file:config.org::*Roam][Roam:2]]
 (package! org-roam :disable t)
+;; Roam:2 ends here
 
+;; [[file:config.org::*Graph view][Graph view:1]]
 (package! org-roam-ui
   :recipe (:host github :repo "org-roam/org-roam-ui"
            :files ("*.el" "out"))
   :pin "309fe3c58c7081de4e2c9c64f7b40ea291926048")
 (package! websocket
   :pin "fda4455333309545c0787a79d73c19ddbeb57980")
+;; Graph view:1 ends here
 
+;; [[file:config.org::*Render LaTeX on the fly!][Render LaTeX on the fly!:1]]
 (package! org-fragtog
   :pin "680606189d5d28039e6f9301b55ec80517a24005")
-
-(package! engrave-faces
-  :recipe (:host github :repo "tecosaur/engrave-faces"
-           :files ("*.el"))
-  :pin "9e41d5f9a8f8e91d2e1424bc1cc4948cf5165ac8")
-
-(package! ox-chameleon
-  :recipe (:host github :repo "tecosaur/ox-chameleon"
-           :files ("*.el"))
-  :pin "8c7f6362c49a80b4bc96acc63f527a212ebd9428")
+;; Render LaTeX on the fly!:1 ends here

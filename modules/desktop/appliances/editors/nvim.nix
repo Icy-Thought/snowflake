@@ -34,7 +34,7 @@ in {
         luafile ${builtins.toString "${configDir}/lua/options.lua"}
         luafile ${builtins.toString "${configDir}/lua/keymaps.lua"}
       ''];
-      extraPackages = with pkgs; [ stylua sumneko-lua-language-server ];
+      extraPackages = with pkgs; [ stylua sumneko-lua-language-server vale ];
       plugins = pkgs.callPackage "${configDir}/plugins.nix" plugins;
     };
   };

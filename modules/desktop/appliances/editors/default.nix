@@ -17,7 +17,7 @@ in {
         fd
         imagemagick
         (ripgrep.override { withPCRE2 = true; })
-        # toolset
+        # toolbox
         editorconfig-core-c
         # module dependencies
         ## checkers: aspell
@@ -25,16 +25,12 @@ in {
         ## lsp: haskell
         haskell-language-server
         stylish-haskell
-        ## lsp: latex
-        biber
+        ## lsp: LaTeX
+        tectonic
         gnuplot
-        (texlive.combine {
-          inherit (texlive)
-            scheme-medium cancel currfile embedall embedfile gfsartemisia hanging svg transparent
-            trimspaces wrapfig;
-          BMC = { pkgs = [ my.bmc-math ]; };
-        })
-        ## :lang javascript
+        ## lsp: Org-Mode
+        pandoc
+        ## lsp: javascript
         nodePackages.typescript-language-server
         ## lsp: nix
         nixfmt

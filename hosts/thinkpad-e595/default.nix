@@ -31,7 +31,6 @@
       };
       editors = {
         default = "nvim";
-        emacs.enable = true;
         nvim.enable = true;
       };
       browsers = {
