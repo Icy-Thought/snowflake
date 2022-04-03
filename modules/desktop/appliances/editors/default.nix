@@ -11,7 +11,7 @@ in {
   config = (mkMerge [
     (mkIf (cfg.default != null) { env.EDITOR = cfg.default; })
 
-    (mkIf (cfg.emacs.enable || cfg.neovim.enable) {
+    (mkIf (cfg.emacs.enable || cfg.nvim.enable) {
       user.packages = with pkgs; [
         #extraPkgs
         fd
