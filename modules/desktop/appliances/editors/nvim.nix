@@ -5,7 +5,7 @@ with lib.my;
 let
   acs = config.modules.themes.active;
   cfg = config.modules.desktop.appliances.editors.nvim;
-  configDir = "${config.snowflake.configDir}/nvim";
+  configDir = "${config.snowflake.configDir}/nvim.d/niflheim";
 in {
   options.modules.desktop.appliances.editors.nvim = {
     enable = mkBoolOpt false;

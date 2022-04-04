@@ -51,7 +51,7 @@ in
     # Default DOOMDIR => Snowflake/config/doom-emacs.
     environment.variables = {
       EMACSDIR = "$XDG_CONFIG_HOME/emacs";
-      DOOMDIR = "${configDir}/doom-emacs";
+      DOOMDIR = "${configDir}/emacs.d/doom-emacs";
     };
 
     # init.doomEmacs = mkIf cfg.doom.enable ''
