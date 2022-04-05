@@ -5,8 +5,7 @@ with lib.my;
 let
   cfg = config.modules.desktop.appliances.editors.emacs;
   configDir = config.snowflake.configDir;
-in
-{
+in {
   options.modules.desktop.appliances.editors.emacs = {
     enable = mkBoolOpt false;
     doom = {
@@ -26,7 +25,7 @@ in
     homeManager.programs.emacs = {
       enable = true;
       package = pkgs.emacsGcc;
-      extraPackages = epkgs: with epkgs; [ vterm pdf-tools emojify ];
+      extraPackages = epkgs: with epkgs; [ vterm ];
     };
 
     user.packages = with pkgs; [
@@ -48,7 +47,6 @@ in
     # Enable access to doom (tool).
     env.PATH = [ "$XDG_CONFIG_HOME/emacs/bin" ];
 
-    # Default DOOMDIR => Snowflake/config/doom-emacs.
     environment.variables = {
       EMACSDIR = "$XDG_CONFIG_HOME/emacs";
       DOOMDIR = "${configDir}/emacs.d/doom-emacs";
