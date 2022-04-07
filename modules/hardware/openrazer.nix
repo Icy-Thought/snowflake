@@ -16,9 +16,7 @@ in {
 
     user.extraGroups = [ "plugdev" "openrazer" ];
 
-    environment.systemPackages = with pkgs;
-      [
-        # TODO: polychromatic
-      ];
+    # GUI for managing your openrazer devices
+    environment.systemPackages = with pkgs; [ my.polychromatic ];
   };
 }

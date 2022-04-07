@@ -15,8 +15,8 @@
   - [[#replacing-necessary-configuration-entries][Replacing Necessary Configuration Entries]]
 - [[#doom-emacs][Doom Emacs]]
 - [[#congratulations-][Congratulations! 🎉]]
-- [[#special-thanks][Special Thanks]]
 - [[#useful-links][Useful Links]]
+- [[#special-thanks][Special Thanks]]
 
 * Introduction
 A hamerspace containing a declarative NixOS environment consisting of many hand-crafted configurations, ranging from: Kitty, Alacritty, Doom-Emacs, Zathura to many other applications which can be found in the =./home= directory.
@@ -144,7 +144,7 @@ reboot
 * Doom Emacs
 If you have replicated my setup, you need to do nothing but ~git clone~ doom-emacs repository and enable the =emacs= module in your =X/default.nix=:
 #+begin_src nix :noeval
-modules.desktop.txtEditor.emacs.enable = true;
+modules.desktop.appliances.editors.emacs.enable = true;
 #+end_src
 
 To proceed with the installation of doom-emacs on your newly installed/configured nix-flake system:
