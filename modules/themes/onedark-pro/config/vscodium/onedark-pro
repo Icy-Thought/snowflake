@@ -1,0 +1,6 @@
+{
+    name = "Material-theme";
+    publisher = "zhuangtongfa";
+    version = "3.13.20";
+    sha256 = "ACk9bnxFjhS7K4cUpiTUUaeDJqEpiL+jWh9XEYBDvEo=";
+}

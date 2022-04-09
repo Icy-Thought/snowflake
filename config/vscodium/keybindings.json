@@ -1,0 +1,7 @@
+[
+  {
+    "key": "shift+;",
+    "command": "vim.showQuickpickCmdLine",
+    "when": "editorTextFocus && vim.mode != 'Insert'"
+  }
+]

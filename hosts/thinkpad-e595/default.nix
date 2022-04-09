@@ -33,6 +33,7 @@
         default = "nvim";
         emacs.enable = true;
         nvim.enable = true;
+        vscodium.enable = true;
       };
       browsers = {
         default = "firefox";
