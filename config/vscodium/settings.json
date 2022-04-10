@@ -1,4 +1,5 @@
 {
+    "__comment": "(VSCode) settings.json => immutable conf-file, managed via (Nix) Home-Manager",
     "update.mode": "false",
     "workbench.settings.editor": "ui",
     "files.exclude": {
@@ -10,19 +11,13 @@
         "**/*.o": true
     },
 
+    "window.menuBarVisibility": "toggle",
     "breadcrumbs.enabled": false,
-    "workbench.iconTheme": "VSCode Icons",
+    "workbench.iconTheme": "vscode-icons",
     "workbench.tree.indent": 8,
     "editor.scrollbar.vertical": "auto",
     "editor.roundedSelection": true,
     "editor.smoothScrolling": true,
-
-    "editor.fontFamily": "VictorMono Nerd Font, Consolas, monospace",
-    "editor.fontSize": 16,
-    "debug.console.fontFamily": "VictorMono Nerd Font Mono",
-    "debug.console.fontSize": 14,
-    "terminal.integrated.fontFamily": "VictorMono Nerd Font Mono",
-    "terminal.integrated.fontSize": 14,
 
     "terminal.integrated.env.linux": { },
     "terminal.explorerKind": "integrated",
@@ -43,6 +38,7 @@
     "search.searchEditor.doubleClickBehaviour": "goToLocation",
 
     "files.autoSave": "onWindowChange",
+    "editor.formatOnSave": true,
     "editor.bracketPairColorization.enabled": true,
     "editor.guides.bracketPairs": "active",
     "editor.tabSize": 4,

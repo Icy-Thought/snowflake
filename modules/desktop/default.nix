@@ -32,7 +32,7 @@ in {
       libsForQt5.qtstyleplugin-kvantum
     ];
 
-    modules.desktop.appliances.termIce = {
+    modules.desktop.terminal = {
       colorPanes.enable = true;
       htop.enable = true;
       neofetch.enable = true;

@@ -23,40 +23,37 @@
 
   modules.desktop = {
     xmonad.enable = true;
-
-    appliances = {
-      termEmu = {
-        default = "alacritty";
-        alacritty.enable = true;
-      };
-      editors = {
-        default = "nvim";
-        emacs.enable = true;
-        nvim.enable = true;
-        vscodium.enable = true;
-      };
-      browsers = {
-        default = "firefox";
-        firefox.enable = true;
-        unGoogled.enable = true;
-      };
-      philomath.aula = {
-        anki.enable = true;
-        zoom.enable = true;
-      };
-      media = {
-        mpv.enable = true;
-        spotify.enable = true;
-        graphics.enable = true;
-        docViewer.enable = true;
-        transmission.enable = true;
-        chat = {
-          enable = true;
-          mobile.enable = true;
-        };
-      };
-      gaming = { steam.enable = true; };
+    terminal = {
+      default = "alacritty";
+      alacritty.enable = true;
     };
+    editors = {
+      default = "nvim";
+      emacs.enable = true;
+      nvim.enable = true;
+      vscodium.enable = true;
+    };
+    browsers = {
+      default = "firefox";
+      firefox.enable = true;
+      unGoogled.enable = true;
+    };
+    philomath.aula = {
+      anki.enable = true;
+      zoom.enable = true;
+    };
+    media = {
+      mpv.enable = true;
+      spotify.enable = true;
+      graphics.enable = true;
+      docViewer.enable = true;
+      transmission.enable = true;
+      chat = {
+        enable = true;
+        mobile.enable = true;
+      };
+    };
+    gaming = { steam.enable = false; };
   };
 
   modules.develop = {

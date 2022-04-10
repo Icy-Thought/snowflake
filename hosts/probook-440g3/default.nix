@@ -22,30 +22,27 @@
 
   modules.desktop = {
     gnome.enable = true;
-
-    appliances = {
-      termEmu = {
-        default = "alacritty";
-        alacritty.enable = true;
-      };
-      editors = {
-        default = "nvim";
-        nvim.enable = true;
-      };
-      browsers = {
-        default = "firefox";
-        firefox.enable = true;
-        unGoogled.enable = true;
-      };
-      extras = {
-        chat.enable = true;
-        docViewer.enable = true;
-      };
-      media = {
-        mpv.enable = true;
-        spotify.enable = true;
-        # graphics.enable = true;
-      };
+    terminal = {
+      default = "alacritty";
+      alacritty.enable = true;
+    };
+    editors = {
+      default = "nvim";
+      nvim.enable = true;
+    };
+    browsers = {
+      default = "firefox";
+      firefox.enable = true;
+      unGoogled.enable = true;
+    };
+    extras = {
+      chat.enable = true;
+      docViewer.enable = true;
+    };
+    media = {
+      mpv.enable = true;
+      spotify.enable = true;
+      # graphics.enable = true;
     };
   };
 

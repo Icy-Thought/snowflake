@@ -2,10 +2,7 @@
 
 with lib;
 with lib.my;
-let
-  cfg = config.modules.themes;
-  dsk = config.modules.desktop;
-  dapl = config.modules.desktop.appliances;
+let cfg = config.modules.themes;
 in {
   config = mkIf (cfg.active == "onedark-pro") (mkMerge [
     {
@@ -74,39 +71,41 @@ in {
       fonts.fonts = with pkgs;
         [ (nerdfonts.override { fonts = [ "VictorMono" ]; }) ];
 
-      home.configFile = mkMerge [
-        {
-          # Sourced from sessionCommands in modules/themes/default.nix
-          "xtheme/90-theme".text = import ./config/Xresources cfg;
-          "fish/conf.d/onedark-pro.fish".source = ./config/fish/onedark-pro.fish;
-        }
-        (mkIf (dsk.xmonad.enable || dsk.bspwm.enable) {
-          "dunst/dunstrc".text = import ./config/dunst/dunstrc cfg;
-          "rofi" = {
-            source = ./config/rofi;
-            recursive = true;
-          };
-        })
-        (mkIf dapl.termEmu.alacritty.enable {
-          "alacritty/config/onedark-pro.yml".text =
-            import ./config/alacritty/onedark-pro.yml cfg;
-        })
-        (mkIf dapl.termEmu.kitty.enable {
-          "kitty/config/onedark-pro.conf".text =
-            import ./config/kitty/onedark-pro.conf cfg;
-        })
-        (mkIf dapl.media.docViewer.enable {
-          "zathura/zathurarc".text = import ./config/zathura/zathurarc cfg;
-        })
-        # (mkIf dapl.media.graphics.vector.enable {
-        #   "inkscape/templates/default.svg".source =
-        #     ./config/inkscape/default-template.svg;
-        # })
-      ];
+      home.configFile = with config.modules;
+        mkMerge [
+          {
+            # Sourced from sessionCommands in modules/themes/default.nix
+            "xtheme/90-theme".text = import ./config/Xresources cfg;
+            "fish/conf.d/onedark-pro.fish".source =
+              ./config/fish/onedark-pro.fish;
+          }
+          (mkIf (desktop.xmonad.enable || desktop.bspwm.enable) {
+            "dunst/dunstrc".text = import ./config/dunst/dunstrc cfg;
+            "rofi" = {
+              source = ./config/rofi;
+              recursive = true;
+            };
+          })
+          (mkIf desktop.terminal.alacritty.enable {
+            "alacritty/config/onedark-pro.yml".text =
+              import ./config/alacritty/onedark-pro.yml cfg;
+          })
+          (mkIf desktop.terminal.kitty.enable {
+            "kitty/config/onedark-pro.conf".text =
+              import ./config/kitty/onedark-pro.conf cfg;
+          })
+          (mkIf desktop.media.docViewer.enable {
+            "zathura/zathurarc".text = import ./config/zathura/zathurarc cfg;
+          })
+          # (mkIf desktop.media.graphics.vector.enable {
+          #   "inkscape/templates/default.svg".source =
+          #     ./config/inkscape/default-template.svg;
+          # })
+        ];
     })
 
     # Activate Neovim Colorscheme
-    (mkIf dapl.editors.nvim.enable {
+    (mkIf config.modules.desktop.editors.nvim.enable {
       homeManager.programs.neovim.plugins = with pkgs.vimPlugins; [{
         plugin = onedarkpro-nvim;
         type = "lua";
@@ -114,30 +113,31 @@ in {
       }];
     })
 
-    (mkIf (dsk.xmonad.enable || dsk.qtile.enable) {
-      services.xserver.displayManager = {
-        sessionCommands = with cfg.gtk; ''
-          ${pkgs.xorg.xsetroot}/bin/xsetroot -xcf ${pkgs.bibata-cursors}/share/icons/${cursor.name}/cursors/${cursor.default} ${
-            toString (cursor.size)
-          }
-        '';
+    (mkIf (config.modules.desktop.xmonad.enable
+      || config.modules.desktop.qtile.enable) {
+        services.xserver.displayManager = {
+          sessionCommands = with cfg.gtk; ''
+            ${pkgs.xorg.xsetroot}/bin/xsetroot -xcf ${pkgs.bibata-cursors}/share/icons/${cursor.name}/cursors/${cursor.default} ${
+              toString (cursor.size)
+            }
+          '';
 
-        # LightDM: Replace with LightDM-Web-Greeter theme
-        lightdm.greeters.mini.extraConfig = ''
-          text-color = "${cfg.colors.magenta}"
-          password-background-color = "${cfg.colors.black}"
-          window-color = "${cfg.colors.types.border}"
-          border-color = "${cfg.colors.types.border}"
-        '';
-      };
+          # LightDM: Replace with LightDM-Web-Greeter theme
+          lightdm.greeters.mini.extraConfig = ''
+            text-color = "${cfg.colors.magenta}"
+            password-background-color = "${cfg.colors.black}"
+            window-color = "${cfg.colors.types.border}"
+            border-color = "${cfg.colors.types.border}"
+          '';
+        };
 
-      # Fcitx5
-      home.file.".local/share/fcitx5/themes".source = pkgs.fetchFromGitHub {
-        owner = "icy-thought";
-        repo = "fcitx5-catppuccin";
-        rev = "3b699870fb2806404e305fe34a3d2541d8ed5ef5";
-        sha256 = "hOAcjgj6jDWtCGMs4Gd49sAAOsovGXm++TKU3NhZt8w=";
-      };
-    })
+        # Fcitx5
+        home.file.".local/share/fcitx5/themes".source = pkgs.fetchFromGitHub {
+          owner = "icy-thought";
+          repo = "fcitx5-catppuccin";
+          rev = "3b699870fb2806404e305fe34a3d2541d8ed5ef5";
+          sha256 = "hOAcjgj6jDWtCGMs4Gd49sAAOsovGXm++TKU3NhZt8w=";
+        };
+      })
   ]);
 }
