@@ -25,7 +25,7 @@ in {
       (makeDesktopItem {
         name = "firefox-devedition-private";
         desktopName = "Firefox-DevEdition (Private)";
-        genericName = "Open a Private Firefox-DevEdition Window";
+        genericName = "Launch a Private Firefox-DevEdition Instance";
         icon = "firefox";
         exec =
           "${firefox-devedition-bin}/bin/firefox-devedition --private-window";

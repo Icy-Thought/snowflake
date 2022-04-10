@@ -31,9 +31,9 @@
       nvim.enable = true;
     };
     browsers = {
-      default = "firefox";
+      default = "brave";
+      brave.enable = true;
       firefox.enable = true;
-      unGoogled.enable = true;
     };
     extras = {
       chat.enable = true;

@@ -34,9 +34,9 @@
       vscodium.enable = true;
     };
     browsers = {
-      default = "firefox";
+      default = "brave";
+      brave.enable = true;
       firefox.enable = true;
-      unGoogled.enable = true;
     };
     philomath.aula = {
       anki.enable = true;
@@ -53,7 +53,7 @@
         mobile.enable = true;
       };
     };
-    gaming = { steam.enable = false; };
+    # gaming = { steam.enable = true; };
   };
 
   modules.develop = {

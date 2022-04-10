@@ -228,27 +228,27 @@ getWorkspaceDmenu = myDmenu (workspaces myConfig)
 -- Selectors
 isProtonMailTitle t = isInfixOf "@protonmail.com" t && isInfixOf "ProtonMail" t
 
-isChromiumClass = isInfixOf "Chromium"
+isChromiumClass = isInfixOf "Brave"
 
 noSpecialChromiumTitles = helper <$> title
   where helper t = not $ any ($ t) [isProtonMailTitle]
 
 chromiumSelectorBase = isChromiumClass <$> className
 
-chromiumSelector = className =? "Chromium"
+chromiumSelector = className =? "Brave-browser"
 
 firefoxSelector = className =? "Firefox"
 
 protonMailSelector = chromiumSelectorBase <&&> fmap isProtonMailTitle title
 
 virtualClasses =
-  [(protonMailSelector, "ProtonMail"), (chromiumSelector, "Chromium")]
+  [(protonMailSelector, "ProtonMail"), (chromiumSelector, "Brave")]
 
 -- Commands
-chromiumCommand = "chromium"
+chromiumCommand = "brave"
 
 protonMailCommand =
-  "chromium --new-window https://mail.protonmail.com/u/5/inbox"
+  "brave --new-window https://mail.protonmail.com/u/5/inbox"
 
 firefoxCommand = "firefox-devedition"
 
