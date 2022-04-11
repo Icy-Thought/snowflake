@@ -27,7 +27,7 @@
         };
       in rec {
         devShell = pkgs.haskellPackages.shellFor {
-          packages = p: [ p.icy-xmonad ];
+          packages = p: [ p.my-xmonad ];
           buildInputs = with pkgs.haskellPackages; [
             cabal-install
             haskell-language-server
@@ -37,7 +37,7 @@
             implicit-hie
           ];
         };
-        defaultPackage = pkgs.haskellPackages.icy-xmonad;
+        defaultPackage = pkgs.haskellPackages.my-xmonad;
       }) // {
         inherit overlay overlays;
       };

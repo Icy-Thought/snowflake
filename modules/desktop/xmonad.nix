@@ -12,7 +12,7 @@ in {
     nixpkgs.overlays = [ inputs.xmonad.overlay inputs.xmonad-contrib.overlay ];
 
     environment.systemPackages = with pkgs; [
-      haskellPackages.icy-xmonad
+      haskellPackages.my-xmonad
       lightdm
       libnotify
       dunst
@@ -38,7 +38,7 @@ in {
       windowManager.session = [{
         name = "xmonad";
         start = ''
-          /usr/bin/env icy-xmonad &
+          /usr/bin/env my-xmonad &
           waitPID=$!
         '';
       }];
@@ -67,7 +67,7 @@ in {
         preferStatusNotifierItems = true;
 
         windowManager.command = ''
-          ${pkgs.haskellPackages.icy-xmonad}/bin/icy-xmonad
+          ${pkgs.haskellPackages.my-xmonad}/bin/my-xmonad
         '';
 
         importedVariables = [ "GDK_PIXBUF_MODULE_FILE" ];

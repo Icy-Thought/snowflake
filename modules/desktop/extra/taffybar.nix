@@ -21,7 +21,7 @@ in {
 
     homeManager.services.taffybar = {
       enable = true;
-      package = pkgs.haskellPackages.icy-taffybar;
+      package = pkgs.haskellPackages.my-taffybar;
     };
   };
 }

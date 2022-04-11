@@ -12,7 +12,7 @@
     },
 
     "window.menuBarVisibility": "toggle",
-    "breadcrumbs.enabled": false,
+    "breadcrumbs.enabled": true,
     "workbench.iconTheme": "vscode-icons",
     "workbench.tree.indent": 8,
     "editor.scrollbar.vertical": "auto",

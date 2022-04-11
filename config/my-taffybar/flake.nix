@@ -18,10 +18,9 @@
           config.allowBroken = true;
         };
       in rec {
-        devShell = pkgs.haskellPackages.shellFor {
-          packages = p: [ p.icy-taffybar ];
-        };
-        defaultPackage = pkgs.haskellPackages.icy-taffybar;
+        devShell =
+          pkgs.haskellPackages.shellFor { packages = p: [ p.my-taffybar ]; };
+        defaultPackage = pkgs.haskellPackages.my-taffybar;
       }) // {
         inherit overlay overlays;
       };

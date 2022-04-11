@@ -1,13 +1,13 @@
-name:           icy-xmonad
+name:           my-xmonad
 version:        0.1.0
-synopsis:       Icy-Thought's Xmonad configuration.
-homepage:       https://github.com/Icy-Thought/Snowflake/home/xmonad/icy-xmonad
+synopsis:       Icy-Thought's Xmonad Config
+homepage:       https://github.com/Icy-Thought/Snowflake/tree/main/config/my-xmonad
 author:         Icy-Thought
 maintainer:     Icy-Thought
 build-type:     Simple
 cabal-version:  >=1.10
 
-executable icy-xmonad
+executable my-xmonad
   main-is:             xmonad.hs
   build-depends:       aeson>=0.11.2.1
                      , X11>=1.8
