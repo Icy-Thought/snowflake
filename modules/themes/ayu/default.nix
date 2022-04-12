@@ -4,7 +4,7 @@ with lib;
 with lib.my;
 let cfg = config.modules.themes;
 in {
-  config = mkIf (cfg.active == "ayu-dark") (mkMerge [
+  config = mkIf (cfg.active == "ayu") (mkMerge [
     {
       modules = {
         themes = {

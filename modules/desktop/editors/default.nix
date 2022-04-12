@@ -4,9 +4,7 @@ with lib;
 with lib.my;
 let cfg = config.modules.desktop.editors;
 in {
-  options.modules.desktop.editors = {
-    default = mkOpt types.str "nvim";
-  };
+  options.modules.desktop.editors = { default = mkOpt types.str "nvim"; };
 
   config = (mkMerge [
     (mkIf (cfg.default != null) { env.EDITOR = cfg.default; })

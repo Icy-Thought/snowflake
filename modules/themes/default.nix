@@ -40,11 +40,13 @@ in {
       mono = {
         family = mkOpt str "Monospace";
         weight = mkOpt str "SemiBold";
+        weightNum = mkOpt str "600";
         size = mkOpt int 13;
       };
       sans = {
         family = mkOpt str "Sans";
         weight = mkOpt str "SemiBold";
+        weightNum = mkOpt str "600";
         size = mkOpt int 10;
       };
     };

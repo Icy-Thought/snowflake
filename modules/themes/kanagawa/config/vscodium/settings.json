@@ -11,9 +11,21 @@
         "**/*.o": true
     },
 
+    "workbench.colorTheme": "Kanagawa",
+    "workbench.preferredDarkColorTheme": "Kanagawa",
+    "workbench.preferredLightColorTheme": "Quiet Light",
+    "workbench.iconTheme": "vscode-icons",
+ 
+    "editor.fontFamily": "VictorMono Nerd Font, Consolas, monospace",
+    "editor.fontWeight": "600",
+    "editor.fontSize": 16,
+    "debug.console.fontFamily": "VictorMono Nerd Font Mono",
+    "debug.console.fontSize": 14,
+    "terminal.integrated.fontFamily": "VictorMono Nerd Font Mono",
+    "terminal.integrated.fontSize": 14,
+
     "window.menuBarVisibility": "toggle",
     "breadcrumbs.enabled": true,
-    "workbench.iconTheme": "vscode-icons",
     "workbench.tree.indent": 8,
     "editor.scrollbar.vertical": "auto",
     "editor.roundedSelection": true,
@@ -50,6 +62,8 @@
 
     "haskell.formattingProvider": "stylish-haskell",
     "[nix]": { "editor.tabSize": 2 },
+
+    "nix.formatterPath": "nixfmt",
 
     "git.autofetch": false,
     "git.enableCommitSigning": true,
