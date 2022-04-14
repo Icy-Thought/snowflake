@@ -235,7 +235,7 @@ noSpecialChromiumTitles = helper <$> title
 
 chromiumSelectorBase = isChromiumClass <$> className
 
-chromiumSelector = className =? "Brave-browser"
+chromiumSelector = className =? "brave-browser"
 
 firefoxSelector = className =? "Firefox"
 
@@ -829,7 +829,7 @@ scratchpads =
   , NS "discord"            discordCommand      discordSelector      nonFloating
   , NS "element"            elementCommand      elementSelector      nonFloating
   , NS "emacs"              emacsCommand        emacsSelector        nonFloating
-  , NS "protonmail"         protonMailCommand   protonMailSelector   nonFloating
+  , NS "protonmail"         protonMailCommand   protonMailSelector   nearFullFloat
   , NS "qalc"               qalcCommand         qalcSelector         termFloat
   , NS "spotify"            spotifyCommand      spotifySelector      nearFullFloat
   , NS "telegram"           telegramCommand     telegramSelector     nonFloating
