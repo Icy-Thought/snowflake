@@ -1,10 +1,11 @@
-{ config }:
+{ config, ... }:
 
-let cfg = config.snowflake.themes;
+let cfg = config.modules.themes;
 in {
   # Introduction
-  "__comment" = "(VSCode) settings.json => immutable conf-file, managed via (Nix) Home-Manager";
-  "update.mode" = "false";
+  "__comment" =
+    "(VSCode) settings.json => immutable conf-file, managed via (Nix) Home-Manager";
+  "update.mode" = "none";
   "workbench.settings.editor" = "ui";
   "files.exclude" = {
     "**/.classpath" = true;
@@ -16,12 +17,12 @@ in {
   };
 
   # Colorscheme
-  "workbench.colorTheme" = "${cfg.active}";
-  "workbench.preferredDarkColorTheme" = "${cfg.active}";
-  "workbench.preferredLightColorTheme" = "Quiet Light";
+  "workbench.colorTheme" = "${cfg.vscode.theme.dark}";
+  "workbench.preferredDarkColorTheme" = "${cfg.vscode.theme.dark}";
+  "workbench.preferredLightColorTheme" = "${cfg.vscode.theme.light}";
 
   # Font-related
-  "editor.fontFamily" = [ "${cfg.font.sans.family}" "Consolas" "monospace" ];
+  "editor.fontFamily" = "${cfg.font.sans.family}";
   "editor.fontWeight" = "${cfg.font.sans.weightNum}";
   "editor.fontSize" = 16;
   "debug.console.fontFamily" = "${cfg.font.mono.family}";
@@ -74,12 +75,10 @@ in {
   # Language specific
   "haskell.formattingProvider" = "stylish-haskell";
 
-  "[nix]" = {
-    "editor.tabSize" = 2;
-  };
+  "[nix]" = { "editor.tabSize" = 2; };
 
   # Git
-  "git.autofetch" = false;
+  "git.autoFetch" = false;
   "git.enableCommitSigning" = true;
   "git.defaultCloneDirectory" = "~/git";
   "git.promptToSaveFilesBeforeCommit" = "staged";
@@ -99,10 +98,7 @@ in {
   }];
   "vim.normalModeKeyBindingsNonRecursive" = [
     {
-      "before" = [
-        "<leader>"
-        "d"
-      ];
+      "before" = [ "<leader>" "d" ];
       "after" = [ "d" "d" ];
     }
     {

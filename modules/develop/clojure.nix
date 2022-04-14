@@ -4,14 +4,14 @@ with lib;
 with lib.my;
 let cfg = config.modules.develop;
 in {
-  options.modules.develop.cc = {
+  options.modules.develop.clojure = {
     enable = mkBoolOpt false;
     xdg.enable = mkBoolOpt cfg.xdg.enable;
   };
 
   config = mkMerge [
-    (mkIf cfg.cc.enable {
-      user.packages = with pkgs; [ clang bear gdb cmake llvmPackages.libcxx ];
+    (mkIf cfg.clojure.enable {
+      user.packages = with pkgs; [ clojure joker leiningen ];
     })
 
     (mkIf cfg.xdg.enable {

@@ -4,9 +4,19 @@ with lib;
 with lib.my;
 let cfg = config.modules.develop;
 in {
-  options.modules.develop = { xdg.enable = mkBoolOpt true; };
-
-  config = mkIf cfg.xdg.enable {
-    # TODO
+  options.modules.develop = {
+    enable = mkBoolOpt true;
+    xdg.enable = mkBoolOpt true;
   };
+
+  config = mkMerge [
+    (mkIf cfg.enable {
+      # nixLang related
+      user.packages = with pkgs; [ nixfmt rnix-lsp ];
+    })
+
+    (mkIf cfg.xdg.enable {
+      # TODO
+    })
+  ];
 }

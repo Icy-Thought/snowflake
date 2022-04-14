@@ -2,20 +2,22 @@
 
 with lib;
 with lib.my;
-let
-  devCfg = config.modules.develop;
-  cfg = devCfg.rust;
+let cfg = config.modules.develop;
 in {
   options.modules.develop.rust = {
     enable = mkBoolOpt false;
-    xdg.enable = mkBoolOpt devCfg.xdg.enable;
+    xdg.enable = mkBoolOpt cfg.xdg.enable;
   };
 
   config = mkMerge [
-    (mkIf cfg.enable {
+    (mkIf cfg.rust.enable {
       nixpkgs.overlays = [ inputs.rust.overlay ];
 
-      user.packages = with pkgs; [ rust-bin.beta.latest.default crate2nix ];
+      user.packages = with pkgs; [
+        crate2nix
+        rust-bin.beta.latest.default
+        unstable.rust-analyzer
+      ];
 
       env.PATH = [ "$(${pkgs.yarn}/bin/yarn global bin)" ];
 

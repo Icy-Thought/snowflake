@@ -6,59 +6,62 @@ let cfg = config.modules.themes;
 in {
   config = mkIf (cfg.active == "catppuccin") (mkMerge [
     {
-      modules = {
-        themes = {
-          wallpaper = mkDefault ./config/wallpaper.jpg;
-          gtk = {
-            # theme = "Catppuccin";
-            theme = "Orchis-dark-compact";
-            iconTheme = "WhiteSur-dark";
-            cursor = {
-              name = "Bibata-Modern-Amber";
-              size = 24;
-            };
-          };
-          font = {
-            sans.family = "VictorMono Nerd Font";
-            mono.family = "VictorMono Nerd Font Mono";
-          };
-          colors = {
-            # Normal Colors:
-            black = "#6e6c7e";
-            red = "#f28fad";
-            green = "#abe9b3";
-            yellow = "#fae3b0";
-            blue = "#96cdfb";
-            magenta = "#f5c2e7";
-            cyan = "#89dceb";
-            white = "#d9e0ee";
+      modules.themes = {
+        wallpaper = mkDefault ./config/wallpaper.jpg;
 
-            # Bright Colors
-            brightBlack = "#988ba2";
-            brightRed = "#f28fad";
-            brightGreen = "#abe9b3";
-            brightYellow = "#fae3b0";
-            brightBlue = "#96cdfb";
-            brightMagenta = "#f5c2e7";
-            brightCyan = "#89dceb";
-            brightWhite = "#d9e0ee";
-
-            # Extra Colors:
-            types = {
-              fg = "#d9e0ee";
-              bg = "#1e1d2f";
-              panelbg = "#161320";
-              border = "#abe9b3";
-              highlight = "#575268";
-            };
+        gtk = {
+          # theme = "Catppuccin";
+          theme = "Orchis-dark-compact";
+          iconTheme = "WhiteSur-dark";
+          cursor = {
+            name = "Bibata-Modern-Amber";
+            size = 24;
           };
         };
 
-        # desktop.browsers = {
-        #   firefox.userChrome = concatMapStringsSep "\n" readFile
-        #     [ ./config/firefox/userChrome.css ];
-        # };
+        vscode.theme = {
+          dark = "Catppuccin";
+          light = "Quiet Light";
+        };
+
+        font = {
+          sans.family = "VictorMono Nerd Font";
+          mono.family = "VictorMono Nerd Font Mono";
+        };
+
+        colors = {
+          black = "#6e6c7e";
+          red = "#f28fad";
+          green = "#abe9b3";
+          yellow = "#fae3b0";
+          blue = "#96cdfb";
+          magenta = "#f5c2e7";
+          cyan = "#89dceb";
+          white = "#d9e0ee";
+
+          brightBlack = "#988ba2";
+          brightRed = "#f28fad";
+          brightGreen = "#abe9b3";
+          brightYellow = "#fae3b0";
+          brightBlue = "#96cdfb";
+          brightMagenta = "#f5c2e7";
+          brightCyan = "#89dceb";
+          brightWhite = "#d9e0ee";
+
+          types = {
+            fg = "#d9e0ee";
+            bg = "#1e1d2f";
+            panelbg = "#161320";
+            border = "#abe9b3";
+            highlight = "#575268";
+          };
+        };
       };
+
+      # modules.desktop.browsers = {
+      #   firefox.userChrome = concatMapStringsSep "\n" readFile
+      #     [ ./config/firefox/userChrome.css ];
+      # };
     }
 
     # Desktop (X11) theming <- Change after gnome = independent of xserver.

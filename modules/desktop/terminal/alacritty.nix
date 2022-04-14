@@ -5,20 +5,18 @@ with lib.my;
 let
   cfg = config.modules.desktop.terminal.alacritty;
   configDir = config.snowflake.configDir;
-  acs = config.modules.themes.active;
+  active = config.modules.themes.active;
 in {
-  options.modules.desktop.terminal.alacritty = {
-    enable = mkBoolOpt false;
-  };
+  options.modules.desktop.terminal.alacritty = { enable = mkBoolOpt false; };
 
   config = mkIf cfg.enable {
     user.packages = with pkgs; [ alacritty ];
 
     home.configFile."alacritty/alacritty.yml" = {
       text = ''
-        ${optionalString (acs != null) ''
+        ${optionalString (active != null) ''
           import:
-            - ~/.config/alacritty/config/${acs}.yml
+            - ~/.config/alacritty/config/${active}.yml
         ''}
 
         env:

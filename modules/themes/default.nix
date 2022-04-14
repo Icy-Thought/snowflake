@@ -34,6 +34,13 @@ in {
       };
     };
 
+    # since json combination != work,
+    # resolve to following solution..
+    vscode.theme = {
+      dark = mkOpt str "";
+      light = mkOpt str "";
+    };
+
     onReload = mkOpt (attrsOf lines) { };
 
     font = {
@@ -52,7 +59,6 @@ in {
     };
 
     colors = {
-      # Normal Colors:
       black = mkOpt str "#000000"; # 0
       red = mkOpt str "#FF0000"; # 1
       green = mkOpt str "#00FF00"; # 2
@@ -62,7 +68,6 @@ in {
       cyan = mkOpt str "#00FFFF"; # 6
       white = mkOpt str "#BBBBBB"; # 7
 
-      # Bright Colors:
       brightBlack = mkOpt str "#888888"; # 8
       brightRed = mkOpt str "#FF8800"; # 9
       brightGreen = mkOpt str "#00FF80"; # 10
@@ -72,7 +77,6 @@ in {
       brightCyan = mkOpt str "#88FFFF"; # 14
       brightWhite = mkOpt str "#FFFFFF"; # 15
 
-      # Color classes
       types = {
         bg = mkOpt str cfg.colors.black;
         fg = mkOpt str cfg.colors.white;

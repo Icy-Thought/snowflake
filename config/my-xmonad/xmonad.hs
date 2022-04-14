@@ -1028,12 +1028,10 @@ addKeys conf@XConfig { modMask = modm } =
          ,
          -- ScratchPad(s)
            ((modalt, xK_b)               , doScratchpad "bitwarden")
-         , ((modalt, xK_j)               , doScratchpad "discord")
-         , ((modalt, xK_k)               , doScratchpad "element")
+         , ((modalt, xK_d)               , doScratchpad "discord")
          , ((modalt, xK_e)               , doScratchpad "emacs")
          , ((modalt, xK_m)               , doScratchpad "protonmail")
          , ((modalt, xK_s)               , doScratchpad "spotify")
-         , ((modalt, xK_l)               , doScratchpad "telegram")
          , ((modalt, xK_t)               , doScratchpad "transmission")
          ,
          -- Rofi(s)

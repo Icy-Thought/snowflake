@@ -52,6 +52,9 @@ in {
       blueman.enable = true;
     };
 
+    # Xdg.mimeApps -> application management
+    modules.desktop.mimeApps.enable = true;
+
     homeManager = {
       services = {
         gnome-keyring.enable = true;

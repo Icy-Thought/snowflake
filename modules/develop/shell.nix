@@ -1,18 +1,16 @@
-{ config, options, lib, pkgs, my, ... }:
+{ config, options, lib, pkgs, ... }:
 
 with lib;
 with lib.my;
-let
-  devCfg = config.modules.develop;
-  cfg = devCfg.shell;
+let cfg = config.modules.develop;
 in {
   options.modules.develop.shell = {
     enable = mkBoolOpt false;
-    xdg.enable = mkBoolOpt devCfg.xdg.enable;
+    xdg.enable = mkBoolOpt cfg.xdg.enable;
   };
 
   config = mkMerge [
-    (mkIf cfg.enable { user.packages = with pkgs; [ shellcheck ]; })
+    (mkIf cfg.shell.enable { user.packages = with pkgs; [ shellcheck ]; })
 
     (mkIf cfg.xdg.enable {
       # TODO

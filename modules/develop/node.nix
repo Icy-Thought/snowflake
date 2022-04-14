@@ -2,18 +2,16 @@
 
 with lib;
 with lib.my;
-let
-  devCfg = config.modules.develop;
-  cfg = devCfg.node;
+let cfg = config.modules.develop;
 in {
   options.modules.develop.node = {
     enable = mkBoolOpt false;
-    xdg.enable = mkBoolOpt devCfg.xdg.enable;
+    xdg.enable = mkBoolOpt cfg.xdg.enable;
   };
 
   config = mkMerge [
     (let node = pkgs.nodejs_latest;
-    in mkIf cfg.enable {
+    in mkIf cfg.node.enable {
       user.packages = [ node pkgs.yarn ];
 
       # Run locally installed bin-script, e.g. n coffee file.coffee

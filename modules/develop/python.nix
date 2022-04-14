@@ -1,18 +1,16 @@
-{ config, options, lib, pkgs, my, ... }:
+{ config, options, lib, pkgs, ... }:
 
 with lib;
 with lib.my;
-let
-  devCfg = config.modules.develop;
-  cfg = devCfg.python;
+let cfg = config.modules.develop;
 in {
   options.modules.develop.python = {
     enable = mkBoolOpt false;
-    xdg.enable = mkBoolOpt devCfg.xdg.enable;
+    xdg.enable = mkBoolOpt cfg.xdg.enable;
   };
 
   config = mkMerge [
-    (mkIf cfg.enable {
+    (mkIf cfg.python.enable {
       user.packages = with pkgs;
         [ python39 ] ++ (with python39Packages; [
           pip

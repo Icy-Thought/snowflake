@@ -6,58 +6,61 @@ let cfg = config.modules.themes;
 in {
   config = mkIf (cfg.active == "kanagawa") (mkMerge [
     {
-      modules = {
-        themes = {
-          wallpaper = mkDefault ./config/wallpaper.jpg;
-          gtk = {
-            theme = "Orchis-dark-compact";
-            iconTheme = "WhiteSur-dark";
-            cursor = {
-              name = "Bibata-Modern-Amber";
-              size = 24;
-            };
-          };
-          font = {
-            sans.family = "VictorMono Nerd Font";
-            mono.family = "VictorMono Nerd Font Mono";
-          };
-          colors = {
-            # Normal Colors:
-            black = "#090618";
-            red = "#c34043";
-            green = "#76946a";
-            yellow = "#c0a36e";
-            blue = "#7e9cd8";
-            magenta = "#957fb8";
-            cyan = "#6a9589";
-            white = "#c8c093";
+      modules.themes = {
+        wallpaper = mkDefault ./config/wallpaper.jpg;
 
-            # Bright Colors
-            brightBlack = "#727169";
-            brightRed = "#e82424";
-            brightGreen = "#98bb6c";
-            brightYellow = "#e6c384";
-            brightBlue = "#7fb4ca";
-            brightMagenta = "#938aa9";
-            brightCyan = "#7aa89f";
-            brightWhite = "#dcd7ba";
-
-            # Extra Colors:
-            types = {
-              fg = "#dcd7ba";
-              bg = "#1f1f28";
-              panelbg = "#15161e";
-              border = "#c8c093";
-              highlight = "#2d4f67";
-            };
+        gtk = {
+          theme = "Orchis-dark-compact";
+          iconTheme = "WhiteSur-dark";
+          cursor = {
+            name = "Bibata-Modern-Amber";
+            size = 24;
           };
         };
 
-        # desktop.browsers = {
-        #   firefox.userChrome = concatMapStringsSep "\n" readFile
-        #     [ ./config/firefox/userChrome.css ];
-        # };
+        vscode.theme = {
+          dark = "Kanagawa";
+          light = "Quite Light";
+        };
+
+        font = {
+          sans.family = "VictorMono Nerd Font";
+          mono.family = "VictorMono Nerd Font Mono";
+        };
+
+        colors = {
+          black = "#090618";
+          red = "#c34043";
+          green = "#76946a";
+          yellow = "#c0a36e";
+          blue = "#7e9cd8";
+          magenta = "#957fb8";
+          cyan = "#6a9589";
+          white = "#c8c093";
+
+          brightBlack = "#727169";
+          brightRed = "#e82424";
+          brightGreen = "#98bb6c";
+          brightYellow = "#e6c384";
+          brightBlue = "#7fb4ca";
+          brightMagenta = "#938aa9";
+          brightCyan = "#7aa89f";
+          brightWhite = "#dcd7ba";
+
+          types = {
+            fg = "#dcd7ba";
+            bg = "#1f1f28";
+            panelbg = "#15161e";
+            border = "#c8c093";
+            highlight = "#2d4f67";
+          };
+        };
       };
+
+      # modules.desktop.browsers = {
+      #   firefox.userChrome = concatMapStringsSep "\n" readFile
+      #     [ ./config/firefox/userChrome.css ];
+      # };
     }
 
     # Desktop (X11) theming <- Change after gnome = independent of xserver.

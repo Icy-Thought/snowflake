@@ -17,24 +17,14 @@ in {
         (ripgrep.override { withPCRE2 = true; })
         # toolbox
         editorconfig-core-c
+
         # module dependencies
         ## checkers: aspell
         (aspellWithDicts (ds: with ds; [ en en-computers en-science ]))
-        ## lsp: haskell
-        haskell-language-server
-        stylish-haskell
-        ## lsp: LaTeX
-        tectonic
+        ## lsp: LaTeX + Org-Mode
         gnuplot
-        ## lsp: Org-Mode
         pandoc
-        ## lsp: javascript
-        nodePackages.typescript-language-server
-        ## lsp: nix
-        nixfmt
-        rnix-lsp
-        ## lsp: rust
-        unstable.rust-analyzer
+        tectonic
       ];
     })
   ]);

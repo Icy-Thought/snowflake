@@ -5,7 +5,7 @@ with lib.my;
 let
   cfg = config.modules.desktop.terminal.kitty;
   configDir = config.snowflake.configDir;
-  acs = config.modules.themes.active;
+  active = config.modules.themes.active;
 in {
   options.modules.desktop.terminal.kitty = with types; {
     enable = mkBoolOpt false;
@@ -16,8 +16,8 @@ in {
 
     home.configFile."kitty/kitty.conf" = {
       text = ''
-        ${optionalString (acs != null) ''
-          include ~/.config/kitty/config/${acs}.conf
+        ${optionalString (active != null) ''
+          include ~/.config/kitty/config/${active}.conf
         ''}
 
         # Xterm

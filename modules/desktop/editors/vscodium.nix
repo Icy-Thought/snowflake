@@ -11,10 +11,13 @@ in {
       enable = true;
       package = pkgs.vscodium;
       mutableExtensionsDir = true;
-      extensions = (import "${configDir}/vscodium/extensions.nix" { });
-      # userSettings = trivial.importJSON "${themesDir}/${acs}/config/vscodium/settings.json";
-      userSettings = (import "${configDir}/vscodium/settings.nix" { });
-      keybindings = (import "${configDir}/vscodium/keybindings.nix" { });
+      extensions = import "${configDir}/vscodium/extensions.nix" {
+        inherit config;
+        inherit pkgs;
+      };
+      userSettings =
+        import "${configDir}/vscodium/settings.nix" { inherit config; };
+      keybindings = import "${configDir}/vscodium/keybindings.nix" { };
     };
   };
 }
