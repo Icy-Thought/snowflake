@@ -7,7 +7,7 @@ in {
   config = mkIf (cfg.active == "catppuccin") (mkMerge [
     {
       modules.themes = {
-        wallpaper = mkDefault ./config/wallpaper.jpg;
+        wallpaper = mkDefault ./config/wallpaper.png;
 
         gtk = {
           # theme = "Catppuccin";
