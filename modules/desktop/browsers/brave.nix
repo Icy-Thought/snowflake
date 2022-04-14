@@ -31,6 +31,7 @@ in {
         { id = "iaiomicjabeggjcfkbimgmglanimpnae"; } # Tab-Session-Manager
         { id = "hipekcciheckooncpjeljhnekcoolahp"; } # Tabliss
         { id = "cjpalhdlnbpafiamejdnhcphjbkeiagm"; } # Ublock-Origin
+        { id = "jinjaccalgkegednnccohejagnlnfdag"; } # Violentmonkey
         {
           id = "dcpihecpambacapedldabdbpakmachpb";
           updateUrl =
