@@ -11,10 +11,11 @@
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
 
-    ## (remove) xmonad & contrib after "ConditionalLayoutModifier" merger
+    ## TODO: (-) xmonad-contrib after "ConditionalLayoutModifier" merge
     xmonad.url = "github:xmonad/xmonad";
     xmonad-contrib.url = "github:icy-thought/xmonad-contrib";
-    taffybar.url = "github:taffybar/taffybar";
+    ## TODO: pin taffybar/taffybar after figuring out override flags
+    taffybar.url = "github:icy-thought/taffybar";
 
     emacs.url = "github:nix-community/emacs-overlay";
     neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";

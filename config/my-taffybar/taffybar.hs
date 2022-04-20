@@ -41,7 +41,6 @@ import           System.Taffybar.Information.X11DesktopInfo
 import           System.Taffybar.SimpleConfig
 import           System.Taffybar.Util
 import           System.Taffybar.Widget
-import           System.Taffybar.Widget.Crypto
 import           System.Taffybar.Widget.Generic.Icon
 import           System.Taffybar.Widget.Generic.PollingGraph
 import           System.Taffybar.Widget.Generic.PollingLabel
@@ -185,13 +184,6 @@ main = do
                 { clockUpdateStrategy = RoundedTargetInterval 60 0.0
                 , clockFormatString = "%a %b %_d, %H:%M"
                 }
-      myBTC = deocrateWithSetClassAndBoxes "BTC" $
-              cryptoPriceLabelWithIcon @"BTC-USD"
-      myETH = deocrateWithSetClassAndBoxes "ETH" $
-              cryptoPriceLabelWithIcon @"ETH-USD"
-      myADA = deocrateWithSetClassAndBoxes "ADA" $
-              cryptoPriceLabelWithIcon @"ADA-USD"
-      myCrypto = [myBTC, myETH, myADA]
       myTray = deocrateWithSetClassAndBoxes "tray" $
                sniTrayNewFromParams
                defaultTrayParams
@@ -215,7 +207,7 @@ main = do
                        , myNet
                        , myMpris
                        ]
-      fullEndWidgets = baseEndWidgets ++ myCrypto
+      fullEndWidgets = baseEndWidgets
       laptopEndWidgets = myBattery ++ baseEndWidgets
       baseConfig = defaultSimpleTaffyConfig
                    { startWidgets = [myWorkspaces, myLayout, myWindows]
@@ -225,7 +217,6 @@ main = do
                    , barPadding = 0
                    , barHeight = ScreenRatio (1 / 24)
                    , cssPaths = cssFiles
-                   , startupHook = void $ setCMCAPIKey "f9e66366-9d42-4c6e-8d40-4194a0aaa329"
                    }
       selectedConfig = fromMaybe baseConfig $ lookup hostName
                        [ ( "thinkpad-e595"

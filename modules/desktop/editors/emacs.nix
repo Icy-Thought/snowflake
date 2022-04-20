@@ -24,7 +24,7 @@ in {
 
     homeManager.programs.emacs = {
       enable = true;
-      package = pkgs.emacsGcc;
+      package = pkgs.emacsNativeComp;
       extraPackages = epkgs: with epkgs; [ vterm ];
     };
 

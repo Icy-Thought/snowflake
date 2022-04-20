@@ -1,7 +1,7 @@
 {
   inputs = {
-    # taffybar.url = "github:taffybar/taffybar/cryptoWidget";
-    taffybar.url = "github:taffybar/taffybar";
+    taffybar.url = "github:icy-thought/taffybar";
+    # taffybar.url = "github:taffybar/taffybar";
     flake-utils.url = "github:numtide/flake-utils";
   };
 
