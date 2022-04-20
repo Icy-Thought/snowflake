@@ -9,10 +9,10 @@ in {
   config = mkIf cfg.enable {
     user.packages = with pkgs; [
       act
-      git-filter-repo
-      gitAndTools.diff-so-fancy
+      dura
+      gitui
+      onefetch
       gitAndTools.gh
-      gitAndTools.git-annex
       gitAndTools.git-open
       (mkIf config.modules.shell.gnupg.enable gitAndTools.git-crypt)
     ];
@@ -20,6 +20,7 @@ in {
     homeManager.programs.git = {
       enable = true;
       package = pkgs.gitFull;
+      delta.enable = true;
 
       aliases = {
         unadd = "reset HEAD";
@@ -84,7 +85,6 @@ in {
         init.defaultBranch = "main";
         core = {
           editor = "emacsclient -t";
-          pager = "diff-so-fancy | less --tabs=4 -RFX";
           whitespace = "trailing-space,space-before-tab";
         };
 

@@ -21,7 +21,7 @@ in {
       pwgen
       ripgrep
       tldr
-      youtube-dl
+      yt-dlp
     ];
 
     # Enables vendor completion: https://nixos.wiki/wiki/Fish
