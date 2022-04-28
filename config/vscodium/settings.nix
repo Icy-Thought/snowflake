@@ -24,11 +24,15 @@ in {
   # Font-related
   "editor.fontFamily" = "${cfg.font.sans.family}";
   "editor.fontWeight" = "${cfg.font.sans.weightNum}";
-  "editor.fontSize" = 16;
+  "editor.fontSize" = 17;
+
   "debug.console.fontFamily" = "${cfg.font.mono.family}";
-  "debug.console.fontSize" = 14;
+  "debug.console.fontWeight" = "${cfg.font.mono.weightNum}";
+  "debug.console.fontSize" = 16;
+
   "terminal.integrated.fontFamily" = "${cfg.font.mono.family}";
-  "terminal.integrated.fontSize" = 14;
+  "terminal.integrated.fontWeight" = "${cfg.font.mono.weightNum}";
+  "terminal.integrated.fontSize" = 16;
 
   # Aesthetics
   "window.menuBarVisibility" = "toggle";

@@ -1,8 +1,8 @@
 {
-  description = "A grossly incandescent nixos config.";
+  description = "λ well-tailored and configureable NixOS system!";
 
   inputs = {
-    dotfiles.url = "github:hlissner/dotfiles";
+    dotfiles.url = "github:icy-thought/snowflake";
   };
 
   outputs = inputs @ { dotfiles, ... }: {

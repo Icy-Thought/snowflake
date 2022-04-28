@@ -23,10 +23,8 @@
   };
 
   outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, ... }:
-
     let
       inherit (lib.my) mapModules mapModulesRec mapHosts;
-
       system = "x86_64-linux";
 
       mkPkgs = pkgs: extraOverlays:
@@ -35,14 +33,13 @@
           config.allowUnfree = true;
           overlays = extraOverlays ++ (lib.attrValues self.overlays);
         };
-
       pkgs = mkPkgs nixpkgs [ self.overlay ];
       pkgs' = mkPkgs nixpkgs-unstable [ ];
 
-      lib = nixpkgs.lib.extend (self: super: {
+      lib = nixpkgs.lib.extend (final: prev: {
         my = import ./lib {
           inherit pkgs inputs;
-          lib = self;
+          lib = final;
         };
       });
 
@@ -66,18 +63,13 @@
 
       devShell."${system}" = import ./shell.nix { inherit pkgs; };
 
-      # TODO: new struct.
-      templates.full = {
-        path = ./.;
-        description = "λ well-tailored and configureable NixOS system!";
-      };
-
-      template.minimal = {
-        path = ./templates/minimal;
-        description = "λ well-tailored and configureable NixOS system!";
-      };
-
-      defaultTemplate = self.templates.minimal;
+      templates = {
+        full = {
+          path = ./.;
+          description = "λ well-tailored and configureable NixOS system!";
+        };
+      } // import ./templates;
+      defaultTemplate = self.templates.full;
 
       # TODO: deployment + template tool.
       # defaultApp."${system}" = {
