@@ -52,15 +52,12 @@ in {
       DOOMDIR = "${configDir}/emacs.d/doom-emacs";
     };
 
-    # init.doomEmacs = mkIf cfg.doom.enable ''
-    #   if [ -d $HOME/.config/emacs ]; then
-    #      ${optionalString cfg.doom.fromSSH ''
-    #         git clone --depth 1 git@github.com:hlissner/doom-emacs.git $HOME/.config/emacs
-    #      ''}
-    #      ${optionalString (cfg.doom.fromSSH == false) ''
-    #         git clone --depth 1 https://github.com/hlissner/doom-emacs $HOME/.config/emacs
-    #      ''}
-    #   fi
-    # '';
+    # system.userActivationScripts = mkIf cfg.doom.enable {
+    #   installDoomEmacs = ''
+    #     if [ ! -d "$HOME/.config/emacs" ]; then
+    #        git clone --depth=1 --single-branch https://github.com/hlissner/doom-emacs "$XDG_CONFIG_HOME/emacs"
+    #     fi
+    #   '';
+    # };
   };
 }
