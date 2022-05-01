@@ -30,8 +30,11 @@
     editors = {
       default = "nvim";
       emacs.enable = true;
-      nvim.enable = true;
-      vscodium.enable = true;
+      nvim = {
+        enable = true;
+        # fnl.enable = true;
+        lua.enable = true;
+      };
     };
     browsers = {
       default = "brave";

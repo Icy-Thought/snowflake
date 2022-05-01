@@ -4,40 +4,59 @@ with lib;
 with lib.my;
 let
   cfg = config.modules.desktop.editors.nvim;
-  nvimDir = "${config.snowflake.configDir}/nvim.d/niflheim";
+  nvimDir = "${config.snowflake.configDir}/nvim.d";
   active = config.modules.themes.active;
 in {
-  options.modules.desktop.editors.nvim = { enable = mkBoolOpt false; };
-
-  config = mkIf cfg.enable {
-    nixpkgs.overlays = [ inputs.neovim-nightly.overlay ];
-
-    modules.develop.lua.enable = true;
-
-    environment.shellAliases = {
-      vi = "nvim";
-      vim = "nvim";
-      vimdiff = "nvim -d";
-    };
-
-    home.configFile."nvim/lua/my-snippets" = {
-      source = "${nvimDir}/my-snippets";
-      recursive = true;
-    };
-
-    homeManager.programs.neovim = let
-      customPlugins = pkgs.callPackage "${nvimDir}/custom-plugins.nix" pkgs;
-      plugins = pkgs.vimPlugins // customPlugins;
-    in {
-      enable = true;
-      package = pkgs.neovim-nightly;
-      extraConfig = builtins.concatStringsSep "\n" [''
-        lua vim.cmd([[colorscheme ${active}]])
-        luafile ${builtins.toString "${nvimDir}/lua/options.lua"}
-        luafile ${builtins.toString "${nvimDir}/lua/keymaps.lua"}
-      ''];
-      extraPackages = with pkgs; [ texlab vale ];
-      plugins = pkgs.callPackage "${nvimDir}/plugins.nix" plugins;
-    };
+  options.modules.desktop.editors.nvim = {
+    enable = mkBoolOpt false;
+    fnl.enable = mkBoolOpt false;
+    lua.enable = mkBoolOpt false;
   };
+
+  config = mkMerge [
+    {
+      nixpkgs.overlays = [ inputs.neovim-nightly.overlay ];
+
+      user.packages = with pkgs; [ neovim-nightly ];
+
+      environment.shellAliases = {
+        vi = "nvim";
+        vim = "nvim";
+        vimdiff = "nvim -d";
+      };
+    }
+
+    (mkIf cfg.fnl.enable {
+      modules.develop.lua.fennel.enable = true;
+
+      # home.configFile."nvim" = {
+      #   source = "${config.snowflake.configDir}/nvim.d/pomelo";
+      #   recursive = true;
+      # };
+    })
+
+    (mkIf cfg.lua.enable {
+      modules.develop.lua.enable = true;
+
+      homeManager.programs.neovim = let
+        customPlugins =
+          pkgs.callPackage "${nvimDir}/niflheim/custom-plugins.nix" pkgs;
+        plugins = pkgs.vimPlugins // customPlugins;
+      in {
+        enable = true;
+        extraConfig = builtins.concatStringsSep "\n" [''
+          lua vim.cmd([[colorscheme ${active}]])
+          luafile ${builtins.toString "${nvimDir}/niflheim/lua/options.lua"}
+          luafile ${builtins.toString "${nvimDir}/niflheim/lua/keymaps.lua"}
+        ''];
+        extraPackages = with pkgs; [ texlab vale ];
+        plugins = pkgs.callPackage "${nvimDir}/niflheim/plugins.nix" plugins;
+      };
+
+      home.configFile."nvim/lua/my-snippets" = {
+        source = "${nvimDir}/niflheim/my-snippets";
+        recursive = true;
+      };
+    })
+  ];
 }

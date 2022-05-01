@@ -6,19 +6,18 @@ let cfg = config.modules.develop;
 in {
   options.modules.develop.lua = {
     enable = mkBoolOpt false;
-    xdg.enable = mkBoolOpt cfg.enableXDG;
     fennel.enable = mkBoolOpt false;
+    xdg.enable = mkBoolOpt cfg.enableXDG;
   };
 
   config = mkMerge [
-    (mkIf cfg.lua.enable {
-      user.packages = with pkgs; [
-        lua
-        sumneko-lua-language-server
-        stylua
+    {
+      user.packages = mkMerge (with pkgs; [
+        (mkIf cfg.lua.enable [ lua sumneko-lua-language-server stylua ])
         (mkIf cfg.lua.fennel.enable [ fennel fnlfmt ])
-      ];
-
+      ]);
+    }
+    (mkIf cfg.lua.enable {
       home.configFile = with config.snowflake; {
         "stylua/stylua.toml".source = "${configDir}/formatters/stylua.toml";
       };
