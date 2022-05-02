@@ -41,8 +41,8 @@ import           System.Process
 import           Text.Printf
 import           Unsafe.Coerce
 import           XMonad                                hiding ((|||))
-import           XMonad.Actions.CycleWS                hiding (nextScreen)
 import           XMonad.Actions.CycleWorkspaceByScreen
+import           XMonad.Actions.CycleWS                hiding (nextScreen)
 import qualified XMonad.Actions.DynamicWorkspaceOrder  as DWO
 import           XMonad.Actions.DynamicWorkspaces      hiding (renameWorkspace,
                                                         withWorkspace)
@@ -824,27 +824,14 @@ termFloat = customFloating $ W.RationalRect l t w h
   l = 0.1 - w
 
 scratchpads =
-  [ NS "bitwarden"          bitwardenCommand    bitwardenSelector    nonFloating
-  , NS "Picture-in-Picture" ffPicCommand        ffPicSelector        defaultFloating
-  , NS "discord"            discordCommand      discordSelector      nonFloating
-  , NS "element"            elementCommand      elementSelector      nonFloating
+  [ NS "Picture-in-Picture" ffPicCommand        ffPicSelector        defaultFloating
   , NS "emacs"              emacsCommand        emacsSelector        nonFloating
   , NS "protonmail"         protonMailCommand   protonMailSelector   nearFullFloat
   , NS "qalc"               qalcCommand         qalcSelector         termFloat
   , NS "spotify"            spotifyCommand      spotifySelector      nearFullFloat
-  , NS "telegram"           telegramCommand     telegramSelector     nonFloating
   , NS "transmission"       transmissionCommand transmissionSelector nearFullFloat
   ]
  where
-  bitwardenCommand     = "bitwarden"
-  bitwardenSelector    = className =? "Bitwarden"
-
-  discordCommand       = "discord"
-  discordSelector      = className =? "discord"
-
-  elementCommand       = "element-desktop"
-  elementSelector      = className =? "Element"
-
   emacsCommand         = "emacsclient -c"
   emacsSelector        = className =? "Emacs"
 
@@ -856,9 +843,6 @@ scratchpads =
 
   spotifyCommand       = "spotify"
   spotifySelector      = className =? "Spotify"
-
-  telegramCommand      = "telegram-desktop"
-  telegramSelector     = className =? "TelegramDesktop"
 
   transmissionCommand  = "transmission-gtk"
   transmissionSelector = className =? "Transmission-gtk"
@@ -1027,9 +1011,7 @@ addKeys conf@XConfig { modMask = modm } =
          , ((hyper, xK_l)                , selectLayout)
          ,
          -- ScratchPad(s)
-           ((modalt, xK_b)               , doScratchpad "bitwarden")
-         , ((modalt, xK_d)               , doScratchpad "discord")
-         , ((modalt, xK_e)               , doScratchpad "emacs")
+           ((modalt, xK_e)               , doScratchpad "emacs")
          , ((modalt, xK_m)               , doScratchpad "protonmail")
          , ((modalt, xK_s)               , doScratchpad "spotify")
          , ((modalt, xK_t)               , doScratchpad "transmission")
@@ -1042,6 +1024,7 @@ addKeys conf@XConfig { modMask = modm } =
          -- Specific program spawning
            ((modalt, xK_h)               , spawn "alacritty -t htop -e htop")
          , ((modalt, xK_v)               , spawn "pavucontrol")
+         , ((modalt, xK_d)               , spawn "discord")
          -- , ((modm .|. shiftMask, xK_x), spawn "") insert lockscreen when found!
          ,
          -- Playerctl
