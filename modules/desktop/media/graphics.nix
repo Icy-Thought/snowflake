@@ -32,7 +32,7 @@ in {
       # 3D-Modelling:
       (if cfg.modeling.enable then [ blender ] else [ ]);
 
-    # TODO: gimp setup on rebuild!
+    # TODO: setup GIMP on rebuild!
     # home.configFile = mkIf cfg.raster.enable {
     #   "GIMP/2.10" = {
     #     source = "${configDir}/gimp";

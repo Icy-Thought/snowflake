@@ -53,7 +53,7 @@ in {
     };
 
     # Xdg.mimeApps -> application management
-    modules.desktop.mimeApps.enable = true;
+    modules.desktop.extra.mimeApps.enable = true;
 
     homeManager = {
       services = {

@@ -7,7 +7,7 @@ in {
   options.modules.networking = {
     enable = mkBoolOpt false;
     networkManager.enable = mkBoolOpt false;
-    networkD.enable = mkBoolOpt false;
+    networkd.enable = mkBoolOpt false;
   };
 
   config = mkIf cfg.enable (mkMerge [
@@ -26,7 +26,7 @@ in {
     })
 
     # TODO: add network connections + agenix.
-    (mkIf cfg.networkD.enable {
+    (mkIf cfg.networkd.enable {
       systemd.network.enable = true;
 
       systemd.services = {

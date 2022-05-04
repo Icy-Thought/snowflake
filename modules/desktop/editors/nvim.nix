@@ -29,10 +29,10 @@ in {
     (mkIf cfg.fnl.enable {
       modules.develop.lua.fennel.enable = true;
 
-      # home.configFile."nvim" = {
-      #   source = "${config.snowflake.configDir}/nvim.d/pomelo";
-      #   recursive = true;
-      # };
+      home.configFile."nvim" = {
+        source = "${config.snowflake.configDir}/nvim.d/pomelo";
+        recursive = true;
+      };
     })
 
     (mkIf cfg.lua.enable {
