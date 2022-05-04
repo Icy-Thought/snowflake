@@ -1,19 +1,15 @@
-#+TITLE: Guide Towards a Functional ~wg-quick~!
-#+DATE: <2021-08-21 Sat>
-#+AUTHOR: Icy-Thought
+# Guide Towards a Functional ~wg-quick~!
 
-* Table of Contents :TOC:
-- [[#introduction][Introduction]]
-- [[#template][Template]]
-- [[#example-configuration][Example Configuration]]
+# Table of Contents :TOC:
 
-* Introduction
-Setting up a functional ~wg-quick~ environment in NixOS can be bothersome oftentimes to due non-functional operations that would otherwise work in a normal linux environment. An example of such scenario is the usage of ~%i~ in both the ~postUp~ & ~preDown~.
+# Introduction
+Setting up a functional `wg-quick` environment in NixOS can be bothersome oftentimes to due non-functional operations that would otherwise work in a normal linux environment. 
+An example of such scenario is the usage of `%i` in both the `postUp` & `preDown`.
 
 Henceforth I have choosen to write both a template and an example showcasing how a nixified wg-quick configuration could look like.
 
-* Template
-#+begin_src nix
+# (Template) Example Wireguard Connection
+```nix
 { config, lib, pkgs, ... }: {
 
   # Disable wg-quick on boot:
@@ -61,14 +57,14 @@ Henceforth I have choosen to write both a template and an example showcasing how
     };
   };
 }
-#+end_src
+```
 
-* Example Configuration
-#+begin_quote
-*HEADS UP!* The information displayed in the following example originates from the man-page of ~wg-quick~ and also Quad9 DNS servers, which means that the information has been written with an educational purpose in mind. Therefore I do not claim the ownership of those settings nor am I trying to leak information belonging to a netizen.
-#+end_quote
+# Example Configuration
+> **HEADS UP!** 
+> The information displayed in the following example originates from the man-page of `wg-quick` and also Quad9 DNS servers, which means that the information has been written with an educational purpose in mind.
+> Therefore I do not claim the ownership of those settings nor am I trying to leak information belonging to a netizen.
 
-#+begin_src nix
+```nix
 { config, lib, pkgs, ... }: {
 
   # Disable wg-quick on boot:
@@ -121,4 +117,4 @@ Henceforth I have choosen to write both a template and an example showcasing how
     };
   };
 }
-#+end_src
+```
