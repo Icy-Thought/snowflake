@@ -10,7 +10,7 @@
   * [Mount & Create Required Dirs](#mount---create-required-dirs)
   * [Prepare System Environment for Nix-Flake](#prepare-system-environment-for-nix-flake)
 - [Nix-Flake: Beginning of a Journey](#nix-flake--beginning-of-a-journey)
-  * [Git Clone `Snowflake` && `ln -s` Nix-Files To Correct Dir](#git-clone--snowflake------ln--s--nix-files-to-correct-dir)
+  * [Clone `Snowflake` and Link Files To Dir](#clone-snowflake-and-link-files-to-correct-path)
   * [Replacing Necessary Configuration Entries](#replacing-necessary-configuration-entries)
     + [Create Your Hosts Directory](#create-your-hosts-directory)
     + [Hardware-Configuration.nix](#hardware-configurationnix)
@@ -79,7 +79,7 @@ nix.extraOptions = ''
 ```
 
 # Nix-Flake: Beginning of a Journey
-## Git Clone `Snowflake` && `ln -s` Nix-Files To Correct Dir
+## Clone `Snowflake` and Link Files To Correct Path
 `git clone` your desired repository and because this guide is written with my personal flake repository in mind:
 ```sh 
 git clone https://github.com/Icy-Thought/Snowflake.git

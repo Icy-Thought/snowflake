@@ -1,6 +1,9 @@
 # Guide Towards a Functional ~wg-quick~!
 
 # Table of Contents :TOC:
+- [Introduction](#introduction)
+- [(Template) Example Wireguard Connection](#-template--example-wireguard-connection)
+- [Example Configuration](#example-configuration)
 
 # Introduction
 Setting up a functional `wg-quick` environment in NixOS can be bothersome oftentimes to due non-functional operations that would otherwise work in a normal linux environment. 
