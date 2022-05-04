@@ -2,12 +2,12 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.hardware.openrazer;
+let cfg = config.modules.hardware.razer;
 in {
-  options.modules.hardware.openrazer = { enable = mkBoolOpt false; };
+  options.modules.hardware.razer = { enable = mkBoolOpt false; };
 
   config = mkIf cfg.enable {
-    hardware.openrazer = {
+    hardware.razer = {
       enable = true;
       devicesOffOnScreensaver = false;
       syncEffectsEnabled = true;
