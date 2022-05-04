@@ -5,7 +5,7 @@
   modules.hardware = {
     audio.enable = true;
     touchpad.enable = true;
-    # openrazer.enable = true;
+    # razer.enable = true;
   };
 
   modules.networking = {
