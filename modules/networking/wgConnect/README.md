@@ -1,8 +1,8 @@
-# Guide Towards a Functional ~wg-quick~!
+# Guide Towards a Functional `wg-quick`!
 
-# Table of Contents :TOC:
+# Table of Contents
 - [Introduction](#introduction)
-- [(Template) Example Wireguard Connection](#-template--example-wireguard-connection)
+- [(Template) Example Wireguard Connection](#template-example-wireguard-connection)
 - [Example Configuration](#example-configuration)
 
 # Introduction
