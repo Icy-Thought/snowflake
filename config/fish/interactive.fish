@@ -41,8 +41,8 @@ alias exa 'exa --group-directories-first'
 # Abbreviations
 ## Sys-Management
 abbr --add --global -- bat0 'upower -i /org/freedesktop/UPower/devices/battery_BAT0'
-abbr --add --global -- flkup 'pushd ~/git/Icy-Thought/Snowflake ; nix flake update ; popd'
-abbr --add --global -- thkup 'pushd ~/git/Icy-Thought/Snowflake ; sudo nixos-rebuild switch --flake '\''.#thinkpad-e595'\'' --impure ; popd'
+abbr --add --global -- flkup 'nix flake update'
+abbr --add --global -- thkup 'nixos-rebuild switch --use-remote-sudo --flake '.#thinkpad-e595' --impure'
 abbr --add --global -- proup 'pushd ~/git/Icy-Thought/Snowflake ; sudo nixos-rebuild switch --flake '\''.#probook-440g3'\'' --impure ; popd'
 abbr --add --global -- g2nix 'dconf dump / | dconf2nix > ~/git/Icy-Thought/Snowflake/config/dconf/gnome.nix'
 

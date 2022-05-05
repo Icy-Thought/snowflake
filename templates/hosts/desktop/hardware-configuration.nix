@@ -1,9 +1,7 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
-  imports = [
-    "${modulesPath}/installer/scan/not-detected.nix"
-  ];
+  imports = [ "${modulesPath}/installer/scan/not-detected.nix" ];
 
   boot.kernelParams = [
     # HACK Disables fixes for spectre, meltdown, L1TF and a number of CPU
@@ -21,7 +19,7 @@
   modules.hardware = {
     audio.enable = true;
     bluetooth.enable = true;
-    openrazer.enable = true;
+    razer.enable = true;
     touchpad.enable = true;
   };
 

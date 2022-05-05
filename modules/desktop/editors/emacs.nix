@@ -61,5 +61,6 @@ in {
            git clone "${cfg.doom.configRepoUrl}" "$XDG_CONFIG_HOME/doom"
         fi
       '';
+    };
   };
 }

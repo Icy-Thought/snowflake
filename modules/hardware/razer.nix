@@ -7,7 +7,7 @@ in {
   options.modules.hardware.razer = { enable = mkBoolOpt false; };
 
   config = mkIf cfg.enable {
-    hardware.razer = {
+    hardware.openrazer = {
       enable = true;
       devicesOffOnScreensaver = false;
       syncEffectsEnabled = true;

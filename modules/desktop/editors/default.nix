@@ -23,8 +23,8 @@ in {
         (aspellWithDicts (ds: with ds; [ en en-computers en-science ]))
         ## lsp: LaTeX + Org-Mode
         gnuplot
-        pandoc
         tectonic
+        # texlive.combined.scheme-medium
       ];
     })
   ]);
