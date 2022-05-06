@@ -10,7 +10,7 @@ in {
         wallpaper = mkDefault ./config/wallpaper.jpg;
 
         gtk = {
-          theme = "Orchis-dark-compact";
+          theme = "Orchis-Dark-Compact";
           iconTheme = "WhiteSur-dark";
           cursor = {
             name = "Bibata-Modern-Amber";
