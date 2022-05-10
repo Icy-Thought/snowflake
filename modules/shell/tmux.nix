@@ -2,86 +2,119 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.shell.fish;
+let cfg = config.modules.shell;
 in {
-  config = mkIf cfg.enable {
-    homeManager.programs.tmux = {
-      enable = true;
-      secureSocket = true;
-      prefix = "C-a";
-      terminal = "tmux-256color";
+  options.modules.shell.tmux = { enable = mkBoolOpt false; };
 
-      baseIndex = 1;
-      escapeTime = 0;
-      keyMode = "vi";
-      disableConfirmationPrompt = true;
+  config = mkIf (cfg.tmux.enable || cfg.fish.enable) {
+    user.packages = with pkgs; [ tmux ];
 
-      clock24 = true;
-      resizeAmount = 2;
-      historyLimit = 5000;
+    env = {
+      PATH = [ "$TMUXIFIER/bin" ];
+      TMUX_HOME = "$XDG_CONFIG_HOME/tmux";
+    };
 
-      extraConfig = ''
+    modules.themes.onReload.tmux =
+      "${pkgs.tmux}/bin/tmux source-file $TMUX_HOME/tmux.conf";
+
+    home.configFile = {
+      "fish/conf.d/tmux.fish".text = ''
+        # Start Tmux on Fish start
+        if not set -q TMUX
+            set -g TMUX tmux new-session -d -s main
+            eval $TMUX
+            tmux attach-session -d -t main
+        end
+      '';
+
+      "tmux/tmux.conf".text = with config.modules.themes; ''
         # --------=== General-Configurations
-        set -g mouse on
-        set -s focus-events on
-        set -g renumber-windows on
+        set-option -g default-terminal "tmux-256color"
+        set-option -g base-index 1
+        set-window-option -g pane-base-index 1
+
+        set-option -g status-keys vi
+        set-option -g mode-keys vi
+
+        # Rebind C-b -> C-a
+        set-option -g prefix C-a
+        unbind C-b
+        bind-key C-a send-prefix
+
+        # Disables confirmation on exit
+        bind-key x kill-pane
+        bind-key X kill-window
+        bind-key q kill-session
+        bind-key Q kill-server
+
+        set-option  -g renumber-windows on
+        set-window-option -g aggressive-resize off
+        set-window-option -g automatic-rename on
+
+        set-window-option -g clock-mode-style 24
+        set-option -s escape-time 0
+        set-option -g history-limit 5000
+
+        set-option -g mouse on
+        set-option -s focus-events on
+        set-option -g renumber-windows on
         set-option -g allow-rename off
 
         # Activity/Sound
-        set -g bell-action none
-        set -g visual-bell off
-        set -g visual-silence off
-        set -g visual-activity off
-        setw -g monitor-activity off
+        set-option -g bell-action none
+        set-option -g visual-bell off
+        set-option -g visual-silence off
+        set-option -g visual-activity off
+        set-window-option -g monitor-activity off
 
         # --------=== Keybindings
         # Buffers
-        bind b list-buffers
-        bind p paste-buffer
-        bind P choose-buffer
+        bind-key b list-buffers
+        bind-key p paste-buffer
+        bind-key P choose-buffer
 
         # Split bindings
-        bind / split-window -h -c '#{pane_current_path}'
-        bind - split-window -v -c '#{pane_current_path}'
-        bind c new-window -c '#{pane_current_path}'
+        bind-key / split-window -h -c '#{pane_current_path}'
+        bind-key - split-window -v -c '#{pane_current_path}'
+        bind-key c new-window -c '#{pane_current_path}'
 
         # Copy/Paste bindings
-        bind P paste-buffer
-        bind -T copy-mode-vi v send-keys -X begin-selection
-        bind -T copy-mode-vi y send-keys -X copy-selection
-        bind -T copy-mode-vi r send-keys -X rectangle-toggle
+        bind-key P paste-buffer
+        bind-key -T copy-mode-vi v send-keys -X begin-selection
+        bind-key -T copy-mode-vi y send-keys -X copy-selection
+        bind-key -T copy-mode-vi r send-keys -X rectangle-toggle
 
         # --------=== Status-bar
-        set -g status on
-        set -g status-interval 1
-        set -g status-style bg=default,bold,italics
+        set-option -g status on
+        set-option -g status-interval 1
+        set-option -g status-style bg=default,bold,italics
 
-        set -g status-position top
-        set -g status-justify left
+        set-option -g status-position top
+        set-option -g status-justify left
 
-        set -g status-left-length "40"
-        set -g status-right-length "80"
+        set-option -g status-left-length "40"
+        set-option -g status-right-length "80"
 
         # Messages
-        set -g message-style fg=colour0,bg=colour5,align="centre"
-        set -g message-command-style fg=colour0,bg=colour5,align="centre"
+        set-option -g message-style fg="${colors.types.bg}",bg="${colors.types.highlight}",align="centre"
+        set-option -g message-command-style fg="${colors.types.bg}",bg="${colors.types.highlight}",align="centre"
 
         # Panes
-        set -g pane-border-style fg=colour7
-        set -g pane-active-border-style fg=colour4
+        set-option -g pane-border-style fg="${colors.blue}"
+        set-option -g pane-active-border-style fg="${colors.types.border}"
 
         # Windows
-        set -g window-status-format "#[fg=colour7] #W/#{window_panes} "
-        set -g window-status-current-format "#[fg=colour0,bg=colour3]#{?client_prefix,#[fg=colour0],}#{?client_prefix,#[bg=colour5],} #W "
+        set-option -g window-status-format "#[fg=${colors.white}] #W/#{window_panes} "
+        set-option -g window-status-current-format "#[fg=${colors.types.bg},bg=${colors.types.border}]#{?client_prefix,#[fg=${colors.types.bg}],}#{?client_prefix,#[bg=${colors.blue}],} #W "
 
         # --------=== Status-line
-        set -g status-left "🦊 "
-        set -g status-bg default
-        set -g status-right "#[noitalics]#(volctl --status)  #(batstat)  #[noitalics,nobold]| %b %d, %H:%M:%S  #[fg=colour0,bg=colour2,bold,italics] #S "
+        set-option -g status-left "🦊 "
+        set-option -g status-bg default
+        set-option -g status-right "#[italics]#(batstat)  #(volctl --status) #[italics]| %b %d, %H:%M:%S  #[fg=${colors.types.bg},bg=${colors.types.panelbg},bold,italics] #S "
 
-        # --------=== Modes
-        setw -g clock-mode-colour colour6
-        setw -g mode-style "fg=colour5 bg=colour0 bold"
+        # --------=== Clock & Selection
+        set-window-option -g clock-mode-colour "${colors.types.border}"
+        set-window-option -g mode-style "fg=${colors.types.bg} bg=${colors.types.highlight} bold"
       '';
     };
   };
