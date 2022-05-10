@@ -11,7 +11,7 @@
   set default-bg              "${colors.types.bg}"
 
   set statusbar-fg            "${colors.white}"
-  set statusbar-bg            "${colors.types.panelbg}"
+  set statusbar-bg            "${colors.types.bg}"
 
   set inputbar-fg             "${colors.yellow}"
   set inputbar-bg             "${colors.types.bg}"
@@ -29,12 +29,12 @@
   set highlight-color         "${colors.types.highlight}"
 
   set completion-fg           "${colors.yellow}"
-  set completion-bg           "${colors.types.panelbg}"
+  set completion-bg           "${colors.types.bg}"
 
-  set completion-highlight-fg "${colors.types.panelbg}"
+  set completion-highlight-fg "${colors.types.bg}"
   set completion-highlight-bg "${colors.yellow}"
 
-  set recolor-lightcolor      "${colors.types.panelbg}"
+  set recolor-lightcolor      "${colors.types.bg}"
   set recolor-darkcolor       "${colors.white}"
 
   set recolor                 true

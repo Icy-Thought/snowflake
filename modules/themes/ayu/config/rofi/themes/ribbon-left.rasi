@@ -4,15 +4,16 @@
  */
 
 * {
-    foreground:                         #e6e1cfff;
-    background:                         #0f1419ff;
-    background-alt:                     #0f141900;
-    background-bar:                     #1d242cff;
+    foreground:                         hsla(46, 31%, 85%, 1);
+    background:                         hsla(210, 25%, 7%, 1);
+    background-alt:                     hsla(210, 25%, 7%, 0);
+    background-bar:                     hsla(212, 20%, 14%, 1);
 
-    border:                             #254365ff;
-    border-alt:                         #168ab9ff;
-    selected:                           #0f589d99;
-    urgent:                             #ffaa00ff;
+    outer-ribbon:                       hsla(211, 46%, 27%, 1);
+    inner-ribbon:                       hsla(197, 78%, 40%, 1);
+    selected:                           hsla(209, 82%, 33%, 0.6);
+    urgent:                             hsla(40, 100%, 50%, 1);
+    transparent:                        hsla(0, 0%, 0%, 0);
 }
 
 window {
@@ -20,7 +21,7 @@ window {
     background-color:                   @background;
     text-color:                         @foreground;
     border:                             0% 0% 0% 1.5%;
-    border-color:                       @border;
+    border-color:                       @outer-ribbon;
     border-radius:                      0% 0% 0% 2.5%;
     height:                             54.50%;
     width:                              43%;
@@ -54,7 +55,7 @@ inputbar {
     expand:                             false;
     border:                             0% 0% 0.3% 0.2%;
     border-radius:                      1.5% 1.0% 1.5% 1.5%;
-    border-color:                       @border-alt;
+    border-color:                       @inner-ribbon;
     margin:                             0% 17% 0% 0%;
     padding:                            1%;
     position:                           center;
@@ -73,7 +74,7 @@ mainbox {
     background-color:                   @background;
     border:                             0% 0% 0% 1.5%;
     border-radius:                      0% 0% 0% 2.5%;
-    border-color:                       @border-alt;
+    border-color:                       @inner-ribbon;
     children:                           [ inputbar, listview ];
     spacing:                            3%;
     padding:                            2.5% 2% 2.5% 2%;
@@ -88,7 +89,7 @@ element {
 }
 
 element-icon {
-    background-color: 				    #00000000;
+    background-color:                   @transparent;
     text-color:                         inherit;
     horizontal-align:                   0.5;
     vertical-align:                     0.5;
@@ -97,7 +98,7 @@ element-icon {
 }
 
 element-text {
-    background-color: 				    #00000000;
+    background-color:                   @transparent;
     text-color:                         inherit;
     expand:                             true;
     horizontal-align:                   0.5;
@@ -123,7 +124,7 @@ element selected {
     text-color:                         @foreground;
     border:                             0% 0% 0.3% 0.2%;
     border-radius:                      1.5% 1.0% 1.5% 1.5%;
-    border-color:                       @border-alt;
+    border-color:                       @inner-ribbon;
 }
 
 element selected.urgent {

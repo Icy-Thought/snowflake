@@ -39,7 +39,7 @@
       cursor: "${colors.yellow}"
 
     selection:
-      text: "${colors.types.fg}"
+      text: "${colors.types.bg}"
       background: "${colors.types.highlight}"
 
     normal:
