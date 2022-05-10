@@ -6,7 +6,7 @@ _: pkgs: rec {
           (pkgs.lib.sourceByRegex ../config/my-taffybar [
             "taffybar.hs"
             "taffybar.css"
-            "my-palette.css"
+            "catppuccin.css"
             "my-taffybar.cabal"
           ]) { };
       });

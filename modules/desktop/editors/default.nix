@@ -21,6 +21,8 @@ in {
         # module dependencies
         ## checkers: aspell
         (aspellWithDicts (ds: with ds; [ en en-computers en-science ]))
+        ## Markdown
+        nodePackages.markdownlint-cli2
         ## lsp: LaTeX + Org-Mode
         gnuplot
         tectonic

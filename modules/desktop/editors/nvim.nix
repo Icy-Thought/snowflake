@@ -19,10 +19,13 @@ in {
 
       user.packages = with pkgs; [ neovim-nightly ];
 
-      environment.shellAliases = {
-        vi = "nvim";
-        vim = "nvim";
-        vimdiff = "nvim -d";
+      environment = {
+        # variables.NVIMDIR = "${configDir}/nvim.d/niflheim";
+        shellAliases = {
+          vi = "nvim";
+          vim = "nvim";
+          vimdiff = "nvim -d";
+        };
       };
     }
 

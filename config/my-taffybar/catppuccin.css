@@ -1,0 +1,13 @@
+@define-color patina-green rgba(171, 233, 179, 1);
+@define-color fog rgba(223, 224, 255, 1);
+@define-color sambucus rgba(22, 19, 32, 1);
+@define-color black-howl rgba(30, 29, 47, 1);
+
+@define-color transparent rgba(0, 0, 0, 0.0);
+@define-color black rgba(0, 0, 0, 1);
+@define-color white rgba(255, 255, 255, 1);
+
+@define-color main-color @patina-green;
+@define-color menu-background-color @white;
+@define-color menu-font-color @black;
+@define-color bar-background @transparent;

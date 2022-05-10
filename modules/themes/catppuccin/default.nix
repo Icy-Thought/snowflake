@@ -51,9 +51,9 @@ in {
           types = {
             fg = "#d9e0ee";
             bg = "#1e1d2f";
-            panelbg = "#161320";
-            border = "#abe9b3";
-            highlight = "#575268";
+            panelbg = "#b5e8e0";
+            border = "#c9cbff";
+            highlight = "#f2cdcd";
           };
         };
       };

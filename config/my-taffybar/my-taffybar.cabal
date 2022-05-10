@@ -7,7 +7,7 @@ maintainer:     Icy-Thought
 build-type:     Simple
 cabal-version:  >=1.10
 data-files:     taffybar.css
-                my-palette.css
+                catppuccin.css
 
 executable taffybar
   hs-source-dirs:      .

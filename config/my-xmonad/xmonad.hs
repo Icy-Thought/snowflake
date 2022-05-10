@@ -125,7 +125,7 @@ icyTheme = def { activeColor         = icyActive
                , fontName            = "xft:VictorMono Nerd Font:style=SemiBold"
                }
 
-icyActive = "#abe9b3"
+icyActive = "#c9cbff"
 
 icyInactive = "#1a1b25"
 
@@ -824,8 +824,9 @@ termFloat = customFloating $ W.RationalRect l t w h
   l = 0.1 - w
 
 scratchpads =
-  [ NS "Picture-in-Picture" ffPicCommand        ffPicSelector        defaultFloating
+  [ NS "discord"            discordCommand      discordSelector      nonFloating
   , NS "emacs"              emacsCommand        emacsSelector        nonFloating
+  , NS "Picture-in-Picture" ffPicCommand        ffPicSelector        defaultFloating
   , NS "protonmail"         protonMailCommand   protonMailSelector   nearFullFloat
   , NS "qalc"               qalcCommand         qalcSelector         termFloat
   , NS "spotify"            spotifyCommand      spotifySelector      nearFullFloat
@@ -834,6 +835,9 @@ scratchpads =
  where
   emacsCommand         = "emacsclient -c"
   emacsSelector        = className =? "Emacs"
+
+  discordCommand       = "discord"
+  discordSelector      = className =? "discord"
 
   ffPicCommand         = "Picture-in-Picture"
   ffPicSelector        = title =? "Picture-in-Picture"

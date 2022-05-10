@@ -62,11 +62,9 @@ makeCombinedWidget constructors = do
   Gtk.toWidget hbox
 
 mkRGBA (r, g, b, a) = (r / 256, g / 256, b / 256, a / 256)
-blue = mkRGBA (42, 99, 140, 256)
-yellow1 = mkRGBA (242, 163, 54, 256)
-yellow2 = mkRGBA (254, 204, 83, 256)
-yellow3 = mkRGBA (227, 134, 18, 256)
-red = mkRGBA (210, 77, 37, 256)
+catBlue = mkRGBA (150, 205, 251, 256)
+catRed = mkRGBA (242, 143, 173, 256)
+catYellow = mkRGBA (248, 189, 150, 256)
 
 myGraphConfig = defaultGraphConfig
     { graphPadding = 0
@@ -74,17 +72,17 @@ myGraphConfig = defaultGraphConfig
     , graphWidth = 75
     , graphBackgroundColor = (0.0, 0.0, 0.0, 0.0)
     }
-netCfg = myGraphConfig
-    { graphDataColors = [yellow1, yellow2]
-    , graphLabel = Just "NET"
+cpuCfg = myGraphConfig
+    { graphDataColors = [catRed]
+    , graphLabel = Just "CPU"
     }
 memCfg = myGraphConfig
-    { graphDataColors = [(0.129, 0.588, 0.953, 1)]
+    { graphDataColors = [catBlue]
     , graphLabel = Just "MEM"
     }
-cpuCfg = myGraphConfig
-    { graphDataColors = [red, (1, 0, 1, 0.5)]
-    , graphLabel = Just "CPU"
+netCfg = myGraphConfig
+    { graphDataColors = [catYellow]
+    , graphLabel = Just "NET"
     }
 
 memCallback :: IO [Double]
@@ -202,9 +200,9 @@ main = do
                     makeCombinedWidget [batteryIconNew, textBatteryNew "$percentage$%"]
                   ]
       baseEndWidgets = [ myTray
-                       , myCPU
-                       , myMem
                        , myNet
+                       , myMem
+                       , myCPU
                        , myMpris
                        ]
       fullEndWidgets = baseEndWidgets
