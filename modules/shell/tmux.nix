@@ -21,7 +21,7 @@ in {
       "fish/conf.d/tmux.fish".text = ''
         # Start Tmux on Fish start
         if status is-interactive && if ! set -q TMUX
-            tmux new-session -t base
+            exec tmux
             end
         end
       '';
@@ -109,7 +109,7 @@ in {
         # --------=== Status-line
         set-option -g status-left "🦊 "
         set-option -g status-bg default
-        set-option -g status-right "#[italics]#(batstat)  #(volctl --status) #[italics]| %b %d, %H:%M:%S  #[fg=${colors.types.bg},bg=${colors.types.panelbg},bold,italics] #S "
+        set-option -g status-right "#[italics]∡ #H | %b %d, %H:%M:%S  #[fg=${colors.types.bg},bg=${colors.types.panelbg},bold,italics] base-#S "
 
         # --------=== Clock & Selection
         set-window-option -g clock-mode-colour "${colors.types.border}"

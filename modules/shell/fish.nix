@@ -41,6 +41,7 @@ in {
       enable = true;
       interactiveShellInit = ''
         ${pkgs.starship}/bin/starship init fish | source
+        ${pkgs.zoxide}/bin/zoxide init fish | source
         ${pkgs.any-nix-shell}/bin/any-nix-shell fish | source
         ${builtins.readFile "${configDir}/fish/interactive.fish"}
 
