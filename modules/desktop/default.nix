@@ -32,12 +32,6 @@ in {
       libsForQt5.qtstyleplugin-kvantum
     ];
 
-    modules.desktop.terminal = {
-      colorPanes.enable = true;
-      htop.enable = true;
-      neofetch.enable = true;
-    };
-
     fonts = {
       fontDir.enable = true;
       enableGhostscriptFonts = true;

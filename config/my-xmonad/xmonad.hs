@@ -824,7 +824,7 @@ termFloat = customFloating $ W.RationalRect l t w h
   l = 0.1 - w
 
 scratchpads =
-  [ NS "discord"            discordCommand      discordSelector      nonFloating
+  [ NS "discord"            discordCommand      discordSelector      nearFullFloat
   , NS "emacs"              emacsCommand        emacsSelector        nonFloating
   , NS "Picture-in-Picture" ffPicCommand        ffPicSelector        defaultFloating
   , NS "protonmail"         protonMailCommand   protonMailSelector   nearFullFloat
@@ -1015,7 +1015,8 @@ addKeys conf@XConfig { modMask = modm } =
          , ((hyper, xK_l)                , selectLayout)
          ,
          -- ScratchPad(s)
-           ((modalt, xK_e)               , doScratchpad "emacs")
+           ((modalt, xK_d)               , doScratchpad "discord")
+         , ((modalt, xK_e)               , doScratchpad "emacs")
          , ((modalt, xK_m)               , doScratchpad "protonmail")
          , ((modalt, xK_s)               , doScratchpad "spotify")
          , ((modalt, xK_t)               , doScratchpad "transmission")
@@ -1028,8 +1029,7 @@ addKeys conf@XConfig { modMask = modm } =
          -- Specific program spawning
            ((modalt, xK_h)               , spawn "alacritty -t htop -e htop")
          , ((modalt, xK_v)               , spawn "pavucontrol")
-         , ((modalt, xK_d)               , spawn "discord")
-         -- , ((modm .|. shiftMask, xK_x), spawn "") insert lockscreen when found!
+         -- , ((modm .|. shiftMask, xK_x), spawn "") <- lockscreen when found!
          ,
          -- Playerctl
            ((modm, xK_Up)                , spawn "playerctl play-pause")

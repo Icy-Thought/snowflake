@@ -78,7 +78,7 @@ with lib.my; {
     bind
     cached-nix-shell
     git
-    wget
+    ht-rust
     gcc
     gnumake
     unzip

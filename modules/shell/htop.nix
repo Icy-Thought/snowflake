@@ -3,10 +3,10 @@
 with lib;
 with lib.my;
 let
-  cfg = config.modules.desktop.terminal.htop;
+  cfg = config.modules.shell.htop;
   htop = config.home-manager.users.${config.user.name}.lib.htop;
 in {
-  options.modules.desktop.terminal.htop = { enable = mkBoolOpt false; };
+  options.modules.shell.htop = { enable = mkBoolOpt false; };
 
   config = mkIf cfg.enable {
     homeManager = {

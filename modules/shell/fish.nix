@@ -13,16 +13,26 @@ in {
 
     user.packages = with pkgs; [
       any-nix-shell
-      bat
-      exa
-      fd
       fzf
       pipes-rs
       pwgen
-      ripgrep
-      tldr
       yt-dlp
+
+      # Unix-tools alternatives
+      bat
+      bottom
+      duf
+      exa
+      fd
+      ripgrep
+      zoxide
     ];
+
+    # Several Term-UI's + Ricing:
+    modules.shell = {
+      colorPanes.enable = true;
+      neofetch.enable = true;
+    };
 
     # Enables vendor completion: https://nixos.wiki/wiki/Fish
     programs.fish.enable = true;

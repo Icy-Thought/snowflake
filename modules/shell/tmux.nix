@@ -20,10 +20,9 @@ in {
     home.configFile = {
       "fish/conf.d/tmux.fish".text = ''
         # Start Tmux on Fish start
-        if not set -q TMUX
-            set -g TMUX tmux new-session -d -s main
-            eval $TMUX
-            tmux attach-session -d -t main
+        if status is-interactive && if ! set -q TMUX
+            tmux new-session -t base
+            end
         end
       '';
 
