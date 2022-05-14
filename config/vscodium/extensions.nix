@@ -24,7 +24,7 @@ in (with pkgs.vscode-extensions; [
   yzhang.markdown-all-in-one
   jnoortheen.nix-ide
   ms-python.python
-  matklad.rust-analyzer
+  rust-lang.rust-analyzer
   tamasfe.even-better-toml
 ]) ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
   (import "${themesDir}/${active}/config/vscodium/extension")
