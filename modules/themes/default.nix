@@ -187,6 +187,15 @@ in {
         '';
       };
 
+      # Force Qt to use GTK cursor theme
+      home.file.".icons/default/index.theme" =
+        mkIf (cfg.gtk.cursor.name != "") {
+          text = ''
+            [icon theme]
+            Inherits=${cfg.gtk.cursor.name}
+          '';
+        };
+
       fonts.fontconfig.defaultFonts = {
         sansSerif = [ cfg.font.sans.family ];
         monospace = [ cfg.font.mono.family ];
