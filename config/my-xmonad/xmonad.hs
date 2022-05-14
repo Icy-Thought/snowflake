@@ -824,7 +824,8 @@ termFloat = customFloating $ W.RationalRect l t w h
   l = 0.1 - w
 
 scratchpads =
-  [ NS "discord"            discordCommand      discordSelector      nearFullFloat
+  [ NS "bottom"             bottomCommand       bottomSelector       nearFullFloat
+  , NS "discord"            discordCommand      discordSelector      nearFullFloat
   , NS "emacs"              emacsCommand        emacsSelector        nonFloating
   , NS "Picture-in-Picture" ffPicCommand        ffPicSelector        defaultFloating
   , NS "protonmail"         protonMailCommand   protonMailSelector   nearFullFloat
@@ -833,11 +834,14 @@ scratchpads =
   , NS "transmission"       transmissionCommand transmissionSelector nearFullFloat
   ]
  where
-  emacsCommand         = "emacsclient -c"
-  emacsSelector        = className =? "Emacs"
+  bottomCommand         = "alacritty -t Bottom -e btm"
+  bottomSelector        = title =? "btm"
 
   discordCommand       = "discord"
   discordSelector      = className =? "discord"
+
+  emacsCommand         = "emacsclient -c"
+  emacsSelector        = className =? "Emacs"
 
   ffPicCommand         = "Picture-in-Picture"
   ffPicSelector        = title =? "Picture-in-Picture"
@@ -1027,7 +1031,7 @@ addKeys conf@XConfig { modMask = modm } =
          , ((hyper, xK_p)                , spawn "rofi-systemd")
          ,
          -- Specific program spawning
-           ((modalt, xK_h)               , spawn "alacritty -t htop -e htop")
+           ((modalt, xK_h)               , doScratchpad "bottom")
          , ((modalt, xK_v)               , spawn "pavucontrol")
          -- , ((modm .|. shiftMask, xK_x), spawn "") <- lockscreen when found!
          ,
