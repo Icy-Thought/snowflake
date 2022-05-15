@@ -1,0 +1,6 @@
+{
+    name = "rose-pine";
+    publisher = "mvllow";
+    version = "2.2.0";
+    sha256 = "qOixpqB/cdo3g2QazKC+lHwrvf0taE7VwT2E2MUBREU=";
+}

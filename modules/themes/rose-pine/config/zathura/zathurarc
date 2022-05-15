@@ -1,0 +1,43 @@
+{ colors, font, ... }: ''
+
+  set adjust-open             width
+  set first-page-column       "1:1"
+  set window-title-basename   true
+  set selection-clipboard     clipboard
+  set font                    "${font.sans.family} ${font.sans.weight} ${toString (font.mono.size)}"
+
+  # Colors:
+  set default-fg              "${colors.types.fg}"
+  set default-bg              "${colors.types.bg}"
+
+  set statusbar-fg            "${colors.white}"
+  set statusbar-bg            "${colors.types.bg}"
+
+  set inputbar-fg             "${colors.yellow}"
+  set inputbar-bg             "${colors.types.bg}"
+
+  set notification-fg         "${colors.white}"
+  set notification-bg         "${colors.black}"
+
+  set notification-error-fg   "${colors.white}"
+  set notification-error-bg   "${colors.black}"
+
+  set notification-warning-fg "${colors.red}"
+  set notification-warning-bg "${colors.black}"
+
+  set highlight-active-color  "${colors.types.fg}"
+  set highlight-color         "${colors.types.highlight}"
+
+  set completion-fg           "${colors.yellow}"
+  set completion-bg           "${colors.types.bg}"
+
+  set completion-highlight-fg "${colors.types.bg}"
+  set completion-highlight-bg "${colors.yellow}"
+
+  set recolor-lightcolor      "${colors.types.bg}"
+  set recolor-darkcolor       "${colors.white}"
+
+  set recolor                 true
+  set recolor-keephue         true
+  set recolor-reverse-video   true
+''
