@@ -30,11 +30,11 @@
           packages = p: [ p.my-xmonad ];
           buildInputs = with pkgs.haskellPackages; [
             cabal-install
+            ghcid
             haskell-language-server
             hlint
-            ghcid
-            ormolu
             implicit-hie
+            stylish-haskell
           ];
         };
         defaultPackage = pkgs.haskellPackages.my-xmonad;

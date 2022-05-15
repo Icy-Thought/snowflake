@@ -29,7 +29,6 @@ in {
         categories = [ "Development" ];
       })
       qgnomeplatform
-      libsForQt5.qtstyleplugin-kvantum
     ];
 
     fonts = {
@@ -48,9 +47,11 @@ in {
       config.user.name;
 
     # Try really hard to get QT to respect my GTK theme.
-    env.GTK_DATA_PREFIX = [ "${config.system.path}" ];
-    env.QT_QPA_PLATFORMTHEME = "gnome";
-    env.QT_STYLE_OVERRIDE = "kvantum";
+    env = {
+      GTK_DATA_PREFIX = [ "${config.system.path}" ];
+      QT_QPA_PLATFORMTHEME = "gnome";
+      # QT_STYLE_OVERRIDE = "kvantum";
+    };
 
     services.xserver.displayManager.sessionCommands = ''
       # GTK2_RC_FILES must be available to the display manager.

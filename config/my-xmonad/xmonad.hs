@@ -6,7 +6,6 @@
 {-# LANGUAGE PartialTypeSignatures     #-}
 {-# LANGUAGE ScopedTypeVariables       #-}
 {-# LANGUAGE TupleSections             #-}
-{-# LANGUAGE TypeSynonymInstances      #-}
 
 module Main where
 
@@ -835,7 +834,7 @@ scratchpads =
   ]
  where
   bottomCommand         = "alacritty -t Bottom -e btm"
-  bottomSelector        = title =? "btm"
+  bottomSelector        = title =? "Bottom"
 
   discordCommand       = "discord"
   discordSelector      = className =? "discord"
@@ -1019,7 +1018,8 @@ addKeys conf@XConfig { modMask = modm } =
          , ((hyper, xK_l)                , selectLayout)
          ,
          -- ScratchPad(s)
-           ((modalt, xK_d)               , doScratchpad "discord")
+           ((modalt, xK_b)               , doScratchpad "bottom")
+         , ((modalt, xK_d)               , doScratchpad "discord")
          , ((modalt, xK_e)               , doScratchpad "emacs")
          , ((modalt, xK_m)               , doScratchpad "protonmail")
          , ((modalt, xK_s)               , doScratchpad "spotify")
@@ -1031,9 +1031,9 @@ addKeys conf@XConfig { modMask = modm } =
          , ((hyper, xK_p)                , spawn "rofi-systemd")
          ,
          -- Specific program spawning
-           ((modalt, xK_h)               , doScratchpad "bottom")
-         , ((modalt, xK_v)               , spawn "pavucontrol")
-         -- , ((modm .|. shiftMask, xK_x), spawn "") <- lockscreen when found!
+           ((modalt, xK_v)               , spawn "pavucontrol")
+         -- , ((modm .|. shiftMask, xK_x)   , spawn "whatever-lock") <- lockscreen when found!
+         -- , ((modalt, xK_p)               , spawn "rofi -show power") <- rofi power controls
          ,
          -- Playerctl
            ((modm, xK_Up)                , spawn "playerctl play-pause")

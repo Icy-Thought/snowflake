@@ -4,28 +4,35 @@ let
   active = config.modules.themes.active;
   themesDir = config.snowflake.themesDir;
 in (with pkgs.vscode-extensions; [
-  jock.svg
-  vscodevim.vim
-  naumovs.color-highlight
-  gruntfuggly.todo-tree
-  eamodio.gitlens
-  mhutchie.git-graph
-  ms-toolsai.jupyter
-  editorconfig.editorconfig
+  # Editor
   formulahendry.code-runner
-  christian-kohler.path-intellisense
   github.copilot
-  wix.vscode-import-cost
+  ms-toolsai.jupyter
+  vscodevim.vim
+
+  # Aesthetics
   esbenp.prettier-vscode
-  ms-vscode.cpptools
+  gruntfuggly.todo-tree
+  jock.svg
+  naumovs.color-highlight
+
+  # Tools
+  christian-kohler.path-intellisense
+  eamodio.gitlens
+  editorconfig.editorconfig
+  mhutchie.git-graph
+  wix.vscode-import-cost
+
+  # Language
   haskell.haskell
   justusadam.language-haskell # syntax-highlighting
   james-yu.latex-workshop
-  yzhang.markdown-all-in-one
   jnoortheen.nix-ide
   ms-python.python
+  ms-vscode.cpptools
   rust-lang.rust-analyzer
   tamasfe.even-better-toml
+  yzhang.markdown-all-in-one
 ]) ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
   (import "${themesDir}/${active}/config/vscodium/extension")
   # {
