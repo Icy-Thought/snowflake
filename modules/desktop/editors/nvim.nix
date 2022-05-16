@@ -1,8 +1,13 @@
-{ config, options, lib, pkgs, inputs, ... }:
-
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}:
 with lib;
-with lib.my;
-let
+with lib.my; let
   cfg = config.modules.desktop.editors.nvim;
   nvimDir = "${config.snowflake.configDir}/nvim.d";
   active = config.modules.themes.active;
@@ -15,9 +20,9 @@ in {
 
   config = mkMerge [
     {
-      nixpkgs.overlays = [ inputs.neovim-nightly.overlay ];
+      nixpkgs.overlays = [inputs.neovim-nightly.overlay];
 
-      user.packages = with pkgs; [ neovim-nightly ];
+      user.packages = with pkgs; [neovim-nightly];
 
       environment = {
         # variables.NVIMDIR = "${configDir}/nvim.d/niflheim";
@@ -47,12 +52,14 @@ in {
         plugins = pkgs.vimPlugins // customPlugins;
       in {
         enable = true;
-        extraConfig = builtins.concatStringsSep "\n" [''
-          lua vim.cmd([[colorscheme ${active}]])
-          luafile ${builtins.toString "${nvimDir}/niflheim/lua/options.lua"}
-          luafile ${builtins.toString "${nvimDir}/niflheim/lua/keymaps.lua"}
-        ''];
-        extraPackages = with pkgs; [ texlab vale ];
+        extraConfig = builtins.concatStringsSep "\n" [
+          ''
+            lua vim.cmd([[colorscheme ${active}]])
+            luafile ${builtins.toString "${nvimDir}/niflheim/lua/options.lua"}
+            luafile ${builtins.toString "${nvimDir}/niflheim/lua/keymaps.lua"}
+          ''
+        ];
+        extraPackages = with pkgs; [texlab vale];
         plugins = pkgs.callPackage "${nvimDir}/niflheim/plugins.nix" plugins;
       };
 

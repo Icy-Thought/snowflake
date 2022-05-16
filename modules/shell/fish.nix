@@ -1,12 +1,16 @@
-{ config, options, lib, pkgs, ... }:
-
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let
+with lib.my; let
   cfg = config.modules.shell;
   configDir = config.snowflake.configDir;
 in {
-  options.modules.shell.fish = { enable = mkBoolOpt false; };
+  options.modules.shell.fish = {enable = mkBoolOpt false;};
 
   config = mkIf cfg.fish.enable {
     users.defaultUserShell = pkgs.fish;

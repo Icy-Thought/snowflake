@@ -1,8 +1,13 @@
-{ options, config, lib, pkgs, ... }:
-
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.desktop;
+with lib.my; let
+  cfg = config.modules.desktop;
 in {
   config = mkIf (cfg.xmonad.enable || cfg.qtile.enable) {
     # TODO: after wintypes merge -> homeManager.
@@ -36,7 +41,7 @@ in {
       ];
 
       shadow = true;
-      shadowOffsets = [ (-7) (-7) ];
+      shadowOffsets = [(-7) (-7)];
       shadowOpacity = 0.75;
 
       shadowExclude = [
@@ -98,24 +103,24 @@ in {
         detect-client-opacity = true;
 
         unredir-if-possible = false;
-        unredir-if-possible-exclude = [ ];
+        unredir-if-possible-exclude = [];
         detect-transient = true;
         detect-client-leader = true;
 
-        invert-color-include = [ ];
+        invert-color-include = [];
         glx-no-stencil = true;
         use-damage = false;
         transparent-clipping = false;
         inactive-opacity-override = false;
 
-        focus-exclude = [ "class_g ?= 'rofi'" "class_g ?= 'Steam'" ];
+        focus-exclude = ["class_g ?= 'rofi'" "class_g ?= 'Steam'"];
 
         wintypes = {
-          normal = { };
-          notification = { };
-          desktop = { blur-background = false; };
-          menu = { focus = false; };
-          dialog = { };
+          normal = {};
+          notification = {};
+          desktop = {blur-background = false;};
+          menu = {focus = false;};
+          dialog = {};
           tooltip = {
             shadow = true;
             opacity = 0.75;

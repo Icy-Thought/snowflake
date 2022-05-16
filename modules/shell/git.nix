@@ -1,10 +1,15 @@
-{ config, options, lib, pkgs, ... }:
-
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.shell.git;
+with lib.my; let
+  cfg = config.modules.shell.git;
 in {
-  options.modules.shell.git = { enable = mkBoolOpt false; };
+  options.modules.shell.git = {enable = mkBoolOpt false;};
 
   config = mkIf cfg.enable {
     user.packages = with pkgs; [
@@ -34,7 +39,7 @@ in {
         '';
       };
 
-      attributes = [ "*.lisp diff=lisp" "*.el diff=lisp" "*.org diff=org" ];
+      attributes = ["*.lisp diff=lisp" "*.el diff=lisp" "*.org diff=org"];
 
       ignores = [
         # General:
@@ -115,8 +120,7 @@ in {
         };
 
         diff = {
-          "lisp".xfuncname =
-            "^(((;;;+ )|\\(|([ 	]+\\(((cl-|el-patch-)?def(un|var|macro|method|custom)|gb/))).*)$";
+          "lisp".xfuncname = "^(((;;;+ )|\\(|([ \t]+\\(((cl-|el-patch-)?def(un|var|macro|method|custom)|gb/))).*)$";
           "org".xfuncname = "^(\\*+ +.*)$";
         };
       };

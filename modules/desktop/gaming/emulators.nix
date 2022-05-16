@@ -1,8 +1,13 @@
-{ options, config, lib, pkgs, ... }:
-
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.desktop.gaming.emulators;
+with lib.my; let
+  cfg = config.modules.desktop.gaming.emulators;
 in {
   options.modules.desktop.gaming.emulators = {
     psx.enable = mkBoolOpt false; # Playstation

@@ -1,26 +1,26 @@
-{ lib
-, fetchFromGitHub
-, bash
-, cairo
-, glib
-, qt5
-, hicolor-icon-theme
-, gdk-pixbuf
-, imagemagick
-, desktop-file-utils
-, ninja
-, meson
-, sassc
-, ibus
-, usbutils
-, xorg
-, python3Packages
-, gobject-introspection
-, gtk3
-, wrapGAppsHook
-, libappindicator-gtk3
+{
+  lib,
+  fetchFromGitHub,
+  bash,
+  cairo,
+  glib,
+  qt5,
+  hicolor-icon-theme,
+  gdk-pixbuf,
+  imagemagick,
+  desktop-file-utils,
+  ninja,
+  meson,
+  sassc,
+  ibus,
+  usbutils,
+  xorg,
+  python3Packages,
+  gobject-introspection,
+  gtk3,
+  wrapGAppsHook,
+  libappindicator-gtk3,
 }:
-
 python3Packages.buildPythonApplication rec {
   name = "polychromatic";
   version = "0.7.3";
@@ -45,9 +45,9 @@ python3Packages.buildPythonApplication rec {
     scripts/build-styles.sh
   '';
 
-  buildInputs = [ cairo hicolor-icon-theme ];
+  buildInputs = [cairo hicolor-icon-theme];
 
-  pythonPath = with python3Packages; [ openrazer pyqt5 pyqtwebengine ];
+  pythonPath = with python3Packages; [openrazer pyqt5 pyqtwebengine];
 
   propagatedBuildInputs = with python3Packages; [
     xorg.libxcb
@@ -63,8 +63,7 @@ python3Packages.buildPythonApplication rec {
     libappindicator-gtk3
   ];
 
-  nativePropagatedBuildInputs =
-    [ gobject-introspection gtk3 gdk-pixbuf imagemagick ];
+  nativePropagatedBuildInputs = [gobject-introspection gtk3 gdk-pixbuf imagemagick];
 
   nativeBuildInputs = with python3Packages; [
     pyqt5
@@ -76,18 +75,17 @@ python3Packages.buildPythonApplication rec {
     sassc
   ];
 
-  makeWrapperArgs = [ "\${qtWrapperArgs[@]}" ];
+  makeWrapperArgs = ["\${qtWrapperArgs[@]}"];
 
   meta = with lib; {
     homepage = "https://polychromatic.app/";
-    description =
-      "Graphical front-end and tray applet for configuring Razer peripherals on GNU/Linux.";
+    description = "Graphical front-end and tray applet for configuring Razer peripherals on GNU/Linux.";
     longDescription = ''
       Polychromatic is a frontend for OpenRazer that enables Razer devices
       to control lighting effects and more on GNU/Linux.
     '';
     license = licenses.gpl3;
     platforms = platforms.linux;
-    maintainers = with maintainers; [ evanjs ];
+    maintainers = with maintainers; [evanjs];
   };
 }

@@ -1,8 +1,12 @@
-{ config, options, lib, pkgs, ... }:
-
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let
+with lib.my; let
   cfg = config.modules.desktop.media.graphics;
   configDir = config.snowflake.configDir;
 in {
@@ -16,21 +20,36 @@ in {
 
   config = mkIf cfg.enable {
     user.packages = with pkgs;
-      (if cfg.tools.enable then [ font-manager imagemagick ] else [ ]) ++
-
+      (
+        if cfg.tools.enable
+        then [font-manager imagemagick]
+        else []
+      )
+      ++
       # Illustrator & Indesign replacement:
-      (if cfg.vector.enable then [ inkscape ] else [ ]) ++
-
+      (
+        if cfg.vector.enable
+        then [inkscape]
+        else []
+      )
+      ++
       # Photoshop replacement:
-      (if cfg.raster.enable then [
-        krita
-        gimp
-        gimpPlugins.resynthesizer
-      ] else
-        [ ]) ++
-
+      (
+        if cfg.raster.enable
+        then [
+          krita
+          gimp
+          gimpPlugins.resynthesizer
+        ]
+        else []
+      )
+      ++
       # 3D-Modelling:
-      (if cfg.modeling.enable then [ blender ] else [ ]);
+      (
+        if cfg.modeling.enable
+        then [blender]
+        else []
+      );
 
     # TODO: setup GIMP on rebuild!
     # home.configFile = mkIf cfg.raster.enable {

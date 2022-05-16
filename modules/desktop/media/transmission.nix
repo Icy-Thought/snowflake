@@ -1,8 +1,13 @@
-{ config, options, lib, pkgs, ... }:
-
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.desktop.media.transmission;
+with lib.my; let
+  cfg = config.modules.desktop.media.transmission;
 in {
   options.modules.desktop.media.transmission = {
     enable = mkBoolOpt false;
@@ -10,13 +15,13 @@ in {
 
   config = mkIf cfg.enable {
     user = {
-      packages = with pkgs; [ transmission-gtk ];
-      extraGroups = [ "transmission" ];
+      packages = with pkgs; [transmission-gtk];
+      extraGroups = ["transmission"];
     };
 
     networking.firewall = {
-      allowedTCPPorts = [ 51413 ];
-      allowedUDPPorts = [ 51413 ];
+      allowedTCPPorts = [51413];
+      allowedUDPPorts = [51413];
     };
   };
 }

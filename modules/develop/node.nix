@@ -1,8 +1,13 @@
-{ config, options, lib, pkgs, ... }:
-
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.develop;
+with lib.my; let
+  cfg = config.modules.develop;
 in {
   options.modules.develop.node = {
     enable = mkBoolOpt false;
@@ -10,18 +15,20 @@ in {
   };
 
   config = mkMerge [
-    (let node = pkgs.nodejs_latest;
-    in mkIf cfg.node.enable {
-      user.packages = [ node pkgs.yarn ];
+    (let
+      node = pkgs.nodejs_latest;
+    in
+      mkIf cfg.node.enable {
+        user.packages = [node pkgs.yarn];
 
-      # Run locally installed bin-script, e.g. n coffee file.coffee
-      environment.shellAliases = {
-        n = ''PATH="$(${node}/bin/npm bin):$PATH"'';
-        ya = "yarn";
-      };
+        # Run locally installed bin-script, e.g. n coffee file.coffee
+        environment.shellAliases = {
+          n = ''PATH="$(${node}/bin/npm bin):$PATH"'';
+          ya = "yarn";
+        };
 
-      env.PATH = [ "$(${pkgs.yarn}/bin/yarn global bin)" ];
-    })
+        env.PATH = ["$(${pkgs.yarn}/bin/yarn global bin)"];
+      })
 
     (mkIf cfg.xdg.enable {
       env = {

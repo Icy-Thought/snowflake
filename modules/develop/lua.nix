@@ -1,8 +1,13 @@
-{ config, options, lib, pkgs, ... }:
-
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.develop;
+with lib.my; let
+  cfg = config.modules.develop;
 in {
   options.modules.develop.lua = {
     enable = mkBoolOpt false;
@@ -13,8 +18,8 @@ in {
   config = mkMerge [
     {
       user.packages = mkMerge (with pkgs; [
-        (mkIf cfg.lua.enable [ lua sumneko-lua-language-server stylua ])
-        (mkIf cfg.lua.fennel.enable [ fennel fnlfmt ])
+        (mkIf cfg.lua.enable [lua sumneko-lua-language-server stylua])
+        (mkIf cfg.lua.fennel.enable [fennel fnlfmt])
       ]);
     }
     (mkIf cfg.lua.enable {

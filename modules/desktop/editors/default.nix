@@ -1,26 +1,31 @@
-{ config, options, lib, pkgs, ... }:
-
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.desktop.editors;
+with lib.my; let
+  cfg = config.modules.desktop.editors;
 in {
-  options.modules.desktop.editors = { default = mkOpt types.str "nvim"; };
+  options.modules.desktop.editors = {default = mkOpt types.str "nvim";};
 
-  config = (mkMerge [
-    (mkIf (cfg.default != null) { env.EDITOR = cfg.default; })
+  config = mkMerge [
+    (mkIf (cfg.default != null) {env.EDITOR = cfg.default;})
 
     (mkIf (cfg.emacs.enable || cfg.nvim.enable) {
       user.packages = with pkgs; [
         #extraPkgs
         fd
         imagemagick
-        (ripgrep.override { withPCRE2 = true; })
+        (ripgrep.override {withPCRE2 = true;})
         # toolbox
         editorconfig-core-c
 
         # module dependencies
         ## checkers: aspell
-        (aspellWithDicts (ds: with ds; [ en en-computers en-science ]))
+        (aspellWithDicts (ds: with ds; [en en-computers en-science]))
         ## Markdown
         nodePackages.markdownlint-cli2
         ## lsp: LaTeX + Org-Mode
@@ -29,5 +34,5 @@ in {
         # texlive.combined.scheme-medium
       ];
     })
-  ]);
+  ];
 }

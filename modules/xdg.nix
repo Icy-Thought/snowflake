@@ -1,5 +1,8 @@
-{ config, home-manager, ... }: {
-
+{
+  config,
+  home-manager,
+  ...
+}: {
   homeManager.xdg.enable = true;
 
   environment = {

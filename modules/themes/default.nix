@@ -1,16 +1,24 @@
-{ options, config, lib, pkgs, ... }:
-
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.themes;
+with lib.my; let
+  cfg = config.modules.themes;
 in {
   options.modules.themes = with types; {
     active = mkOption {
       type = nullOr str;
       default = null;
-      apply = v:
-        let theme = builtins.getEnv "THEME";
-        in if theme != "" then theme else v;
+      apply = v: let
+        theme = builtins.getEnv "THEME";
+      in
+        if theme != ""
+        then theme
+        else v;
       description = ''
         Name of the theme to enable. Can be overridden by the THEME environment
         variable.
@@ -19,10 +27,11 @@ in {
 
     wallpaper = mkOpt (either path null) null;
 
-    loginWallpaper = mkOpt (either path null) (if cfg.wallpaper != null then
-      toFilteredImage cfg.wallpaper "-gaussian-blur 0x2 -modulate 70 -level 5%"
-    else
-      null);
+    loginWallpaper = mkOpt (either path null) (
+      if cfg.wallpaper != null
+      then toFilteredImage cfg.wallpaper "-gaussian-blur 0x2 -modulate 70 -level 5%"
+      else null
+    );
 
     gtk = {
       theme = mkOpt str "";
@@ -41,7 +50,7 @@ in {
       light = mkOpt str "";
     };
 
-    onReload = mkOpt (attrsOf lines) { };
+    onReload = mkOpt (attrsOf lines) {};
 
     font = {
       mono = {
@@ -94,8 +103,7 @@ in {
     # Read xresources files in ~/.config/xtheme/* to allow modular configuration
     # of Xresources.
     (let
-      xrdb =
-        ''cat "$XDG_CONFIG_HOME"/xtheme/* | ${pkgs.xorg.xrdb}/bin/xrdb -load'';
+      xrdb = ''cat "$XDG_CONFIG_HOME"/xtheme/* | ${pkgs.xorg.xrdb}/bin/xrdb -load'';
     in {
       home.configFile."xtheme.init" = {
         text = xrdb;
@@ -149,21 +157,21 @@ in {
         '';
 
         "xtheme/05-fonts".text = with cfg.font.sans; ''
-          *.font: xft:${family}:style=${weight}:pixelsize=${toString (size)}
-          Emacs.font: ${family}:style=${weight}:pixelsize=${toString (size)}
+          *.font: xft:${family}:style=${weight}:pixelsize=${toString size}
+          Emacs.font: ${family}:style=${weight}:pixelsize=${toString size}
         '';
 
         # GTK
         "gtk-3.0/settings.ini".text = ''
           [Settings]
           ${optionalString (cfg.gtk.theme != "")
-          "gtk-theme-name=${cfg.gtk.theme}"}
+            "gtk-theme-name=${cfg.gtk.theme}"}
           ${optionalString (cfg.gtk.iconTheme != "")
-          "gtk-icon-theme-name=${cfg.gtk.iconTheme}"}
+            "gtk-icon-theme-name=${cfg.gtk.iconTheme}"}
           ${optionalString (cfg.gtk.cursor.name != "")
-          "gtk-cursor-theme-name=${cfg.gtk.cursor.name}"}
+            "gtk-cursor-theme-name=${cfg.gtk.cursor.name}"}
           ${optionalString (cfg.gtk.cursor.size != "")
-          "gtk-cursor-theme-size=${toString (cfg.gtk.cursor.size)}"}
+            "gtk-cursor-theme-size=${toString (cfg.gtk.cursor.size)}"}
           gtk-fallback-icon-theme=gnome
           gtk-application-prefer-dark-theme=true
           gtk-xft-hinting=1
@@ -174,9 +182,9 @@ in {
         # GTK2 global theme (widget and icon theme)
         "gtk-2.0/gtkrc".text = ''
           ${optionalString (cfg.gtk.theme != "")
-          ''gtk-theme-name="${cfg.gtk.theme}"''}
+            ''gtk-theme-name="${cfg.gtk.theme}"''}
           ${optionalString (cfg.gtk.iconTheme != "")
-          ''gtk-icon-theme-name="${cfg.gtk.iconTheme}"''}
+            ''gtk-icon-theme-name="${cfg.gtk.iconTheme}"''}
           gtk-font-name="Sans ${toString (cfg.font.sans.size)}"
         '';
 
@@ -188,23 +196,22 @@ in {
       };
 
       # Force Qt to use GTK cursor theme
-      home.file.".icons/default/index.theme" =
-        mkIf (cfg.gtk.cursor.name != "") {
-          text = ''
-            [icon theme]
-            Inherits=${cfg.gtk.cursor.name}
-          '';
-        };
+      home.file.".icons/default/index.theme" = mkIf (cfg.gtk.cursor.name != "") {
+        text = ''
+          [icon theme]
+          Inherits=${cfg.gtk.cursor.name}
+        '';
+      };
 
       fonts.fontconfig.defaultFonts = {
-        sansSerif = [ cfg.font.sans.family ];
-        monospace = [ cfg.font.mono.family ];
+        sansSerif = [cfg.font.sans.family];
+        monospace = [cfg.font.mono.family];
       };
     }
 
     (mkIf (cfg.wallpaper != null)
-    # Set the wallpaper ourselves so we don't need .background-image and/or
-    # .fehbg polluting $HOME
+      # Set the wallpaper ourselves so we don't need .background-image and/or
+      # .fehbg polluting $HOME
       (let
         wCfg = config.services.xserver.desktopManager.wallpaper;
         command = ''
@@ -220,25 +227,25 @@ in {
         modules.themes.onReload.wallpaper = command;
 
         home.dataFile =
-          mkIf (cfg.wallpaper != null) { "wallpaper".source = cfg.wallpaper; };
+          mkIf (cfg.wallpaper != null) {"wallpaper".source = cfg.wallpaper;};
       }))
 
     (mkIf (cfg.loginWallpaper != null) {
       services.xserver.displayManager.lightdm.background = cfg.loginWallpaper;
     })
 
-    (mkIf (cfg.onReload != { }) (let
-      reloadTheme = with pkgs;
-        (writeScriptBin "reloadTheme" ''
-          #!${stdenv.shell}
-          echo "Reloading current theme: ${cfg.active}"
-          ${concatStringsSep "\n" (mapAttrsToList (name: script: ''
+    (mkIf (cfg.onReload != {}) (let
+      reloadTheme = with pkgs; (writeScriptBin "reloadTheme" ''
+        #!${stdenv.shell}
+        echo "Reloading current theme: ${cfg.active}"
+        ${concatStringsSep "\n" (mapAttrsToList (name: script: ''
             echo "[${name}]"
             ${script}
-          '') cfg.onReload)}
-        '');
+          '')
+          cfg.onReload)}
+      '');
     in {
-      user.packages = [ reloadTheme ];
+      user.packages = [reloadTheme];
       system.userActivationScripts.reloadTheme = ''
         [ -z "$NORELOAD" ] && ${reloadTheme}/bin/reloadTheme
       '';

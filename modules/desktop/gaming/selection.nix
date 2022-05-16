@@ -1,8 +1,13 @@
-{ options, config, lib, pkgs, ... }:
-
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.desktop.gaming.selection;
+with lib.my; let
+  cfg = config.modules.desktop.gaming.selection;
 in {
   options.modules.desktop.gaming.selection = {
     geforce.enable = mkBoolOpt true;

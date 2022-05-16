@@ -1,21 +1,25 @@
-{ config, options, lib, pkgs, ... }:
-
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.shell;
+with lib.my; let
+  cfg = config.modules.shell;
 in {
-  options.modules.shell.tmux = { enable = mkBoolOpt false; };
+  options.modules.shell.tmux = {enable = mkBoolOpt false;};
 
   config = mkIf (cfg.tmux.enable || cfg.fish.enable) {
-    user.packages = with pkgs; [ tmux ];
+    user.packages = with pkgs; [tmux];
 
     env = {
-      PATH = [ "$TMUXIFIER/bin" ];
+      PATH = ["$TMUXIFIER/bin"];
       TMUX_HOME = "$XDG_CONFIG_HOME/tmux";
     };
 
-    modules.themes.onReload.tmux =
-      "${pkgs.tmux}/bin/tmux source-file $TMUX_HOME/tmux.conf";
+    modules.themes.onReload.tmux = "${pkgs.tmux}/bin/tmux source-file $TMUX_HOME/tmux.conf";
 
     home.configFile = {
       "fish/conf.d/tmux.fish".text = ''

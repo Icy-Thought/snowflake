@@ -1,8 +1,13 @@
-{ config, options, lib, pkgs, ... }:
-
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.develop;
+with lib.my; let
+  cfg = config.modules.develop;
 in {
   options.modules.develop.python = {
     enable = mkBoolOpt false;
@@ -12,7 +17,8 @@ in {
   config = mkMerge [
     (mkIf cfg.python.enable {
       user.packages = with pkgs;
-        [ python39 ] ++ (with python39Packages; [
+        [python39]
+        ++ (with python39Packages; [
           pip
           ipython
           black

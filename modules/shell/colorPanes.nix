@@ -1,14 +1,18 @@
-{ config, options, lib, pkgs, ... }:
-
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let
+with lib.my; let
   cfg = config.modules.shell.colorPanes;
   screenDir = "${config.user.home}/Pictures/Screenshots";
 in {
-  options.modules.shell.colorPanes = { enable = mkBoolOpt false; };
+  options.modules.shell.colorPanes = {enable = mkBoolOpt false;};
 
   config = mkIf cfg.enable {
-    user.packages = with pkgs; [ (writeScriptBin "colorPanes" "") ];
+    user.packages = with pkgs; [(writeScriptBin "colorPanes" "")];
   };
 }

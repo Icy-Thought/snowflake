@@ -1,6 +1,10 @@
-{ pkgs, config, lib, ... }: {
-
-  imports = [ ./hwCfg.nix ];
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}: {
+  imports = [./hwCfg.nix];
 
   modules.hardware = {
     audio.enable = true;
@@ -18,7 +22,7 @@
     };
   };
 
-  modules.themes = { active = "one-dark"; };
+  modules.themes = {active = "one-dark";};
 
   modules.desktop = {
     gnome.enable = true;
@@ -65,7 +69,7 @@
   ];
 
   services.xserver = {
-    videoDrivers = [ "modesetting" ];
+    videoDrivers = ["modesetting"];
     useGlamor = true;
   };
 }

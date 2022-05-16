@@ -1,10 +1,16 @@
-{ config, options, lib, pkgs, inputs, ... }:
-
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.desktop.editors.vscodium;
+with lib.my; let
+  cfg = config.modules.desktop.editors.vscodium;
 in {
-  options.modules.desktop.editors.vscodium = { enable = mkBoolOpt false; };
+  options.modules.desktop.editors.vscodium = {enable = mkBoolOpt false;};
 
   config = mkIf cfg.enable {
     homeManager.programs.vscode = with config.snowflake; {
@@ -16,8 +22,8 @@ in {
         inherit pkgs;
       };
       userSettings =
-        import "${configDir}/vscodium/settings.nix" { inherit config; };
-      keybindings = import "${configDir}/vscodium/keybindings.nix" { };
+        import "${configDir}/vscodium/settings.nix" {inherit config;};
+      keybindings = import "${configDir}/vscodium/keybindings.nix" {};
     };
   };
 }

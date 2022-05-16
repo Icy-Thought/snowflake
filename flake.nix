@@ -22,60 +22,66 @@
     rust.url = "github:oxalica/rust-overlay";
   };
 
-  outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, ... }:
-    let
-      inherit (lib.my) mapModules mapModulesRec mapHosts;
-      system = "x86_64-linux";
+  outputs = inputs @ {
+    self,
+    nixpkgs,
+    nixpkgs-unstable,
+    ...
+  }: let
+    inherit (lib.my) mapModules mapModulesRec mapHosts;
+    system = "x86_64-linux";
 
-      mkPkgs = pkgs: extraOverlays:
-        import pkgs {
-          inherit system;
-          config.allowUnfree = true;
-          overlays = extraOverlays ++ (lib.attrValues self.overlays);
-        };
-      pkgs = mkPkgs nixpkgs [ self.overlay ];
-      pkgs' = mkPkgs nixpkgs-unstable [ ];
-
-      lib = nixpkgs.lib.extend (final: prev: {
-        my = import ./lib {
-          inherit pkgs inputs;
-          lib = final;
-        };
-      });
-
-    in {
-      lib = lib.my;
-
-      overlay = final: prev: {
-        unstable = pkgs';
-        my = self.packages."${system}";
+    mkPkgs = pkgs: extraOverlays:
+      import pkgs {
+        inherit system;
+        config.allowUnfree = true;
+        overlays = extraOverlays ++ (lib.attrValues self.overlays);
       };
+    pkgs = mkPkgs nixpkgs [self.overlay];
+    pkgs' = mkPkgs nixpkgs-unstable [];
 
-      overlays = mapModules ./overlays import;
+    lib = nixpkgs.lib.extend (final: prev: {
+      my = import ./lib {
+        inherit pkgs inputs;
+        lib = final;
+      };
+    });
+  in {
+    lib = lib.my;
 
-      packages."${system}" = mapModules ./packages (p: pkgs.callPackage p { });
+    overlay = final: prev: {
+      unstable = pkgs';
+      my = self.packages."${system}";
+    };
 
-      nixosModules = {
+    overlays = mapModules ./overlays import;
+
+    packages."${system}" = mapModules ./packages (p: pkgs.callPackage p {});
+
+    nixosModules =
+      {
         snowflake = import ./.;
-      } // mapModulesRec ./modules import;
+      }
+      // mapModulesRec ./modules import;
 
-      nixosConfigurations = mapHosts ./hosts { };
+    nixosConfigurations = mapHosts ./hosts {};
 
-      devShell."${system}" = import ./shell.nix { inherit pkgs; };
+    devShell."${system}" = import ./shell.nix {inherit pkgs;};
 
-      templates = {
+    templates =
+      {
         full = {
           path = ./.;
           description = "λ well-tailored and configureable NixOS system!";
         };
-      } // import ./templates;
-      defaultTemplate = self.templates.full;
+      }
+      // import ./templates;
+    defaultTemplate = self.templates.full;
 
-      # TODO: deployment + template tool.
-      # defaultApp."${system}" = {
-      #   type = "app";
-      #   program = ./bin/hagel;
-      # };
-
-    };
+    # TODO: deployment + template tool.
+    # defaultApp."${system}" = {
+    #   type = "app";
+    #   program = ./bin/hagel;
+    # };
+  };
 }

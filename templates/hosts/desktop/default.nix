@@ -1,12 +1,16 @@
-{ pkgs, config, lib, ... }:
 {
+  pkgs,
+  config,
+  lib,
+  ...
+}: {
   imports = [
     ../home.nix
     ./hardware-configuration.nix
   ];
 
   ## Modules
-  modules.themes = { active = "catppuccin"; };
+  modules.themes = {active = "catppuccin";};
 
   modules.desktop = {
     xmonad.enable = true;
@@ -22,7 +26,7 @@
       default = "brave";
       brave.enable = true;
     };
-   media = {
+    media = {
       mpv.enable = true;
       spotify.enable = true;
       docViewer.enable = true;

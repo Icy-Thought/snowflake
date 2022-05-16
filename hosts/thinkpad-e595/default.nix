@@ -1,6 +1,10 @@
-{ pkgs, config, lib, ... }: {
-
-  imports = [ ./hwCfg.nix ];
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}: {
+  imports = [./hwCfg.nix];
 
   modules.hardware = {
     audio.enable = true;
@@ -19,7 +23,7 @@
     };
   };
 
-  modules.themes = { active = "catppuccin"; };
+  modules.themes = {active = "catppuccin";};
 
   modules.desktop = {
     xmonad.enable = true;
@@ -85,10 +89,9 @@
   };
 
   boot.kernel.sysctl."abi.vsyscall32" = 0; # League of Legends..
-  boot.kernelParams = [ "acpi_backlight=native" ];
+  boot.kernelParams = ["acpi_backlight=native"];
 
-  hardware.opengl.extraPackages =
-    [ pkgs.amdvlk pkgs.driversi686Linux.amdvlk pkgs.rocm-opencl-icd ];
+  hardware.opengl.extraPackages = [pkgs.amdvlk pkgs.driversi686Linux.amdvlk pkgs.rocm-opencl-icd];
 
   systemd.services.systemd-udev-settle.enable = false;
 
@@ -98,7 +101,7 @@
   };
 
   services.xserver = {
-    videoDrivers = [ "amdgpu" ];
+    videoDrivers = ["amdgpu"];
     deviceSection = ''
       Option "TearFree" "true"
     '';

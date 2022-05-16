@@ -1,8 +1,13 @@
-{ config, options, lib, pkgs, ... }:
-
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.desktop;
+with lib.my; let
+  cfg = config.modules.desktop;
 in {
   config = mkIf config.services.xserver.enable {
     assertions = [
@@ -11,9 +16,14 @@ in {
         message = "Can't enable DE/WM <2 at the same time.";
       }
       {
-        assertion = let srv = config.services;
-        in srv.xserver.enable || srv.sway.enable || !(anyAttrs
-          (n: v: isAttrs v && anyAttrs (n: v: isAttrs v && v.enable)) cfg);
+        assertion = let
+          srv = config.services;
+        in
+          srv.xserver.enable
+          || srv.sway.enable
+          || !(anyAttrs
+            (n: v: isAttrs v && anyAttrs (n: v: isAttrs v && v.enable))
+            cfg);
         message = "Can't enable a desktop-app without a DE/WM.";
       }
     ];
@@ -26,7 +36,7 @@ in {
         desktopName = "Qalculator";
         icon = "calc";
         exec = "${alacritty}/bin/alacritty -t Qalculator -e qalc";
-        categories = [ "Development" ];
+        categories = ["Development"];
       })
       qgnomeplatform
     ];
@@ -48,7 +58,7 @@ in {
 
     # Try really hard to get QT to respect my GTK theme.
     env = {
-      GTK_DATA_PREFIX = [ "${config.system.path}" ];
+      GTK_DATA_PREFIX = ["${config.system.path}"];
       QT_QPA_PLATFORMTHEME = "gnome";
       # QT_STYLE_OVERRIDE = "kvantum";
     };

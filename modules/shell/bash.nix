@@ -1,10 +1,15 @@
-{ config, options, lib, pkgs, ... }:
-
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.shell.bash;
+with lib.my; let
+  cfg = config.modules.shell.bash;
 in {
-  options.modules.shell.bash = { enable = mkBoolOpt true; };
+  options.modules.shell.bash = {enable = mkBoolOpt true;};
 
   config = mkIf cfg.enable (mkMerge [
     {
@@ -12,14 +17,14 @@ in {
         programs.direnv = {
           enable = true;
           nix-direnv.enable = true;
-          config.whitelist.prefix = [ "/home" ];
+          config.whitelist.prefix = ["/home"];
         };
 
         programs.bash = {
           enable = true;
           historySize = 5000;
           historyFileSize = 5000;
-          historyIgnore = [ "nvim" "neofetch" ];
+          historyIgnore = ["nvim" "neofetch"];
 
           shellAliases = {
             ls = "exa -Slhg --icons";

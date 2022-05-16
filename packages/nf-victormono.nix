@@ -1,12 +1,16 @@
-{ stdenv, lib, nerd-font-patcher, victor-mono }:
-
+{
+  stdenv,
+  lib,
+  nerd-font-patcher,
+  victor-mono,
+}:
 stdenv.mkDerivation {
   pname = "NF-VictorMono";
   version = (builtins.parseDrvName victor-mono.name).version;
 
-  nativeBuildInputs = [ nerd-font-patcher victor-mono ];
+  nativeBuildInputs = [nerd-font-patcher victor-mono];
 
-  phases = [ "installPhase" ];
+  phases = ["installPhase"];
 
   preInstall = ''
     mkdir -p $out/share/fonts/truetype && cd "$_"
@@ -25,7 +29,7 @@ stdenv.mkDerivation {
     description = "Free programming font with cursive italics and ligatures";
     homepage = "https://rubjo.github.io/victor-mono";
     license = licenses.ofl;
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [];
     platforms = platforms.linux;
   };
 }

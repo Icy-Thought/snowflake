@@ -1,12 +1,16 @@
-{ options, config, lib, pkgs, ... }:
-
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let
+with lib.my; let
   cfg = config.modules.containers.archlinux;
   configDir = config.snowflake.configDir;
 in {
-  options.modules.containers.archlinux = { enable = mkBoolOpt false; };
+  options.modules.containers.archlinux = {enable = mkBoolOpt false;};
 
   config = mkIf cfg.enable {
     virtualisation = {
@@ -20,8 +24,8 @@ in {
 
     systemd.nspawn."archLinux" = {
       enable = true;
-      wantedBy = [ "machines.target" ];
-      requiredBy = [ "machines.target" ];
+      wantedBy = ["machines.target"];
+      requiredBy = ["machines.target"];
       execConfig = {
         Timezone = "Bind";
         Hostname = "Arch";
@@ -30,7 +34,7 @@ in {
 
       filesConfig = {
         Volatile = false;
-        BindReadOnly = [ "/home/icy-thought:/mnt/icy-thought" ];
+        BindReadOnly = ["/home/icy-thought:/mnt/icy-thought"];
         Bind = [
           "/home/icy-thought/.container-arch:/home/icy-thought"
           "/run/user/1000/wayland-1"
@@ -51,7 +55,7 @@ in {
 
     systemd.services."systemd-nspawn@".serviceConfig = {
       # Vulkan support
-      DeviceAllow = [ "char-drm rwx" "/dev/dri/renderD128" ];
+      DeviceAllow = ["char-drm rwx" "/dev/dri/renderD128"];
     };
   };
 }

@@ -1,5 +1,4 @@
 {
-
   minimal = {
     path = ./minimal;
     description = "λ well-tailored and configureable NixOS system!";

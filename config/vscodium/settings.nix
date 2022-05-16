@@ -1,10 +1,8 @@
-{ config, ... }:
-
-let cfg = config.modules.themes;
+{config, ...}: let
+  cfg = config.modules.themes;
 in {
   # Introduction
-  "__comment" =
-    "(VSCode) settings.json => immutable conf-file, managed via (Nix) Home-Manager";
+  "__comment" = "(VSCode) settings.json => immutable conf-file, managed via (Nix) Home-Manager";
   "update.mode" = "none";
   "workbench.settings.editor" = "ui";
   "files.exclude" = {
@@ -44,7 +42,7 @@ in {
   "editor.smoothScrolling" = true;
 
   # Terminal
-  "terminal.integrated.env.linux" = { };
+  "terminal.integrated.env.linux" = {};
   "terminal.explorerKind" = "integrated";
   "terminal.external.linuxExec" = "alacritty";
   "terminal.integrated.tabs.focusMode" = "singleClick";
@@ -79,7 +77,7 @@ in {
   # Language specific
   "haskell.formattingProvider" = "stylish-haskell";
 
-  "[nix]" = { "editor.tabSize" = 2; };
+  "[nix]" = {"editor.tabSize" = 2;};
 
   # Git
   "git.autoFetch" = false;
@@ -96,22 +94,24 @@ in {
   "vim.useSystemClipboard" = true;
   "vim.useCtrlKeys" = true;
   "vim.hlsearch" = true;
-  "vim.insertModeKeyBindings" = [{
-    "before" = [ "j" "j" ];
-    "after" = [ "<Esc>" ];
-  }];
+  "vim.insertModeKeyBindings" = [
+    {
+      "before" = ["j" "j"];
+      "after" = ["<Esc>"];
+    }
+  ];
   "vim.normalModeKeyBindingsNonRecursive" = [
     {
-      "before" = [ "<leader>" "d" ];
-      "after" = [ "d" "d" ];
+      "before" = ["<leader>" "d"];
+      "after" = ["d" "d"];
     }
     {
-      "before" = [ "<C-n>" ];
-      "commands" = [ " =nohl" ];
+      "before" = ["<C-n>"];
+      "commands" = [" =nohl"];
     }
     {
-      "before" = [ "K" ];
-      "commands" = [ "lineBreakInsert" ];
+      "before" = ["K"];
+      "commands" = ["lineBreakInsert"];
       "silent" = true;
     }
   ];

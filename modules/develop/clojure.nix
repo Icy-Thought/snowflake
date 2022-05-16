@@ -1,8 +1,13 @@
-{ config, options, lib, pkgs, ... }:
-
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.develop;
+with lib.my; let
+  cfg = config.modules.develop;
 in {
   options.modules.develop.clojure = {
     enable = mkBoolOpt false;
@@ -11,7 +16,7 @@ in {
 
   config = mkMerge [
     (mkIf cfg.clojure.enable {
-      user.packages = with pkgs; [ clojure joker leiningen ];
+      user.packages = with pkgs; [clojure joker leiningen];
     })
 
     (mkIf cfg.xdg.enable {

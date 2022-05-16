@@ -1,8 +1,13 @@
-{ options, config, lib, pkgs, ... }:
-
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.desktop.gaming.steam;
+with lib.my; let
+  cfg = config.modules.desktop.gaming.steam;
 in {
   options.modules.desktop.gaming.steam = with types; {
     enable = mkBoolOpt false;
@@ -19,8 +24,7 @@ in {
         driSupport32Bit = true;
       };
 
-      environment.variables.VK_ICD_FILENAMES =
-        [ "/run/opengl-driver/share/vulkan/icd.d/amd_icd64.json" ];
+      environment.variables.VK_ICD_FILENAMES = ["/run/opengl-driver/share/vulkan/icd.d/amd_icd64.json"];
 
       user.packages = with pkgs; [
         # Get steam to keep its garbage out of $HOME
@@ -40,8 +44,8 @@ in {
           icon = "steam";
           exec = "steam";
           terminal = false;
-          mimeTypes = [ "x-scheme-handler/steam" ];
-          categories = [ "Network" "FileTransfer" "Game" ];
+          mimeTypes = ["x-scheme-handler/steam"];
+          categories = ["Network" "FileTransfer" "Game"];
         })
       ];
       system.userActivationScripts.setupSteamDir = ''mkdir -p "${cfg.libDir}"'';
@@ -50,6 +54,6 @@ in {
       systemd.extraConfig = "DefaultLimitNOFILE=1048576";
     }
 
-    (mkIf cfg.hardware.enable { hardware.steam-hardware.enable = true; })
+    (mkIf cfg.hardware.enable {hardware.steam-hardware.enable = true;})
   ]);
 }

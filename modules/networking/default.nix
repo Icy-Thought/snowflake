@@ -1,8 +1,13 @@
-{ config, options, lib, pkgs, ... }:
-
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.networking;
+with lib.my; let
+  cfg = config.modules.networking;
 in {
   options.modules.networking = {
     enable = mkBoolOpt false;

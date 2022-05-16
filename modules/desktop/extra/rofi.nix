@@ -1,10 +1,15 @@
-{ options, config, lib, pkgs, ... }:
-
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.desktop;
+with lib.my; let
+  cfg = config.modules.desktop;
 in {
-  options.modules.desktop.extra.rofi = { enable = mkBoolOpt false; };
+  options.modules.desktop.extra.rofi = {enable = mkBoolOpt false;};
 
   config = mkIf (cfg.xmonad.enable || cfg.qtile.enable) {
     user.packages = with pkgs; [

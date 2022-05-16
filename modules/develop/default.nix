@@ -1,8 +1,13 @@
-{ config, options, lib, pkgs, ... }:
-
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.develop;
+with lib.my; let
+  cfg = config.modules.develop;
 in {
   options.modules.develop = {
     enable = mkBoolOpt true;
@@ -12,7 +17,7 @@ in {
   config = mkMerge [
     (mkIf cfg.enable {
       # nixLang related
-      user.packages = with pkgs; [ nixfmt rnix-lsp ];
+      user.packages = with pkgs; [alejandra rnix-lsp];
     })
 
     (mkIf cfg.xdg.enable {

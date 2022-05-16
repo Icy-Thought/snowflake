@@ -1,16 +1,20 @@
-{ config, lib, pkgs, modulesPath, ... }: {
-
-  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
+{
+  config,
+  lib,
+  pkgs,
+  modulesPath,
+  ...
+}: {
+  imports = [(modulesPath + "/installer/scan/not-detected.nix")];
 
   boot = {
-    kernelModules = [ "kvm-amd" ];
-    extraModulePackages = [ ];
+    kernelModules = ["kvm-amd"];
+    extraModulePackages = [];
   };
 
   boot.initrd = {
-    availableKernelModules =
-      [ "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" "rtsx_pci_sdmmc" ];
-    kernelModules = [ ];
+    availableKernelModules = ["xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" "rtsx_pci_sdmmc"];
+    kernelModules = [];
   };
 
   # CPU-related
@@ -22,17 +26,17 @@
   fileSystems."/" = {
     device = "/dev/disk/by-label/nixos";
     fsType = "ext4";
-    options = [ "noatime, x-gvfs-hide" ];
+    options = ["noatime, x-gvfs-hide"];
   };
   fileSystems."/home" = {
     device = "/dev/disk/by-label/home";
     fsType = "ext4";
-    options = [ "noatime, x-gvfs-hide" ];
+    options = ["noatime, x-gvfs-hide"];
   };
   fileSystems."/boot" = {
     device = "/dev/disk/by-label/boot";
     fsType = "vfat";
-    options = [ "x-gvfs-hide" ];
+    options = ["x-gvfs-hide"];
   };
-  swapDevices = [{ device = "/dev/disk/by-label/swap"; }];
+  swapDevices = [{device = "/dev/disk/by-label/swap";}];
 }

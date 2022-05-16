@@ -1,15 +1,20 @@
-{ inputs, options, config, lib, pkgs, ... }:
-
+{
+  inputs,
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let
+with lib.my; let
   cfg = config.modules.desktop.xmonad;
   configDir = config.snowflake.configDir;
 in {
-  options.modules.desktop.xmonad = { enable = mkBoolOpt false; };
+  options.modules.desktop.xmonad = {enable = mkBoolOpt false;};
 
   config = mkIf cfg.enable {
-    nixpkgs.overlays = [ inputs.xmonad.overlay inputs.xmonad-contrib.overlay ];
+    nixpkgs.overlays = [inputs.xmonad.overlay inputs.xmonad-contrib.overlay];
 
     environment.systemPackages = with pkgs; [
       haskellPackages.my-xmonad
@@ -35,13 +40,15 @@ in {
         };
       };
 
-      windowManager.session = [{
-        name = "xmonad";
-        start = ''
-          /usr/bin/env my-xmonad &
-          waitPID=$!
-        '';
-      }];
+      windowManager.session = [
+        {
+          name = "xmonad";
+          start = ''
+            /usr/bin/env my-xmonad &
+            waitPID=$!
+          '';
+        }
+      ];
     };
 
     # Prevent x11 askPass prompt on git push:
@@ -73,7 +80,7 @@ in {
           ${pkgs.haskellPackages.my-xmonad}/bin/my-xmonad
         '';
 
-        importedVariables = [ "GDK_PIXBUF_MODULE_FILE" ];
+        importedVariables = ["GDK_PIXBUF_MODULE_FILE"];
       };
     };
   };

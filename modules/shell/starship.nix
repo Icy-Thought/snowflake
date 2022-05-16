@@ -1,8 +1,13 @@
-{ config, options, lib, pkgs, ... }:
-
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.shell.fish;
+with lib.my; let
+  cfg = config.modules.shell.fish;
 in {
   config = mkIf cfg.enable {
     homeManager.programs.starship = {
@@ -24,10 +29,12 @@ in {
           full_symbol = "🔋";
           charging_symbol = "⚡️";
           discharging_symbol = "💀";
-          display = [{
-            style = "bold red";
-            threshold = 15;
-          }];
+          display = [
+            {
+              style = "bold red";
+              threshold = 15;
+            }
+          ];
         };
       };
     };

@@ -1,8 +1,14 @@
-{ inputs, options, config, lib, pkgs, ... }:
-
+{
+  inputs,
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.desktop;
+with lib.my; let
+  cfg = config.modules.desktop;
 in {
   config = let
     customKeyboardLayout = pkgs.writeText "custom-keyboard-layout" ''
@@ -21,18 +27,18 @@ in {
         xkb_geometry  { include "pc(pc104)"     };
       };
     '';
+  in
+    mkIf (cfg.xmonad.enable || cfg.qtile.enable) {
+      homeManager = {
+        # Home-Manager (null) -> fixes fuck-up.
+        home.keyboard = null;
 
-  in mkIf (cfg.xmonad.enable || cfg.qtile.enable) {
-    homeManager = {
-      # Home-Manager (null) -> fixes fuck-up.
-      home.keyboard = null;
+        xsession.initExtra = ''
+          # Set XKB layout = us+hyper on XMonad start:
+          ${pkgs.xorg.xkbcomp}/bin/xkbcomp ${customKeyboardLayout} $DISPLAY
+        '';
+      };
 
-      xsession.initExtra = ''
-        # Set XKB layout = us+hyper on XMonad start:
-        ${pkgs.xorg.xkbcomp}/bin/xkbcomp ${customKeyboardLayout} $DISPLAY
-      '';
+      environment.etc."X11/keymap.xkb".source = customKeyboardLayout;
     };
-
-    environment.etc."X11/keymap.xkb".source = customKeyboardLayout;
-  };
 }

@@ -1,8 +1,13 @@
-{ options, config, lib, pkgs, ... }:
-
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.themes;
+with lib.my; let
+  cfg = config.modules.themes;
 in {
   config = mkIf (cfg.active == "rose-pine") (mkMerge [
     {
@@ -73,8 +78,7 @@ in {
         bibata-cursors
       ];
 
-      fonts.fonts = with pkgs;
-        [ (nerdfonts.override { fonts = [ "VictorMono" ]; }) ];
+      fonts.fonts = with pkgs; [(nerdfonts.override {fonts = ["VictorMono"];})];
 
       home.configFile = with config.modules;
         mkMerge [
@@ -110,38 +114,40 @@ in {
 
     # Activate Neovim Colorscheme
     (mkIf config.modules.desktop.editors.nvim.enable {
-      homeManager.programs.neovim.plugins = with pkgs.vimPlugins; [{
-        plugin = rose-pine;
-        type = "lua";
-        config = builtins.readFile ./config/nvim/rose-pine.lua;
-      }];
+      homeManager.programs.neovim.plugins = with pkgs.vimPlugins; [
+        {
+          plugin = rose-pine;
+          type = "lua";
+          config = builtins.readFile ./config/nvim/rose-pine.lua;
+        }
+      ];
     })
 
     (mkIf (config.modules.desktop.xmonad.enable
       || config.modules.desktop.qtile.enable) {
-        services.xserver.displayManager = {
-          sessionCommands = with cfg.gtk; ''
-            ${pkgs.xorg.xsetroot}/bin/xsetroot -xcf ${pkgs.bibata-cursors}/share/icons/${cursor.name}/cursors/${cursor.default} ${
-              toString (cursor.size)
-            }
-          '';
+      services.xserver.displayManager = {
+        sessionCommands = with cfg.gtk; ''
+          ${pkgs.xorg.xsetroot}/bin/xsetroot -xcf ${pkgs.bibata-cursors}/share/icons/${cursor.name}/cursors/${cursor.default} ${
+            toString (cursor.size)
+          }
+        '';
 
-          # LightDM: Replace with LightDM-Web-Greeter theme
-          lightdm.greeters.mini.extraConfig = ''
-            text-color = "${cfg.colors.magenta}"
-            password-background-color = "${cfg.colors.black}"
-            window-color = "${cfg.colors.types.border}"
-            border-color = "${cfg.colors.types.border}"
-          '';
-        };
+        # LightDM: Replace with LightDM-Web-Greeter theme
+        lightdm.greeters.mini.extraConfig = ''
+          text-color = "${cfg.colors.magenta}"
+          password-background-color = "${cfg.colors.black}"
+          window-color = "${cfg.colors.types.border}"
+          border-color = "${cfg.colors.types.border}"
+        '';
+      };
 
-        # Fcitx5: solution not available atm
-        # home.file.".local/share/fcitx5/themes".source = pkgs.fetchFromGitHub {
-        #   owner = "icy-thought";
-        #   repo = "fcitx5-rose-pine";
-        #   rev = "3b699870fb2806404e305fe34a3d2541d8ed5ef5";
-        #   sha256 = "hOAcjgj6jDWtCGMs4Gd49sAAOsovGXm++TKU3NhZt8w=";
-        # };
-      })
+      # Fcitx5: solution not available atm
+      # home.file.".local/share/fcitx5/themes".source = pkgs.fetchFromGitHub {
+      #   owner = "icy-thought";
+      #   repo = "fcitx5-rose-pine";
+      #   rev = "3b699870fb2806404e305fe34a3d2541d8ed5ef5";
+      #   sha256 = "hOAcjgj6jDWtCGMs4Gd49sAAOsovGXm++TKU3NhZt8w=";
+      # };
+    })
   ]);
 }

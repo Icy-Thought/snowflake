@@ -1,8 +1,12 @@
-{ config, options, lib, pkgs, ... }:
-
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let
+with lib.my; let
   cfg = config.modules.containers.transmission;
   configDir = config.snowflake.configDir;
   torrentDir = "${config.user.home}/Downloads/Torrents";
@@ -26,8 +30,8 @@ in {
 
   config = mkIf cfg.enable {
     user = {
-      packages = with pkgs; [ transmission-remote-gtk ];
-      extraGroups = [ "transmission" ];
+      packages = with pkgs; [transmission-remote-gtk];
+      extraGroups = ["transmission"];
     };
 
     containers.transmission = {
@@ -61,14 +65,14 @@ in {
       # + fish completion (?)
 
       systemd.services.transmission = {
-        bindsTo = [ "wg-quick-akkadianVPN" ];
-        after = [ "wg-quick-akkadianVPN" ];
+        bindsTo = ["wg-quick-akkadianVPN"];
+        after = ["wg-quick-akkadianVPN"];
       };
 
       networking.firewall = {
         enable = true;
-        allowedTCPPorts = [ 9091 51413 ];
-        allowedUDPPorts = [ 51413 ];
+        allowedTCPPorts = [9091 51413];
+        allowedUDPPorts = [51413];
       };
 
       services.transmission = {

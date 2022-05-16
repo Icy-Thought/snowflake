@@ -1,8 +1,13 @@
-{ config, options, lib, pkgs, ... }:
-
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.develop;
+with lib.my; let
+  cfg = config.modules.develop;
 in {
   options.modules.develop.haskell = {
     enable = mkBoolOpt false;
@@ -12,7 +17,8 @@ in {
   config = mkMerge [
     (mkIf cfg.haskell.enable {
       user.packages = with pkgs;
-        [ ghc ] ++ (with haskellPackages; [
+        [ghc]
+        ++ (with haskellPackages; [
           cabal-install
           haskell-language-server
           hasktags

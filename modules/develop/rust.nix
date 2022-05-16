@@ -1,8 +1,14 @@
-{ inputs, config, options, lib, pkgs, ... }:
-
+{
+  inputs,
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.develop;
+with lib.my; let
+  cfg = config.modules.develop;
 in {
   options.modules.develop.rust = {
     enable = mkBoolOpt false;
@@ -11,7 +17,7 @@ in {
 
   config = mkMerge [
     (mkIf cfg.rust.enable {
-      nixpkgs.overlays = [ inputs.rust.overlay ];
+      nixpkgs.overlays = [inputs.rust.overlay];
 
       user.packages = with pkgs; [
         crate2nix
@@ -19,7 +25,7 @@ in {
         unstable.rust-analyzer
       ];
 
-      env.PATH = [ "$(${pkgs.yarn}/bin/yarn global bin)" ];
+      env.PATH = ["$(${pkgs.yarn}/bin/yarn global bin)"];
 
       environment.shellAliases = {
         rs = "rustc";
@@ -30,7 +36,7 @@ in {
     (mkIf cfg.xdg.enable {
       env = {
         CARGO_HOME = "$XDG_DATA_HOME/cargo";
-        PATH = [ "$CARGO_HOME/bin" ];
+        PATH = ["$CARGO_HOME/bin"];
       };
     })
   ];

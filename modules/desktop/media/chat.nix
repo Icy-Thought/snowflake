@@ -1,8 +1,13 @@
-{ config, options, lib, pkgs, ... }:
-
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.desktop.media.chat;
+with lib.my; let
+  cfg = config.modules.desktop.media.chat;
 in {
   options.modules.desktop.media.chat = {
     enable = mkBoolOpt false;
@@ -12,18 +17,23 @@ in {
 
   config = mkIf cfg.enable {
     user.packages = with pkgs;
-      (if cfg.essential.enable then [
-        element-desktop
-        unstable.discord
-      ] else
-        [ ]) ++
-
-      (if cfg.mobile.enable then [
-        signal-desktop
-        tdesktop
-        whatsapp-for-linux
-      ] else
-        [ ]);
+      (
+        if cfg.essential.enable
+        then [
+          element-desktop
+          unstable.discord
+        ]
+        else []
+      )
+      ++ (
+        if cfg.mobile.enable
+        then [
+          signal-desktop
+          tdesktop
+          whatsapp-for-linux
+        ]
+        else []
+      );
 
     # TODO: discord (powercord) + declerative setup.
     # home.configFile = mkIf cfg.essential.enable {

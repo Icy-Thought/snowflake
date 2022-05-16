@@ -1,10 +1,15 @@
-{ config, options, lib, pkgs, ... }:
-
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.services.laptop;
+with lib.my; let
+  cfg = config.modules.services.laptop;
 in {
-  options.modules.services.laptop = { enable = mkBoolOpt false; };
+  options.modules.services.laptop = {enable = mkBoolOpt false;};
 
   config = mkIf cfg.enable {
     services = {
