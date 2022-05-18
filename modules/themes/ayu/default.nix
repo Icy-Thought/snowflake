@@ -23,6 +23,8 @@ in {
           };
         };
 
+        neovim.theme = "ayu";
+
         vscode.theme = {
           dark = "Ayu Dark";
           light = "Ayu Light";
@@ -108,17 +110,6 @@ in {
           #     ./config/inkscape/default-template.svg;
           # })
         ];
-    })
-
-    # Activate Neovim Colorscheme
-    (mkIf config.modules.desktop.editors.nvim.enable {
-      homeManager.programs.neovim.plugins = with pkgs.vimPlugins; [
-        {
-          plugin = neovim-ayu;
-          type = "lua";
-          config = builtins.readFile ./config/nvim/ayu.lua;
-        }
-      ];
     })
 
     (mkIf (config.modules.desktop.xmonad.enable

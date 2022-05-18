@@ -43,8 +43,8 @@ in {
       };
     };
 
-    # since json combination != work,
-    # resolve to following solution..
+    neovim.theme = mkOpt str "";
+
     vscode.theme = {
       dark = mkOpt str "";
       light = mkOpt str "";

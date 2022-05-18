@@ -20,7 +20,7 @@
     };
     editors = {
       default = "nvim";
-      nvim.enable = true;
+      neovim.enable = true;
     };
     browsers = {
       default = "brave";

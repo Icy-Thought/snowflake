@@ -23,6 +23,8 @@ in {
           };
         };
 
+        neovim.theme = "onedark-pro";
+
         vscode.theme = {
           dark = "OneDarkPro";
           light = "Quite Light";
@@ -109,17 +111,6 @@ in {
           #     ./config/inkscape/default-template.svg;
           # })
         ];
-    })
-
-    # Activate Neovim Colorscheme
-    (mkIf config.modules.desktop.editors.nvim.enable {
-      homeManager.programs.neovim.plugins = with pkgs.vimPlugins; [
-        {
-          plugin = onedarkpro-nvim;
-          type = "lua";
-          config = builtins.readFile ./config/nvim/onedark-pro.lua;
-        }
-      ];
     })
 
     (mkIf (config.modules.desktop.xmonad.enable

@@ -23,6 +23,8 @@ in {
           };
         };
 
+        neovim.theme = "kanagawa";
+
         vscode.theme = {
           dark = "Kanagawa";
           light = "Quite Light";
@@ -108,17 +110,6 @@ in {
           #     ./config/inkscape/default-template.svg;
           # })
         ];
-    })
-
-    # Activate Neovim Colorscheme
-    (mkIf config.modules.desktop.editors.nvim.enable {
-      homeManager.programs.neovim.plugins = with pkgs.vimPlugins; [
-        {
-          plugin = kanagawa-nvim;
-          type = "lua";
-          config = builtins.readFile ./config/nvim/kanagawa.lua;
-        }
-      ];
     })
 
     (mkIf (config.modules.desktop.xmonad.enable

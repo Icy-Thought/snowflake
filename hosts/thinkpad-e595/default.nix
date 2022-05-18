@@ -34,9 +34,8 @@
     editors = {
       default = "nvim";
       emacs.enable = true;
-      nvim = {
+      neovim = {
         enable = true;
-        # fnl.enable = true;
         lua.enable = true;
       };
     };

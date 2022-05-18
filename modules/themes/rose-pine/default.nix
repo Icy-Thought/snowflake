@@ -24,6 +24,8 @@ in {
           };
         };
 
+        neovim.theme = "rose-pine";
+
         vscode.theme = {
           dark = "Rosé Pine";
           light = "Rosé Pine Dawn";
@@ -110,17 +112,6 @@ in {
           #     ./config/inkscape/default-template.svg;
           # })
         ];
-    })
-
-    # Activate Neovim Colorscheme
-    (mkIf config.modules.desktop.editors.nvim.enable {
-      homeManager.programs.neovim.plugins = with pkgs.vimPlugins; [
-        {
-          plugin = rose-pine;
-          type = "lua";
-          config = builtins.readFile ./config/nvim/rose-pine.lua;
-        }
-      ];
     })
 
     (mkIf (config.modules.desktop.xmonad.enable

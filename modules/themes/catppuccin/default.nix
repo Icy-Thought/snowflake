@@ -24,6 +24,8 @@ in {
           };
         };
 
+        neovim.theme = "catppuccin";
+
         vscode.theme = {
           dark = "Catppuccin";
           light = "Quiet Light";
@@ -111,17 +113,6 @@ in {
           #     ./config/inkscape/default-template.svg;
           # })
         ];
-    })
-
-    # Activate Neovim Colorscheme
-    (mkIf config.modules.desktop.editors.nvim.enable {
-      homeManager.programs.neovim.plugins = with pkgs.vimPlugins; [
-        {
-          plugin = catppuccin-nvim;
-          type = "lua";
-          config = builtins.readFile ./config/nvim/catppuccin.lua;
-        }
-      ];
     })
 
     (mkIf (config.modules.desktop.xmonad.enable
