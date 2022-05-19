@@ -7,10 +7,10 @@
   appimageTools,
 }: let
   pname = "gfn-electron";
-  version = "1.6.0";
+  version = "1.7.0";
   src = fetchurl {
     url = "https://github.com/hmlendea/gfn-electron/releases/download/v${version}/geforcenow-electron_${version}_linux.AppImage";
-    sha256 = "HNRha5wUGxiSxzG7bMpMfDL6ZCg0wYy3b6x1SkF9ESI=";
+    sha256 = "hrDPjGD/IMNoI4R/wAB+mW7ef/37q5bEZTf0AEBpQpg=";
   };
   appimage = appimageTools.wrapType2 {inherit version pname src;};
   appimage-contents = appimageTools.extractType2 {inherit version pname src;};
