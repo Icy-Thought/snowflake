@@ -2,7 +2,7 @@
 A new theme that I am planning on using after Catppuccin.
 
 # Minimal Capture
-![Rosé Pine](./assets/catppuccin.png)
+![Rosé Pine](../../../.assets/themes/rose-pine.png)
 
 # Useful Links
 1. [Rosé Pine](https://github.com/rose-pine/rose-pine-theme) (GitHub)

@@ -1,17 +1,17 @@
-<img alt="WM-related Configurations" src="../assets/wm-related.png" align="center">
+<img alt="WM-related Configurations" src="../.assets/main/wm-related.png" align="center">
 
 # Introduction
 The following folder contains several WM's tried throughout the years of my NixOS usage. Hopefully you'll find something that attracts you to NixOS here and start using it.
 
 # Table of Contents
 - [Introduction](#introduction)
-- [Xmonad](#xmonad)
+- [XMonad](#xmonad)
   - [Keybindings](#keybindings)
 - [Gnome](#gnome)
 - [Special Thanks](#special-thanks)
 
-# Xmonad
-<img alt="XMonad Desktop" src="../assets/xmonad-desktop.png" align="center">
+# XMonad
+<img alt="XMonad Desktop" src="../.assets/main/xmonad-desktop.png" align="center">
 
 ## Keybindings
 *Credits:* [micrub](https://gist.github.com)/[xmonad-default-key-bindings.md](https://gist.github.com/micrub/aeebe7eb4d2df9e5e203e76a0fd89542)
@@ -36,8 +36,8 @@ Definitions:
 | <kbd>modm</kbd> + <kbd>shift</kbd> + <kbd>b</kbd>      | Invoke rofi to select a window to replace the active window with.     |
 | <kbd>hyper</kbd> + <kbd>l</kbd>                        | Invoke rofi to select from available layouts.                         |
 | <kbd>modm</kbd> + <kbd>shift</kbd> + <kbd>c</kbd>      | Close focused window.                                                 |
-| <kbd>modm</kbd> + <kbd>q</kbd>                         | Restart Xmonad.                                                       |
-| <kbd>modm</kbd> + <kbd>shift</kbd> + <kbd>q</kbd>      | Quit Xmonad.                                                          |
+| <kbd>modm</kbd> + <kbd>q</kbd>                         | Restart XMonad.                                                       |
+| <kbd>modm</kbd> + <kbd>shift</kbd> + <kbd>q</kbd>      | Quit XMonad.                                                          |
 
 ### Window Movement Keybindings
 
@@ -87,8 +87,7 @@ Definitions:
 | <kbd>modm</kbd> + <kbd>shift</kbd> + <kbd>{w,e,r}</kbd> | Move client to screen 1, 2, or 3.               |
 
 # Gnome
-<img alt="Gnome Desktop" src="../assets/gnome-desktop.png" align="center">
+<img alt="Gnome Desktop" src="../.assets/main/gnome-desktop.png" align="center">
 
-# Special Thanks
-- [IvanMalison](https://github.com/IvanMalison): Xmonad Setup.
-- [Taylor85345](https://github.com/taylor85345/leftwm-theme-garden): LeftWM Garden.
+# Special Thanks 🪔
+- [IvanMalison](https://github.com/IvanMalison): XMonad Setup.

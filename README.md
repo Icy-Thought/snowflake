@@ -1,4 +1,4 @@
-![XMonad Desktop](./assets/xmonad-desktop.png)
+![XMonad Desktop](./.assets/main/xmonad-desktop.png)
 
 # Table of Contents
 - [Introduction](#introduction)
