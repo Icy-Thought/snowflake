@@ -17,8 +17,8 @@ in {
   config = mkMerge [
     (mkIf cfg.python.enable {
       user.packages = with pkgs;
-        [python39]
-        ++ (with python39Packages; [
+        [python310]
+        ++ (with python310Packages; [
           pip
           ipython
           black
