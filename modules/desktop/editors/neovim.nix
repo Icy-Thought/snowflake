@@ -77,6 +77,16 @@ in {
             lua vim.cmd([[colorscheme ${colorscheme}]])
             luafile ${builtins.toString "${nvimDir}/niflheim/lua/options.lua"}
             luafile ${builtins.toString "${nvimDir}/niflheim/lua/keymaps.lua"}
+
+            lua require('colorizer').setup()
+            lua require('gitsigns').setup()
+            lua require('neogit').setup()
+            lua require('octo').setup()
+            lua require('spectre').setup()
+            lua require('toggleterm').setup()
+            lua require('Comment').setup()
+            lua require('trouble').setup()
+            lua require('nvim-autopairs').setup()
           ''
         ];
         extraPackages = with pkgs; [texlab vale];
