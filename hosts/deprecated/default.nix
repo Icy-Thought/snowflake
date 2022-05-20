@@ -37,16 +37,10 @@
     browsers = {
       default = "brave";
       brave.enable = true;
-      firefox.enable = true;
     };
-    extras = {
-      chat.enable = true;
-      docViewer.enable = true;
-    };
-    media = {
-      mpv.enable = true;
-      spotify.enable = true;
-      # graphics.enable = true;
+    media.viewer = {
+      document.enable = true;
+      video.enable = true;
     };
   };
 

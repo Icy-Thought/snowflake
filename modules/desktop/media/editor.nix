@@ -7,49 +7,40 @@
 }:
 with lib;
 with lib.my; let
-  cfg = config.modules.desktop.media.graphics;
+  cfg = config.modules.desktop.media.editor;
   configDir = config.snowflake.configDir;
 in {
-  options.modules.desktop.media.graphics = {
+  options.modules.desktop.media.editor = {
     enable = mkBoolOpt false;
     tools.enable = mkBoolOpt true;
-    raster.enable = mkBoolOpt true;
-    vector.enable = mkBoolOpt true;
+    raster.enable = mkBoolOpt false;
+    vector.enable = mkBoolOpt false;
     modeling.enable = mkBoolOpt false;
   };
 
   config = mkIf cfg.enable {
     user.packages = with pkgs;
-      (
-        if cfg.tools.enable
-        then [font-manager imagemagick]
-        else []
-      )
+      (mkIf cfg.tools.enable [
+        font-manager
+        imagemagick
+      ])
       ++
       # Illustrator & Indesign replacement:
-      (
-        if cfg.vector.enable
-        then [inkscape]
-        else []
-      )
+      (mkIf cfg.vector.enable [
+        inkscape
+      ])
       ++
       # Photoshop replacement:
-      (
-        if cfg.raster.enable
-        then [
-          krita
-          gimp
-          gimpPlugins.resynthesizer
-        ]
-        else []
-      )
+      (mkIf cfg.raster.enable [
+        krita
+        gimp
+        gimpPlugins.resynthesizer
+      ])
       ++
       # 3D-Modelling:
-      (
-        if cfg.modeling.enable
-        then [blender]
-        else []
-      );
+      (mkIf cfg.modeling.enable [
+        blender
+      ]);
 
     # TODO: setup GIMP on rebuild!
     # home.configFile = mkIf cfg.raster.enable {

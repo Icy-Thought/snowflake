@@ -828,7 +828,7 @@ scratchpads =
   , NS "emacs"              emacsCommand        emacsSelector        nonFloating
   , NS "Picture-in-Picture" ffPicCommand        ffPicSelector        defaultFloating
   , NS "protonmail"         protonMailCommand   protonMailSelector   nearFullFloat
-  , NS "qalc"               qalcCommand         qalcSelector         termFloat
+  , NS "kalker"             kalkerCommand       kalkerSelector       termFloat
   , NS "spotify"            spotifyCommand      spotifySelector      nearFullFloat
   , NS "transmission"       transmissionCommand transmissionSelector nearFullFloat
   ]
@@ -845,8 +845,8 @@ scratchpads =
   ffPicCommand         = "Picture-in-Picture"
   ffPicSelector        = title =? "Picture-in-Picture"
 
-  qalcCommand          = "alacritty -t qalc -e qalc"
-  qalcSelector         = title =? "Qalculator"
+  kalkerCommand        = "alacritty -t Kalker -e kalker"
+  kalkerSelector       = title =? "Kalker"
 
   spotifyCommand       = "spotify"
   spotifySelector      = className =? "Spotify"

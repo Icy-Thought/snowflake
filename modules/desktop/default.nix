@@ -30,12 +30,12 @@ in {
 
     user.packages = with pkgs; [
       bitwarden
-      libqalculate
+      kalker
       (makeDesktopItem {
-        name = "qalc";
-        desktopName = "Qalculator";
+        name = "kalker";
+        desktopName = "Kalker";
         icon = "calc";
-        exec = "${alacritty}/bin/alacritty -t Qalculator -e qalc";
+        exec = "${alacritty}/bin/alacritty -t Kalker -e kalker";
         categories = ["Development"];
       })
       qgnomeplatform

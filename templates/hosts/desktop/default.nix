@@ -26,10 +26,10 @@
       default = "brave";
       brave.enable = true;
     };
-    media = {
-      mpv.enable = true;
-      spotify.enable = true;
-      docViewer.enable = true;
+    media.viewer = {
+      document.enable = true;
+      music.enable = true;
+      video.enable = true;
     };
   };
 

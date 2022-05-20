@@ -103,10 +103,10 @@ in {
             "kitty/config/onedark-pro.conf".text =
               import ./config/kitty/onedark-pro.conf cfg;
           })
-          (mkIf desktop.media.docViewer.enable {
+          (mkIf desktop.media.viewer.document.enable {
             "zathura/zathurarc".text = import ./config/zathura/zathurarc cfg;
           })
-          # (mkIf desktop.media.graphics.vector.enable {
+          # (mkIf desktop.media.editor.vector.enable {
           #   "inkscape/templates/default.svg".source =
           #     ./config/inkscape/default-template.svg;
           # })

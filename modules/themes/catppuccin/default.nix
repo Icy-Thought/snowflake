@@ -105,10 +105,10 @@ in {
             "kitty/config/catppuccin.conf".text =
               import ./config/kitty/catppuccin.conf cfg;
           })
-          (mkIf desktop.media.docViewer.enable {
+          (mkIf desktop.media.viewer.document.enable {
             "zathura/zathurarc".text = import ./config/zathura/zathurarc cfg;
           })
-          # (mkIf desktop.media.graphics.vector.enable {
+          # (mkIf desktop.media.editor.vector.enable {
           #   "inkscape/templates/default.svg".source =
           #     ./config/inkscape/default-template.svg;
           # })

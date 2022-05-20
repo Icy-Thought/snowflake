@@ -23,12 +23,16 @@ in {
       dunst
       pavucontrol
       playerctl
-      gnome.nautilus
       gxmessage
       xdotool
       xclip
       feh
     ];
+
+    modules.desktop.media.browser = {
+      nautilus.enable = true;
+      # thunar.enable = true;
+    };
 
     services.xserver = {
       enable = true;

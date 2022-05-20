@@ -7,9 +7,9 @@
 }:
 with lib;
 with lib.my; let
-  cfg = config.modules.desktop.media.recording;
+  cfg = config.modules.desktop.media.recorder;
 in {
-  options.modules.desktop.media.recording = {
+  options.modules.desktop.media.recorder = {
     enable = mkBoolOpt false;
     audio.enable = mkBoolOpt true;
     video.enable = mkBoolOpt true;

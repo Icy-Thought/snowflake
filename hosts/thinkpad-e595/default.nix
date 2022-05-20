@@ -49,14 +49,20 @@
       zoom.enable = true;
     };
     media = {
-      mpv.enable = true;
-      spotify.enable = true;
-      graphics.enable = true;
-      docViewer.enable = true;
-      transmission.enable = true;
-      chat = {
-        enable = true;
-        mobile.enable = true;
+      downloader = {
+        transmission.enable = true;
+      };
+      editor = {
+        raster.enable = true;
+        vector.enable = true;
+      };
+      social = {
+        commonenable = true;
+      };
+      viewer = {
+        video.enable = true;
+        music.enable = true;
+        document.enable = true;
       };
     };
     # gaming = { steam.enable = true; };
@@ -64,7 +70,7 @@
 
   modules.develop = {
     haskell.enable = true;
-    node.enable = true;
+    julia.enable = true;
     python.enable = true;
     rust.enable = true;
   };
@@ -90,14 +96,11 @@
   boot.kernel.sysctl."abi.vsyscall32" = 0; # League of Legends..
   boot.kernelParams = ["acpi_backlight=native"];
 
-  hardware.opengl.extraPackages = [pkgs.amdvlk pkgs.driversi686Linux.amdvlk pkgs.rocm-opencl-icd];
-
-  systemd.services.systemd-udev-settle.enable = false;
-
-  services = {
-    avahi.enable = false;
-    gvfs.enable = true;
-  };
+  hardware.opengl.extraPackages = with pkgs; [
+    amdvlk
+    driversi686Linux.amdvlk
+    rocm-opencl-icd
+  ];
 
   services.xserver = {
     videoDrivers = ["amdgpu"];
