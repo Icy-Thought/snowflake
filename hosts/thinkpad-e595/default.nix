@@ -44,6 +44,10 @@
       brave.enable = true;
       firefox.enable = true;
     };
+    virtual = {
+      vbox.enable = true;
+      # docker.enable = true;
+    };
     philomath.aula = {
       anki.enable = true;
       zoom.enable = true;
@@ -57,7 +61,7 @@
         vector.enable = true;
       };
       social = {
-        commonenable = true;
+        common.enable = true;
       };
       viewer = {
         video.enable = true;
