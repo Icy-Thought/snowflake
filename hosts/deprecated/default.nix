@@ -46,7 +46,6 @@
 
   modules.services = {
     kdeconnect.enable = true;
-    laptop.enable = true;
   };
 
   modules.shell = {
@@ -62,8 +61,13 @@
     libvdpau-va-gl
   ];
 
-  services.xserver = {
-    videoDrivers = ["modesetting"];
-    useGlamor = true;
+  services = {
+    upower.enable = true;
+    printing.enable = true;
+
+    xserver = {
+      videoDrivers = ["modesetting"];
+      useGlamor = true;
+    };
   };
 }

@@ -44,10 +44,6 @@
       brave.enable = true;
       firefox.enable = true;
     };
-    virtual = {
-      vbox.enable = true;
-      # docker.enable = true;
-    };
     philomath.aula = {
       anki.enable = true;
       zoom.enable = true;
@@ -87,7 +83,6 @@
 
   modules.services = {
     # ssh.enable = true;
-    laptop.enable = true;
     kdeconnect.enable = true;
   };
 
@@ -97,8 +92,10 @@
     gnupg.enable = true;
   };
 
-  boot.kernel.sysctl."abi.vsyscall32" = 0; # League of Legends..
-  boot.kernelParams = ["acpi_backlight=native"];
+  boot = {
+    kernel.sysctl."abi.vsyscall32" = 0; # League of Legends..
+    kernelParams = ["acpi_backlight=native"];
+  };
 
   hardware.opengl.extraPackages = with pkgs; [
     amdvlk
@@ -106,15 +103,20 @@
     rocm-opencl-icd
   ];
 
-  services.xserver = {
-    videoDrivers = ["amdgpu"];
-    deviceSection = ''
-      Option "TearFree" "true"
-    '';
+  services = {
+    upower.enable = true;
+    printing.enable = true;
+
+    xserver = {
+      videoDrivers = ["amdgpu"];
+      deviceSection = ''
+        Option "TearFree" "true"
+      '';
+    };
   };
 
-  services.xserver.libinput = {
-    touchpad.accelSpeed = "0.5";
-    touchpad.accelProfile = "adaptive";
+  services.xserver.libinput.touchpad = {
+    accelSpeed = "0.5";
+    accelProfile = "adaptive";
   };
 }
