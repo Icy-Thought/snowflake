@@ -16,7 +16,7 @@ in {
       lutris
       wineWowPackages.fonts
       wineWowPackages.staging
-      (winetricks.override {wine = wineWowPackages.staging;})
+      winetricks
     ];
 
     # League of Legends (OpenSSL)
