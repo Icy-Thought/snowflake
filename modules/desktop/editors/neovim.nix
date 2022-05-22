@@ -22,7 +22,7 @@ in {
   config = mkMerge [
     {
       nixpkgs.overlays = [inputs.neovim-nightly.overlay];
-      user.packages = with pkgs; [neovim-nightly];
+      # user.packages = with pkgs; [neovim-nightly];
       environment.shellAliases = {
         vi = "nvim";
         vim = "nvim";
@@ -72,6 +72,7 @@ in {
         plugins = pkgs.vimPlugins // customPlugins;
       in {
         enable = true;
+        package = pkgs.neovim-nightly;
         extraConfig = builtins.concatStringsSep "\n" [
           ''
             lua vim.cmd([[colorscheme ${colorscheme}]])

@@ -23,7 +23,9 @@
     };
   };
 
-  modules.themes = {active = "catppuccin";};
+  modules.themes = {
+    active = "catppuccin";
+  };
 
   modules.desktop = {
     xmonad.enable = true;
@@ -65,7 +67,11 @@
         document.enable = true;
       };
     };
-    # gaming = { steam.enable = true; };
+    # gaming = {
+    #   # steam.enable = true;
+    #   # lutris.enable = true;
+    # };
+    # virtual.virtualbox.enable = true;
   };
 
   modules.develop = {

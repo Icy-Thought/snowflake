@@ -9,9 +9,11 @@ with lib;
 with lib.my; let
   cfg = config.modules.desktop;
 in {
-  options.modules.desktop.extra.rofi = {enable = mkBoolOpt false;};
+  options.modules.desktop.extra.rofi = {
+    enable = mkBoolOpt false;
+  };
 
-  config = mkIf (cfg.xmonad.enable || cfg.qtile.enable) {
+  config = mkIf cfg.xmonad.enable {
     user.packages = with pkgs; [
       rofi-systemd
 

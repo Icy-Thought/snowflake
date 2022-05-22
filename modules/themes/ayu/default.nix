@@ -87,7 +87,7 @@ in {
             "xtheme/90-theme".text = import ./config/Xresources cfg;
             "fish/conf.d/ayu-dark.fish".source = ./config/fish/ayu-dark.fish;
           }
-          (mkIf (desktop.xmonad.enable || desktop.qtile.enable) {
+          (mkIf desktop.xmonad.enable {
             "dunst/dunstrc".text = import ./config/dunst/dunstrc cfg;
             "rofi" = {
               source = ./config/rofi;
@@ -112,8 +112,7 @@ in {
         ];
     })
 
-    (mkIf (config.modules.desktop.xmonad.enable
-      || config.modules.desktop.qtile.enable) {
+    (mkIf config.modules.desktop.xmonad.enable {
       services.xserver.displayManager = {
         sessionCommands = with cfg.gtk; ''
           ${pkgs.xorg.xsetroot}/bin/xsetroot -xcf ${pkgs.bibata-cursors}/share/icons/${cursor.name}/cursors/${cursor.default} ${

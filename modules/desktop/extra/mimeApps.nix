@@ -8,7 +8,9 @@ with lib;
 with lib.my; let
   cfg = config.modules.desktop.extra.mimeApps;
 in {
-  options.modules.desktop.extra.mimeApps = {enable = mkBoolOpt false;};
+  options.modules.desktop.extra.mimeApps = {
+    enable = mkBoolOpt false;
+  };
 
   config = mkIf cfg.enable {
     homeManager.xdg = let
@@ -100,10 +102,11 @@ in {
     in {
       mimeApps.enable = true;
       mimeApps.defaultApplications = with lists;
-        listToAttrs (flatten (mapAttrsToList (key: types:
-          map (type: attrsets.nameValuePair type (defaultApps."${key}"))
-          types)
-        mimeMap));
+        listToAttrs (flatten (mapAttrsToList
+          (key: types:
+            map (type: attrsets.nameValuePair type (defaultApps."${key}"))
+            types)
+          mimeMap));
     };
   };
 }

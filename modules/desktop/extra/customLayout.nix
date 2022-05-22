@@ -28,17 +28,15 @@ in {
       };
     '';
   in
-    mkIf (cfg.xmonad.enable || cfg.qtile.enable) {
+    mkIf cfg.xmonad.enable {
       homeManager = {
         # Home-Manager (null) -> fixes fuck-up.
         home.keyboard = null;
-
         xsession.initExtra = ''
           # Set XKB layout = us+hyper on XMonad start:
           ${pkgs.xorg.xkbcomp}/bin/xkbcomp ${customKeyboardLayout} $DISPLAY
         '';
       };
-
       environment.etc."X11/keymap.xkb".source = customKeyboardLayout;
     };
 }
