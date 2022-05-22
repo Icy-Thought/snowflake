@@ -8,20 +8,28 @@
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.gaming.lutris;
+  wineCfg = config.modules.desktop.virtual.wine;
 in {
   options.modules.desktop.gaming.lutris = {
     enable = mkBoolOpt false;
   };
 
-  config = mkIf cfg.enable {
-    user.packages = with pkgs; [
-      lutris
-      wineWowPackages.fonts
-      wineWowPackages.staging
-      winetricks
-    ];
+  config = mkMerge [
+    {
+      networking.firewall.allowedTCPPorts = [443]; # League of Legends (OpenSSL)
+    }
 
-    # League of Legends (OpenSSL)
-    networking.firewall.allowedTCPPorts = [443];
-  };
+    (mkIf (cfg.enable && wineCfg.enable) {
+      user.packages = with pkgs; [lutris];
+    })
+
+    (mkIf (cfg.enable && !wineCfg.enable) {
+      user.packages = with pkgs; [
+        lutris
+        wineWowPackages.fonts
+        wineWowPackages.staging
+        winetricks
+      ];
+    })
+  ];
 }

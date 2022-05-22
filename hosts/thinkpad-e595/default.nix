@@ -67,11 +67,7 @@
         document.enable = true;
       };
     };
-    # gaming = {
-    #   # steam.enable = true;
-    #   # lutris.enable = true;
-    # };
-    # virtual.virtualbox.enable = true;
+    virtual.wine.enable = true;
   };
 
   modules.develop = {
