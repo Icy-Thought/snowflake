@@ -1,14 +1,14 @@
-{ config
-, options
-, lib
-, pkgs
-, ...
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.shell.fish;
-in
-{
+in {
   config = mkIf cfg.enable {
     homeManager.programs.starship = {
       enable = true;
@@ -19,15 +19,25 @@ in
         add_newline = true;
         scan_timeout = 10;
 
-        format = "[$directory](fg:${colors.cyan}) [$git_branch](fg:${colors.yellow}) [$git_status](fg:${colors.red}) $character ";
-        directory.format = "[⯁ $path](bg:${colors.cyan} fg:${colors.types.bg} bold)";
+        format = "[$directory](fg:${colors.cyan}) $git_branch$git_status$character";
+        directory = {
+          style = "bg:${colors.cyan} fg:${colors.types.bg} bold";
+          truncation_length = 3;
+          truncation_symbol = "…/";
+          format = "[⯁ $path]($style)";
+        };
 
         git_branch = {
-          format = "[on $symbol$branch](bg:${colors.yellow} fg:${colors.types.bg} bold)";
+          style = "bg:${colors.yellow} fg:${colors.types.bg} bold";
+          format = "[[](bg: ${colors.yellow})(on $symbol$branch)[](bg: ${colors.yellow})]($style) ";
           symbol = " ";
         };
 
-        git_status.format = "[$all_status](bg:${colors.red} fg:${colors.types.bg} bold)";
+        # TODO: find appealing symbols
+        git_status = {
+          style = "bg:${colors.red} fg:${colors.types.bg} bold";
+          format = "[[](bg: ${colors.red})(「$all_status$ahead_behind」)[](bg: ${colors.red})]($style) ";
+        };
 
         character = {
           success_symbol = "[](bold green)";
