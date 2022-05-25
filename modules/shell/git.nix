@@ -21,7 +21,7 @@ in {
       (mkIf config.modules.shell.gnupg.enable gitAndTools.git-crypt)
     ];
 
-    homeManager.programs.git = {
+    home.programs.git = {
       enable = true;
       package = pkgs.gitFull;
       delta.enable = true;

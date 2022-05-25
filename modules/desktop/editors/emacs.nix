@@ -23,12 +23,12 @@ in {
   config = mkIf cfg.enable {
     nixpkgs.overlays = [inputs.emacs.overlay];
 
-    homeManager.services.emacs = {
+    home.services.emacs = {
       enable = true;
       client.enable = true;
     };
 
-    homeManager.programs.emacs = {
+    home.programs.emacs = {
       enable = true;
       package = pkgs.emacsNativeComp;
       extraPackages = epkgs: with epkgs; [vterm];

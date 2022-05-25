@@ -66,7 +66,7 @@ in {
       # environment.variables.NVIMDIR = "${nvimDir}/niflheim";
       modules.develop.lua.enable = true;
 
-      homeManager.programs.neovim = let
+      home.programs.neovim = let
         customPlugins =
           pkgs.callPackage "${nvimDir}/niflheim/custom-plugins.nix" pkgs;
         plugins = pkgs.vimPlugins // customPlugins;

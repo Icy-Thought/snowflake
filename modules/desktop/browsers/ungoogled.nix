@@ -14,7 +14,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    homeManager.programs.chromium = {
+    home.programs.chromium = {
       enable = true;
       package = pkgs.ungoogled-chromium;
       extensions = [

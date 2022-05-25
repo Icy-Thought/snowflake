@@ -10,7 +10,7 @@ with lib.my; let
   cfg = config.modules.shell.fish;
 in {
   config = mkIf cfg.enable {
-    homeManager.programs.starship = {
+    home.programs.starship = {
       enable = true;
       enableBashIntegration = true;
       enableFishIntegration = true;
@@ -28,8 +28,8 @@ in {
         };
 
         git_branch = {
-          style = "bg:${colors.yellow} fg:${colors.types.bg} bold";
-          format = "[[](bg: ${colors.yellow})(on $symbol$branch)[](bg: ${colors.yellow})]($style) ";
+          style = "bg:${colors.green} fg:${colors.types.bg} bold";
+          format = "[[](bg: ${colors.green})(on $symbol$branch)[](bg: ${colors.green})]($style) ";
           symbol = " ";
         };
 

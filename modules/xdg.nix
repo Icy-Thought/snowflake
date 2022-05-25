@@ -3,7 +3,7 @@
   home-manager,
   ...
 }: {
-  homeManager.xdg.enable = true;
+  home-manager.users.${config.user.name}.xdg.enable = true;
 
   environment = {
     sessionVariables = {

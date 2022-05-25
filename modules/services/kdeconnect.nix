@@ -12,7 +12,7 @@ in {
   options.modules.services.kdeconnect = {enable = mkBoolOpt false;};
 
   config = mkIf cfg.enable {
-    homeManager.services.kdeconnect = {
+    home.services.kdeconnect = {
       enable = true;
       indicator = true;
     };

@@ -13,10 +13,10 @@ in {
   options.modules.shell.htop = {enable = mkBoolOpt false;};
 
   config = mkIf cfg.enable {
-    homeManager = {
-      programs.htop.enable = true;
+    home.programs.htop = {
+      enable = true;
 
-      programs.htop.settings = let
+      settings = let
         leftMeters = with htop;
           htop.leftMeters [
             (bar "AllCPUs2")

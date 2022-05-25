@@ -23,7 +23,7 @@ in {
       })
     ];
 
-    homeManager.programs.chromium = {
+    home.programs.chromium = {
       enable = true;
       package = pkgs.brave;
       extensions = [

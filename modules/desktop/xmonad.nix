@@ -66,26 +66,24 @@ in {
     # Xdg.mimeApps -> application management
     modules.desktop.extra.mimeApps.enable = true;
 
-    homeManager = {
-      services = {
-        gnome-keyring.enable = true;
-        blueman-applet.enable = true;
-        status-notifier-watcher.enable = true;
-        network-manager-applet.enable = true;
-      };
+    home.services = {
+      gnome-keyring.enable = true;
+      blueman-applet.enable = true;
+      status-notifier-watcher.enable = true;
+      network-manager-applet.enable = true;
+    };
 
-      # Extras:
-      xsession = {
-        enable = true;
-        numlock.enable = true;
-        preferStatusNotifierItems = true;
+    # Extras:
+    home.xsession = {
+      enable = true;
+      numlock.enable = true;
+      preferStatusNotifierItems = true;
 
-        windowManager.command = ''
-          ${pkgs.haskellPackages.my-xmonad}/bin/my-xmonad
-        '';
+      windowManager.command = ''
+        ${pkgs.haskellPackages.my-xmonad}/bin/my-xmonad
+      '';
 
-        importedVariables = ["GDK_PIXBUF_MODULE_FILE"];
-      };
+      importedVariables = ["GDK_PIXBUF_MODULE_FILE"];
     };
   };
 }
