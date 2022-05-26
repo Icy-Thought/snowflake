@@ -15,7 +15,6 @@ in {
         wallpaper = mkDefault ./config/wallpaper.png;
 
         gtk = {
-          # theme = "Catppuccin-purple";
           theme = "Orchis-Dark-Compact";
           iconTheme = "WhiteSur-dark";
           cursor = {
@@ -74,7 +73,6 @@ in {
     # Desktop (X11) theming <- Change after gnome = independent of xserver.
     (mkIf config.services.xserver.enable {
       user.packages = with pkgs; [
-        # catppuccin-gtk
         orchis-theme
         whitesur-icon-theme
         bibata-cursors
