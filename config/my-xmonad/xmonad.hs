@@ -225,7 +225,7 @@ myDmenu = DM.menuArgs "rofi" myDmenuArgs
 getWorkspaceDmenu = myDmenu (workspaces myConfig)
 
 -- Selectors
-isProtonMailTitle t = isInfixOf "@protonmail.com" t && isInfixOf "ProtonMail" t
+isProtonMailTitle t = isInfixOf "@proton.me" t && isInfixOf "Proton Mail" t
 
 isChromiumClass = isInfixOf "Brave"
 
@@ -247,7 +247,7 @@ virtualClasses =
 chromiumCommand = "brave"
 
 protonMailCommand =
-  "brave --new-window https://mail.protonmail.com/u/5/inbox"
+  "brave --new-window https://mail.proton.me/u/0/inbox"
 
 firefoxCommand = "firefox-devedition"
 
