@@ -35,16 +35,10 @@ in {
     };
 
     user.packages = with pkgs; [
-      # emacsPkgs:
       binutils
-      # doomPkgs
       gnutls
-      # extraPkgs
       zstd
       (mkIf (config.programs.gnupg.agent.enable) pinentry_emacs)
-      # Module dependencies
-      ## :tools lookup
-      sqlite
     ];
 
     # Fonts -> icons + ligatures when specified:

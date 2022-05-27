@@ -16,17 +16,21 @@ in {
 
     (mkIf (cfg.emacs.enable || cfg.nvim.enable) {
       user.packages = with pkgs; [
-        #extraPkgs
         fd
         imagemagick
-        (ripgrep.override {withPCRE2 = true;})
-
-        # toolbox
+        (ripgrep.override {
+          withPCRE2 = true;
+        })
         editorconfig-core-c
 
         # module dependencies
         ## checkers: aspell
-        (aspellWithDicts (ds: with ds; [en en-computers en-science]))
+        (aspellWithDicts (ds:
+          with ds; [
+            en
+            en-computers
+            en-science
+          ]))
 
         ## Markdown
         nodePackages.markdownlint-cli2
@@ -34,6 +38,9 @@ in {
         ## lsp: LaTeX + Org-Mode
         tectonic
         # texlive.combined.scheme-medium
+
+        # Lookup
+        sqlite
       ];
     })
   ];

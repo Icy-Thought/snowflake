@@ -38,7 +38,7 @@
       emacs.enable = true;
       neovim = {
         enable = true;
-        niflheim.enable = true;
+        agasaya.enable = true;
       };
     };
     browsers = {
