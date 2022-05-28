@@ -826,9 +826,9 @@ scratchpads =
   [ NS "bottom"             bottomCommand       bottomSelector       nearFullFloat
   , NS "discord"            discordCommand      discordSelector      nearFullFloat
   , NS "emacs"              emacsCommand        emacsSelector        nonFloating
+  , NS "neovide"            neovideCommand      neovideSelector      nearFullFloat
   , NS "Picture-in-Picture" ffPicCommand        ffPicSelector        defaultFloating
   , NS "protonmail"         protonMailCommand   protonMailSelector   nearFullFloat
-  , NS "kalker"             kalkerCommand       kalkerSelector       termFloat
   , NS "spotify"            spotifyCommand      spotifySelector      nearFullFloat
   , NS "transmission"       transmissionCommand transmissionSelector nearFullFloat
   ]
@@ -845,8 +845,8 @@ scratchpads =
   ffPicCommand         = "Picture-in-Picture"
   ffPicSelector        = title =? "Picture-in-Picture"
 
-  kalkerCommand        = "alacritty -t Kalker -e kalker"
-  kalkerSelector       = title =? "Kalker"
+  neovideCommand       = "neovide"
+  neovideSelector      = classname =? "neovide"
 
   spotifyCommand       = "spotify"
   spotifySelector      = className =? "Spotify"
@@ -1020,7 +1020,7 @@ addKeys conf@XConfig { modMask = modm } =
          -- ScratchPad(s)
            ((modalt, xK_b)               , doScratchpad "bottom")
          , ((modalt, xK_d)               , doScratchpad "discord")
-         , ((modalt, xK_e)               , doScratchpad "emacs")
+         , ((modalt, xK_e)               , doScratchpad "neovide")
          , ((modalt, xK_m)               , doScratchpad "protonmail")
          , ((modalt, xK_s)               , doScratchpad "spotify")
          , ((modalt, xK_t)               , doScratchpad "transmission")

@@ -54,6 +54,7 @@
         transmission.enable = true;
       };
       editor = {
+        enable = true;
         raster.enable = true;
         vector.enable = true;
       };

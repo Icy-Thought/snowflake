@@ -32,6 +32,7 @@ in {
 
     (mkIf (!cfg.niflheim.enable) {
       user.packages = with pkgs; [
+        neovide
         neovim-nightly
         (python310.withPackages (pypkgs: with pypkgs; [pynvim]))
       ];
