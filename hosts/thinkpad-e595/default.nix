@@ -35,7 +35,6 @@
     };
     editors = {
       default = "nvim";
-      emacs.enable = true;
       neovim = {
         enable = true;
         agasaya.enable = true;
