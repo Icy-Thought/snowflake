@@ -17,7 +17,7 @@ in {
   config = mkMerge [
     (mkIf cfg.enable {
       # nixLang related
-      user.packages = with pkgs; [alejandra rnix-lsp];
+      user.packages = with pkgs; [alejandra];
     })
 
     (mkIf cfg.xdg.enable {
