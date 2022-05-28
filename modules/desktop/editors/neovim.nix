@@ -61,6 +61,7 @@ in {
         "nvim/init.lua".text = ''
           require("core.packer")
           require("core.settings")
+          require("core.neovide")
 
           require("keymaps.default")
           require("keymaps.which-key")

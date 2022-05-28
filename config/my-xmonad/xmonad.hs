@@ -846,7 +846,7 @@ scratchpads =
   ffPicSelector        = title =? "Picture-in-Picture"
 
   neovideCommand       = "neovide"
-  neovideSelector      = classname =? "neovide"
+  neovideSelector      = className =? "neovide"
 
   spotifyCommand       = "spotify"
   spotifySelector      = className =? "Spotify"
