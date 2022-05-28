@@ -9,12 +9,14 @@ with lib;
 with lib.my; let
   cfg = config.modules.desktop.editors;
 in {
-  options.modules.desktop.editors = {default = mkOpt types.str "nvim";};
+  options.modules.desktop.editors = {
+    default = mkOpt types.str "neovim";
+  };
 
   config = mkMerge [
     (mkIf (cfg.default != null) {env.EDITOR = cfg.default;})
 
-    (mkIf (cfg.emacs.enable || cfg.nvim.enable) {
+    (mkIf (cfg.emacs.enable || cfg.neovim.enable) {
       user.packages = with pkgs; [
         fd
         imagemagick
@@ -22,6 +24,7 @@ in {
           withPCRE2 = true;
         })
         editorconfig-core-c
+        sqlite
 
         # module dependencies
         ## checkers: aspell
@@ -38,9 +41,6 @@ in {
         ## lsp: LaTeX + Org-Mode
         tectonic
         # texlive.combined.scheme-medium
-
-        # Lookup
-        sqlite
       ];
     })
   ];
