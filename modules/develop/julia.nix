@@ -17,6 +17,7 @@ in {
   config = mkMerge [
     (mkIf cfg.julia.enable {
       user.packages = with pkgs; [julia-bin];
+      # TODO: automate the installation of: [Plots PyPlot GR UnicodePlots]
     })
 
     (mkIf cfg.xdg.enable {
