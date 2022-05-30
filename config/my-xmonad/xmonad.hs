@@ -63,11 +63,9 @@ import           XMonad.Hooks.ManageHelpers
 import           XMonad.Hooks.Minimize
 import           XMonad.Hooks.TaffybarPagerHints
 import           XMonad.Hooks.WorkspaceHistory
-import           XMonad.Layout.Accordion
 import           XMonad.Layout.BoringWindows
 import           XMonad.Layout.ConditionalLayout
 import           XMonad.Layout.Decoration
-import           XMonad.Layout.GridVariants            (Grid (Grid))
 import           XMonad.Layout.LayoutCombinators
 import           XMonad.Layout.LayoutModifier
 import           XMonad.Layout.LimitWindows
@@ -410,8 +408,6 @@ andDeactivateFull action = sequence_ [action, deactivateFull]
 goFullscreen = sendMessage $ JumpToLayout "Tabbed"
 
 -- Layout setup
-myTabConfig = def { activeBorderColor = "#66CCCC" }
-
 rename newName = RN.renamed [RN.Replace newName]
 
 layoutsStart layout = (layout, [Layout layout])
@@ -420,11 +416,9 @@ layoutsStart layout = (layout, [Layout layout])
   (joined ||| newLayout, layouts ++ [Layout newLayout])
 
 layoutInfo =
-  layoutsStart (rename "Grid" (Grid $ 16 / 10))
+  layoutsStart (rename "2 Columns"  (Tall 1 (3 / 100) (1 / 2)))
     |||! rename "Large Main" (Tall 1 (3 / 100) (3 / 4))
-    |||! rename "2 Columns"  (Tall 1 (3 / 100) (1 / 2))
     |||! rename "3 Columns"  (multiCol [1, 1] 2 0.01 (-0.5))
-    |||! Accordion
     |||! myTabbed
   where myTabbed = rename "Tabbed" $ tabbed shrinkText icyTheme
 
