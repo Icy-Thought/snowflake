@@ -18,86 +18,96 @@ in {
   config = mkIf cfg.enable {
     user.packages = with pkgs; [kitty];
 
-    home.configFile."kitty/kitty.conf" =
-      {
-        text = ''
-          ${optionalString (active != null) ''
-            include ~/.config/kitty/config/${active}.conf
-          ''}
+    home.configFile = {
+      "kitty/tab_bar.py".source = "${configDir}/kitty/tab_bar.py";
 
-          # Xterm
-          term xterm-kitty
+      "kitty/kitty.conf".text = ''
+        ${optionalString (active != null) ''
+          include ~/.config/kitty/config/${active}.conf
+        ''}
 
-          # General
-          sync_to_monitor yes
-          update_check_interval 0
-          allow_remote_control no
-          close_on_child_death no
+        # }----------=[ XTerm ]=---------- {
+        term xterm-kitty
 
-          # Decorations
-          repaint_delay 10
-          disable_ligatures no
-          inactive_text_alpha 1.0
+        # }----------=[ General ]=---------- {
+        sync_to_monitor       yes
+        update_check_interval 0
+        allow_remote_control  no
+        close_on_child_death  no
 
-          # Notification
-          enable_audio_bell no
-          bell_on_tab no
-          visual_bell_duration 0.0
+        # }----------=[ Decorations ]=---------- {
+        repaint_delay       10
+        disable_ligatures   cursor
+        adjust_line_height  120%
+        inactive_text_alpha 1.0
 
-          # Selection + Clipboard
-          strip_trailing_spaces smart
-          copy_on_select clipboard
-          select_by_word_characters @-./_~?&=%+#
-          clipboard_control write-clipboard write-primary no-append
+        # }----------=[ Notification ]=---------- {
+        enable_audio_bell    no
+        bell_on_tab          no
+        visual_bell_duration 0.0
 
-          # Cursor
-          default_pointer_shape beam
-          cursor_shape block
-          cursor_blink_interval 0.5
-          cursor_stop_blinking_after 15.0
+        # }----------=[ Selection + Clip ]=---------- {
+        strip_trailing_spaces     smart
+        copy_on_select            clipboard
+        select_by_word_characters @-./_~?&=%+#
+        clipboard_control         write-clipboard write-primary no-append
 
-          input_delay 3
-          pointer_shape_when_dragging beam
-          pointer_shape_when_grabbed arrow
+        # }----------=[ Cursor ]=---------- {
+        default_pointer_shape      beam
+        cursor_shape               block
+        cursor_blink_interval      0.5
+        cursor_stop_blinking_after 15.0
 
-          # Mouse
-          click_interval 0.5
-          mouse_hide_wait 3.0
-          focus_follows_mouse yes
+        input_delay 3
+        pointer_shape_when_dragging beam
+        pointer_shape_when_grabbed  arrow
 
-          # URL
-          detect_urls yes
-          open_url_with default
-          url_prefixes http https file ftp gemini irc gopher mailto news git
+        # }----------=[ Mouse ]=---------- {
+        click_interval      0.5
+        mouse_hide_wait     3.0
+        focus_follows_mouse yes
 
-          # Scrolling
-          scrollback_lines 5000
-          wheel_scroll_multiplier 5.0
+        # }----------=[ URL ]=---------- {
+        detect_urls   yes
+        open_url_with default
+        url_prefixes  http https file ftp gemini irc gopher mailto news git
 
-          # Window
-          remember_window_size yes
-          resize_draw_strategy static
+        # }----------=[ Scrolling ]=---------- {
+        scrollback_lines        5000
+        wheel_scroll_multiplier 5.0
 
-          initial_window_height 28
-          initial_window_width 96
+        # }----------=[ Windows ]=---------- {
+        initial_window_height 28
+        initial_window_width  96
+        remember_window_size  yes
+        resize_draw_strategy  static
 
-          draw_minimal_borders yes
-          window_border_width 0.5pt
-          window_padding_width 18.75
+        window_border_width  1.0
+        window_margin_width  0.0
+        window_padding_width 15.00
+        placement_strategy   top-left
+        draw_minimal_borders yes
 
-          # Mappings
-          map ctrl+0 restore_font_size
-          map ctrl+minus change_font_size all -1.0
-          map ctrl+plus change_font_size all +1.0
-          map ctrl+shift+delete clear_terminal reset active
-          map ctrl+shift+end load_config_file
-          map middle release ungrabbed paste_from_selection
-        '';
-      }
-      // optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
-        onChange = ''
-          ${getBin pkgs.procps}/pkill -USR1 -u $USER kitty || true
-        '';
-      };
+        # }----------=[ Tabs ]=---------- {
+        tab_bar_style           custom
+        tab_separator           ""
+        tab_fade                0 0 0 0
+        tab_activity_symbol     none
+        tab_bar_edge            top
+        tab_bar_margin_height   0.0 0.0
+        active_tab_font_style   bold-italic
+        inactive_tab_font_style normal
+        tab_bar_min_tabs        1
+        bell_on_tab             no
+
+        # }----------=[ Mappings ]=---------- {
+        map ctrl+shift+end           load_config_file
+        map ctrl+shift+0             restore_font_size
+        map middle release ungrabbed paste_from_selection
+
+        map ctrl+shift+j next_tab
+        map ctrl+shift+k previous_tab
+      '';
+    };
   };
 }

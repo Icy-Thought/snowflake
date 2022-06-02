@@ -7,11 +7,14 @@
 }:
 with lib;
 with lib.my; let
-  cfg = config.modules.shell;
+  cfg = config.modules.shell.tmux;
+  term = config.modules.desktop.terminal;
 in {
-  options.modules.shell.tmux = {enable = mkBoolOpt false;};
+  options.modules.shell.tmux = {
+    enable = mkBoolOpt false;
+  };
 
-  config = mkIf (cfg.tmux.enable || cfg.fish.enable) {
+  config = mkIf (cfg.enable || term.alacritty.enable) {
     user.packages = with pkgs; [tmux];
 
     env = {

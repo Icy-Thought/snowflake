@@ -44,7 +44,7 @@ in {
   # Terminal
   "terminal.integrated.env.linux" = {};
   "terminal.explorerKind" = "integrated";
-  "terminal.external.linuxExec" = "alacritty";
+  "terminal.external.linuxExec" = "kitty";
   "terminal.integrated.tabs.focusMode" = "singleClick";
   "terminal.integrated.copyOnSelection" = true;
   "terminal.integrated.scrollback" = 5000;

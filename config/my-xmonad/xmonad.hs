@@ -93,7 +93,7 @@ import           XMonad.Util.WorkspaceCompare
 
 myConfig = def
   { modMask            = mod4Mask
-  , terminal           = "alacritty"
+  , terminal           = "kitty"
   , manageHook         = namedScratchpadManageHook scratchpads
   , layoutHook         = myLayoutHook
   , borderWidth        = 2
@@ -827,7 +827,7 @@ scratchpads =
   , NS "transmission"       transmissionCommand transmissionSelector nearFullFloat
   ]
  where
-  bottomCommand         = "alacritty -t Bottom -e btm"
+  bottomCommand         = "kitty -T Bottom -e btm"
   bottomSelector        = title =? "Bottom"
 
   discordCommand       = "discord"

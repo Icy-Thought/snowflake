@@ -45,10 +45,10 @@ in {
           <?xml version="1.0" encoding="UTF-8"?>
           <actions>
           <action>
-                  <icon>Alacritty</icon>
-                  <name>Launch Alacritty Here</name>
+                  <icon>kitty</icon>
+                  <name>Launch Kitty Here</name>
                   <unique-id>1653079815094995-1</unique-id>
-                  <command>alacritty  --working-directory %f</command>
+                  <command>kitty --working-directory %f</command>
                   <description>Example for a custom action</description>
                   <patterns>*</patterns>
                   <startup-notify/>

@@ -9,7 +9,7 @@ configuration {
     location: 0;
     sidebar-mode: false;
 
-    terminal: "alacritty";
+    terminal: "kitty";
     xoffset: 0;
     yoffset: 0;
 }

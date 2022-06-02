@@ -35,7 +35,7 @@ in {
         name = "kalker";
         desktopName = "Kalker";
         icon = "calc";
-        exec = "${getExe alacritty} -t Kalker -e kalker";
+        exec = "${getExe kitty} -T Kalker -e kalker";
         categories = ["Development"];
       })
       qgnomeplatform

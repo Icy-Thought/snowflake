@@ -54,18 +54,18 @@ in {
 
     font = {
       mono = {
-        family = mkOpt str "Monospace";
+        family = mkOpt str "";
         weight = mkOpt str "SemiBold";
-        weightAlt = mkOpt str "DemiBold";
         weightNum = mkOpt str "600";
         size = mkOpt int 13;
       };
       sans = {
-        family = mkOpt str "Sans";
+        family = mkOpt str "";
         weight = mkOpt str "SemiBold";
         weightNum = mkOpt str "600";
         size = mkOpt int 10;
       };
+      emoji = mkOpt str "";
     };
 
     colors = {
@@ -207,6 +207,7 @@ in {
       fonts.fontconfig.defaultFonts = {
         sansSerif = [cfg.font.sans.family];
         monospace = [cfg.font.mono.family];
+        emoji = [cfg.font.emoji];
       };
     }
 
@@ -227,8 +228,9 @@ in {
         services.xserver.displayManager.sessionCommands = command;
         modules.themes.onReload.wallpaper = command;
 
-        home.dataFile =
-          mkIf (cfg.wallpaper != null) {"wallpaper".source = cfg.wallpaper;};
+        home.dataFile = mkIf (cfg.wallpaper != null) {
+          "wallpaper".source = cfg.wallpaper;
+        };
       }))
 
     (mkIf (cfg.loginWallpaper != null) {

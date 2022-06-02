@@ -27,8 +27,8 @@
   modules.desktop = {
     gnome.enable = true;
     terminal = {
-      default = "alacritty";
-      alacritty.enable = true;
+      default = "kitty";
+      kitty.enable = true;
     };
     editors = {
       default = "nvim";

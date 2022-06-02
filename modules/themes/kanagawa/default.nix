@@ -33,6 +33,7 @@ in {
         font = {
           sans.family = "VictorMono Nerd Font";
           mono.family = "VictorMono Nerd Font Mono";
+          emoji = "Twitter Color Emoji";
         };
 
         colors = {
@@ -78,7 +79,10 @@ in {
         bibata-cursors
       ];
 
-      fonts.fonts = with pkgs; [(nerdfonts.override {fonts = ["VictorMono"];})];
+      fonts.fonts = with pkgs; [
+        (nerdfonts.override {fonts = ["VictorMono"];})
+        twitter-color-emoji
+      ];
 
       home.configFile = with config.modules;
         mkMerge [
