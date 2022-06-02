@@ -27,7 +27,7 @@ in {
       programs.firejail = {
         enable = true;
         wrappedBinaries.zoom = {
-          executable = "${lib.getBin pkgs.zoom-us}/bin/zoom-us";
+          executable = "${getExe pkgs.zoom-us}";
           profile = "${pkgs.firejail}/etc/firejail/zoom.profile";
         };
       };

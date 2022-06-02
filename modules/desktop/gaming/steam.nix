@@ -24,20 +24,24 @@ in {
         driSupport32Bit = true;
       };
 
-      environment.variables.VK_ICD_FILENAMES = ["/run/opengl-driver/share/vulkan/icd.d/amd_icd64.json"];
+      environment.variables.VK_ICD_FILENAMES = [
+        "/run/opengl-driver/share/vulkan/icd.d/amd_icd64.json"
+      ];
 
       user.packages = with pkgs; [
         # Get steam to keep its garbage out of $HOME
         (writeScriptBin "steam" ''
           #!${stdenv.shell}
-          HOME="${cfg.libDir}" exec ${steam}/bin/steam "$@"
+          HOME="${cfg.libDir}" exec ${getExe steam} "$@"
         '')
+
         # for running GOG and humble bundle games
         (writeScriptBin "steam-run" ''
           #!${stdenv.shell}
-          HOME="${cfg.libDir}" exec ${steam-run-native}/bin/steam-run "$@"
+          HOME="${cfg.libDir}" exec ${getExe steam-run-native} "$@"
         '')
-        # So a rofi entry exists
+
+        # Add rofi desktop icon
         (makeDesktopItem {
           name = "steam";
           desktopName = "Steam";
@@ -48,12 +52,17 @@ in {
           categories = ["Network" "FileTransfer" "Game"];
         })
       ];
-      system.userActivationScripts.setupSteamDir = ''mkdir -p "${cfg.libDir}"'';
+
+      system.userActivationScripts.setupSteamDir = ''
+        mkdir -p "${cfg.libDir}"
+      '';
 
       # better for steam proton games
       systemd.extraConfig = "DefaultLimitNOFILE=1048576";
     }
 
-    (mkIf cfg.hardware.enable {hardware.steam-hardware.enable = true;})
+    (mkIf cfg.hardware.enable {
+      hardware.steam-hardware.enable = true;
+    })
   ]);
 }

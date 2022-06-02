@@ -79,9 +79,7 @@ in {
       numlock.enable = true;
       preferStatusNotifierItems = true;
 
-      windowManager.command = ''
-        ${pkgs.haskellPackages.my-xmonad}/bin/my-xmonad
-      '';
+      windowManager.command = "${getExe pkgs.haskellPackages.my-xmonad}";
 
       importedVariables = ["GDK_PIXBUF_MODULE_FILE"];
     };

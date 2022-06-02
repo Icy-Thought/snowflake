@@ -37,9 +37,11 @@ in {
 
         ## Markdown
         nodePackages.markdownlint-cli2
+        vale
 
         ## lsp: LaTeX + Org-Mode
         tectonic
+        # python310Packages.matplotlib
         # texlive.combined.scheme-medium
       ];
     })

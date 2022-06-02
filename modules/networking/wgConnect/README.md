@@ -99,22 +99,22 @@ Henceforth I have choosen to write both a template and an example showcasing how
       }];
 
       postUp = ''
-        ${pkgs.iptables}/bin/iptables -I OUTPUT ! -o ghostVPN \
-          -m mark ! --mark $(${pkgs.wireguard-tools}/bin/wg show ghostVPN fwmark) \
+        iptables -I OUTPUT ! -o ghostVPN \
+          -m mark ! --mark $(wg show ghostVPN fwmark) \
           -m addrtype ! --dst-type LOCAL -j REJECT
 
-        ${pkgs.iptables}/bin/ip6tables -I OUTPUT ! -o ghostVPN \
-          -m mark ! --mark $(${pkgs.wireguard-tools}/bin/wg show ghostVPN fwmark) \
+        ip6tables -I OUTPUT ! -o ghostVPN \
+          -m mark ! --mark $(wg show ghostVPN fwmark) \
           -m addrtype ! --dst-type LOCAL -j REJECT
       '';
 
       preDown = ''
-        ${pkgs.iptables}/bin/iptables -D OUTPUT ! -o ghostVPN \
-          -m mark ! --mark $(${pkgs.wireguard-tools}/bin/wg show ghostVPN fwmark) \
+        iptables -D OUTPUT ! -o ghostVPN \
+          -m mark ! --mark $(wg show ghostVPN fwmark) \
           -m addrtype ! --dst-type LOCAL -j REJECT
 
-        ${pkgs.iptables}/bin/ip6tables -D OUTPUT ! -o ghostVPN \
-          -m mark ! --mark $(${pkgs.wireguard-tools}/bin/wg show ghostVPN fwmark) \
+        ip6tables -D OUTPUT ! -o ghostVPN \
+          -m mark ! --mark $(wg show ghostVPN fwmark) \
           -m addrtype ! --dst-type LOCAL -j REJECT
       '';
     };

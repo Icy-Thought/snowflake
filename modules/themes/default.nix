@@ -104,7 +104,7 @@ in {
     # Read xresources files in ~/.config/xtheme/* to allow modular configuration
     # of Xresources.
     (let
-      xrdb = ''cat "$XDG_CONFIG_HOME"/xtheme/* | ${pkgs.xorg.xrdb}/bin/xrdb -load'';
+      xrdb = ''cat "$XDG_CONFIG_HOME"/xtheme/* | ${getExe pkgs.xorg.xrdb} -load'';
     in {
       home.configFile."xtheme.init" = {
         text = xrdb;
@@ -217,7 +217,7 @@ in {
         wCfg = config.services.xserver.desktopManager.wallpaper;
         command = ''
           if [ -e "$XDG_DATA_HOME/wallpaper" ]; then
-            ${pkgs.feh}/bin/feh --bg-${wCfg.mode} \
+            ${getExe pkgs.feh} --bg-${wCfg.mode} \
               ${optionalString wCfg.combineScreens "--no-xinerama"} \
               --no-fehbg \
               $XDG_DATA_HOME/wallpaper

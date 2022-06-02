@@ -25,7 +25,9 @@ in {
         unstable.rust-analyzer
       ];
 
-      env.PATH = ["$(${pkgs.yarn}/bin/yarn global bin)"];
+      env.PATH = [
+        "$(${getExe pkgs.yarn} global bin)"
+      ];
 
       environment.shellAliases = {
         rs = "rustc";

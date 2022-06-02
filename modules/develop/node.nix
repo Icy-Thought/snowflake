@@ -23,11 +23,11 @@ in {
 
         # Run locally installed bin-script, e.g. n coffee file.coffee
         environment.shellAliases = {
-          n = ''PATH="$(${node}/bin/npm bin):$PATH"'';
+          n = ''PATH="$(${getBin node}/npm bin):$PATH"'';
           ya = "yarn";
         };
 
-        env.PATH = ["$(${pkgs.yarn}/bin/yarn global bin)"];
+        env.PATH = ["$(${getExe pkgs.yarn} global bin)"];
       })
 
     (mkIf cfg.xdg.enable {

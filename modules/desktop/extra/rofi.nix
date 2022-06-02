@@ -19,7 +19,7 @@ in {
 
       (writeScriptBin "rofi" ''
         #!${stdenv.shell}
-        exec ${pkgs.rofi}/bin/rofi -terminal alacritty -m -1 "$@"
+        exec ${getExe pkgs.rofi} -terminal alacritty -m -1 "$@"
       '')
 
       # TODO: powermenu + screenshot

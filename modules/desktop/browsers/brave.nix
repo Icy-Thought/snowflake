@@ -18,7 +18,7 @@ in {
         desktopName = "Brave Web Browser (Private)";
         genericName = "Launch a Private Brave-browser Instance";
         icon = "brave";
-        exec = "${brave}/bin/brave --incognito";
+        exec = "${getExe brave} --incognito";
         categories = ["Network"];
       })
     ];

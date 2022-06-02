@@ -119,7 +119,7 @@ in {
     (mkIf config.modules.desktop.xmonad.enable {
       services.xserver.displayManager = {
         sessionCommands = with cfg.gtk; ''
-          ${pkgs.xorg.xsetroot}/bin/xsetroot -xcf ${pkgs.bibata-cursors}/share/icons/${cursor.name}/cursors/${cursor.default} ${
+          ${getExe pkgs.xorg.xsetroot} -xcf ${pkgs.bibata-cursors}/share/icons/${cursor.name}/cursors/${cursor.default} ${
             toString (cursor.size)
           }
         '';

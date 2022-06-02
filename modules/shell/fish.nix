@@ -44,9 +44,9 @@ in {
     home.programs.fish = {
       enable = true;
       interactiveShellInit = ''
-        ${pkgs.starship}/bin/starship init fish | source
-        ${pkgs.zoxide}/bin/zoxide init fish | source
-        ${pkgs.any-nix-shell}/bin/any-nix-shell fish | source
+        ${getExe pkgs.starship} init fish | source
+        ${getExe pkgs.zoxide} init fish | source
+        ${getExe pkgs.any-nix-shell} fish | source
         ${builtins.readFile "${configDir}/fish/interactive.fish"}
 
         ${optionalString cfg.git.enable ''

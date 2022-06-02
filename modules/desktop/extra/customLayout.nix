@@ -31,7 +31,7 @@ in {
     mkIf cfg.xmonad.enable {
       home.xsession.initExtra = ''
         # Set XKB layout = us+hyper on XMonad start:
-        ${pkgs.xorg.xkbcomp}/bin/xkbcomp ${customKeyboardLayout} $DISPLAY
+        ${getExe pkgs.xorg.xkbcomp} ${customKeyboardLayout} $DISPLAY
       '';
 
       environment.etc."X11/keymap.xkb".source = customKeyboardLayout;

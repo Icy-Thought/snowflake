@@ -19,7 +19,7 @@ in {
       TMUX_HOME = "$XDG_CONFIG_HOME/tmux";
     };
 
-    modules.themes.onReload.tmux = "${pkgs.tmux}/bin/tmux source-file $TMUX_HOME/tmux.conf";
+    modules.themes.onReload.tmux = "${getExe pkgs.tmux} source-file $TMUX_HOME/tmux.conf";
 
     home.configFile = {
       "fish/conf.d/tmux.fish".text = ''

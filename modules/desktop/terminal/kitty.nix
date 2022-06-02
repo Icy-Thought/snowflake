@@ -96,7 +96,7 @@ in {
       }
       // optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
         onChange = ''
-          ${pkgs.procps}/bin/pkill -USR1 -u $USER kitty || true
+          ${getBin pkgs.procps}/pkill -USR1 -u $USER kitty || true
         '';
       };
   };

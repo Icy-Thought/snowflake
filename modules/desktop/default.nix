@@ -35,7 +35,7 @@ in {
         name = "kalker";
         desktopName = "Kalker";
         icon = "calc";
-        exec = "${alacritty}/bin/alacritty -t Kalker -e kalker";
+        exec = "${getExe alacritty} -t Kalker -e kalker";
         categories = ["Development"];
       })
       qgnomeplatform
