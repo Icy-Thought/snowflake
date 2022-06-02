@@ -103,6 +103,10 @@ in {
             "kitty/config/catppuccin.conf".text =
               import ./config/kitty/catppuccin.conf cfg;
           })
+          (mkIf desktop.terminal.wezterm.enable {
+            "wezterm/config/catppuccin.lua".text =
+              import ./config/wezterm/catppuccin.lua cfg;
+          })
           (mkIf desktop.media.viewer.document.enable {
             "zathura/zathurarc".text = import ./config/zathura/zathurarc cfg;
           })

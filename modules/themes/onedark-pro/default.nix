@@ -103,6 +103,10 @@ in {
             "kitty/config/onedark-pro.conf".text =
               import ./config/kitty/onedark-pro.conf cfg;
           })
+          (mkIf desktop.terminal.wezterm.enable {
+            "wezterm/config/onedark-pro.lua".text =
+              import ./config/wezterm/onedark-pro.lua cfg;
+          })
           (mkIf desktop.media.viewer.document.enable {
             "zathura/zathurarc".text = import ./config/zathura/zathurarc cfg;
           })
@@ -130,7 +134,7 @@ in {
         '';
       };
 
-      # Fcitx5
+      # TODO: Fcitx5 onedark-pro theme
       home.file.".local/share/fcitx5/themes".source =
         pkgs.fetchFromGitHub
         {

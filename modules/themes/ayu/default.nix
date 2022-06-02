@@ -102,6 +102,10 @@ in {
             "kitty/config/ayu-dark.conf".text =
               import ./config/kitty/ayu-dark.conf cfg;
           })
+          (mkIf desktop.terminal.wezterm.enable {
+            "wezterm/config/ayu-dark.lua".text =
+              import ./config/wezterm/ayu-dark.lua cfg;
+          })
           (mkIf desktop.media.viewer.document.enable {
             "zathura/zathurarc".text = import ./config/zathura/zathurarc cfg;
           })
@@ -129,7 +133,7 @@ in {
         '';
       };
 
-      # Fcitx5
+      # TODO: Fcitx5 ayu-dark theme
       home.file.".local/share/fcitx5/themes".source = pkgs.fetchFromGitHub {
         owner = "icy-thought";
         repo = "fcitx5-catppuccin";
