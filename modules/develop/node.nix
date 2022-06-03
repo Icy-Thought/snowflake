@@ -15,20 +15,17 @@ in {
   };
 
   config = mkMerge [
-    (let
-      node = pkgs.nodejs_latest;
-    in
-      mkIf cfg.node.enable {
-        user.packages = [node pkgs.yarn];
+    (mkIf cfg.node.enable {
+      user.packages = with pkgs; [nodejs_latest yarn];
 
-        # Run locally installed bin-script, e.g. n coffee file.coffee
-        environment.shellAliases = {
-          n = ''PATH="$(${getBin node}/npm bin):$PATH"'';
-          ya = "yarn";
-        };
+      # Run locally installed bin-script, e.g. n coffee file.coffee
+      environment.shellAliases = {
+        n = ''PATH="$(${getBin node}/npm bin):$PATH"'';
+        ya = "yarn";
+      };
 
-        env.PATH = ["$(${getExe pkgs.yarn} global bin)"];
-      })
+      env.PATH = ["$(${getExe pkgs.yarn} global bin)"];
+    })
 
     (mkIf cfg.xdg.enable {
       env = {

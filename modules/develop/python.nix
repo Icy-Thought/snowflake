@@ -19,12 +19,13 @@ in {
       user.packages = with pkgs;
         [python310]
         ++ (with python310Packages; [
-          pip
-          ipython
           black
-          setuptools
-          pylint
+          ipython
+          isort
+          pip
           poetry
+          pylint
+          setuptools
         ]);
 
       environment.shellAliases = {

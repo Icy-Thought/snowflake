@@ -38,7 +38,7 @@ in {
         # }----------=[ Decorations ]=---------- {
         repaint_delay       10
         disable_ligatures   cursor
-        adjust_line_height  120%
+        adjust_line_height  113%
         inactive_text_alpha 1.0
 
         # }----------=[ Notification ]=---------- {
