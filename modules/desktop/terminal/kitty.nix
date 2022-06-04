@@ -30,10 +30,12 @@ in {
         term xterm-kitty
 
         # }----------=[ General ]=---------- {
-        sync_to_monitor       yes
-        update_check_interval 0
-        allow_remote_control  no
-        close_on_child_death  no
+        sync_to_monitor         yes
+        update_check_interval   0
+        allow_remote_control    no
+        close_on_child_death    no
+        shell_integration       enabled
+        confirm_os_window_close -1
 
         # }----------=[ Decorations ]=---------- {
         repaint_delay       10
@@ -105,6 +107,7 @@ in {
         map ctrl+shift+0             restore_font_size
         map middle release ungrabbed paste_from_selection
 
+        map ctrl+shift+t new_tab_with_cwd
         map ctrl+shift+j next_tab
         map ctrl+shift+k previous_tab
       '';

@@ -19,10 +19,12 @@ in {
     (mkIf cfg.document.enable {
       user.packages = with pkgs; [zathura];
     })
+
     (mkIf cfg.music.enable {
       user.packages = with pkgs; [spotify];
       # TODO: spicetify-cli + activeTheme.
     })
+
     (mkIf cfg.video.enable {
       user.packages = with pkgs; [mpv-with-scripts mpvc];
     })

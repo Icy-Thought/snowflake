@@ -12,7 +12,11 @@ in {
   config = mkIf cfg.gnome.enable {
     i18n.inputMethod = {
       enabled = "ibus";
-      ibus.engines = with pkgs.ibus-engines; [libpinyin hangul mozc];
+      ibus.engines = with pkgs.ibus-engines; [
+        libpinyin
+        hangul
+        mozc
+      ];
     };
   };
 }

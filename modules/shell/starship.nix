@@ -7,9 +7,13 @@
 }:
 with lib;
 with lib.my; let
-  cfg = config.modules.shell.fish;
+  cfg = config.modules.shell;
 in {
-  config = mkIf cfg.enable {
+  options.modules.shell.starship = {
+    enable = mkBoolOpt false;
+  };
+
+  config = mkIf (cfg.starship.enable || cfg.fish.enable) {
     home.programs.starship = {
       enable = true;
       enableBashIntegration = true;

@@ -9,7 +9,7 @@
     nixosConfigurations = dotfiles.lib.mapHosts ./hosts {
       imports = [
         # If this is a linode machine
-        # "${dotfiles}/hosts/linode.nix"
+        # "${snowflake}/hosts/linode.nix"
       ];
     };
   };

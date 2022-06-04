@@ -11,10 +11,15 @@ with lib.my; let
   cfg = config.modules.desktop.xmonad;
   configDir = config.snowflake.configDir;
 in {
-  options.modules.desktop.xmonad = {enable = mkBoolOpt false;};
+  options.modules.desktop.xmonad = {
+    enable = mkBoolOpt false;
+  };
 
   config = mkIf cfg.enable {
-    nixpkgs.overlays = [inputs.xmonad.overlay inputs.xmonad-contrib.overlay];
+    nixpkgs.overlays = with inputs; [
+      xmonad.overlay
+      xmonad-contrib.overlay
+    ];
 
     environment.systemPackages = with pkgs; [
       haskellPackages.my-xmonad
@@ -73,14 +78,11 @@ in {
       network-manager-applet.enable = true;
     };
 
-    # Extras:
     home.xsession = {
       enable = true;
       numlock.enable = true;
       preferStatusNotifierItems = true;
-
       windowManager.command = "${getExe pkgs.haskellPackages.my-xmonad}";
-
       importedVariables = ["GDK_PIXBUF_MODULE_FILE"];
     };
   };

@@ -7,15 +7,15 @@
 }:
 with lib;
 with lib.my; let
-  cfg = config.modules.develop;
+  cfg = config.modules.develop.python;
+  devCfg = config.modules.develop.xdg;
 in {
   options.modules.develop.python = {
     enable = mkBoolOpt false;
-    xdg.enable = mkBoolOpt cfg.xdg.enable;
   };
 
   config = mkMerge [
-    (mkIf cfg.python.enable {
+    (mkIf cfg.enable {
       user.packages = with pkgs;
         [python310]
         ++ (with python310Packages; [
@@ -38,7 +38,7 @@ in {
       };
     })
 
-    (mkIf cfg.xdg.enable {
+    (mkIf devCfg.enable {
       env = {
         IPYTHONDIR = "$XDG_CONFIG_HOME/ipython";
         PIP_CONFIG_FILE = "$XDG_CONFIG_HOME/pip/pip.conf";

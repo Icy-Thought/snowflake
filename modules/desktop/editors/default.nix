@@ -10,11 +10,18 @@ with lib.my; let
   cfg = config.modules.desktop.editors;
 in {
   options.modules.desktop.editors = {
-    default = mkOpt types.str "neovim";
+    default = mkOption {
+      type = with types; str;
+      default = "neovim";
+      description = "Default editor";
+      example = "emacs";
+    };
   };
 
   config = mkMerge [
-    (mkIf (cfg.default != null) {env.EDITOR = cfg.default;})
+    (mkIf (cfg.default != null) {
+      env.EDITOR = cfg.default;
+    })
 
     (mkIf (cfg.emacs.enable || cfg.neovim.enable) {
       user.packages = with pkgs; [

@@ -15,20 +15,22 @@ in {
   };
 
   config = mkIf cfg.enable {
-    environment.variables.GNUPGHOME = "$XDG_CONFIG_HOME/gnupg";
+    environment.variables = {
+      GNUPGHOME = "$XDG_CONFIG_HOME/gnupg";
+    };
 
-    programs.gnupg.agent.enable = true;
+    programs.gnupg.agent = {
+      enable = true;
+    };
 
     user.packages = [pkgs.tomb];
 
     # HACK Without this config file you get "No pinentry program" on 20.03.
     #      programs.gnupg.agent.pinentryFlavor doesn't appear to work, and this
     #      is cleaner than overriding the systemd unit.
-    home.configFile."gnupg/gpg-agent.conf" = {
-      text = ''
-        default-cache-ttl ${toString cfg.cacheTTL}
-        pinentry-program ${getExe pkgs.pinentry.gtk2}
-      '';
-    };
+    home.configFile."gnupg/gpg-agent.conf".text = ''
+      default-cache-ttl ${toString cfg.cacheTTL}
+      pinentry-program ${getExe pkgs.pinentry.gtk2}
+    '';
   };
 }

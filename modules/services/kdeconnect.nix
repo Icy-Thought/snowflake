@@ -9,7 +9,9 @@ with lib;
 with lib.my; let
   cfg = config.modules.services.kdeconnect;
 in {
-  options.modules.services.kdeconnect = {enable = mkBoolOpt false;};
+  options.modules.services.kdeconnect = {
+    enable = mkBoolOpt false;
+  };
 
   config = mkIf cfg.enable {
     home.services.kdeconnect = {

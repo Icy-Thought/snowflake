@@ -7,20 +7,26 @@
 }:
 with lib;
 with lib.my; let
-  cfg = config.modules.develop;
+  cfg = config.modules.develop.cc;
+  devCfg = config.modules.develop.xdg;
 in {
   options.modules.develop.cc = {
     enable = mkBoolOpt false;
-    xdg.enable = mkBoolOpt cfg.xdg.enable;
   };
 
   config = mkMerge [
-    (mkIf cfg.cc.enable {
-      user.packages = with pkgs; [clang bear gdb cmake llvmPackages.libcxx];
+    (mkIf cfg.enable {
+      user.packages = with pkgs; [
+        clang
+        bear
+        gdb
+        cmake
+        llvmPackages.libcxx
+      ];
     })
 
-    (mkIf cfg.xdg.enable {
-      # TODO
+    (mkIf devCfg.enable {
+      # TODO:
     })
   ];
 }

@@ -21,7 +21,7 @@ in {
 
   config = mkMerge [
     {
-      nixpkgs.overlays = [inputs.neovim-nightly.overlay];
+      nixpkgs.overlays = with inputs; [neovim-nightly.overlay];
 
       environment.shellAliases = {
         vi = "nvim";

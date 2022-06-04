@@ -7,21 +7,21 @@
 }:
 with lib;
 with lib.my; let
-  cfg = config.modules.develop;
+  cfg = config.modules.develop.julia;
+  devCfg = config.modules.develop.xdg;
 in {
   options.modules.develop.julia = {
     enable = mkBoolOpt false;
-    xdg.enable = mkBoolOpt cfg.xdg.enable;
   };
 
   config = mkMerge [
-    (mkIf cfg.julia.enable {
+    (mkIf cfg.enable {
       user.packages = with pkgs; [julia-bin];
       # TODO: automate the installation of: [Plots PyPlot GR UnicodePlots]
     })
 
-    (mkIf cfg.xdg.enable {
-      # TODO
+    (mkIf devCfg.enable {
+      # TODO:
     })
   ];
 }

@@ -9,7 +9,9 @@ with lib;
 with lib.my; let
   cfg = config.modules.shell.bash;
 in {
-  options.modules.shell.bash = {enable = mkBoolOpt true;};
+  options.modules.shell.bash = {
+    enable = mkBoolOpt true;
+  };
 
   config = mkIf cfg.enable (mkMerge [
     {

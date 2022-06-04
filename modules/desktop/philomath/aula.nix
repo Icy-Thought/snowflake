@@ -15,14 +15,11 @@ in {
   };
 
   config = mkMerge [
-    {
-      # Configure anki OR replace with other software
-      user.packages = with pkgs; (
-        if cfg.anki.enable
-        then [anki]
-        else []
-      );
-    }
+    (mkIf cfg.anki.enable {
+      # TODO: Configure anki OR replace with other software
+      user.packages = with pkgs; [anki];
+    })
+
     (mkIf cfg.zoom.enable {
       programs.firejail = {
         enable = true;

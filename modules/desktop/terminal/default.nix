@@ -9,7 +9,14 @@ with lib;
 with lib.my; let
   cfg = config.modules.desktop.terminal;
 in {
-  options.modules.desktop.terminal = {default = mkOpt types.str "xterm";};
+  options.modules.desktop.terminal = {
+    default = mkOption {
+      type = with types; str;
+      default = "xterm";
+      description = "Default terminal";
+      example = "kitty";
+    };
+  };
 
   config = {
     services.xserver.desktopManager.xterm.enable =

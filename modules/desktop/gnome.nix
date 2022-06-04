@@ -10,16 +10,18 @@ with lib.my; let
   cfg = config.modules.desktop.gnome;
   configDir = config.snowflake.configDir;
 in {
-  options.modules.desktop.gnome = {enable = mkBoolOpt false;};
+  options.modules.desktop.gnome = {
+    enable = mkBoolOpt false;
+  };
 
   config = mkIf cfg.enable {
     programs.dconf.enable = true;
 
     services.xserver = {
       enable = true;
-      displayManager = {
-        gdm.enable = true;
-        gdm.wayland = true;
+      displayManager.gdm = {
+        enable = true;
+        wayland = true;
       };
       desktopManager.gnome.enable = true;
     };
@@ -49,13 +51,15 @@ in {
       gnome.gnome-disk-utility
       gnome.gnome-tweak-tool
 
-      # Extras:
       # gnomeExtensions.pop-os-shell
       gnomeExtensions.gsconnect
       gnomeExtensions.user-themes
     ];
 
-    environment.variables = {MOZ_ENABLE_WAYLAND = 1;};
+    # Force-enable wayland on FireFox
+    environment.variables = {
+      MOZ_ENABLE_WAYLAND = 1;
+    };
 
     # Enable chrome-gnome-shell in FireFox nightly (mozilla-overlay):
     home.file.".mozilla/native-messaging-hosts/org.gnome.chrome_gnome_shell.json".source = "${pkgs.chrome-gnome-shell}/lib/mozilla/native-messaging-hosts/org.gnome.chrome_gnome_shell.json";

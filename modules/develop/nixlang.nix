@@ -7,16 +7,16 @@
 }:
 with lib;
 with lib.my; let
-  cfg = config.modules.develop.shell;
+  cfg = config.modules.develop.nix;
   devCfg = config.modules.develop.xdg;
 in {
-  options.modules.develop.shell = {
-    enable = mkBoolOpt false;
+  options.modules.develop.nix = {
+    enable = mkBoolOpt true;
   };
 
   config = mkMerge [
     (mkIf cfg.enable {
-      user.packages = with pkgs; [shellcheck];
+      user.packages = with pkgs; [alejandra];
     })
 
     (mkIf devCfg.enable {

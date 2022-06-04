@@ -21,7 +21,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    nixpkgs.overlays = [inputs.emacs.overlay];
+    nixpkgs.overlays = with inputs; [emacs.overlay];
 
     home.services.emacs = {
       enable = true;

@@ -9,7 +9,9 @@ with lib;
 with lib.my; let
   cfg = config.modules.hardware.touchpad;
 in {
-  options.modules.hardware.touchpad = {enable = mkBoolOpt false;};
+  options.modules.hardware.touchpad = {
+    enable = mkBoolOpt false;
+  };
 
   config = mkIf cfg.enable {
     services.xserver.libinput = {

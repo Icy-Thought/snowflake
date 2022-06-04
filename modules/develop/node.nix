@@ -7,15 +7,15 @@
 }:
 with lib;
 with lib.my; let
-  cfg = config.modules.develop;
+  cfg = config.modules.develop.node;
+  devCfg = config.modules.develop.xdg;
 in {
   options.modules.develop.node = {
     enable = mkBoolOpt false;
-    xdg.enable = mkBoolOpt cfg.xdg.enable;
   };
 
   config = mkMerge [
-    (mkIf cfg.node.enable {
+    (mkIf cfg.enable {
       user.packages = with pkgs; [nodejs_latest yarn];
 
       # Run locally installed bin-script, e.g. n coffee file.coffee
@@ -27,7 +27,7 @@ in {
       env.PATH = ["$(${getExe pkgs.yarn} global bin)"];
     })
 
-    (mkIf cfg.xdg.enable {
+    (mkIf devCfg.enable {
       env = {
         NPM_CONFIG_USERCONFIG = "$XDG_CONFIG_HOME/npm/config";
         NPM_CONFIG_CACHE = "$XDG_CACHE_HOME/npm";

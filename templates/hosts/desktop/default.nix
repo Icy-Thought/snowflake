@@ -10,7 +10,9 @@
   ];
 
   ## Modules
-  modules.themes = {active = "catppuccin";};
+  modules.themes = {
+    active = "catppuccin";
+  };
 
   modules.desktop = {
     xmonad.enable = true;

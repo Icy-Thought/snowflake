@@ -10,22 +10,23 @@ with lib.my; let
   cfg = config.modules.containers.archlinux;
   configDir = config.snowflake.configDir;
 in {
-  options.modules.containers.archlinux = {enable = mkBoolOpt false;};
+  options.modules.containers.archlinux = {
+    enable = mkBoolOpt false;
+  };
 
   config = mkIf cfg.enable {
-    virtualisation = {
-      libvirtd = {
-        enable = true;
-        qemuVerbatimConfig = ''
-          user = "icy-thought"
-        '';
-      };
+    virtualisation.libvirtd = {
+      enable = true;
+      qemuVerbatimConfig = ''
+        user = "icy-thought"
+      '';
     };
 
     systemd.nspawn."archLinux" = {
       enable = true;
       wantedBy = ["machines.target"];
       requiredBy = ["machines.target"];
+
       execConfig = {
         Timezone = "Bind";
         Hostname = "Arch";
@@ -53,8 +54,8 @@ in {
       };
     };
 
+    # Vulkan support
     systemd.services."systemd-nspawn@".serviceConfig = {
-      # Vulkan support
       DeviceAllow = ["char-drm rwx" "/dev/dri/renderD128"];
     };
   };

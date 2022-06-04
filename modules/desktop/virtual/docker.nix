@@ -9,13 +9,17 @@ with lib;
 with lib.my; let
   cfg = config.modules.desktop.virtual.docker;
 in {
-  options.modules.desktop.virtual.docker = {enable = mkBoolOpt false;};
+  options.modules.desktop.virtual.docker = {
+    enable = mkBoolOpt false;
+  };
 
   config = mkIf cfg.enable {
     user.packages = with pkgs; [docker docker-compose];
 
-    env.DOCKER_CONFIG = "$XDG_CONFIG_HOME/docker";
-    env.MACHINE_STORAGE_PATH = "$XDG_DATA_HOME/docker/machine";
+    env = {
+      DOCKER_CONFIG = "$XDG_CONFIG_HOME/docker";
+      MACHINE_STORAGE_PATH = "$XDG_DATA_HOME/docker/machine";
+    };
 
     user.extraGroups = ["docker"];
 

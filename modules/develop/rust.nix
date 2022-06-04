@@ -8,16 +8,16 @@
 }:
 with lib;
 with lib.my; let
-  cfg = config.modules.develop;
+  cfg = config.modules.develop.rust;
+  devCfg = config.modules.develop.xdg;
 in {
   options.modules.develop.rust = {
     enable = mkBoolOpt false;
-    xdg.enable = mkBoolOpt cfg.xdg.enable;
   };
 
   config = mkMerge [
-    (mkIf cfg.rust.enable {
-      nixpkgs.overlays = [inputs.rust.overlay];
+    (mkIf cfg.enable {
+      nixpkgs.overlays = with inputs; [rust.overlay];
 
       user.packages = with pkgs; [
         crate2nix
@@ -35,7 +35,7 @@ in {
       };
     })
 
-    (mkIf cfg.xdg.enable {
+    (mkIf devCfg.enable {
       env = {
         CARGO_HOME = "$XDG_DATA_HOME/cargo";
         PATH = ["$CARGO_HOME/bin"];
