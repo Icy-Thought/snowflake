@@ -14,7 +14,7 @@
   sassc,
   ibus,
   usbutils,
-  xorg,
+  libxcb,
   python3Packages,
   gobject-introspection,
   gtk3,
@@ -33,7 +33,7 @@ python3Packages.buildPythonApplication rec {
     sha256 = "H++kQ3Fxw56avEsSE1ctu5p0s50s0eQ+jL5zXS3AA94=";
   };
 
-  postPatch = ''
+  preConfigure = ''
     patchShebangs scripts
 
     substituteInPlace scripts/build-styles.sh \
@@ -45,12 +45,19 @@ python3Packages.buildPythonApplication rec {
     scripts/build-styles.sh
   '';
 
-  buildInputs = [cairo hicolor-icon-theme];
+  buildInputs = [
+    cairo
+    hicolor-icon-theme
+  ];
 
-  pythonPath = with python3Packages; [openrazer pyqt5 pyqtwebengine];
+  pythonPath = with python3Packages; [
+    openrazer
+    pyqt5
+    pyqtwebengine
+  ];
 
   propagatedBuildInputs = with python3Packages; [
-    xorg.libxcb
+    libxcb
     colour
     colorama
     setproctitle
@@ -63,7 +70,12 @@ python3Packages.buildPythonApplication rec {
     libappindicator-gtk3
   ];
 
-  nativePropagatedBuildInputs = [gobject-introspection gtk3 gdk-pixbuf imagemagick];
+  propagatedNativeBuildInputs = [
+    gobject-introspection
+    gtk3
+    gdk-pixbuf
+    imagemagick
+  ];
 
   nativeBuildInputs = with python3Packages; [
     pyqt5
@@ -75,7 +87,9 @@ python3Packages.buildPythonApplication rec {
     sassc
   ];
 
-  makeWrapperArgs = ["\${qtWrapperArgs[@]}"];
+  makeWrapperArgs = [
+    "\${qtWrapperArgs[@]}"
+  ];
 
   meta = with lib; {
     homepage = "https://polychromatic.app/";
