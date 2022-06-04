@@ -34,7 +34,7 @@ in {
         update_check_interval   0
         allow_remote_control    no
         close_on_child_death    no
-        shell_integration       enabled
+        shell_integration       no-cursor
         confirm_os_window_close -1
 
         # }----------=[ Decorations ]=---------- {
