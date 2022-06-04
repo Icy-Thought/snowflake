@@ -11,13 +11,12 @@ with lib.my; let
   configDir = config.snowflake.configDir;
 in {
   options.modules.desktop.media.editor = {
-    enable = mkBoolOpt false;
     raster.enable = mkBoolOpt false;
     vector.enable = mkBoolOpt false;
     modeling.enable = mkBoolOpt false;
   };
 
-  config = mkIf cfg.enable {
+  config = {
     user.packages = mkMerge (with pkgs; [
       [
         font-manager

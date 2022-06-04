@@ -15,13 +15,13 @@
   ibus,
   usbutils,
   libxcb,
-  python3Packages,
+  python310Packages,
   gobject-introspection,
   gtk3,
   wrapGAppsHook,
   libappindicator-gtk3,
 }:
-python3Packages.buildPythonApplication rec {
+python310Packages.buildPythonApplication rec {
   name = "polychromatic";
   version = "0.7.3";
   format = "other";
@@ -50,13 +50,13 @@ python3Packages.buildPythonApplication rec {
     hicolor-icon-theme
   ];
 
-  pythonPath = with python3Packages; [
+  pythonPath = with python310Packages; [
     openrazer
     pyqt5
     pyqtwebengine
   ];
 
-  propagatedBuildInputs = with python3Packages; [
+  propagatedBuildInputs = with python310Packages; [
     libxcb
     colour
     colorama
@@ -77,7 +77,7 @@ python3Packages.buildPythonApplication rec {
     imagemagick
   ];
 
-  nativeBuildInputs = with python3Packages; [
+  nativeBuildInputs = with python310Packages; [
     pyqt5
     desktop-file-utils
     qt5.wrapQtAppsHook

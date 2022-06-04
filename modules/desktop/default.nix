@@ -29,7 +29,6 @@ in {
     ];
 
     user.packages = with pkgs; [
-      bitwarden
       kalker
       (makeDesktopItem {
         name = "kalker";
@@ -47,8 +46,6 @@ in {
       fonts = with pkgs; [
         sarasa-gothic
         scheherazade-new
-        source-code-pro
-        times-newer-roman
       ];
     };
 

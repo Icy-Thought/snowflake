@@ -35,10 +35,7 @@
     };
     editors = {
       default = "nvim";
-      neovim = {
-        enable = true;
-        agasaya.enable = true;
-      };
+      neovim.agasaya.enable = true;
     };
     browsers = {
       default = "brave";
@@ -46,7 +43,6 @@
       firefox.enable = true;
     };
     philomath.aula = {
-      anki.enable = true;
       zoom.enable = true;
     };
     media = {
@@ -54,7 +50,6 @@
         transmission.enable = true;
       };
       editor = {
-        enable = true;
         raster.enable = true;
         vector.enable = true;
       };

@@ -18,23 +18,21 @@ in {
     user.packages = with pkgs; [
       any-nix-shell
       fzf
-      pipes-rs
       pwgen
       yt-dlp
 
       # Unix-tools alternatives
-      bat
       bottom
-      duf
       exa
       fd
-      ripgrep
+      (ripgrep.override {
+        withPCRE2 = true;
+      })
       zoxide
     ];
 
     # Several Term-UI's + Ricing:
     modules.shell = {
-      colorPanes.enable = true;
       neofetch.enable = true;
     };
 

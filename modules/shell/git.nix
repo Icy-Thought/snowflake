@@ -23,6 +23,9 @@ in {
       (mkIf config.modules.shell.gnupg.enable gitAndTools.git-crypt)
     ];
 
+    # Prevent x11 askPass prompt on git push:
+    programs.ssh.askPassword = "";
+
     home.programs.git = {
       enable = true;
       package = pkgs.gitFull;

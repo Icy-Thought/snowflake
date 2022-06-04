@@ -13,7 +13,6 @@ with lib.my; let
   colorscheme = config.modules.themes.neovim.theme;
 in {
   options.modules.desktop.editors.neovim = {
-    enable = mkBoolOpt false;
     ereshkigal.enable = mkBoolOpt false; # fnl
     agasaya.enable = mkBoolOpt false; # lua
     niflheim.enable = mkBoolOpt false; # lua + nix

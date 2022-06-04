@@ -83,13 +83,9 @@ with lib.my; {
   i18n.defaultLocale = mkDefault "en_US.UTF-8";
 
   environment.systemPackages = with pkgs; [
-    bind
     cached-nix-shell
-    git
-    ht-rust
-    gcc
     gnumake
-    unzip
     unrar
+    unzip
   ];
 }

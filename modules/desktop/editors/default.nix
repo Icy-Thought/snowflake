@@ -12,7 +12,7 @@ in {
   options.modules.desktop.editors = {
     default = mkOption {
       type = with types; str;
-      default = "neovim";
+      default = "nvim";
       description = "Default editor";
       example = "emacs";
     };
@@ -23,20 +23,16 @@ in {
       env.EDITOR = cfg.default;
     })
 
-    (mkIf (cfg.emacs.enable || cfg.neovim.enable) {
+    (mkIf (cfg.default == "nvim" || cfg.default == "emacs") {
       user.packages = with pkgs; [
-        fd
         imagemagick
-        (ripgrep.override {
-          withPCRE2 = true;
-        })
         editorconfig-core-c
         sqlite
 
         # module dependencies
         ## checkers: aspell
-        (aspellWithDicts (ds:
-          with ds; [
+        (aspellWithDicts (dct:
+          with dct; [
             en
             en-computers
             en-science
@@ -48,8 +44,7 @@ in {
 
         ## lsp: LaTeX + Org-Mode
         tectonic
-        # python310Packages.matplotlib
-        # texlive.combined.scheme-medium
+        pandoc
       ];
     })
   ];

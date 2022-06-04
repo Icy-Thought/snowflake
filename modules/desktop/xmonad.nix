@@ -60,9 +60,6 @@ in {
       ];
     };
 
-    # Prevent x11 askPass prompt on git push:
-    programs.ssh.askPassword = "";
-
     services = {
       autorandr.enable = true;
       blueman.enable = true;
