@@ -93,7 +93,7 @@ in {
       extraConfig = {
         init.defaultBranch = "main";
         core = {
-          editor = "emacsclient -t";
+          editor = "nvim";
           whitespace = "trailing-space,space-before-tab";
         };
 

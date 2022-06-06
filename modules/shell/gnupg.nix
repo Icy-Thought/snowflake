@@ -21,9 +21,20 @@ in {
 
     programs.gnupg.agent = {
       enable = true;
-      pinentryFlavor = "gtk2";
+      # enableSSHSupport = true;
+      # pinentryFlavor = "gtk2";
     };
 
     user.packages = [pkgs.tomb];
+
+    # HACK Without this config file you get "No pinentry program" on 20.03.
+    #      programs.gnupg.agent.pinentryFlavor doesn't appear to work, and this
+    #      is cleaner than overriding the systemd unit.
+    home.configFile."gnupg/gpg-agent.conf" = {
+      text = ''
+        default-cache-ttl ${toString cfg.cacheTTL}
+        pinentry-program ${pkgs.pinentry.gtk2}/bin/pinentry
+      '';
+    };
   };
 }

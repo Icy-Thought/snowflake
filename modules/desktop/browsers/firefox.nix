@@ -33,7 +33,7 @@ in {
           desktopName = "Firefox-DevEdition (Private)";
           genericName = "Launch a Private Firefox-DevEdition Instance";
           icon = "firefox";
-          exec = "${getExe firefox-devedition-bin} --private-window";
+          exec = "${firefox-devedition-bin}/bin/firefox-devedition --private-window";
           categories = ["Network" "WebBrowser"];
         })
       ];

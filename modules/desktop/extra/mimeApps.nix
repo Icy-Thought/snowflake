@@ -26,7 +26,7 @@ in {
           magnet = ["transmission-gtk.desktop"];
           mail = ["firefox.desktop"]; # [ "org.gnome.Geary.desktop" ];
           pdf = ["org.pwmt.zathura-cb.desktop"];
-          text = ["emacsclient.desktop"];
+          text = ["neovide.desktop"];
           telegram = ["telegramdesktop.desktop"];
           video = ["mpv.desktop"];
         };

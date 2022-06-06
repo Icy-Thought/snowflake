@@ -52,11 +52,14 @@ in {
         ''}
       '';
 
-      functions = {
-        eg = "emacs --create-frame $argv & disown";
-        ecg = "emacsclient --create-frame $argv & disown";
-        gitignore = "curl -sL https://www.gitignore.io/api/$argv";
-      };
+      functions = mkMerge [
+        {gitignore = "curl -sL https://www.gitignore.io/api/$argv";}
+
+        (mkIf config.modules.desktop.editors.emacs.enable {
+          eg = "emacs --create-frame $argv & disown";
+          ecg = "emacsclient --create-frame $argv & disown";
+        })
+      ];
 
       plugins = [
         {

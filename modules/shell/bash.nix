@@ -27,14 +27,19 @@ in {
         historyFileSize = 5000;
         historyIgnore = ["nvim" "neofetch"];
 
-        shellAliases = {
-          ls = "exa -Slhg --icons";
-          lsa = "exa -Slhga --icons";
-          temacs = "emacsclient -t";
+        shellAliases = mkMerge [
+          {
+            ls = "exa -Slhg --icons";
+            lsa = "exa -Slhga --icons";
 
-          wup = "systemctl start wg-quick-Akkadian-VPN.service";
-          wud = "systemctl stop wg-quick-Akkadian-VPN.service";
-        };
+            wup = "systemctl start wg-quick-Akkadian-VPN.service";
+            wud = "systemctl stop wg-quick-Akkadian-VPN.service";
+          }
+
+          (mkIf config.modules.desktop.editors.emacs.enable {
+            temacs = "emacsclient -t";
+          })
+        ];
       };
     }
 
