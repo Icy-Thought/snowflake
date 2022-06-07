@@ -28,33 +28,3 @@ function vterm_printf;
         printf "\e]%s\e\\" "$argv"
     end
 end
-
-# Aliases
-alias exa 'exa --group-directories-first'
-
-# Abbreviations
-## Sys-Management
-abbr --add --global -- bat0 'upower -i /org/freedesktop/UPower/devices/battery_BAT0'
-abbr --add --global -- flkup 'nix flake update'
-abbr --add --global -- thkup 'nixos-rebuild switch --use-remote-sudo --flake '.#thinkpad-e595' --impure'
-abbr --add --global -- proup 'pushd ~/git/Icy-Thought/Snowflake ; sudo nixos-rebuild switch --flake '\''.#probook-440g3'\'' --impure ; popd'
-abbr --add --global -- g2nix 'dconf dump / | dconf2nix > ~/git/Icy-Thought/Snowflake/config/dconf/gnome.nix'
-
-## General
-abbr --add --global -- ls 'exa -Slhg --icons'
-abbr --add --global -- lsa 'exa -Slhga --icons'
-abbr --add --global -- tree 'exa -SlhgT --icons'
-abbr --add --global -- emc 'emacsclient -c'
-abbr --add --global -- tmc 'emacsclient -t'
-abbr --add --global -- usbStat 'watch rg -e Dirty: -e Writeback: /proc/meminfo'
-
-## Nix
-abbr --add --global -- nb 'nix-build -E \'with import <nixpkgs> {}; callPackage ./. {}\''
-abbr --add --global -- np 'nix-shell -p'
-abbr --add --global -- nls 'nix-store --query --requisites /run/current-system | cut -d- -f2- | sort | uniq'
-
-## Other
-abbr --add --global -- wud 'systemctl stop wg-quick-akkadianVPN.service'
-abbr --add --global -- wup 'systemctl start wg-quick-akkadianVPN.service'
-abbr --add --global -- yta 'youtube-dl -x --audio-format mp3'
-abbr --add --global -- ytv 'youtube-dl --best-quality'
