@@ -29,16 +29,14 @@ in {
         withPCRE2 = true;
       })
       zoxide
-
-      # plugins for our beloved fish-shell
-      fishPlugins.done # notifies on success/failure/
-      fishPlugins.pisces # auto-pair symbols
-      fishPlugins.fzf-fish # fzf completion
     ];
 
-    programs.fish = {
+    # Enables vendor completion: https://nixos.wiki/wiki/Fish
+    programs.fish.enable = true;
+
+    home.programs.fish = {
       enable = true;
-      useBabelfish = true;
+      # useBabelfish = true;
       interactiveShellInit = ''
         ${getExe pkgs.starship} init fish | source
         ${getExe pkgs.zoxide} init fish | source
@@ -51,6 +49,20 @@ in {
           ${builtins.readFile "${fishCfg}/abbreviations/git.fish"}
         ''}
       '';
+      plugins = with pkgs.fishPlugins; [
+        {
+          name = "done";
+          src = done.src;
+        }
+        {
+          name = "pisces";
+          src = pisces.src;
+        }
+        {
+          name = "fzf-fish";
+          src = fzf-fish.src;
+        }
+      ];
     };
   };
 }

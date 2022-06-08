@@ -24,11 +24,9 @@ in {
     ];
 
     # easier gitignore fetching (fish)
-    home.configFile."fish/functions/gitignore.fish".text = ''
-      function gitignore
-        curl -sL https://www.gitignore.io/api/$argv
-      end
-    '';
+    home.programs.fish.functions = {
+      gitignore = "curl -sL https://www.gitignore.io/api/$argv";
+    };
 
     # Prevent x11 askPass prompt on git push:
     programs.ssh.askPassword = "";

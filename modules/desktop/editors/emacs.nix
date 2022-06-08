@@ -62,14 +62,9 @@ in {
     };
 
     # Easier frame creation (fish)
-    home.configFile."fish/functions/emacs.fish".text = ''
-      function eg
-        emacs --create-frame $argv & disown
-      end
-
-      function ecg
-        emacsclient --create-frame $argv & disown
-      end
-    '';
+    home.programs.fish.functions = {
+      eg = "emacs --create-frame $argv & disown";
+      ecg = "emacsclient --create-frame $argv & disown";
+    };
   };
 }
