@@ -15,36 +15,30 @@ in {
   };
 
   config = mkIf cfg.fish.enable {
-    user.packages = with pkgs;
-      [
-        any-nix-shell
-        fzf
-        pwgen
-        yt-dlp
+    user.packages = with pkgs; [
+      any-nix-shell
+      fzf
+      pwgen
+      yt-dlp
 
-        # Unix-tools alternatives
-        bottom
-        exa
-        fd
-        (ripgrep.override {
-          withPCRE2 = true;
-        })
-        zoxide
-      ]
-      ++ (with fishPlugins; [
-        done # notifies on success/failure/
-        pisces # auto-pair symbols
-        fzf-fish # fzf completion
-      ]);
+      # alternatives for several gnu-tools
+      bottom
+      exa
+      fd
+      (ripgrep.override {
+        withPCRE2 = true;
+      })
+      zoxide
 
-    # Several Term-UI's + Ricing:
-    modules.shell = {
-      neofetch.enable = true;
-    };
+      # plugins for our beloved fish-shell
+      fishPlugins.done # notifies on success/failure/
+      fishPlugins.pisces # auto-pair symbols
+      fishPlugins.fzf-fish # fzf completion
+    ];
 
-    # Enables vendor completion: https://nixos.wiki/wiki/Fish
     programs.fish = {
       enable = true;
+      useBabelfish = true;
       interactiveShellInit = ''
         ${getExe pkgs.starship} init fish | source
         ${getExe pkgs.zoxide} init fish | source
