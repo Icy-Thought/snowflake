@@ -23,7 +23,7 @@ in {
           };
         };
 
-        neovim.theme = "kanagawa";
+        neovim.theme = "themer_kanagawa";
 
         vscode.theme = {
           dark = "Kanagawa";

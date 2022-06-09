@@ -23,7 +23,7 @@ in {
           };
         };
 
-        neovim.theme = "ayu";
+        neovim.theme = "themer_ayu";
 
         vscode.theme = {
           dark = "Ayu Dark";

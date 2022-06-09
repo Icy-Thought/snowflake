@@ -66,7 +66,6 @@ in {
           require("keymaps.which-key")
 
           -- Apply colorscheme
-          require("themes.${colorscheme}")
           vim.cmd("colorscheme ${colorscheme}")
 
           -- Point nvim to correct sqlite path

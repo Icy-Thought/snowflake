@@ -23,7 +23,7 @@ in {
           };
         };
 
-        neovim.theme = "onedark-pro";
+        neovim.theme = "themer_onedark-pro";
 
         vscode.theme = {
           dark = "OneDarkPro";
