@@ -15,8 +15,6 @@ in {
       enable = true;
       backend = "glx";
       experimentalBackends = true;
-
-      refreshRate = 0;
       vSync = true;
 
       menuOpacity = 0.9;
