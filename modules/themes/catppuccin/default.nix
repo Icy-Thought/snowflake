@@ -23,7 +23,7 @@ in {
           };
         };
 
-        neovim.theme = "themer_catppuccin";
+        neovim.theme = "catppuccin";
 
         vscode.theme = {
           dark = "Catppuccin";
