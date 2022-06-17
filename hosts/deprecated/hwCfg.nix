@@ -8,13 +8,16 @@
   imports = [(modulesPath + "/installer/scan/not-detected.nix")];
 
   boot = {
-    kernelModules = [];
+    initrd = {
+      availableKernelModules = ["xhci_pci" "ahci" "usb_storage" "sd_mod" "rtsx_pci_sdmmc"];
+      kernelModules = [];
+    };
     extraModulePackages = [];
-  };
-
-  boot.initrd = {
-    availableKernelModules = ["xhci_pci" "ahci" "usb_storage" "sd_mod" "rtsx_pci_sdmmc"];
     kernelModules = [];
+    kernelParams = [];
+    kernel.sysctl = {
+      "net.ipv4.icmp_echo_ignore_broadcasts" = 1; # Refuse ICMP echo requests
+    };
   };
 
   # CPU-related
