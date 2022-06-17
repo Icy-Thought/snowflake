@@ -28,6 +28,11 @@ in {
           setuptools
         ]);
 
+      home.programs.vscode.extensions = with pkgs.vscode-extensions; [
+        ms-python.python
+        ms-toolsai.jupyter
+      ];
+
       environment.shellAliases = {
         py = "python";
         py2 = "python2";

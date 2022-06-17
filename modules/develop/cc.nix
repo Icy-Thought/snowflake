@@ -23,6 +23,10 @@ in {
         cmake
         llvmPackages.libcxx
       ];
+
+      home.programs.vscode.extensions = with pkgs.vscode-extensions; [
+        ms-vscode.cpptools
+      ];
     })
 
     (mkIf devCfg.enable {

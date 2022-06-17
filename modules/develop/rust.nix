@@ -25,6 +25,10 @@ in {
         unstable.rust-analyzer
       ];
 
+      home.programs.vscode.extensions = with pkgs.vscode-extensions; [
+        rust-lang.rust-analyzer
+      ];
+
       env.PATH = [
         "$(${getExe pkgs.yarn} global bin)"
       ];

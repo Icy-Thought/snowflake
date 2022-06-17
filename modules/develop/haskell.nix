@@ -26,6 +26,11 @@ in {
           hpack
           stylish-haskell
         ]);
+
+      home.programs.vscode.extensions = with pkgs.vscode-extensions; [
+        haskell.haskell
+        justusadam.language-haskell # syntax-highlighting
+      ];
     })
 
     (mkIf devCfg.enable {
