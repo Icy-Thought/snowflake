@@ -6,6 +6,7 @@ alt = "mod1"
 ctrl = "control"
 mod = "mod4"
 shift = "shift"
+hyper = "mod3"
 
 # Default applications
 myTerminal = "kitty"
@@ -42,6 +43,11 @@ keys = [
     Key([mod, shift], "space", lazy.layout.rotate()),
     # Toggle between split and unsplit sides of stack.
     Key([mod, shift], "Return", lazy.layout.toggle_split()),
+    # System-dependent application spawns
+    Key([mod], "p", lazy.spawn("rofi -show drun")),
+    Key([mod], "b", lazy.spawn("rofi -show window")),
+    Key([mod, alt], "p", lazy.spawn("rofi -show run")),
+    Key([hyper], "p", lazy.spawn("rofi-systemd")),
     # Pre-defined application spawns
     Key([mod, shift], "Return", lazy.spawn(myTerminal)),
     Key([mod, alt], "f", lazy.spawn(myBrowser)),
