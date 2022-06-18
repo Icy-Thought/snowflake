@@ -29,12 +29,12 @@ in {
     ];
 
     user.packages = with pkgs; [
-      kalker
+      libqalculate
       (makeDesktopItem {
         name = "kalker";
-        desktopName = "Kalker";
+        desktopName = "Qalculate";
         icon = "calc";
-        exec = "${getExe kitty} -T Kalker -e kalker";
+        exec = "${getExe kitty} -T Qalculate -e qalc";
         categories = ["Development"];
       })
       qgnomeplatform
