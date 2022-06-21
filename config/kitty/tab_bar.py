@@ -3,6 +3,7 @@
 
 import datetime
 import json
+import os
 import subprocess
 from collections import defaultdict
 
@@ -37,8 +38,8 @@ def _draw_icon(screen: Screen, index: int, symbol: str = "") -> int:
         return 0
 
     fg, bg = screen.cursor.fg, screen.cursor.bg
-    screen.cursor.fg = as_rgb(color_as_int(Color(255, 250, 205)))
-    screen.cursor.bg = as_rgb(color_as_int(Color(60, 71, 77)))
+    screen.cursor.fg = as_rgb(color_as_int(Color(30, 29, 47)))
+    screen.cursor.bg = as_rgb(color_as_int(Color(199, 201, 253)))
     screen.draw(symbol)
     screen.cursor.fg, screen.cursor.bg = fg, bg
     screen.cursor.x = len(symbol)
@@ -93,18 +94,19 @@ def _draw_right_status(screen: Screen, is_last: bool) -> int:
         return 0
 
     draw_attributed_string(Formatter.reset, screen)
-    date = datetime.datetime.now().strftime(" %H:%M")
-    utc_date = datetime.datetime.now(datetime.timezone.utc).strftime(" (UTC %H:%M)")
+    date = datetime.datetime.today().strftime(" (%B %d")
+    time = datetime.datetime.now().strftime(", %H:%M)")
+    hostname = os.uname()[1]
 
-    right_status_length = calc_draw_spaces(date + " " + utc_date + " ")
+    right_status_length = calc_draw_spaces(date + " " + time + " ")
 
     draw_spaces = screen.columns - screen.cursor.x - right_status_length
     if draw_spaces > 0:
         screen.draw(" " * draw_spaces)
 
     cells = [
-        (Color(135, 192, 149), date),
-        (Color(113, 115, 116), utc_date),
+        (Color(171, 233, 179), date),
+        (Color(171, 233, 179), time),
     ]
 
     screen.cursor.fg = 0
@@ -136,7 +138,7 @@ def draw_tab(
     is_last: bool,
     extra_data: ExtraData,
 ) -> int:
-    _draw_icon(screen, index, symbol="  \uf490  ")
+    _draw_icon(screen, index, symbol="  \uf81f   ")
     _draw_left_status(
         draw_data,
         screen,

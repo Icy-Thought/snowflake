@@ -38,6 +38,7 @@ in {
         categories = ["Development"];
       })
       qgnomeplatform
+      xcolor
     ];
 
     fonts = {
