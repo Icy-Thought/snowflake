@@ -28,7 +28,7 @@ in {
       };
     '';
   in
-    mkIf cfg.xmonad.enable {
+    mkIf (cfg.xmonad.enable || cfg.qtile.enable) {
       home.xsession.initExtra = ''
         # Set XKB layout = us+hyper on XMonad start:
         ${getExe pkgs.xorg.xkbcomp} ${customKeyboardLayout} $DISPLAY

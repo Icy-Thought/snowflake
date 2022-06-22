@@ -8,6 +8,7 @@
 with lib;
 with lib.my; let
   cfg = config.modules.themes;
+  deskCfg = config.modules.desktop;
 in {
   config = mkIf (cfg.active == "kanagawa") (mkMerge [
     {
@@ -84,43 +85,43 @@ in {
         twitter-color-emoji
       ];
 
-      home.configFile = with config.modules;
+      home.configFile = with config.modules.desktop;
         mkMerge [
           {
             # Sourced from sessionCommands in modules/themes/default.nix
             "xtheme/90-theme".text = import ./config/Xresources cfg;
             "fish/conf.d/kanagawa.fish".source = ./config/fish/kanagawa.fish;
           }
-          (mkIf desktop.xmonad.enable {
+          (mkIf (xmonad.enable || qtile.enable) {
             "dunst/dunstrc".text = import ./config/dunst/dunstrc cfg;
             "rofi" = {
               source = ./config/rofi;
               recursive = true;
             };
           })
-          (mkIf desktop.terminal.alacritty.enable {
+          (mkIf terminal.alacritty.enable {
             "alacritty/config/kanagawa.yml".text =
               import ./config/alacritty/kanagawa.yml cfg;
           })
-          (mkIf desktop.terminal.kitty.enable {
+          (mkIf terminal.kitty.enable {
             "kitty/config/kanagawa.conf".text =
               import ./config/kitty/kanagawa.conf cfg;
           })
-          (mkIf desktop.terminal.wezterm.enable {
+          (mkIf terminal.wezterm.enable {
             "wezterm/config/kanagawa.lua".text =
               import ./config/wezterm/kanagawa.lua cfg;
           })
-          (mkIf desktop.media.viewer.document.enable {
+          (mkIf media.viewer.document.enable {
             "zathura/zathurarc".text = import ./config/zathura/zathurarc cfg;
           })
-          # (mkIf desktop.media.editor.vector.enable {
+          # (mkIf media.editor.vector.enable {
           #   "inkscape/templates/default.svg".source =
           #     ./config/inkscape/default-template.svg;
           # })
         ];
     })
 
-    (mkIf config.modules.desktop.xmonad.enable {
+    (mkIf (deskCfg.xmonad.enable || deskCfg.qtile.enable) {
       services.xserver.displayManager = {
         sessionCommands = with cfg.gtk; ''
           ${getExe pkgs.xorg.xsetroot} -xcf ${pkgs.bibata-cursors}/share/icons/${cursor.name}/cursors/${cursor.default} ${

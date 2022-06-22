@@ -9,7 +9,7 @@ with lib;
 with lib.my; let
   cfg = config.modules.desktop;
 in {
-  config = mkIf cfg.xmonad.enable {
+  config = mkIf (cfg.xmonad.enable || cfg.qtile.enable) {
     # TODO: after wintypes merge -> home-manager
     services.picom = {
       enable = true;

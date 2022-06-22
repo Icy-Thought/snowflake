@@ -26,7 +26,7 @@
     themes.active = "catppuccin";
 
     desktop = {
-      xmonad.enable = true;
+      qtile.enable = true;
       terminal = {
         default = "kitty";
         kitty.enable = true;

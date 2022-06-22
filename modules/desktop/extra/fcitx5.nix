@@ -9,7 +9,7 @@ with lib;
 with lib.my; let
   cfg = config.modules.desktop;
 in {
-  config = mkIf cfg.xmonad.enable {
+  config = mkIf (cfg.xmonad.enable || cfg.qtile.enable) {
     i18n.inputMethod = {
       enabled = "fcitx5";
       fcitx5.addons = with pkgs; [

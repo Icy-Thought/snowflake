@@ -9,7 +9,7 @@
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.qtile;
-  configDir = config.snowflake.configDir;
+  qtileDir = "${config.snowflake.configDir}/qtile";
 in {
   options.modules.desktop.qtile = {
     enable = mkBoolOpt false;
@@ -19,7 +19,7 @@ in {
     };
     configFile = mkOption {
       type = with types; nullOr path;
-      default = "${configDir}/qtile/config.py";
+      default = "${qtileDir}/config.py";
       example = literalExpression "./config.py";
     };
     backend = mkOption {
@@ -30,7 +30,7 @@ in {
 
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
-      qtile
+      (cfg.package.unwrapped or cfg.package)
       lightdm
       libnotify
       dunst
@@ -61,9 +61,10 @@ in {
         {
           name = "qtile";
           start = ''
-            ${qtile}/bin/qtile start -b ${cfg.backend} \
-            ${optionalString (cfg.configFile != null)
-              "--config \"${cfg.configFile}\""} &
+            ${cfg.package}/bin/qtile start -b ${cfg.backend} \
+            ${optionalString (cfg.configFile != null) ''
+              --config ${cfg.configFile}
+            ''} &
             waitPID=$!
           '';
         }

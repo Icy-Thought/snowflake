@@ -1,84 +1,94 @@
 from libqtile import bar, layout, widget
-from libqtile.config import Group, Match, Screen
+from libqtile.command import lazy
+from libqtile.config import Click, DropDown, Group, Key, Match, ScratchPad
+from modules.keymaps import keys
 
-groups = [
-    Group("1", label="一"),
-    Group("2", label="二"),
-    Group("3", label="三"),
-    Group("4", label="四"),
-    Group("5", label="万"),
-    Group("6", label="六"),
-    Group("7", label="七"),
-    Group("8", label="八"),
-    Group("9", label="九"),
-]
+from modules.themes import palette
+
+# groups = [
+#     Group("1", label="一"),
+#     Group("2", label="二"),
+#     Group("3", label="三"),
+#     Group("4", label="四"),
+#     Group("5", label="万"),
+#     Group("6", label="六"),
+#     Group("7", label="七"),
+#     Group("8", label="八"),
+#     Group("9", label="九"),
+# ]
+
+alt = "mod1"
+ctrl = "control"
+mod = "mod4"
+shift = "shift"
+hyper = "mod3"
+
+groups = [Group(f"{i+1}", label="◉") for i in range(9)]
 
 for i in groups:
     keys.extend(
         [
             # mod1 + letter of group = switch to group
             Key([mod], i.name, lazy.group[i.name].toscreen()),
-            # mod1 + shift + letter of group = switch to & move focused window to group
+            # mod1 + shift + letter of group => move focused window to group
             Key([mod, shift], i.name, lazy.window.togroup(i.name)),
         ]
     )
 
-border = dict(
-    border_focus="#C9CBFF",
-    border_normal="#1A1B25",
+borderline = dict(
+    border_focus=palette[8],
+    border_normal=palette[1],
     border_width=2,
+    margin=4,
 )
 
 layouts = [
-    layout.MonadTall(margin=4, **border),
-    layout.MonadThreeCol(margin=4, **border),
-    layout.MonadWide(margin=4, **border),
-    layout.Spiral(clockwise=True, main_pane="left", margin=4, **border),
+    layout.MonadTall(**borderline),
+    layout.MonadThreeCol(**borderline),
+    layout.MonadWide(**borderline),
+    layout.Spiral(clockwise=True, main_pane="left", **borderline),
 ]
 
 # Automatically float application pop-ups
 floating_layout = layout.Floating(
-    **border,
+    **borderline,
     float_rules=[
         *layout.Floating.default_float_rules,
-        Match(wmclass="confirm"),
-        Match(wmclass="dialog"),
-        Match(wmclass="download"),
-        Match(wmclass="error"),
-        Match(wmclass="file_progress"),
-        Match(wmclass="notification"),
-        Match(wmclass="splash"),
-        Match(wmclass="toolbar"),
-        Match(wmclass="confirmreset"),  # gitk
-        Match(wmclass="makebranch"),  # gitk
-        Match(wmclass="maketag"),  # gitk
-        Match(wname="branchdialog"),  # gitk
-        Match(wname="pinentry"),  # GPG key password entry
-        Match(wname="Picture-in-Picture"),  # FireFox
-        Match(wmclass="ssh-askpass"),  # ssh-askpass
-    ]
+        Match(wm_class="confirm"),
+        Match(wm_class="dialog"),
+        Match(wm_class="download"),
+        Match(wm_class="error"),
+        Match(wm_class="file_progress"),
+        Match(wm_class="notification"),
+        Match(wm_class="splash"),
+        Match(wm_class="toolbar"),
+        Match(wm_class="confirmreset"),  # gitk
+        Match(wm_class="makebranch"),  # gitk
+        Match(wm_class="maketag"),  # gitk
+        Match(title="branchdialog"),  # gitk
+        Match(title="pinentry"),  # GPG key password entry
+        Match(title="Picture-in-Picture"),  # FireFox
+        Match(wm_class="ssh-askpass"),  # ssh-askpass
+    ],
 )
 
 # Scratchpads
 # TODO: protonmail -> float on title recognition + scratchpad launch?
-default_float = Dict(x=0.05, y=0.05, width=0.9, height=0.9, opacity=1.0)
+next_maximum = dict(x=0.05, y=0.05, width=0.9, height=0.9, opacity=0.9)
 
 groups.append(
     ScratchPad(
         "Scratchpad",
         [
-            DropDown("Bottom", "kitty -T Bottom -e btm", **default_float),
-            DropDown("Discord", "discord", **default_float),
-            # DropDown("Emacs", "emacsclient -c", **default_float),
-            DropDown("Neovide", "neovide", **default_float),
-            DropDown("Spotify", "spotify", **default_float),
-            DropDown("Transmission", "transmission-gtk", **default_float),
+            DropDown("Bottom", "kitty -T Bottom -e btm", **next_maximum),
+            DropDown("Discord", "discord", **next_maximum),
+            # DropDown("Emacs", "emacsclient -c", **next_maximum),
+            DropDown("Neovide", "neovide", **next_maximum),
+            DropDown("Spotify", "spotify", **next_maximum),
+            DropDown("Transmission", "transmission-gtk", **next_maximum),
         ],
     )
 )
-
-mod = "mod4"
-alt = "mod1"
 
 keys.extend(
     [

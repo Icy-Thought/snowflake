@@ -13,7 +13,7 @@ in {
     enable = mkBoolOpt false;
   };
 
-  config = mkIf cfg.xmonad.enable {
+  config = mkIf (cfg.xmonad.enable || cfg.qtile.enable) {
     user.packages = with pkgs; [
       rofi-systemd
 

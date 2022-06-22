@@ -1,16 +1,8 @@
 from typing import List  # noqa: F401
 
-from modules.aesthetics import screens
 from modules.keymaps import keys, mouse
 from modules.layouts import floating_layout, groups, layouts
-
-# from modules.statusbar import screens
-
-# assert keys
-# assert mouse
-# assert groups
-# assert layouts
-# assert floating_layout
+from modules.statusbar import extension_defaults, screens, widget_defaults
 
 auto_fullscreen = True
 auto_minimize = False

@@ -8,6 +8,7 @@
 with lib;
 with lib.my; let
   cfg = config.modules.themes;
+  deskCfg = config.modules.desktop;
 in {
   config = mkIf (cfg.active == "catppuccin") (mkMerge [
     {
@@ -84,7 +85,7 @@ in {
         twitter-color-emoji
       ];
 
-      home.configFile = with config.modules;
+      home.configFile = with deskCfg;
         mkMerge [
           {
             # Sourced from sessionCommands in modules/themes/default.nix
@@ -92,36 +93,36 @@ in {
             "fish/conf.d/catppuccin.fish".source =
               ./config/fish/catppuccin.fish;
           }
-          (mkIf desktop.xmonad.enable {
+          (mkIf (xmonad.enable || qtile.enable) {
             "dunst/dunstrc".text = import ./config/dunst/dunstrc cfg;
             "rofi" = {
               source = ./config/rofi;
               recursive = true;
             };
           })
-          (mkIf desktop.terminal.alacritty.enable {
+          (mkIf terminal.alacritty.enable {
             "alacritty/config/catppuccin.yml".text =
               import ./config/alacritty/catppuccin.yml cfg;
           })
-          (mkIf desktop.terminal.kitty.enable {
+          (mkIf terminal.kitty.enable {
             "kitty/config/catppuccin.conf".text =
               import ./config/kitty/catppuccin.conf cfg;
           })
-          (mkIf desktop.terminal.wezterm.enable {
+          (mkIf terminal.wezterm.enable {
             "wezterm/config/catppuccin.lua".text =
               import ./config/wezterm/catppuccin.lua cfg;
           })
-          (mkIf desktop.media.viewer.document.enable {
+          (mkIf media.viewer.document.enable {
             "zathura/zathurarc".text = import ./config/zathura/zathurarc cfg;
           })
-          # (mkIf desktop.media.editor.vector.enable {
+          # (mkIf media.editor.vector.enable {
           #   "inkscape/templates/default.svg".source =
           #     ./config/inkscape/default-template.svg;
           # })
         ];
     })
 
-    (mkIf config.modules.desktop.xmonad.enable {
+    (mkIf (deskCfg.xmonad.enable || deskCfg.qtile.enable) {
       services.xserver.displayManager = {
         sessionCommands = with cfg.gtk; ''
           ${getExe pkgs.xorg.xsetroot} -xcf ${pkgs.bibata-cursors}/share/icons/${cursor.name}/cursors/${cursor.default} ${
