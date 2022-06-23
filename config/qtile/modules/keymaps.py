@@ -1,119 +1,118 @@
 from libqtile.command import lazy
-from libqtile.config import Click, Drag, Key
-
-# More sophisticated key-names
-alt = "mod1"
-ctrl = "control"
-mod = "mod4"
-shift = "shift"
-hyper = "mod3"
+from libqtile.config import EzClick, EzDrag, EzKey
 
 # Default applications
 myTerminal = "kitty"
 myBrowser = "firefox-devedition"
 
+EzKey.modifier_keys = {
+    "M": "mod4",
+    "A": "mod1",
+    "S": "shift",
+    "C": "control",
+    "H": "mod3",
+}
+
 # Drag floating layouts.
 mouse = [
-    Drag(
-        [mod],
-        "Button1",
+    EzDrag(
+        "M-<Button1>",
         lazy.window.set_position_floating(),
         start=lazy.window.get_position(),
     ),
-    Drag(
-        [mod], "Button2", lazy.window.set_size_floating(), start=lazy.window.get_size()
+    EzDrag(
+        "M-<Button2>", lazy.window.set_size_floating(), start=lazy.window.get_size()
     ),
-    Click([mod], "Button3", lazy.window.bring_to_front()),
+    EzClick("M-<Button3>", lazy.window.bring_to_front()),
 ]
 
 window_navigation = [
-    Key([mod], "h", lazy.layout.left()),
-    Key([mod], "j", lazy.layout.down()),
-    Key([mod], "k", lazy.layout.up()),
-    Key([mod], "l", lazy.layout.right()),
+    EzKey("M-h", lazy.layout.left()),
+    EzKey("M-j", lazy.layout.down()),
+    EzKey("M-k", lazy.layout.up()),
+    EzKey("M-l", lazy.layout.right()),
 ]
 
 window_displacement = [
-    Key([mod], "Tab", lazy.layout.next()),  # Shift focus -> other window(s) in stack
-    Key([mod], "Return", lazy.layout.swap_main()),
-    Key([mod, shift], "h", lazy.layout.swap_left(), lazy.layout.shuffle_left()),
-    Key([mod, shift], "j", lazy.layout.swap_down(), lazy.layout.shuffle_down()),
-    Key([mod, shift], "k", lazy.layout.swap_up(), lazy.layout.shuffle_up()),
-    Key([mod, shift], "l", lazy.layout.swap_right(), lazy.layout.shuffle_right()),
+    EzKey("M-<Tab>", lazy.layout.next()),  # Shift focus -> other window(s) in stack
+    EzKey("M-<Return>", lazy.layout.swap_main()),
+    EzKey("M-S-h", lazy.layout.swap_left(), lazy.layout.shuffle_left()),
+    EzKey("M-S-j", lazy.layout.swap_down(), lazy.layout.shuffle_down()),
+    EzKey("M-S-k", lazy.layout.swap_up(), lazy.layout.shuffle_up()),
+    EzKey("M-S-l", lazy.layout.swap_right(), lazy.layout.shuffle_right()),
 ]
 
 window_size_control = [
-    Key([mod, ctrl], "h", lazy.layout.grow_left()),
-    Key([mod, ctrl], "j", lazy.layout.grow_down()),
-    Key([mod, ctrl], "k", lazy.layout.grow_up()),
-    Key([mod, ctrl], "l", lazy.layout.grow_right()),
-    Key([mod, ctrl], "n", lazy.layout.normalize()),  # Restore to original size
+    EzKey("M-C-h", lazy.layout.grow_left()),
+    EzKey("M-C-j", lazy.layout.grow_down()),
+    EzKey("M-C-k", lazy.layout.grow_up()),
+    EzKey("M-C-l", lazy.layout.grow_right()),
+    EzKey("M-C-n", lazy.layout.normalize()),  # Restore to original size
 ]
 
 toggles = [
-    Key([mod, shift], "c", lazy.window.kill()),
-    Key([mod], "space", lazy.next_layout()),
-    Key([mod], "t", lazy.window.toggle_floating()),
-    Key([mod], "m", lazy.window.toggle_minimize()),
-    Key([mod, shift], "m", lazy.window.toggle_maximize()),
-    Key([mod, shift], "space", lazy.window.toggle_fullscreen()),
+    EzKey("M-S-c", lazy.window.kill()),
+    EzKey("M-<space>", lazy.next_layout()),
+    EzKey("M-t", lazy.window.toggle_floating()),
+    EzKey("M-m", lazy.window.toggle_minimize()),
+    EzKey("M-S-m", lazy.window.toggle_maximize()),
+    EzKey("M-S-<space>", lazy.window.toggle_fullscreen()),
 ]
 
 qtile_controls = [
-    Key([mod, shift], "r", lazy.restart()),
-    Key([mod, shift], "q", lazy.shutdown()),
+    EzKey("M-S-r", lazy.restart()),
+    EzKey("M-S-q", lazy.shutdown()),
 ]
 
 rofi_spawns = [
-    Key([mod], "p", lazy.spawn("rofi -show drun")),
-    Key([mod], "b", lazy.spawn("rofi -show window")),
-    Key([mod, alt], "p", lazy.spawn("rofi -show run")),
-    Key([hyper], "p", lazy.spawn("rofi-systemd")),
+    EzKey("M-p", lazy.spawn("rofi -show drun")),
+    EzKey("M-b", lazy.spawn("rofi -show window")),
+    EzKey("M-A-p", lazy.spawn("rofi -show run")),
+    EzKey("H-p", lazy.spawn("rofi-systemd")),
 ]
 
 application_spawns = [
-    Key([mod, shift], "Return", lazy.spawn(myTerminal)),
-    Key([mod, alt], "f", lazy.spawn(myBrowser)),
-    Key(
-        [mod, alt],
-        "w",
+    EzKey("M-S-<Return>", lazy.spawn(myTerminal)),
+    EzKey("M-A-f", lazy.spawn(myBrowser)),
+    EzKey(
+        "M-A-w",
         lazy.spawn(
             [myBrowser, "--profile ~/.mozilla/firefox/z5dgw9v6.dev-edition-private"]
         ),
     ),
-    Key([mod, alt], "g", lazy.spawn("brave")),
-    Key([mod, alt], "b", lazy.spawn([myTerminal, "-T Bottom -e btm"])),
+    EzKey("M-A-g", lazy.spawn("brave")),
+    EzKey("M-A-b", lazy.spawn([myTerminal, "-T Bottom -e btm"])),
 ]
 
 audio_controls = [
-    Key([], "XF86AudioMute", lazy.spawn("volctl --mute")),
-    Key([], "XF86AudioRaiseVolume", lazy.spawn("volctl --up")),
-    Key([], "XF86AudioLowerVolume", lazy.spawn("volctl --down")),
-    Key([], "XF86AudioMicMute", lazy.spawn("micvol --mute")),
+    EzKey("<XF86AudioMute>", lazy.spawn("volctl --mute")),
+    EzKey("<XF86AudioRaiseVolume>", lazy.spawn("volctl --up")),
+    EzKey("<XF86AudioLowerVolume>", lazy.spawn("volctl --down")),
+    EzKey("<XF86AudioMicMute>", lazy.spawn("micvol --mute")),
 ]
 
 media_controls = [
-    Key([mod], "Down", lazy.spawn("playerctl play-pause")),
-    Key([mod], "Right", lazy.spawn("playerctl next")),
-    Key([mod], "Left", lazy.spawn("playerctl previous")),
+    EzKey("M-<Down>", lazy.spawn("playerctl play-pause")),
+    EzKey("M-<Right>", lazy.spawn("playerctl next")),
+    EzKey("M-<Left>", lazy.spawn("playerctl previous")),
 ]
 
 screenshot = [
-    Key([], "Print", lazy.spawn("scrcap -w")),
-    Key(["control"], "Print", lazy.spawn("scrcap -c -w")),
-    Key([alt], "Print", lazy.spawn("scrcap -a")),
-    Key([ctrl, alt], "Print", lazy.spawn("scrcap -c -a")),
-    Key([shift], "Print", lazy.spawn("scrcap -r")),
-    Key([ctrl, shift], "Print", lazy.spawn("scrcap -c -r")),
+    EzKey("<Print>", lazy.spawn("scrcap -w")),
+    EzKey("C-<Print>", lazy.spawn("scrcap -c -w")),
+    EzKey("A-<Print>", lazy.spawn("scrcap -a")),
+    EzKey("C-A-<Print>", lazy.spawn("scrcap -c -a")),
+    EzKey("S-<Print>", lazy.spawn("scrcap -r")),
+    EzKey("C-S-<Print>", lazy.spawn("scrcap -c -r")),
 ]
 
 brightness_controls = [
-    Key([], "XF86MonBrightnessUp", lazy.spawn("brightctl --up")),
-    Key([], "XF86MonBrightnessDown", lazy.spawn("brightctl --down")),
+    EzKey("<XF86MonBrightnessUp>", lazy.spawn("brightctl --up")),
+    EzKey("<XF86MonBrightnessDown>", lazy.spawn("brightctl --down")),
 ]
 
 quick_launch = [
-    Key([], "XF86Calculator", lazy.spawn([myTerminal, "-T Qalc -e qalc"])),
+    EzKey("<XF86Calculator>", lazy.spawn([myTerminal, "-T Qalc -e qalc"])),
 ]
 
 keys = [

@@ -1,6 +1,6 @@
 from libqtile import bar, layout, widget
 from libqtile.command import lazy
-from libqtile.config import Click, DropDown, Group, Key, Match, ScratchPad
+from libqtile.config import DropDown, EzClick, EzKey, Group, Match, ScratchPad
 from modules.keymaps import keys
 
 from modules.themes import palette
@@ -17,21 +17,15 @@ from modules.themes import palette
 #     Group("9", label="九"),
 # ]
 
-alt = "mod1"
-ctrl = "control"
-mod = "mod4"
-shift = "shift"
-hyper = "mod3"
-
 groups = [Group(f"{i+1}", label="⬤") for i in range(9)]
 
 for i in groups:
     keys.extend(
         [
             # mod1 + letter of group = switch to group
-            Key([mod], i.name, lazy.group[i.name].toscreen()),
+            EzKey("M-%s" % i.name, lazy.group[i.name].toscreen()),
             # mod1 + shift + letter of group => move focused window to group
-            Key([mod, shift], i.name, lazy.window.togroup(i.name)),
+            EzKey("M-S-%s" % i.name, lazy.window.togroup(i.name)),
         ]
     )
 
@@ -77,8 +71,8 @@ floating_layout = layout.Floating(
 next_maximum = {
     "x": 0.05,
     "y": 0.05,
-    "width": 0.9,
-    "height": 0.9,
+    "width": 0.95,
+    "height": 0.95,
     "opacity": 1.0,
 }
 
@@ -98,14 +92,13 @@ groups.append(
 
 keys.extend(
     [
-        Key([mod, alt], "b", lazy.group["Scratchpad"].dropdown_toggle("Bottom")),
-        Key([mod, alt], "d", lazy.group["Scratchpad"].dropdown_toggle("Discord")),
-        # Key([mod, alt], "e", lazy.group["Scratchpad"].dropdown_toggle("Emacs")),
-        Key([mod, alt], "v", lazy.group["Scratchpad"].dropdown_toggle("Neovide")),
-        Key([mod, alt], "s", lazy.group["Scratchpad"].dropdown_toggle("Spotify")),
-        Key(
-            [mod, alt],
-            "t",
+        EzKey("M-A-b", lazy.group["Scratchpad"].dropdown_toggle("Bottom")),
+        EzKey("M-A-d", lazy.group["Scratchpad"].dropdown_toggle("Discord")),
+        EzKey("M-A-e", lazy.group["Scratchpad"].dropdown_toggle("Emacs")),
+        EzKey("M-A-v", lazy.group["Scratchpad"].dropdown_toggle("Neovide")),
+        EzKey("M-A-s", lazy.group["Scratchpad"].dropdown_toggle("Spotify")),
+        EzKey(
+            "M-A-t",
             lazy.group["Scratchpad"].dropdown_toggle("Transmission"),
         ),
     ]
