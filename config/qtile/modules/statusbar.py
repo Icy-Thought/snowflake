@@ -8,9 +8,9 @@ from modules.layouts import borderline
 
 from modules.themes import palette
 
-font = dict(
-    family="VictorMono Nerd Font Semibold",
-    size=12,
+fontinfo = dict(
+    font="VictorMono Nerd Font Semibold",
+    fontsize=12,
     padding=3,
 )
 
@@ -19,9 +19,9 @@ rofi = "rofi -no-lazy-grab -show drun -modi drun"
 groupbox = [
     widget.GroupBox,
     {
-        "font": font["family"],
-        "padding": font["padding"],
-        "fontsize": font["size"],
+        "font": fontinfo["font"],
+        "padding": fontinfo["padding"],
+        "fontsize": fontinfo["fontsize"],
         "foreground": palette[2],
         "highlight_method": "text",
         "block_highlight_text_color": palette[0],
@@ -43,7 +43,7 @@ groupbox = [
 windowname = [
     widget.WindowName,
     {
-        "font": font["family"],
+        "font": fontinfo["font"],
         "fontsize": 16,
         "padding": 3,
         "format": "{name}",
@@ -76,9 +76,9 @@ logo = [
     widget.TextBox,
     {
         # text="  ",
-        "font": font["family"],
+        "font": fontinfo["font"],
         "padding": -2,
-        "fontsize": font["size"] * 1.6,
+        "fontsize": fontinfo["fontsize"] * 1.6,
         "text": " ",
         # "text": " Σ",
         "background": palette[8],
@@ -87,12 +87,12 @@ logo = [
     },
 ]
 
-layout = [widget.CurrentLayout, {**font, "background": palette[1]}]
+layout = [widget.CurrentLayout, {**fontinfo, "background": palette[1]}]
 
 cpu = [
     widget.CPU,
     {
-        **font,
+        **fontinfo,
         "format": " {freq_current}GHz {load_percent}%",
         "background": palette[3],
         "foreground": palette[1],
@@ -102,7 +102,7 @@ cpu = [
 net = [
     widget.Net,
     {
-        **font,
+        **fontinfo,
         "format": "\u2193 {down} \u2191 {up}",
         "interface": "wlan0",
         "update_interval": 3,
@@ -113,7 +113,7 @@ net = [
 mem = [
     widget.Memory,
     {
-        **font,
+        **fontinfo,
         "format": ": {MemUsed:.2f}/{MemTotal:.2f}{mm}",
         "update_interval": 1.0,
         "measure_mem": "G",
@@ -123,7 +123,7 @@ mem = [
 batt = [
     widget.Battery,
     {
-        **font,
+        **fontinfo,
         "background": palette[8],
         "foreground": palette[1],
         "low_foreground": palette[7],
@@ -141,7 +141,7 @@ batt = [
 
 datetime = [
     widget.Clock,
-    {**font, "format": "%B %d, %H:%M", "background": palette[5]},
+    {**fontinfo, "format": "%B %d, %H:%M", "background": palette[5]},
 ]
 
 
@@ -201,12 +201,17 @@ def my_bar():
         foreground=palette[0],
         background=palette[1],
         opacity=1.0,
-        margin=[borderline[4], borderline[4], borderline[3], borderline[4]],
+        margin=[
+            borderline["margin"],
+            borderline["margin"],
+            borderline["border_width"],
+            borderline["margin"],
+        ],
     )
 
 
 widget_defaults = dict(
-    **font,
+    **fontinfo,
 )
 
 extension_defaults = widget_defaults.copy()

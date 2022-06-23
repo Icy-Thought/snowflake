@@ -23,7 +23,7 @@ mod = "mod4"
 shift = "shift"
 hyper = "mod3"
 
-groups = [Group(f"{i+1}", label="◉") for i in range(9)]
+groups = [Group(f"{i+1}", label="⬤") for i in range(9)]
 
 for i in groups:
     keys.extend(
@@ -38,8 +38,8 @@ for i in groups:
 borderline = dict(
     border_focus=palette[8],
     border_normal=palette[1],
-    border_width=2,
-    margin=4,
+    border_width=3,
+    margin=12,
 )
 
 layouts = [
@@ -74,7 +74,13 @@ floating_layout = layout.Floating(
 
 # Scratchpads
 # TODO: protonmail -> float on title recognition + scratchpad launch?
-next_maximum = dict(x=0.05, y=0.05, width=0.9, height=0.9, opacity=0.9)
+next_maximum = {
+    "x": 0.05,
+    "y": 0.05,
+    "width": 0.9,
+    "height": 0.9,
+    "opacity": 1.0,
+}
 
 groups.append(
     ScratchPad(
@@ -82,7 +88,7 @@ groups.append(
         [
             DropDown("Bottom", "kitty -T Bottom -e btm", **next_maximum),
             DropDown("Discord", "discord", **next_maximum),
-            # DropDown("Emacs", "emacsclient -c", **next_maximum),
+            DropDown("Emacs", "emacsclient -c", **next_maximum),
             DropDown("Neovide", "neovide", **next_maximum),
             DropDown("Spotify", "spotify", **next_maximum),
             DropDown("Transmission", "transmission-gtk", **next_maximum),

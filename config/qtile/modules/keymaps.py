@@ -89,7 +89,7 @@ audio_controls = [
     Key([], "XF86AudioMute", lazy.spawn("volctl --mute")),
     Key([], "XF86AudioRaiseVolume", lazy.spawn("volctl --up")),
     Key([], "XF86AudioLowerVolume", lazy.spawn("volctl --down")),
-    Key([], "xF86XK_AudioMicMute", lazy.spawn("micvol --mute")),
+    Key([], "XF86AudioMicMute", lazy.spawn("micvol --mute")),
 ]
 
 media_controls = [
@@ -108,8 +108,8 @@ screenshot = [
 ]
 
 brightness_controls = [
-    Key([], "xF86XK_MonBrightnessUp", lazy.spawn("brightctl --up")),
-    Key([], "xF86XK_MonBrightnessDown", lazy.spawn("brightctl --down")),
+    Key([], "XF86MonBrightnessUp", lazy.spawn("brightctl --up")),
+    Key([], "XF86MonBrightnessDown", lazy.spawn("brightctl --down")),
 ]
 
 quick_launch = [

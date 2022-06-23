@@ -17,8 +17,8 @@ in {
   config = mkMerge [
     (mkIf cfg.enable {
       user.packages = with pkgs;
-        [python310]
-        ++ (with python310Packages; [
+        [python3]
+        ++ (with python3Packages; [
           black
           ipython
           isort
