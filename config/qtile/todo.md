@@ -8,29 +8,30 @@ related info:
 ```
 
 ## Toggled spawns (rofi):
-a. MagicFocus (view window -> main window)
-b. Magnify (view window => grows larger)
+- [ ] MagicFocus (view window -> main window)
+- [ ] Magnify (view window => grows larger)
 
 ### `mod+alt` spawns:
-1. `m` = "brave --new-window https://mail.proton.me/u/0/inbox" <- floating
-    a. Make sure it floats for both firefox and brave.
+- [ ] `m` = "brave --new-window https://mail.proton.me/u/0/inbox" <- floating
+    - Make sure it floats for both firefox and brave.
+
 ```haskell
 isProtonMailTitle t = isInfixOf "@proton.me" t && isInfixOf "Proton Mail" t
 ```
 
 ## Aesthetics
-3. Specify font, if possible done through nix. (XResources??)
-1. Have bar show active applications inside workspaces, like taffybar
-    a. Or, like Chromium, show what applicatiosn are in a certain workspace on
+- [ ] Specify font, if possible done through nix. (XResources??)
+- [ ] Have bar show active applications inside workspaces, like taffybar
+    - Or, like Chromium, show what applicatiosn are in a certain workspace on
     hover
 
 # Functionality
-1. When workspace has one active window -> toggle.maximum(), otherwise -> disabled.
-    a. Ability to cycle + switch focus on fullscreen to other application.
-2. Add rofi power spawn on battery widget click.
-4. Tray seems to be missing lanched applications?
-5. Center cursor on window focus
-6. Brave seems to lose focus on tab kill???
+- [ ] When workspace has one active window -> toggle.maximum(), otherwise -> disabled.
+    - Ability to cycle + switch focus on fullscreen to other application.
+- [ ] Add rofi power spawn on battery widget click.
+- [ ] Tray seems to be missing lanched applications?
+- [ ] Center cursor on window focus
+- [ ] Brave seems to lose focus on tab kill???
 
 # Keymaps
 ```python
