@@ -17,7 +17,7 @@ from modules.themes import palette
 #     Group("9", label="九"),
 # ]
 
-groups = [Group(f"{i+1}", label="⬤") for i in range(9)]
+groups = [Group(f"{i+1}", label="") for i in range(7)]
 
 for i in groups:
     keys.extend(
@@ -69,11 +69,11 @@ floating_layout = layout.Floating(
 # Scratchpads
 # TODO: protonmail -> float on title recognition + scratchpad launch?
 next_maximum = {
-    "x": 0.05,
-    "y": 0.05,
+    "x": 0.02,
+    "y": 0.02,
     "width": 0.95,
     "height": 0.95,
-    "opacity": 1.0,
+    "opacity": 0.95,
 }
 
 groups.append(

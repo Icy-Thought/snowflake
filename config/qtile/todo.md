@@ -20,13 +20,22 @@ isProtonMailTitle t = isInfixOf "@proton.me" t && isInfixOf "Proton Mail" t
 
 ## Aesthetics
 3. Specify font, if possible done through nix. (XResources??)
-2. Space between windows (gaps) = X???
 1. Have bar show active applications inside workspaces, like taffybar
+    a. Or, like Chromium, show what applicatiosn are in a certain workspace on
+    hover
+
+# Functionality
+1. When workspace has one active window -> toggle.maximum(), otherwise -> disabled.
+    a. Ability to cycle + switch focus on fullscreen to other application.
+2. Add rofi power spawn on battery widget click.
+4. Tray seems to be missing lanched applications?
+5. Center cursor on window focus
+6. Brave seems to lose focus on tab kill???
 
 # Keymaps
 ```python
-Key([mod, alt], "b", lazy.spawn("rofi -show window")), TODO: swap with X window
-Key([mod], "g", lazy.spawn("rofi -show window")), TODO: go to X window
+EzKey(["M-A-b", lazy.spawn("rofi -show window")), TODO: swap with X window
+EzKey("M-g", lazy.spawn("rofi -show window")), TODO: go to X window
 ```
 
 Migrate to Qtile

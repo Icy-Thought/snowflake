@@ -55,8 +55,8 @@ toggles = [
     EzKey("M-<space>", lazy.next_layout()),
     EzKey("M-t", lazy.window.toggle_floating()),
     EzKey("M-m", lazy.window.toggle_minimize()),
-    EzKey("M-S-m", lazy.window.toggle_maximize()),
-    EzKey("M-S-<space>", lazy.window.toggle_fullscreen()),
+    EzKey("M-S-<space>", lazy.window.toggle_maximize()),
+    EzKey("M-C-<space>", lazy.window.toggle_fullscreen()),
 ]
 
 qtile_controls = [

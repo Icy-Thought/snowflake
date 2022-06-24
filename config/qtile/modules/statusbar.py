@@ -19,36 +19,37 @@ rofi = "rofi -no-lazy-grab -show drun -modi drun"
 groupbox = [
     widget.GroupBox,
     {
+        "active": palette[0],
+        "block_highlight_text_color": palette[0],
+        "disable_drag": True,
         "font": fontinfo["font"],
-        "padding": fontinfo["padding"],
         "fontsize": fontinfo["fontsize"],
         "foreground": palette[2],
-        "highlight_method": "text",
-        "block_highlight_text_color": palette[0],
-        "active": palette[0],
-        "inactive": palette[0],
-        "rounded": False,
-        "highlight_color": [palette[0], palette[3]],
-        "urgent_alert_method": "line",
-        "urgent_text": palette[7],
-        "urgent_border": palette[7],
-        "disable_drag": True,
-        "use_mouse_wheel": False,
         "hide_unused": False,
+        "highlight_color": [palette[0], palette[9]],
+        "highlight_method": "text",
+        "inactive": palette[0],
+        "padding": fontinfo["padding"],
+        "rounded": False,
         "spacing": 5,
         "this_current_screen_border": palette[10],
+        "urgent_alert_method": "line",
+        "urgent_border": palette[7],
+        "urgent_text": palette[7],
+        "use_mouse_wheel": False,
     },
 ]
 
 windowname = [
     widget.WindowName,
     {
-        "font": fontinfo["font"],
-        "fontsize": 16,
-        "padding": 3,
-        "format": "{name}",
-        "background": palette[0],
+        "background": palette[2],
         "center_aligned": True,
+        "font": fontinfo["font"],
+        "fontsize": fontinfo["fontsize"],
+        "format": "{name}",
+        "max_chars": 35,
+        "padding": 3,
     },
 ]
 
@@ -66,8 +67,8 @@ spacer_small = [
     {
         "length": 5,
         # these values are used by style func, not qtile
-        "is_spacer": True,
         "inheirit": True,
+        "is_spacer": True,
         "use_separator": False,
     },
 ]
@@ -75,27 +76,28 @@ spacer_small = [
 logo = [
     widget.TextBox,
     {
-        # text="  ",
         "font": fontinfo["font"],
-        "padding": -2,
-        "fontsize": fontinfo["fontsize"] * 1.6,
-        "text": " ",
-        # "text": " Σ",
         "background": palette[8],
+        "fontsize": fontinfo["fontsize"] * 1.6,
         "foreground": palette[1],
         "mouse_callbacks": {"Button1": lazy.spawn(rofi)},
+        "padding": -2,
+        "text": "  ",
     },
 ]
 
-layout = [widget.CurrentLayout, {**fontinfo, "background": palette[1]}]
+layout = [
+    widget.CurrentLayout,
+    {**fontinfo, "background": palette[3], "foreground": palette[1]},
+]
 
 cpu = [
     widget.CPU,
     {
         **fontinfo,
-        "format": " {freq_current}GHz {load_percent}%",
-        "background": palette[3],
+        "background": palette[10],
         "foreground": palette[1],
+        "format": " {freq_current}GHz {load_percent}%",
     },
 ]
 
@@ -103,10 +105,10 @@ net = [
     widget.Net,
     {
         **fontinfo,
+        "background": palette[4],
         "format": "\u2193 {down} \u2191 {up}",
         "interface": "wlan0",
         "update_interval": 3,
-        "background": palette[4],
     },
 ]
 
@@ -115,8 +117,20 @@ mem = [
     {
         **fontinfo,
         "format": ": {MemUsed:.2f}/{MemTotal:.2f}{mm}",
-        "update_interval": 1.0,
         "measure_mem": "G",
+        "update_interval": 1.0,
+    },
+]
+
+mpris = [
+    widget.Mpris2,
+    {
+        **fontinfo,
+        "foreground": palette[1],
+        "background": palette[9],
+        "max_chars": 15,
+        "paused_text": "\uf8e4 {track}",
+        "playing_text": "\uf90b {track}",
     },
 ]
 
@@ -124,24 +138,29 @@ batt = [
     widget.Battery,
     {
         **fontinfo,
-        "background": palette[8],
+        "background": palette[5],
         "foreground": palette[1],
-        "low_foreground": palette[7],
-        "low_background": None,
-        "low_percentage": 0.30,
-        "charge_char": "",
+        "charge_char": " \uf583 ",
         "discharge_char": "",
-        "full_char": "",
-        "empty_char": "X",
-        "unknown_char": "?",
-        "format": "  {char} {percent:2.0%}",
+        "empty_char": "\uf244",
+        "format": "{char} {percent:2.0%} ",
+        "full_char": "\uf240",
+        "low_background": palette[7],
+        "low_foreground": palette[1],
+        "low_percentage": 0.30,
         "show_short_text": False,
+        "unknown_char": "\uf590",
     },
 ]
 
 datetime = [
     widget.Clock,
-    {**fontinfo, "format": "%B %d, %H:%M", "background": palette[5]},
+    {
+        **fontinfo,
+        "background": palette[6],
+        "foreground": palette[1],
+        "format": "%B %d, %H:%M",
+    },
 ]
 
 
@@ -152,25 +171,25 @@ def widgetlist():
         groupbox,
         layout,
         windowname,
+        mpris,
         cpu,
-        net,
+        # net,
         mem,
-        batt,
-        datetime,
         systray,
+        datetime,
+        batt,
     ]
 
 
 def style(widgetlist):
-    # adds separator widgets in between the initial widget list
     styled = widgetlist[:]
 
     for index, wid in enumerate(widgetlist):
         end_sep = {
-            "font": "VictorMono Nerd Font",
-            "text": " ",
+            "font": fontinfo["font"],
             "fontsize": 34,
             "padding": -1,
+            "text": " ",
         }
 
         if index < len(widgetlist) - 1:
