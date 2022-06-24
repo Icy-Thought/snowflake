@@ -24,7 +24,7 @@ in {
       user.packages = with pkgs; [
         neovide
         neovim-nightly
-        (python3.withPackages (pypkgs: with pypkgs; [pynvim]))
+        (python3.withPackages (ps: with ps; [pynvim]))
       ];
 
       environment.shellAliases = {
