@@ -38,7 +38,7 @@ in {
       modules.develop.lua.enable = true;
 
       environment.variables = {
-        SQLITE_PATH = "${pkgs.sqlite.out}/lib/libsqlite3.dylib";
+        SQLITE_PATH = "${pkgs.sqlite.out}/lib/libsqlite3.so";
         # MYVIMRC = "${nvimDir}/agasaya/init.lua";
       };
     })
