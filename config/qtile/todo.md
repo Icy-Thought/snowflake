@@ -20,6 +20,8 @@ isProtonMailTitle t = isInfixOf "@proton.me" t && isInfixOf "Proton Mail" t
 ```
 
 ## Aesthetics
+- [ ] Fix statusbar icon paths + apply whitsur icon theme to qtile.. seems to
+      not follow theme specifications from `modules.themes`.. 
 - [ ] Specify font, if possible done through nix. (XResources??)
 - [ ] Have bar show active applications inside workspaces, like taffybar
     - Or, like Chromium, show what applicatiosn are in a certain workspace on

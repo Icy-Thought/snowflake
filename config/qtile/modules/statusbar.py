@@ -58,7 +58,7 @@ systray = [
     {
         "background": palette[2],
         "foreground": palette[5],
-        # "theme_path": "",
+        "theme_path": "/nix/store/g8pz3vf8ih10h3hw50rv0gpki9k72j2q-Whitesur-icon-theme-2022-03-18/share/icons/WhiteSur/",
     },
 ]
 
@@ -87,8 +87,14 @@ logo = [
 ]
 
 layout = [
-    widget.CurrentLayout,
-    {**fontinfo, "background": palette[3], "foreground": palette[1]},
+    widget.CurrentLayoutIcon,
+    {
+        **fontinfo,
+        "background": palette[3],
+        "foreground": palette[1],
+        "custom_icon_paths": "./icons",
+        "scale": 0.65,
+    },
 ]
 
 cpu = [
@@ -140,16 +146,20 @@ batt = [
         **fontinfo,
         "background": palette[5],
         "foreground": palette[1],
-        "charge_char": "\uf583 ",
-        "discharge_char": "",
-        "empty_char": "\uf244 ",
-        "format": "{char} {percent:2.0%} ",
-        "full_char": "\uf240 ",
+        # "charge_char": "\uf583 ",
+        # "discharge_char": "",
+        # "empty_char": "\uf244 ",
+        "format": "{char} {percent:2.0%} ({watt:.2f}W)",
+        # "full_char": "\uf240 ",
         "low_background": palette[7],
         "low_foreground": palette[1],
         "low_percentage": 0.30,
         "show_short_text": False,
-        "unknown_char": "\uf590 ",
+        # "unknown_char": "\uf590 ",
+    },
+    widget.BatteryIcon,
+    {
+        "theme_path": "/nix/store/g8pz3vf8ih10h3hw50rv0gpki9k72j2q-Whitesur-icon-theme-2022-03-18/share/icons/WhiteSur",
     },
 ]
 

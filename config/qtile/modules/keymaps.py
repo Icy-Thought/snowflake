@@ -21,9 +21,9 @@ mouse = [
         start=lazy.window.get_position(),
     ),
     EzDrag(
-        "M-<Button2>", lazy.window.set_size_floating(), start=lazy.window.get_size()
+        "M-<Button3>", lazy.window.set_size_floating(), start=lazy.window.get_size()
     ),
-    EzClick("M-<Button3>", lazy.window.bring_to_front()),
+    EzClick("M-<Button2>", lazy.window.bring_to_front()),
 ]
 
 window_navigation = [
