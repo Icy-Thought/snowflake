@@ -11,6 +11,7 @@ with lib.my; let
 in {
   options.modules.shell.xplr = {
     enable = mkBoolOpt false;
+    fennel.enable = mkBoolOpt false;
   };
 
   config = mkIf (cfg.xplr.enable || cfg.fish.enable) {
@@ -18,7 +19,7 @@ in {
 
     home.configFile."xplr/init.lua".text = ''
       ---@diagnostic disable
-      version = "0.19.0"
+      version = "0.18.0"
       local xplr = xplr
       ---@diagnostic enable
 
@@ -83,17 +84,19 @@ in {
       xplr.config.general.show_hidden = true
       xplr.config.general.enable_recover_mode = true
 
-      -- add support for fennel
-      local fennel = require("fennel")
+      ${optionalString (cfg.xplr.fennel.enable) ''
+        -- add support for fennel
+        local fennel = require("fennel")
 
-      fennel.path = fennel.path
-          .. ";"
-          .. home
-          .. "/.config/xplr/plugins/?/init.fnl;"
-          .. home
-          .. "/.config/xplr/plugins/?.fnl;"
+        fennel.path = fennel.path
+            .. ";"
+            .. home
+            .. "/.config/xplr/plugins/?/init.fnl;"
+            .. home
+            .. "/.config/xplr/plugins/?.fnl;"
 
-      table.insert(package.loaders or package.searchers, fennel.searcher)
+        table.insert(package.loaders or package.searchers, fennel.searcher)
+      ''}
     '';
   };
 }
