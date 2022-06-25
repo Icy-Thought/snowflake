@@ -34,9 +34,10 @@ in {
       feh
     ];
 
-    modules.desktop.media.browser = {
-      nautilus.enable = true;
-      # thunar.enable = true;
+    modules.desktop = {
+      media.browser.nautilus.enable = true;
+      # Xdg.mimeApps -> application management
+      extra.mimeApps.enable = true;
     };
 
     services.xserver = {
@@ -64,9 +65,6 @@ in {
       autorandr.enable = true;
       blueman.enable = true;
     };
-
-    # Xdg.mimeApps -> application management
-    modules.desktop.extra.mimeApps.enable = true;
 
     home.services = {
       gnome-keyring.enable = true;

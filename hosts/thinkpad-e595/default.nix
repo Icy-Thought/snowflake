@@ -44,16 +44,12 @@
         zoom.enable = true;
       };
       media = {
-        downloader = {
-          transmission.enable = true;
-        };
+        downloader.transmission.enable = true;
         editor = {
           raster.enable = true;
           vector.enable = true;
         };
-        social = {
-          common.enable = true;
-        };
+        social.common.enable = true;
         viewer = {
           video.enable = true;
           music.enable = true;
