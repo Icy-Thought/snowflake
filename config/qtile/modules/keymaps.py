@@ -35,6 +35,7 @@ window_navigation = [
 
 window_displacement = [
     EzKey("M-<Tab>", lazy.layout.next()),  # Shift focus -> other window(s) in stack
+    EzKey("M-S-<Tab>", lazy.layout.previous()),
     EzKey("M-<Return>", lazy.layout.swap_main()),
     EzKey("M-S-h", lazy.layout.swap_left(), lazy.layout.shuffle_left()),
     EzKey("M-S-j", lazy.layout.swap_down(), lazy.layout.shuffle_down()),
