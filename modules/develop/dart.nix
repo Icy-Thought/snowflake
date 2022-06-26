@@ -10,6 +10,7 @@ with lib;
 with lib.my; let
   cfg = config.modules.develop.dart;
   devCfg = config.modules.develop.xdg;
+  codeCfg = config.modules.desktop.editors.vscodium;
 in {
   options.modules.develop.dart = {
     enable = mkBoolOpt false;
@@ -21,7 +22,9 @@ in {
         dart
         flutter
       ];
+    })
 
+    (mkIf codeCfg.enable {
       home.programs.vscode.extensions = with pkgs.vscode-utils.extensionsFromVscodeMarketplace; [
         {
           name = "dart-code";

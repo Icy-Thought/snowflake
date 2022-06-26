@@ -10,6 +10,7 @@ with lib;
 with lib.my; let
   cfg = config.modules.develop.rust;
   devCfg = config.modules.develop.xdg;
+  codeCfg = config.modules.desktop.editors.vscodium;
 in {
   options.modules.develop.rust = {
     enable = mkBoolOpt false;
@@ -25,10 +26,6 @@ in {
         unstable.rust-analyzer
       ];
 
-      home.programs.vscode.extensions = with pkgs.vscode-extensions; [
-        rust-lang.rust-analyzer
-      ];
-
       env.PATH = [
         "$(${getExe pkgs.yarn} global bin)"
       ];
@@ -37,6 +34,12 @@ in {
         rs = "rustc";
         ca = "cargo";
       };
+    })
+
+    (mkIf codeCfg.enable {
+      home.programs.vscode.extensions = with pkgs.vscode-extensions; [
+        rust-lang.rust-analyzer
+      ];
     })
 
     (mkIf devCfg.enable {

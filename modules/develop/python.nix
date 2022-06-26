@@ -9,6 +9,7 @@ with lib;
 with lib.my; let
   cfg = config.modules.develop.python;
   devCfg = config.modules.develop.xdg;
+  codeCfg = config.modules.desktop.editors.vscodium;
 in {
   options.modules.develop.python = {
     enable = mkBoolOpt false;
@@ -28,11 +29,6 @@ in {
           setuptools
         ]);
 
-      home.programs.vscode.extensions = with pkgs.vscode-extensions; [
-        ms-python.python
-        ms-toolsai.jupyter
-      ];
-
       environment.shellAliases = {
         py = "python";
         py2 = "python2";
@@ -41,6 +37,13 @@ in {
         ipy = "ipython --no-banner";
         ipylab = "ipython --pylab=qt5 --no-banner";
       };
+    })
+
+    (mkIf codeCfg.enable {
+      home.programs.vscode.extensions = with pkgs.vscode-extensions; [
+        ms-python.python
+        ms-toolsai.jupyter
+      ];
     })
 
     (mkIf devCfg.enable {

@@ -9,6 +9,7 @@ with lib;
 with lib.my; let
   cfg = config.modules.develop.cc;
   devCfg = config.modules.develop.xdg;
+  codeCfg = config.modules.desktop.editors.vscodium;
 in {
   options.modules.develop.cc = {
     enable = mkBoolOpt false;
@@ -23,7 +24,9 @@ in {
         cmake
         llvmPackages.libcxx
       ];
+    })
 
+    (mkIf codeCfg.enable {
       home.programs.vscode.extensions = with pkgs.vscode-extensions; [
         ms-vscode.cpptools
       ];

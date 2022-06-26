@@ -9,6 +9,7 @@ with lib;
 with lib.my; let
   cfg = config.modules.develop.haskell;
   devCfg = config.modules.develop.xdg;
+  codeCfg = config.modules.desktop.editors.vscodium;
 in {
   options.modules.develop.haskell = {
     enable = mkBoolOpt false;
@@ -26,7 +27,9 @@ in {
           hpack
           stylish-haskell
         ]);
+    })
 
+    (mkIf codeCfg.enable {
       home.programs.vscode.extensions = with pkgs.vscode-extensions; [
         haskell.haskell
         justusadam.language-haskell # syntax-highlighting
