@@ -4,7 +4,7 @@
 from libqtile import bar, qtile, widget
 from libqtile.config import Screen
 from libqtile.lazy import lazy
-from modules.layouts import borderline
+from modules.groups import borderline
 
 from modules.themes import palette
 
@@ -20,23 +20,23 @@ groupbox = [
     widget.GroupBox,
     {
         "active": palette[0],
-        "block_highlight_text_color": palette[0],
+        "block_highlight_text_color": palette[1],
         "disable_drag": True,
         "font": fontinfo["font"],
-        "fontsize": fontinfo["fontsize"],
+        "fontsize": fontinfo["fontsize"] + 4,
         "foreground": palette[2],
-        "hide_unused": False,
+        "hide_unused": True,
         "highlight_color": [palette[0], palette[3]],
-        "highlight_method": "text",
+        "highlight_method": "block",
         "inactive": palette[0],
         "padding": fontinfo["padding"],
-        "rounded": False,
+        "rounded": True,
         "spacing": 5,
         "this_current_screen_border": palette[4],
-        "urgent_alert_method": "line",
+        "urgent_alert_method": "block",
         "urgent_border": palette[7],
         "urgent_text": palette[7],
-        "use_mouse_wheel": False,
+        "use_mouse_wheel": True,
     },
 ]
 
@@ -93,7 +93,7 @@ layout = [
         "background": palette[3],
         "foreground": palette[1],
         "custom_icon_paths": "./icons",
-        "scale": 0.65,
+        "scale": 0.63,
     },
 ]
 

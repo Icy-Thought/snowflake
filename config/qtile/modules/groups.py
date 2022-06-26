@@ -5,19 +5,19 @@ from modules.keymaps import keys
 
 from modules.themes import palette
 
-# groups = [
-#     Group("1", label="一"),
-#     Group("2", label="二"),
-#     Group("3", label="三"),
-#     Group("4", label="四"),
-#     Group("5", label="万"),
-#     Group("6", label="六"),
-#     Group("7", label="七"),
-#     Group("8", label="八"),
-#     Group("9", label="九"),
-# ]
+groups = [
+    Group("1", label="一"),
+    Group("2", label="二"),
+    Group("3", label="三"),
+    Group("4", label="四"),
+    Group("5", label="万"),
+    Group("6", label="六"),
+    Group("7", label="七"),
+    Group("8", label="八"),
+    Group("9", label="九"),
+]
 
-groups = [Group(f"{i+1}", label="") for i in range(7)]
+# groups = [Group(f"{i+1}", label="") for i in range(9)]
 
 for i in groups:
     keys.extend(
@@ -60,7 +60,7 @@ floating_layout = layout.Floating(
         Match(wm_class="makebranch"),  # gitk
         Match(wm_class="maketag"),  # gitk
         Match(title="branchdialog"),  # gitk
-        Match(title="pinentry"),  # GPG key password entry
+        Match(wm_class="pinentry"),  # GPG key password entry
         Match(title="Picture-in-Picture"),  # FireFox
         Match(wm_class="ssh-askpass"),  # ssh-askpass
     ],
@@ -78,7 +78,7 @@ next_maximum = {
 
 groups.append(
     ScratchPad(
-        "Scratchpad",
+        "NSP",
         [
             DropDown("Bottom", "kitty -T Bottom -e btm", **next_maximum),
             DropDown("Discord", "discord", **next_maximum),
@@ -92,14 +92,14 @@ groups.append(
 
 keys.extend(
     [
-        EzKey("M-A-b", lazy.group["Scratchpad"].dropdown_toggle("Bottom")),
-        EzKey("M-A-d", lazy.group["Scratchpad"].dropdown_toggle("Discord")),
-        EzKey("M-A-e", lazy.group["Scratchpad"].dropdown_toggle("Emacs")),
-        EzKey("M-A-v", lazy.group["Scratchpad"].dropdown_toggle("Neovide")),
-        EzKey("M-A-s", lazy.group["Scratchpad"].dropdown_toggle("Spotify")),
+        EzKey("M-A-b", lazy.group["NSP"].dropdown_toggle("Bottom")),
+        EzKey("M-A-d", lazy.group["NSP"].dropdown_toggle("Discord")),
+        EzKey("M-A-e", lazy.group["NSP"].dropdown_toggle("Emacs")),
+        EzKey("M-A-v", lazy.group["NSP"].dropdown_toggle("Neovide")),
+        EzKey("M-A-s", lazy.group["NSP"].dropdown_toggle("Spotify")),
         EzKey(
             "M-A-t",
-            lazy.group["Scratchpad"].dropdown_toggle("Transmission"),
+            lazy.group["NSP"].dropdown_toggle("Transmission"),
         ),
     ]
 )
