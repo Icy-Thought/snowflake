@@ -1,4 +1,4 @@
-![XMonad Desktop](./.assets/main/xmonad-desktop.png)
+![Qtile Desktop](./.assets/main/qtile-desktop.png)
 
 # Table of Contents
 - [Introduction](#introduction)
@@ -167,5 +167,4 @@ You have successful installed your/my personally hand-crafted/replicated Nix-Fla
 - [A Tour of Nix](https://nixcloud.io/tour/?id=1): a beautifully crafted introduction into the Nix programming language.
 
 # Special Thanks
-- [hlissner/dotfiles](https://github.com/hlissner/dotfiles): Flake structure!
-- [IvanMalison/dotfiles](https://github.com/IvanMalison/dotfiles): XMonad + Taffybar Setup!
+- [hlissner/dotfiles](https://github.com/hlissner/dotfiles): nix-flake skeleton!
