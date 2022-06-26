@@ -4,19 +4,18 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
     nixpkgs-unstable.url = "nixpkgs/nixpkgs-unstable";
-
-    home-manager.url = "github:nix-community/home-manager/master";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
-
-    agenix.url = "github:ryantm/agenix";
-    agenix.inputs.nixpkgs.follows = "nixpkgs";
-
-    ## TODO: (-) xmonad-contrib after "ConditionalLayoutModifier" merge
+    home-manager = {
+      url = "github:nix-community/home-manager/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     xmonad.url = "github:xmonad/xmonad";
+    # TODO: (-) xmonad-contrib after "ConditionalLayoutModifier" merge
     xmonad-contrib.url = "github:icy-thought/xmonad-contrib";
-    ## TODO: pin taffybar/taffybar after figuring out override flags
-    taffybar.url = "github:icy-thought/taffybar";
-
+    taffybar.url = "github:taffybar/taffybar";
     emacs.url = "github:nix-community/emacs-overlay";
     neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
     rust.url = "github:oxalica/rust-overlay";
