@@ -56,7 +56,7 @@ toggles = [
     EzKey("M-<space>", lazy.next_layout()),
     EzKey("M-t", lazy.window.toggle_floating()),
     EzKey("M-m", lazy.window.toggle_minimize()),
-    EzKey("M-C-<space>", lazy.window.toggle_maximize()),
+    EzKey("M-C-<space>", lazy.group.setlayout("max")),
     EzKey("M-S-<space>", lazy.window.toggle_fullscreen()),
 ]
 

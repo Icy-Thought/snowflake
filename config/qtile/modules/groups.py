@@ -39,8 +39,9 @@ borderline = dict(
 layouts = [
     layout.MonadTall(**borderline),
     layout.MonadThreeCol(**borderline),
-    layout.MonadWide(**borderline),
-    layout.Spiral(clockwise=True, main_pane="left", **borderline),
+    layout.MonadWide(**borderline, ratio=0.65),
+    layout.Spiral(**borderline, clockwise=True, main_pane="left"),
+    layout.Max(**borderline),
 ]
 
 # Automatically float application pop-ups

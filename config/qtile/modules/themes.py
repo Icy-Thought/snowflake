@@ -1,7 +1,3 @@
-"""
-A module that contains dictionaries of the themes I am rather fond of.
-"""
-
 catppuccin = [
     "#d8dee9",  # Colour 0
     "#1e1e2e",  # Colour 1
@@ -27,7 +23,7 @@ rose_pine = [
     "#555169",  # Colour 7
     "#e0def4",  # Colour 8
     "#6e6a86",  # Colour 9
-    "#2a2837"   # Colour 10
+    "#2a2837",  # Colour 10
 ]
 
 palette = catppuccin
