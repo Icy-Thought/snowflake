@@ -21,11 +21,14 @@ in {
     {
       nixpkgs.overlays = with inputs; [neovim-nightly.overlay];
 
-      user.packages = with pkgs; [
-        neovide
-        neovim-nightly
-        (python3.withPackages (ps: with ps; [pynvim]))
-      ];
+      user.packages = with pkgs; (mkMerge [
+        [
+          neovide
+          neovim-nightly
+          (python3.withPackages (ps: with ps; [pynvim]))
+        ]
+        (mkIf (!config.modules.develop.cc.enable) [clang]) # Treesitter
+      ]);
 
       environment.shellAliases = {
         vi = "nvim";
