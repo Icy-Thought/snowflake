@@ -26,7 +26,6 @@ in {
       lightdm
       libnotify
       dunst
-      pavucontrol
       playerctl
       gxmessage
       xdotool

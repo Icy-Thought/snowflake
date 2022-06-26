@@ -82,10 +82,10 @@ groups.append(
         [
             DropDown("Bottom", "kitty -T Bottom -e btm", **next_maximum),
             DropDown("Discord", "discord", **next_maximum),
-            DropDown("Emacs", "emacsclient -c", **next_maximum),
             DropDown("Neovide", "neovide", **next_maximum),
             DropDown("Spotify", "spotify", **next_maximum),
             DropDown("Transmission", "transmission-gtk", **next_maximum),
+            DropDown("Volume Control", "pavucontrol", **next_maximum),
         ],
     )
 )
@@ -94,12 +94,12 @@ keys.extend(
     [
         EzKey("M-A-b", lazy.group["NSP"].dropdown_toggle("Bottom")),
         EzKey("M-A-d", lazy.group["NSP"].dropdown_toggle("Discord")),
-        EzKey("M-A-e", lazy.group["NSP"].dropdown_toggle("Emacs")),
-        EzKey("M-A-v", lazy.group["NSP"].dropdown_toggle("Neovide")),
+        EzKey("M-A-e", lazy.group["NSP"].dropdown_toggle("Neovide")),
         EzKey("M-A-s", lazy.group["NSP"].dropdown_toggle("Spotify")),
         EzKey(
             "M-A-t",
             lazy.group["NSP"].dropdown_toggle("Transmission"),
         ),
+        EzKey("M-A-v", lazy.group["NSP"].dropdown_toggle("Volume Control")),
     ]
 )
