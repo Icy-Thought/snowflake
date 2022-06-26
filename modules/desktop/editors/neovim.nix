@@ -27,7 +27,7 @@ in {
           neovim-nightly
           (python3.withPackages (ps: with ps; [pynvim]))
         ]
-        (mkIf (!config.modules.develop.cc.enable) [clang]) # Treesitter
+        (mkIf (!config.modules.develop.cc.enable) [gcc]) # Treesitter
       ]);
 
       environment.shellAliases = {
