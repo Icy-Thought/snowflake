@@ -23,7 +23,7 @@ in {
         add_newline = true;
         scan_timeout = 10;
 
-        format = "[$directory](fg:#89dceb) ($git_branch)($git_status )($nix_shell)($character)";
+        format = "[$directory](fg:${colors.cyan}) ($git_branch)($git_status )($nix_shell)($character)";
         directory = {
           style = "bg:${colors.cyan} fg:${colors.types.bg} bold";
           truncation_length = 3;

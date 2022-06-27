@@ -1,0 +1,37 @@
+{ colors, font, ... }: ''
+  ! Types
+  *foreground: ${colors.types.fg}
+  *background: ${colors.types.bg}
+
+  ! Black
+  *color0: ${colors.black}
+  *color8:  ${colors.brightBlack}
+
+  ! Red
+  *color1:  ${colors.red}
+  *color9:  ${colors.brightRed}
+
+  ! Green
+  *color2:  ${colors.green}
+  *color10: ${colors.brightGreen}
+
+  ! Yellow
+  *color3:  ${colors.yellow}
+  *color11: ${colors.brightYellow}
+
+  ! Blue
+  *color4:  ${colors.blue}
+  *color12: ${colors.brightBlue}
+
+  ! Magenta
+  *color5:  ${colors.magenta}
+  *color13: ${colors.brightMagenta}
+
+  ! Cyan
+  *color6:  ${colors.cyan}
+  *color14: ${colors.brightCyan}
+
+  ! White
+  *color7:  ${colors.white}
+  *color15: ${colors.brightWhite}
+''
