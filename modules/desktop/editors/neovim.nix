@@ -22,18 +22,26 @@ in {
       nixpkgs.overlays = with inputs; [neovim-nightly.overlay];
 
       user.packages = with pkgs; (mkMerge [
-        [
-          neovide
-          neovim-nightly
-          (python3.withPackages (ps: with ps; [pynvim]))
-        ]
+        [neovide]
         (mkIf (!config.modules.develop.cc.enable) [gcc]) # Treesitter
       ]);
+
+      programs.neovim = {
+        enable = true;
+        package = pkgs.neovim-nightly;
+        configure.customRC = ''
+          luafile ${nvimDir}/agasaya/init.lua
+        '';
+
+        withRuby = true;
+        withPython3 = true;
+        withNodeJs = true;
+      };
 
       environment.shellAliases = {
         vi = "nvim";
         vim = "nvim";
-        vimdiff = "nvim -d";
+        vdiff = "nvim -d";
       };
     }
 
