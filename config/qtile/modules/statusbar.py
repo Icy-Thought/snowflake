@@ -78,11 +78,11 @@ logo = [
     {
         "font": fontinfo["font"],
         "background": palette[8],
-        "fontsize": fontinfo["fontsize"] * 1.6,
+        "fontsize": fontinfo["fontsize"] * 1.8,
         "foreground": palette[1],
         "mouse_callbacks": {"Button1": lazy.spawn(rofi)},
         "padding": -2,
-        "text": "  ",
+        "text": " \uf313 ",
     },
 ]
 
@@ -103,7 +103,7 @@ cpu = [
         **fontinfo,
         "background": palette[10],
         "foreground": palette[1],
-        "format": " {freq_current}GHz {load_percent}%",
+        "format": "\uf2db {freq_current}GHz {load_percent}%",
     },
 ]
 
@@ -122,7 +122,7 @@ mem = [
     widget.Memory,
     {
         **fontinfo,
-        "format": ": {MemUsed:.2f}/{MemTotal:.2f}{mm}",
+        "format": "\uf85a {MemUsed:.2f}/{MemTotal:.2f}{mm}",
         "measure_mem": "G",
         "update_interval": 1.0,
     },
@@ -149,7 +149,7 @@ batt = [
         # "charge_char": "\uf583 ",
         # "discharge_char": "",
         # "empty_char": "\uf244 ",
-        "format": "{char} {percent:2.0%} ({watt:.2f}W)",
+        "format": "{char} {percent:2.0%} ({watt:.2f}W) ",
         # "full_char": "\uf240 ",
         "low_background": palette[7],
         "low_foreground": palette[1],
@@ -199,7 +199,7 @@ def style(widgetlist):
             "font": fontinfo["font"],
             "fontsize": 34,
             "padding": -1,
-            "text": " ",
+            "text": " \ue0b6",
         }
 
         if index < len(widgetlist) - 1:
