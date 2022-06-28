@@ -9,7 +9,7 @@
   modules = {
     hardware = {
       audio.enable = true;
-      touchpad.enable = true;
+      input.enable = true;
       # razer.enable = true;
     };
 

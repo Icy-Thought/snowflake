@@ -11,7 +11,7 @@
       audio.enable = true;
       bluetooth.enable = true;
       razer.enable = true;
-      touchpad.enable = true;
+      input.enable = true;
     };
 
     networking = {
