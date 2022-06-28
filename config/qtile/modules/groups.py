@@ -74,7 +74,7 @@ next_maximum = {
     "y": 0.02,
     "width": 0.95,
     "height": 0.95,
-    "opacity": 0.95,
+    "opacity": 1.00,
 }
 
 groups.append(
@@ -82,8 +82,24 @@ groups.append(
         "NSP",
         [
             DropDown("Bottom", "kitty -T Bottom -e btm", **next_maximum),
-            DropDown("Discord", "discord", **next_maximum),
-            DropDown("Neovide", "neovide", **next_maximum),
+            DropDown(
+                "Discord",
+                "discord",
+                match=Match(wm_class="discord"),
+                **next_maximum,
+            ),
+            DropDown(
+                "Element",
+                "element-desktop",
+                match=Match(wm_class="element"),
+                **next_maximum,
+            ),
+            DropDown(
+                "Neovide",
+                "neovide",
+                match=Match(wm_class="neovide"),
+                **next_maximum,
+            ),
             DropDown("Spotify", "spotify", **next_maximum),
             DropDown("Transmission", "transmission-gtk", **next_maximum),
             DropDown("Volume Control", "pavucontrol", **next_maximum),
@@ -95,7 +111,8 @@ keys.extend(
     [
         EzKey("M-A-b", lazy.group["NSP"].dropdown_toggle("Bottom")),
         EzKey("M-A-d", lazy.group["NSP"].dropdown_toggle("Discord")),
-        EzKey("M-A-e", lazy.group["NSP"].dropdown_toggle("Neovide")),
+        EzKey("M-A-e", lazy.group["NSP"].dropdown_toggle("Element")),
+        EzKey("M-A-n", lazy.group["NSP"].dropdown_toggle("Neovide")),
         EzKey("M-A-s", lazy.group["NSP"].dropdown_toggle("Spotify")),
         EzKey(
             "M-A-t",
