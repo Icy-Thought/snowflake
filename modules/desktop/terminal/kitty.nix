@@ -109,7 +109,9 @@ in {
 
         map ctrl+shift+t new_tab_with_cwd
         map ctrl+shift+j next_tab
+        map ctrl+shift+page_up next_tab
         map ctrl+shift+k previous_tab
+        map ctrl+shift+page_down previous_tab
       '';
     };
   };

@@ -34,6 +34,7 @@
       editors = {
         default = "nvim";
         neovim.agasaya.enable = true;
+        vscodium.enable = true;
       };
       browsers = {
         default = "brave";

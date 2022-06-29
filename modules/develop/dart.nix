@@ -25,7 +25,7 @@ in {
     })
 
     (mkIf codeCfg.enable {
-      home.programs.vscode.extensions = with pkgs.vscode-utils.extensionsFromVscodeMarketplace; [
+      home.programs.vscode.extensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace [
         {
           name = "dart-code";
           publisher = "dart-code";

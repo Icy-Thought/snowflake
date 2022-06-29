@@ -95,9 +95,9 @@ groups.append(
                 **next_maximum,
             ),
             DropDown(
-                "Neovide",
-                "neovide",
-                match=Match(wm_class="neovide"),
+                "VSCodium",
+                "codium",
+                match=Match(wm_class="vscodium"),
                 **next_maximum,
             ),
             DropDown("Spotify", "spotify", **next_maximum),
@@ -112,7 +112,7 @@ keys.extend(
         EzKey("M-A-b", lazy.group["NSP"].dropdown_toggle("Bottom")),
         EzKey("M-A-d", lazy.group["NSP"].dropdown_toggle("Discord")),
         EzKey("M-A-e", lazy.group["NSP"].dropdown_toggle("Element")),
-        EzKey("M-A-n", lazy.group["NSP"].dropdown_toggle("Neovide")),
+        EzKey("M-A-n", lazy.group["NSP"].dropdown_toggle("VSCodium")),
         EzKey("M-A-s", lazy.group["NSP"].dropdown_toggle("Spotify")),
         EzKey(
             "M-A-t",
