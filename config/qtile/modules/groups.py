@@ -75,11 +75,12 @@ next_maximum = {
     "width": 0.95,
     "height": 0.95,
     "opacity": 1.00,
+    "on_focus_lost_hide": False,
 }
 
 groups.append(
     ScratchPad(
-        "NSP",
+        "SPD",
         [
             DropDown("Bottom", "kitty -T Bottom -e btm", **next_maximum),
             DropDown(
@@ -109,15 +110,15 @@ groups.append(
 
 keys.extend(
     [
-        EzKey("M-A-b", lazy.group["NSP"].dropdown_toggle("Bottom")),
-        EzKey("M-A-d", lazy.group["NSP"].dropdown_toggle("Discord")),
-        EzKey("M-A-e", lazy.group["NSP"].dropdown_toggle("Element")),
-        EzKey("M-A-n", lazy.group["NSP"].dropdown_toggle("VSCodium")),
-        EzKey("M-A-s", lazy.group["NSP"].dropdown_toggle("Spotify")),
+        EzKey("M-A-b", lazy.group["SPD"].dropdown_toggle("Bottom")),
+        EzKey("M-A-d", lazy.group["SPD"].dropdown_toggle("Discord")),
+        EzKey("M-A-e", lazy.group["SPD"].dropdown_toggle("Element")),
+        EzKey("M-A-n", lazy.group["SPD"].dropdown_toggle("VSCodium")),
+        EzKey("M-A-s", lazy.group["SPD"].dropdown_toggle("Spotify")),
         EzKey(
             "M-A-t",
-            lazy.group["NSP"].dropdown_toggle("Transmission"),
+            lazy.group["SPD"].dropdown_toggle("Transmission"),
         ),
-        EzKey("M-A-v", lazy.group["NSP"].dropdown_toggle("Volume Control")),
+        EzKey("M-A-v", lazy.group["SPD"].dropdown_toggle("Volume Control")),
     ]
 )
