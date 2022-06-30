@@ -22,7 +22,7 @@ in {
   # Font-related
   "editor.fontFamily" = "${cfg.font.sans.family}";
   "editor.fontWeight" = "${cfg.font.sans.weightNum}";
-  "editor.fontSize" = 17;
+  "editor.fontSize" = 16;
 
   "debug.console.fontFamily" = "${cfg.font.mono.family}";
   "debug.console.fontWeight" = "${cfg.font.mono.weightNum}";
@@ -63,7 +63,7 @@ in {
   "search.searchEditor.doubleClickBehaviour" = "goToLocation";
 
   # Editor
-  "files.autoSave" = "onWindowChange";
+  "files.autoSave" = "onFocusChange";
   "editor.formatOnSave" = true;
   "editor.bracketPairColorization.enabled" = true;
   "editor.guides.bracketPairs" = "active";

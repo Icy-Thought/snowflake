@@ -23,7 +23,7 @@ MUTE=$(pamixer --get-mute)
 VOLUME=$(pamixer --get-volume)
 
 if [[ "$MUTE" = false && "$TOGGLE" = 1 ]]; then
-    ICON='婢'
+    ICON=''
 elif (( "$VOLUME" >= 0 && "$VOLUME" < 30 )); then
     ICON=''
 elif (( "$VOLUME" >= 30 && "$VOLUME" < 70 )); then
