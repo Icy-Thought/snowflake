@@ -62,33 +62,68 @@ in {
     };
 
     colors = {
-      black = mkOpt str "#000000"; # 0
-      red = mkOpt str "#FF0000"; # 1
-      green = mkOpt str "#00FF00"; # 2
-      yellow = mkOpt str "#FFFF00"; # 3
-      blue = mkOpt str "#0000FF"; # 4
-      magenta = mkOpt str "#FF00FF"; # 5
-      cyan = mkOpt str "#00FFFF"; # 6
-      white = mkOpt str "#BBBBBB"; # 7
+      main = {
+        normal = {
+          black = mkOpt str "#000000"; # 0
+          red = mkOpt str "#FF0000"; # 1
+          green = mkOpt str "#00FF00"; # 2
+          yellow = mkOpt str "#FFFF00"; # 3
+          blue = mkOpt str "#0000FF"; # 4
+          magenta = mkOpt str "#FF00FF"; # 5
+          cyan = mkOpt str "#00FFFF"; # 6
+          white = mkOpt str "#BBBBBB"; # 7
+        };
+        bright = {
+          black = mkOpt str "#888888"; # 8
+          red = mkOpt str "#FF8800"; # 9
+          green = mkOpt str "#00FF80"; # 10
+          yellow = mkOpt str "#FF8800"; # 11
+          blue = mkOpt str "#0088FF"; # 12
+          magenta = mkOpt str "#FF88FF"; # 13
+          cyan = mkOpt str "#88FFFF"; # 14
+          white = mkOpt str "#FFFFFF"; # 15
+        };
+        types = {
+          bg = mkOpt str cfg.colors.main.normal.black;
+          fg = mkOpt str cfg.colors.main.normal.white;
+          panelbg = mkOpt str cfg.colors.main.types.bg;
+          panelfg = mkOpt str cfg.colors.main.types.fg;
+          border = mkOpt str cfg.colors.main.types.bg;
+          error = mkOpt str cfg.colors.main.normal.red;
+          warning = mkOpt str cfg.colors.main.normal.yellow;
+          highlight = mkOpt str cfg.colors.main.normal.white;
+        };
+      };
 
-      brightBlack = mkOpt str "#888888"; # 8
-      brightRed = mkOpt str "#FF8800"; # 9
-      brightGreen = mkOpt str "#00FF80"; # 10
-      brightYellow = mkOpt str "#FF8800"; # 11
-      brightBlue = mkOpt str "#0088FF"; # 12
-      brightMagenta = mkOpt str "#FF88FF"; # 13
-      brightCyan = mkOpt str "#88FFFF"; # 14
-      brightWhite = mkOpt str "#FFFFFF"; # 15
+      fish = {
+        fg = mkOpt str "#FFFFFF";
+        highlight = mkOpt str "#FFFFFF";
+        base01 = mkOpt str "#FFFFFF";
+        base02 = mkOpt str "#FFFFFF";
+        base03 = mkOpt str "#FFFFFF";
+        base04 = mkOpt str "#FFFFFF";
+        base05 = mkOpt str "#FFFFFF";
+        base06 = mkOpt str "#FFFFFF";
+        base07 = mkOpt str "#FFFFFF";
+        base08 = mkOpt str "#FFFFFF";
+        base09 = mkOpt str "#FFFFFF";
+        base10 = mkOpt str "#FFFFFF";
+      };
 
-      types = {
-        bg = mkOpt str cfg.colors.black;
-        fg = mkOpt str cfg.colors.white;
-        panelbg = mkOpt str cfg.colors.types.bg;
-        panelfg = mkOpt str cfg.colors.types.fg;
-        border = mkOpt str cfg.colors.types.bg;
-        error = mkOpt str cfg.colors.red;
-        warning = mkOpt str cfg.colors.yellow;
-        highlight = mkOpt str cfg.colors.white;
+      rofi = {
+        bg = {
+          main = mkOpt str "#FFFFFF";
+          alt = mkOpt str "#FFFFFF";
+          bar = mkOpt str "#FFFFFF";
+        };
+        fg = mkOpt str "#FFFFFF";
+        ribbon = {
+          outer = mkOpt str "#FFFFFF";
+          inner = mkOpt str "#FFFFFF";
+        };
+        highlight = mkOpt str "#FFFFFF";
+        urgent = mkOpt str "#FFFFFF";
+        transparent = mkOpt str "#FFFFFF";
       };
     };
 
@@ -107,37 +142,6 @@ in {
         light = mkOpt str "";
       };
     };
-
-    fish.colors = {
-      fg = mkOpt str "#FFFFFF";
-      highlight = mkOpt str "#FFFFFF";
-      base01 = mkOpt str "#FFFFFF";
-      base02 = mkOpt str "#FFFFFF";
-      base03 = mkOpt str "#FFFFFF";
-      base04 = mkOpt str "#FFFFFF";
-      base05 = mkOpt str "#FFFFFF";
-      base06 = mkOpt str "#FFFFFF";
-      base07 = mkOpt str "#FFFFFF";
-      base08 = mkOpt str "#FFFFFF";
-      base09 = mkOpt str "#FFFFFF";
-      base10 = mkOpt str "#FFFFFF";
-    };
-
-    rofi.colors = {
-      bg = {
-        main = mkOpt str "#FFFFFF";
-        alt = mkOpt str "#FFFFFF";
-        bar = mkOpt str "#FFFFFF";
-      };
-      fg = mkOpt str "#FFFFFF";
-      ribbon = {
-        outer = mkOpt str "#FFFFFF";
-        inner = mkOpt str "#FFFFFF";
-      };
-      highlight = mkOpt str "#FFFFFF";
-      urgent = mkOpt str "#FFFFFF";
-      transparent = mkOpt str "#FFFFFF";
-    };
   };
 
   config = mkIf (cfg.active != null) (mkMerge [
@@ -155,25 +159,25 @@ in {
 
     {
       home.configFile = {
-        "xtheme/00-init".text = with cfg.colors; ''
+        "xtheme/00-init".text = with cfg.colors.main; ''
           #define bg   ${types.bg}
           #define fg   ${types.fg}
-          #define blk  ${black}
-          #define bblk ${brightBlack}
-          #define red  ${red}
-          #define bred ${brightRed}
-          #define grn  ${green}
-          #define bgrn ${brightGreen}
-          #define ylw  ${yellow}
-          #define bylw ${brightYellow}
-          #define blu  ${blue}
-          #define bblu ${brightBlue}
-          #define mag  ${magenta}
-          #define bmag ${brightMagenta}
-          #define cyn  ${cyan}
-          #define bcyn ${brightCyan}
-          #define wht  ${white}
-          #define bwht ${brightWhite}
+          #define blk  ${normal.black}
+          #define bblk ${bright.black}
+          #define red  ${normal.red}
+          #define bred ${bright.red}
+          #define grn  ${normal.green}
+          #define bgrn ${bright.green}
+          #define ylw  ${normal.yellow}
+          #define bylw ${bright.yellow}
+          #define blu  ${normal.blue}
+          #define bblu ${bright.blue}
+          #define mag  ${normal.magenta}
+          #define bmag ${bright.magenta}
+          #define cyn  ${normal.cyan}
+          #define bcyn ${bright.cyan}
+          #define wht  ${normal.white}
+          #define bwht ${bright.white}
         '';
 
         "xtheme/05-colors".text = ''

@@ -20,7 +20,7 @@ in {
       package = pkgs.vscodium;
       mutableExtensionsDir = true;
 
-      extensions = import "${configDir}/vscodium/extensions.nix" {
+      extensions = import "${configDir}/vscodium/extensions.nix".extensions {
         inherit config;
         inherit pkgs;
       };

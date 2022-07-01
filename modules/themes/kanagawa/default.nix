@@ -8,7 +8,6 @@
 with lib;
 with lib.my; let
   cfg = config.modules.themes;
-  deskCfg = config.modules.desktop;
 in {
   config = mkIf (cfg.active == "kanagawa") (mkMerge [
     {
@@ -31,30 +30,65 @@ in {
         };
 
         colors = {
-          black = "#090618";
-          red = "#c34043";
-          green = "#76946a";
-          yellow = "#c0a36e";
-          blue = "#7e9cd8";
-          magenta = "#957fb8";
-          cyan = "#6a9589";
-          white = "#c8c093";
+          main = {
+            normal = {
+              black = "#090618";
+              red = "#c34043";
+              green = "#76946a";
+              yellow = "#c0a36e";
+              blue = "#7e9cd8";
+              magenta = "#957fb8";
+              cyan = "#6a9589";
+              white = "#c8c093";
+            };
+            bright = {
+              black = "#727169";
+              red = "#e82424";
+              green = "#98bb6c";
+              yellow = "#e6c384";
+              blue = "#7fb4ca";
+              magenta = "#938aa9";
+              cyan = "#7aa89f";
+              white = "#dcd7ba";
+            };
+            types = {
+              fg = "#dcd7ba";
+              bg = "#1f1f28";
+              panelbg = "#15161e";
+              border = "#c8c093";
+              highlight = "#2d4f67";
+            };
+          };
 
-          brightBlack = "#727169";
-          brightRed = "#e82424";
-          brightGreen = "#98bb6c";
-          brightYellow = "#e6c384";
-          brightBlue = "#7fb4ca";
-          brightMagenta = "#938aa9";
-          brightCyan = "#7aa89f";
-          brightWhite = "#dcd7ba";
+          fish = {
+            fg = "#";
+            highlight = "#";
+            base01 = "#";
+            base02 = "#";
+            base03 = "#";
+            base04 = "#";
+            base05 = "#";
+            base06 = "#";
+            base07 = "#";
+            base08 = "#";
+            base09 = "#";
+            base10 = "#";
+          };
 
-          types = {
-            fg = "#dcd7ba";
-            bg = "#1f1f28";
-            panelbg = "#15161e";
-            border = "#c8c093";
-            highlight = "#2d4f67";
+          rofi = {
+            bg = {
+              main = "";
+              alt = "";
+              bar = "";
+            };
+            fg = "";
+            ribbon = {
+              outer = "";
+              inner = "";
+            };
+            highlight = "";
+            urgent = "";
+            transparent = "";
           };
         };
 
@@ -72,40 +106,6 @@ in {
             dark = "Kanagawa";
             light = "Quite Light";
           };
-        };
-
-        fish.colors = {
-          fg = "#";
-          highlight = "#";
-
-          base01 = "#";
-          base02 = "#";
-          base03 = "#";
-          base04 = "#";
-          base05 = "#";
-          base06 = "#";
-          base07 = "#";
-          base08 = "#";
-          base09 = "#";
-          base10 = "#";
-        };
-
-        rofi.colors = {
-          bg = {
-            main = "";
-            alt = "";
-            bar = "";
-          };
-          fg = "";
-
-          ribbon = {
-            outer = "";
-            inner = "";
-          };
-
-          highlight = "";
-          urgent = "";
-          transparent = "";
         };
       };
 
@@ -129,7 +129,8 @@ in {
       ];
     })
 
-    (mkIf (deskCfg.xmonad.enable || deskCfg.qtile.enable) {
+    (mkIf (config.modules.desktop.xmonad.enable
+      || config.modules.desktop.qtile.enable) {
       services.xserver.displayManager = {
         sessionCommands = with cfg.gtk; ''
           ${getExe pkgs.xorg.xsetroot} -xcf ${pkgs.bibata-cursors}/share/icons/${cursor.name}/cursors/${cursor.default} ${
@@ -138,32 +139,32 @@ in {
         '';
 
         # LightDM: Replace with LightDM-Web-Greeter theme
-        lightdm.greeters.mini.extraConfig = ''
-          text-color = "${cfg.colors.magenta}"
-          password-background-color = "${cfg.colors.black}"
-          window-color = "${cfg.colors.types.border}"
-          border-color = "${cfg.colors.types.border}"
+        lightdm.greeters.mini.extraConfig = with cfg.colors.main; ''
+          text-color = "${normal.magenta}"
+          password-background-color = "${normal.black}"
+          window-color = "${types.border}"
+          border-color = "${types.border}"
         '';
       };
     })
 
     (mkIf config.modules.shell.fish.enable {
-      home.configFile."fish/conf.d/${cfg.active}.fish".text = ''
+      home.configFile."fish/conf.d/${cfg.active}.fish".text = with cfg.colors.fish; ''
         # --> General
-        set -l foreground ${cfg.colors.fg}
-        set -l highlight  ${cfg.colors.highlight}
+        set -l foreground ${fg}
+        set -l highlight  ${highlight}
 
         # --> palette
-        set -l base01     ${cfg.colors.base01}
-        set -l base02     ${cfg.colors.base02}
-        set -l base03     ${cfg.colors.base03}
-        set -l base04     ${cfg.colors.base04}
-        set -l base05     ${cfg.colors.base05}
-        set -l base06     ${cfg.colors.base06}
-        set -l base07     ${cfg.colors.base07}
-        set -l base08     ${cfg.colors.base08}
-        set -l base09     ${cfg.colors.base09}
-        set -l base10     ${cfg.colors.base10}
+        set -l base01     ${base01}
+        set -l base02     ${base02}
+        set -l base03     ${base03}
+        set -l base04     ${base04}
+        set -l base05     ${base05}
+        set -l base06     ${base06}
+        set -l base07     ${base07}
+        set -l base08     ${base08}
+        set -l base09     ${base09}
+        set -l base10     ${base10}
 
         # Syntax Highlighting
         set -g fish_color_normal            $foreground
@@ -196,187 +197,192 @@ in {
     })
 
     (mkIf config.modules.desktop.terminal.alacritty.enable {
-      home.configFile."alacritty/config/${cfg.active}.yml".text = ''
-        font:
-          normal:
-            family: "${cfg.font.sans.family}"
-            style:  "${cfg.font.sans.weight}"
+      home.configFile."alacritty/config/${cfg.active}.yml".text = with cfg;
+        ''
+          font:
+            normal:
+              family: "${font.sans.family}"
+              style:  "${font.sans.weight}"
 
-          bold:
-            family: "${cfg.font.sans.family}"
-            style:  "Bold"
+            bold:
+              family: "${font.sans.family}"
+              style:  "Bold"
 
-          italic:
-            family: "${cfg.font.sans.family}"
-            style:  "${cfg.font.sans.weight} Italic"
+            italic:
+              family: "${font.sans.family}"
+              style:  "${font.sans.weight} Italic"
 
-          bold_italics:
-            family: "${cfg.font.sans.family}"
-            style:  "${cfg.font.sans.weight} Italic"
+            bold_italics:
+              family: "${font.sans.family}"
+              style:  "${font.sans.weight} Italic"
 
-          size: ${toString (cfg.font.mono.size)}
+            size: ${toString (font.mono.size)}
 
-          offset:
-            x: 0
-            y: 0
+            offset:
+              x: 0
+              y: 0
 
-          glyph_offset:
-            x: 0
-            y: 0
+            glyph_offset:
+              x: 0
+              y: 0
 
-          use_thin_strokes: true
+            use_thin_strokes: true
+        ''
+        + (with cfg.colors.main; ''
+          colors:
+            primary:
+              foreground: "${types.fg}"
+              background: "${types.bg}"
 
-        colors:
-          primary:
-            foreground: "${cfg.colors.types.fg}"
-            background: "${cfg.colors.types.bg}"
+            cursor:
+              text:   "${types.bg}"
+              cursor: "${normal.yellow}"
 
-          cursor:
-            text:   "${cfg.colors.types.bg}"
-            cursor: "${cfg.colors.yellow}"
+            selection:
+              text:       "${types.bg}"
+              background: "${types.highlight}"
 
-          selection:
-            text:       "${cfg.colors.types.bg}"
-            background: "${cfg.colors.types.highlight}"
+            normal:
+              black:      "${normal.black}"
+              red:        "${normal.red}"
+              green:      "${normal.green}"
+              yellow:     "${normal.yellow}"
+              blue:       "${normal.blue}"
+              magenta:    "${normal.magenta}"
+              cyan:       "${normal.cyan}"
+              white:      "${normal.white}"
 
-          normal:
-            black:      "${cfg.colors.black}"
-            red:        "${cfg.colors.red}"
-            green:      "${cfg.colors.green}"
-            yellow:     "${cfg.colors.yellow}"
-            blue:       "${cfg.colors.blue}"
-            magenta:    "${cfg.colors.magenta}"
-            cyan:       "${cfg.colors.cyan}"
-            white:      "${cfg.colors.white}"
-
-          bright:
-            black:      "${cfg.colors.brightBlack}"
-            red:        "${cfg.colors.brightRed}"
-            green:      "${cfg.colors.brightGreen}"
-            yellow:     "${cfg.colors.brightYellow}"
-            blue:       "${cfg.colors.brightBlue}"
-            magenta:    "${cfg.colors.brightMagenta}"
-            cyan:       "${cfg.colors.brightCyan}"
-            white:      "${cfg.colors.brightWhite}"
-      '';
+            bright:
+              black:      "${bright.black}"
+              red:        "${bright.red}"
+              green:      "${bright.green}"
+              yellow:     "${bright.yellow}"
+              blue:       "${bright.blue}"
+              magenta:    "${bright.magenta}"
+              cyan:       "${bright.cyan}"
+              white:      "${bright.white}"
+        '');
     })
 
     (mkIf config.modules.desktop.terminal.kitty.enable {
       # TODO: Find ONE general nix-automation entry for VictorMono
-      "kitty/config/${cfg.active}.conf".text = ''
-        font_family               Victor Mono SemiBold Nerd Font Complete
-        italic_font               Victor Mono SemiBold Italic Nerd Font Complete
-        bold_font                 Victor Mono Bold Nerd Font Complete
-        bold_italic_font          Victor Mono Bold Italic Nerd Font Complete
-        font_size                 ${toString (cfg.font.mono.size)}
+      "kitty/config/${cfg.active}.conf".text = with cfg;
+        ''
+          font_family               Victor Mono SemiBold Nerd Font Complete
+          italic_font               Victor Mono SemiBold Italic Nerd Font Complete
+          bold_font                 Victor Mono Bold Nerd Font Complete
+          bold_italic_font          Victor Mono Bold Italic Nerd Font Complete
+          font_size                 ${toString (font.mono.size)}
+        ''
+        + (with cfg.colors.main; ''
 
-        foreground                ${cfg.colors.types.fg}
-        background                ${cfg.colors.types.bg}
+          foreground                ${types.fg}
+          background                ${types.bg}
 
-        cursor                    ${cfg.colors.yellow}
-        cursor_text_color         ${cfg.colors.types.bg}
+          cursor                    ${normal.yellow}
+          cursor_text_color         ${types.bg}
 
-        tab_bar_background        ${cfg.colors.types.bg}
-        tab_title_template        "{fmt.fg._415c6d}{fmt.bg.default} ○ {index}:{f'{title[:6]}…{title[-6:]}' if title.rindex(title[-1]) + 1 > 25 else title}{' []' if layout_name == 'stack' else '''} "
-        active_tab_title_template "{fmt.fg._83b6af}{fmt.bg.default} 綠{index}:{f'{title[:6]}…{title[-6:]}' if title.rindex(title[-1]) + 1 > 25 else title}{' []' if layout_name == 'stack' else '''} "
+          tab_bar_background        ${types.bg}
+          tab_title_template        "{fmt.fg._415c6d}{fmt.bg.default} ○ {index}:{f'{title[:6]}…{title[-6:]}' if title.rindex(title[-1]) + 1 > 25 else title}{' []' if layout_name == 'stack' else '''} "
+          active_tab_title_template "{fmt.fg._83b6af}{fmt.bg.default} 綠{index}:{f'{title[:6]}…{title[-6:]}' if title.rindex(title[-1]) + 1 > 25 else title}{' []' if layout_name == 'stack' else '''} "
 
-        selection_foreground      ${cfg.colors.types.bg}
-        selection_background      ${cfg.colors.types.highlight}
+          selection_foreground      ${types.bg}
+          selection_background      ${types.highlight}
 
-        color0                    ${cfg.colors.black}
-        color8                    ${cfg.colors.brightBlack}
+          color0                    ${normal.black}
+          color8                    ${bright.black}
 
-        color1                    ${cfg.colors.red}
-        color9                    ${cfg.colors.brightRed}
+          color1                    ${normal.red}
+          color9                    ${bright.red}
 
-        color2                    ${cfg.colors.green}
-        color10                   ${cfg.colors.brightGreen}
+          color2                    ${normal.green}
+          color10                   ${bright.green}
 
-        color3                    ${cfg.colors.yellow}
-        color11                   ${cfg.colors.brightYellow}
+          color3                    ${normal.yellow}
+          color11                   ${bright.yellow}
 
-        color4                    ${cfg.colors.blue}
-        color12                   ${cfg.colors.brightBlue}
+          color4                    ${normal.blue}
+          color12                   ${bright.blue}
 
-        color5                    ${cfg.colors.magenta}
-        color13                   ${cfg.colors.brightMagenta}
+          color5                    ${normal.magenta}
+          color13                   ${bright.magenta}
 
-        color6                    ${cfg.colors.cyan}
-        color14                   ${cfg.colors.brightCyan}
+          color6                    ${normal.cyan}
+          color14                   ${bright.cyan}
 
-        color7                    ${cfg.colors.white}
-        color15                   ${cfg.colors.brightWhite}
-      '';
+          color7                    ${normal.white}
+          color15                   ${bright.white}
+        '');
     })
 
     (mkIf config.modules.desktop.terminal.wezterm.enable {
-      "wezterm/config/${cfg.active}.lua".text = ''
+      "wezterm/config/${cfg.active}.lua".text = with cfg.colors.main; ''
         return {
-            foreground      = "${cfg.colors.types.fg}",
-            background      = "${cfg.colors.types.bg}",
+            foreground      = "${types.fg}",
+            background      = "${types.bg}",
 
-            cursor_fg       = "${cfg.colors.types.bg}",
-            cursor_bg       = "${cfg.colors.yellow}",
-            cursor_border   = "${cfg.colors.yellow}",
+            cursor_fg       = "${types.bg}",
+            cursor_bg       = "${normal.yellow}",
+            cursor_border   = "${normal.yellow}",
 
-            selection_fg    = "${cfg.colors.types.bg}",
-            selection_bg    = "${cfg.colors.types.highlight}",
+            selection_fg    = "${types.bg}",
+            selection_bg    = "${types.highlight}",
 
-            scrollbar_thumb = "${cfg.colors.magenta}",
-            split = "${cfg.colors.green}",
+            scrollbar_thumb = "${normal.magenta}",
+            split = "${normal.green}",
 
             tab_bar = {
                 active_tab = {
-                    bg_color  = "${cfg.colors.types.bg}",
-                    fg_color  = "${cfg.colors.magenta}",
+                    bg_color  = "${types.bg}",
+                    fg_color  = "${normal.magenta}",
                     intensity = "Normal",
                     italic    = true,
                     underline = "Single",
                 },
                 inactive_tab = {
-                    bg_color = "${cfg.colors.types.bg}",
-                    fg_color = "${cfg.colors.types.fg}",
+                    bg_color = "${types.bg}",
+                    fg_color = "${types.fg}",
                     italic   = true,
                 },
-                inactive_tab_edge = "${cfg.colors.black}",
+                inactive_tab_edge = "${normal.black}",
                 inactive_tab_hover = {
-                    bg_color  = "${cfg.colors.types.bg}",
-                    fg_color  = "${cfg.colors.yellow}",
+                    bg_color  = "${types.bg}",
+                    fg_color  = "${normal.yellow}",
                     italic    = true,
                     underline = "Single",
                 },
                 new_tab = {
-                    bg_color = "${cfg.colors.types.bg}",
-                    fg_color = "${cfg.colors.green}",
+                    bg_color = "${types.bg}",
+                    fg_color = "${normal.green}",
                     italic   = true,
                 },
                 new_tab_hover = {
-                    bg_color = "${cfg.colors.types.bg}",
-                    fg_color = "${cfg.colors.yellow}",
+                    bg_color = "${types.bg}",
+                    fg_color = "${normal.yellow}",
                     italic   = true,
                 },
             },
 
             ansi = {
-                "${cfg.colors.black}",
-                "${cfg.colors.red}",
-                "${cfg.colors.green}",
-                "${cfg.colors.yellow}",
-                "${cfg.colors.blue}",
-                "${cfg.colors.magenta}",
-                "${cfg.colors.cyan}",
-                "${cfg.colors.white}",
+                "${normal.black}",
+                "${normal.red}",
+                "${normal.green}",
+                "${normal.yellow}",
+                "${normal.blue}",
+                "${normal.magenta}",
+                "${normal.cyan}",
+                "${normal.white}",
             },
 
             brights = {
-                "${cfg.colors.brightBlack}",
-                "${cfg.colors.brightRed}",
-                "${cfg.colors.brightGreen}",
-                "${cfg.colors.brightYellow}",
-                "${cfg.colors.brightBlue}",
-                "${cfg.colors.brightMagenta}",
-                "${cfg.colors.brightCyan}",
-                "${cfg.colors.brightWhite}",
+                "${bright.black}",
+                "${bright.red}",
+                "${bright.green}",
+                "${bright.yellow}",
+                "${bright.blue}",
+                "${bright.magenta}",
+                "${bright.cyan}",
+                "${bright.white}",
             },
         }
       '';
@@ -384,146 +390,147 @@ in {
 
     (mkIf config.modules.desktop.extra.rofi.enable {
       home.programs.rofi = {
-        extraConfig = {
-          icon-theme = "${cfg.gtk.iconTheme}";
-          font = "${cfg.font.sans.family} ${cfg.font.sans.weight} ${toString (cfg.font.sans.size)}";
+        extraConfig = with cfg; {
+          icon-theme = "${gtk.iconTheme}";
+          font = "${font.sans.family} ${font.sans.weight} ${toString (font.sans.size)}";
         };
 
         theme = let
           inherit (config.lib.formats.rasi) mkLiteral;
-        in {
-          "*" = {
-            fg = mkLiteral "${cfg.rofi.colors.fg}";
-            bg = mkLiteral "${cfg.rofi.colors.bg}";
-            bg-alt = mkLiteral "${cfg.rofi.colors.bg.alt}";
-            bg-bar = mkLiteral "${cfg.rofi.colors.bg.bar}";
+        in
+          with cfg.colors.rofi; {
+            "*" = {
+              fg = mkLiteral "${fg}";
+              bg = mkLiteral "${bg.main}";
+              bg-alt = mkLiteral "${bg.alt}";
+              bg-bar = mkLiteral "${bg.bar}";
 
-            outer-ribbon = mkLiteral "${cfg.rofi.colors.ribbon.outer}";
-            inner-ribbon = mkLiteral "${cfg.rofi.colors.ribbon.inner}";
-            highlight = mkLiteral "${cfg.rofi.colors.highlighted}";
-            urgent = mkLiteral "${cfg.rofi.colors.urgent}";
-            transparent = mkLiteral "${cfg.rofi.colors.transparent}";
-          };
+              outer-ribbon = mkLiteral "${ribbon.outer}";
+              inner-ribbon = mkLiteral "${ribbon.inner}";
+              highlight = mkLiteral "${highlight}";
+              urgent = mkLiteral "${urgent}";
+              transparent = mkLiteral "${transparent}";
+            };
 
-          "window" = {
-            transparency = "real";
-            background-color = mkLiteral "@bg";
-            text-color = mkLiteral "@fg";
-            border = mkLiteral "0% 0% 0% 1.5%";
-            border-color = mkLiteral "@outer-ribbon";
-            border-radius = mkLiteral "0% 0% 0% 2.5%";
-            height = mkLiteral "54.50%";
-            width = mkLiteral "43%";
-            location = mkLiteral "center";
-            x-offset = mkLiteral 0;
-            y-offset = mkLiteral 0;
-          };
+            "window" = {
+              transparency = "real";
+              background-color = mkLiteral "@bg";
+              text-color = mkLiteral "@fg";
+              border = mkLiteral "0% 0% 0% 1.5%";
+              border-color = mkLiteral "@outer-ribbon";
+              border-radius = mkLiteral "0% 0% 0% 2.5%";
+              height = mkLiteral "54.50%";
+              width = mkLiteral "43%";
+              location = mkLiteral "center";
+              x-offset = mkLiteral 0;
+              y-offset = mkLiteral 0;
+            };
 
-          "prompt" = {
-            enabled = true;
-            padding = mkLiteral "0% 1% 0% 0%";
-            background-color = mkLiteral "@bg-bar";
-            text-color = mkLiteral "@fg";
-          };
+            "prompt" = {
+              enabled = true;
+              padding = mkLiteral "0% 1% 0% 0%";
+              background-color = mkLiteral "@bg-bar";
+              text-color = mkLiteral "@fg";
+            };
 
-          "entry" = {
-            background-color = mkLiteral "@bg-bar";
-            text-color = mkLiteral "@fg";
-            placeholder-color = mkLiteral "@fg";
-            expand = true;
-            horizontal-align = 0;
-            placeholder = "Search";
-            padding = mkLiteral "0.15% 0% 0% 0%";
-            blink = true;
-          };
+            "entry" = {
+              background-color = mkLiteral "@bg-bar";
+              text-color = mkLiteral "@fg";
+              placeholder-color = mkLiteral "@fg";
+              expand = true;
+              horizontal-align = 0;
+              placeholder = "Search";
+              padding = mkLiteral "0.15% 0% 0% 0%";
+              blink = true;
+            };
 
-          "inputbar" = {
-            children = mkLiteral "[ prompt, entry ]";
-            background-color = mkLiteral "@bg-bar";
-            text-color = mkLiteral "@fg";
-            expand = false;
-            border = mkLiteral "0% 0% 0.3% 0.2%";
-            border-radius = mkLiteral "1.5% 1.0% 1.5% 1.5%";
-            border-color = mkLiteral "@inner-ribbon";
-            margin = mkLiteral "0% 17% 0% 0%";
-            padding = mkLiteral "1%";
-            position = mkLiteral "center";
-          };
+            "inputbar" = {
+              children = mkLiteral "[ prompt, entry ]";
+              background-color = mkLiteral "@bg-bar";
+              text-color = mkLiteral "@fg";
+              expand = false;
+              border = mkLiteral "0% 0% 0.3% 0.2%";
+              border-radius = mkLiteral "1.5% 1.0% 1.5% 1.5%";
+              border-color = mkLiteral "@inner-ribbon";
+              margin = mkLiteral "0% 17% 0% 0%";
+              padding = mkLiteral "1%";
+              position = mkLiteral "center";
+            };
 
-          "listview" = {
-            background-color = mkLiteral "@bg";
-            columns = 5;
-            spacing = mkLiteral "1%";
-            cycle = false;
-            dynamic = true;
-            layout = mkLiteral "vertical";
-          };
+            "listview" = {
+              background-color = mkLiteral "@bg";
+              columns = 5;
+              spacing = mkLiteral "1%";
+              cycle = false;
+              dynamic = true;
+              layout = mkLiteral "vertical";
+            };
 
-          "mainbox" = {
-            background-color = mkLiteral "@bg";
-            border = mkLiteral "0% 0% 0% 1.5%";
-            border-radius = mkLiteral "0% 0% 0% 2.5%";
-            border-color = mkLiteral "@inner-ribbon";
-            children = mkLiteral "[ inputbar, listview ]";
-            spacing = mkLiteral "3%";
-            padding = mkLiteral "2.5% 2% 2.5% 2%";
-          };
+            "mainbox" = {
+              background-color = mkLiteral "@bg";
+              border = mkLiteral "0% 0% 0% 1.5%";
+              border-radius = mkLiteral "0% 0% 0% 2.5%";
+              border-color = mkLiteral "@inner-ribbon";
+              children = mkLiteral "[ inputbar, listview ]";
+              spacing = mkLiteral "3%";
+              padding = mkLiteral "2.5% 2% 2.5% 2%";
+            };
 
-          "element" = {
-            background-color = mkLiteral "@bg-bar";
-            text-color = mkLiteral "@fg";
-            orientation = mkLiteral "vertical";
-            border-radius = mkLiteral "1.5% 1.0% 1.5% 1.5%";
-            padding = mkLiteral "2% 0% 2% 0%";
-          };
+            "element" = {
+              background-color = mkLiteral "@bg-bar";
+              text-color = mkLiteral "@fg";
+              orientation = mkLiteral "vertical";
+              border-radius = mkLiteral "1.5% 1.0% 1.5% 1.5%";
+              padding = mkLiteral "2% 0% 2% 0%";
+            };
 
-          "element-icon" = {
-            background-color = mkLiteral "@transparent";
-            text-color = mkLiteral "inherit";
-            horizontal-align = 0.5;
-            vertical-align = 0.5;
-            size = mkLiteral "64px";
-            border = mkLiteral "0px";
-          };
+            "element-icon" = {
+              background-color = mkLiteral "@transparent";
+              text-color = mkLiteral "inherit";
+              horizontal-align = 0.5;
+              vertical-align = 0.5;
+              size = mkLiteral "64px";
+              border = mkLiteral "0px";
+            };
 
-          "element-text" = {
-            background-color = mkLiteral "@transparent";
-            text-color = mkLiteral "inherit";
-            expand = true;
-            horizontal-align = mkLiteral "0.5";
-            vertical-align = mkLiteral "0.5";
-            margin = mkLiteral "0.5% 1% 0% 1%";
-          };
+            "element-text" = {
+              background-color = mkLiteral "@transparent";
+              text-color = mkLiteral "inherit";
+              expand = true;
+              horizontal-align = mkLiteral "0.5";
+              vertical-align = mkLiteral "0.5";
+              margin = mkLiteral "0.5% 1% 0% 1%";
+            };
 
-          "element normal.urgent, element alternate.urgent" = {
-            background-color = mkLiteral "@urgent";
-            text-color = mkLiteral "@fg";
-            border-radius = mkLiteral "1%";
-          };
+            "element normal.urgent, element alternate.urgent" = {
+              background-color = mkLiteral "@urgent";
+              text-color = mkLiteral "@fg";
+              border-radius = mkLiteral "1%";
+            };
 
-          "element normal.active, element alternate.active" = {
-            background-color = mkLiteral "@bg-alt";
-            text-color = mkLiteral "@fg";
-          };
+            "element normal.active, element alternate.active" = {
+              background-color = mkLiteral "@bg-alt";
+              text-color = mkLiteral "@fg";
+            };
 
-          "element selected" = {
-            background-color = mkLiteral "@highlight";
-            text-color = mkLiteral "@bg";
-            border = mkLiteral "0% 0% 0.3% 0.2%";
-            border-radius = mkLiteral "1.5% 1.0% 1.5% 1.5%";
-            border-color = mkLiteral "@inner-ribbon";
-          };
+            "element selected" = {
+              background-color = mkLiteral "@highlight";
+              text-color = mkLiteral "@bg";
+              border = mkLiteral "0% 0% 0.3% 0.2%";
+              border-radius = mkLiteral "1.5% 1.0% 1.5% 1.5%";
+              border-color = mkLiteral "@inner-ribbon";
+            };
 
-          "element selected.urgent" = {
-            background-color = mkLiteral "@urgent";
-            text-color = mkLiteral "@fg";
-          };
+            "element selected.urgent" = {
+              background-color = mkLiteral "@urgent";
+              text-color = mkLiteral "@fg";
+            };
 
-          "element selected.active" = {
-            background-color = mkLiteral "@bg-alt";
-            color = mkLiteral "@fg";
+            "element selected.active" = {
+              background-color = mkLiteral "@bg-alt";
+              color = mkLiteral "@fg";
+            };
           };
-        };
       };
     })
 
@@ -563,9 +570,9 @@ in {
           # Aesthetics
           transparency = 0;
           frame_width = 2;
-          frame_color = "${cfg.colors.types.border}";
+          frame_color = "${cfg.colors.main.types.border}";
           separator_color = "frame";
-          font = "${cfg.font.sans.family} ${cfg.font.sans.weight} 11";
+          font = with cfg.font; "${sans.family} ${sans.weight} 11";
 
           line_height = 1;
           idle_threshold = 120;
@@ -609,25 +616,25 @@ in {
           per_monitor_dpi = false;
         };
 
-        urgency_low = {
-          foreground = "${cfg.colors.types.fg}";
-          background = "${cfg.colors.types.bg}";
+        urgency_low = with cfg.colors.main; {
+          foreground = "${types.fg}";
+          background = "${types.bg}";
           timeout = 5;
           #icon = /path/to/icon;
         };
 
-        urgency_normal = {
-          foreground = "${cfg.colors.types.fg}";
-          background = "${cfg.colors.types.bg}";
-          frame_color = "${cfg.colors.types.border}";
+        urgency_normal = with cfg.colors.main; {
+          foreground = "${types.fg}";
+          background = "${types.bg}";
+          frame_color = "${types.border}";
           timeout = 7;
           #icon = /path/to/icon;
         };
 
-        urgency_critical = {
-          foreground = "${cfg.colors.types.fg}";
-          background = "${cfg.colors.types.bg}";
-          frame_color = "${cfg.colors.types.error}";
+        urgency_critical = with cfg.colors.main; {
+          foreground = "${types.fg}";
+          background = "${types.bg}";
+          frame_color = "${types.error}";
           timeout = 10;
           #icon = /path/to/icon
         };
@@ -638,7 +645,7 @@ in {
       };
     })
 
-    # TODO: Fcitx5 kanagawa theme
+    # TODO: Find ONE general nix-automation entry for VictorMono
     (mkIf config.modules.desktop.extra.fcitx5.enable {
       home.file.".local/share/fcitx5/themes".source = pkgs.fetchFromGitHub {
         owner = "icy-thought";
@@ -649,58 +656,60 @@ in {
     })
 
     (mkIf config.modules.desktop.editors.vscodium.enable {
-      home.programs.vscode.extensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace [
-        {
-          name = "${cfg.vscode.extension.name}";
-          publisher = "${cfg.vscode.extension.publisher}";
-          version = "${cfg.vscode.extension.version}";
-          sha256 = "${cfg.vscode.extension.sha256}";
-        }
-      ];
+      home.programs.vscode.extensions = with cfg.vscode.extension;
+        pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+          {
+            name = "${name}";
+            publisher = "${publisher}";
+            version = "${version}";
+            sha256 = "${sha256}";
+          }
+        ];
     })
 
     (mkIf config.modules.desktop.media.viewer.document {
-      home.programs.zathura.options = {
-        adjust-open = "width";
-        first-page-column = "1:1";
-        window-title-basename = true;
-        selection-clipboard = "clipboard";
-        font = "${cfg.font.sans.family} ${cfg.font.sans.weight} ${toString (cfg.font.mono.size)}";
+      home.programs.zathura.options =
+        {
+          adjust-open = "width";
+          first-page-column = "1:1";
+          window-title-basename = true;
+          selection-clipboard = "clipboard";
+          font = with cfg.font; "${sans.family} ${sans.weight} ${toString (mono.size)}";
+          recolor = true;
+          recolor-keephue = true;
+          recolor-reverse-video = true;
+        }
+        ++ (with cfg.colors.main; {
+          default-fg = "${types.fg}";
+          default-bg = "${types.bg}";
 
-        default-fg = "${cfg.colors.types.fg}";
-        default-bg = "${cfg.colors.types.bg}";
+          statusbar-fg = "${normal.white}";
+          statusbar-bg = "${types.bg}";
 
-        statusbar-fg = "${cfg.colors.white}";
-        statusbar-bg = "${cfg.colors.types.bg}";
+          inputbar-fg = "${normal.yellow}";
+          inputbar-bg = "${types.bg}";
 
-        inputbar-fg = "${cfg.colors.yellow}";
-        inputbar-bg = "${cfg.colors.types.bg}";
+          notification-fg = "${normal.white}";
+          notification-bg = "${normal.black}";
 
-        notification-fg = "${cfg.colors.white}";
-        notification-bg = "${cfg.colors.black}";
+          notification-error-fg = "${normal.white}";
+          notification-error-bg = "${normal.black}";
 
-        notification-error-fg = "${cfg.colors.white}";
-        notification-error-bg = "${cfg.colors.black}";
+          notification-warning-fg = "${normal.red}";
+          notification-warning-bg = "${normal.black}";
 
-        notification-warning-fg = "${cfg.colors.red}";
-        notification-warning-bg = "${cfg.colors.black}";
+          highlight-active-color = "${types.fg}";
+          highlight-color = "${types.highlight}";
 
-        highlight-active-color = "${cfg.colors.types.fg}";
-        highlight-color = "${cfg.colors.types.highlight}";
+          completion-fg = "${normal.yellow}";
+          completion-bg = "${types.bg}";
 
-        completion-fg = "${cfg.colors.yellow}";
-        completion-bg = "${cfg.colors.types.bg}";
+          completion-highlight-fg = "${types.bg}";
+          completion-highlight-bg = "${normal.yellow}";
 
-        completion-highlight-fg = "${cfg.colors.types.bg}";
-        completion-highlight-bg = "${cfg.colors.yellow}";
-
-        recolor-lightcolor = "${cfg.colors.types.bg}";
-        recolor-darkcolor = "${cfg.colors.white}";
-
-        recolor = true;
-        recolor-keephue = true;
-        recolor-reverse-video = true;
-      };
+          recolor-lightcolor = "${types.bg}";
+          recolor-darkcolor = "${normal.white}";
+        });
     })
   ]);
 }
