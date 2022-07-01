@@ -9,7 +9,11 @@ with lib;
 with lib.my; let
   cfg = config.modules.desktop;
 in {
-  config = mkIf cfg.gnome.enable {
+  options.modules.desktop.extra.ibus = {
+    enable = mkBoolOpt false;
+  };
+
+  config = mkIf cfg.extra.ibus.enable {
     i18n.inputMethod = {
       enabled = "ibus";
       ibus.engines = with pkgs.ibus-engines; [

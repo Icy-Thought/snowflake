@@ -8,8 +8,12 @@
 }:
 with lib;
 with lib.my; let
-  cfg = config.modules.desktop;
+  cfg = config.modules.desktop.extra.customLayout;
 in {
+  options.modules.desktop.extra.customLayout = {
+    enable = mkBoolOpt false;
+  };
+
   config = let
     customKeyboardLayout = pkgs.writeText "custom-keyboard-layout" ''
       xkb_keymap {
@@ -28,9 +32,9 @@ in {
       };
     '';
   in
-    mkIf (cfg.xmonad.enable || cfg.qtile.enable) {
+    mkIf cfg.enable {
       home.xsession.initExtra = ''
-        # Set XKB layout = us+hyper on XMonad start:
+        # Set XKB layout = us+hyper on WM start:
         ${getExe pkgs.xorg.xkbcomp} ${customKeyboardLayout} $DISPLAY
       '';
 

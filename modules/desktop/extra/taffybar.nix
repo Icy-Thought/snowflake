@@ -8,8 +8,12 @@
 }:
 with lib;
 with lib.my; let
-  cfg = config.modules.desktop.xmonad;
+  cfg = config.modules.desktop.extra.taffybar;
 in {
+  options.modules.desktop.extra.taffybar = {
+    enable = mkBoolOpt false;
+  };
+
   config = mkIf cfg.enable {
     nixpkgs.overlays = with inputs; [taffybar.overlay];
 
@@ -18,7 +22,6 @@ in {
 
     services.xserver = {
       gdk-pixbuf.modulePackages = [pkgs.librsvg];
-
       displayManager.sessionCommands = ''
         # 1st-Step Taffybar workaround
         systemctl --user import-environment GDK_PIXBUF_MODULE_FILE DBUS_SESSION_BUS_ADDRESS PATH

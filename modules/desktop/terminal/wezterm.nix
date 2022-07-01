@@ -9,8 +9,11 @@ with lib;
 with lib.my; let
   cfg = config.modules.desktop.terminal.wezterm;
   configDir = config.snowflake.configDir;
-  font = config.modules.themes.font;
+
+  # Theme-related let's
   active = config.modules.themes.active;
+  colors = config.modules.themes.colors;
+  font = config.modules.themes.font;
 in {
   options.modules.desktop.terminal.wezterm = {
     enable = mkBoolOpt false;
@@ -19,10 +22,9 @@ in {
   config = mkIf cfg.enable {
     user.packages = with pkgs; [wezterm];
 
-    home.configFile."wezterm/wezterm.lua" = {
-      text = ''
+    home.configFile = {
+      "wezterm/wezterm.lua".text = ''
         local wezterm = require("wezterm")
-
         ${optionalString (active != null) ''
           local ${active} = require("config.${active}")
         ''}
@@ -33,32 +35,34 @@ in {
             automatically_reload_config = true,
             hide_tab_bar_if_only_one_tab = false,
 
-            ${optionalString (active != null) "colors = ${active},"}
             bold_brightens_ansi_colors = true,
             use_fancy_tab_bar = false,
-
-            font = wezterm.font({
-                family = "${font.sans.family}",
-                -- {bold = true, italic = true,}
-                weight = "${font.sans.weightAlt}",
-                harfbuzz_features = { "calt=1", "clig=1", "liga=1" },
-            }),
-
-            font_size= ${toString (font.mono.size)},
-
             line_height = 1.0,
 
-            window_frame = {
-                active_titlebar_bg = "${colors.types.bg}",
-                inactive_titlebar_bg = "${colors.black}",
+            ${optionalString (active != null) ''
+          colors = ${active},
 
-                font = wezterm.font({
-                    family = "${font.sans.family}",
-                    weight = "${font.sans.weightAlt}",
-                    style = "Italic",
-                }),
-                font_size= 9.0,
-            },
+          font = wezterm.font({
+              family = "${font.sans.family}",
+              -- {bold = true, italic = true,}
+              weight = "${font.sans.weightAlt}",
+              harfbuzz_features = { "calt=1", "clig=1", "liga=1" },
+          }),
+
+          font_size= ${toString (font.mono.size)},
+
+          window_frame = {
+              active_titlebar_bg = "${colors.types.bg}",
+              inactive_titlebar_bg = "${colors.black}",
+
+              font = wezterm.font({
+                  family = "${font.sans.family}",
+                  weight = "${font.sans.weightAlt}",
+                  style = "Italic",
+              }),
+              font_size= 9.0,
+          },
+        ''}
 
             window_padding = {
                 left = 5,

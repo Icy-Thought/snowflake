@@ -1,6 +1,0 @@
-{
-    name = "catppuccin-vsc";
-    publisher = "Catppuccin";
-    version = "1.0.6";
-    sha256 = "4M8y8dc8BpH1yhabYJsHDT9uDWeqYjnvPBgLS+lTa5I=";
-}

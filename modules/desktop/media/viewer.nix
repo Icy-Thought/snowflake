@@ -8,6 +8,11 @@
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.media.viewer;
+
+  # Theme-related let's
+  active = config.modules.themes.active;
+  colors = config.modules.themes.colors;
+  font = config.modules.themes.font;
 in {
   options.modules.desktop.media.viewer = {
     document.enable = mkBoolOpt false;
@@ -17,7 +22,7 @@ in {
 
   config = mkMerge [
     (mkIf cfg.document.enable {
-      user.packages = with pkgs; [zathura];
+      home.programs.zathura.enable = true;
     })
 
     (mkIf cfg.music.enable {

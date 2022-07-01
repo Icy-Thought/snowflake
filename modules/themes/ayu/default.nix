@@ -13,7 +13,7 @@ in {
   config = mkIf (cfg.active == "ayu") (mkMerge [
     {
       modules.themes = {
-        wallpaper = mkDefault ./config/wallpaper.jpg;
+        wallpaper = mkDefault ./wallpaper.jpg;
 
         gtk = {
           theme = "Orchis-Dark-Compact";
@@ -22,13 +22,6 @@ in {
             name = "Bibata-Modern-Amber";
             size = 24;
           };
-        };
-
-        neovim.theme = "themer_ayu";
-
-        vscode.theme = {
-          dark = "Ayu Dark";
-          light = "Ayu Light";
         };
 
         font = {
@@ -64,6 +57,56 @@ in {
             highlight = "#e6e1cf";
           };
         };
+
+        neovim.theme = "themer_ayu";
+
+        vscode = {
+          extension = {
+            name = "ayu";
+            publisher = "teabyii";
+            version = "1.0.5";
+            sha256 = "+ifqgwlikr+qjblmqlzf44xnbn7br5a119v9wanzou4=";
+          };
+
+          theme = {
+            dark = "Ayu Dark";
+            light = "Ayu Light";
+          };
+        };
+
+        fish.colors = {
+          fg = "#b3b1ad";
+          highlight = "#e6b450";
+
+          base01 = "#00827f";
+          base02 = "#95e6cb";
+          base03 = "#";
+          base04 = "#e53983";
+          base05 = "#ff3333";
+          base06 = "#f29668";
+          base07 = "#c2d94c";
+          base08 = "#ffb454";
+          base09 = "#59c2ff";
+          base10 = "#4d5566";
+        };
+
+        rofi.colors = {
+          bg = {
+            main = "hsla(210, 25%, 7%, 1)";
+            alt = "hsla(210, 25%, 7%, 0)";
+            bar = "hsla(212, 20%, 14%, 1)";
+          };
+          fg = "hsla(46, 31%, 85%, 1)";
+
+          ribbon = {
+            outer = "hsla(211, 46%, 27%, 1)";
+            inner = "hsla(197, 78%, 40%, 1)";
+          };
+
+          highlight = "hsla(209, 82%, 33%, 0.6)";
+          urgent = "hsla(40, 100%, 50%, 1)";
+          transparent = "hsla(0, 0%, 0%, 0)";
+        };
       };
 
       # modules.desktop.browsers = {
@@ -84,41 +127,6 @@ in {
         (nerdfonts.override {fonts = ["VictorMono"];})
         twitter-color-emoji
       ];
-
-      home.configFile = with deskCfg;
-        mkMerge [
-          {
-            # Sourced from sessionCommands in modules/themes/default.nix
-            "xtheme/90-theme".text = import ./config/Xresources cfg;
-            "fish/conf.d/ayu-dark.fish".source = ./config/fish/ayu-dark.fish;
-          }
-          (mkIf (xmonad.enable || qtile.enable) {
-            "dunst/dunstrc".text = import ./config/dunst/dunstrc cfg;
-            "rofi" = {
-              source = ./config/rofi;
-              recursive = true;
-            };
-          })
-          (mkIf terminal.alacritty.enable {
-            "alacritty/config/ayu-dark.yml".text =
-              import ./config/alacritty/ayu-dark.yml cfg;
-          })
-          (mkIf terminal.kitty.enable {
-            "kitty/config/ayu-dark.conf".text =
-              import ./config/kitty/ayu-dark.conf cfg;
-          })
-          (mkIf terminal.wezterm.enable {
-            "wezterm/config/ayu-dark.lua".text =
-              import ./config/wezterm/ayu-dark.lua cfg;
-          })
-          (mkIf media.viewer.document.enable {
-            "zathura/zathurarc".text = import ./config/zathura/zathurarc cfg;
-          })
-          # (mkIf media.editor.vector.enable {
-          #   "inkscape/templates/default.svg".source =
-          #     ./config/inkscape/default-template.svg;
-          # })
-        ];
     })
 
     (mkIf (deskCfg.xmonad.enable || deskCfg.qtile.enable) {

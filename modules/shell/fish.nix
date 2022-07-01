@@ -7,14 +7,14 @@
 }:
 with lib;
 with lib.my; let
-  cfg = config.modules.shell;
+  cfg = config.modules.shell.fish;
   fishCfg = "${config.snowflake.configDir}/fish";
 in {
   options.modules.shell.fish = {
     enable = mkBoolOpt false;
   };
 
-  config = mkIf cfg.fish.enable {
+  config = mkIf cfg.enable {
     user.packages = with pkgs; [
       any-nix-shell
       fzf

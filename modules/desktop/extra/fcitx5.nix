@@ -9,7 +9,11 @@ with lib;
 with lib.my; let
   cfg = config.modules.desktop;
 in {
-  config = mkIf (cfg.xmonad.enable || cfg.qtile.enable) {
+  options.modules.desktop.extra.fcitx5 = {
+    enable = mkBoolOpt false;
+  };
+
+  config = mkIf cfg.extra.fcitx5.enable {
     i18n.inputMethod = {
       enabled = "fcitx5";
       fcitx5.addons = with pkgs; [

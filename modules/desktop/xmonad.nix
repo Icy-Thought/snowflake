@@ -33,10 +33,18 @@ in {
       feh
     ];
 
+    # Our beloved modules
     modules.desktop = {
       media.browser.nautilus.enable = true;
-      # Xdg.mimeApps -> application management
-      extra.mimeApps.enable = true;
+      extra = {
+        customLayout.enable = true;
+        fcitx5.enable = true;
+        # mimeApps -> default launch application
+        mimeApps.enable = true;
+        picom.enable = true;
+        rofi.enable = true;
+        taffybar.enable = true;
+      };
     };
 
     services.xserver = {

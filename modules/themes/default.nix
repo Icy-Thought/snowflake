@@ -43,13 +43,6 @@ in {
       };
     };
 
-    neovim.theme = mkOpt str "";
-
-    vscode.theme = {
-      dark = mkOpt str "";
-      light = mkOpt str "";
-    };
-
     onReload = mkOpt (attrsOf lines) {};
 
     font = {
@@ -97,6 +90,53 @@ in {
         warning = mkOpt str cfg.colors.yellow;
         highlight = mkOpt str cfg.colors.white;
       };
+    };
+
+    neovim.theme = mkOpt str "";
+
+    vscode = {
+      extension = {
+        name = mkOpt str "";
+        publisher = mkOpt str "";
+        version = mkOpt str "";
+        sha256 = mkOpt str "";
+      };
+
+      theme = {
+        dark = mkOpt str "";
+        light = mkOpt str "";
+      };
+    };
+
+    fish.colors = {
+      fg = mkOpt str "#FFFFFF";
+      highlight = mkOpt str "#FFFFFF";
+      base01 = mkOpt str "#FFFFFF";
+      base02 = mkOpt str "#FFFFFF";
+      base03 = mkOpt str "#FFFFFF";
+      base04 = mkOpt str "#FFFFFF";
+      base05 = mkOpt str "#FFFFFF";
+      base06 = mkOpt str "#FFFFFF";
+      base07 = mkOpt str "#FFFFFF";
+      base08 = mkOpt str "#FFFFFF";
+      base09 = mkOpt str "#FFFFFF";
+      base10 = mkOpt str "#FFFFFF";
+    };
+
+    rofi.colors = {
+      bg = {
+        main = mkOpt str "#FFFFFF";
+        alt = mkOpt str "#FFFFFF";
+        bar = mkOpt str "#FFFFFF";
+      };
+      fg = mkOpt str "#FFFFFF";
+      ribbon = {
+        outer = mkOpt str "#FFFFFF";
+        inner = mkOpt str "#FFFFFF";
+      };
+      highlight = mkOpt str "#FFFFFF";
+      urgent = mkOpt str "#FFFFFF";
+      transparent = mkOpt str "#FFFFFF";
     };
   };
 

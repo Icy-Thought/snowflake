@@ -24,13 +24,6 @@ in {
           };
         };
 
-        neovim.theme = "catppuccin";
-
-        vscode.theme = {
-          dark = "decay"; #TODO: fix with proper naming
-          light = "Quiet Light";
-        };
-
         font = {
           sans.family = "VictorMono Nerd Font";
           mono.family = "VictorMono Nerd Font Mono";
@@ -64,6 +57,56 @@ in {
             highlight = "#94f7c5";
           };
         };
+
+        neovim.theme = "catppuccin";
+
+        vscode = {
+          extension = {
+            name = "";
+            publisher = "";
+            version = "";
+            sha256 = "";
+          };
+
+          theme = {
+            dark = "decay"; #TODO: fix with proper naming
+            light = "Quite Light";
+          };
+        };
+
+        fish.colors = {
+          fg = "#";
+          highlight = "#";
+
+          base01 = "#";
+          base02 = "#";
+          base03 = "#";
+          base04 = "#";
+          base05 = "#";
+          base06 = "#";
+          base07 = "#";
+          base08 = "#";
+          base09 = "#";
+          base10 = "#";
+        };
+
+        rofi.colors = {
+          bg = {
+            main = "";
+            alt = "";
+            bar = "";
+          };
+          fg = "";
+
+          ribbon = {
+            outer = "";
+            inner = "";
+          };
+
+          highlight = "";
+          urgent = "";
+          transparent = "";
+        };
       };
 
       # modules.desktop.browsers = {
@@ -84,42 +127,6 @@ in {
         (nerdfonts.override {fonts = ["VictorMono"];})
         twitter-color-emoji
       ];
-
-      home.configFile = with deskCfg;
-        mkMerge [
-          {
-            # Sourced from sessionCommands in modules/themes/default.nix
-            "xtheme/90-theme".text = import ./config/Xresources cfg;
-            "fish/conf.d/decay.fish".source =
-              ./config/fish/decay.fish;
-          }
-          (mkIf (xmonad.enable || qtile.enable) {
-            "dunst/dunstrc".text = import ./config/dunst/dunstrc cfg;
-            "rofi" = {
-              source = ./config/rofi;
-              recursive = true;
-            };
-          })
-          (mkIf terminal.alacritty.enable {
-            "alacritty/config/decay.yml".text =
-              import ./config/alacritty/decay.yml cfg;
-          })
-          (mkIf terminal.kitty.enable {
-            "kitty/config/decay.conf".text =
-              import ./config/kitty/decay.conf cfg;
-          })
-          (mkIf terminal.wezterm.enable {
-            "wezterm/config/decay.lua".text =
-              import ./config/wezterm/decay.lua cfg;
-          })
-          (mkIf media.viewer.document.enable {
-            "zathura/zathurarc".text = import ./config/zathura/zathurarc cfg;
-          })
-          # (mkIf media.editor.vector.enable {
-          #   "inkscape/templates/default.svg".source =
-          #     ./config/inkscape/default-template.svg;
-          # })
-        ];
     })
 
     (mkIf (deskCfg.xmonad.enable || deskCfg.qtile.enable) {

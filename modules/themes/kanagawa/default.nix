@@ -13,7 +13,7 @@ in {
   config = mkIf (cfg.active == "kanagawa") (mkMerge [
     {
       modules.themes = {
-        wallpaper = mkDefault ./config/wallpaper.jpg;
+        wallpaper = mkDefault ./wallpaper.jpg;
 
         gtk = {
           theme = "Orchis-Dark-Compact";
@@ -22,13 +22,6 @@ in {
             name = "Bibata-Modern-Amber";
             size = 24;
           };
-        };
-
-        neovim.theme = "themer_kanagawa";
-
-        vscode.theme = {
-          dark = "Kanagawa";
-          light = "Quite Light";
         };
 
         font = {
@@ -64,6 +57,56 @@ in {
             highlight = "#2d4f67";
           };
         };
+
+        neovim.theme = "themer_kanagawa";
+
+        vscode = {
+          extension = {
+            name = "kanagawa";
+            publisher = "qufiwefefwoyn";
+            version = "1.5.1";
+            sha256 = "";
+          };
+
+          theme = {
+            dark = "Kanagawa";
+            light = "Quite Light";
+          };
+        };
+
+        fish.colors = {
+          fg = "#";
+          highlight = "#";
+
+          base01 = "#";
+          base02 = "#";
+          base03 = "#";
+          base04 = "#";
+          base05 = "#";
+          base06 = "#";
+          base07 = "#";
+          base08 = "#";
+          base09 = "#";
+          base10 = "#";
+        };
+
+        rofi.colors = {
+          bg = {
+            main = "";
+            alt = "";
+            bar = "";
+          };
+          fg = "";
+
+          ribbon = {
+            outer = "";
+            inner = "";
+          };
+
+          highlight = "";
+          urgent = "";
+          transparent = "";
+        };
       };
 
       # modules.desktop.browsers = {
@@ -84,41 +127,6 @@ in {
         (nerdfonts.override {fonts = ["VictorMono"];})
         twitter-color-emoji
       ];
-
-      home.configFile = with config.modules.desktop;
-        mkMerge [
-          {
-            # Sourced from sessionCommands in modules/themes/default.nix
-            "xtheme/90-theme".text = import ./config/Xresources cfg;
-            "fish/conf.d/kanagawa.fish".source = ./config/fish/kanagawa.fish;
-          }
-          (mkIf (xmonad.enable || qtile.enable) {
-            "dunst/dunstrc".text = import ./config/dunst/dunstrc cfg;
-            "rofi" = {
-              source = ./config/rofi;
-              recursive = true;
-            };
-          })
-          (mkIf terminal.alacritty.enable {
-            "alacritty/config/kanagawa.yml".text =
-              import ./config/alacritty/kanagawa.yml cfg;
-          })
-          (mkIf terminal.kitty.enable {
-            "kitty/config/kanagawa.conf".text =
-              import ./config/kitty/kanagawa.conf cfg;
-          })
-          (mkIf terminal.wezterm.enable {
-            "wezterm/config/kanagawa.lua".text =
-              import ./config/wezterm/kanagawa.lua cfg;
-          })
-          (mkIf media.viewer.document.enable {
-            "zathura/zathurarc".text = import ./config/zathura/zathurarc cfg;
-          })
-          # (mkIf media.editor.vector.enable {
-          #   "inkscape/templates/default.svg".source =
-          #     ./config/inkscape/default-template.svg;
-          # })
-        ];
     })
 
     (mkIf (deskCfg.xmonad.enable || deskCfg.qtile.enable) {
