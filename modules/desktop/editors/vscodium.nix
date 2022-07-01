@@ -21,7 +21,6 @@ in {
       mutableExtensionsDir = true;
 
       extensions = import "${configDir}/vscodium/extensions.nix".extensions {
-        inherit config;
         inherit pkgs;
       };
 

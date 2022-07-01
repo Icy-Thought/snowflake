@@ -7,13 +7,13 @@
 }:
 with lib;
 with lib.my; let
-  cfg = config.modules.desktop;
+  cfg = config.modules.desktop.extra.fcitx5;
 in {
   options.modules.desktop.extra.fcitx5 = {
     enable = mkBoolOpt false;
   };
 
-  config = mkIf cfg.extra.fcitx5.enable {
+  config = mkIf cfg.enable {
     i18n.inputMethod = {
       enabled = "fcitx5";
       fcitx5.addons = with pkgs; [
@@ -32,7 +32,7 @@ in {
         SDL_IM_MODULE = "fcitx";
       }
 
-      (mkIf cfg.terminal.kitty.enable {
+      (mkIf config.modules.desktop.terminal.kitty.enable {
         GLFW_IM_MODULE = "ibus"; # ibus != fcitx kitty.. bruh
       })
     ];

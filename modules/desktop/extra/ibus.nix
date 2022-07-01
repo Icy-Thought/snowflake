@@ -7,13 +7,13 @@
 }:
 with lib;
 with lib.my; let
-  cfg = config.modules.desktop;
+  cfg = config.modules.desktop.extra.ibus;
 in {
   options.modules.desktop.extra.ibus = {
     enable = mkBoolOpt false;
   };
 
-  config = mkIf cfg.extra.ibus.enable {
+  config = mkIf cfg.enable {
     i18n.inputMethod = {
       enabled = "ibus";
       ibus.engines = with pkgs.ibus-engines; [
@@ -31,7 +31,7 @@ in {
         SDL_IM_MODULE = "ibus";
       }
 
-      (mkIf cfg.terminal.kitty.enable {
+      (mkIf config.modules.desktop.terminal.kitty.enable {
         GLFW_IM_MODULE = "ibus";
       })
     ];

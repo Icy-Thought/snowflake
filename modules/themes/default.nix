@@ -207,16 +207,16 @@ in {
         '';
 
         # GTK
-        "gtk-3.0/settings.ini".text = ''
+        "gtk-3.0/settings.ini".text = with cfg.gtk; ''
           [Settings]
           ${optionalString (cfg.gtk.theme != "")
-            "gtk-theme-name=${cfg.gtk.theme}"}
+            "gtk-theme-name=${theme}"}
           ${optionalString (cfg.gtk.iconTheme != "")
-            "gtk-icon-theme-name=${cfg.gtk.iconTheme}"}
+            "gtk-icon-theme-name=${iconTheme}"}
           ${optionalString (cfg.gtk.cursor.name != "")
-            "gtk-cursor-theme-name=${cfg.gtk.cursor.name}"}
+            "gtk-cursor-theme-name=${cursor.name}"}
           ${optionalString (cfg.gtk.cursor.size != "")
-            "gtk-cursor-theme-size=${toString (cfg.gtk.cursor.size)}"}
+            "gtk-cursor-theme-size=${toString (cursor.size)}"}
           gtk-fallback-icon-theme=gnome
           gtk-application-prefer-dark-theme=true
           gtk-xft-hinting=1
@@ -225,18 +225,18 @@ in {
         '';
 
         # GTK2 global theme (widget and icon theme)
-        "gtk-2.0/gtkrc".text = ''
-          ${optionalString (cfg.gtk.theme != "")
-            ''gtk-theme-name="${cfg.gtk.theme}"''}
+        "gtk-2.0/gtkrc".text = with cfg; ''
+          ${optionalString (gtk.theme != "")
+            ''gtk-theme-name="${gtk.theme}"''}
           ${optionalString (cfg.gtk.iconTheme != "")
-            ''gtk-icon-theme-name="${cfg.gtk.iconTheme}"''}
-          gtk-font-name="Sans ${toString (cfg.font.sans.size)}"
+            ''gtk-icon-theme-name="${gtk.iconTheme}"''}
+          gtk-font-name="Sans ${toString (font.sans.size)}"
         '';
 
         # QT4/5 global theme
-        "Trolltech.conf".text = ''
+        "Trolltech.conf".text = with cfg.gtk; ''
           [Qt]
-          ${optionalString (cfg.gtk.theme != "") "style=${cfg.gtk.theme}"}
+          ${optionalString (theme != "") "style=${theme}"}
         '';
       };
 
@@ -248,10 +248,10 @@ in {
         '';
       };
 
-      fonts.fontconfig.defaultFonts = {
-        sansSerif = [cfg.font.sans.family];
-        monospace = [cfg.font.mono.family];
-        emoji = [cfg.font.emoji];
+      fonts.fontconfig.defaultFonts = with cfg.font; {
+        sansSerif = [sans.family];
+        monospace = [mono.family];
+        emoji = [emoji];
       };
     }
 

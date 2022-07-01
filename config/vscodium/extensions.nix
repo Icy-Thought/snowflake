@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   extensions =
     (with pkgs.vscode-extensions; [
       # Editor

@@ -9,11 +9,7 @@ with lib;
 with lib.my; let
   cfg = config.modules.desktop.terminal.wezterm;
   configDir = config.snowflake.configDir;
-
-  # Theme-related let's
-  active = config.modules.themes.active;
-  colors = config.modules.themes.colors;
-  font = config.modules.themes.font;
+  pltCfg = config.modules.themes;
 in {
   options.modules.desktop.terminal.wezterm = {
     enable = mkBoolOpt false;
@@ -22,7 +18,7 @@ in {
   config = mkIf cfg.enable {
     user.packages = with pkgs; [wezterm];
 
-    home.configFile = {
+    home.configFile = with pltCfg; {
       "wezterm/wezterm.lua".text = ''
         local wezterm = require("wezterm")
         ${optionalString (active != null) ''
@@ -52,8 +48,8 @@ in {
           font_size= ${toString (font.mono.size)},
 
           window_frame = {
-              active_titlebar_bg = "${colors.types.bg}",
-              inactive_titlebar_bg = "${colors.black}",
+              active_titlebar_bg = "${colors.main.types.bg}",
+              inactive_titlebar_bg = "${colors.main.normal.black}",
 
               font = wezterm.font({
                   family = "${font.sans.family}",
