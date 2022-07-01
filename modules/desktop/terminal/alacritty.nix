@@ -16,7 +16,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home.programs.alacritty = {
+    hm.programs.alacritty = {
       enable = true;
 
       settings = mkMerge [

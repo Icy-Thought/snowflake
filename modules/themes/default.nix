@@ -83,31 +83,31 @@ in {
           cyan = mkOpt str "#88FFFF"; # 14
           white = mkOpt str "#FFFFFF"; # 15
         };
-        types = {
-          bg = mkOpt str cfg.colors.main.normal.black;
-          fg = mkOpt str cfg.colors.main.normal.white;
-          panelbg = mkOpt str cfg.colors.main.types.bg;
-          panelfg = mkOpt str cfg.colors.main.types.fg;
-          border = mkOpt str cfg.colors.main.types.bg;
-          error = mkOpt str cfg.colors.main.normal.red;
-          warning = mkOpt str cfg.colors.main.normal.yellow;
-          highlight = mkOpt str cfg.colors.main.normal.white;
+        types = with cfg.colors.main; {
+          bg = mkOpt str normal.black;
+          fg = mkOpt str normal.white;
+          panelbg = mkOpt str types.bg;
+          panelfg = mkOpt str types.fg;
+          border = mkOpt str types.bg;
+          error = mkOpt str normal.red;
+          warning = mkOpt str normal.yellow;
+          highlight = mkOpt str normal.white;
         };
       };
 
       fish = {
-        fg = mkOpt str "#FFFFFF";
-        highlight = mkOpt str "#FFFFFF";
-        base01 = mkOpt str "#FFFFFF";
-        base02 = mkOpt str "#FFFFFF";
-        base03 = mkOpt str "#FFFFFF";
-        base04 = mkOpt str "#FFFFFF";
-        base05 = mkOpt str "#FFFFFF";
-        base06 = mkOpt str "#FFFFFF";
-        base07 = mkOpt str "#FFFFFF";
-        base08 = mkOpt str "#FFFFFF";
-        base09 = mkOpt str "#FFFFFF";
-        base10 = mkOpt str "#FFFFFF";
+        fg = mkOpt str "#ffffff";
+        highlight = mkOpt str "#ffffff";
+        base01 = mkOpt str "#ffffff";
+        base02 = mkOpt str "#ffffff";
+        base03 = mkOpt str "#ffffff";
+        base04 = mkOpt str "#ffffff";
+        base05 = mkOpt str "#ffffff";
+        base06 = mkOpt str "#ffffff";
+        base07 = mkOpt str "#ffffff";
+        base08 = mkOpt str "#ffffff";
+        base09 = mkOpt str "#ffffff";
+        base10 = mkOpt str "#ffffff";
       };
 
       rofi = {
@@ -136,7 +136,6 @@ in {
         version = mkOpt str "";
         sha256 = mkOpt str "";
       };
-
       theme = {
         dark = mkOpt str "";
         light = mkOpt str "";

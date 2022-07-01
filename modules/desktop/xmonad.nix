@@ -38,9 +38,9 @@ in {
       extra = {
         customLayout.enable = true;
         fcitx5.enable = true;
-        # mimeApps -> default launch application
-        mimeApps.enable = true;
+        mimeApps.enable = true; # mimeApps -> default launch application
         picom.enable = true;
+        dunst.enable = true;
         rofi.enable = true;
         taffybar.enable = true;
       };
@@ -70,17 +70,16 @@ in {
     services = {
       autorandr.enable = true;
       blueman.enable = true;
-      dunst.enable = true;
     };
 
-    home.services = {
-      gnome-keyring.enable = true;
+    hm.services = {
       blueman-applet.enable = true;
-      status-notifier-watcher.enable = true;
+      gnome-keyring.enable = true;
       network-manager-applet.enable = true;
+      status-notifier-watcher.enable = true;
     };
 
-    home.xsession = {
+    hm.xsession = {
       enable = true;
       numlock.enable = true;
       preferStatusNotifierItems = true;

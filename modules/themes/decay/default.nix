@@ -41,7 +41,7 @@ in {
               cyan = "#74bee9";
               white = "#dee1e6";
             };
-            brigh = {
+            bright = {
               black = "#485263";
               red = "#e05f65";
               green = "#78dba9";
@@ -101,7 +101,6 @@ in {
             version = "";
             sha256 = "";
           };
-
           theme = {
             dark = "decay"; #TODO: fix with proper naming
             light = "Quite Light";
@@ -266,7 +265,7 @@ in {
 
     (mkIf config.modules.desktop.terminal.kitty.enable {
       # TODO: Find ONE general nix-automation entry for VictorMono
-      "kitty/config/${cfg.active}.conf".text = with cfg;
+      home.configFile."kitty/config/${cfg.active}.conf".text = with cfg;
         ''
           font_family               Victor Mono SemiBold Nerd Font Complete
           italic_font               Victor Mono SemiBold Italic Nerd Font Complete
@@ -316,7 +315,7 @@ in {
     })
 
     (mkIf config.modules.desktop.terminal.wezterm.enable {
-      "wezterm/config/${cfg.active}.lua".text = with cfg.colors.main; ''
+      home.configFile."wezterm/config/${cfg.active}.lua".text = with cfg.colors.main; ''
         return {
             foreground      = "${types.fg}",
             background      = "${types.bg}",
@@ -389,14 +388,14 @@ in {
     })
 
     (mkIf config.modules.desktop.extra.rofi.enable {
-      home.programs.rofi = {
+      hm.programs.rofi = {
         extraConfig = with cfg; {
           icon-theme = "${gtk.iconTheme}";
           font = "${font.sans.family} ${font.sans.weight} ${toString (font.sans.size)}";
         };
 
         theme = let
-          inherit (config.lib.formats.rasi) mkLiteral;
+          inherit (config.hm.lib.formats.rasi) mkLiteral;
         in
           with cfg.colors.rofi; {
             "*" = {
@@ -422,8 +421,8 @@ in {
               height = mkLiteral "54.50%";
               width = mkLiteral "43%";
               location = mkLiteral "center";
-              x-offset = mkLiteral 0;
-              y-offset = mkLiteral 0;
+              x-offset = 0;
+              y-offset = 0;
             };
 
             "prompt" = {
@@ -487,8 +486,8 @@ in {
             "element-icon" = {
               background-color = mkLiteral "@transparent";
               text-color = mkLiteral "inherit";
-              horizontal-align = 0.5;
-              vertical-align = 0.5;
+              horizontal-align = "0.5";
+              vertical-align = "0.5";
               size = mkLiteral "64px";
               border = mkLiteral "0px";
             };
@@ -534,118 +533,84 @@ in {
       };
     })
 
-    (mkif config.modules.desktop.extra.dunst.enable {
-      home.services.dunst.settings = {
-        global = {
-          monitor = 0;
-          follow = "mouse";
-          indicate_hidden = "yes";
+    (mkIf config.modules.desktop.extra.dunst.enable {
+      hm.services.dunst.settings =
+        {
+          global = {
+            # Geometry
+            width = 300;
+            height = 200;
+            origin = "top-right";
+            offset = "12+48";
 
-          # Geometry
-          width = 300;
-          height = 200;
-          origin = "top-right";
-          offset = "12+48";
+            padding = 20;
+            horizontal_padding = 20;
+            notification_limit = 0;
+            separator_height = 2;
 
-          # Notification
-          sort = "yes";
-          scale = 0;
-          shrink = "no";
-          word_wrap = "yes";
+            # Progress-Bar
+            progress_bar = true;
+            progress_bar_height = 10;
+            progress_bar_frame_width = 1;
+            progress_bar_min_width = 150;
+            progress_bar_max_width = 300;
 
-          padding = 20;
-          horizontal_padding = 20;
-          notification_limit = 0;
-          separator_height = 2;
-          stack_duplicates = true;
-          hide_duplicate_count = false;
+            # Aesthetics
+            transparency = 0;
+            frame_width = 2;
+            separator_color = "frame";
+            font = with cfg.font; "${sans.family} ${sans.weight} 11";
 
-          # Progress-Bar
-          progress_bar = true;
-          progress_bar_height = 10;
-          progress_bar_frame_width = 1;
-          progress_bar_min_width = 150;
-          progress_bar_max_width = 300;
+            line_height = 1;
+            idle_threshold = 120;
+            markup = "full";
+            format = "<span font='13' weight='bold'>%s</span>\\n%b";
+            alignment = "left";
+            vertical_alignment = "center";
 
-          # Aesthetics
-          transparency = 0;
-          frame_width = 2;
-          frame_color = "${cfg.colors.main.types.border}";
-          separator_color = "frame";
-          font = with cfg.font; "${sans.family} ${sans.weight} 11";
+            icon_position = "left";
+            min_icon_size = 0;
+            max_icon_size = 64;
 
-          line_height = 1;
-          idle_threshold = 120;
-          markup = "full";
-          format = "<span font='13' weight='bold'>%s</span>\\n%b";
-          alignment = "left";
-          vertical_alignment = "center";
+            # Keybindings
+            close = "ctrl+space";
+            close_all = "ctrl+shift+space";
+            history = "ctrl+grave";
+            context = "ctrl+shift+period";
 
-          icon_position = "left";
-          min_icon_size = 0;
-          max_icon_size = 64;
+            mouse_left_click = "close_current";
+            mouse_middle_click = "do_action, close_current";
+            mouse_right_click = "close_all";
+          };
+        }
+        // (with cfg.colors.main; {
+          global.frame_color = "${types.border}";
 
-          # General
-          title = "Dunst";
-          class = "Dunst";
+          urgency_low = {
+            foreground = "${types.fg}";
+            background = "${types.bg}";
+            timeout = 5;
+            #icon = /path/to/icon;
+          };
 
-          show_age_threshold = 60;
-          ellipsize = "middle";
-          ignore_newline = "no";
-          show_indicators = "no";
-          sticky_history = "no";
-          history_length = 20;
+          urgency_normal = {
+            foreground = "${types.fg}";
+            background = "${types.bg}";
+            frame_color = "${types.border}";
+            timeout = 7;
+            #icon = /path/to/icon;
+          };
 
-          browser = "firefox-devedition";
-          always_run_script = true;
-          ignore_dbusclose = false;
-          force_xinerama = false;
-
-          # Keybindings
-          close = "ctrl+space";
-          close_all = "ctrl+shift+space";
-          history = "ctrl+grave";
-          context = "ctrl+shift+period";
-
-          mouse_left_click = "close_current";
-          mouse_middle_click = "do_action, close_current";
-          mouse_right_click = "close_all";
-        };
-
-        experimental = {
-          per_monitor_dpi = false;
-        };
-
-        urgency_low = with cfg.colors.main; {
-          foreground = "${types.fg}";
-          background = "${types.bg}";
-          timeout = 5;
-          #icon = /path/to/icon;
-        };
-
-        urgency_normal = with cfg.colors.main; {
-          foreground = "${types.fg}";
-          background = "${types.bg}";
-          frame_color = "${types.border}";
-          timeout = 7;
-          #icon = /path/to/icon;
-        };
-
-        urgency_critical = with cfg.colors.main; {
-          foreground = "${types.fg}";
-          background = "${types.bg}";
-          frame_color = "${types.error}";
-          timeout = 10;
-          #icon = /path/to/icon
-        };
-
-        fullscreen_pushback_everything = {
-          fullscreen = "pushback";
-        };
-      };
+          urgency_critical = {
+            foreground = "${types.fg}";
+            background = "${types.bg}";
+            frame_color = "${types.error}";
+            timeout = 10;
+            #icon = /path/to/icon
+          };
+        });
     })
 
-    # TODO: Find ONE general nix-automation entry for VictorMono
     (mkIf config.modules.desktop.extra.fcitx5.enable {
       home.file.".local/share/fcitx5/themes".source = pkgs.fetchFromGitHub {
         owner = "icy-thought";
@@ -656,7 +621,7 @@ in {
     })
 
     (mkIf config.modules.desktop.editors.vscodium.enable {
-      home.programs.vscode.extensions = with cfg.vscode.extension;
+      hm.programs.vscode.extensions = with cfg.vscode.extension;
         pkgs.vscode-utils.extensionsFromVscodeMarketplace [
           {
             name = "${name}";
@@ -667,8 +632,8 @@ in {
         ];
     })
 
-    (mkIf config.modules.desktop.media.viewer.document {
-      home.programs.zathura.options =
+    (mkIf config.modules.desktop.media.viewer.document.enable {
+      hm.programs.zathura.options =
         {
           adjust-open = "width";
           first-page-column = "1:1";
@@ -679,7 +644,7 @@ in {
           recolor-keephue = true;
           recolor-reverse-video = true;
         }
-        ++ (with cfg.colors.main; {
+        // (with cfg.colors.main; {
           default-fg = "${types.fg}";
           default-bg = "${types.bg}";
 

@@ -15,13 +15,13 @@ in {
 
   config = mkIf cfg.enable (mkMerge [
     {
-      home.programs.direnv = {
+      hm.programs.direnv = {
         enable = true;
         nix-direnv.enable = true;
         config.whitelist.prefix = ["/home"];
       };
 
-      home.programs.bash = {
+      hm.programs.bash = {
         enable = true;
         historySize = 5000;
         historyFileSize = 5000;
@@ -45,7 +45,7 @@ in {
 
     # Starship intended for fish rice -> side-effect (hehe)
     (mkIf config.modules.shell.fish.enable {
-      home.programs.bash.bashrcExtra = ''
+      hm.programs.bash.bashrcExtra = ''
         eval "$(starship init bash)"
       '';
     })

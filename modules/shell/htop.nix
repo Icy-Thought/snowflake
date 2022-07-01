@@ -15,7 +15,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home.programs.htop = {
+    hm.programs.htop = {
       enable = true;
 
       settings = let

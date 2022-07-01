@@ -34,7 +34,7 @@ in {
     # Enables vendor completion: https://nixos.wiki/wiki/Fish
     programs.fish.enable = true;
 
-    home.programs.fish = {
+    hm.programs.fish = {
       enable = true;
       # useBabelfish = true;
       interactiveShellInit = ''
@@ -45,7 +45,7 @@ in {
         ${builtins.readFile "${fishCfg}/abbreviations/main.fish"}
         ${builtins.readFile "${fishCfg}/aliases/main.fish"}
 
-        ${optionalString cfg.git.enable ''
+        ${optionalString config.modules.shell.git.enable ''
           ${builtins.readFile "${fishCfg}/abbreviations/git.fish"}
         ''}
       '';

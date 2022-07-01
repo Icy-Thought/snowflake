@@ -26,28 +26,26 @@ in {
       # })
     ];
 
-    home.programs.rofi = {
+    hm.programs.rofi = {
       enable = true;
       plugins = with pkgs; [rofi-emoji];
 
       extraConfig = {
-        xoffset = 0;
-        yoffset = 0;
-        location = "center";
-
-        terminal = "${getExe kitty}";
+        terminal = "${getExe pkgs.kitty}";
         disable-history = false;
-        sidebar-mode = false;
-
-        sort = true;
         show-icons = true;
+        sidebar-mode = false;
+        sort = true;
 
         display-drun = "   Run ";
-        display-window = " 﩯  Window ";
         display-emoji = "  Emoji ";
+        display-window = " 﩯  Window ";
 
         drun-display-format = "{icon} {name}";
         modi = "run,drun,filebrowser,emoji";
+
+        xoffset = 0;
+        yoffset = 0;
       };
     };
   };

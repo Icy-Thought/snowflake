@@ -21,7 +21,7 @@ in {
     })
 
     (mkIf codeCfg.enable {
-      home.programs.vscode.extensions = with pkgs.vscode-extensions; [
+      hm.programs.vscode.extensions = with pkgs.vscode-extensions; [
         jnoortheen.nix-ide
       ];
     })

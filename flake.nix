@@ -50,7 +50,7 @@
 
     overlay = final: prev: {
       unstable = pkgs';
-      my = final.packages."${system}";
+      my = self.packages."${system}";
     };
 
     overlays = mapModules ./overlays import;

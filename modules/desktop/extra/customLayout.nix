@@ -33,7 +33,7 @@ in {
     '';
   in
     mkIf cfg.enable {
-      home.xsession.initExtra = ''
+      hm.xsession.initExtra = ''
         # Set XKB layout = us+hyper on WM start:
         ${getExe pkgs.xorg.xkbcomp} ${customKeyboardLayout} $DISPLAY
       '';

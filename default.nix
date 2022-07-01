@@ -6,9 +6,14 @@
   ...
 }:
 with lib;
-with lib.my; {
+with lib.my; let
+  name = builtins.getEnv "USER";
+in {
   imports =
-    [inputs.home-manager.nixosModules.home-manager]
+    [
+      inputs.home-manager.nixosModules.home-manager
+      (mkAliasOptionModule ["hm"] ["home-manager" "users" name])
+    ]
     ++ (mapModulesRec' (toString ./modules) import);
 
   # Common config for all nixos machines;

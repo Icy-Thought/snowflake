@@ -101,7 +101,6 @@ in {
             version = "1.0.6";
             sha256 = "4M8y8dc8BpH1yhabYJsHDT9uDWeqYjnvPBgLS+lTa5I=";
           };
-
           theme = {
             dark = "Catppuccin";
             light = "Quiet Light";
@@ -266,7 +265,7 @@ in {
 
     (mkIf config.modules.desktop.terminal.kitty.enable {
       # TODO: Find ONE general nix-automation entry for VictorMono
-      "kitty/config/${cfg.active}.conf".text = with cfg;
+      home.configFile."kitty/config/${cfg.active}.conf".text = with cfg;
         ''
           font_family               Victor Mono SemiBold Nerd Font Complete
           italic_font               Victor Mono SemiBold Italic Nerd Font Complete
@@ -316,7 +315,7 @@ in {
     })
 
     (mkIf config.modules.desktop.terminal.wezterm.enable {
-      "wezterm/config/${cfg.active}.lua".text = with cfg.colors.main; ''
+      home.configFile."wezterm/config/${cfg.active}.lua".text = with cfg.colors.main; ''
         return {
             foreground      = "${types.fg}",
             background      = "${types.bg}",
@@ -389,14 +388,14 @@ in {
     })
 
     (mkIf config.modules.desktop.extra.rofi.enable {
-      home.programs.rofi = {
+      hm.programs.rofi = {
         extraConfig = with cfg; {
           icon-theme = "${gtk.iconTheme}";
           font = "${font.sans.family} ${font.sans.weight} ${toString (font.sans.size)}";
         };
 
         theme = let
-          inherit (config.lib.formats.rasi) mkLiteral;
+          inherit (config.hm.lib.formats.rasi) mkLiteral;
         in
           with cfg.colors.rofi; {
             "*" = {
@@ -422,8 +421,8 @@ in {
               height = mkLiteral "54.50%";
               width = mkLiteral "43%";
               location = mkLiteral "center";
-              x-offset = mkLiteral 0;
-              y-offset = mkLiteral 0;
+              x-offset = 0;
+              y-offset = 0;
             };
 
             "prompt" = {
@@ -487,8 +486,8 @@ in {
             "element-icon" = {
               background-color = mkLiteral "@transparent";
               text-color = mkLiteral "inherit";
-              horizontal-align = 0.5;
-              vertical-align = 0.5;
+              horizontal-align = "0.5";
+              vertical-align = "0.5";
               size = mkLiteral "64px";
               border = mkLiteral "0px";
             };
@@ -534,32 +533,20 @@ in {
       };
     })
 
-    (mkif config.modules.desktop.extra.dunst.enable {
-      home.services.dunst.settings =
+    (mkIf config.modules.desktop.extra.dunst.enable {
+      hm.services.dunst.settings =
         {
           global = {
-            monitor = 0;
-            follow = "mouse";
-            indicate_hidden = "yes";
-
             # Geometry
             width = 300;
             height = 200;
             origin = "top-right";
             offset = "12+48";
 
-            # Notification
-            sort = "yes";
-            scale = 0;
-            shrink = "no";
-            word_wrap = "yes";
-
             padding = 20;
             horizontal_padding = 20;
             notification_limit = 0;
             separator_height = 2;
-            stack_duplicates = true;
-            hide_duplicate_count = false;
 
             # Progress-Bar
             progress_bar = true;
@@ -571,7 +558,6 @@ in {
             # Aesthetics
             transparency = 0;
             frame_width = 2;
-            frame_color = "${cfg.colors.main.types.border}";
             separator_color = "frame";
             font = with cfg.font; "${sans.family} ${sans.weight} 11";
 
@@ -586,22 +572,6 @@ in {
             min_icon_size = 0;
             max_icon_size = 64;
 
-            # General
-            title = "Dunst";
-            class = "Dunst";
-
-            show_age_threshold = 60;
-            ellipsize = "middle";
-            ignore_newline = "no";
-            show_indicators = "no";
-            sticky_history = "no";
-            history_length = 20;
-
-            browser = "firefox-devedition";
-            always_run_script = true;
-            ignore_dbusclose = false;
-            force_xinerama = false;
-
             # Keybindings
             close = "ctrl+space";
             close_all = "ctrl+shift+space";
@@ -612,16 +582,10 @@ in {
             mouse_middle_click = "do_action, close_current";
             mouse_right_click = "close_all";
           };
-
-          experimental = {
-            per_monitor_dpi = false;
-          };
-
-          fullscreen_pushback_everything = {
-            fullscreen = "pushback";
-          };
         }
-        ++ (with cfg.colors.main; {
+        // (with cfg.colors.main; {
+          global.frame_color = "${types.border}";
+
           urgency_low = {
             foreground = "${types.fg}";
             background = "${types.bg}";
@@ -657,7 +621,7 @@ in {
     })
 
     (mkIf config.modules.desktop.editors.vscodium.enable {
-      home.programs.vscode.extensions = with cfg.vscode.extension;
+      hm.programs.vscode.extensions = with cfg.vscode.extension;
         pkgs.vscode-utils.extensionsFromVscodeMarketplace [
           {
             name = "${name}";
@@ -668,8 +632,8 @@ in {
         ];
     })
 
-    (mkIf config.modules.desktop.media.viewer.document {
-      home.programs.zathura.options =
+    (mkIf config.modules.desktop.media.viewer.document.enable {
+      hm.programs.zathura.options =
         {
           adjust-open = "width";
           first-page-column = "1:1";
@@ -680,7 +644,7 @@ in {
           recolor-keephue = true;
           recolor-reverse-video = true;
         }
-        ++ (with cfg.colors.main; {
+        // (with cfg.colors.main; {
           default-fg = "${types.fg}";
           default-bg = "${types.bg}";
 
