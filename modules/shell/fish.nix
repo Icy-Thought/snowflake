@@ -49,6 +49,7 @@ in {
           ${builtins.readFile "${fishCfg}/abbreviations/git.fish"}
         ''}
       '';
+
       plugins = with pkgs.fishPlugins; [
         {
           name = "done";

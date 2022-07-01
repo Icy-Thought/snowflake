@@ -9,6 +9,7 @@ with lib;
 with lib.my; let
   cfg = config.modules.desktop.terminal.kitty;
   configDir = config.snowflake.configDir;
+  active = config.modules.themes.active;
 in {
   options.modules.desktop.terminal.kitty = with types; {
     enable = mkBoolOpt false;

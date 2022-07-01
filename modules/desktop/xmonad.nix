@@ -25,7 +25,6 @@ in {
       haskellPackages.my-xmonad
       lightdm
       libnotify
-      dunst
       playerctl
       gxmessage
       xdotool
@@ -71,6 +70,7 @@ in {
     services = {
       autorandr.enable = true;
       blueman.enable = true;
+      dunst.enable = true;
     };
 
     home.services = {

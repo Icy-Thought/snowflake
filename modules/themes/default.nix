@@ -159,20 +159,20 @@ in {
           #define bg   ${types.bg}
           #define fg   ${types.fg}
           #define blk  ${black}
-          #define red  ${red}
-          #define grn  ${green}
-          #define ylw  ${yellow}
-          #define blu  ${blue}
-          #define mag  ${magenta}
-          #define cyn  ${cyan}
-          #define wht  ${white}
           #define bblk ${brightBlack}
+          #define red  ${red}
           #define bred ${brightRed}
+          #define grn  ${green}
           #define bgrn ${brightGreen}
+          #define ylw  ${yellow}
           #define bylw ${brightYellow}
+          #define blu  ${blue}
           #define bblu ${brightBlue}
+          #define mag  ${magenta}
           #define bmag ${brightMagenta}
+          #define cyn  ${cyan}
           #define bcyn ${brightCyan}
+          #define wht  ${white}
           #define bwht ${brightWhite}
         '';
 

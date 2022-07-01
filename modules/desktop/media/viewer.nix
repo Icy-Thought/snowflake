@@ -8,11 +8,6 @@
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.media.viewer;
-
-  # Theme-related let's
-  active = config.modules.themes.active;
-  colors = config.modules.themes.colors;
-  font = config.modules.themes.font;
 in {
   options.modules.desktop.media.viewer = {
     document.enable = mkBoolOpt false;

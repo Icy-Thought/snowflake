@@ -33,7 +33,6 @@ in {
       (cfg.package.unwrapped or cfg.package)
       lightdm
       libnotify
-      dunst
       playerctl
       gxmessage
       xdotool
@@ -81,6 +80,7 @@ in {
     services = {
       autorandr.enable = true;
       blueman.enable = true;
+      dunst.enable = true;
     };
 
     home.services = {

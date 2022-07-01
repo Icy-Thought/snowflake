@@ -143,91 +143,52 @@ in {
           border-color = "${cfg.colors.types.border}"
         '';
       };
-
-      # Xresources
-      xresources.properties = {
-        # Types
-        "*foreground" = "${cfg.colors.types.fg}";
-        "*background" = "${cfg.colors.types.bg}";
-
-        # Black
-        "*color0" = "${cfg.colors.black}";
-        "*color8" = "${cfg.colors.brightBlack}";
-
-        # Red
-        "*color1" = "${cfg.colors.red}";
-        "*color9" = "${cfg.colors.brightRed}";
-
-        # Green
-        "*color2" = "${cfg.colors.green}";
-        "*color10" = "${cfg.colors.brightGreen}";
-
-        # Yellow
-        "*color3" = "${cfg.colors.yellow}";
-        "*color11" = "${cfg.colors.brightYellow}";
-
-        # Blue
-        "*color4" = "${cfg.colors.blue}";
-        "*color12" = "${cfg.colors.brightBlue}";
-
-        # Magenta
-        "*color5" = "${cfg.colors.magenta}";
-        "*color13" = "${cfg.colors.brightMagenta}";
-
-        # Cyan
-        "*color6 " = "${cfg.colors.cyan}";
-        "*color14" = "${cfg.colors.brightCyan}";
-
-        # White
-        "*color7" = "${cfg.colors.white}";
-        "*color15" = "${cfg.colors.brightWhite}";
-      };
     })
 
     (mkIf config.modules.shell.fish.enable {
       home.configFile."fish/conf.d/${cfg.active}.fish".text = ''
         # --> General
-        set -l foreground   ${cfg.colors.fg}
-        set -l highlight    ${cfg.colors.highlight}
+        set -l foreground ${cfg.colors.fg}
+        set -l highlight  ${cfg.colors.highlight}
 
         # --> palette
-        set -l base01       ${cfg.colors.base01}
-        set -l base02       ${cfg.colors.base02}
-        set -l base03       ${cfg.colors.base03}
-        set -l base04       ${cfg.colors.base04}
-        set -l base05       ${cfg.colors.base05}
-        set -l base06       ${cfg.colors.base06}
-        set -l base07       ${cfg.colors.base07}
-        set -l base08       ${cfg.colors.base08}
-        set -l base09       ${cfg.colors.base09}
-        set -l base10       ${cfg.colors.base10}
+        set -l base01     ${cfg.colors.base01}
+        set -l base02     ${cfg.colors.base02}
+        set -l base03     ${cfg.colors.base03}
+        set -l base04     ${cfg.colors.base04}
+        set -l base05     ${cfg.colors.base05}
+        set -l base06     ${cfg.colors.base06}
+        set -l base07     ${cfg.colors.base07}
+        set -l base08     ${cfg.colors.base08}
+        set -l base09     ${cfg.colors.base09}
+        set -l base10     ${cfg.colors.base10}
 
         # Syntax Highlighting
-        set -g fish_color_normal $foreground
-        set -g fish_color_command $base09
-        set -g fish_color_param $base02
-        set -g fish_color_keyword $base05
-        set -g fish_color_quote $base07
-        set -g fish_color_redirection $base04
-        set -g fish_color_end $base06
-        set -g fish_color_error $base05
-        set -g fish_color_gray $base10
-        set -g fish_color_selection --background=$highlight
-        set -g fish_color_search_match --background=$highlight
-        set -g fish_color_operator $base04
-        set -g fish_color_escape $base02
-        set -g fish_color_autosuggestion $base10
-        set -g fish_color_cancel $base05
+        set -g fish_color_normal            $foreground
+        set -g fish_color_command           $base09
+        set -g fish_color_param             $base02
+        set -g fish_color_keyword           $base05
+        set -g fish_color_quote             $base07
+        set -g fish_color_redirection       $base04
+        set -g fish_color_end               $base06
+        set -g fish_color_error             $base05
+        set -g fish_color_gray              $base10
+        set -g fish_color_selection         --background=$highlight
+        set -g fish_color_search_match      --background=$highlight
+        set -g fish_color_operator          $base04
+        set -g fish_color_escape            $base02
+        set -g fish_color_autosuggestion    $base10
+        set -g fish_color_cancel            $base05
 
         # Prompt
-        set -g fish_color_cwd $base08
-        set -g fish_color_user $base01
-        set -g fish_color_host $base09
+        set -g fish_color_cwd               $base08
+        set -g fish_color_user              $base01
+        set -g fish_color_host              $base09
 
         # Completion Pager
-        set -g fish_pager_color_progress $base10
-        set -g fish_pager_color_prefix $base04
-        set -g fish_pager_color_completion $foreground
+        set -g fish_pager_color_progress    $base10
+        set -g fish_pager_color_prefix      $base04
+        set -g fish_pager_color_completion  $foreground
         set -g fish_pager_color_description $base10
       '';
     })
@@ -237,19 +198,19 @@ in {
         font:
           normal:
             family: "${cfg.font.sans.family}"
-            style: "${cfg.font.sans.weight}"
+            style:  "${cfg.font.sans.weight}"
 
           bold:
             family: "${cfg.font.sans.family}"
-            style: "Bold"
+            style:  "Bold"
 
           italic:
             family: "${cfg.font.sans.family}"
-            style: "${cfg.font.sans.weight} Italic"
+            style:  "${cfg.font.sans.weight} Italic"
 
           bold_italics:
             family: "${cfg.font.sans.family}"
-            style: "${cfg.font.sans.weight} Italic"
+            style:  "${cfg.font.sans.weight} Italic"
 
           size: ${toString (cfg.font.mono.size)}
 
@@ -269,38 +230,38 @@ in {
             background: "${cfg.colors.types.bg}"
 
           cursor:
-            text: "${cfg.colors.types.bg}"
+            text:   "${cfg.colors.types.bg}"
             cursor: "${cfg.colors.yellow}"
 
           selection:
-            text: "${cfg.colors.types.bg}"
+            text:       "${cfg.colors.types.bg}"
             background: "${cfg.colors.types.highlight}"
 
           normal:
-            black: "${cfg.colors.black}"
-            red: "${cfg.colors.red}"
-            green: "${cfg.colors.green}"
-            yellow: "${cfg.colors.yellow}"
-            blue: "${cfg.colors.blue}"
-            magenta: "${cfg.colors.magenta}"
-            cyan: "${cfg.colors.cyan}"
-            white: "${cfg.colors.white}"
+            black:      "${cfg.colors.black}"
+            red:        "${cfg.colors.red}"
+            green:      "${cfg.colors.green}"
+            yellow:     "${cfg.colors.yellow}"
+            blue:       "${cfg.colors.blue}"
+            magenta:    "${cfg.colors.magenta}"
+            cyan:       "${cfg.colors.cyan}"
+            white:      "${cfg.colors.white}"
 
           bright:
-            black: "${cfg.colors.brightBlack}"
-            red: "${cfg.colors.brightRed}"
-            green: "${cfg.colors.brightGreen}"
-            yellow: "${cfg.colors.brightYellow}"
-            blue: "${cfg.colors.brightBlue}"
-            magenta: "${cfg.colors.brightMagenta}"
-            cyan: "${cfg.colors.brightCyan}"
-            white: "${cfg.colors.brightWhite}"
+            black:      "${cfg.colors.brightBlack}"
+            red:        "${cfg.colors.brightRed}"
+            green:      "${cfg.colors.brightGreen}"
+            yellow:     "${cfg.colors.brightYellow}"
+            blue:       "${cfg.colors.brightBlue}"
+            magenta:    "${cfg.colors.brightMagenta}"
+            cyan:       "${cfg.colors.brightCyan}"
+            white:      "${cfg.colors.brightWhite}"
       '';
     })
 
     (mkIf config.modules.desktop.terminal.kitty.enable {
+      # TODO: Find ONE general nix-automation entry for VictorMono
       "kitty/config/${cfg.active}.conf".text = ''
-        # TODO: Find ONE general nix-automation entry for VictorMono
         font_family               Victor Mono SemiBold Nerd Font Complete
         italic_font               Victor Mono SemiBold Italic Nerd Font Complete
         bold_font                 Victor Mono Bold Nerd Font Complete
@@ -349,48 +310,48 @@ in {
     (mkIf config.modules.desktop.terminal.wezterm.enable {
       "wezterm/config/${cfg.active}.lua".text = ''
         return {
-            foreground = "${cfg.colors.types.fg}",
-            background = "${cfg.colors.types.bg}",
+            foreground      = "${cfg.colors.types.fg}",
+            background      = "${cfg.colors.types.bg}",
 
-            cursor_fg = "${cfg.colors.types.bg}",
-            cursor_bg = "${cfg.colors.yellow}",
-            cursor_border = "${colors.yellow}",
+            cursor_fg       = "${cfg.colors.types.bg}",
+            cursor_bg       = "${cfg.colors.yellow}",
+            cursor_border   = "${cfg.colors.yellow}",
 
-            selection_fg = "${cfg.colors.types.bg}",
-            selection_bg = "${cfg.colors.types.highlight}",
+            selection_fg    = "${cfg.colors.types.bg}",
+            selection_bg    = "${cfg.colors.types.highlight}",
 
             scrollbar_thumb = "${cfg.colors.magenta}",
             split = "${cfg.colors.green}",
 
             tab_bar = {
                 active_tab = {
-                    bg_color = "${cfg.colors.types.bg}",
-                    fg_color = "${cfg.colors.magenta}",
+                    bg_color  = "${cfg.colors.types.bg}",
+                    fg_color  = "${cfg.colors.magenta}",
                     intensity = "Normal",
-                    italic = true,
+                    italic    = true,
                     underline = "Single",
                 },
                 inactive_tab = {
                     bg_color = "${cfg.colors.types.bg}",
                     fg_color = "${cfg.colors.types.fg}",
-                    italic = true,
+                    italic   = true,
                 },
                 inactive_tab_edge = "${cfg.colors.black}",
                 inactive_tab_hover = {
-                    bg_color = "${cfg.colors.types.bg}",
-                    fg_color = "${cfg.colors.yellow}",
-                    italic = true,
+                    bg_color  = "${cfg.colors.types.bg}",
+                    fg_color  = "${cfg.colors.yellow}",
+                    italic    = true,
                     underline = "Single",
                 },
                 new_tab = {
                     bg_color = "${cfg.colors.types.bg}",
                     fg_color = "${cfg.colors.green}",
-                    italic = true,
+                    italic   = true,
                 },
                 new_tab_hover = {
                     bg_color = "${cfg.colors.types.bg}",
                     fg_color = "${cfg.colors.yellow}",
-                    italic = true,
+                    italic   = true,
                 },
             },
 
