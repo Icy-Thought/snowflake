@@ -10,101 +10,101 @@ with lib.my; let
   cfg = config.modules.themes;
   configDir = config.snowflake.configDir;
 in {
-  config = mkIf (cfg.active == "ayu") (mkMerge [
+  config = mkIf (cfg.active == "") (mkMerge [
     {
       modules.themes = {
-        wallpaper = mkDefault ./wallpaper.jpg;
+        wallpaper = mkDefault ./wallpaper.png;
 
         gtk = {
-          theme = "Orchis-Dark-Compact";
-          iconTheme = "WhiteSur-dark";
+          theme = "";
+          iconTheme = "";
           cursor = {
-            name = "Bibata-Modern-Amber";
+            name = "";
             size = 24;
           };
         };
 
         font = {
-          sans.family = "VictorMono Nerd Font";
-          mono.family = "VictorMono Nerd Font Mono";
-          emoji = "Twitter Color Emoji";
+          sans.family = "";
+          mono.family = "";
+          emoji = "";
         };
 
         colors = {
           main = {
             normal = {
-              black = "#1d242c";
-              red = "#ff7733";
-              green = "#b8cc52";
-              yellow = "#ffb454";
-              blue = "#36a3d9";
-              magenta = "#ca30c7";
-              cyan = "#95e6cb";
-              white = "#c7c7c7";
+              black = "";
+              red = "";
+              green = "";
+              yellow = "";
+              blue = "";
+              magenta = "";
+              cyan = "";
+              white = "";
             };
             bright = {
-              black = "#686868";
-              red = "#f07178";
-              green = "#cbe645";
-              yellow = "#ffee99";
-              blue = "#6871ff";
-              magenta = "#ff77ff";
-              cyan = "#a6fde1";
-              white = "#ffffff";
+              black = "";
+              red = "";
+              green = "";
+              yellow = "";
+              blue = "";
+              magenta = "";
+              cyan = "";
+              white = "";
             };
             types = {
-              fg = "#e6e1cf";
-              bg = "#0f1419";
-              panelbg = "#171b24";
-              border = "#f29718";
-              highlight = "#e6e1cf";
+              fg = "";
+              bg = "";
+              panelbg = "";
+              border = "";
+              highlight = "";
             };
           };
 
           fish = {
-            fg = "b3b1ad";
-            highlight = "e6b450";
-            base01 = "00827f";
-            base02 = "95e6cb";
+            fg = "";
+            highlight = "";
+            base01 = "";
+            base02 = "";
             base03 = "";
-            base04 = "e53983";
-            base05 = "ff3333";
-            base06 = "f29668";
-            base07 = "c2d94c";
-            base08 = "ffb454";
-            base09 = "59c2ff";
-            base10 = "4d5566";
+            base04 = "";
+            base05 = "";
+            base06 = "";
+            base07 = "";
+            base08 = "";
+            base09 = "";
+            base10 = "";
           };
 
           rofi = {
             bg = {
-              main = "hsla(210, 25%, 7%, 1)";
-              alt = "hsla(210, 25%, 7%, 0)";
-              bar = "hsla(212, 20%, 14%, 1)";
+              main = "";
+              alt = "";
+              bar = "";
             };
-            fg = "hsla(46, 31%, 85%, 1)";
+            fg = "";
             ribbon = {
-              outer = "hsla(211, 46%, 27%, 1)";
-              inner = "hsla(197, 78%, 40%, 1)";
+              outer = "";
+              inner = "";
             };
-            highlight = "hsla(209, 82%, 33%, 0.6)";
-            urgent = "hsla(40, 100%, 50%, 1)";
-            transparent = "hsla(0, 0%, 0%, 0)";
+            highlight = "";
+            urgent = "";
+            transparent = "";
           };
         };
 
-        neovim.theme = "themer_ayu";
+        neovim.theme = "";
 
         vscode = {
           extension = {
-            name = "ayu";
-            publisher = "teabyii";
-            version = "1.0.5";
-            sha256 = "+ifqgwlikr+qjblmqlzf44xnbn7br5a119v9wanzou4=";
+            name = "";
+            publisher = "";
+            version = "";
+            sha256 = "";
           };
           theme = {
-            dark = "Ayu Dark";
-            light = "Ayu Light";
+            dark = "";
+            light = "";
           };
         };
       };
@@ -118,15 +118,15 @@ in {
 
     # Desktop (X11) theming <- Change after gnome = independent of xserver.
     (mkIf config.services.xserver.enable {
-      user.packages = with pkgs; [
-        orchis-theme
-        whitesur-icon-theme
-        bibata-cursors
+      user.packages = with cfg.gtk; [
+        theme-package #WARN:
+        icon-package #WARN:
+        cursor-package #WARN:
       ];
 
       fonts.fonts = with pkgs; [
-        (nerdfonts.override {fonts = ["VictorMono"];})
-        twitter-color-emoji
+        (nerdfonts.override {fonts = [""];}) #WARN:
+        emoji-theme #WARN:
       ];
     })
 
@@ -134,17 +134,17 @@ in {
       || config.modules.desktop.qtile.enable) {
       services.xserver.displayManager = {
         sessionCommands = with cfg.gtk; ''
-          ${getExe pkgs.xorg.xsetroot} -xcf ${pkgs.bibata-cursors}/share/icons/${cursor.name}/cursors/${cursor.default} ${
+          ${getExe pkgs.xorg.xsetroot} -xcf ${pkgs.cursor-package}/share/icons/${cursor.name}/cursors/${cursor.default} ${
             toString (cursor.size)
           }
-        '';
+        ''; #WARN:
 
         # LightDM: Replace with LightDM-Web-Greeter theme
         lightdm.greeters.mini.extraConfig = with cfg.colors.main; ''
           text-color = "${types.bg}"
           password-background-color = "${normal.black}"
-          window-color = "${normal.yellow}"
-          border-color = "${types.bg}"
+          window-color = "${types.border}"
+          border-color = "${types.border}"
         '';
       };
     })
@@ -614,11 +614,11 @@ in {
 
     (mkIf config.modules.desktop.extra.fcitx5.enable {
       home.file.".local/share/fcitx5/themes".source = pkgs.fetchFromGitHub {
-        owner = "icy-thought";
-        repo = "fcitx5-catppuccin";
-        rev = "3b699870fb2806404e305fe34a3d2541d8ed5ef5";
-        sha256 = "hOAcjgj6jDWtCGMs4Gd49sAAOsovGXm++TKU3NhZt8w=";
-      };
+        owner = "";
+        repo = "";
+        rev = "";
+        sha256 = "";
+      }; #WARN:
     })
 
     (mkIf config.modules.desktop.editors.vscodium.enable {

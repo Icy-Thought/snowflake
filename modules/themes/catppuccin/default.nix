@@ -8,6 +8,7 @@
 with lib;
 with lib.my; let
   cfg = config.modules.themes;
+  configDir = config.snowflake.configDir;
 in {
   config = mkIf (cfg.active == "catppuccin") (mkMerge [
     {
@@ -107,12 +108,13 @@ in {
           };
         };
       };
-
-      # modules.desktop.browsers = {
-      #   firefox.userChrome = concatMapStringsSep "\n" readFile
-      #     [ ./config/firefox/userChrome.css ];
-      # };
     }
+
+    # (mkIf config.modules.desktop.browsers.firefox.enable {
+    #   firefox.userChrome =
+    #     concatMapStringsSep "\n" readFile
+    #     ["${configDir}" /firefox/userChrome.css];
+    # })
 
     # Desktop (X11) theming <- Change after gnome = independent of xserver.
     (mkIf config.services.xserver.enable {
