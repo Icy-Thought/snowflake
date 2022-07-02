@@ -75,7 +75,7 @@ in {
           draw_minimal_borders = "yes";
 
           tab_bar_style = "custom";
-          tab_separator = "";
+          tab_separator = "\"\"";
           tab_fade = "0 0 0 0";
           tab_activity_symbol = "none";
           tab_bar_edge = "top";

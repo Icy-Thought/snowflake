@@ -166,32 +166,32 @@ in {
         set -l base10     ${base10}
 
         # Syntax Highlighting
-        set -g fish_color_normal            $foreground
-        set -g fish_color_command           $base09
-        set -g fish_color_param             $base02
-        set -g fish_color_keyword           $base05
-        set -g fish_color_quote             $base07
-        set -g fish_color_redirection       $base04
-        set -g fish_color_end               $base06
-        set -g fish_color_error             $base05
-        set -g fish_color_gray              $base10
-        set -g fish_color_selection         --background=$highlight
-        set -g fish_color_search_match      --background=$highlight
-        set -g fish_color_operator          $base04
-        set -g fish_color_escape            $base02
-        set -g fish_color_autosuggestion    $base10
-        set -g fish_color_cancel            $base05
+        set -g fish_color_normal                     $foreground
+        set -g fish_color_command                    $base09
+        set -g fish_color_param                      $base02
+        set -g fish_color_keyword                    $base05
+        set -g fish_color_quote                      $base07
+        set -g fish_color_redirection                $base04
+        set -g fish_color_end                        $base06
+        set -g fish_color_error                      $base05
+        set -g fish_color_gray                       $base10
+        set -g fish_color_selection    --background= $highlight
+        set -g fish_color_search_match --background= $highlight
+        set -g fish_color_operator                   $base04
+        set -g fish_color_escape                     $base02
+        set -g fish_color_autosuggestion             $base10
+        set -g fish_color_cancel                     $base05
 
         # Prompt
-        set -g fish_color_cwd               $base08
-        set -g fish_color_user              $base01
-        set -g fish_color_host              $base09
+        set -g fish_color_cwd                        $base08
+        set -g fish_color_user                       $base01
+        set -g fish_color_host                       $base09
 
         # Completion Pager
-        set -g fish_pager_color_progress    $base10
-        set -g fish_pager_color_prefix      $base04
-        set -g fish_pager_color_completion  $foreground
-        set -g fish_pager_color_description $base10
+        set -g fish_pager_color_progress             $base10
+        set -g fish_pager_color_prefix               $base04
+        set -g fish_pager_color_completion           $foreground
+        set -g fish_pager_color_description          $base10
       '';
     })
 
@@ -535,7 +535,7 @@ in {
 
     (mkIf config.modules.desktop.extra.dunst.enable {
       hm.services.dunst.settings =
-        {
+        (with cfg; {
           global = {
             # Geometry
             width = 300;
@@ -556,10 +556,11 @@ in {
             progress_bar_max_width = 300;
 
             # Aesthetics
-            transparency = 0;
+            font = "${font.sans.family} ${font.sans.weight} 11";
             frame_width = 2;
             separator_color = "frame";
-            font = with cfg.font; "${sans.family} ${sans.weight} 11";
+            frame_color = "${colors.main.types.border}";
+            transparency = 0;
 
             line_height = 1;
             idle_threshold = 120;
@@ -582,10 +583,8 @@ in {
             mouse_middle_click = "do_action, close_current";
             mouse_right_click = "close_all";
           };
-        }
+        })
         // (with cfg.colors.main; {
-          global.frame_color = "${types.border}";
-
           urgency_low = {
             foreground = "${types.fg}";
             background = "${types.bg}";

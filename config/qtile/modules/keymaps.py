@@ -68,7 +68,7 @@ qtile_controls = [
 rofi_spawns = [
     EzKey("M-p", lazy.spawn("rofi -show drun")),
     EzKey("M-b", lazy.spawn("rofi -show window")),
-    EzKey("M-A-p", lazy.spawn("rofi -show run")),
+    EzKey("M-S-p", lazy.spawn("rofi -show run")),
     EzKey("H-p", lazy.spawn("rofi-systemd")),
 ]
 

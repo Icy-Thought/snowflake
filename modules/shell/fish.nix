@@ -41,10 +41,10 @@ in {
         ${getExe pkgs.starship} init fish | source
         ${getExe pkgs.zoxide} init fish | source
         ${getExe pkgs.any-nix-shell} fish | source
+
         ${builtins.readFile "${fishCfg}/interactive.fish"}
         ${builtins.readFile "${fishCfg}/abbreviations/main.fish"}
         ${builtins.readFile "${fishCfg}/aliases/main.fish"}
-
         ${optionalString config.modules.shell.git.enable ''
           ${builtins.readFile "${fishCfg}/abbreviations/git.fish"}
         ''}
