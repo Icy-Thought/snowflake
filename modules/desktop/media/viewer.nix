@@ -17,7 +17,7 @@ in {
 
   config = mkMerge [
     (mkIf cfg.document.enable {
-      user.packages = with pkgs; [zathura];
+      hm.programs.zathura.enable = true;
     })
 
     (mkIf cfg.music.enable {

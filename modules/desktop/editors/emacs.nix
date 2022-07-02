@@ -23,12 +23,12 @@ in {
   config = mkIf cfg.enable {
     nixpkgs.overlays = with inputs; [emacs.overlay];
 
-    home.services.emacs = {
+    hm.services.emacs = {
       enable = true;
       client.enable = true;
     };
 
-    home.programs.emacs = {
+    hm.programs.emacs = {
       enable = true;
       package = pkgs.emacsNativeComp;
       extraPackages = epkgs: with epkgs; [vterm];
@@ -62,7 +62,7 @@ in {
     };
 
     # Easier frame creation (fish)
-    home.programs.fish.functions = {
+    hm.programs.fish.functions = {
       eg = "emacs --create-frame $argv & disown";
       ecg = "emacsclient --create-frame $argv & disown";
     };

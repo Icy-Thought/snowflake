@@ -7,10 +7,13 @@
 }:
 with lib;
 with lib.my; let
-  cfg = config.modules.desktop;
+  cfg = config.modules.desktop.extra.picom;
 in {
-  config = mkIf (cfg.xmonad.enable || cfg.qtile.enable) {
-    # TODO: after wintypes merge -> home-manager
+  options.modules.desktop.extra.picom = {
+    enable = mkBoolOpt false;
+  };
+
+  config = mkIf cfg.enable {
     services.picom = {
       enable = true;
       backend = "glx";

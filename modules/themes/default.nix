@@ -43,13 +43,6 @@ in {
       };
     };
 
-    neovim.theme = mkOpt str "";
-
-    vscode.theme = {
-      dark = mkOpt str "";
-      light = mkOpt str "";
-    };
-
     onReload = mkOpt (attrsOf lines) {};
 
     font = {
@@ -69,33 +62,83 @@ in {
     };
 
     colors = {
-      black = mkOpt str "#000000"; # 0
-      red = mkOpt str "#FF0000"; # 1
-      green = mkOpt str "#00FF00"; # 2
-      yellow = mkOpt str "#FFFF00"; # 3
-      blue = mkOpt str "#0000FF"; # 4
-      magenta = mkOpt str "#FF00FF"; # 5
-      cyan = mkOpt str "#00FFFF"; # 6
-      white = mkOpt str "#BBBBBB"; # 7
+      main = {
+        normal = {
+          black = mkOpt str "#000000"; # 0
+          red = mkOpt str "#FF0000"; # 1
+          green = mkOpt str "#00FF00"; # 2
+          yellow = mkOpt str "#FFFF00"; # 3
+          blue = mkOpt str "#0000FF"; # 4
+          magenta = mkOpt str "#FF00FF"; # 5
+          cyan = mkOpt str "#00FFFF"; # 6
+          white = mkOpt str "#BBBBBB"; # 7
+        };
+        bright = {
+          black = mkOpt str "#888888"; # 8
+          red = mkOpt str "#FF8800"; # 9
+          green = mkOpt str "#00FF80"; # 10
+          yellow = mkOpt str "#FF8800"; # 11
+          blue = mkOpt str "#0088FF"; # 12
+          magenta = mkOpt str "#FF88FF"; # 13
+          cyan = mkOpt str "#88FFFF"; # 14
+          white = mkOpt str "#FFFFFF"; # 15
+        };
+        types = with cfg.colors.main; {
+          bg = mkOpt str normal.black;
+          fg = mkOpt str normal.white;
+          panelbg = mkOpt str types.bg;
+          panelfg = mkOpt str types.fg;
+          border = mkOpt str types.bg;
+          error = mkOpt str normal.red;
+          warning = mkOpt str normal.yellow;
+          highlight = mkOpt str normal.white;
+        };
+      };
 
-      brightBlack = mkOpt str "#888888"; # 8
-      brightRed = mkOpt str "#FF8800"; # 9
-      brightGreen = mkOpt str "#00FF80"; # 10
-      brightYellow = mkOpt str "#FF8800"; # 11
-      brightBlue = mkOpt str "#0088FF"; # 12
-      brightMagenta = mkOpt str "#FF88FF"; # 13
-      brightCyan = mkOpt str "#88FFFF"; # 14
-      brightWhite = mkOpt str "#FFFFFF"; # 15
+      fish = {
+        fg = mkOpt str "#ffffff";
+        highlight = mkOpt str "#ffffff";
+        base01 = mkOpt str "#ffffff";
+        base02 = mkOpt str "#ffffff";
+        base03 = mkOpt str "#ffffff";
+        base04 = mkOpt str "#ffffff";
+        base05 = mkOpt str "#ffffff";
+        base06 = mkOpt str "#ffffff";
+        base07 = mkOpt str "#ffffff";
+        base08 = mkOpt str "#ffffff";
+        base09 = mkOpt str "#ffffff";
+        base10 = mkOpt str "#ffffff";
+      };
 
-      types = {
-        bg = mkOpt str cfg.colors.black;
-        fg = mkOpt str cfg.colors.white;
-        panelbg = mkOpt str cfg.colors.types.bg;
-        panelfg = mkOpt str cfg.colors.types.fg;
-        border = mkOpt str cfg.colors.types.bg;
-        error = mkOpt str cfg.colors.red;
-        warning = mkOpt str cfg.colors.yellow;
-        highlight = mkOpt str cfg.colors.white;
+      rofi = {
+        bg = {
+          main = mkOpt str "#FFFFFF";
+          alt = mkOpt str "#FFFFFF";
+          bar = mkOpt str "#FFFFFF";
+        };
+        fg = mkOpt str "#FFFFFF";
+        ribbon = {
+          outer = mkOpt str "#FFFFFF";
+          inner = mkOpt str "#FFFFFF";
+        };
+        highlight = mkOpt str "#FFFFFF";
+        urgent = mkOpt str "#FFFFFF";
+        transparent = mkOpt str "#FFFFFF";
+      };
+    };
+
+    neovim.theme = mkOpt str "";
+
+    vscode = {
+      extension = {
+        name = mkOpt str "";
+        publisher = mkOpt str "";
+        version = mkOpt str "";
+        sha256 = mkOpt str "";
+      };
+      theme = {
+        dark = mkOpt str "";
+        light = mkOpt str "";
       };
     };
   };
@@ -115,25 +158,25 @@ in {
 
     {
       home.configFile = {
-        "xtheme/00-init".text = with cfg.colors; ''
+        "xtheme/00-init".text = with cfg.colors.main; ''
           #define bg   ${types.bg}
           #define fg   ${types.fg}
-          #define blk  ${black}
-          #define red  ${red}
-          #define grn  ${green}
-          #define ylw  ${yellow}
-          #define blu  ${blue}
-          #define mag  ${magenta}
-          #define cyn  ${cyan}
-          #define wht  ${white}
-          #define bblk ${brightBlack}
-          #define bred ${brightRed}
-          #define bgrn ${brightGreen}
-          #define bylw ${brightYellow}
-          #define bblu ${brightBlue}
-          #define bmag ${brightMagenta}
-          #define bcyn ${brightCyan}
-          #define bwht ${brightWhite}
+          #define blk  ${normal.black}
+          #define bblk ${bright.black}
+          #define red  ${normal.red}
+          #define bred ${bright.red}
+          #define grn  ${normal.green}
+          #define bgrn ${bright.green}
+          #define ylw  ${normal.yellow}
+          #define bylw ${bright.yellow}
+          #define blu  ${normal.blue}
+          #define bblu ${bright.blue}
+          #define mag  ${normal.magenta}
+          #define bmag ${bright.magenta}
+          #define cyn  ${normal.cyan}
+          #define bcyn ${bright.cyan}
+          #define wht  ${normal.white}
+          #define bwht ${bright.white}
         '';
 
         "xtheme/05-colors".text = ''
@@ -163,16 +206,16 @@ in {
         '';
 
         # GTK
-        "gtk-3.0/settings.ini".text = ''
+        "gtk-3.0/settings.ini".text = with cfg.gtk; ''
           [Settings]
           ${optionalString (cfg.gtk.theme != "")
-            "gtk-theme-name=${cfg.gtk.theme}"}
+            "gtk-theme-name=${theme}"}
           ${optionalString (cfg.gtk.iconTheme != "")
-            "gtk-icon-theme-name=${cfg.gtk.iconTheme}"}
+            "gtk-icon-theme-name=${iconTheme}"}
           ${optionalString (cfg.gtk.cursor.name != "")
-            "gtk-cursor-theme-name=${cfg.gtk.cursor.name}"}
+            "gtk-cursor-theme-name=${cursor.name}"}
           ${optionalString (cfg.gtk.cursor.size != "")
-            "gtk-cursor-theme-size=${toString (cfg.gtk.cursor.size)}"}
+            "gtk-cursor-theme-size=${toString (cursor.size)}"}
           gtk-fallback-icon-theme=gnome
           gtk-application-prefer-dark-theme=true
           gtk-xft-hinting=1
@@ -181,18 +224,18 @@ in {
         '';
 
         # GTK2 global theme (widget and icon theme)
-        "gtk-2.0/gtkrc".text = ''
-          ${optionalString (cfg.gtk.theme != "")
-            ''gtk-theme-name="${cfg.gtk.theme}"''}
+        "gtk-2.0/gtkrc".text = with cfg; ''
+          ${optionalString (gtk.theme != "")
+            ''gtk-theme-name="${gtk.theme}"''}
           ${optionalString (cfg.gtk.iconTheme != "")
-            ''gtk-icon-theme-name="${cfg.gtk.iconTheme}"''}
-          gtk-font-name="Sans ${toString (cfg.font.sans.size)}"
+            ''gtk-icon-theme-name="${gtk.iconTheme}"''}
+          gtk-font-name="Sans ${toString (font.sans.size)}"
         '';
 
         # QT4/5 global theme
-        "Trolltech.conf".text = ''
+        "Trolltech.conf".text = with cfg.gtk; ''
           [Qt]
-          ${optionalString (cfg.gtk.theme != "") "style=${cfg.gtk.theme}"}
+          ${optionalString (theme != "") "style=${theme}"}
         '';
       };
 
@@ -204,10 +247,10 @@ in {
         '';
       };
 
-      fonts.fontconfig.defaultFonts = {
-        sansSerif = [cfg.font.sans.family];
-        monospace = [cfg.font.mono.family];
-        emoji = [cfg.font.emoji];
+      fonts.fontconfig.defaultFonts = with cfg.font; {
+        sansSerif = [sans.family];
+        monospace = [mono.family];
+        emoji = [emoji];
       };
     }
 

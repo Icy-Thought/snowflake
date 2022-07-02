@@ -14,33 +14,33 @@ in {
   };
 
   config = mkIf (cfg.starship.enable || cfg.fish.enable) {
-    home.programs.starship = {
+    hm.programs.starship = {
       enable = true;
       enableBashIntegration = true;
       enableFishIntegration = true;
 
-      settings = with config.modules.themes; {
+      settings = with config.modules.themes.colors.main; {
         add_newline = true;
         scan_timeout = 10;
 
-        format = "[$directory](fg:${colors.cyan}) ($git_branch)($git_status )($nix_shell)($character)";
+        format = "[$directory](fg:${normal.cyan}) ($git_branch)($git_status )($nix_shell)($character)";
         directory = {
-          style = "bg:${colors.cyan} fg:${colors.types.bg} bold";
+          style = "bg:${normal.cyan} fg:${types.bg} bold";
           truncation_length = 3;
           truncation_symbol = "…/";
           format = "[⯁ $path]($style)";
         };
 
         git_branch = {
-          style = "bg:${colors.yellow} fg:${colors.types.bg} bold";
-          format = "[[](bg: ${colors.yellow})(on $symbol$branch)[](bg: ${colors.yellow})]($style) ";
+          style = "bg:${normal.yellow} fg:${types.bg} bold";
+          format = "[[](bg: ${normal.yellow})(on $symbol$branch)[](bg: ${normal.yellow})]($style) ";
           symbol = " ";
         };
 
         # TODO: find appealing symbols
         git_status = {
-          style = "bg:${colors.magenta} fg:${colors.types.bg} bold";
-          format = "[([](bg: ${colors.magenta})「$all_status$ahead_behind」[](bg: ${colors.magenta}))]($style)";
+          style = "bg:${normal.magenta} fg:${types.bg} bold";
+          format = "[([](bg: ${normal.magenta})「$all_status$ahead_behind」[](bg: ${normal.magenta}))]($style)";
         };
 
         character = {

@@ -15,13 +15,12 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home.programs.vscode = with config.snowflake; {
+    hm.programs.vscode = with config.snowflake; {
       enable = true;
       package = pkgs.vscodium;
       mutableExtensionsDir = true;
 
-      extensions = import "${configDir}/vscodium/extensions.nix" {
-        inherit config;
+      extensions = import "${configDir}/vscodium/extensions.nix".extensions {
         inherit pkgs;
       };
 

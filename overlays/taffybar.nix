@@ -2,9 +2,9 @@ _: pkgs: rec {
   haskellPackages = pkgs.haskellPackages.override (old: {
     overrides =
       pkgs.lib.composeExtensions (old.overrides or (_: _: {}))
-      (self: super: rec {
+      (final: prev: rec {
         my-taffybar =
-          self.callCabal2nix "my-taffybar"
+          final.callCabal2nix "my-taffybar"
           (pkgs.lib.sourceByRegex ../config/my-taffybar [
             "taffybar.hs"
             "taffybar.css"

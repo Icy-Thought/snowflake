@@ -24,7 +24,9 @@ implementation or an outdated `README.md`.
 | <kbd>M</kbd> + <kbd>A</kbd> + <kbd>f</kbd>      | Launch Firefox Browser.                                      |
 | <kbd>M</kbd> + <kbd>A</kbd> + <kbd>h</kbd>      | Launch Bottom.                                               |
 | <kbd>M</kbd> + <kbd>A</kbd> + <kbd>s</kbd>      | Launch Spotify.                                              |
-| <kbd>M</kbd> + <kbd>p</kbd>                     | Rofi -> launch selected application.                         |
+| <kbd>M</kbd> + <kbd>p</kbd>                     | Rofi -> launch application from desktop-file.                |
+| <kbd>M</kbd> + <kbd>S</kbd> + <kbd>p</kbd>      | Rofi -> launch application from path.                        |
+| <kbd>H</kbd> + <kbd>p</kbd>                     | Rofi -> control systemd units.                               |
 | <kbd>M</kbd> + <kbd>g</kbd>                     | Rofi -> select window to shift focus towards.                |
 | <kbd>M</kbd> + <kbd>b</kbd>                     | Rofi -> bring window + shift focus.                          |
 | <kbd>M</kbd> + <kbd>S</kbd> + <kbd>b</kbd>      | Rofi -> select window to replace current active window with. |

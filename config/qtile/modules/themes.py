@@ -26,18 +26,4 @@ decay = [
     "#74bee9",  # Colour 10
 ]
 
-rose_pine = [
-    "#1f1d2e",  # Colour 0
-    "#191724",  # Colour 1
-    "#eb6f92",  # Colour 2
-    "#31748f",  # Colour 3
-    "#f6c177",  # Colour 4
-    "#9ccfd8",  # Colour 5
-    "#c4a7e7",  # Colour 6
-    "#555169",  # Colour 7
-    "#e0def4",  # Colour 8
-    "#6e6a86",  # Colour 9
-    "#2a2837",  # Colour 10
-]
-
 palette = catppuccin

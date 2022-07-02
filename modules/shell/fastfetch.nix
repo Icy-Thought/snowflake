@@ -14,7 +14,9 @@ in {
     enable = mkBoolOpt false;
   };
 
-  config = mkIf (cfg.fastfetch.enable || cfg.fish.enable) {
+  # config = mkIf (cfg.fastfetch.enable || cfg.fish.enable) {
+  config = mkIf cfg.fastfetch.enable {
+    # remove when merged
     user.packages = with pkgs; [fastfetch];
 
     home.configFile."fastfetch/config.conf".source = "${configDir}/fastfetch/config.conf";

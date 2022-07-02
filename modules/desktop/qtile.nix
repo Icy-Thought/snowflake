@@ -33,7 +33,6 @@ in {
       (cfg.package.unwrapped or cfg.package)
       lightdm
       libnotify
-      dunst
       playerctl
       gxmessage
       xdotool
@@ -41,10 +40,17 @@ in {
       feh
     ];
 
+    # Our beloved modules
     modules.desktop = {
       media.browser.nautilus.enable = true;
-      # Xdg.mimeApps -> application management
-      extra.mimeApps.enable = true;
+      extra = {
+        customLayout.enable = true;
+        fcitx5.enable = true;
+        mimeApps.enable = true; # mimeApps -> default launch application
+        picom.enable = true;
+        dunst.enable = true;
+        rofi.enable = true;
+      };
     };
 
     services.xserver = {
@@ -76,14 +82,14 @@ in {
       blueman.enable = true;
     };
 
-    home.services = {
-      gnome-keyring.enable = true;
+    hm.services = {
       blueman-applet.enable = true;
-      status-notifier-watcher.enable = true;
+      gnome-keyring.enable = true;
       network-manager-applet.enable = true;
+      status-notifier-watcher.enable = true;
     };
 
-    home.xsession = {
+    hm.xsession = {
       enable = true;
       numlock.enable = true;
       preferStatusNotifierItems = true;

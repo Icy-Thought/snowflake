@@ -56,6 +56,11 @@ in {
       gnomeExtensions.user-themes
     ];
 
+    # Our beloved modules
+    modules.desktop.extra = {
+      ibus.enable = true;
+    };
+
     # Force-enable wayland on FireFox
     environment.variables = {
       MOZ_ENABLE_WAYLAND = 1;
