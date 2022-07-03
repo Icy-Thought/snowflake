@@ -20,25 +20,27 @@ in {
       experimentalBackends = true;
       vSync = true;
 
+      fade = true;
+      fadeDelta = 3;
+      fadeSteps = [0.03 0.03];
+
       menuOpacity = 0.9;
       inactiveOpacity = 0.8;
-
       opacityRules = [
         "100:window_type = 'combo'"
         "100:window_type = 'desktop'"
         "100:window_type = 'dialog'"
-        "100:window_type = 'dock'"
         "100:window_type = 'dnd'"
+        "100:window_type = 'dock'"
         "100:window_type = 'dropdown_menu'"
-        "100:window_type = 'toolbar'"
         "100:window_type = 'menu'"
         "100:window_type = 'normal'"
         "100:window_type = 'notification'"
         "100:window_type = 'popup_menu'"
         "100:window_type = 'splash'"
         "100:window_type = 'toolbar'"
-        "100:window_type = 'utility'"
         "100:window_type = 'unknown'"
+        "100:window_type = 'utility'"
       ];
 
       shadow = true;
@@ -46,45 +48,35 @@ in {
       shadowOpacity = 0.75;
 
       shadowExclude = [
-        "_GTK_FRAME_EXTENTS@:c"
-        "window_type = 'desktop'"
-        "window_type = 'dock'"
-        "window_type = 'dnd'"
-        "window_type = 'notification'"
-        "window_type = 'toolbar'"
-        "window_type = 'utility'"
+        "! name~=''" # Qtile == empty wm_class..
         "_COMPTON_SHADOW@:32c = 0"
+        "_GTK_FRAME_EXTENTS@:c"
+        "class_g = 'firefox-aurora' && window_type = 'popup_menu'"
+        "class_g = 'firefox-aurora' && window_type = 'tooltip'"
+        "class_g = 'firefox-aurora' && window_type = 'utility'"
         "class_g = 'Rofi'"
         "class_g = 'slop'" # Maim
+        "name = 'Notification'"
       ];
 
       settings = {
-        blur = {
-          method = "dual_kawase";
-          strength = "7.0";
-        };
+        shadow-radius = 15;
+
+        corner-radius = 10;
+        rounded-corners-exclude = [
+          "! name~=''" # Qtile == empty wm_class..
+          "window_type = 'dock'"
+          "window_type = 'desktop'"
+        ];
+
+        round-borders = 0;
+        round-borders-exclude = [
+          "! name~=''" # Qtile == empty wm_class..
+        ];
 
         blur-background = false;
         blur-background-frame = false;
         blur-background-fixed = false;
-
-        blur-background-exclude = [
-          "_GTK_FRAME_EXTENTS@:c"
-          "window_type = 'combo'"
-          "window_type = 'desktop'"
-          "window_type = 'dnd'"
-          "window_type = 'dropdown_menu'"
-          "window_type = 'toolbar'"
-          "window_type = 'menu'"
-          "window_type = 'notification'"
-          "window_type = 'utility'"
-          "window_type = 'dock'"
-          "window_type = 'dialog'"
-
-          "class_g = 'Rofi'"
-          "class_g = 'slop'" # Maim
-          "class_g = 'Firefox' && window_type = 'utility'"
-        ];
 
         transition-length = 200;
         transition-pow-x = 5.0e-2;
@@ -92,9 +84,6 @@ in {
         transition-pow-w = 5.0e-2;
         transition-pow-h = 5.0e-2;
         size-transition = true;
-
-        shadow-radius = 7;
-        shadow-color = "#000000";
 
         daemon = false;
         dbus = false;
