@@ -17,8 +17,6 @@ groups = [
     Group("9", label="九"),
 ]
 
-# groups = [Group(f"{i+1}", label="") for i in range(9)]
-
 for i in groups:
     keys.extend(
         [
@@ -33,14 +31,13 @@ borderline = dict(
     border_focus=palette[8],
     border_normal=palette[1],
     border_width=2,
-    margin=14,
+    margin=10,
 )
 
 layouts = [
     layout.MonadTall(**borderline),
     layout.MonadThreeCol(**borderline),
     layout.MonadWide(**borderline, ratio=0.65),
-    layout.Spiral(**borderline, clockwise=True, main_pane="left"),
     layout.Max(**borderline),
 ]
 
