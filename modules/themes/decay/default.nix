@@ -87,7 +87,7 @@ in {
               outer = "";
               inner = "";
             };
-            highlight = "";
+            selected = "";
             urgent = "";
             transparent = "";
           };
@@ -408,7 +408,7 @@ in {
 
               outer-ribbon = mkLiteral "${ribbon.outer}";
               inner-ribbon = mkLiteral "${ribbon.inner}";
-              highlight = mkLiteral "${highlight}";
+              selected = mkLiteral "${selected}";
               urgent = mkLiteral "${urgent}";
               transparent = mkLiteral "${transparent}";
             };
@@ -515,7 +515,7 @@ in {
             };
 
             "element selected" = {
-              background-color = mkLiteral "@highlight";
+              background-color = mkLiteral "@selected";
               text-color = mkLiteral "@bg";
               border = mkLiteral "0% 0% 0.3% 0.2%";
               border-radius = mkLiteral "1.5% 1.0% 1.5% 1.5%";

@@ -121,7 +121,7 @@ in {
           outer = mkOpt str "#FFFFFF";
           inner = mkOpt str "#FFFFFF";
         };
-        highlight = mkOpt str "#FFFFFF";
+        selected = mkOpt str "#FFFFFF";
         urgent = mkOpt str "#FFFFFF";
         transparent = mkOpt str "#FFFFFF";
       };

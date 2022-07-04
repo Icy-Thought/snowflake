@@ -87,7 +87,7 @@ in {
               outer = "hsla(41, 88%, 83%, 1)";
               inner = "hsla(23, 87%, 78%, 1)";
             };
-            highlight = "hsla(9, 56%, 90%, 1)";
+            selected = "hsla(9, 56%, 90%, 1)";
             urgent = "hsla(342, 79%, 75%, 1)";
             transparent = "hsla(0, 0%, 0%, 0)";
           };
@@ -408,7 +408,7 @@ in {
 
               outer-ribbon = mkLiteral "${ribbon.outer}";
               inner-ribbon = mkLiteral "${ribbon.inner}";
-              highlight = mkLiteral "${highlight}";
+              selected = mkLiteral "${selected}";
               urgent = mkLiteral "${urgent}";
               transparent = mkLiteral "${transparent}";
             };
@@ -515,7 +515,7 @@ in {
             };
 
             "element selected" = {
-              background-color = mkLiteral "@highlight";
+              background-color = mkLiteral "@selected";
               text-color = mkLiteral "@bg";
               border = mkLiteral "0% 0% 0.3% 0.2%";
               border-radius = mkLiteral "1.5% 1.0% 1.5% 1.5%";

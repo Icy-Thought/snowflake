@@ -20,12 +20,12 @@ in {
       experimentalBackends = true;
       vSync = true;
 
-      fade = true;
+      fade = false;
       fadeDelta = 3;
       fadeSteps = [0.03 0.03];
 
       menuOpacity = 0.9;
-      inactiveOpacity = 0.8;
+      inactiveOpacity = 0.65;
       opacityRules = [
         "100:window_type = 'combo'"
         "100:window_type = 'desktop'"
@@ -60,7 +60,8 @@ in {
       ];
 
       settings = {
-        shadow-radius = 15;
+        frame-opacity = 0.55;
+        shadow-radius = 10;
 
         corner-radius = 10;
         rounded-corners-exclude = [
