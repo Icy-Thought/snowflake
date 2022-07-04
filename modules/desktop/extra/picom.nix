@@ -60,7 +60,7 @@ in {
       ];
 
       settings = {
-        frame-opacity = 0.55;
+        # frame-opacity = 0.55;
         shadow-radius = 10;
 
         corner-radius = 10;

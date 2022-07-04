@@ -30,7 +30,7 @@ for i in groups:
 borderline = dict(
     border_focus=palette[8],
     border_normal=palette[1],
-    border_width=3,
+    border_width=2,
     margin=10,
 )
 
