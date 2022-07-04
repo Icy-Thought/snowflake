@@ -56,7 +56,12 @@ in {
         "class_g = 'firefox-aurora' && window_type = 'utility'"
         "class_g = 'Rofi'"
         "class_g = 'slop'" # Maim
-        "name = 'Notification'"
+        "window_type = 'desktop'"
+        "window_type = 'dnd'"
+        "window_type = 'dock'"
+        "window_type = 'notification'"
+        "window_type = 'toolbar'"
+        "window_type = 'utility'"
       ];
 
       settings = {
