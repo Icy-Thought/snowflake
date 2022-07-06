@@ -29,7 +29,7 @@
         config.allowBroken = true;
       };
     in rec {
-      devShell = pkgs.haskellPackages.shellFor {
+      devShells.default = pkgs.haskellPackages.shellFor {
         packages = p: [p.my-xmonad];
         buildInputs = with pkgs.haskellPackages; [
           cabal-install
@@ -40,7 +40,7 @@
           stylish-haskell
         ];
       };
-      defaultPackage = pkgs.haskellPackages.my-xmonad;
+      packages.default = pkgs.haskellPackages.my-xmonad;
     })
     // {
       inherit overlay overlays;

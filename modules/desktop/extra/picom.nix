@@ -20,9 +20,9 @@ in {
       experimentalBackends = true;
       vSync = true;
 
-      fade = false;
-      fadeDelta = 3;
-      fadeSteps = [0.03 0.03];
+      fade = true;
+      fadeDelta = 2;
+      fadeSteps = [2.5e-2 2.5e-2];
 
       menuOpacity = 0.9;
       inactiveOpacity = 0.65;
@@ -65,7 +65,6 @@ in {
       ];
 
       settings = {
-        # frame-opacity = 0.55;
         shadow-radius = 10;
 
         corner-radius = 10;
@@ -74,7 +73,6 @@ in {
           "window_type = 'dock'"
           "window_type = 'desktop'"
         ];
-
         round-borders = 0;
         round-borders-exclude = [
           "! name~=''" # Qtile == empty wm_class..
@@ -84,12 +82,23 @@ in {
         blur-background-frame = false;
         blur-background-fixed = false;
 
-        transition-length = 200;
-        transition-pow-x = 5.0e-2;
-        transition-pow-y = 5.0e-2;
-        transition-pow-w = 5.0e-2;
-        transition-pow-h = 5.0e-2;
-        size-transition = true;
+        # WARN: Official Picom animations (unsupported as of 06/07/22)
+        # transition-length = 200;
+        # transition-pow-x = 5.0e-2;
+        # transition-pow-y = 5.0e-2;
+        # transition-pow-w = 5.0e-2;
+        # transition-pow-h = 5.0e-2;
+        # size-transition = true;
+
+        # WARN: Unofficial animation support (dccsillag)
+        animations = true;
+        animation-stiffness = 170;
+        animation-window-mass = 0.8;
+        animation-dampening = 15;
+        animation-clamping = false;
+        animation-for-open-window = "zoom";
+        animation-for-unmap-window = "zoom";
+        animation-for-transient-window = "slide-up";
 
         daemon = false;
         dbus = false;
@@ -111,36 +120,10 @@ in {
 
         focus-exclude = ["class_g ?= 'rofi'" "class_g ?= 'Steam'"];
 
+        # WARN: Unofficial animation support (dccsillag)
         wintypes = {
-          normal = {};
-          notification = {};
-          desktop = {blur-background = false;};
-          menu = {focus = false;};
-          dialog = {};
-          tooltip = {
-            shadow = true;
-            opacity = 0.75;
-            focus = false;
-            full-shadow = false;
-          };
-          dock = {
-            shadow = true;
-            opacity = 1.0;
-          };
-          popup_menu = {
-            shadow = true;
-            focus = false;
-            opacity = 0.8;
-          };
-          dropdown_menu = {
-            opacity = 0.8;
-            focus = false;
-          };
-          utility = {
-            focus = false;
-            opacity = 1.0;
-            blur-background = false;
-          };
+          dock = {animation = "slide-down";};
+          toolbar = {animation = "slide-down";};
         };
       };
     };

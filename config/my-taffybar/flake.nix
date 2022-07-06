@@ -20,9 +20,9 @@
         config.allowBroken = true;
       };
     in rec {
-      devShell =
+      devShells.default =
         pkgs.haskellPackages.shellFor {packages = p: [p.my-taffybar];};
-      defaultPackage = pkgs.haskellPackages.my-taffybar;
+      packages.default = pkgs.haskellPackages.my-taffybar;
     })
     // {
       inherit overlay overlays;
