@@ -6,13 +6,11 @@
   ...
 }:
 with lib;
-with lib.my; let
-  name = builtins.getEnv "USER";
-in {
+with lib.my; {
   imports =
     [
       inputs.home-manager.nixosModules.home-manager
-      (mkAliasOptionModule ["hm"] ["home-manager" "users" name])
+      (mkAliasOptionModule ["hm"] ["home-manager" "users" config.user.name])
     ]
     ++ (mapModulesRec' (toString ./modules) import);
 
