@@ -65,20 +65,19 @@
 
     nixosConfigurations = mapHosts ./hosts {};
 
-    devShell."${system}" = import ./shell.nix {inherit pkgs;};
+    devShells."${system}".default = import ./shell.nix {inherit pkgs;};
 
-    templates =
+    templates.full =
       {
-        full = {
-          path = ./.;
-          description = "λ well-tailored and configureable NixOS system!";
-        };
+        path = ./.;
+        description = "λ well-tailored and configureable NixOS system!";
       }
       // import ./templates;
-    defaultTemplate = self.templates.full;
+
+    templates.default = self.templates.full;
 
     # TODO: deployment + template tool.
-    # defaultApp."${system}" = {
+    # apps."${system}" = {
     #   type = "app";
     #   program = ./bin/hagel;
     # };
