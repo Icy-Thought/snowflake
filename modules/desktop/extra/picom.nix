@@ -43,7 +43,7 @@ in {
         "100:window_type = 'utility'"
       ];
 
-      shadow = true;
+      shadow = false;
       shadowOffsets = [(-7) (-7)];
       shadowOpacity = 0.75;
 
