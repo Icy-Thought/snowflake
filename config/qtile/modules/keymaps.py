@@ -1,11 +1,17 @@
+import os
+
 from libqtile.command import lazy
 from libqtile.config import EzClick, EzDrag, EzKey
+
+HOME = os.path.expanduser("~")
 
 # Default applications
 myTerm = "kitty"
 myBrowser = "firefox-devedition"
 myPrivateBrowser = (
-    "firefox-devedition --profile ~/.mozilla/firefox/z5dgw9v6.dev-edition-private"
+    myBrowser,
+    "--profile",
+    HOME + "/.mozilla/firefox/z5dgw9v6.dev-edition-private",
 )
 
 EzKey.modifier_keys = {
