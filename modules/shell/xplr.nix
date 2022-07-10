@@ -19,7 +19,7 @@ in {
 
     home.configFile."xplr/init.lua".text = ''
       ---@diagnostic disable
-      version = "0.18.0"
+      version = "0.19.0"
       local xplr = xplr
       ---@diagnostic enable
 

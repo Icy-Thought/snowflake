@@ -2,8 +2,11 @@ from libqtile.command import lazy
 from libqtile.config import EzClick, EzDrag, EzKey
 
 # Default applications
-myTerminal = "kitty"
+myTerm = "kitty"
 myBrowser = "firefox-devedition"
+myPrivateBrowser = (
+    "firefox-devedition --profile ~/.mozilla/firefox/z5dgw9v6.dev-edition-private"
+)
 
 EzKey.modifier_keys = {
     "M": "mod4",
@@ -43,7 +46,7 @@ window_displacement = [
     EzKey("M-S-l", lazy.layout.swap_right(), lazy.layout.shuffle_right()),
 ]
 
-window_size_control = [
+window_dimension = [
     EzKey("M-C-h", lazy.layout.grow_left()),
     EzKey("M-C-j", lazy.layout.grow_down()),
     EzKey("M-C-k", lazy.layout.grow_up()),
@@ -51,7 +54,7 @@ window_size_control = [
     EzKey("M-C-n", lazy.layout.normalize()),  # Restore to original size
 ]
 
-toggles = [
+window_toggles = [
     EzKey("M-S-c", lazy.window.kill()),
     EzKey("M-<space>", lazy.next_layout()),
     EzKey("M-t", lazy.window.toggle_floating()),
@@ -60,7 +63,7 @@ toggles = [
     EzKey("M-S-<space>", lazy.window.toggle_fullscreen()),
 ]
 
-qtile_controls = [
+qtilectl = [
     EzKey("M-S-r", lazy.restart()),
     EzKey("M-S-q", lazy.shutdown()),
 ]
@@ -73,32 +76,27 @@ rofi_spawns = [
 ]
 
 application_spawns = [
-    EzKey("M-S-<Return>", lazy.spawn(myTerminal)),
+    EzKey("M-S-<Return>", lazy.spawn(myTerm)),
     EzKey("M-A-f", lazy.spawn(myBrowser)),
-    EzKey(
-        "M-A-w",
-        lazy.spawn(
-            [myBrowser, "--profile ~/.mozilla/firefox/z5dgw9v6.dev-edition-private"]
-        ),
-    ),
+    EzKey("M-A-w", lazy.spawn(myPrivateBrowser)),
     EzKey("M-A-g", lazy.spawn("brave")),
-    EzKey("M-A-b", lazy.spawn([myTerminal, "-T Bottom -e btm"])),
+    EzKey("M-A-b", lazy.spawn(myTerm, "-T Bottom -e btm")),
 ]
 
-audio_controls = [
+audioctl = [
     EzKey("<XF86AudioMute>", lazy.spawn("volctl --mute")),
     EzKey("<XF86AudioRaiseVolume>", lazy.spawn("volctl --up")),
     EzKey("<XF86AudioLowerVolume>", lazy.spawn("volctl --down")),
     EzKey("<XF86AudioMicMute>", lazy.spawn("micvol --mute")),
 ]
 
-media_controls = [
+mediactl = [
     EzKey("M-<Down>", lazy.spawn("playerctl play-pause")),
     EzKey("M-<Right>", lazy.spawn("playerctl next")),
     EzKey("M-<Left>", lazy.spawn("playerctl previous")),
 ]
 
-screenshot = [
+scrcap = [
     EzKey("<Print>", lazy.spawn("scrcap -w")),
     EzKey("C-<Print>", lazy.spawn("scrcap -c -w")),
     EzKey("A-<Print>", lazy.spawn("scrcap -a")),
@@ -107,26 +105,26 @@ screenshot = [
     EzKey("C-S-<Print>", lazy.spawn("scrcap -c -r")),
 ]
 
-brightness_controls = [
+brightctl = [
     EzKey("<XF86MonBrightnessUp>", lazy.spawn("brightctl --up")),
     EzKey("<XF86MonBrightnessDown>", lazy.spawn("brightctl --down")),
 ]
 
 quick_launch = [
-    EzKey("<XF86Calculator>", lazy.spawn([myTerminal, "-T Qalc -e qalc"])),
+    EzKey("<XF86Calculator>", lazy.spawn(myTerm, "-T Qalc -e qalc")),
 ]
 
 keys = [
     *window_navigation,
     *window_displacement,
-    *window_size_control,
-    *toggles,
-    *qtile_controls,
+    *window_dimension,
+    *window_toggles,
+    *qtilectl,
     *rofi_spawns,
     *application_spawns,
-    *audio_controls,
-    *media_controls,
-    *screenshot,
-    *brightness_controls,
+    *audioctl,
+    *mediactl,
+    *scrcap,
+    *brightctl,
     *quick_launch,
 ]
