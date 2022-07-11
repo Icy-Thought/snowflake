@@ -7,7 +7,7 @@ from modules.statusbar import extension_defaults, screens, widget_defaults
 auto_fullscreen = True
 auto_minimize = False
 bring_front_click = False
-cursor_warp = False
+cursor_warp = True
 
 dgroups_app_rules = []  # type: List
 dgroups_key_binder = None

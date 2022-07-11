@@ -1,12 +1,11 @@
+# Qtile
+## Status-bar (qtile-extras)
+- [ ] `UPowerWidget`: better battery <- icon + bg change on low level
+- [ ] `CurrentLayoutIcon`: working foreground color with `use_mask = True`
+- [ ] (Maybe) `BrightnessControl`: visual + clickable control. <- use only if
+      layout can change.
+
 # XMonad-like Setup
-## Layout (4):
-b. large main
-
-related info:
-```haskell 
-  |||! rename "Large Main" (Tall 1 (3 / 100) (3 / 4))
-```
-
 ## Toggled spawns (rofi):
 - [ ] MagicFocus (view window -> main window)
 - [ ] Magnify (view window => grows larger)
@@ -22,7 +21,6 @@ isProtonMailTitle t = isInfixOf "@proton.me" t && isInfixOf "Proton Mail" t
 ## Aesthetics
 - [ ] Fix statusbar icon paths + apply whitsur icon theme to qtile.. seems to
       not follow theme specifications from `modules.themes`.. 
-- [ ] Specify font, if possible done through nix. (XResources??)
 - [ ] Have bar show active applications inside workspaces, like taffybar
     - Or, like Chromium, show what applicatiosn are in a certain workspace on
     hover
@@ -31,8 +29,7 @@ isProtonMailTitle t = isInfixOf "@proton.me" t && isInfixOf "Proton Mail" t
 - [ ] When workspace has one active window -> toggle.maximum(), otherwise -> disabled.
     - Ability to cycle + switch focus on fullscreen to other application.
 - [ ] Add rofi power spawn on battery widget click.
-- [ ] Tray seems to be missing lanched applications?
-- [ ] Center cursor on window focus
+- [ ] Tray == missing lanched applications????
 - [ ] Brave seems to lose focus on tab kill???
 
 # Keymaps
@@ -74,5 +71,4 @@ Migrate to Qtile
 , ((modalt, xK_3)               , selectWorkspace def)
 , ((hyper .|. mod1Mask, xK_3)   , removeWorkspace)
 , ((hyper, xK_l)                , selectLayout)
-,
 ```
