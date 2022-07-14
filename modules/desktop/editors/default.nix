@@ -43,8 +43,9 @@ in {
         vale
 
         ## lsp: LaTeX + Org-Mode
-        tectonic
         pandoc
+        tectonic
+        texlab
       ];
     })
   ];
