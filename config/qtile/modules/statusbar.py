@@ -78,11 +78,11 @@ logo = [
     {
         "font": fontinfo["font"],
         "background": palette[8],
-        "fontsize": fontinfo["fontsize"] * 1.8,
+        "fontsize": fontinfo["fontsize"] * 1.75,
         "foreground": palette[1],
         "mouse_callbacks": {"Button1": lazy.spawn(rofi)},
-        "padding": -2,
-        "text": " \uf313 ",
+        "padding": -1.0,
+        "text": " \ue235 ",
     },
 ]
 
@@ -96,6 +96,7 @@ layout = [
         "scale": 0.63,
     },
 ]
+
 
 cpu = [
     widget.CPU,
@@ -146,16 +147,16 @@ batt = [
         **fontinfo,
         "background": palette[5],
         "foreground": palette[1],
-        # "charge_char": "\uf583 ",
-        # "discharge_char": "",
-        # "empty_char": "\uf244 ",
+        "charge_char": "\uf583",
+        "discharge_char": "\uf578",
+        "empty_char": "\uf58d",
+        "full_char": "\uf583",
+        "unknown_char": "\uf590",
         "format": "{char} {percent:2.0%} ({watt:.2f}W) ",
-        # "full_char": "\uf240 ",
         "low_background": palette[7],
         "low_foreground": palette[1],
         "low_percentage": 0.30,
         "show_short_text": False,
-        # "unknown_char": "\uf590 ",
     },
     widget.BatteryIcon,
     {
