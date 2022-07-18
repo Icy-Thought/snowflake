@@ -23,7 +23,7 @@ groupbox = [
         "block_highlight_text_color": palette[1],
         "disable_drag": True,
         "font": fontinfo["font"],
-        "fontsize": fontinfo["fontsize"] + 4,
+        "fontsize": 16,
         "foreground": palette[2],
         "hide_unused": True,
         "highlight_color": [palette[0], palette[3]],
@@ -78,7 +78,7 @@ logo = [
     {
         "font": fontinfo["font"],
         "background": palette[8],
-        "fontsize": fontinfo["fontsize"] * 1.75,
+        "fontsize": 21,
         "foreground": palette[1],
         "mouse_callbacks": {"Button1": lazy.spawn(rofi)},
         "padding": -1.0,
