@@ -18,8 +18,8 @@ in {
   config = mkIf (cfg.macchina.enable || cfg.fish.enable) {
     user.packages = with pkgs; [macchina];
 
-    home.configFile."macchina" = {
-      "macchina.toml".text = ''
+    home.configFile = {
+      "macchina/macchina.toml".text = ''
         interface = "wlan0"
         long_uptime = true
         long_shell = false
@@ -41,9 +41,10 @@ in {
         ]
       '';
 
-      "themes/Xi.conf".source = "${configDir}/macchina/xi.toml";
-      "artworks" = {
-        source = "${configDir}/macchina/artworks";
+      "macchina/themes/Xi.conf".source = "${configDir}/macchina/xi.toml";
+
+      "macchina/artwork" = {
+        source = "${configDir}/macchina/artwork";
         recursive = true;
       };
     };
