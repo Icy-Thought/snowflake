@@ -70,10 +70,12 @@ in {
             text_background_opacity = 1.0,
             warn_about_missing_glyphs = false,
             window_background_opacity = 1.0,
-
             enable_scroll_bar = false,
             scrollback_lines = 5000,
+
             cursor_blink_rate = 500,
+            cursor_blink_ease_in = "Constant",
+            cursor_blink_ease_out = "Constant",
 
             hyperlink_rules = {
                 { -- This is actually the default if you don't specify any hyperlink_rules

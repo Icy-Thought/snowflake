@@ -29,6 +29,7 @@ in {
     ];
 
     user.packages = with pkgs; [
+      hyperfine
       libqalculate
       (makeDesktopItem {
         name = "kalker";
