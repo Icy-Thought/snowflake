@@ -26,13 +26,9 @@ in {
         (mkIf (!config.modules.develop.cc.enable) [gcc]) # Treesitter
       ]);
 
-      programs.neovim = {
+      hm.programs.neovim = {
         enable = true;
         package = pkgs.neovim-nightly;
-        configure.customRC = ''
-          luafile ${nvimDir}/agasaya/init.lua
-        '';
-
         withRuby = true;
         withPython3 = true;
         withNodeJs = true;
