@@ -26,7 +26,7 @@ in {
         (mkIf (!config.modules.develop.cc.enable) [gcc]) # Treesitter
       ]);
 
-      hm.programs.neovim = {
+      programs.neovim = {
         enable = true;
         package = pkgs.neovim-nightly;
         withRuby = true;
@@ -43,6 +43,10 @@ in {
 
     (mkIf cfg.agasaya.enable {
       modules.develop.lua.enable = true;
+
+      programs.neovim.configure.customRC = ''
+        luafile ${nvimDir}/agasaya/init.lua
+      '';
 
       environment.variables = {
         SQLITE_PATH = "${pkgs.sqlite.out}/lib/libsqlite3.so";
