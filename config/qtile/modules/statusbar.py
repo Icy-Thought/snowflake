@@ -4,8 +4,8 @@
 from libqtile import bar, qtile, widget
 from libqtile.config import Screen
 from libqtile.lazy import lazy
-from modules.groups import borderline
 
+from modules.groups import borderline
 from modules.themes import palette
 
 fontinfo = dict(
@@ -170,7 +170,7 @@ datetime = [
         **fontinfo,
         "background": palette[6],
         "foreground": palette[1],
-        "format": "%B %d, %H:%M",
+        "format": "%a, %B %e, %H:%M",
     },
 ]
 
