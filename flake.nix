@@ -17,7 +17,7 @@
     xmonad-contrib.url = "github:icy-thought/xmonad-contrib";
     taffybar.url = "github:taffybar/taffybar";
     emacs.url = "github:nix-community/emacs-overlay";
-    neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
+    nvim-nightly.url = "github:nix-community/neovim-nightly-overlay";
     rust.url = "github:oxalica/rust-overlay";
   };
 
@@ -36,7 +36,7 @@
         config.allowUnfree = true;
         overlays = extraOverlays ++ (lib.attrValues self.overlays);
       };
-    pkgs = mkPkgs nixpkgs [self.overlay];
+    pkgs = mkPkgs nixpkgs [self.overlays.default];
     pkgs' = mkPkgs nixpkgs-unstable [];
 
     lib = nixpkgs.lib.extend (final: prev: {
@@ -48,12 +48,14 @@
   in {
     lib = lib.my;
 
-    overlay = final: prev: {
-      unstable = pkgs';
-      my = self.packages."${system}";
-    };
-
-    overlays = mapModules ./overlays import;
+    overlays =
+      (mapModules ./overlays import)
+      // {
+        default = final: prev: {
+          unstable = pkgs';
+          my = self.packages.${system};
+        };
+      };
 
     packages."${system}" = mapModules ./packages (p: pkgs.callPackage p {});
 

@@ -18,7 +18,7 @@ in {
 
   config = mkMerge [
     (mkIf cfg.enable {
-      nixpkgs.overlays = with inputs; [rust.overlay];
+      nixpkgs.overlays = with inputs; [rust.overlays.default];
 
       user.packages = with pkgs; [
         crate2nix
