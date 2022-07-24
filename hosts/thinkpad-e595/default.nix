@@ -30,7 +30,6 @@
       terminal = {
         default = "kitty";
         kitty.enable = true;
-        wezterm.enable = true;
       };
       editors = {
         default = "nvim";

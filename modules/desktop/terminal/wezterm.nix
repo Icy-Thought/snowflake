@@ -59,14 +59,14 @@ in {
                       weight = "${font.sans.weightAlt}",
                       style = "Italic",
                   }),
-                  font_size= 9.0,
+                  font_size= ${toString (font.mono.size)},
               },
             ''}
 
                 window_padding = {
                     left = 15,
                     right = 15,
-                    top = 0,
+                    top = 10,
                     bottom = 0,
                 },
 
@@ -127,15 +127,15 @@ in {
                         action = wezterm.action({ ScrollToPrompt = 1 }),
                     },
                     { -- split current pane vertical
-                        key = '"',
-                        mods = "CTRL|SHIFT|ALT",
+                        key = '|',
+                        mods = "CTRL|SHIFT",
                         action = wezterm.action({
                             SplitVertical = { domain = "CurrentPaneDomain" },
                         }),
                     },
                     { -- split current pane horizontal
-                        key = "%",
-                        mods = "CTRL|SHIFT|ALT",
+                        key = "-",
+                        mods = "CTRL|SHIFT",
                         action = wezterm.action({
                             SplitHorizontal = { domain = "CurrentPaneDomain" },
                         }),

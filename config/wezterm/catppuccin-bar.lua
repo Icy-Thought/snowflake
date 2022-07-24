@@ -1,5 +1,16 @@
 local wezterm = require("wezterm")
 
+wezterm.on("update-right-status", function(window, pane)
+    local datetime = "   " .. wezterm.strftime("%B %e, %H:%M  ")
+
+    window:set_right_status(wezterm.format({
+        -- { Attribute = { Underline = "Single" } },
+        { Attribute = { Italic = true } },
+        { Foreground = { Color = "#abe9b3" } },
+        { Text = datetime },
+    }))
+end)
+
 wezterm.on(
     "format-tab-title",
     function(tab, tabs, panes, config, hover, max_width)
@@ -18,7 +29,7 @@ wezterm.on(
 
         local edge_background = background
         local edge_foreground = "#7976ab"
-        local separator = "| "
+        local separator = " | "
 
         -- ensure that the titles fit in the available space,
         -- and that we have room for the edges.
@@ -29,7 +40,7 @@ wezterm.on(
             -- Logo
             { Background = { Color = "#c7c9fd" } },
             { Foreground = { Color = "#1e1d2f" } },
-            { Text = "  " },
+            { Text = "   " },
             -- Separator
             { Background = { Color = edge_background } },
             { Foreground = { Color = edge_foreground } },
