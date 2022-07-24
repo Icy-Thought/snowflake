@@ -9,14 +9,14 @@ with lib;
 with lib.my; let
   cfg = config.modules.desktop.terminal.kitty;
   configDir = config.snowflake.configDir;
-  active = config.modules.themes.active;
+  themeCfg = config.modules.themes;
 in {
   options.modules.desktop.terminal.kitty = with types; {
     enable = mkBoolOpt false;
   };
 
   config = mkIf cfg.enable {
-    hm.programs.kitty = mkMerge [
+    hm.programs.kitty = with themeCfg; (mkMerge [
       {
         enable = true;
         settings = {
@@ -97,16 +97,70 @@ in {
           "ctrl+shift+page_down" = "previous_tab";
         };
       }
-
       (mkIf (active != null) {
         extraConfig = ''
           include ~/.config/kitty/config/${active}.conf
         '';
       })
-    ];
+    ]);
 
-    home.configFile = {
-      "kitty/tab_bar.py".source = "${configDir}/kitty/tab_bar.py";
-    };
+    home.configFile = with themeCfg; (mkMerge [
+      {
+        "kitty/tab_bar.py" = {
+          source = "${configDir}/kitty/${active}-bar.py";
+        };
+      }
+
+      (mkIf (active != null) {
+        # TODO: Find ONE general nix-automation entry for VictorMono
+        "kitty/config/${active}.conf".text =
+          ''
+            font_family               Victor Mono SemiBold Nerd Font Complete
+            italic_font               Victor Mono SemiBold Italic Nerd Font Complete
+            bold_font                 Victor Mono Bold Nerd Font Complete
+            bold_italic_font          Victor Mono Bold Italic Nerd Font Complete
+            font_size                 ${toString (font.mono.size)}
+          ''
+          + (with colors.main; ''
+
+            foreground                ${types.fg}
+            background                ${types.bg}
+
+            cursor                    ${normal.yellow}
+            cursor_text_color         ${types.bg}
+
+            tab_bar_background        ${types.bg}
+            tab_title_template        "{fmt.fg._7976ab}{fmt.bg.default} ○ {index}:{f'{title[:6]}…{title[-6:]}' if title.rindex(title[-1]) + 1 > 25 else title}{' []' if layout_name == 'stack' else '''} "
+            active_tab_title_template "{fmt.fg._f2cdcd}{fmt.bg.default} 綠{index}:{f'{title[:6]}…{title[-6:]}' if title.rindex(title[-1]) + 1 > 25 else title}{' []' if layout_name == 'stack' else '''} "
+
+            selection_foreground      ${types.bg}
+            selection_background      ${types.highlight}
+
+            color0                    ${normal.black}
+            color8                    ${bright.black}
+
+            color1                    ${normal.red}
+            color9                    ${bright.red}
+
+            color2                    ${normal.green}
+            color10                   ${bright.green}
+
+            color3                    ${normal.yellow}
+            color11                   ${bright.yellow}
+
+            color4                    ${normal.blue}
+            color12                   ${bright.blue}
+
+            color5                    ${normal.magenta}
+            color13                   ${bright.magenta}
+
+            color6                    ${normal.cyan}
+            color14                   ${bright.cyan}
+
+            color7                    ${normal.white}
+            color15                   ${bright.white}
+          '');
+      })
+    ]);
   };
 }

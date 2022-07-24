@@ -9,9 +9,11 @@ with lib;
 with lib.my; let
   cfg = config.modules.shell.fish;
   fishCfg = "${config.snowflake.configDir}/fish";
+  themeCfg = config.modules.themes;
 in {
   options.modules.shell.fish = {
     enable = mkBoolOpt false;
+    theme = config.modules.themes;
   };
 
   config = mkIf cfg.enable {
@@ -64,6 +66,54 @@ in {
           src = fzf-fish.src;
         }
       ];
+    };
+
+    home.configFile = mkIf (themeCfg.active != null) {
+      "fish/conf.d/${themeCfg.active}.fish".text = with themeCfg.colors.fish; ''
+        # --> General
+        set -l foreground ${fg}
+        set -l highlight  ${highlight}
+
+        # --> palette
+        set -l base01     ${base01}
+        set -l base02     ${base02}
+        set -l base03     ${base03}
+        set -l base04     ${base04}
+        set -l base05     ${base05}
+        set -l base06     ${base06}
+        set -l base07     ${base07}
+        set -l base08     ${base08}
+        set -l base09     ${base09}
+        set -l base10     ${base10}
+
+        # Syntax Highlighting
+        set -g fish_color_normal                     $foreground
+        set -g fish_color_command                    $base09
+        set -g fish_color_param                      $base02
+        set -g fish_color_keyword                    $base05
+        set -g fish_color_quote                      $base07
+        set -g fish_color_redirection                $base04
+        set -g fish_color_end                        $base06
+        set -g fish_color_error                      $base05
+        set -g fish_color_gray                       $base10
+        set -g fish_color_selection    --background= $highlight
+        set -g fish_color_search_match --background= $highlight
+        set -g fish_color_operator                   $base04
+        set -g fish_color_escape                     $base02
+        set -g fish_color_autosuggestion             $base10
+        set -g fish_color_cancel                     $base05
+
+        # Prompt
+        set -g fish_color_cwd                        $base08
+        set -g fish_color_user                       $base01
+        set -g fish_color_host                       $base09
+
+        # Completion Pager
+        set -g fish_pager_color_progress             $base10
+        set -g fish_pager_color_prefix               $base04
+        set -g fish_pager_color_completion           $foreground
+        set -g fish_pager_color_description          $base10
+      '';
     };
   };
 }

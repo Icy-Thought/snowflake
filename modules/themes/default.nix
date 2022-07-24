@@ -49,12 +49,14 @@ in {
       mono = {
         family = mkOpt str "";
         weight = mkOpt str "SemiBold";
+        weightAlt = mkOpt str "DemiBold";
         weightNum = mkOpt str "600";
         size = mkOpt int 13;
       };
       sans = {
         family = mkOpt str "";
         weight = mkOpt str "SemiBold";
+        weightAlt = mkOpt str "DemiBold";
         weightNum = mkOpt str "600";
         size = mkOpt int 10;
       };
