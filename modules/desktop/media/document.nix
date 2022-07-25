@@ -102,7 +102,7 @@ in {
           # Other useful vim-bindings
           "goto_begining" = "gg";
           "goto_end" = "<S-g>";
-          "goto_toc" = "<Tab>";
+          "goto_toc" = "<tab>";
 
           "next_page" = "<S-j>";
           "previous_page" = "<S-k>";
