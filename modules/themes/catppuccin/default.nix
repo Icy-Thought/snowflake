@@ -171,7 +171,7 @@ in {
         "synctex_highlight_color" = "0.96 0.88 0.86";
 
         "page_separator_width" = "2";
-        "page_separator_color" = "0.98 0.70 0.53";
+        "page_separator_color" = "0.95 0.80 0.80";
         "status_bar_color" = "0.19 0.20 0.27";
 
         "font_size" = "${toString (font.sans.size)}";
