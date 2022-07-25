@@ -13,7 +13,9 @@ in {
   };
 
   config = mkIf cfg.enable {
-    xdg.mime = {
+    home.configFile."mimeapps.list".force = true;
+
+    hm.xdg.mimeApps = {
       enable = true;
       defaultApplications = with lists; let
         defaultApps = {
@@ -25,7 +27,7 @@ in {
           image = ["feh.desktop"];
           magnet = ["transmission-gtk.desktop"];
           mail = ["firefox.desktop"]; # [ "org.gnome.Geary.desktop" ];
-          pdf = ["org.pwmt.zathura-cb.desktop"];
+          pdf = ["sioyek.desktop"];
           text = ["neovide.desktop"];
           telegram = ["telegramdesktop.desktop"];
           video = ["mpv.desktop"];
