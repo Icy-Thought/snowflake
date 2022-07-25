@@ -149,6 +149,48 @@ in {
       };
     })
 
+    (mkIf config.modules.desktop.extra.fcitx5.enable {
+      home.file.".local/share/fcitx5/themes".source = pkgs.fetchFromGitHub {
+        owner = "icy-thought";
+        repo = "fcitx5-catppuccin";
+        rev = "3b699870fb2806404e305fe34a3d2541d8ed5ef5";
+        sha256 = "hOAcjgj6jDWtCGMs4Gd49sAAOsovGXm++TKU3NhZt8w=";
+      };
+    })
+
+    (mkIf config.modules.desktop.media.document.sioyek.enable {
+      hm.programs.sioyek.config = with cfg; {
+        "custom_background_color " = "0.12 0.11 0.18";
+        "custom_text_color " = "0.85 0.88 0.93";
+        "startup_commands" = "toggle_custom_color";
+
+        "text_highlight_color" = "0.85 0.88 0.93";
+        "visual_mark_color" = "0.27 0.28 0.35 1.0";
+        "search_highlight_color" = "0.95 0.55 0.66";
+        "link_highlight_color" = "0.59 0.80 0.98";
+        "synctex_highlight_color" = "0.96 0.88 0.86";
+
+        "page_separator_width" = "2";
+        "page_separator_color" = "0.98 0.70 0.53";
+        "status_bar_color" = "0.19 0.20 0.27";
+
+        "font_size" = "${toString (font.sans.size)}";
+        "ui_font" = "${font.sans.family} ${font.sans.weight}";
+      };
+    })
+
+    (mkIf config.modules.desktop.editors.vscodium.enable {
+      hm.programs.vscode.extensions = with cfg.vscode.extension;
+        pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+          {
+            name = "${name}";
+            publisher = "${publisher}";
+            version = "${version}";
+            sha256 = "${sha256}";
+          }
+        ];
+    })
+
     (mkIf config.modules.desktop.extra.rofi.enable {
       hm.programs.rofi = {
         extraConfig = with cfg; {
@@ -293,27 +335,6 @@ in {
             };
           };
       };
-    })
-
-    (mkIf config.modules.desktop.extra.fcitx5.enable {
-      home.file.".local/share/fcitx5/themes".source = pkgs.fetchFromGitHub {
-        owner = "icy-thought";
-        repo = "fcitx5-catppuccin";
-        rev = "3b699870fb2806404e305fe34a3d2541d8ed5ef5";
-        sha256 = "hOAcjgj6jDWtCGMs4Gd49sAAOsovGXm++TKU3NhZt8w=";
-      };
-    })
-
-    (mkIf config.modules.desktop.editors.vscodium.enable {
-      hm.programs.vscode.extensions = with cfg.vscode.extension;
-        pkgs.vscode-utils.extensionsFromVscodeMarketplace [
-          {
-            name = "${name}";
-            publisher = "${publisher}";
-            version = "${version}";
-            sha256 = "${sha256}";
-          }
-        ];
     })
   ]);
 }

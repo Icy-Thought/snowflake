@@ -28,10 +28,12 @@
       default = "brave";
       brave.enable = true;
     };
-    media.viewer = {
-      document.enable = true;
+    media.player = {
       music.enable = true;
       video.enable = true;
+    };
+    document = {
+      zathura.enable = true;
     };
   };
 

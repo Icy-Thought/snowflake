@@ -68,8 +68,15 @@ in {
       ];
     };
 
-    home.configFile = mkIf (themeCfg.active != null) {
-      "fish/conf.d/${themeCfg.active}.fish".text = with themeCfg.colors.fish; ''
+    home.configFile = with themeCfg; (mkIf (themeCfg.active != null) {
+      "fish/conf.d/fzf.fish".text = with colors.main; ''
+        set -Ux FZF_DEFAULT_OPTS "\
+        --color=bg+:${normal.black},bg:${types.bg},spinner:${types.highlight},hl:${normal.red} \
+        --color=fg:${types.border},header:${normal.red},info:${normal.magenta},pointer:${types.highlight} \
+        --color=marker:${types.highlight},fg+:${types.border},prompt:${normal.magenta},hl+:${normal.red}"
+      '';
+
+      "fish/conf.d/${themeCfg.active}.fish".text = with colors.fish; ''
         # --> General
         set -l foreground ${fg}
         set -l highlight  ${highlight}
@@ -114,6 +121,6 @@ in {
         set -g fish_pager_color_completion           $foreground
         set -g fish_pager_color_description          $base10
       '';
-    };
+    });
   };
 }

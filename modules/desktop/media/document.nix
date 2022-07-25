@@ -7,17 +7,16 @@
 }:
 with lib;
 with lib.my; let
-  cfg = config.modules.desktop.media.viewer;
+  cfg = config.modules.desktop.media.document;
   themeCfg = config.modules.themes;
 in {
-  options.modules.desktop.media.viewer = {
-    document.enable = mkBoolOpt false;
-    music.enable = mkBoolOpt false;
-    video.enable = mkBoolOpt false;
+  options.modules.desktop.media.document = {
+    zathura.enable = mkBoolOpt false;
+    sioyek.enable = mkBoolOpt false;
   };
 
   config = mkMerge [
-    (mkIf cfg.document.enable {
+    (mkIf cfg.zathura.enable {
       hm.programs.zathura = {
         enable = true;
         options = with themeCfg; (mkMerge [
@@ -73,13 +72,66 @@ in {
       };
     })
 
-    (mkIf cfg.music.enable {
-      user.packages = with pkgs; [spotify];
-      # TODO: spicetify-cli + activeTheme.
-    })
+    (mkIf cfg.sioyek.enable {
+      hm.programs.sioyek = {
+        enable = true;
+        config = {
+          "check_for_updates_on_startup" = "0";
+          "default_dark_mode" = "1";
+          # "single_main_window_size" = "1980 1080";
 
-    (mkIf cfg.video.enable {
-      user.packages = with pkgs; [mpv-with-scripts mpvc];
+          "should_launch_new_instance" = "1";
+          "sort_bookmarks_by_location" = "1";
+          "visual_mark_next_page_fraction" = "0.5";
+
+          "search_url_g" = "https://www.google.com/search?q=";
+          "middle_click_search_engine" = "g";
+
+          "ruler_mode" = "1";
+          "ruler_padding" = "1.0";
+          "ruler_x_padding" = "5.0";
+        };
+
+        bindings = {
+          # Arrow keys -> hjkl
+          "move_up" = "k";
+          "move_down" = "j";
+          "move_left" = "h";
+          "move_right" = "l";
+
+          # Other useful vim-bindings
+          "goto_begining" = "gg";
+          "goto_end" = "<S-g>";
+          "goto_toc" = "<Tab>";
+
+          "next_page" = "<S-j>";
+          "previous_page" = "<S-k>";
+          "prev_state" = "<C-o>";
+          "next_state" = "<C-i>";
+
+          "zoom_in" = "=";
+          "zoom_out" = "-";
+          "fit_to_page_width" = "w";
+          "fit_to_page_width_smart" = "e";
+
+          "search" = "/";
+          "next_item" = "n";
+          "previous_item" = "<S-n>";
+
+          "add_bookmark" = "b";
+          "delete_bookmark" = "db";
+          "goto_bookmark" = "gb";
+          "goto_bookmark_g" = "g<S-b>";
+
+          "add_highlight" = "<S-h>";
+          "set_mark" = "m";
+          "goto_mark" = "'";
+
+          "link" = "f";
+          "delete_link" = "df";
+          "quit" = "q";
+        };
+      };
     })
   ];
 }

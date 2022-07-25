@@ -38,9 +38,13 @@
         default = "brave";
         brave.enable = true;
       };
-      media.viewer = {
-        document.enable = true;
-        video.enable = true;
+      media = {
+        player = {
+          video.enable = true;
+        };
+        document = {
+          zathura.enable = true;
+        };
       };
     };
   };

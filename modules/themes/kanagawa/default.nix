@@ -149,6 +149,48 @@ in {
       };
     })
 
+    (mkIf config.modules.desktop.extra.fcitx5.enable {
+      home.file.".local/share/fcitx5/themes".source = pkgs.fetchFromGitHub {
+        owner = "icy-thought";
+        repo = "fcitx5-catppuccin";
+        rev = "3b699870fb2806404e305fe34a3d2541d8ed5ef5";
+        sha256 = "hOAcjgj6jDWtCGMs4Gd49sAAOsovGXm++TKU3NhZt8w=";
+      };
+    })
+
+    (mkIf config.modules.desktop.media.document.sioyek.enable {
+      hm.programs.sioyek.config = with cfg; {
+        "custom_background_color " = "";
+        "custom_text_color " = "";
+        "startup_commands" = "toggle_custom_color";
+
+        "text_highlight_color" = "";
+        "visual_mark_color" = "";
+        "search_highlight_color" = "";
+        "link_highlight_color" = "";
+        "synctex_highlight_color" = "";
+
+        "page_separator_width" = "2";
+        "page_separator_color" = "";
+        "status_bar_color" = "";
+
+        "font_size" = "${toString (font.sans.size)}";
+        "ui_font" = "${font.sans.family} ${font.sans.weight}";
+      };
+    })
+
+    (mkIf config.modules.desktop.editors.vscodium.enable {
+      hm.programs.vscode.extensions = with cfg.vscode.extension;
+        pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+          {
+            name = "${name}";
+            publisher = "${publisher}";
+            version = "${version}";
+            sha256 = "${sha256}";
+          }
+        ];
+    })
+
     (mkIf config.modules.desktop.extra.rofi.enable {
       hm.programs.rofi = {
         extraConfig = with cfg; {
@@ -293,27 +335,6 @@ in {
             };
           };
       };
-    })
-
-    (mkIf config.modules.desktop.extra.fcitx5.enable {
-      home.file.".local/share/fcitx5/themes".source = pkgs.fetchFromGitHub {
-        owner = "icy-thought";
-        repo = "fcitx5-catppuccin";
-        rev = "3b699870fb2806404e305fe34a3d2541d8ed5ef5";
-        sha256 = "hOAcjgj6jDWtCGMs4Gd49sAAOsovGXm++TKU3NhZt8w=";
-      };
-    })
-
-    (mkIf config.modules.desktop.editors.vscodium.enable {
-      hm.programs.vscode.extensions = with cfg.vscode.extension;
-        pkgs.vscode-utils.extensionsFromVscodeMarketplace [
-          {
-            name = "${name}";
-            publisher = "${publisher}";
-            version = "${version}";
-            sha256 = "${sha256}";
-          }
-        ];
     })
   ]);
 }
