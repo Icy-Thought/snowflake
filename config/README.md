@@ -1,4 +1,4 @@
-<img alt="WM-related Configurations" src="../.assets/main/wm-related.png" align="center">
+<img alt="WM-related Configurations" src="../.assets/main/png/wm-related.png" align="center">
 
 # Introduction
 The following folder contains window-managers and desktop-environments I've tried
@@ -8,4 +8,4 @@ If there is a missing section for a certain WM/DE in this `README.md`, then do l
 in that WM/DE folder, because it most certainly contains a `README.md` file!
 
 # Gnome
-<img alt="Gnome Desktop" src="../.assets/main/gnome-desktop.png" align="center">
+<img alt="Gnome Desktop" src="../.assets/main/png/gnome-desktop.png" align="center">

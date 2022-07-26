@@ -1,4 +1,4 @@
-<img alt="XMonad Desktop" src="../../.assets/main/xmonad-desktop.png" align="center">
+<img alt="XMonad Desktop" src="../../.assets/main/png/xmonad-desktop.png" align="center">
 
 # (>>=) XMonad
 > A dynamically tiling X11 window manager that is written and configured in

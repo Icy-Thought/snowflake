@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="./.assets/main/svg/chess.svg" alt="Snowflake" width="400" height="400"/>
+    <img src="./.assets/main/png/chess.png" alt="Snowflake" width="400" height="400"/>
 </p>
 
 <p align="center">
@@ -44,7 +44,7 @@
 - [Special Thanks](#special-thanks)
 
 # Showcase (Qtile)
-![Qtile Desktop](./.assets/main/qtile-desktop.png)
+![Qtile Desktop](./.assets/main/png/qtile-desktop.png)
 
 # Introduction
 A hamerspace containing a declarative NixOS environment consisting of many
