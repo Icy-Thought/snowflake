@@ -1,3 +1,4 @@
+# Copyright (c) 2022 felschr. All Rights Reserved.
 {
   options,
   config,
