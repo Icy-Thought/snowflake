@@ -3,11 +3,13 @@ _: pkgs: rec {
     overrides =
       pkgs.lib.composeExtensions (old.overrides or (_: _: {}))
       (final: prev: rec {
-        my-xmonad =
-          final.callCabal2nix "my-xmonad"
-          (pkgs.lib.sourceByRegex ../config/my-xmonad [
-            "xmonad.hs"
-            "my-xmonad.cabal"
+        taffybar =
+          final.callCabal2nix "taffybar"
+          (pkgs.lib.sourceByRegex ./. [
+            "taffybar.hs"
+            "taffybar.css"
+            "catppuccin.css"
+            "taffybar.cabal"
           ]) {};
       });
   });

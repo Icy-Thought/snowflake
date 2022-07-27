@@ -16,13 +16,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    nixpkgs.overlays = with inputs; [
-      xmonad.overlay
-      xmonad-contrib.overlay
-    ];
-
     environment.systemPackages = with pkgs; [
-      haskellPackages.my-xmonad
       lightdm
       libnotify
       playerctl
@@ -55,16 +49,15 @@ in {
           greeters.mini.enable = true;
         };
       };
-
-      windowManager.session = [
-        {
-          name = "xmonad";
-          start = ''
-            /usr/bin/env my-xmonad &
-            waitPID=$!
-          '';
-        }
-      ];
+      windowManager.xmonad = {
+        enable = true;
+        enableContribAndExtras = true;
+        enableConfiguredRecompile = true;
+        # haskellPackages = with pkgs; [];
+        # ghcArgs = [];
+        # xmonadCliArgs = [];
+        config = "${configDir}/xmonad/xmonad.hs";
+      };
     };
 
     services = {
@@ -83,8 +76,7 @@ in {
       enable = true;
       numlock.enable = true;
       preferStatusNotifierItems = true;
-      windowManager.command = "${getExe pkgs.haskellPackages.my-xmonad}";
-      importedVariables = ["GDK_PIXBUF_MODULE_FILE"];
+      importedVariables = ["GDK_PIXBUF_MODULE_FILE"]; # Taffybar
     };
   };
 }

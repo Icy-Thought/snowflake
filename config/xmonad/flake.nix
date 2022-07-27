@@ -1,24 +1,10 @@
 {
-  inputs = {
-    flake-utils.url = "github:numtide/flake-utils";
-
-    xmonad = {
-      url = "github:xmonad/xmonad";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    xmonad-contrib = {
-      url = "github:icy-thought/xmonad-contrib";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-  };
+  inputs.flake-utils.url = "github:numtide/flake-utils";
 
   outputs = {
     self,
     flake-utils,
     nixpkgs,
-    xmonad,
-    xmonad-contrib,
   }: let
     overlay = import ../../overlays/xmonad.nix;
     overlays = [overlay xmonad.overlay xmonad-contrib.overlay];

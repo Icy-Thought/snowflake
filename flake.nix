@@ -12,10 +12,6 @@
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    xmonad.url = "github:xmonad/xmonad";
-    # TODO: (-) xmonad-contrib after "ConditionalLayoutModifier" merge
-    xmonad-contrib.url = "github:icy-thought/xmonad-contrib";
-    taffybar.url = "github:taffybar/taffybar";
     emacs.url = "github:nix-community/emacs-overlay";
     nvim-nightly.url = "github:nix-community/neovim-nightly-overlay";
     rust.url = "github:oxalica/rust-overlay";

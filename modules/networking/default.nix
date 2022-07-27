@@ -26,7 +26,10 @@ in {
 
       networking.networkmanager = {
         enable = mkDefault true;
-        wifi.backend = "iwd";
+        wifi = {
+          # backend = "iwd";
+          backend = "wpa_supplicant";
+        };
       };
     })
 
