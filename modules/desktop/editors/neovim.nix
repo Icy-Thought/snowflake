@@ -22,13 +22,13 @@ in {
       nixpkgs.overlays = with inputs; [nvim-nightly.overlay];
 
       user.packages = with pkgs; (mkMerge [
-        [neovide]
         (mkIf (!config.modules.develop.cc.enable) [gcc]) # Treesitter
       ]);
 
-      programs.neovim = {
+      hm.programs.neovim = {
         enable = true;
         package = pkgs.neovim-nightly;
+        extraPackages = with pkgs; [neovide];
         withRuby = true;
         withPython3 = true;
         withNodeJs = true;
@@ -44,9 +44,12 @@ in {
     (mkIf cfg.agasaya.enable {
       modules.develop.lua.enable = true;
 
-      programs.neovim.configure.customRC = ''
-        luafile ${nvimDir}/agasaya/init.lua
-      '';
+      hm.programs.neovim = {
+        # extraLuaPackages = (ps: with ps; [ luautf8 ]);
+        extraConfig = ''
+          luafile ${builtins.toString nvimDir + "/agasaya/init.lua"}
+        '';
+      };
 
       environment.variables = {
         SQLITE_PATH = "${pkgs.sqlite.out}/lib/libsqlite3.so";
