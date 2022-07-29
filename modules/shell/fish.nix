@@ -58,8 +58,8 @@ in {
           src = done.src;
         }
         {
-          name = "pisces";
-          src = pisces.src;
+          name = "autopair-fish";
+          src = autopair-fish.src;
         }
         {
           name = "fzf-fish";
