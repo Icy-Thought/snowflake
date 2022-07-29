@@ -1,8 +1,8 @@
 from libqtile import bar, layout, widget
 from libqtile.command import lazy
 from libqtile.config import DropDown, EzClick, EzKey, Group, Match, ScratchPad
-from modules.keymaps import keys
 
+from modules.keymaps import keys
 from modules.themes import palette
 
 groups = [
@@ -93,9 +93,8 @@ groups.append(
                 **next_maximum,
             ),
             DropDown(
-                "Neovide",
-                "neovide",
-                match=Match(wm_class="neovide"),
+                "Neovim",
+                "kitty -T Neovim -e nvim",
                 **next_maximum,
             ),
             DropDown("Spotify", "spotify", **next_maximum),
@@ -110,7 +109,7 @@ keys.extend(
         EzKey("M-A-b", lazy.group["SPD"].dropdown_toggle("Bottom")),
         EzKey("M-A-d", lazy.group["SPD"].dropdown_toggle("Discord")),
         EzKey("M-A-e", lazy.group["SPD"].dropdown_toggle("Element")),
-        EzKey("M-A-n", lazy.group["SPD"].dropdown_toggle("Neovide")),
+        EzKey("M-A-n", lazy.group["SPD"].dropdown_toggle("Neovim")),
         EzKey("M-A-s", lazy.group["SPD"].dropdown_toggle("Spotify")),
         EzKey(
             "M-A-t",

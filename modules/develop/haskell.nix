@@ -27,6 +27,12 @@ in {
           hpack
           stylish-haskell
         ]);
+
+      home.configFile = with config.snowflake; {
+        "stylish-haskell/config.yaml" = {
+          source = "${configDir}/formatters/stylish-haskell.yaml";
+        };
+      };
     })
 
     (mkIf codeCfg.enable {

@@ -1,0 +1,52 @@
+steps:
+  - unicode_syntax:
+        add_language_pragma: false
+
+  - module_header:
+      indent: 4
+      sort: true
+      separate_lists: true
+      break_where: inline
+      open_bracket: next_line
+
+  # Alignment control
+  - simple_align:
+      cases: always
+      top_level_patterns: always
+      records: always
+      multi_way_if: always
+
+  # Import(s) cleanup
+  - imports:
+      align: global
+      list_align: after_alias
+      pad_module_names: true
+      long_list_align: inline
+      empty_list_align: inherit
+      list_padding: 2
+      separate_lists: true
+      space_surround: false
+      post_qualify: false
+
+  # Language Pragmas
+  - language_pragmas:
+      style: vertical
+      align: true
+      remove_redundant: true
+      language_prefix: LANGUAGE
+
+  # 1 Tab == n spaces
+  - tabs:
+      spaces: 2
+
+  # Remove trailing whitespace
+  - trailing_whitespace: {}
+
+ # Maximum line-width
+columns: 80
+
+# Newline (Linux) -> "\n",
+newline: native
+
+# Cabal language extension awareness
+cabal: true
