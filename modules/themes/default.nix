@@ -58,7 +58,7 @@ in {
         weight = mkOpt str "SemiBold";
         weightAlt = mkOpt str "DemiBold";
         weightNum = mkOpt str "600";
-        size = mkOpt int 12;
+        size = mkOpt int 10;
       };
       emoji = mkOpt str "";
     };
@@ -202,7 +202,7 @@ in {
           *.color15: bwht
         '';
 
-        "xtheme/05-fonts".text = with cfg.font.sans; ''
+        "xtheme/05-fonts".text = with cfg.font.mono; ''
           *.font: xft:${family}:style=${weight}:pixelsize=${toString size}
           Emacs.font: ${family}:style=${weight}:pixelsize=${toString size}
         '';
