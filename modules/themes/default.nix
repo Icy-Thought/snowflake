@@ -58,7 +58,7 @@ in {
         weight = mkOpt str "SemiBold";
         weightAlt = mkOpt str "DemiBold";
         weightNum = mkOpt str "600";
-        size = mkOpt int 10;
+        size = mkOpt int 12;
       };
       emoji = mkOpt str "";
     };

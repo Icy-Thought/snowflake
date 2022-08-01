@@ -63,9 +63,9 @@
           # zathura.enable = true;
         };
       };
-      virtual = {
-        wine.enable = true;
-      };
+      # virtual = {
+      #   wine.enable = true;
+      # };
     };
 
     develop = {
