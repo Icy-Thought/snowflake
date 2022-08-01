@@ -159,7 +159,7 @@ in {
     })
 
     (mkIf config.modules.desktop.media.document.sioyek.enable {
-      hm.programs.sioyek.config = with cfg; {
+      hm.programs.sioyek.config = with cfg.font; {
         "custom_background_color " = "";
         "custom_text_color " = "";
         "startup_commands" = "toggle_custom_color";
@@ -174,8 +174,8 @@ in {
         "page_separator_color" = "";
         "status_bar_color" = "";
 
-        "font_size" = "${toString (font.sans.size)}";
-        "ui_font" = "${font.sans.family} ${font.sans.weight}";
+        "font_size" = "${toString (mono.size)}";
+        "ui_font" = "${mono.family} ${mono.weight}";
       };
     })
 
@@ -195,7 +195,7 @@ in {
       hm.programs.rofi = {
         extraConfig = with cfg; {
           icon-theme = "${gtk.iconTheme}";
-          font = "${font.sans.family} ${font.sans.weight} ${toString (font.sans.size)}";
+          font = with font; "${sans.family} ${sans.weight} ${toString (sans.size)}";
         };
 
         theme = let
