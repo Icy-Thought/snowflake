@@ -60,9 +60,10 @@ in {
     (mkIf cfg.ereshkigal.enable {
       modules.develop.lua.fennel.enable = true;
 
-      home.configFile."nvim" = {
-        source = "${nvimDir}/ereshkigal";
-        recursive = true;
+      hm.programs.neovim = {
+        extraConfig = ''
+          luafile ${builtins.toString nvimDir + "/ereshkigal/init.lua"}
+        '';
       };
     })
   ];
