@@ -33,7 +33,10 @@
       };
       editors = {
         default = "nvim";
-        neovim.ereshkigal.enable = true;
+        neovim = {
+            agasaya.enable = true;
+            # ereshkigal.enable = true;
+        };
       };
       browsers = {
         default = "brave";
