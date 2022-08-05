@@ -34,8 +34,8 @@
       editors = {
         default = "nvim";
         neovim = {
-            agasaya.enable = true;
-            # ereshkigal.enable = true;
+            # agasaya.enable = true;
+            ereshkigal.enable = true;
         };
       };
       browsers = {
