@@ -93,8 +93,9 @@ groups.append(
                 **next_maximum,
             ),
             DropDown(
-                "Neovim",
-                "kitty -T Neovim -e nvim",
+                "Neovide",
+                "neovide --multigrid --frame none",
+                match=Match(wm_class="neovide"),
                 **next_maximum,
             ),
             DropDown("Spotify", "spotify", **next_maximum),
@@ -109,7 +110,7 @@ keys.extend(
         EzKey("M-A-b", lazy.group["SPD"].dropdown_toggle("Bottom")),
         EzKey("M-A-d", lazy.group["SPD"].dropdown_toggle("Discord")),
         EzKey("M-A-e", lazy.group["SPD"].dropdown_toggle("Element")),
-        EzKey("M-A-n", lazy.group["SPD"].dropdown_toggle("Neovim")),
+        EzKey("M-A-n", lazy.group["SPD"].dropdown_toggle("Neovide")),
         EzKey("M-A-s", lazy.group["SPD"].dropdown_toggle("Spotify")),
         EzKey(
             "M-A-t",
