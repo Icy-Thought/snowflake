@@ -39,6 +39,10 @@ in {
         vim = "nvim";
         vdiff = "nvim -d";
       };
+
+      environment.variables = {
+        SQLITE_PATH = "${pkgs.sqlite.out}/lib/libsqlite3.so";
+      };
     }
 
     (mkIf cfg.agasaya.enable {
