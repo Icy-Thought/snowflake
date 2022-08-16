@@ -16,7 +16,7 @@ in {
         wallpaper = mkDefault ./wallpaper.png;
 
         gtk = {
-          theme = "Catppuccin-orange-dark";
+          theme = "Catppuccin-Orange-Dark-Compact";
           iconTheme = "WhiteSur-dark";
           cursor = {
             name = "Bibata-Modern-Amber";
@@ -119,7 +119,7 @@ in {
     # Desktop (X11) theming <- Change after gnome = independent of xserver.
     (mkIf config.services.xserver.enable {
       user.packages = with pkgs; [
-        catppuccin-gtk
+        (catppuccin-gtk.override {size = "compact";})
         whitesur-icon-theme
         bibata-cursors
       ];
