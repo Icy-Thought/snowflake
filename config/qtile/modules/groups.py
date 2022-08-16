@@ -79,7 +79,7 @@ groups.append(
     ScratchPad(
         "SPD",
         [
-            DropDown("Bottom", "kitty -T Bottom -e btm", **next_maximum),
+            DropDown("Bottom", "wezterm start --always-new-process btm", **next_maximum),
             DropDown(
                 "Discord",
                 "discord",

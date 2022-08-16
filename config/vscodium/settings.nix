@@ -1,5 +1,6 @@
 {config, ...}: let
   cfg = config.modules.themes;
+  myTerm = config.modules.desktop.terminal.default;
 in {
   # Introduction
   "__comment" = "(VSCode) settings.json => immutable conf-file, managed via (Nix) Home-Manager";
@@ -44,7 +45,7 @@ in {
   # Terminal
   "terminal.integrated.env.linux" = {};
   "terminal.explorerKind" = "integrated";
-  "terminal.external.linuxExec" = "kitty";
+  "terminal.external.linuxExec" = toString myTerm;
   "terminal.integrated.tabs.focusMode" = "singleClick";
   "terminal.integrated.copyOnSelection" = true;
   "terminal.integrated.scrollback" = 5000;

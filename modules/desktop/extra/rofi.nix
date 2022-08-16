@@ -8,6 +8,7 @@
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.extra.rofi;
+  myTerm = config.modules.desktop.terminal.default;
 in {
   options.modules.desktop.extra.rofi = {
     enable = mkBoolOpt false;
@@ -31,7 +32,7 @@ in {
       plugins = with pkgs; [rofi-emoji];
 
       extraConfig = {
-        terminal = "${getExe pkgs.kitty}";
+        terminal = with pkgs; "${getExe myTerm}";
         disable-history = false;
         show-icons = true;
         sidebar-mode = false;

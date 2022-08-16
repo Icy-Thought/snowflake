@@ -6,7 +6,7 @@ from libqtile.config import EzClick, EzDrag, EzKey
 HOME = os.path.expanduser("~")
 
 # Default applications
-myTerm = "kitty"
+myTerm = "wezterm"
 myBrowser = "firefox-devedition"
 myPrivateBrowser = (
     myBrowser,
@@ -86,7 +86,6 @@ application_spawns = [
     EzKey("M-A-f", lazy.spawn(myBrowser)),
     EzKey("M-A-w", lazy.spawn(myPrivateBrowser)),
     EzKey("M-A-g", lazy.spawn("brave")),
-    EzKey("M-A-b", lazy.spawn(myTerm, "-T Bottom -e btm")),
 ]
 
 audioctl = [
@@ -117,7 +116,7 @@ brightctl = [
 ]
 
 quick_launch = [
-    EzKey("<XF86Calculator>", lazy.spawn(myTerm, "-T Qalc -e qalc")),
+    EzKey("<XF86Calculator>", lazy.spawn(myTerm, "start --always-new-process qalc")),
 ]
 
 keys = [

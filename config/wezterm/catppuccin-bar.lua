@@ -9,6 +9,12 @@ wezterm.on("update-right-status", function(window, pane)
         { Foreground = { Color = "#abe9b3" } },
         { Text = datetime },
     }))
+
+    window:set_left_status(wezterm.format({
+        { Background = { Color = "#c7c9fd" } },
+        { Foreground = { Color = "#1e1d2f" } },
+        { Text = "     " },
+    }))
 end)
 
 wezterm.on(
@@ -34,20 +40,16 @@ wezterm.on(
         -- ensure that the titles fit in the available space,
         -- and that we have room for the edges.
         local title =
-            wezterm.truncate_right(tab.active_pane.title, max_width - 2)
+            wezterm.truncate_right(tab.active_pane.title, max_width - 5) .. "…"
 
         return {
-            -- Logo
-            { Background = { Color = "#c7c9fd" } },
-            { Foreground = { Color = "#1e1d2f" } },
-            { Text = "   " },
             -- Separator
             { Background = { Color = edge_background } },
             { Foreground = { Color = edge_foreground } },
             -- Active / Inactive
             { Background = { Color = background } },
             { Foreground = { Color = foreground } },
-            { Text = symbolic .. title .. " " },
+            { Text = symbolic .. title },
             -- Separator
             { Background = { Color = edge_background } },
             { Foreground = { Color = edge_foreground } },

@@ -28,6 +28,114 @@ in {
               require("config.${active}-bar")
             ''}
 
+            local key_bindings = {
+                { -- Focus -> left window
+                    key = "j",
+                    mods = "ALT",
+                    action = wezterm.action { ActivatePaneDirection = "Left" }
+                }, { -- Focus -> right window
+                    key = "k",
+                    mods = "ALT",
+                    action = wezterm.action { ActivatePaneDirection = "Right" }
+                }, { -- Cycle prompts -> left
+                    key = "h",
+                    mods = "ALT",
+                    action = wezterm.action({ ActivateTabRelative = -1 }),
+                }, { -- Cycle prompts -> right
+                    key = "l",
+                    mods = "ALT",
+                    action = wezterm.action({ ActivateTabRelative = 1 }),
+                }, { -- Split pane -> vertically
+                    key = '|',
+                    mods = "CTRL|SHIFT",
+                    action = wezterm.action({
+                        SplitVertical = { domain = "CurrentPaneDomain" },
+                    }),
+                }, {
+                    key = "-",
+                    mods = "CTRL|SHIFT",
+                    action = wezterm.action({
+                        SplitHorizontal = { domain = "CurrentPaneDomain" },
+                    }),
+                },
+            }
+
+            local mouse_bindings = {
+                {
+                    event = { Down = { streak = 1, button = "Left" } },
+                    mods = "NONE",
+                    action = wezterm.action { SelectTextAtMouseCursor = "Cell" }
+                }, {
+                    event = { Down = { streak = 2, button = "Left" } },
+                    mods = "NONE",
+                    action = wezterm.action { SelectTextAtMouseCursor = "Word" }
+                }, {
+                    event = { Down = { streak = 3, button = "Left" } },
+                    mods = "NONE",
+                    action = wezterm.action { SelectTextAtMouseCursor = "Line" }
+                }, {
+                    event = { Drag = { streak = 1, button = "Left" } },
+                    mods = "NONE",
+                    action = wezterm.action { ExtendSelectionToMouseCursor = "Cell" }
+                }, {
+                    event = { Drag = { streak = 2, button = "Left" } },
+                    mods = "NONE",
+                    action = wezterm.action { ExtendSelectionToMouseCursor = "Word" }
+                }, {
+                    event = { Drag = { streak = 3, button = "Left" } },
+                    mods = "NONE",
+                    action = wezterm.action { ExtendSelectionToMouseCursor = "Line" }
+                }, {
+                    event = { Up = { streak = 1, button = "Left" } },
+                    mods = "NONE",
+                    action = wezterm.action {
+                        CompleteSelection = "ClipboardAndPrimarySelection"
+                    }
+                }, {
+                    event = { Up =  { streak = 2, button = "Left" } },
+                    mods = "NONE",
+                    action = wezterm.action { CompleteSelection = "PrimarySelection" }
+                }, {
+                    event = { Up = { streak = 3, button = "Left" } },
+                    mods = "NONE",
+                    action = wezterm.action { CompleteSelection = "PrimarySelection" }
+                }, {
+                    event = { Up = { streak = 1, button = "Left" } },
+                    mods = "SUPER",
+                    action = wezterm.action {
+                        CompleteSelectionOrOpenLinkAtMouseCursor = "ClipboardAndPrimarySelection"
+                    }
+                }
+            }
+
+            local hyperlink_rules = {
+                { -- This is actually the default if you don't specify any hyperlink_rules
+                        regex = "\\b\\w+://(?:[\\w.-]+)\\.[a-z]{2,15}\\S*\\b",
+                        format = "$0",
+                }, { -- linkify email addresses
+                    regex = "\\b\\w+@[\\w-]+(\\.[\\w-]+)+\\b",
+                    format = "mailto:$0",
+                }, { -- file:// URI
+                    regex = "\\bfile://\\S*\\b",
+                    format = "$0",
+                }, { -- nixpkgs review current program
+                    regex = "nixpkgs-review pr (\\d+)",
+                    format = "https://github.com/NixOS/nixpkgs/pull/$1",
+                }, {
+                    regex = "pr-(\\d+)-?\\d?",
+                    format = "https://github.com/NixOS/nixpkgs/pull/$1",
+                }, { -- nix flake github references
+                    regex = "github:([\\w\\d_-]+)/([\\w\\d_\\.-]+)",
+                    format = "https://github.com/$1/$2",
+                }, { -- nix flake github references with commit
+                    regex = "github:([\\w\\d_-]+)/([\\w\\d_\\.-]+)/([\\d\\w-]+)",
+                    format = "https://github.com/$1/$2/commit/$3",
+                }, { -- git ssh remote url
+                    regex = "git@(\\w+\\.\\w+):(\\w+/\\w+)\\.git",
+                    format = "https://$1/$2",
+                },
+            }
+
             return {
                 term = "wezterm",
                 audible_bell = "Disabled",
@@ -43,7 +151,6 @@ in {
 
               font = wezterm.font({
                   family = "${font.sans.family}",
-                  -- {bold = true, italic = true,}
                   weight = "${font.sans.weightAlt}",
                   harfbuzz_features = { "calt=1", "clig=1", "liga=1" },
               }),
@@ -81,66 +188,9 @@ in {
                 cursor_blink_ease_in = "Constant",
                 cursor_blink_ease_out = "Constant",
 
-                hyperlink_rules = {
-                    { -- This is actually the default if you don't specify any hyperlink_rules
-                        regex = "\\b\\w+://(?:[\\w.-]+)\\.[a-z]{2,15}\\S*\\b",
-                        format = "$0",
-                    },
-                    { -- linkify email addresses
-                        regex = "\\b\\w+@[\\w-]+(\\.[\\w-]+)+\\b",
-                        format = "mailto:$0",
-                    },
-                    { -- file:// URI
-                        regex = "\\bfile://\\S*\\b",
-                        format = "$0",
-                    },
-                    { -- nixpkgs review current program
-                        regex = "nixpkgs-review pr (\\d+)",
-                        format = "https://github.com/NixOS/nixpkgs/pull/$1",
-                    },
-                    {
-                        regex = "pr-(\\d+)-?\\d?",
-                        format = "https://github.com/NixOS/nixpkgs/pull/$1",
-                    },
-                    { -- nix flake github references
-                        regex = "github:([\\w\\d_-]+)/([\\w\\d_\\.-]+)",
-                        format = "https://github.com/$1/$2",
-                    },
-                    { -- nix flake github references with commit
-                        regex = "github:([\\w\\d_-]+)/([\\w\\d_\\.-]+)/([\\d\\w-]+)",
-                        format = "https://github.com/$1/$2/commit/$3",
-                    },
-                    { -- git ssh remote url
-                        regex = "git@(\\w+\\.\\w+):(\\w+/\\w+)\\.git",
-                        format = "https://$1/$2",
-                    },
-                },
-                keys = {
-                    { -- scroll between prompts with Shift+Arrow up/down
-                        key = "UpArrow",
-                        mods = "SHIFT",
-                        action = wezterm.action({ ScrollToPrompt = -1 }),
-                    },
-                    {
-                        key = "DownArrow",
-                        mods = "SHIFT",
-                        action = wezterm.action({ ScrollToPrompt = 1 }),
-                    },
-                    { -- split current pane vertical
-                        key = '|',
-                        mods = "CTRL|SHIFT",
-                        action = wezterm.action({
-                            SplitVertical = { domain = "CurrentPaneDomain" },
-                        }),
-                    },
-                    { -- split current pane horizontal
-                        key = "-",
-                        mods = "CTRL|SHIFT",
-                        action = wezterm.action({
-                            SplitHorizontal = { domain = "CurrentPaneDomain" },
-                        }),
-                    },
-                },
+                hyperlink_rules = hyperlink_rules,
+                keys = key_bindings,
+                mouse_bindings = mouse_bindings,
             }
           '';
         }

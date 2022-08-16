@@ -28,14 +28,14 @@
     desktop = {
       qtile.enable = true;
       terminal = {
-        default = "kitty";
-        kitty.enable = true;
+        default = "wezterm";
+        wezterm.enable = true;
       };
       editors = {
         default = "nvim";
         neovim = {
-            # agasaya.enable = true;
-            ereshkigal.enable = true;
+          # agasaya.enable = true;
+          ereshkigal.enable = true;
         };
       };
       browsers = {

@@ -35,7 +35,7 @@ in {
         name = "kalker";
         desktopName = "Qalculate";
         icon = "calc";
-        exec = "${getExe kitty} -T Qalculate -e qalc";
+        exec = "${getExe wezterm} start qalc";
         categories = ["Development"];
       })
       qgnomeplatform
