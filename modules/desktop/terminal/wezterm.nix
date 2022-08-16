@@ -8,6 +8,7 @@
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.terminal.wezterm;
+  fishCfg = "${config.snowflake.configDir}/fish";
   configDir = config.snowflake.configDir;
   themeCfg = config.modules.themes;
 in {
@@ -17,6 +18,12 @@ in {
 
   config = mkIf cfg.enable {
     user.packages = with pkgs; [wezterm];
+
+    hm.programs.fish = {
+      interactiveShellInit = ''
+        ${builtins.readFile "${fishCfg}/abbreviations/wezterm.fish"}
+      '';
+    };
 
     home.configFile = with themeCfg;
       mkMerge [

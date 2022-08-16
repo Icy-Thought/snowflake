@@ -8,6 +8,7 @@
 with lib;
 with lib.my; let
   cfg = config.modules.shell.git;
+  fishCfg = "${config.snowflake.configDir}/fish";
 in {
   options.modules.shell.git = {
     enable = mkBoolOpt false;
@@ -24,8 +25,14 @@ in {
     ];
 
     # easier gitignore fetching (fish)
-    hm.programs.fish.functions = {
-      gitignore = "curl -sL https://www.gitignore.io/api/$argv";
+    hm.programs.fish = {
+      interactiveShellInit = ''
+        ${builtins.readFile "${fishCfg}/abbreviations/git.fish"}
+      '';
+
+      functions = {
+        gitignore = "curl -sL https://www.gitignore.io/api/$argv";
+      };
     };
 
     # Prevent x11 askPass prompt on git push:
