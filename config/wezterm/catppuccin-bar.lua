@@ -49,7 +49,7 @@ wezterm.on(
             -- Active / Inactive
             { Background = { Color = background } },
             { Foreground = { Color = foreground } },
-            { Text = symbolic .. title },
+            { Text = symbolic .. " " .. title },
             -- Separator
             { Background = { Color = edge_background } },
             { Foreground = { Color = edge_foreground } },

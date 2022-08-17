@@ -28,7 +28,7 @@ in {
           style = "bg:${normal.cyan} fg:${types.bg} bold";
           truncation_length = 3;
           truncation_symbol = "…/";
-          format = "[⯁ $path]($style)";
+          format = "[◈ $path]($style)";
         };
 
         git_branch = {
@@ -40,7 +40,7 @@ in {
         # TODO: find appealing symbols
         git_status = {
           style = "bg:${normal.magenta} fg:${types.bg} bold";
-          format = "[([](bg: ${normal.magenta})「$all_status$ahead_behind」[](bg: ${normal.magenta}))]($style)";
+          format = "[([](bg: ${normal.magenta})『 $all_status$ahead_behind 』[](bg: ${normal.magenta}))]($style)";
         };
 
         character = {

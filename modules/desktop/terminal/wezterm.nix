@@ -156,10 +156,10 @@ in {
             ${optionalString (active != null) ''
               colors = ${active},
 
-              font = wezterm.font({
-                  family = "${font.sans.family}",
-                  weight = "${font.sans.weightAlt}",
-                  harfbuzz_features = { "calt=1", "clig=1", "liga=1" },
+              font = wezterm.font_with_fallback({
+                  { family = "${font.sans.family}", weight = "${font.sans.weightAlt}" },
+                  "DejaVu Sans",
+                  "Unicode",
               }),
 
               font_size= ${toString (font.mono.size)},

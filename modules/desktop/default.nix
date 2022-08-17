@@ -39,6 +39,7 @@ in {
         categories = ["Development"];
       })
       qgnomeplatform
+      gucharmap
       xcolor
     ];
 

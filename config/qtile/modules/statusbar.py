@@ -14,7 +14,7 @@ fontinfo = dict(
     padding=3,
 )
 
-rofi = "rofi -no-lazy-grab -show drun -modi drun"
+ROFI = "rofi -no-lazy-grab -show drun -modi drun"
 
 groupbox = [
     widget.GroupBox,
@@ -80,9 +80,9 @@ logo = [
         "background": palette[8],
         "fontsize": 21,
         "foreground": palette[1],
-        "mouse_callbacks": {"Button1": lazy.spawn(rofi)},
+        "mouse_callbacks": {"Button1": lazy.spawn(ROFI)},
         "padding": -1.0,
-        "text": " \ue235 ",
+        "text": " \ue928",
     },
 ]
 
@@ -104,7 +104,7 @@ cpu = [
         **fontinfo,
         "background": palette[10],
         "foreground": palette[1],
-        "format": "\uf2db {freq_current}GHz {load_percent}%",
+        "format": "\ue9aa {freq_current}GHz {load_percent}%",
     },
 ]
 
@@ -113,7 +113,7 @@ net = [
     {
         **fontinfo,
         "background": palette[4],
-        "format": "\u2193 {down} \u2191 {up}",
+        "format": "\ue640 {down} \u2191 {up}",
         "interface": "wlan0",
         "update_interval": 3,
     },
@@ -123,7 +123,7 @@ mem = [
     widget.Memory,
     {
         **fontinfo,
-        "format": "\uf85a {MemUsed:.2f}/{MemTotal:.2f}{mm}",
+        "format": "\ue949 {MemUsed:.2f}/{MemTotal:.2f}{mm}",
         "measure_mem": "G",
         "update_interval": 1.0,
     },
@@ -147,11 +147,11 @@ batt = [
         **fontinfo,
         "background": palette[5],
         "foreground": palette[1],
-        "charge_char": "\uf583",
-        "discharge_char": "\uf578",
-        "empty_char": "\uf58d",
-        "full_char": "\uf583",
-        "unknown_char": "\uf590",
+        "charge_char": "\ue63c ",
+        "discharge_char": "\ue3e6 ",
+        "empty_char": "\uf244 ",
+        "full_char": "\uf240 ",
+        "unknown_char": "\ue645 ",
         "format": "{char} {percent:2.0%} ({watt:.2f}W) ",
         "low_background": palette[7],
         "low_foreground": palette[1],
@@ -170,7 +170,7 @@ datetime = [
         **fontinfo,
         "background": palette[6],
         "foreground": palette[1],
-        "format": "%a, %B %e, %H:%M",
+        "format": "\ue8df %a, %B %e, %H:%M",
     },
 ]
 
