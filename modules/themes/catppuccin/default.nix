@@ -133,10 +133,8 @@ in {
     (mkIf (config.modules.desktop.xmonad.enable
       || config.modules.desktop.qtile.enable) {
       services.xserver.displayManager = {
-        sessionCommands = with cfg.gtk; ''
-          ${getExe pkgs.xorg.xsetroot} -xcf ${pkgs.bibata-cursors}/share/icons/${cursor.name}/cursors/${cursor.default} ${
-            toString (cursor.size)
-          }
+        sessionCommands = with cfg.gtk.cursor; ''
+          ${getExe pkgs.xorg.xsetroot} -xcf ${pkgs.bibata-cursors}/share/icons/${name}/cursors/${default} ${toString size}
         '';
 
         # LightDM: Replace with LightDM-Web-Greeter theme

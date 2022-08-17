@@ -207,16 +207,22 @@ in {
           Emacs.font: ${family}:style=${weight}:pixelsize=${toString size}
         '';
 
+        "xtheme/06-cursor".text = with cfg.gtk.cursor; ''
+          Xcursor.theme: ${name}
+          Xcursor.name: left_ptr
+          Xcursor.size: ${toString size}
+        '';
+
         # GTK
         "gtk-3.0/settings.ini".text = with cfg.gtk; ''
           [Settings]
-          ${optionalString (cfg.gtk.theme != "")
+          ${optionalString (theme != "")
             "gtk-theme-name=${theme}"}
-          ${optionalString (cfg.gtk.iconTheme != "")
+          ${optionalString (iconTheme != "")
             "gtk-icon-theme-name=${iconTheme}"}
-          ${optionalString (cfg.gtk.cursor.name != "")
+          ${optionalString (cursor.name != "")
             "gtk-cursor-theme-name=${cursor.name}"}
-          ${optionalString (cfg.gtk.cursor.size != "")
+          ${optionalString (cursor.size != "")
             "gtk-cursor-theme-size=${toString (cursor.size)}"}
           gtk-fallback-icon-theme=gnome
           gtk-application-prefer-dark-theme=true
