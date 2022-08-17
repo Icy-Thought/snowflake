@@ -22,6 +22,7 @@ in {
       fzf
       pwgen
       yt-dlp
+      csview
 
       # alternatives for several gnu-tools
       bottom
