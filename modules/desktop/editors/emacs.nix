@@ -61,10 +61,27 @@ in {
       '';
     };
 
-    # Easier frame creation (fish)
-    hm.programs.fish.functions = {
-      eg = "emacs --create-frame $argv & disown";
-      ecg = "emacsclient --create-frame $argv & disown";
+    # Allow fish-shell to send information to vterm via properly escaped sequences.
+    hm.programs.fish = {
+      interactiveShellInit = ''
+        function vterm_printf;
+            if begin; [  -n "$TMUX" ]  ; and  string match -q -r "screen|tmux" "$TERM"; end
+                # tell tmux to pass the escape sequences through
+                printf "\ePtmux;\e\e]%s\007\e\\" "$argv"
+            else if string match -q -- "screen*" "$TERM"
+                # GNU screen (screen, screen-256color, screen-256color-bce)
+                printf "\eP\e]%s\007\e\\" "$argv"
+            else
+                printf "\e]%s\e\\" "$argv"
+            end
+        end
+      '';
+
+      # Easier frame creation (fish)
+      functions = {
+        eg = "emacs --create-frame $argv & disown";
+        ecg = "emacsclient --create-frame $argv & disown";
+      };
     };
   };
 }
