@@ -44,7 +44,7 @@
 - [Special Thanks](#special-thanks)
 
 # Showcase (Qtile)
-![Qtile Desktop](./.assets/main/png/qtile-desktop.png)
+![Qtile Desktop](./.assets/themes/tokyonight-qtile.png)
 
 # Introduction
 A hamerspace containing a declarative NixOS environment consisting of many

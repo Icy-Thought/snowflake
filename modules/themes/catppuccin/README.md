@@ -3,7 +3,7 @@ A rather beautiful theme that I recently came across and cannot seem to get
 over with! xD
 
 # Minimal Capture
-![Catppuccin](../../../.assets/themes/catppuccin.png)
+![Catppuccin](../../../.assets/themes/catppuccin-qtile.png)
 
 # Useful Links
 1. Repository (GitHub): [Catppuccin](https://github.com/catppuccin/catppuccin)
