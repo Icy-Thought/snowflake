@@ -16,7 +16,7 @@ in {
         wallpaper = mkDefault ./wallpaper.jpg;
 
         gtk = {
-          theme = ""; # TODO
+          theme = "Tokyonight-Dark-BL"; # TODO
           iconTheme = "WhiteSur-dark";
           cursor = {
             name = "Bibata-Modern-Amber";
@@ -119,7 +119,7 @@ in {
     # Desktop (X11) theming <- Change after gnome = independent of xserver.
     (mkIf config.services.xserver.enable {
       user.packages = with pkgs; [
-        # https://github.com/Fausto-Korpsvart/Tokyo-Night-GTK-Theme
+        my.tokyo-night-gtk
         whitesur-icon-theme
         bibata-cursors
       ];

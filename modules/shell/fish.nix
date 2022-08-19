@@ -101,8 +101,8 @@ in {
         set -g fish_color_end                        $base06
         set -g fish_color_error                      $base05
         set -g fish_color_gray                       $base10
-        set -g fish_color_selection    --background= $highlight
-        set -g fish_color_search_match --background= $highlight
+        set -g fish_color_selection     --background=$highlight
+        set -g fish_color_search_match  --background=$highlight
         set -g fish_color_operator                   $base04
         set -g fish_color_escape                     $base08
         set -g fish_color_autosuggestion             $base10
