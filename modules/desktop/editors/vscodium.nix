@@ -9,6 +9,7 @@
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.editors.vscodium;
+  vscDir = "${config.snowflake.configDir}/vscodium";
 in {
   options.modules.desktop.editors.vscodium = {
     enable = mkBoolOpt false;
@@ -20,13 +21,38 @@ in {
       package = pkgs.vscodium;
       mutableExtensionsDir = true;
 
-      extensions = import "${configDir}/vscodium/extensions.nix".extensions {
-        inherit pkgs;
-      };
+      # Config imports
+      extensions =
+        pkgs.vscode-utils.extensionsFromVscodeMarketplace (
+          (import "${vscDir}/custom-extensions.nix").extensions
+        )
+        ++ (with pkgs.vscode-extensions; [
+          # Editor
+          eamodio.gitlens
+          editorconfig.editorconfig
+          mhutchie.git-graph
+          vscodevim.vim
 
-      userSettings =
-        import "${configDir}/vscodium/settings.nix" {inherit config;};
-      keybindings = import "${configDir}/vscodium/keybindings.nix" {};
+          # Aesthetics
+          esbenp.prettier-vscode
+          gruntfuggly.todo-tree
+          jock.svg
+          naumovs.color-highlight
+
+          # Toolset
+          christian-kohler.path-intellisense
+          formulahendry.code-runner
+          github.copilot
+          wix.vscode-import-cost
+
+          # Language specific
+          james-yu.latex-workshop
+          tamasfe.even-better-toml
+          yzhang.markdown-all-in-one
+        ]);
+
+      userSettings = import "${vscDir}/settings.nix" {inherit config;};
+      keybindings = import "${vscDir}/keybindings.nix" {};
     };
   };
 }

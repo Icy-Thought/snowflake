@@ -23,7 +23,7 @@
       };
     };
 
-    themes.active = "catppuccin";
+    themes.active = "tokyonight";
 
     desktop = {
       qtile.enable = true;

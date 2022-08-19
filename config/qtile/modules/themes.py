@@ -26,4 +26,18 @@ decay = [
     "#74bee9",  # Colour 10
 ]
 
-palette = catppuccin
+tokyonight = [
+    "#c0caf5",  # Colour 0
+    "#21262e",  # Colour 1
+    "#1a1b26",  # Colour 2
+    "#ff9e64",  # Colour 3
+    "#bb9af7",  # Colour 4
+    "#9ece6a",  # Colour 5
+    "#e0af68",  # Colour 6
+    "#f7768e",  # Colour 7
+    "#1abc9c",  # Colour 8
+    "#2ac3de",  # Colour 9
+    "#7aa2f7",  # Colour 10
+]
+
+palette = tokyonight

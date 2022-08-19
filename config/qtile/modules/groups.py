@@ -5,6 +5,7 @@ from libqtile.config import DropDown, EzClick, EzKey, Group, Match, ScratchPad
 from modules.keymaps import keys
 from modules.themes import palette
 
+# Requires CJK-font (using: Sarasa Gothic)
 groups = [
     Group("1", label="一"),
     Group("2", label="二"),
@@ -79,7 +80,9 @@ groups.append(
     ScratchPad(
         "SPD",
         [
-            DropDown("Bottom", "wezterm start --always-new-process btm", **next_maximum),
+            DropDown(
+                "Bottom", "wezterm start --always-new-process btm", **next_maximum
+            ),
             DropDown(
                 "Discord",
                 "discord",

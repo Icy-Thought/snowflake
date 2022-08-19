@@ -95,16 +95,16 @@ in {
         set -g fish_color_normal                     $foreground
         set -g fish_color_command                    $base09
         set -g fish_color_param                      $base02
-        set -g fish_color_keyword                    $base05
+        set -g fish_color_keyword                    $base08
         set -g fish_color_quote                      $base07
-        set -g fish_color_redirection                $base04
+        set -g fish_color_redirection                $foreground
         set -g fish_color_end                        $base06
         set -g fish_color_error                      $base05
         set -g fish_color_gray                       $base10
         set -g fish_color_selection    --background= $highlight
         set -g fish_color_search_match --background= $highlight
         set -g fish_color_operator                   $base04
-        set -g fish_color_escape                     $base02
+        set -g fish_color_escape                     $base08
         set -g fish_color_autosuggestion             $base10
         set -g fish_color_cancel                     $base05
 
@@ -115,7 +115,7 @@ in {
 
         # Completion Pager
         set -g fish_pager_color_progress             $base10
-        set -g fish_pager_color_prefix               $base04
+        set -g fish_pager_color_prefix               $base07
         set -g fish_pager_color_completion           $foreground
         set -g fish_pager_color_description          $base10
       '';

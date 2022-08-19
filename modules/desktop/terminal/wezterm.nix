@@ -31,8 +31,8 @@ in {
           "wezterm/wezterm.lua".text = ''
             local wezterm = require("wezterm")
             ${optionalString (active != null) ''
-              local ${active} = require("config.${active}")
-              require("config.${active}-bar")
+              local ${active} = require("themes.${active}")
+              require("statusbar.${active}")
             ''}
 
             local key_bindings = {
@@ -203,11 +203,11 @@ in {
         }
 
         (mkIf (active != null) {
-          "wezterm/config/${active}-bar.lua" = {
-            source = "${configDir}/wezterm/${active}-bar.lua";
+          "wezterm/statusbar/${active}.lua" = {
+            source = "${configDir}/wezterm/statusbar/${active}.lua";
           };
 
-          "wezterm/config/${active}.lua".text = with colors.main; ''
+          "wezterm/themes/${active}.lua".text = with colors.main; ''
             return {
                 foreground      = "${types.fg}",
                 background      = "${types.bg}",
