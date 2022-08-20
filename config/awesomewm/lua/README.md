@@ -12,7 +12,7 @@ The primary goal of this setup is to create an environment that:
   3. Looks Awesome!
 
 # Dashboard
-<img src="../.assets/main/png/awesomewm-desktop.png" width="1200">
+<img src="../../../.assets/main/png/awesomewm-desktop.png" width="1200">
 
 Features:
 - Fancy music player (thank you, [rxhyn](https://github.com/rxyhn/yoru))
