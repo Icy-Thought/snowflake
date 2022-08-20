@@ -17,7 +17,7 @@ wm=$(echo $wm | sed -e s/^"Name: "//)
 echo "wm:$wm"
 
 # Packages
-nixpkgs=$(nix-store --query --requisites /run/current-system | cut -d- -f2- | sort | uniq)
+nixpkgs=$(nix-store --query --requisites /run/current-system | cut -d- -f2- | sort | uniq | wc -l)
 echo "pkg:$nixpkgs"
 
 # uptime

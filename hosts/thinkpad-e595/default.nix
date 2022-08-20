@@ -75,6 +75,7 @@
       haskell.enable = true;
       python.enable = true;
       rust.enable = true;
+      r-language.enable = true;
     };
 
     containers.transmission = {
