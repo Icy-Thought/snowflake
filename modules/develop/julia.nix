@@ -17,7 +17,7 @@ in {
   config = mkMerge [
     (mkIf cfg.enable {
       user.packages = with pkgs; [julia-bin];
-      # TODO: automate the installation of: [Plots PyPlot GR UnicodePlots]
+      # TODO: automate the installation of: [ Gadfly LanguageServer ]
     })
 
     (mkIf devCfg.enable {
