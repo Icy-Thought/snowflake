@@ -73,7 +73,6 @@
 
     develop = {
       haskell.enable = true;
-      julia.enable = true;
       python.enable = true;
       rust.enable = true;
     };

@@ -190,10 +190,10 @@ in {
                 enable_scroll_bar = false,
                 scrollback_lines = 5000,
 
-                default_cursor_style = "BlinkingBlock",
                 cursor_blink_rate = 500,
                 cursor_blink_ease_in = "Constant",
                 cursor_blink_ease_out = "Constant",
+                default_cursor_style = "BlinkingBlock",
 
                 hyperlink_rules = hyperlink_rules,
                 keys = key_bindings,
