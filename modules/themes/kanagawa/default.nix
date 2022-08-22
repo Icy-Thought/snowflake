@@ -19,7 +19,7 @@ in {
           theme = "Orchis-Dark-Compact";
           iconTheme = "WhiteSur-dark";
           cursor = {
-            name = "Bibata-Modern-Amber";
+            name = "Bibata-Modern-Classic";
             size = 24;
           };
         };

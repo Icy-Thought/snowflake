@@ -16,10 +16,10 @@ in {
         wallpaper = mkDefault ./wallpaper.jpg;
 
         gtk = {
-          theme = "Tokyonight-Dark-BL"; # TODO
+          theme = "Tokyonight-Dark-BL";
           iconTheme = "WhiteSur-dark";
           cursor = {
-            name = "Bibata-Modern-Amber";
+            name = "Bibata-Modern-Classic";
             size = 24;
           };
         };

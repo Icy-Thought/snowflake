@@ -19,7 +19,7 @@ in {
           theme = "Catppuccin-Orange-Dark-Compact";
           iconTheme = "WhiteSur-dark";
           cursor = {
-            name = "Bibata-Modern-Amber";
+            name = "Bibata-Modern-Classic";
             size = 24;
           };
         };
