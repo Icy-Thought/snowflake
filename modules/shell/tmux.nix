@@ -15,7 +15,7 @@ in {
   };
 
   config = mkIf (cfg.enable || term.alacritty.enable) {
-    user.packages = with pkgs; [tmux];
+    user.packages = [pkgs.tmux];
 
     env = {
       PATH = ["$TMUXIFIER/bin"];

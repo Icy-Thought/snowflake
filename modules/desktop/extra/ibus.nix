@@ -16,10 +16,10 @@ in {
   config = mkIf cfg.enable {
     i18n.inputMethod = {
       enabled = "ibus";
-      ibus.engines = with pkgs.ibus-engines; [
-        libpinyin
-        hangul
-        mozc
+      ibus.engines = [
+        pkgs.ibus-engines.libpinyin
+        pkgs.ibus-engines.hangul
+        pkgs.ibus-engines.mozc
       ];
     };
 

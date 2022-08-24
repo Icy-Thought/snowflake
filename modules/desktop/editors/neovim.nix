@@ -19,12 +19,12 @@ in {
 
   config = mkMerge [
     {
-      nixpkgs.overlays = with inputs; [nvim-nightly.overlay];
+      nixpkgs.overlays = [inputs.nvim-nightly.overlay];
 
-      user.packages = with pkgs; (mkMerge [
-        [neovide]
-        (mkIf (!config.modules.develop.cc.enable) [gcc]) # Treesitter
-      ]);
+      user.packages = [
+        pkgs.neovide
+        (mkIf (!config.modules.develop.cc.enable) pkgs.gcc) # Treesitter
+      ];
 
       hm.programs.neovim = {
         enable = true;

@@ -18,9 +18,9 @@ in {
 
   config = mkMerge [
     (mkIf cfg.enable {
-      user.packages = with pkgs; [
-        dart
-        flutter
+      user.packages = [
+        pkgs.dart
+        pkgs.flutter
       ];
     })
 

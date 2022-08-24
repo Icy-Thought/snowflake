@@ -16,16 +16,22 @@ in {
   };
 
   config = mkMerge [
-    {
-      user.packages = mkMerge (with pkgs; [
-        (mkIf cfg.enable [lua sumneko-lua-language-server stylua])
-        (mkIf cfg.fennel.enable [fennel fnlfmt])
-      ]);
-    }
     (mkIf cfg.enable {
+      user.packages = [
+        pkgs.lua
+        pkgs.sumneko-lua-language-server
+        pkgs.stylua
+      ];
       home.configFile = with config.snowflake; {
         "stylua/stylua.toml".source = "${configDir}/formatters/stylua.toml";
       };
+    })
+
+    (mkIf cfg.fennel.enable {
+      user.packages = [
+        pkgs.fennel
+        pkgs.fnlfmt
+      ];
     })
 
     (mkIf devCfg.enable {

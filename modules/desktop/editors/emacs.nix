@@ -21,7 +21,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    nixpkgs.overlays = with inputs; [emacs.overlay];
+    nixpkgs.overlays = [inputs.emacs.overlay];
 
     hm.services.emacs = {
       enable = true;
@@ -34,11 +34,11 @@ in {
       extraPackages = epkgs: with epkgs; [vterm];
     };
 
-    user.packages = with pkgs; [
-      binutils
-      gnutls
-      zstd
-      (mkIf (config.programs.gnupg.agent.enable) pinentry_emacs)
+    user.packages = [
+      pkgs.binutils
+      pkgs.gnutls
+      pkgs.zstd
+      (mkIf config.programs.gnupg.agent.enable [pkgs.pinentry_emacs])
     ];
 
     # Fonts -> icons + ligatures when specified:

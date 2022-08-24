@@ -14,7 +14,10 @@ in {
   };
 
   config = mkIf cfg.enable {
-    user.packages = with pkgs; [docker docker-compose];
+    user.packages = [
+      pkgs.docker
+      pkgs.docker-compose
+    ];
 
     env = {
       DOCKER_CONFIG = "$XDG_CONFIG_HOME/docker";

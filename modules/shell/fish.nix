@@ -17,21 +17,21 @@ in {
   };
 
   config = mkIf cfg.enable {
-    user.packages = with pkgs; [
-      any-nix-shell
-      fzf
-      pwgen
-      yt-dlp
-      csview
+    user.packages = [
+      pkgs.any-nix-shell
+      pkgs.fzf
+      pkgs.pwgen
+      pkgs.yt-dlp
+      pkgs.csview
 
       # alternatives for several gnu-tools
-      bottom
-      exa
-      fd
-      (ripgrep.override {
+      pkgs.bottom
+      pkgs.exa
+      pkgs.fd
+      (pkgs.ripgrep.override {
         withPCRE2 = true;
       })
-      zoxide
+      pkgs.zoxide
     ];
 
     # Enables vendor completion: https://nixos.wiki/wiki/Fish
@@ -50,18 +50,18 @@ in {
         ${builtins.readFile "${fishCfg}/aliases/main.fish"}
       '';
 
-      plugins = with pkgs.fishPlugins; [
+      plugins = [
         {
           name = "done";
-          src = done.src;
+          src = pkgs.fishPlugins.done.src;
         }
         {
           name = "autopair-fish";
-          src = autopair-fish.src;
+          src = pkgs.fishPlugins.autopair-fish.src;
         }
         {
           name = "fzf-fish";
-          src = fzf-fish.src;
+          src = pkgs.fishPlugins.fzf-fish.src;
         }
       ];
     };

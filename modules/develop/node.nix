@@ -16,7 +16,7 @@ in {
 
   config = mkMerge [
     (mkIf cfg.enable {
-      user.packages = with pkgs; [nodejs_latest yarn];
+      user.packages = [pkgs.nodejs_latest pkgs.yarn];
 
       # Run locally installed bin-script, e.g. n coffee file.coffee
       environment.shellAliases = {

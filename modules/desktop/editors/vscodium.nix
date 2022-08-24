@@ -26,30 +26,30 @@ in {
         pkgs.vscode-utils.extensionsFromVscodeMarketplace (
           (import "${vscDir}/custom-extensions.nix").extensions
         )
-        ++ (with pkgs.vscode-extensions; [
+        ++ [
           # Editor
-          eamodio.gitlens
-          editorconfig.editorconfig
-          mhutchie.git-graph
-          vscodevim.vim
+          pkgs.vscode-extensions.eamodio.gitlens
+          pkgs.vscode-extensions.editorconfig.editorconfig
+          pkgs.vscode-extensions.mhutchie.git-graph
+          pkgs.vscode-extensions.vscodevim.vim
 
           # Aesthetics
-          esbenp.prettier-vscode
-          gruntfuggly.todo-tree
-          jock.svg
-          naumovs.color-highlight
+          pkgs.vscode-extensions.esbenp.prettier-vscode
+          pkgs.vscode-extensions.gruntfuggly.todo-tree
+          pkgs.vscode-extensions.jock.svg
+          pkgs.vscode-extensions.naumovs.color-highlight
 
           # Toolset
-          christian-kohler.path-intellisense
-          formulahendry.code-runner
-          github.copilot
-          wix.vscode-import-cost
+          pkgs.vscode-extensions.christian-kohler.path-intellisense
+          pkgs.vscode-extensions.formulahendry.code-runner
+          pkgs.vscode-extensions.github.copilot
+          pkgs.vscode-extensions.wix.vscode-import-cost
 
           # Language specific
-          james-yu.latex-workshop
-          tamasfe.even-better-toml
-          yzhang.markdown-all-in-one
-        ]);
+          pkgs.vscode-extensions.james-yu.latex-workshop
+          pkgs.vscode-extensions.tamasfe.even-better-toml
+          pkgs.vscode-extensions.yzhang.markdown-all-in-one
+        ];
 
       userSettings = import "${vscDir}/settings.nix" {inherit config;};
       keybindings = import "${vscDir}/keybindings.nix" {};

@@ -20,15 +20,15 @@ in {
     }
 
     (mkIf (cfg.enable && wineCfg.enable) {
-      user.packages = with pkgs; [lutris];
+      user.packages = [pkgs.lutris];
     })
 
     (mkIf (cfg.enable && !wineCfg.enable) {
-      user.packages = with pkgs; [
-        lutris
-        wineWowPackages.fonts
-        wineWowPackages.staging
-        winetricks
+      user.packages = [
+        pkgs.lutris
+        pkgs.wineWowPackages.fonts
+        pkgs.wineWowPackages.staging
+        pkgs.winetricks
       ];
     })
   ];

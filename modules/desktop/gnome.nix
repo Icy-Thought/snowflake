@@ -33,11 +33,11 @@ in {
 
     services.dbus = {
       enable = true;
-      packages = with pkgs; [gnome.dconf];
+      packages = [pkgs.gnome.dconf];
     };
 
     services.udev = {
-      packages = with pkgs; [gnome.gnome-settings-daemon];
+      packages = [pkgs.gnome.gnome-settings-daemon];
       extraRules = ''
         ACTION=="add|change", KERNEL=="nvme[0-9]*", ATTR{queue/scheduler}="none"
         ACTION=="add|change", KERNEL=="sd[a-z]|mmcblk[0-9]*", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="mq-deadline"
@@ -45,15 +45,15 @@ in {
       '';
     };
 
-    user.packages = with pkgs; [
-      dconf2nix
-      gnome.polari
-      gnome.gnome-disk-utility
-      gnome.gnome-tweak-tool
+    user.packages = [
+      pkgs.dconf2nix
+      pkgs.gnome.polari
+      pkgs.gnome.gnome-disk-utility
+      pkgs.gnome.gnome-tweak-tool
 
       # gnomeExtensions.pop-os-shell
-      gnomeExtensions.gsconnect
-      gnomeExtensions.user-themes
+      pkgs.gnomeExtensions.gsconnect
+      pkgs.gnomeExtensions.user-themes
     ];
 
     # Our beloved modules

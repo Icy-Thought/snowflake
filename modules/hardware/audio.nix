@@ -34,7 +34,7 @@ in {
   in
     mkIf cfg.enable (mkMerge [
       {
-        environment.systemPackages = with pkgs; [pavucontrol];
+        environment.systemPackages = [pkgs.pavucontrol];
 
         security.rtkit.enable = true;
 

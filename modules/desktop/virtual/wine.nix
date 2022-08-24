@@ -14,11 +14,11 @@ in {
   };
 
   config = mkIf cfg.enable {
-    user.packages = with pkgs; [
-      bottles
-      wineWowPackages.fonts
-      wineWowPackages.staging
-      winetricks
+    user.packages = [
+      pkgs.bottles
+      pkgs.wineWowPackages.fonts
+      pkgs.wineWowPackages.staging
+      pkgs.winetricks
     ];
   };
 }

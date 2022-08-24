@@ -15,11 +15,11 @@ in {
 
   config = mkMerge [
     (mkIf cfg.common.enable {
-      user.packages = with pkgs; [
-        element-desktop
-        unstable.discord
-        signal-desktop
-        tdesktop
+      user.packages = [
+        pkgs.element-desktop
+        pkgs.unstable.discord
+        pkgs.signal-desktop
+        pkgs.tdesktop
       ];
 
       # TODO: discord (powercord) + declerative setup.

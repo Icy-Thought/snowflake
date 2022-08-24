@@ -17,12 +17,15 @@ in {
 
   config = mkMerge [
     (mkIf cfg.music.enable {
-      user.packages = with pkgs; [spotify];
+      user.packages = [pkgs.spotify];
       # TODO: spicetify-cli + activeTheme.
     })
 
     (mkIf cfg.video.enable {
-      user.packages = with pkgs; [mpv-with-scripts mpvc];
+      user.packages = [
+        pkgs.mpv-with-scripts
+        pkgs.mpvc
+      ];
     })
   ];
 }

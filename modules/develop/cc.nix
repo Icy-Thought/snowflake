@@ -17,18 +17,18 @@ in {
 
   config = mkMerge [
     (mkIf cfg.enable {
-      user.packages = with pkgs; [
-        clang
-        bear
-        gdb
-        cmake
-        llvmPackages.libcxx
+      user.packages = [
+        pkgs.clang
+        pkgs.bear
+        pkgs.gdb
+        pkgs.cmake
+        pkgs.llvmPackages.libcxx
       ];
     })
 
     (mkIf codeCfg.enable {
-      hm.programs.vscode.extensions = with pkgs.vscode-extensions; [
-        ms-vscode.cpptools
+      hm.programs.vscode.extensions = [
+        pkgs.vscode-extensions.ms-vscode.cpptools
       ];
     })
 

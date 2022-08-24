@@ -17,20 +17,17 @@ in {
 
   config = mkMerge [
     (mkIf cfg.enable {
-      user.packages = with pkgs;
-        [
-          python3
-          nodePackages.pyright
-        ]
-        ++ (with python3Packages; [
-          black
-          ipython
-          isort
-          pip
-          poetry
-          pylint
-          setuptools
-        ]);
+      user.packages = [
+        pkgs.python3
+        pkgs.nodePackages.pyright
+        pkgs.python3Packages.black
+        pkgs.python3Packages.ipython
+        pkgs.python3Packages.isort
+        pkgs.python3Packages.pip
+        pkgs.python3Packages.poetry
+        pkgs.python3Packages.pylint
+        pkgs.python3Packages.setuptools
+      ];
 
       environment.shellAliases = {
         py = "python";
@@ -43,9 +40,9 @@ in {
     })
 
     (mkIf codeCfg.enable {
-      hm.programs.vscode.extensions = with pkgs.vscode-extensions; [
-        ms-python.python
-        ms-toolsai.jupyter
+      hm.programs.vscode.extensions = [
+        pkgs.vscode-extensions.ms-python.python
+        pkgs.vscode-extensions.ms-toolsai.jupyter
       ];
     })
 

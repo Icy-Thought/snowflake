@@ -16,7 +16,7 @@ in {
   };
 
   config = mkIf (cfg.macchina.enable || cfg.fish.enable) {
-    user.packages = with pkgs; [macchina];
+    user.packages = [pkgs.macchina];
 
     home.configFile = {
       "macchina/macchina.toml".text = ''

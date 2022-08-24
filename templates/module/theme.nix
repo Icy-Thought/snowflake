@@ -124,9 +124,9 @@ in {
         cursor-package # WARN:
       ];
 
-      fonts.fonts = with pkgs; [
-        victor-mono
-        emoji-theme # WARN:
+      fonts.fonts = [
+        pkgs.victor-mono
+        pkgs.emoji-theme # WARN:
       ];
     })
 

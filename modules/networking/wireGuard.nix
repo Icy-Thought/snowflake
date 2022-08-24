@@ -14,7 +14,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    user.packages = with pkgs; [wireguard-tools];
+    user.packages = [pkgs.wireguard-tools];
 
     networking = {
       iproute2.enable = true;

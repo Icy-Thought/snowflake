@@ -15,7 +15,7 @@ in {
   };
 
   config = mkIf (cfg.xplr.enable || cfg.fish.enable) {
-    user.packages = with pkgs; [xplr];
+    user.packages = [pkgs.xplr];
 
     home.configFile."xplr/init.lua".text = ''
       ---@diagnostic disable

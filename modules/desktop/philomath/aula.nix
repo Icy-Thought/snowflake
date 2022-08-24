@@ -17,7 +17,7 @@ in {
   config = mkMerge [
     (mkIf cfg.anki.enable {
       # TODO: Configure anki OR replace with other software
-      user.packages = with pkgs; [anki];
+      user.packages = [pkgs.anki];
     })
 
     (mkIf cfg.zoom.enable {
@@ -29,8 +29,8 @@ in {
         };
       };
 
-      user.packages = with pkgs; [
-        (makeDesktopItem {
+      user.packages = [
+        (pkgs.makeDesktopItem {
           name = "zoom-us";
           desktopName = "Zoom (Jailed)";
           icon = "Zoom";

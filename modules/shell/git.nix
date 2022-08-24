@@ -15,13 +15,13 @@ in {
   };
 
   config = mkIf cfg.enable {
-    user.packages = with pkgs; [
-      act
-      dura
-      gitui
-      gitAndTools.gh
-      gitAndTools.git-open
-      (mkIf config.modules.shell.gnupg.enable gitAndTools.git-crypt)
+    user.packages = [
+      pkgs.act
+      pkgs.dura
+      pkgs.gitui
+      pkgs.gitAndTools.gh
+      pkgs.gitAndTools.git-open
+      (mkIf config.modules.shell.gnupg.enable pkgs.gitAndTools.git-crypt)
     ];
 
     # easier gitignore fetching (fish)

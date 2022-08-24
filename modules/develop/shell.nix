@@ -16,7 +16,7 @@ in {
 
   config = mkMerge [
     (mkIf cfg.enable {
-      user.packages = with pkgs; [shellcheck];
+      user.packages = [pkgs.shellcheck];
     })
 
     (mkIf devCfg.enable {

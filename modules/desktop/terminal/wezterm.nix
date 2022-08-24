@@ -17,7 +17,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    user.packages = with pkgs; [wezterm];
+    user.packages = [pkgs.wezterm];
 
     hm.programs.fish = {
       interactiveShellInit = ''

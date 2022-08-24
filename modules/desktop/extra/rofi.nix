@@ -15,11 +15,11 @@ in {
   };
 
   config = mkIf cfg.enable {
-    user.packages = with pkgs; [
-      rofi-systemd
+    user.packages = [
+      pkgs.rofi-systemd
 
       # TODO: powermenu + screenshot
-      # (makeDesktopItem {
+      # (pkgs.makeDesktopItem {
       #   name = "lock-display";
       #   desktopName = "Lock screen";
       #   icon = "system-lock-screen";
@@ -29,10 +29,10 @@ in {
 
     hm.programs.rofi = {
       enable = true;
-      plugins = with pkgs; [rofi-emoji];
+      plugins = [pkgs.rofi-emoji];
 
       extraConfig = {
-        terminal = with pkgs; "${getExe myTerm}";
+        terminal = "${getExe myTerm}";
         disable-history = false;
         show-icons = true;
         sidebar-mode = false;
