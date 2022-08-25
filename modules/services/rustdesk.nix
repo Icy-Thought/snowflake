@@ -14,6 +14,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-    user.packages = [pkgs.rustdesk];
+    user.packages = with pkgs; [rustdesk];
   };
 }

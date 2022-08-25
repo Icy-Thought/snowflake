@@ -18,12 +18,12 @@ in {
 
   config = mkMerge [
     (mkIf cfg.enable {
-      nixpkgs.overlays = [inputs.rust.overlays.default];
+      nixpkgs.overlays = with inputs; [rust.overlays.default];
 
-      user.packages = [
-        pkgs.crate2nix
-        pkgs.rust-bin.beta.latest.default
-        pkgs.unstable.rust-analyzer
+      user.packages = with pkgs; [
+        crate2nix
+        rust-bin.beta.latest.default
+        unstable.rust-analyzer
       ];
 
       env.PATH = [
@@ -37,8 +37,8 @@ in {
     })
 
     (mkIf codeCfg.enable {
-      hm.programs.vscode.extensions = [
-        pkgs.vscode-extensions.rust-lang.rust-analyzer
+      hm.programs.vscode.extensions = with pkgs.vscode-extensions; [
+        rust-lang.rust-analyzer
       ];
     })
 

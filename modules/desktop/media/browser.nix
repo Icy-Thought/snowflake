@@ -20,22 +20,22 @@ in {
     {services.gvfs.enable = true;}
 
     (mkIf cfg.dolphin.enable {
-      environment.systemPackages = [
-        pkgs.libsForQt5.dolphin
-        pkgs.libsForQt5.dolphin-plugins
+      environment.systemPackages = with pkgs.libsForQt5; [
+        dolphin
+        dolphin-plugins
       ];
     })
 
     (mkIf cfg.nautilus.enable {
-      environment.systemPackages = [pkgs.gnome.nautilus];
+      environment.systemPackages = with pkgs.gnome; [nautilus];
     })
 
     (mkIf cfg.thunar.enable {
-      environment.systemPackages = [
-        pkgs.xfce.thunar
-        pkgs.xfce.thunar-volman
-        pkgs.xfce.thunar-archive-plugin
-        pkgs.xfce.thunar-media-tags-plugin
+      environment.systemPackages = with pkgs.xfce; [
+        thunar
+        thunar-volman
+        thunar-archive-plugin
+        thunar-media-tags-plugin
       ];
 
       services.tumbler.enable = true;

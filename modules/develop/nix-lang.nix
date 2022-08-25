@@ -17,12 +17,12 @@ in {
 
   config = mkMerge [
     (mkIf cfg.enable {
-      user.packages = [pkgs.alejandra];
+      user.packages = with pkgs; [alejandra];
     })
 
     (mkIf codeCfg.enable {
-      hm.programs.vscode.extensions = [
-        pkgs.vscode-extensions.jnoortheen.nix-ide
+      hm.programs.vscode.extensions = with pkgs.vscode-extensions; [
+        jnoortheen.nix-ide
       ];
     })
 

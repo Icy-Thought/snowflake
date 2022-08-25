@@ -26,14 +26,14 @@ in {
 
   config = mkIf cfg.enable (mkMerge [
     {
-      user.packages = [
-        pkgs.firefox-devedition-bin
-        (pkgs.makeDesktopItem {
+      user.packages = with pkgs; [
+        firefox-devedition-bin
+        (makeDesktopItem {
           name = "firefox-devedition-private";
           desktopName = "Firefox-DevEdition (Private)";
           genericName = "Launch a Private Firefox-DevEdition Instance";
           icon = "firefox";
-          exec = "${pkgs.firefox-devedition-bin}/bin/firefox-devedition --private-window";
+          exec = "${firefox-devedition-bin}/bin/firefox-devedition --private-window";
           categories = ["Network" "WebBrowser"];
         })
       ];

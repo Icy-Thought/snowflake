@@ -18,10 +18,10 @@
     extraModulePackages = [config.boot.kernelPackages.broadcom_sta];
   };
 
-  environment.systemPackages = [
-    pkgs.fish
-    pkgs.git
-    pkgs.nixFlakes
+  environment.systemPackages = with pkgs; [
+    fish
+    git
+    nixFlakes
   ];
 }
 # nix-build '<nixpkgs/nixos>' -A config.system.build.isoImage -I nixos-config=./default.nix

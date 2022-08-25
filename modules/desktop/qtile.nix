@@ -29,15 +29,15 @@ in {
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = [
+    environment.systemPackages = with pkgs; [
       (cfg.package.unwrapped or cfg.package)
-      pkgs.lightdm
-      pkgs.libnotify
-      pkgs.playerctl
-      pkgs.gxmessage
-      pkgs.xdotool
-      pkgs.xclip
-      pkgs.feh
+      lightdm
+      libnotify
+      playerctl
+      gxmessage
+      xdotool
+      xclip
+      feh
     ];
 
     # Our beloved modules

@@ -16,14 +16,14 @@ in {
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = [
-      pkgs.lightdm
-      pkgs.libnotify
-      pkgs.playerctl
-      pkgs.gxmessage
-      pkgs.xdotool
-      pkgs.xclip
-      pkgs.feh
+    environment.systemPackages = with pkgs; [
+      lightdm
+      libnotify
+      playerctl
+      gxmessage
+      xdotool
+      xclip
+      feh
     ];
 
     # Our beloved modules
@@ -53,7 +53,7 @@ in {
         enable = true;
         enableContribAndExtras = true;
         enableConfiguredRecompile = true;
-        # haskellPackages = [];
+        # haskellPackages = with pkgs; [];
         # ghcArgs = [];
         # xmonadCliArgs = [];
         config = "${configDir}/xmonad/xmonad.hs";

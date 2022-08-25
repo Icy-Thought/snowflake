@@ -16,7 +16,7 @@ in {
   config = mkMerge [
     (mkIf cfg.transmission.enable {
       user = {
-        packages = [pkgs.transmission-gtk];
+        packages = with pkgs; [transmission-gtk];
         extraGroups = ["transmission"];
       };
 

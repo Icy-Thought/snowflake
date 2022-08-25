@@ -30,7 +30,7 @@ in {
 
   config = mkIf cfg.enable {
     user = {
-      packages = [pkgs.transmission-remote-gtk];
+      packages = with pkgs; [transmission-remote-gtk];
       extraGroups = ["transmission"];
     };
 

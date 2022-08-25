@@ -17,15 +17,16 @@ in {
 
   config = mkMerge [
     (mkIf cfg.enable {
-      user.packages = [
-        pkgs.ghc
-        pkgs.haskellPackages.cabal-install
-        pkgs.haskellPackages.haskell-language-server
-        pkgs.haskellPackages.hasktags
-        pkgs.haskellPackages.hoogle
-        pkgs.haskellPackages.hpack
-        pkgs.haskellPackages.stylish-haskell
-      ];
+      user.packages = with pkgs;
+        [ghc]
+        ++ (with haskellPackages; [
+          cabal-install
+          haskell-language-server
+          hasktags
+          hoogle
+          hpack
+          stylish-haskell
+        ]);
 
       home.configFile = with config.snowflake; {
         "stylish-haskell/config.yaml" = {
@@ -35,9 +36,9 @@ in {
     })
 
     (mkIf codeCfg.enable {
-      hm.programs.vscode.extensions = [
-        pkgs.vscode-extensions.haskell.haskell
-        pkgs.vscode-extensions.justusadam.language-haskell # syntax-highlighting
+      hm.programs.vscode.extensions = with pkgs.vscode-extensions; [
+        haskell.haskell
+        justusadam.language-haskell # syntax-highlighting
       ];
     })
 

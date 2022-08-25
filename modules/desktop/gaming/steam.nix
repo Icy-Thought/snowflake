@@ -28,21 +28,21 @@ in {
         "/run/opengl-driver/share/vulkan/icd.d/amd_icd64.json"
       ];
 
-      user.packages = [
+      user.packages = with pkgs; [
         # Get steam to keep its garbage out of $HOME
-        (pkgs.writeScriptBin "steam" ''
+        (writeScriptBin "steam" ''
           #!${stdenv.shell}
-          HOME="${cfg.libDir}" exec ${getExe pkgs.steam} "$@"
+          HOME="${cfg.libDir}" exec ${getExe steam} "$@"
         '')
 
         # for running GOG and humble bundle games
-        (pkgs.writeScriptBin "steam-run" ''
+        (writeScriptBin "steam-run" ''
           #!${stdenv.shell}
-          HOME="${cfg.libDir}" exec ${getExe pkgs.steam-run-native} "$@"
+          HOME="${cfg.libDir}" exec ${getExe steam-run-native} "$@"
         '')
 
         # Add rofi desktop icon
-        (pkgs.makeDesktopItem {
+        (makeDesktopItem {
           name = "steam";
           desktopName = "Steam";
           icon = "steam";

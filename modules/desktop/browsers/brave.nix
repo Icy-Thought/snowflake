@@ -14,13 +14,13 @@ in {
   };
 
   config = mkIf cfg.enable {
-    user.packages = [
-      (pkgs.makeDesktopItem {
+    user.packages = with pkgs; [
+      (makeDesktopItem {
         name = "brave-private";
         desktopName = "Brave Web Browser (Private)";
         genericName = "Launch a Private Brave-browser Instance";
         icon = "brave";
-        exec = "${getExe pkgs.brave} --incognito";
+        exec = "${getExe brave} --incognito";
         categories = ["Network"];
       })
     ];

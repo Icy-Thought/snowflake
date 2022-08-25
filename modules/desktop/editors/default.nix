@@ -24,27 +24,28 @@ in {
     })
 
     (mkIf (cfg.default == "nvim" || cfg.default == "emacs") {
-      user.packages = [
-        pkgs.imagemagick
-        pkgs.editorconfig-core-c
-        pkgs.sqlite
+      user.packages = with pkgs; [
+        imagemagick
+        editorconfig-core-c
+        sqlite
 
         # module dependencies
         ## checkers: aspell
-        (pkgs.aspellWithDicts (dict: [
-          dict.en
-          dict.en-computers
-          dict.en-science
-        ]))
+        (aspellWithDicts (dct:
+          with dct; [
+            en
+            en-computers
+            en-science
+          ]))
 
         ## Markdown
-        pkgs.nodePackages.markdownlint-cli2
-        pkgs.vale
+        nodePackages.markdownlint-cli2
+        vale
 
         ## lsp: LaTeX + Org-Mode
-        pkgs.pandoc
-        pkgs.tectonic
-        pkgs.texlab
+        pandoc
+        tectonic
+        texlab
       ];
     })
   ];

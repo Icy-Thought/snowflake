@@ -118,15 +118,15 @@ in {
 
     # Desktop (X11) theming <- Change after gnome = independent of xserver.
     (mkIf config.services.xserver.enable {
-      user.packages = [
-        (pkgs.catppuccin-gtk.override {size = "compact";})
-        pkgs.whitesur-icon-theme
-        pkgs.bibata-cursors
+      user.packages = with pkgs; [
+        (catppuccin-gtk.override {size = "compact";})
+        whitesur-icon-theme
+        bibata-cursors
       ];
 
-      fonts.fonts = [
-        (pkgs.nerdfonts.override {fonts = ["VictorMono"];})
-        pkgs.twitter-color-emoji
+      fonts.fonts = with pkgs; [
+        (nerdfonts.override {fonts = ["VictorMono"];})
+        twitter-color-emoji
       ];
     })
 

@@ -289,15 +289,15 @@ in {
     })
 
     (mkIf (cfg.onReload != {}) (let
-      reloadTheme = pkgs.writeScriptBin "reloadTheme" ''
-        #!${pkgs.stdenv.shell}
+      reloadTheme = with pkgs; (writeScriptBin "reloadTheme" ''
+        #!${stdenv.shell}
         echo "Reloading current theme: ${cfg.active}"
         ${concatStringsSep "\n" (mapAttrsToList (name: script: ''
             echo "[${name}]"
             ${script}
           '')
           cfg.onReload)}
-      '';
+      '');
     in {
       user.packages = [reloadTheme];
       system.userActivationScripts.reloadTheme = ''

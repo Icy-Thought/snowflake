@@ -11,43 +11,42 @@ with lib.my; let
   configDir = config.snowflake.configDir;
 in {
   options.modules.desktop.media.editor = {
-    modeling.enable = mkBoolOpt false;
     raster.enable = mkBoolOpt false;
-    toolset.enable = mkBoolOpt true;
     vector.enable = mkBoolOpt false;
+    modeling.enable = mkBoolOpt false;
   };
 
-  config = mkMerge [
-    (mkIf cfg.toolset.enable {
-      user.packages = [
-        pkgs.font-manager
-        pkgs.imagemagick
-      ];
-    })
+  config = {
+    user.packages = mkMerge (with pkgs; [
+      [
+        font-manager
+        imagemagick
+      ]
 
-    # Illustrator & Indesign replacement:
-    (mkIf cfg.vector.enable {
-      user.packages = [pkgs.inkscape];
-      # TODO: hard-coded inkscape config
-    })
+      # Illustrator & Indesign replacement:
+      (mkIf cfg.vector.enable [
+        inkscape
+      ])
 
-    # Photoshop replacement:
-    (mkIf cfg.raster.enable {
-      user.packages = [
-        pkgs.krita
-        pkgs.gimp
-        pkgs.gimpPlugins.resynthesizer
-      ];
+      # Photoshop replacement:
+      (mkIf cfg.raster.enable [
+        krita
+        gimp
+        gimpPlugins.resynthesizer
+      ])
 
-      # home.configFile."GIMP/2.10" = {
-      #   source = "${configDir}/gimp";
-      #   recursive = true;
-      # };
-    })
+      # 3D-Modelling:
+      (mkIf cfg.modeling.enable [
+        blender
+      ])
+    ]);
 
-    # 3D-Modelling
-    (mkIf cfg.vector.enable {
-      user.packages = [pkgs.blender];
-    })
-  ];
+    # TODO: setup GIMP on rebuild!
+    # home.configFile = mkIf cfg.raster.enable {
+    #   "GIMP/2.10" = {
+    #     source = "${configDir}/gimp";
+    #     recursive = true;
+    #   };
+    # };
+  };
 }

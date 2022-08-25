@@ -85,10 +85,10 @@ with lib.my; {
   time.timeZone = mkDefault "Europe/Berlin";
   i18n.defaultLocale = mkDefault "en_US.UTF-8";
 
-  environment.systemPackages = [
-    pkgs.cached-nix-shell
-    pkgs.gnumake
-    pkgs.unrar
-    pkgs.unzip
+  environment.systemPackages = with pkgs; [
+    cached-nix-shell
+    gnumake
+    unrar
+    unzip
   ];
 }

@@ -15,6 +15,6 @@ in {
 
   config = mkIf cfg.enable {
     # TODO: OSS packages + configuration.
-    user.packages = [pkgs.kicad];
+    user.packages = with pkgs; [kicad];
   };
 }

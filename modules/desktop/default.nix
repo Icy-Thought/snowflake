@@ -28,27 +28,27 @@ in {
       }
     ];
 
-    user.packages = [
-      pkgs.hyperfine
-      pkgs.libqalculate
-      (pkgs.makeDesktopItem {
+    user.packages = with pkgs; [
+      hyperfine
+      libqalculate
+      (makeDesktopItem {
         name = "kalker";
         desktopName = "Qalculate";
         icon = "calc";
-        exec = "${getExe pkgs.wezterm} start qalc";
+        exec = "${getExe wezterm} start qalc";
         categories = ["Development"];
       })
-      pkgs.qgnomeplatform
-      pkgs.gucharmap
-      pkgs.xcolor
+      qgnomeplatform
+      gucharmap
+      xcolor
     ];
 
     fonts = {
       fontDir.enable = true;
       enableGhostscriptFonts = true;
-      fonts = [
-        pkgs.sarasa-gothic
-        pkgs.scheherazade-new
+      fonts = with pkgs; [
+        sarasa-gothic
+        scheherazade-new
       ];
     };
 

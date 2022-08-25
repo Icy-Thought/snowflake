@@ -16,10 +16,10 @@ in {
 
   config = mkMerge [
     (mkIf cfg.enable {
-      user.packages = [
-        pkgs.clojure
-        pkgs.joker
-        pkgs.leiningen
+      user.packages = with pkgs; [
+        clojure
+        joker
+        leiningen
       ];
     })
 
