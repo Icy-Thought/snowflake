@@ -89,7 +89,12 @@ groups.append(
                 match=Match(wm_class="discord"),
                 **next_maximum,
             ),
-            DropDown("Emacs", "emacs", **next_maximum),
+            DropDown(
+                "Emacs",
+                "emacsclient -c",
+                match=Match(wm_class="emacs"),
+                **next_maximum,
+            ),
             DropDown(
                 "Element",
                 "element-desktop",

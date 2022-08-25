@@ -26,15 +26,15 @@ in {
     hm.services.emacs = {
       enable = true;
       client.enable = true;
-    };
-
-    hm.programs.emacs = {
-      enable = true;
-      package = pkgs.emacsNativeComp;
-      extraPackages = epkgs: with epkgs; [vterm];
+      package = pkgs.emacsPgtkNativeComp;
+      # extraOptions = ["-f" "exwm-enable"];
     };
 
     user.packages = with pkgs; [
+      # Emacs-packages to pull from emacs-overlay:
+      ((emacsPackagesFor emacsPgtkNativeComp).emacsWithPackages
+        (epkgs: with epkgs; [vterm pdf-tools]))
+
       binutils
       gnutls
       zstd
