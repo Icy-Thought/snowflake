@@ -33,6 +33,7 @@
       };
       editors = {
         default = "nvim";
+        emacs.enable = true;
         neovim = {
           # agasaya.enable = true;
           ereshkigal.enable = true;

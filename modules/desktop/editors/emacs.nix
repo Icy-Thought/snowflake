@@ -42,14 +42,14 @@ in {
     ];
 
     # Fonts -> icons + ligatures when specified:
-    fonts.fonts = [pkgs.emacs-all-the-icons-fonts];
+    fonts.fonts = with pkgs; [emacs-all-the-icons-fonts];
 
     # Enable access to doom (tool).
     env.PATH = ["$XDG_CONFIG_HOME/emacs/bin"];
 
     environment.variables = {
       EMACSDIR = "$XDG_CONFIG_HOME/emacs";
-      DOOMDIR = "${configDir}/emacs.d/doom-emacs";
+      DOOMDIR = "${configDir}/emacs.d/doom-emacs"; # TODO: personal
     };
 
     system.userActivationScripts = mkIf cfg.doom.enable {
