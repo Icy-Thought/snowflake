@@ -31,8 +31,8 @@ in {
 
         # module dependencies
         ## checkers: aspell
-        (aspellWithDicts (dct:
-          with dct; [
+        (aspellWithDicts (dict:
+          with dict; [
             en
             en-computers
             en-science

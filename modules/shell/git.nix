@@ -21,7 +21,7 @@ in {
       gitui
       gitAndTools.gh
       gitAndTools.git-open
-      (mkIf config.modules.shell.gnupg.enable gitAndTools.git-crypt)
+      (mkIf (config.modules.shell.gnupg.enable) gitAndTools.git-crypt)
     ];
 
     # easier gitignore fetching (fish)

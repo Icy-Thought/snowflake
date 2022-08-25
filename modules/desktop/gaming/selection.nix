@@ -16,8 +16,8 @@ in {
 
   config = {
     user.packages = with pkgs; [
-      (mkIf cfg.geforce.enable my.gfn-electron)
-      (mkIf cfg.osu.enable osu-lazer)
+      (mkIf (cfg.geforce.enable) my.gfn-electron)
+      (mkIf (cfg.osu.enable) osu-lazer)
     ];
   };
 }

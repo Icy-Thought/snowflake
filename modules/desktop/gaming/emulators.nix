@@ -18,10 +18,13 @@ in {
   };
 
   config = {
-    user.packages = mkMerge (with pkgs; [
-      (mkIf cfg.psx.enable [epsxe])
-      (mkIf cfg.ds.enable [desmume])
-      (mkIf (cfg.gba.enable || cfg.gb.enable || cfg.snes.enable) [higan])
-    ]);
+    user.packages = with pkgs; [
+      (mkIf (cfg.psx.enable) epsxe)
+      (mkIf (cfg.ds.enable) desmume)
+      (mkIf (cfg.gba.enable
+        || cfg.gb.enable
+        || cfg.snes.enable)
+      higan)
+    ];
   };
 }
