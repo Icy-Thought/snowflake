@@ -90,12 +90,6 @@ groups.append(
                 **next_maximum,
             ),
             DropDown(
-                "Emacs",
-                "emacsclient -c",
-                match=Match(wm_class="emacs"),
-                **next_maximum,
-            ),
-            DropDown(
                 "Element",
                 "element-desktop",
                 match=Match(wm_class="element"),
@@ -118,8 +112,7 @@ keys.extend(
     [
         EzKey("M-A-b", lazy.group["SPD"].dropdown_toggle("Bottom")),
         EzKey("M-A-d", lazy.group["SPD"].dropdown_toggle("Discord")),
-        EzKey("M-A-e", lazy.group["SPD"].dropdown_toggle("Emacs")),
-        EzKey("M-A-m", lazy.group["SPD"].dropdown_toggle("Element")),
+        EzKey("M-A-e", lazy.group["SPD"].dropdown_toggle("Element")),
         EzKey("M-A-n", lazy.group["SPD"].dropdown_toggle("Neovide")),
         EzKey("M-A-s", lazy.group["SPD"].dropdown_toggle("Spotify")),
         EzKey(
