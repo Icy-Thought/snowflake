@@ -17,7 +17,7 @@ in {
 
         gtk = {
           theme = "Tokyonight-Dark-BL";
-          iconTheme = "WhiteSur-dark";
+          iconTheme = "Fluent-dark";
           cursor = {
             name = "Bibata-Modern-Classic";
             size = 24;
@@ -119,7 +119,8 @@ in {
     # Desktop (X11) theming <- Change after gnome = independent of xserver.
     (mkIf config.services.xserver.enable {
       user.packages = with pkgs; [
-        my.tokyo-night-gtk
+        my.fluent-icon
+        my.tokyonight-gtk
         whitesur-icon-theme
         bibata-cursors
       ];
