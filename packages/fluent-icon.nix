@@ -7,12 +7,11 @@
   jdupes,
   roundedIcons ? false,
   blackPanelIcons ? false,
-  colorVariants ? [],
+  colorVariant ? [],
 }: let
   pname = "Fluent-icon-theme";
 in
-  lib.checkListOfEnum "${pname}:
-  color variants" [
+  lib.checkListOfEnum "${pname}: available color variants" [
     "standard"
     "green"
     "grey"
@@ -24,7 +23,7 @@ in
     "teal"
     "all"
   ]
-  colorVariants
+  colorVariant
   stdenvNoCC.mkDerivation rec {
     inherit pname;
     version = "2022-02-28";
@@ -54,7 +53,7 @@ in
 
       ./install.sh --dest $out/share/icons \
         --name Fluent \
-        ${builtins.toString colorVariants} \
+        ${builtins.toString colorVariant} \
         ${lib.optionalString roundedIcons "--round"} \
         ${lib.optionalString blackPanelIcons "--black"}
 
