@@ -1,14 +1,14 @@
-{
-  options,
-  config,
-  lib,
-  pkgs,
-  ...
+{ options
+, config
+, lib
+, pkgs
+, ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.gaming.steam;
-in {
+in
+{
   options.modules.desktop.gaming.steam = with types; {
     enable = mkBoolOpt false;
     hardware.enable = mkBoolOpt false;
@@ -48,8 +48,8 @@ in {
           icon = "steam";
           exec = "steam";
           terminal = false;
-          mimeTypes = ["x-scheme-handler/steam"];
-          categories = ["Network" "FileTransfer" "Game"];
+          mimeTypes = [ "x-scheme-handler/steam" ];
+          categories = [ "Network" "FileTransfer" "Game" ];
         })
       ];
 

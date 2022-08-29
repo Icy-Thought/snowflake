@@ -1,14 +1,14 @@
-{
-  options,
-  config,
-  lib,
-  pkgs,
-  ...
+{ options
+, config
+, lib
+, pkgs
+, ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.browsers.brave;
-in {
+in
+{
   options.modules.desktop.browsers.brave = {
     enable = mkBoolOpt false;
   };
@@ -21,7 +21,7 @@ in {
         genericName = "Launch a Private Brave-browser Instance";
         icon = "brave";
         exec = "${getExe brave} --incognito";
-        categories = ["Network"];
+        categories = [ "Network" ];
       })
     ];
 
@@ -29,21 +29,21 @@ in {
       enable = true;
       package = pkgs.brave;
       extensions = [
-        {id = "jhnleheckmknfcgijgkadoemagpecfol";} # Auto-Tab-Discard
-        {id = "nngceckbapebfimnlniiiahkandclblb";} # Bitwarden
-        {id = "eimadpbcbfnmbkopoojfekhnkhdbieeh";} # Dark-Reader
-        {id = "ldpochfccmkkmhdbclfhpagapcfdljkj";} # Decentraleyes
-        {id = "bkdgflcldnnnapblkhphbgpggdiikppg";} # DuckDuckGo
-        {id = "iaiomicjabeggjcfkbimgmglanimpnae";} # Tab-Session-Manager
-        {id = "hipekcciheckooncpjeljhnekcoolahp";} # Tabliss
-        {id = "cjpalhdlnbpafiamejdnhcphjbkeiagm";} # Ublock-Origin
-        {id = "jinjaccalgkegednnccohejagnlnfdag";} # Violentmonkey
+        { id = "jhnleheckmknfcgijgkadoemagpecfol"; } # Auto-Tab-Discard
+        { id = "nngceckbapebfimnlniiiahkandclblb"; } # Bitwarden
+        { id = "eimadpbcbfnmbkopoojfekhnkhdbieeh"; } # Dark-Reader
+        { id = "ldpochfccmkkmhdbclfhpagapcfdljkj"; } # Decentraleyes
+        { id = "bkdgflcldnnnapblkhphbgpggdiikppg"; } # DuckDuckGo
+        { id = "iaiomicjabeggjcfkbimgmglanimpnae"; } # Tab-Session-Manager
+        { id = "hipekcciheckooncpjeljhnekcoolahp"; } # Tabliss
+        { id = "cjpalhdlnbpafiamejdnhcphjbkeiagm"; } # Ublock-Origin
+        { id = "jinjaccalgkegednnccohejagnlnfdag"; } # Violentmonkey
         {
           id = "dcpihecpambacapedldabdbpakmachpb";
           updateUrl = "https://raw.githubusercontent.com/iamadamdev/bypass-paywalls-chrome/master/src/updates/updates.xml";
         }
         (mkIf config.modules.desktop.gnome.enable [
-          {id = "gphhapmejobijbbhgpjhcjognlahblep";} # Gnome-Shell-Integration
+          { id = "gphhapmejobijbbhgpjhcjognlahblep"; } # Gnome-Shell-Integration
         ])
       ];
     };

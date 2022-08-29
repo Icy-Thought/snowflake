@@ -1,4 +1,4 @@
-<img alt="Qtile Desktop" src="../../.assets/main/png/qtile-desktop.png" align="center">
+<img alt="Qtile Desktop" src="../../.github/assets/themes/tokyonight-qtile.png" align="center">
 
 # (def) Qtile
 > A full-featured, hackable tiling window manager written and configured in

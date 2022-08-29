@@ -1,14 +1,14 @@
-{
-  options,
-  config,
-  lib,
-  pkgs,
-  ...
+{ options
+, config
+, lib
+, pkgs
+, ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.virtual.virtualbox;
-in {
+in
+{
   options.modules.desktop.virtual.virtualbox = {
     enable = mkBoolOpt false;
   };
@@ -22,6 +22,6 @@ in {
       };
     };
 
-    user.extraGroups = ["vboxusers"];
+    user.extraGroups = [ "vboxusers" ];
   };
 }

@@ -1,16 +1,16 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
+{ config
+, options
+, lib
+, pkgs
+, ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.shell.fish;
   fishCfg = "${config.snowflake.configDir}/fish";
   themeCfg = config.modules.themes;
-in {
+in
+{
   options.modules.shell.fish = {
     enable = mkBoolOpt false;
     theme = config.modules.themes;

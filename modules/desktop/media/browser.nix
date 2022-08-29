@@ -1,15 +1,15 @@
-{
-  options,
-  config,
-  lib,
-  pkgs,
-  ...
+{ options
+, config
+, lib
+, pkgs
+, ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.media.browser;
   configDir = config.snowflake.configDir;
-in {
+in
+{
   options.modules.desktop.media.browser = {
     dolphin.enable = mkBoolOpt false;
     nautilus.enable = mkBoolOpt false;
@@ -17,7 +17,7 @@ in {
   };
 
   config = mkMerge [
-    {services.gvfs.enable = true;}
+    { services.gvfs.enable = true; }
 
     (mkIf cfg.dolphin.enable {
       environment.systemPackages = with pkgs.libsForQt5; [
@@ -27,7 +27,7 @@ in {
     })
 
     (mkIf cfg.nautilus.enable {
-      environment.systemPackages = with pkgs.gnome; [nautilus];
+      environment.systemPackages = with pkgs.gnome; [ nautilus ];
     })
 
     (mkIf cfg.thunar.enable {

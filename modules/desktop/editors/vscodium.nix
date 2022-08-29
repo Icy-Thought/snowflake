@@ -1,16 +1,16 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  inputs,
-  ...
+{ config
+, options
+, lib
+, pkgs
+, inputs
+, ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.editors.vscodium;
   vscDir = "${config.snowflake.configDir}/vscodium";
-in {
+in
+{
   options.modules.desktop.editors.vscodium = {
     enable = mkBoolOpt false;
   };
@@ -23,9 +23,10 @@ in {
 
       # Config imports
       extensions =
-        pkgs.vscode-utils.extensionsFromVscodeMarketplace (
-          (import "${vscDir}/custom-extensions.nix").extensions
-        )
+        pkgs.vscode-utils.extensionsFromVscodeMarketplace
+          (
+            (import "${vscDir}/custom-extensions.nix").extensions
+          )
         ++ (with pkgs.vscode-extensions; [
           # Editor
           eamodio.gitlens
@@ -51,8 +52,8 @@ in {
           yzhang.markdown-all-in-one
         ]);
 
-      userSettings = import "${vscDir}/settings.nix" {inherit config;};
-      keybindings = import "${vscDir}/keybindings.nix" {};
+      userSettings = import "${vscDir}/settings.nix" { inherit config; };
+      keybindings = import "${vscDir}/keybindings.nix" { };
     };
   };
 }

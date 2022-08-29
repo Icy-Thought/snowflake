@@ -1,24 +1,24 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
+{ config
+, options
+, lib
+, pkgs
+, ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.shell.tmux;
   term = config.modules.desktop.terminal;
-in {
+in
+{
   options.modules.shell.tmux = {
     enable = mkBoolOpt false;
   };
 
   config = mkIf (cfg.enable || term.alacritty.enable) {
-    user.packages = with pkgs; [tmux];
+    user.packages = with pkgs; [ tmux ];
 
     env = {
-      PATH = ["$TMUXIFIER/bin"];
+      PATH = [ "$TMUXIFIER/bin" ];
       TMUX_HOME = "$XDG_CONFIG_HOME/tmux";
     };
 

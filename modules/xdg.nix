@@ -1,7 +1,6 @@
-{
-  config,
-  home-manager,
-  ...
+{ config
+, home-manager
+, ...
 }: {
   home-manager.users.${config.user.name}.xdg.enable = true;
 
@@ -12,6 +11,7 @@
       XDG_DATA_HOME = "$HOME/.local/share";
       XDG_BIN_HOME = "$HOME/.local/bin";
     };
+
     variables = {
       __GL_SHADER_DISK_CACHE_PATH = "$XDG_CACHE_HOME/nv";
       ASPELL_CONF = ''

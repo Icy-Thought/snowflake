@@ -1,16 +1,16 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
+{ config
+, options
+, lib
+, pkgs
+, ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.develop.haskell;
   devCfg = config.modules.develop.xdg;
   codeCfg = config.modules.desktop.editors.vscodium;
-in {
+in
+{
   options.modules.develop.haskell = {
     enable = mkBoolOpt false;
   };
@@ -18,7 +18,7 @@ in {
   config = mkMerge [
     (mkIf cfg.enable {
       user.packages = with pkgs;
-        [ghc]
+        [ ghc ]
         ++ (with haskellPackages; [
           cabal-install
           haskell-language-server

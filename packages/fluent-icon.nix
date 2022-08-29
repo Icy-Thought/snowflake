@@ -1,72 +1,75 @@
-{
-  lib,
-  stdenvNoCC,
-  fetchFromGitHub,
-  gtk3,
-  hicolor-icon-theme,
-  jdupes,
-  roundedIcons ? false,
-  blackPanelIcons ? false,
-  colorVariant ? [],
-}: let
+{ lib
+, stdenvNoCC
+, fetchFromGitHub
+, gtk3
+, hicolor-icon-theme
+, jdupes
+, roundedIcons ? false
+, blackPanelIcons ? false
+, colorVariants ? [ ]
+,
+}:
+let
   pname = "Fluent-icon-theme";
 in
-  lib.checkListOfEnum "${pname}: available color variants" [
-    "standard"
-    "green"
-    "grey"
-    "orange"
-    "pink"
-    "purple"
-    "red"
-    "yellow"
-    "teal"
-    "all"
-  ]
-  colorVariant
-  stdenvNoCC.mkDerivation rec {
-    inherit pname;
-    version = "2022-02-28";
+lib.checkListOfEnum "${pname}: available color variants" [
+  "standard"
+  "green"
+  "grey"
+  "orange"
+  "pink"
+  "purple"
+  "red"
+  "yellow"
+  "teal"
+  "all"
+]
+  colorVariants
 
-    src = fetchFromGitHub {
-      owner = "vinceliuice";
-      repo = pname;
-      rev = version;
-      sha256 = "UMj3qF9lhd9kM7J/3RtG3AiWlBontrowfsFOb3yr0tQ=";
-    };
+  stdenvNoCC.mkDerivation
+rec {
+  inherit pname;
+  version = "2022-02-28";
 
-    nativeBuildInputs = [gtk3 jdupes];
+  src = fetchFromGitHub {
+    owner = "vinceliuice";
+    repo = pname;
+    rev = version;
+    sha256 = "UMj3qF9lhd9kM7J/3RtG3AiWlBontrowfsFOb3yr0tQ=";
+  };
 
-    buildInputs = [hicolor-icon-theme];
+  nativeBuildInputs = [ gtk3 jdupes ];
 
-    # Unnecessary & slow fixup's
-    dontPatchELF = true;
-    dontRewriteSymlinks = true;
-    dontDropIconThemeCache = true;
+  buildInputs = [ hicolor-icon-theme ];
 
-    postPatch = ''
-      patchShebangs install.sh
-    '';
+  # Unnecessary & slow fixup's
+  dontPatchELF = true;
+  dontRewriteSymlinks = true;
+  dontDropIconThemeCache = true;
 
-    installPhase = ''
-      runHook preInstall
+  postPatch = ''
+    patchShebangs install.sh
+  '';
 
-      ./install.sh --dest $out/share/icons \
-        --name Fluent \
-        ${builtins.toString colorVariant} \
-        ${lib.optionalString roundedIcons "--round"} \
-        ${lib.optionalString blackPanelIcons "--black"}
+  installPhase = ''
+    runHook preInstall
 
-      jdupes --link-soft --recurse $out/share
+    ./install.sh --dest $out/share/icons \
+      --name Fluent \
+      ${builtins.toString colorVariants} \
+      ${lib.optionalString roundedIcons "--round"} \
+      ${lib.optionalString blackPanelIcons "--black"}
 
-      runHook postInstall
-    '';
+    jdupes --link-soft --recurse $out/share
 
-    meta = with lib; {
-      description = "Fluent icon theme for linux desktops";
-      homepage = "https://github.com/vinceliuice/Fluent-icon-theme";
-      license = licenses.gpl3Plus;
-      platforms = platforms.linux;
-      maintainers = with maintainers; [icy-thought];
-    };
-  }
+    runHook postInstall
+  '';
+
+  meta = with lib; {
+    description = "Fluent icon theme for linux desktops";
+    homepage = "https://github.com/vinceliuice/Fluent-icon-theme";
+    license = licenses.gpl3Plus;
+    platforms = platforms.linux;
+    maintainers = with maintainers; [ icy-thought ];
+  };
+}

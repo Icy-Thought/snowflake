@@ -1,14 +1,14 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
+{ config
+, options
+, lib
+, pkgs
+, ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.services.kdeconnect;
-in {
+in
+{
   options.modules.services.kdeconnect = {
     enable = mkBoolOpt false;
   };

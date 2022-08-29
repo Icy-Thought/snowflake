@@ -1,14 +1,14 @@
-{
-  options,
-  config,
-  lib,
-  pkgs,
-  ...
+{ options
+, config
+, lib
+, pkgs
+, ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.browsers;
-in {
+in
+{
   options.modules.desktop.browsers = {
     default = mkOption {
       type = with types; nullOr str;

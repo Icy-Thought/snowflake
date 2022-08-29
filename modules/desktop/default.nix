@@ -1,14 +1,14 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
+{ config
+, options
+, lib
+, pkgs
+, ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.desktop;
-in {
+in
+{
   config = mkIf config.services.xserver.enable {
     assertions = [
       {
@@ -16,9 +16,10 @@ in {
         message = "Can't enable DE/WM <2 at the same time.";
       }
       {
-        assertion = let
-          srv = config.services;
-        in
+        assertion =
+          let
+            srv = config.services;
+          in
           srv.xserver.enable
           || srv.sway.enable
           || !(anyAttrs
@@ -36,7 +37,7 @@ in {
         desktopName = "Qalculate";
         icon = "calc";
         exec = "${getExe wezterm} start qalc";
-        categories = ["Development"];
+        categories = [ "Development" ];
       })
       qgnomeplatform
       gucharmap
@@ -58,7 +59,7 @@ in {
 
     # Try really hard to get QT to respect my GTK theme.
     env = {
-      GTK_DATA_PREFIX = ["${config.system.path}"];
+      GTK_DATA_PREFIX = [ "${config.system.path}" ];
       QT_QPA_PLATFORMTHEME = "gnome";
       # QT_STYLE_OVERRIDE = "kvantum";
     };

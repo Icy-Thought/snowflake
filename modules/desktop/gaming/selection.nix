@@ -1,14 +1,14 @@
-{
-  options,
-  config,
-  lib,
-  pkgs,
-  ...
+{ options
+, config
+, lib
+, pkgs
+, ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.gaming.selection;
-in {
+in
+{
   options.modules.desktop.gaming.selection = {
     geforce.enable = mkBoolOpt true;
     osu.enable = mkBoolOpt false;

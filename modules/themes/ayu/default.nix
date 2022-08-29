@@ -1,15 +1,15 @@
-{
-  options,
-  config,
-  lib,
-  pkgs,
-  ...
+{ options
+, config
+, lib
+, pkgs
+, ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.themes;
   configDir = config.snowflake.configDir;
-in {
+in
+{
   config = mkIf (cfg.active == "ayu") (mkMerge [
     {
       modules.themes = {
@@ -125,29 +125,33 @@ in {
       ];
 
       fonts.fonts = with pkgs; [
-        (nerdfonts.override {fonts = ["VictorMono"];})
+        (nerdfonts.override {
+          fonts = [ "VictorMono" ];
+        })
         twitter-color-emoji
       ];
     })
 
-    (mkIf (config.modules.desktop.xmonad.enable
-      || config.modules.desktop.qtile.enable) {
-      services.xserver.displayManager = {
-        sessionCommands = with cfg.gtk; ''
-          ${getExe pkgs.xorg.xsetroot} -xcf ${pkgs.bibata-cursors}/share/icons/${cursor.name}/cursors/${cursor.default} ${
-            toString (cursor.size)
-          }
-        '';
+    (mkIf
+      (config.modules.desktop.xmonad.enable
+        || config.modules.desktop.qtile.enable)
+      {
+        services.xserver.displayManager = {
+          sessionCommands = with cfg.gtk; ''
+            ${getExe pkgs.xorg.xsetroot} -xcf ${pkgs.bibata-cursors}/share/icons/${cursor.name}/cursors/${cursor.default} ${
+              toString (cursor.size)
+            }
+          '';
 
-        # LightDM: Replace with LightDM-Web-Greeter theme
-        lightdm.greeters.mini.extraConfig = with cfg.colors.main; ''
-          text-color = "${types.bg}"
-          password-background-color = "${normal.black}"
-          window-color = "${normal.yellow}"
-          border-color = "${types.bg}"
-        '';
-      };
-    })
+          # LightDM: Replace with LightDM-Web-Greeter theme
+          lightdm.greeters.mini.extraConfig = with cfg.colors.main; ''
+            text-color = "${types.bg}"
+            password-background-color = "${normal.black}"
+            window-color = "${normal.yellow}"
+            border-color = "${types.bg}"
+          '';
+        };
+      })
 
     (mkIf config.modules.desktop.extra.fcitx5.enable {
       home.file.".local/share/fcitx5/themes".source = pkgs.fetchFromGitHub {
@@ -198,9 +202,10 @@ in {
           font = with font; "${sans.family} ${sans.weight} ${toString (sans.size)}";
         };
 
-        theme = let
-          inherit (config.hm.lib.formats.rasi) mkLiteral;
-        in
+        theme =
+          let
+            inherit (config.hm.lib.formats.rasi) mkLiteral;
+          in
           with cfg.colors.rofi; {
             "*" = {
               fg = mkLiteral "${fg}";

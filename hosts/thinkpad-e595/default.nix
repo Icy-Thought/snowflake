@@ -1,10 +1,9 @@
-{
-  pkgs,
-  config,
-  lib,
-  ...
+{ pkgs
+, config
+, lib
+, ...
 }: {
-  imports = [./hwCfg.nix];
+  imports = [ ./hwCfg.nix ];
 
   modules = {
     hardware = {
@@ -100,7 +99,7 @@
     printing.enable = true;
 
     xserver = {
-      videoDrivers = ["amdgpu"];
+      videoDrivers = [ "amdgpu" ];
       deviceSection = ''
         Option "TearFree" "true"
       '';

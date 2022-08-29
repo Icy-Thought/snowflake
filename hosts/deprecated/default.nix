@@ -1,10 +1,9 @@
-{
-  pkgs,
-  config,
-  lib,
-  ...
+{ pkgs
+, config
+, lib
+, ...
 }: {
-  imports = [./hwCfg.nix];
+  imports = [ ./hwCfg.nix ];
 
   modules = {
     hardware = {
@@ -64,7 +63,7 @@
     printing.enable = true;
 
     xserver = {
-      videoDrivers = ["modesetting"];
+      videoDrivers = [ "modesetting" ];
       useGlamor = true;
     };
   };

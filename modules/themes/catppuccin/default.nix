@@ -1,15 +1,15 @@
-{
-  options,
-  config,
-  lib,
-  pkgs,
-  ...
+{ options
+, config
+, lib
+, pkgs
+, ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.themes;
   configDir = config.snowflake.configDir;
-in {
+in
+{
   config = mkIf (cfg.active == "catppuccin") (mkMerge [
     {
       modules.themes = {
@@ -119,33 +119,39 @@ in {
     # Desktop (X11) theming <- Change after gnome = independent of xserver.
     (mkIf config.services.xserver.enable {
       user.packages = with pkgs; [
-        (catppuccin-gtk.override {size = "compact";})
+        (catppuccin-gtk.override {
+          size = "compact";
+        })
         whitesur-icon-theme
         bibata-cursors
       ];
 
       fonts.fonts = with pkgs; [
-        (nerdfonts.override {fonts = ["VictorMono"];})
+        (nerdfonts.override {
+          fonts = [ "VictorMono" ];
+        })
         twitter-color-emoji
       ];
     })
 
-    (mkIf (config.modules.desktop.xmonad.enable
-      || config.modules.desktop.qtile.enable) {
-      services.xserver.displayManager = {
-        sessionCommands = with cfg.gtk.cursor; ''
-          ${getExe pkgs.xorg.xsetroot} -xcf ${pkgs.bibata-cursors}/share/icons/${name}/cursors/${default} ${toString size}
-        '';
+    (mkIf
+      (config.modules.desktop.xmonad.enable
+        || config.modules.desktop.qtile.enable)
+      {
+        services.xserver.displayManager = {
+          sessionCommands = with cfg.gtk.cursor; ''
+            ${getExe pkgs.xorg.xsetroot} -xcf ${pkgs.bibata-cursors}/share/icons/${name}/cursors/${default} ${toString size}
+          '';
 
-        # LightDM: Replace with LightDM-Web-Greeter theme
-        lightdm.greeters.mini.extraConfig = with cfg.colors.main; ''
-          text-color = "${types.bg}"
-          password-background-color = "${normal.black}"
-          window-color = "${types.border}"
-          border-color = "${types.border}"
-        '';
-      };
-    })
+          # LightDM: Replace with LightDM-Web-Greeter theme
+          lightdm.greeters.mini.extraConfig = with cfg.colors.main; ''
+            text-color = "${types.bg}"
+            password-background-color = "${normal.black}"
+            window-color = "${types.border}"
+            border-color = "${types.border}"
+          '';
+        };
+      })
 
     (mkIf config.modules.desktop.extra.fcitx5.enable {
       home.file.".local/share/fcitx5/themes".source = pkgs.fetchFromGitHub {
@@ -196,9 +202,10 @@ in {
           font = with font; "${sans.family} ${sans.weight} ${toString (sans.size)}";
         };
 
-        theme = let
-          inherit (config.hm.lib.formats.rasi) mkLiteral;
-        in
+        theme =
+          let
+            inherit (config.hm.lib.formats.rasi) mkLiteral;
+          in
           with cfg.colors.rofi; {
             "*" = {
               fg = mkLiteral "${fg}";

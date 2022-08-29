@@ -1,14 +1,14 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
+{ config
+, options
+, lib
+, pkgs
+, ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.hardware.input;
-in {
+in
+{
   options.modules.hardware.input = {
     enable = mkBoolOpt false;
   };

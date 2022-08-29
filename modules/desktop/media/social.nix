@@ -1,14 +1,14 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
+{ config
+, options
+, lib
+, pkgs
+, ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.media.social;
-in {
+in
+{
   options.modules.desktop.media.social = {
     common.enable = mkBoolOpt true;
   };

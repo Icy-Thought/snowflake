@@ -1,14 +1,14 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
+{ config
+, options
+, lib
+, pkgs
+, ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.hardware.audio;
-in {
+in
+{
   options.modules.hardware.audio = {
     enable = mkBoolOpt false;
 
@@ -29,12 +29,13 @@ in {
     };
   };
 
-  config = let
-    qr = "${toString cfg.lowLatency.quantum}/${toString cfg.lowLatency.rate}";
-  in
+  config =
+    let
+      qr = "${toString cfg.lowLatency.quantum}/${toString cfg.lowLatency.rate}";
+    in
     mkIf cfg.enable (mkMerge [
       {
-        environment.systemPackages = with pkgs; [pavucontrol];
+        environment.systemPackages = with pkgs; [ pavucontrol ];
 
         security.rtkit.enable = true;
 
@@ -55,7 +56,7 @@ in {
               };
             };
             pipewire-pulse = {
-              "context.properties" = {};
+              "context.properties" = { };
               "context.modules" = [
                 {
                   name = "libpipewire-module-rtkit";
@@ -65,19 +66,19 @@ in {
                     "rt.time.soft" = 200000;
                     "rt.time.hard" = 200000;
                   };
-                  flags = ["ifexists" "nofail"];
+                  flags = [ "ifexists" "nofail" ];
                 }
-                {name = "libpipewire-module-protocol-native";}
-                {name = "libpipewire-module-client-node";}
-                {name = "libpipewire-module-adapter";}
-                {name = "libpipewire-module-metadata";}
+                { name = "libpipewire-module-protocol-native"; }
+                { name = "libpipewire-module-client-node"; }
+                { name = "libpipewire-module-adapter"; }
+                { name = "libpipewire-module-metadata"; }
                 {
                   name = "libpipewire-module-protocol-pulse";
                   args = {
                     "pulse.min.req" = qr;
                     "pulse.min.quantum" = qr;
                     "pulse.min.frag" = qr;
-                    "server.address" = ["unix:native"];
+                    "server.address" = [ "unix:native" ];
                   };
                 }
               ];
@@ -90,7 +91,7 @@ in {
           media-session.config.alsa-monitor = {
             rules = [
               {
-                matches = [{node.name = "alsa_output.*";}];
+                matches = [{ node.name = "alsa_output.*"; }];
                 actions = {
                   update-props = {
                     "audio.format" = "S32LE";

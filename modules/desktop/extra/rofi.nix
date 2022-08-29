@@ -1,15 +1,15 @@
-{
-  options,
-  config,
-  lib,
-  pkgs,
-  ...
+{ options
+, config
+, lib
+, pkgs
+, ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.extra.rofi;
   myTerm = config.modules.desktop.terminal.default;
-in {
+in
+{
   options.modules.desktop.extra.rofi = {
     enable = mkBoolOpt false;
   };
@@ -29,7 +29,7 @@ in {
 
     hm.programs.rofi = {
       enable = true;
-      plugins = with pkgs; [rofi-emoji];
+      plugins = with pkgs; [ rofi-emoji ];
 
       extraConfig = {
         terminal = with pkgs; "${getExe myTerm}";

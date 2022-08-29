@@ -1,24 +1,24 @@
-{
-  inputs,
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
+{ inputs
+, config
+, options
+, lib
+, pkgs
+, ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.develop.rust;
   devCfg = config.modules.develop.xdg;
   codeCfg = config.modules.desktop.editors.vscodium;
-in {
+in
+{
   options.modules.develop.rust = {
     enable = mkBoolOpt false;
   };
 
   config = mkMerge [
     (mkIf cfg.enable {
-      nixpkgs.overlays = with inputs; [rust.overlays.default];
+      nixpkgs.overlays = with inputs; [ rust.overlays.default ];
 
       user.packages = with pkgs; [
         crate2nix
@@ -45,7 +45,7 @@ in {
     (mkIf devCfg.enable {
       env = {
         CARGO_HOME = "$XDG_DATA_HOME/cargo";
-        PATH = ["$CARGO_HOME/bin"];
+        PATH = [ "$CARGO_HOME/bin" ];
       };
     })
   ];

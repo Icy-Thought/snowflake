@@ -1,22 +1,22 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
+{ config
+, options
+, lib
+, pkgs
+, ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.develop.julia;
   devCfg = config.modules.develop.xdg;
-in {
+in
+{
   options.modules.develop.julia = {
     enable = mkBoolOpt false;
   };
 
   config = mkMerge [
     (mkIf cfg.enable {
-      user.packages = with pkgs; [julia-bin];
+      user.packages = with pkgs; [ julia-bin ];
       # TODO: automate the installation of: [ Gadfly LanguageServer ]
     })
 

@@ -1,16 +1,16 @@
-{
-  inputs,
-  options,
-  config,
-  lib,
-  pkgs,
-  ...
+{ inputs
+, options
+, config
+, lib
+, pkgs
+, ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.qtile;
   qtileDir = "${config.snowflake.configDir}/qtile";
-in {
+in
+{
   options.modules.desktop.qtile = {
     enable = mkBoolOpt false;
     package = mkOption {
@@ -23,7 +23,7 @@ in {
       example = literalExpression "./config.py";
     };
     backend = mkOption {
-      type = types.enum ["x11" "wayland"];
+      type = types.enum [ "x11" "wayland" ];
       default = "x11";
     };
   };

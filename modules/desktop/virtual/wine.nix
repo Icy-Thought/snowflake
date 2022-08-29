@@ -1,14 +1,14 @@
-{
-  options,
-  config,
-  lib,
-  pkgs,
-  ...
+{ options
+, config
+, lib
+, pkgs
+, ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.virtual.wine;
-in {
+in
+{
   options.modules.desktop.virtual.wine = {
     enable = mkBoolOpt false;
   };
