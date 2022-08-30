@@ -19,7 +19,7 @@ in
 
   config = mkMerge [
     {
-      nixpkgs.overlays = with inputs; [ nvim-nightly.overlay ];
+      nixpkgs.overlays = [ inputs.nvim-nightly.overlay ];
 
       user.packages = with pkgs; [
         neovide
