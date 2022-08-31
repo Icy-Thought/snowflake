@@ -17,7 +17,10 @@ stdenv.mkDerivation {
   pname = "NF-Iosevka";
   version = iosevka.version;
 
-  nativeBuildInputs = [ nerd-font-patcher iosevka ];
+  nativeBuildInputs = [
+    nerd-font-patcher
+    iosevka
+  ];
 
   phases = [ "installPhase" ];
 

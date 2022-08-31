@@ -119,7 +119,7 @@ in
     # Desktop (X11) theming <- Change after gnome = independent of xserver.
     (mkIf config.services.xserver.enable {
       user.packages = with pkgs; [
-        (my.fluent-icon.override {
+        (fluent-icon.override {
           colorVariant = [ "orange" ];
         })
         my.tokyonight-gtk

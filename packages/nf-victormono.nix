@@ -6,9 +6,13 @@
 }:
 stdenv.mkDerivation {
   pname = "NF-VictorMono";
+
   version = (builtins.parseDrvName victor-mono.name).version;
 
-  nativeBuildInputs = [ nerd-font-patcher victor-mono ];
+  nativeBuildInputs = [
+    nerd-font-patcher
+    victor-mono
+  ];
 
   phases = [ "installPhase" ];
 
