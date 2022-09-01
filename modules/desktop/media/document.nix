@@ -75,6 +75,7 @@ in
     (mkIf cfg.sioyek.enable {
       hm.programs.sioyek = {
         enable = true;
+        package = pkgs.sioyek;
         config = {
           "check_for_updates_on_startup" = "0";
           "default_dark_mode" = "1";

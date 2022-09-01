@@ -8,7 +8,7 @@
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.editors.helix;
-  colorscheme = config.modules.themes.helix.theme;
+  activeTheme = config.modules.themes.editor.helix;
 in
 {
   options.modules.desktop.editors.helix = {
@@ -18,7 +18,7 @@ in
   config = mkIf cfg.enable {
     nixpkgs.overlays = [ inputs.helix.overlay ];
 
-    programs.helix = {
+    hm.programs.helix = {
       enable = true;
       package = pkgs.helix;
 
@@ -42,7 +42,7 @@ in
       ];
 
       settings = {
-        theme = colorscheme;
+        theme = activeTheme.dark;
         editor = {
           true-color = true;
           color-modes = true;

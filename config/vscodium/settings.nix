@@ -18,9 +18,9 @@ in
   };
 
   # Colorscheme
-  "workbench.colorTheme" = "${cfg.vscode.theme.dark}";
-  "workbench.preferredDarkColorTheme" = "${cfg.vscode.theme.dark}";
-  "workbench.preferredLightColorTheme" = "${cfg.vscode.theme.light}";
+  "workbench.colorTheme" = "${cfg.editor.vscode.dark}";
+  "workbench.preferredDarkColorTheme" = "${cfg.editor.vscode.dark}";
+  "workbench.preferredLightColorTheme" = "${cfg.editor.vscode.light}";
 
   # Font-related
   "editor.fontFamily" = "${cfg.font.sans.family}";

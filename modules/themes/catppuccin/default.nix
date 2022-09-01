@@ -93,18 +93,24 @@ in
           };
         };
 
-        neovim.theme = "catppuccin";
-
-        vscode = {
-          extension = {
-            name = "catppuccin-vsc";
-            publisher = "Catppuccin";
-            version = "1.0.6";
-            sha256 = "4M8y8dc8BpH1yhabYJsHDT9uDWeqYjnvPBgLS+lTa5I=";
+        editor = {
+          helix = {
+            dark = "catppuccin_mocha";
+            light = "catppuccin_latte";
           };
-          theme = {
+          neovim = {
+            dark = "catppuccin";
+            light = "catppuccin"; # TODO apply frappe flavour
+          };
+          vscode = {
             dark = "Catppuccin";
             light = "Quiet Light";
+            extension = {
+              name = "catppuccin-vsc";
+              publisher = "Catppuccin";
+              version = "1.0.6";
+              sha256 = "4M8y8dc8BpH1yhabYJsHDT9uDWeqYjnvPBgLS+lTa5I=";
+            };
           };
         };
       };

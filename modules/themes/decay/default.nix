@@ -93,19 +93,26 @@ in
           };
         };
 
-        neovim.theme = "catppuccin";
-
-        vscode = {
-          extension = {
-            name = "";
-            publisher = "";
-            version = "";
-            sha256 = "";
+        editor = {
+          helix = {
+            dark = "decay"; # FIXME: no helix theme as of 2022-09-01
+            light = "decay_light";
           };
-          theme = {
-            dark = "decay"; #TODO: fix with proper naming
+          neovim = {
+            dark = "decay";
+            light = "decay"; # TODO: vim.g.background = "light"
+          };
+          vscode = {
+            dark = "decay"; # TODO: fix with proper naming
             light = "Quite Light";
+            extension = {
+              name = "";
+              publisher = "";
+              version = "";
+              sha256 = "";
+            };
           };
+
         };
       };
     }

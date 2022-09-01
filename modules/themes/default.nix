@@ -130,18 +130,24 @@ in
       };
     };
 
-    neovim.theme = mkOpt str "";
-
-    vscode = {
-      extension = {
-        name = mkOpt str "";
-        publisher = mkOpt str "";
-        version = mkOpt str "";
-        sha256 = mkOpt str "";
+    editor = {
+      helix = {
+        light = mkOpt str "";
+        dark = mkOpt str "";
       };
-      theme = {
+      neovim = {
+        light = mkOpt str "";
+        dark = mkOpt str "";
+      };
+      vscode = {
         dark = mkOpt str "";
         light = mkOpt str "";
+        extension = {
+          name = mkOpt str "";
+          publisher = mkOpt str "";
+          version = mkOpt str "";
+          sha256 = mkOpt str "";
+        };
       };
     };
   };
@@ -219,29 +225,29 @@ in
 
         # GTK
         "gtk-3.0/settings.ini".text = with cfg.gtk; ''
-          [Settings]
-          ${optionalString (theme != "")
-            "gtk-theme-name=${theme}"}
-          ${optionalString (iconTheme != "")
-            "gtk-icon-theme-name=${iconTheme}"}
-          ${optionalString (cursor.name != "")
-            "gtk-cursor-theme-name=${cursor.name}"}
-          ${optionalString (cursor.size != "")
-            "gtk-cursor-theme-size=${toString (cursor.size)}"}
-          gtk-fallback-icon-theme=gnome
-          gtk-application-prefer-dark-theme=true
-          gtk-xft-hinting=1
-          gtk-xft-hintstyle=hintfull
-          gtk-xft-rgba=none
+                    [Settings]
+                    ${optionalString (theme != "")
+          "gtk-theme-name=${theme}"}
+                    ${optionalString (iconTheme != "")
+          "gtk-icon-theme-name=${iconTheme}"}
+                    ${optionalString (cursor.name != "")
+          "gtk-cursor-theme-name=${cursor.name}"}
+                    ${optionalString (cursor.size != "")
+          "gtk-cursor-theme-size=${toString (cursor.size)}"}
+                    gtk-fallback-icon-theme=gnome
+                    gtk-application-prefer-dark-theme=true
+                    gtk-xft-hinting=1
+                    gtk-xft-hintstyle=hintfull
+                    gtk-xft-rgba=none
         '';
 
         # GTK2 global theme (widget and icon theme)
         "gtk-2.0/gtkrc".text = with cfg; ''
-          ${optionalString (gtk.theme != "")
-            ''gtk-theme-name="${gtk.theme}"''}
-          ${optionalString (cfg.gtk.iconTheme != "")
-            ''gtk-icon-theme-name="${gtk.iconTheme}"''}
-          gtk-font-name="Sans ${toString (font.sans.size)}"
+                    ${optionalString (gtk.theme != "")
+          ''gtk-theme-name="${gtk.theme}"''}
+                    ${optionalString (cfg.gtk.iconTheme != "")
+          ''gtk-icon-theme-name="${gtk.iconTheme}"''}
+                    gtk-font-name="Sans ${toString (font.sans.size)}"
         '';
 
         # QT4/5 global theme
@@ -298,13 +304,13 @@ in
     (mkIf (cfg.onReload != { }) (
       let
         reloadTheme = with pkgs; (writeScriptBin "reloadTheme" ''
-          #!${stdenv.shell}
-          echo "Reloading current theme: ${cfg.active}"
-          ${concatStringsSep "\n" (mapAttrsToList (name: script: ''
-              echo "[${name}]"
-              ${script}
-            '')
-            cfg.onReload)}
+                    #!${stdenv.shell}
+                    echo "Reloading current theme: ${cfg.active}"
+                    ${concatStringsSep "\n" (mapAttrsToList (name: script: ''
+                        echo "[${name}]"
+                        ${script}
+                      '')
+          cfg.onReload)}
         '');
       in
       {

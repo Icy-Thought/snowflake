@@ -93,18 +93,24 @@ in
           };
         };
 
-        neovim.theme = "themer_kanagawa";
-
-        vscode = {
-          extension = {
-            name = "kanagawa";
-            publisher = "qufiwefefwoyn";
-            version = "1.5.1";
-            sha256 = "";
+        editor = {
+          helix = {
+            dark = "kanagawa"; # FIXME: no helix theme as of 2022-09-01
+            light = "kanagawa_light";
           };
-          theme = {
+          neovim = {
+            dark = "kanagawa";
+            light = "kanagawa"; # TODO: vim.g.background = "light"
+          };
+          vscode = {
             dark = "Kanagawa";
             light = "Quite Light";
+            extension = {
+              name = "kanagawa";
+              publisher = "qufiwefefwoyn";
+              version = "1.5.1";
+              sha256 = "";
+            };
           };
         };
       };

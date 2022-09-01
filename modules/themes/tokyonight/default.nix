@@ -93,18 +93,24 @@ in
           };
         };
 
-        neovim.theme = "tokyonight";
-
-        vscode = {
-          extension = {
-            name = "tokyo-night";
-            publisher = "enkia";
-            version = "0.9.4";
-            sha256 = "pKokB6446SR6LsTHyJtQ+FEA07A0W9UAI+byqtGeMGw=";
+        editor = {
+          helix = {
+            dark = "tokyonight";
+            light = "tokyonight_storm"; # FIXME: no `tokyonight_day` as of 2022-09-01
           };
-          theme = {
+          neovim = {
+            dark = "tokyonight";
+            light = "tokyonight"; # TODO: vim.g.tokyonight_style = "day"
+          };
+          vscode = {
             dark = "Tokyo Night";
             light = "Tokyo Light";
+            extension = {
+              name = "tokyo-night";
+              publisher = "enkia";
+              version = "0.9.4";
+              sha256 = "pKokB6446SR6LsTHyJtQ+FEA07A0W9UAI+byqtGeMGw=";
+            };
           };
         };
       };
@@ -119,8 +125,8 @@ in
     # Desktop (X11) theming <- Change after gnome = independent of xserver.
     (mkIf config.services.xserver.enable {
       user.packages = with pkgs; [
-        (fluent-icon.override {
-          colorVariant = [ "orange" ];
+        (fluent-icon-theme.override {
+          colorVariants = [ "orange" ];
         })
         my.tokyonight-gtk
         whitesur-icon-theme

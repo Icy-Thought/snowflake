@@ -9,7 +9,7 @@ with lib;
 with lib.my; let
   cfg = config.modules.desktop.editors.neovim;
   nvimDir = "${config.snowflake.configDir}/nvim.d";
-  colorscheme = config.modules.themes.neovim.theme;
+  activeTheme = config.modules.themes.editor.neovim;
 in
 {
   options.modules.desktop.editors.neovim = {

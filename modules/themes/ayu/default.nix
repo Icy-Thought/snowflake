@@ -93,18 +93,24 @@ in
           };
         };
 
-        neovim.theme = "themer_ayu";
-
-        vscode = {
-          extension = {
-            name = "ayu";
-            publisher = "teabyii";
-            version = "1.0.5";
-            sha256 = "+ifqgwlikr+qjblmqlzf44xnbn7br5a119v9wanzou4=";
+        editor = {
+          helix = {
+            dark = "ayu_dark";
+            light = "ayu_light";
           };
-          theme = {
+          neovim = {
+            dark = "ayu-dark";
+            light = "ayu-light";
+          };
+          vscode = {
             dark = "Ayu Dark";
             light = "Ayu Light";
+            extension = {
+              name = "ayu";
+              publisher = "teabyii";
+              version = "1.0.5";
+              sha256 = "+ifqgwlikr+qjblmqlzf44xnbn7br5a119v9wanzou4=";
+            };
           };
         };
       };
