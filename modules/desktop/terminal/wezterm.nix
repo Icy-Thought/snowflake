@@ -101,7 +101,9 @@ in
                 }, {
                     event = { Up =  { streak = 2, button = "Left" } },
                     mods = "NONE",
-                    action = wezterm.action { CompleteSelection = "PrimarySelection" }
+                    action = wezterm.action {
+                        CompleteSelection = "ClipboardAndPrimarySelection"
+                    }
                 }, {
                     event = { Up = { streak = 3, button = "Left" } },
                     mods = "NONE",
@@ -162,7 +164,8 @@ in
                   "Unicode",
               }),
 
-              font_size= ${toString (font.mono.size)},
+              font_size = ${toString (font.mono.size)},
+              char_select_font_size = ${toString (font.mono.size)},
 
               window_frame = {
                   active_titlebar_bg = "${colors.main.types.bg}",

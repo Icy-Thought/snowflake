@@ -53,9 +53,19 @@ in
       ];
     };
 
-    # LightDM
-    services.xserver.displayManager.lightdm.greeters.mini.user =
-      config.user.name;
+    # Call-forward: LightDM!
+    services.xserver.displayManager = {
+      lightdm.greeters.mini.user = config.user.name;
+    };
+
+    # Setup KDE-Connect + startup indicaor
+    programs.kdeconnect.enable = true;
+
+    systemd.user.services.kdeconnect-indicator = {
+      serviceConfig.ExecStart = "${pkgs.kdeconnect}/bin/kdeconnect-indicator";
+      wantedBy = [ "graphical-session.target" ];
+      partOf = [ "graphical-session.target" ];
+    };
 
     # Try really hard to get QT to respect my GTK theme.
     env = {

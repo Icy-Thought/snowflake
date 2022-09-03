@@ -17,7 +17,12 @@ in
 
   config = mkMerge [
     (mkIf cfg.enable {
-      user.packages = with pkgs; [ rnix-lsp nixpkgs-fmt ];
+      user.packages = with pkgs; [
+        nix-output-monitor
+        nix-review
+        rnix-lsp
+        nixpkgs-fmt
+      ];
     })
 
     (mkIf codeCfg.enable {

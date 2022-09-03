@@ -82,11 +82,6 @@
       password = builtins.readFile config.age.secrets.torBylon.path;
     };
 
-    services = {
-      # ssh.enable = true;
-      kdeconnect.enable = true;
-    };
-
     shell = {
       git.enable = true;
       fish.enable = true;

@@ -48,10 +48,6 @@
     };
   };
 
-  services = {
-    kdeconnect.enable = true;
-  };
-
   shell = {
     git.enable = true;
     fish.enable = true;
