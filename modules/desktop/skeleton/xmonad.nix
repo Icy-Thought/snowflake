@@ -31,7 +31,8 @@ with lib.my; {
         picom.enable = true;
         dunst.enable = true;
         rofi.enable = true;
-        taffybar.enable = true;
+        # taffybar.enable = true;
+        eww.enable = true;
       };
     };
 
@@ -63,7 +64,7 @@ with lib.my; {
       enable = true;
       numlock.enable = true;
       preferStatusNotifierItems = true;
-      importedVariables = [ "GDK_PIXBUF_MODULE_FILE" ]; # Taffybar
+      # importedVariables = [ "GDK_PIXBUF_MODULE_FILE" ]; # Taffybar
     };
   };
 }

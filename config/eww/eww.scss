@@ -1,0 +1,19 @@
+@import "./themes/auto.scss";
+@import "./src/scss/_base.scss";
+
+@import "./src/scss/avatar/_init.scss";
+@import "./src/scss/disclose/_init.scss";
+@import "./src/scss/vertigo/_init.scss";
+@import "./src/scss/ocular/_init.scss";
+@import "./src/scss/lumin/_init.scss";
+@import "./src/scss/melody/_init.scss";
+@import "./src/scss/origin/_init.scss";
+@import "./src/scss/horizon/_init.scss";
+@import "./src/scss/clime/_init.scss";
+@import "./src/scss/power/_init.scss";
+@import "./src/scss/chrono/_init.scss";
+@import "./src/scss/bolt/_init.scss";
+
+@import "./src/scss/_override.scss"
+
+// vim:ft=scss

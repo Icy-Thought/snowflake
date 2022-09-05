@@ -1,0 +1,149 @@
+.avatar-mpd-box {
+  font-family: feather, Dosis, "Iosevka Nerd Font", sans-serif;
+  border-radius: 1em;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: right;
+  padding: 1.5em;
+}
+
+.avatar-mpd-icon {
+  font-size: 30;
+  margin-right: 0.6em;
+}
+
+.avatar-mpd-icon,
+.avatar-mpd-name { font-weight: 500; }
+
+.avatar-mpd-separator {
+  font-size: 15;
+  padding: 0 0.5em 0 0.5em; 
+}
+
+.avatar-mpd-artist,
+.avatar-mpd-title { font-size: 20; }
+.avatar-mpd-title { font-weight: bold; }
+.avatar-mpd-controls { font-size: 25; }
+
+.avatar-mpd-button-playback:hover { color: $base10; }
+.avatar-mpd-button-prev:hover { color: $base09; }
+.avatar-mpd-button-next:hover { color: $base09; }
+
+.avatar-mpd-button-like {
+  padding-left: 0.5em;
+  font-size: 30;
+}
+
+.avatar-mpd-button-like:hover { color: $base11; }
+.avatar-mpd-minimal { font-size: 20; }
+.avatar-mpd-footer { font-size: 17; }
+
+.avatar-mpd-progress {
+  trough {
+    background-color: darken($base05, 25%);
+    min-height: 0.3em;
+    border-radius: 0.2em;
+
+    highlight {
+      background-color: lighten($base05, 15%);
+      border-radius: 0.2em;
+    }
+
+    slider {
+      background: lighten($base05, 25%);
+      border-radius: 100%;
+      margin: -8px;
+    }
+  }
+}
+
+.avatar-mpd-button-playback {
+  font-size: 50;
+}
+
+.ava-mpdx-box {
+  background-color: $shade09;
+  font-family: Phosphor, Dosis, sans-serif;
+  border-radius: 0.5em;
+  font-size: 30;
+  padding: 1em;
+}
+
+.ava-mpdx-btn {
+  background-color: $shade05;
+  color: $base04;
+  border-radius: 2em;
+  padding: 1.3em;
+}
+
+.ava-mpdx-btn:hover {
+  background-color: $shade03;
+}
+
+.ava-mpdx-random-on:hover,
+.ava-mpdx-consume-on:hover,
+.ava-mpdx-single-on:hover,
+.ava-mpdx-xfade-on:hover,
+.ava-mpdx-repeat-on:hover {
+  background-color: $shade05;
+  color: $base04;
+}
+
+.ava-mpdx-xfade-off,
+.ava-mpdx-repeat-off,
+.ava-mpdx-random-off,
+.ava-mpdx-single-off,
+.ava-mpdx-consume-off {
+  background-color: $shade05;
+}
+
+.ava-mpdx-xfade-off {
+  color: $base15;
+}
+
+.ava-mpdx-repeat-off {
+  color: $base13;
+}
+
+.ava-mpdx-random-off {
+  color: $base11;
+}
+
+.ava-mpdx-single-off {
+  color: $base14;
+}
+
+.ava-mpdx-consume-off {
+  color: $base08;
+}
+
+.ava-mpdx-btn-shuffle {
+  color: $base07;
+}
+
+.ava-mpdx-random-on {
+  background-color: $base11;
+  color: $base02;
+}
+
+.ava-mpdx-consume-on {
+  background-color: $base08;
+  color: $base02;
+}
+
+.ava-mpdx-single-on {
+  background-color: $base14;
+  color: $base02;
+}
+
+.ava-mpdx-xfade-on {
+  background-color: $base15;
+  color: $base02;
+}
+
+.ava-mpdx-repeat-on {
+  background-color: $base13;
+  color: $base02;
+}
+
+// vim:ft=scss

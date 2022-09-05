@@ -1,0 +1,33 @@
+(defwidget _melodyapps [
+  one two three four five six
+  one_icon two_icon three_icon four_icon five_icon six_icon
+]
+  (box :space-evenly false :class "melody-apps-box" :spacing 50
+    (button :class "melody-apps-box-one" :onclick one one_icon)
+    (button :class "melody-apps-box-two" :onclick two two_icon)
+    (button :class "melody-apps-box-three" :onclick three three_icon)
+    (button :class "melody-apps-box-four" :onclick four four_icon)
+    (button :class "melody-apps-box-five" :onclick five five_icon)
+    (button :class "melody-apps-box-six" :onclick six six_icon)))
+
+(defwidget _melodyplayer [title artist]
+  (box :class "melody-player" 
+       :space-evenly false 
+       :orientation "vertical" 
+       :spacing 5
+       :halign "end"
+    (label :halign "end" :limit-width 20 :class "melody-artist" :text artist)
+    (label :halign "end" :limit-width 40 :class "melody-title" :text title)))
+
+(defwidget _melodycover [cover_path status bright dark]
+  (box :space-evenly false
+       :class "melody-cover-box"
+       :orientation "vertical"
+    (box :space-evenly false
+         :class "melody-cover melody-cover-${status}"
+         :style `background-image: url("${cover_path}")`)
+    (label :class "melody-cover-label"
+           :text {status}
+           :style "color: ${bright}; background-color: ${dark}")))
+
+;; vim:ft=yuck
