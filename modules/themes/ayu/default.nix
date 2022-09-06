@@ -13,7 +13,7 @@ in
   config = mkIf (cfg.active == "ayu") (mkMerge [
     {
       modules.themes = {
-        wallpaper = mkDefault ./wallpaper.jpg;
+        wallpaper = mkDefault ./wallpaper.jpg; # FIXME
 
         gtk = {
           theme = "Orchis-Dark-Compact";

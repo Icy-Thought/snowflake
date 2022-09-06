@@ -13,7 +13,7 @@ in
   config = mkIf (cfg.active == "kanagawa") (mkMerge [
     {
       modules.themes = {
-        wallpaper = mkDefault ./wallpaper.jpg;
+        wallpaper = mkDefault ./assets/antonio-brave-herakles.jpg;
 
         gtk = {
           theme = "Orchis-Dark-Compact";

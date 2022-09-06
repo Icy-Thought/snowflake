@@ -13,7 +13,7 @@ in
   config = mkIf (cfg.active == "catppuccin") (mkMerge [
     {
       modules.themes = {
-        wallpaper = mkDefault ./wallpaper.png;
+        wallpaper = mkDefault ./assets/nasa-jwst-blueprint.png;
 
         gtk = {
           theme = "Catppuccin-Orange-Dark-Compact";
