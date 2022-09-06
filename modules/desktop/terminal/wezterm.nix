@@ -189,7 +189,7 @@ in
 
                 text_background_opacity = 1.0,
                 warn_about_missing_glyphs = false,
-                window_background_opacity = 0.75,
+                window_background_opacity = 0.80,
                 enable_scroll_bar = false,
                 scrollback_lines = 5000,
 
