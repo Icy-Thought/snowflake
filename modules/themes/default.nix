@@ -225,43 +225,39 @@ in
 
         # GTK
         "gtk-3.0/settings.ini".text = with cfg.gtk; ''
-                    [Settings]
-                    ${optionalString (theme != "")
-          "gtk-theme-name=${theme}"}
-                    ${optionalString (iconTheme != "")
-          "gtk-icon-theme-name=${iconTheme}"}
-                    ${optionalString (cursor.name != "")
-          "gtk-cursor-theme-name=${cursor.name}"}
-                    ${optionalString (cursor.size != "")
-          "gtk-cursor-theme-size=${toString (cursor.size)}"}
-                    gtk-fallback-icon-theme=gnome
-                    gtk-application-prefer-dark-theme=true
-                    gtk-xft-hinting=1
-                    gtk-xft-hintstyle=hintfull
-                    gtk-xft-rgba=none
+          [Settings]
+          ${optionalString (theme != "")
+            "gtk-theme-name=${theme}"}
+
+          ${optionalString (iconTheme != "")
+            "gtk-icon-theme-name=${iconTheme}"}
+
+          ${optionalString (cursor.name != "")
+            "gtk-cursor-theme-name=${cursor.name}"}
+
+          ${optionalString (cursor.size != "")
+            "gtk-cursor-theme-size=${toString (cursor.size)}"}
+
+          gtk-fallback-icon-theme=gnome
+          gtk-application-prefer-dark-theme=true
+          gtk-xft-hinting=1
+          gtk-xft-hintstyle=hintfull
+          gtk-xft-rgba=none
         '';
 
         # GTK2 global theme (widget and icon theme)
         "gtk-2.0/gtkrc".text = with cfg; ''
-                    ${optionalString (gtk.theme != "")
-          ''gtk-theme-name="${gtk.theme}"''}
-                    ${optionalString (cfg.gtk.iconTheme != "")
-          ''gtk-icon-theme-name="${gtk.iconTheme}"''}
-                    gtk-font-name="Sans ${toString (font.sans.size)}"
+          ${optionalString (gtk.theme != "")
+            ''gtk-theme-name="${gtk.theme}"''}
+          ${optionalString (gtk.iconTheme != "")
+            ''gtk-icon-theme-name="${gtk.iconTheme}"''}
+          gtk-font-name="Sans ${toString (font.sans.size)}"
         '';
 
         # QT4/5 global theme
         "Trolltech.conf".text = with cfg.gtk; ''
           [Qt]
           ${optionalString (theme != "") "style=${theme}"}
-        '';
-      };
-
-      # Force Qt to use GTK cursor theme
-      home.file.".icons/default/index.theme" = mkIf (cfg.gtk.cursor.name != "") {
-        text = ''
-          [icon theme]
-          Inherits=${cfg.gtk.cursor.name}
         '';
       };
 
@@ -272,45 +268,46 @@ in
       };
     }
 
-    (mkIf (cfg.wallpaper != null)
-      # Set the wallpaper ourselves so we don't need .background-image and/or
-      # .fehbg polluting $HOME
-      (
-        let
-          wCfg = config.services.xserver.desktopManager.wallpaper;
-          command = ''
-            if [ -e "$XDG_DATA_HOME/wallpaper" ]; then
-              ${getExe pkgs.feh} --bg-${wCfg.mode} \
-                ${optionalString wCfg.combineScreens "--no-xinerama"} \
-                --no-fehbg \
-                $XDG_DATA_HOME/wallpaper
-            fi
-          '';
-        in
-        {
-          services.xserver.displayManager.sessionCommands = command;
-          modules.themes.onReload.wallpaper = command;
+    # Set the wallpaper ourselves so we don't need .background-image and/or
+    # .fehbg polluting $HOME
+    (mkIf (cfg.wallpaper != null) (
+      let
+        wCfg = config.services.xserver.desktopManager.wallpaper;
+        command = ''
+            if [ -e "$XDG_DATA_HOME/wallpaper" ];
+          then
+          ${getExe pkgs.feh} --bg-${wCfg.mode} \
+          ${optionalString wCfg.combineScreens "--no-xinerama"} \
+          --no-fehbg \
+          $XDG_DATA_HOME/wallpaper
+          fi
+        '';
+      in
+      {
+        services.xserver.displayManager.sessionCommands = command;
+        modules.themes.onReload.wallpaper = command;
 
-          home.dataFile = mkIf (cfg.wallpaper != null) {
-            "wallpaper".source = cfg.wallpaper;
-          };
-        }
-      ))
+        home.dataFile = mkIf (cfg.wallpaper != null) {
+          "wallpaper".source = cfg.wallpaper;
+        };
+      }
+    ))
 
     (mkIf (cfg.loginWallpaper != null) {
-      services.xserver.displayManager.lightdm.background = cfg.loginWallpaper;
+      services.xserver.displayManager = {
+        lightdm.background = cfg.loginWallpaper;
+      };
     })
 
     (mkIf (cfg.onReload != { }) (
       let
         reloadTheme = with pkgs; (writeScriptBin "reloadTheme" ''
-                    #!${stdenv.shell}
-                    echo "Reloading current theme: ${cfg.active}"
-                    ${concatStringsSep "\n" (mapAttrsToList (name: script: ''
-                        echo "[${name}]"
-                        ${script}
-                      '')
-          cfg.onReload)}
+          #!${stdenv.shell}
+          echo "Reloading current theme: ${cfg.active}"
+          ${concatStringsSep "\n" (mapAttrsToList (name: script: ''
+                echo "[${name}]"
+                ${script}
+            '') cfg.onReload)}
         '');
       in
       {
