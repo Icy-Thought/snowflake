@@ -15,6 +15,10 @@
     emacs.url = "github:nix-community/emacs-overlay";
     nvim-nightly.url = "github:nix-community/neovim-nightly-overlay";
     rust.url = "github:oxalica/rust-overlay";
+    spicetify-nix = {
+      url = "github:the-argus/spicetify-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =

@@ -249,7 +249,8 @@
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nvim-nightly": "nvim-nightly",
-        "rust": "rust"
+        "rust": "rust",
+        "spicetify-nix": "spicetify-nix"
       }
     },
     "rust": {
@@ -268,6 +269,26 @@
       "original": {
         "owner": "oxalica",
         "repo": "rust-overlay",
+        "type": "github"
+      }
+    },
+    "spicetify-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1662671793,
+        "narHash": "sha256-/fY6uGvPipXnxd6tw+685hDZPHWm1qmw9NQ1ZGDOh2A=",
+        "owner": "the-argus",
+        "repo": "spicetify-nix",
+        "rev": "e17310339e430e0d36616ed28364c23b0313908f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "the-argus",
+        "repo": "spicetify-nix",
         "type": "github"
       }
     },

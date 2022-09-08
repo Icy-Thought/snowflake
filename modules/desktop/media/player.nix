@@ -1,4 +1,5 @@
-{ options
+{ inputs
+, options
 , config
 , lib
 , pkgs
@@ -17,8 +18,23 @@ in
 
   config = mkMerge [
     (mkIf cfg.music.enable {
-      user.packages = with pkgs; [ spotify ];
-      # TODO: spicetify-cli + activeTheme.
+      hm.imports = [ inputs.spicetify-nix.homeManagerModule ];
+
+      hm.programs.spicetify = {
+        enable = true;
+        spotifyPackage = pkgs.spotify-unwrapped;
+        spicetifyPackage = pkgs.spicetify-cli;
+
+        enabledExtensions = [
+          "fullAppDisplay.js"
+          "shuffle+.js"
+          "adblock.js"
+          "hidePodcasts.js"
+        ];
+
+        theme = "catppuccin-mocha";
+        colorScheme = "flamingo";
+      };
     })
 
     (mkIf cfg.video.enable {
