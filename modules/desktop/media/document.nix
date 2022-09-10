@@ -27,47 +27,45 @@ in
             selection-clipboard = "clipboard";
           }
 
-          (
-            mkIf (active != null) (mkMerge [
-              {
-                font = "${font.sans.family} ${font.sans.weight} ${toString (font.mono.size)}";
-                recolor = true;
-                recolor-keephue = true;
-                recolor-reverse-video = true;
-              }
-              (with colors.main; {
-                default-fg = "${types.fg}";
-                default-bg = "${types.bg}";
+          (mkIf (active != null) (mkMerge [
+            {
+              font = "${font.sans.family} ${font.sans.weight} ${toString (font.mono.size)}";
+              recolor = true;
+              recolor-keephue = true;
+              recolor-reverse-video = true;
+            }
+            (with colors.main; {
+              default-fg = "${types.fg}";
+              default-bg = "${types.bg}";
 
-                statusbar-fg = "${normal.white}";
-                statusbar-bg = "${types.bg}";
+              statusbar-fg = "${normal.white}";
+              statusbar-bg = "${types.bg}";
 
-                inputbar-fg = "${normal.yellow}";
-                inputbar-bg = "${types.bg}";
+              inputbar-fg = "${normal.yellow}";
+              inputbar-bg = "${types.bg}";
 
-                notification-fg = "${normal.white}";
-                notification-bg = "${normal.black}";
+              notification-fg = "${normal.white}";
+              notification-bg = "${normal.black}";
 
-                notification-error-fg = "${normal.white}";
-                notification-error-bg = "${normal.black}";
+              notification-error-fg = "${normal.white}";
+              notification-error-bg = "${normal.black}";
 
-                notification-warning-fg = "${normal.red}";
-                notification-warning-bg = "${normal.black}";
+              notification-warning-fg = "${normal.red}";
+              notification-warning-bg = "${normal.black}";
 
-                highlight-active-color = "${types.fg}";
-                highlight-color = "${types.highlight}";
+              highlight-active-color = "${types.fg}";
+              highlight-color = "${types.highlight}";
 
-                completion-fg = "${normal.yellow}";
-                completion-bg = "${types.bg}";
+              completion-fg = "${normal.yellow}";
+              completion-bg = "${types.bg}";
 
-                completion-highlight-fg = "${types.bg}";
-                completion-highlight-bg = "${normal.yellow}";
+              completion-highlight-fg = "${types.bg}";
+              completion-highlight-bg = "${normal.yellow}";
 
-                recolor-lightcolor = "${types.bg}";
-                recolor-darkcolor = "${normal.white}";
-              })
-            ])
-          )
+              recolor-lightcolor = "${types.bg}";
+              recolor-darkcolor = "${normal.white}";
+            })
+          ]))
         ]);
       };
     })
