@@ -24,6 +24,7 @@ with lib.my; {
       file = mkOpt' attrs { } "Files to place directly in $HOME";
       configFile = mkOpt' attrs { } "Files to place in $XDG_CONFIG_HOME";
       dataFile = mkOpt' attrs { } "Files to place in $XDG_DATA_HOME";
+      pointerCursor = mkOpt' attrs { } "Cursor to be applied on running system";
     };
 
     env = mkOption {
@@ -65,6 +66,7 @@ with lib.my; {
     hm.home = {
       file = mkAliasDefinitions options.home.file;
       stateVersion = config.system.stateVersion;
+      pointerCursor = mkAliasDefinitions options.home.pointerCursor;
     };
 
     hm.xdg = {

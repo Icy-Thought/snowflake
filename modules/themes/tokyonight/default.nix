@@ -18,10 +18,12 @@ in
         gtk = {
           theme = "Tokyonight-Dark-BL";
           iconTheme = "Fluent-orange-dark";
-          cursor = {
-            name = "Bibata-Modern-Classic";
-            size = 24;
-          };
+        };
+
+        pointer = {
+          name = "Bibata-Modern-Classic";
+          package = pkgs.bibata-cursors;
+          size = 24;
         };
 
         font = {
@@ -130,7 +132,6 @@ in
         })
         my.tokyonight-gtk
         whitesur-icon-theme
-        bibata-cursors
       ];
 
       fonts.fonts = with pkgs; [
@@ -146,10 +147,6 @@ in
         || config.modules.desktop.qtile.enable)
       {
         services.xserver.displayManager = {
-          sessionCommands = with cfg.gtk.cursor; ''
-            ${getExe pkgs.xorg.xsetroot} -xcf ${pkgs.bibata-cursors}/share/icons/${name}/cursors/${default} ${toString size}
-          '';
-
           # LightDM: Replace with LightDM-Web-Greeter theme
           lightdm.greeters.mini.extraConfig = with cfg.colors.main; ''
             text-color = "${types.bg}"

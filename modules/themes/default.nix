@@ -37,11 +37,12 @@ in
     gtk = {
       theme = mkOpt str "";
       iconTheme = mkOpt str "";
-      cursor = {
-        default = mkOpt str "left_ptr";
-        name = mkOpt str "";
-        size = mkOpt int "";
-      };
+    };
+
+    pointer = {
+      name = mkOpt str "";
+      package = mkOpt (either package null) null;
+      size = mkOpt int "";
     };
 
     onReload = mkOpt (attrsOf lines) { };
@@ -217,10 +218,10 @@ in
           Emacs.font: ${family}:style=${weight}:pixelsize=${toString size}
         '';
 
-        "xtheme/06-cursor".text = with cfg.gtk.cursor; ''
-          Xcursor.theme: ${name}
+        "xtheme/06-cursor".text = with cfg.pointer; ''
           Xcursor.name: left_ptr
           Xcursor.size: ${toString size}
+          Xcursor.theme: ${name}
         '';
 
         # GTK
@@ -231,12 +232,6 @@ in
 
           ${optionalString (iconTheme != "")
             "gtk-icon-theme-name=${iconTheme}"}
-
-          ${optionalString (cursor.name != "")
-            "gtk-cursor-theme-name=${cursor.name}"}
-
-          ${optionalString (cursor.size != "")
-            "gtk-cursor-theme-size=${toString (cursor.size)}"}
 
           gtk-fallback-icon-theme=gnome
           gtk-application-prefer-dark-theme=true
@@ -259,6 +254,19 @@ in
           [Qt]
           ${optionalString (theme != "") "style=${theme}"}
         '';
+      };
+
+      home.pointerCursor = with cfg.pointer; {
+        name = name;
+        package = package;
+        size = size;
+
+        # TODO: modify to wayland after migrating!
+        x11 = {
+          enable = true;
+          defaultCursor = "left_ptr";
+        };
+        gtk.enable = true;
       };
 
       fonts.fontconfig.defaultFonts = with cfg.font; {
