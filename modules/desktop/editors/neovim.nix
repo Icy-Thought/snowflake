@@ -22,17 +22,10 @@ in
       nixpkgs.overlays = [ inputs.nvim-nightly.overlay ];
 
       user.packages = with pkgs; [
+        neovim-nightly
         neovide
         (mkIf (!config.modules.develop.cc.enable) gcc) # Treesitter
       ];
-
-      hm.programs.neovim = {
-        enable = true;
-        package = pkgs.neovim-nightly;
-        withRuby = true;
-        withPython3 = true;
-        withNodeJs = true;
-      };
 
       environment.shellAliases = {
         vi = "nvim";
