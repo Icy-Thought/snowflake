@@ -83,6 +83,7 @@ with lib.my; {
   };
 
   time.timeZone = mkDefault "Europe/Berlin";
+
   i18n.defaultLocale = mkDefault "en_US.UTF-8";
 
   environment.systemPackages = with pkgs; [
