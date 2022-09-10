@@ -1,9 +1,10 @@
-{ pkgs
-, config
-, lib
-, ...
+{
+  pkgs,
+  config,
+  lib,
+  ...
 }: {
-  imports = [ ./hwCfg.nix ];
+  imports = [./hwCfg.nix];
 
   modules = {
     hardware = {
@@ -61,8 +62,8 @@
           video.enable = true;
         };
         document = {
-          # sioyek.enable = true;
-          zathura.enable = true;
+          sioyek.enable = true;
+          # zathura.enable = true;
         };
       };
       # virtual = {
@@ -94,7 +95,7 @@
     printing.enable = true;
 
     xserver = {
-      videoDrivers = [ "amdgpu" ];
+      videoDrivers = ["amdgpu"];
       deviceSection = ''
         Option "TearFree" "true"
       '';

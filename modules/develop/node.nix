@@ -1,22 +1,22 @@
-{ config
-, options
-, lib
-, pkgs
-, ...
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.develop.node;
   devCfg = config.modules.develop.xdg;
-in
-{
+in {
   options.modules.develop.node = {
     enable = mkBoolOpt false;
   };
 
   config = mkMerge [
     (mkIf cfg.enable {
-      user.packages = with pkgs; [ nodejs_latest yarn ];
+      user.packages = with pkgs; [nodejs_latest yarn];
 
       # Run locally installed bin-script, e.g. n coffee file.coffee
       environment.shellAliases = {
@@ -24,7 +24,7 @@ in
         ya = "yarn";
       };
 
-      env.PATH = [ "$(${getExe pkgs.yarn} global bin)" ];
+      env.PATH = ["$(${getExe pkgs.yarn} global bin)"];
     })
 
     (mkIf devCfg.enable {

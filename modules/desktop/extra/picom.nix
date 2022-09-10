@@ -1,14 +1,14 @@
-{ options
-, config
-, lib
-, pkgs
-, ...
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.extra.picom;
-in
-{
+in {
   options.modules.desktop.extra.picom = {
     enable = mkBoolOpt false;
   };
@@ -22,7 +22,7 @@ in
 
       fade = true;
       fadeDelta = 2;
-      fadeSteps = [ 2.5e-2 2.5e-2 ];
+      fadeSteps = [2.5e-2 2.5e-2];
 
       menuOpacity = 0.9;
       inactiveOpacity = 0.65;
@@ -44,7 +44,7 @@ in
       ];
 
       shadow = false;
-      shadowOffsets = [ (-7) (-7) ];
+      shadowOffsets = [(-7) (-7)];
       shadowOpacity = 0.75;
 
       shadowExclude = [
@@ -108,22 +108,22 @@ in
         detect-client-opacity = true;
 
         unredir-if-possible = false;
-        unredir-if-possible-exclude = [ ];
+        unredir-if-possible-exclude = [];
         detect-transient = true;
         detect-client-leader = true;
 
-        invert-color-include = [ ];
+        invert-color-include = [];
         glx-no-stencil = true;
         use-damage = false;
         transparent-clipping = false;
         inactive-opacity-override = false;
 
-        focus-exclude = [ "class_g ?= 'rofi'" "class_g ?= 'Steam'" ];
+        focus-exclude = ["class_g ?= 'rofi'" "class_g ?= 'Steam'"];
 
         # WARN: Unofficial animation support (dccsillag)
         wintypes = {
-          dock = { animation = "slide-down"; };
-          toolbar = { animation = "slide-down"; };
+          dock = {animation = "slide-down";};
+          toolbar = {animation = "slide-down";};
         };
       };
     };

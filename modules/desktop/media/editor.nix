@@ -1,15 +1,15 @@
-{ config
-, options
-, lib
-, pkgs
-, ...
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.media.editor;
   configDir = config.snowflake.configDir;
-in
-{
+in {
   options.modules.desktop.media.editor = {
     modeling.enable = mkBoolOpt false;
     raster.enable = mkBoolOpt false;
@@ -27,7 +27,7 @@ in
 
     # Illustrator & Indesign replacement:
     (mkIf cfg.vector.enable {
-      user.packages = with pkgs; [ inkscape ];
+      user.packages = with pkgs; [inkscape];
       # TODO: hard-coded inkscape config
     })
 
@@ -47,7 +47,7 @@ in
 
     # 3D-Modelling
     (mkIf cfg.modeling.enable {
-      user.packages = with pkgs; [ blender ];
+      user.packages = with pkgs; [blender];
     })
   ];
 }

@@ -1,15 +1,15 @@
-{ options
-, config
-, lib
-, pkgs
-, ...
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.themes;
   configDir = config.snowflake.configDir;
-in
-{
+in {
   config = mkIf (cfg.active == "") (mkMerge [
     {
       modules.themes = {
@@ -200,10 +200,9 @@ in
           font = "${font.sans.family} ${font.sans.weight} ${toString (font.sans.size)}";
         };
 
-        theme =
-          let
-            inherit (config.hm.lib.formats.rasi) mkLiteral;
-          in
+        theme = let
+          inherit (config.hm.lib.formats.rasi) mkLiteral;
+        in
           with cfg.colors.rofi; {
             "*" = {
               fg = mkLiteral "${fg}";

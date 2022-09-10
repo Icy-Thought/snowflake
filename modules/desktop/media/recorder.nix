@@ -1,14 +1,14 @@
-{ config
-, options
-, lib
-, pkgs
-, ...
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.media.recorder;
-in
-{
+in {
   options.modules.desktop.media.recorder = {
     enable = mkBoolOpt false;
     audio.enable = mkBoolOpt true;
@@ -22,14 +22,14 @@ in
       (
         # Audio recording + Mastering:
         mkIf (cfg.audio.enable)
-          unstable.audacity-gtk3
-          unstable.helvum
+        unstable.audacity-gtk3
+        unstable.helvum
       )
       (
         # Streaming + Screen-recodring:
         mkIf (cfg.video.enable)
-          unstable.obs-studio
-          unstable.handbrake
+        unstable.obs-studio
+        unstable.handbrake
       )
     ];
   };

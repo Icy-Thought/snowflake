@@ -1,22 +1,21 @@
-{ options
-, config
-, lib
-, pkgs
-, ...
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.themes;
-in
-{
+in {
   options.modules.themes = with types; {
     active = mkOption {
       type = nullOr str;
       default = null;
-      apply = v:
-        let
-          theme = builtins.getEnv "THEME";
-        in
+      apply = v: let
+        theme = builtins.getEnv "THEME";
+      in
         if theme != ""
         then theme
         else v;
@@ -45,7 +44,7 @@ in
       size = mkOpt int "";
     };
 
-    onReload = mkOpt (attrsOf lines) { };
+    onReload = mkOpt (attrsOf lines) {};
 
     font = {
       mono = {
@@ -159,8 +158,7 @@ in
     (
       let
         xrdb = ''cat "$XDG_CONFIG_HOME"/xtheme/* | ${getExe pkgs.xorg.xrdb} -load'';
-      in
-      {
+      in {
         home.configFile."xtheme.init" = {
           text = xrdb;
           executable = true;
@@ -270,9 +268,9 @@ in
       };
 
       fonts.fontconfig.defaultFonts = with cfg.font; {
-        sansSerif = [ sans.family ];
-        monospace = [ mono.family ];
-        emoji = [ emoji ];
+        sansSerif = [sans.family];
+        monospace = [mono.family];
+        emoji = [emoji];
       };
     }
 
@@ -290,8 +288,7 @@ in
           $XDG_DATA_HOME/wallpaper
           fi
         '';
-      in
-      {
+      in {
         services.xserver.displayManager.sessionCommands = command;
         modules.themes.onReload.wallpaper = command;
 
@@ -307,19 +304,19 @@ in
       };
     })
 
-    (mkIf (cfg.onReload != { }) (
+    (mkIf (cfg.onReload != {}) (
       let
         reloadTheme = with pkgs; (writeScriptBin "reloadTheme" ''
           #!${stdenv.shell}
           echo "Reloading current theme: ${cfg.active}"
           ${concatStringsSep "\n" (mapAttrsToList (name: script: ''
-                echo "[${name}]"
-                ${script}
-            '') cfg.onReload)}
+              echo "[${name}]"
+              ${script}
+            '')
+            cfg.onReload)}
         '');
-      in
-      {
-        user.packages = [ reloadTheme ];
+      in {
+        user.packages = [reloadTheme];
         system.userActivationScripts.reloadTheme = ''
           [ -z "$NORELOAD" ] && ${reloadTheme}/bin/reloadTheme
         '';

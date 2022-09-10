@@ -1,14 +1,14 @@
-{ options
-, config
-, lib
-, pkgs
-, ...
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.philomath.aula;
-in
-{
+in {
   options.modules.desktop.philomath.aula = {
     anki.enable = mkBoolOpt false;
     zoom.enable = mkBoolOpt false;
@@ -17,7 +17,7 @@ in
   config = mkMerge [
     (mkIf cfg.anki.enable {
       # TODO: Configure anki OR replace with other software
-      user.packages = with pkgs; [ anki ];
+      user.packages = with pkgs; [anki];
     })
 
     (mkIf cfg.zoom.enable {
@@ -36,7 +36,7 @@ in
           icon = "Zoom";
           exec = "/run/current-system/sw/bin/zoom";
           genericName = "Video Conference";
-          categories = [ "Network" "VideoConference" ];
+          categories = ["Network" "VideoConference"];
         })
       ];
     })

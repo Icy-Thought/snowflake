@@ -1,15 +1,15 @@
-{ options
-, config
-, lib
-, pkgs
-, ...
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.extra.dunst;
   themeCfg = config.modules.themes;
-in
-{
+in {
   options.modules.desktop.extra.dunst = {
     enable = mkBoolOpt false;
   };

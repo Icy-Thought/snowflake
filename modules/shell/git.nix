@@ -1,15 +1,15 @@
-{ config
-, options
-, lib
-, pkgs
-, ...
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.shell.git;
   fishCfg = "${config.snowflake.configDir}/fish";
-in
-{
+in {
   options.modules.shell.git = {
     enable = mkBoolOpt false;
   };
@@ -56,7 +56,7 @@ in
         '';
       };
 
-      attributes = [ "*.lisp diff=lisp" "*.el diff=lisp" "*.org diff=org" ];
+      attributes = ["*.lisp diff=lisp" "*.el diff=lisp" "*.org diff=org"];
 
       ignores = [
         # General:

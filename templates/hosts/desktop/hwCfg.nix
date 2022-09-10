@@ -1,10 +1,11 @@
-{ config
-, lib
-, pkgs
-, modulesPath
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  modulesPath,
+  ...
 }: {
-  imports = [ "${modulesPath}/installer/scan/not-detected.nix" ];
+  imports = ["${modulesPath}/installer/scan/not-detected.nix"];
 
   boot.kernelParams = [
     # HACK Disables fixes for spectre, meltdown, L1TF and a number of CPU
@@ -38,7 +39,7 @@
     "/" = {
       device = "/dev/disk/by-label/nixos";
       fsType = "ext4";
-      options = [ "noatime" ];
+      options = ["noatime"];
     };
     "/boot" = {
       device = "/dev/disk/by-label/boot";
@@ -47,8 +48,8 @@
     "/home" = {
       device = "/dev/disk/by-label/home";
       fsType = "ext4";
-      options = [ "noatime" ];
+      options = ["noatime"];
     };
   };
-  swapDevices = [ "/dev/disk/by-label/swap" ];
+  swapDevices = ["/dev/disk/by-label/swap"];
 }

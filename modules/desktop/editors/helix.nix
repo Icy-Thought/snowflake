@@ -1,44 +1,44 @@
-{ config
-, options
-, lib
-, pkgs
-, inputs
-, ...
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  inputs,
+  ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.editors.helix;
   activeTheme = config.modules.themes.editor.helix;
-in
-{
+in {
   options.modules.desktop.editors.helix = {
     enable = mkBoolOpt false;
   };
 
   config = mkIf cfg.enable {
-    nixpkgs.overlays = [ inputs.helix.overlay ];
+    nixpkgs.overlays = [inputs.helix.overlay];
 
     hm.programs.helix = {
       enable = true;
       package = pkgs.helix;
 
       languages = [
-        { name = "latex"; }
+        {name = "latex";}
         {
           name = "haskell";
           formatter = {
             command = "stylish-haskell";
-            args = [ "--stdin" ];
+            args = ["--stdin"];
           };
         }
         {
           name = "nix";
           formatter = {
             command = "nixpkgs-fmt";
-            args = [ "--stdin" ];
+            args = ["--stdin"];
           };
         }
-        { name = "rust"; }
+        {name = "rust";}
       ];
 
       settings = {
@@ -78,9 +78,9 @@ in
         };
 
         keys.normal = {
-          space.l = { f = ":format"; };
-          space.w = { f = ":w"; };
-          space.q = { q = ":q"; };
+          space.l = {f = ":format";};
+          space.w = {f = ":w";};
+          space.q = {q = ":q";};
         };
       };
     };

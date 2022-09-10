@@ -1,16 +1,16 @@
-{ inputs
-, options
-, config
-, lib
-, pkgs
-, ...
+{
+  inputs,
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.xmonad;
   configDir = config.snowflake.configDir;
-in
-{
+in {
   options.modules.desktop.xmonad = {
     enable = mkBoolOpt false;
   };
@@ -76,7 +76,7 @@ in
       enable = true;
       numlock.enable = true;
       preferStatusNotifierItems = true;
-      importedVariables = [ "GDK_PIXBUF_MODULE_FILE" ]; # Taffybar
+      importedVariables = ["GDK_PIXBUF_MODULE_FILE"]; # Taffybar
     };
   };
 }

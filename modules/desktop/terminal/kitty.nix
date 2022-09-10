@@ -1,16 +1,16 @@
-{ config
-, options
-, lib
-, pkgs
-, ...
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.terminal.kitty;
   configDir = config.snowflake.configDir;
   themeCfg = config.modules.themes;
-in
-{
+in {
   options.modules.desktop.terminal.kitty = with types; {
     enable = mkBoolOpt false;
   };

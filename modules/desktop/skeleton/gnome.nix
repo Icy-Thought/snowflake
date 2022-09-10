@@ -1,15 +1,15 @@
-{ options
-, config
-, lib
-, pkgs
-, ...
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.gnome;
   configDir = config.snowflake.configDir;
-in
-{
+in {
   options.modules.desktop.gnome = {
     enable = mkBoolOpt false;
   };
@@ -33,11 +33,11 @@ in
 
     services.dbus = {
       enable = true;
-      packages = with pkgs; [ gnome.dconf ];
+      packages = with pkgs; [gnome.dconf];
     };
 
     services.udev = {
-      packages = with pkgs; [ gnome.gnome-settings-daemon ];
+      packages = with pkgs; [gnome.gnome-settings-daemon];
       extraRules = ''
         ACTION=="add|change", KERNEL=="nvme[0-9]*", ATTR{queue/scheduler}="none"
         ACTION=="add|change", KERNEL=="sd[a-z]|mmcblk[0-9]*", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="mq-deadline"

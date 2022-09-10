@@ -1,16 +1,16 @@
-{ inputs
-, options
-, config
-, lib
-, pkgs
-, ...
+{
+  inputs,
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.media.player;
   themeCfg = config.modules.themes;
-in
-{
+in {
   options.modules.desktop.media.player = {
     music.enable = mkBoolOpt false;
     video.enable = mkBoolOpt false;
@@ -18,7 +18,7 @@ in
 
   config = mkMerge [
     (mkIf cfg.music.enable {
-      hm.imports = [ inputs.spicetify-nix.homeManagerModule ];
+      hm.imports = [inputs.spicetify-nix.homeManagerModule];
 
       hm.programs.spicetify = {
         enable = true;
@@ -38,7 +38,7 @@ in
     })
 
     (mkIf cfg.video.enable {
-      user.packages = with pkgs; [ mpv-with-scripts mpvc ];
+      user.packages = with pkgs; [mpv-with-scripts mpvc];
     })
   ];
 }

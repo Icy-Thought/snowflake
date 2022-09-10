@@ -1,15 +1,15 @@
-{ options
-, config
-, lib
-, pkgs
-, ...
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.media.document;
   themeCfg = config.modules.themes;
-in
-{
+in {
   options.modules.desktop.media.document = {
     zathura.enable = mkBoolOpt false;
     sioyek.enable = mkBoolOpt false;

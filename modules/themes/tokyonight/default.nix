@@ -1,15 +1,15 @@
-{ options
-, config
-, lib
-, pkgs
-, ...
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.themes;
   configDir = config.snowflake.configDir;
-in
-{
+in {
   config = mkIf (cfg.active == "tokyonight") (mkMerge [
     {
       modules.themes = {
@@ -128,7 +128,7 @@ in
     (mkIf config.services.xserver.enable {
       user.packages = with pkgs; [
         (fluent-icon-theme.override {
-          colorVariants = [ "orange" ];
+          colorVariants = ["orange"];
         })
         my.tokyonight-gtk
         whitesur-icon-theme
@@ -136,7 +136,7 @@ in
 
       fonts.fonts = with pkgs; [
         (nerdfonts.override {
-          fonts = [ "VictorMono" ];
+          fonts = ["VictorMono"];
         })
         twitter-color-emoji
       ];
@@ -206,10 +206,9 @@ in
           font = with font; "${sans.family} ${sans.weight} ${toString (sans.size)}";
         };
 
-        theme =
-          let
-            inherit (config.hm.lib.formats.rasi) mkLiteral;
-          in
+        theme = let
+          inherit (config.hm.lib.formats.rasi) mkLiteral;
+        in
           with cfg.colors.rofi; {
             "*" = {
               fg = mkLiteral "${fg}";

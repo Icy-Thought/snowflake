@@ -1,6 +1,7 @@
-{ config
-, home-manager
-, ...
+{
+  config,
+  home-manager,
+  ...
 }: {
   home-manager.users.${config.user.name}.xdg.enable = true;
 

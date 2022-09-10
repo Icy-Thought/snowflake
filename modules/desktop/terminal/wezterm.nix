@@ -1,8 +1,9 @@
-{ config
-, options
-, lib
-, pkgs
-, ...
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
 }:
 with lib;
 with lib.my; let
@@ -10,14 +11,13 @@ with lib.my; let
   fishCfg = "${config.snowflake.configDir}/fish";
   configDir = config.snowflake.configDir;
   themeCfg = config.modules.themes;
-in
-{
+in {
   options.modules.desktop.terminal.wezterm = {
     enable = mkBoolOpt false;
   };
 
   config = mkIf cfg.enable {
-    user.packages = with pkgs; [ wezterm ];
+    user.packages = with pkgs; [wezterm];
 
     hm.programs.fish = {
       interactiveShellInit = ''

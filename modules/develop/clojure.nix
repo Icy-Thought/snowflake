@@ -1,15 +1,15 @@
-{ config
-, options
-, lib
-, pkgs
-, ...
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.develop.clojure;
   devCfg = config.modules.develop.xdg;
-in
-{
+in {
   options.modules.develop.clojure = {
     enable = mkBoolOpt false;
   };

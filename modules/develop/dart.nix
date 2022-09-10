@@ -1,17 +1,17 @@
-{ inputs
-, config
-, options
-, lib
-, pkgs
-, ...
+{
+  inputs,
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.develop.dart;
   devCfg = config.modules.develop.xdg;
   codeCfg = config.modules.desktop.editors.vscodium;
-in
-{
+in {
   options.modules.develop.dart = {
     enable = mkBoolOpt false;
   };

@@ -1,7 +1,8 @@
-{ modulesPath
-, pkgs
-, config
-, ...
+{
+  modulesPath,
+  pkgs,
+  config,
+  ...
 }: {
   imports = [
     "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"
@@ -13,8 +14,8 @@
 
   boot = {
     kernelPackages = pkgs.linuxKernel.packages.linux_5_16;
-    kernelModules = [ "wl" ];
-    extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
+    kernelModules = ["wl"];
+    extraModulePackages = [config.boot.kernelPackages.broadcom_sta];
   };
 
   environment.systemPackages = with pkgs; [

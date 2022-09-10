@@ -1,14 +1,14 @@
-{ config
-, options
-, lib
-, pkgs
-, ...
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.editors;
-in
-{
+in {
   options.modules.desktop.editors = {
     default = mkOption {
       type = with types; str;

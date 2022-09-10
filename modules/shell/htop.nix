@@ -1,15 +1,15 @@
-{ config
-, options
-, lib
-, pkgs
-, ...
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.shell.htop;
   htop = config.home-manager.users.${config.user.name}.lib.htop;
-in
-{
+in {
   options.modules.shell.htop = {
     enable = mkBoolOpt false;
   };
@@ -18,29 +18,28 @@ in
     hm.programs.htop = {
       enable = true;
 
-      settings =
-        let
-          leftMeters = with htop;
-            htop.leftMeters [
-              (bar "AllCPUs2")
-              (bar "CPU")
-              (bar "Memory")
-              (bar "Swap")
-              (bar "PressureStallIOFull")
-              (bar "Battery")
-            ];
+      settings = let
+        leftMeters = with htop;
+          htop.leftMeters [
+            (bar "AllCPUs2")
+            (bar "CPU")
+            (bar "Memory")
+            (bar "Swap")
+            (bar "PressureStallIOFull")
+            (bar "Battery")
+          ];
 
-          rightMeters = with htop;
-            htop.rightMeters [
-              (text "Hostname")
-              (text "Tasks")
-              (text "LoadAverage")
-              (text "DiskIO")
-              (text "NetworkIO")
-              (text "Uptime")
-              (text "Clock")
-            ];
-        in
+        rightMeters = with htop;
+          htop.rightMeters [
+            (text "Hostname")
+            (text "Tasks")
+            (text "LoadAverage")
+            (text "DiskIO")
+            (text "NetworkIO")
+            (text "Uptime")
+            (text "Clock")
+          ];
+      in
         {
           color_scheme = 0;
           enable_mouse = true;
@@ -81,8 +80,7 @@ in
             COMM
           ];
         }
-        // leftMeters
-        // rightMeters;
+        // leftMeters rightMeters;
     };
   };
 }

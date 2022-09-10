@@ -1,14 +1,14 @@
-{ config
-, options
-, lib
-, pkgs
-, ...
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.shell.bash;
-in
-{
+in {
   options.modules.shell.bash = {
     enable = mkBoolOpt true;
   };
@@ -18,14 +18,14 @@ in
       hm.programs.direnv = {
         enable = true;
         nix-direnv.enable = true;
-        config.whitelist.prefix = [ "/home" ];
+        config.whitelist.prefix = ["/home"];
       };
 
       hm.programs.bash = {
         enable = true;
         historySize = 5000;
         historyFileSize = 5000;
-        historyIgnore = [ "nvim" "neofetch" ];
+        historyIgnore = ["nvim" "neofetch"];
 
         shellAliases = mkMerge [
           {
