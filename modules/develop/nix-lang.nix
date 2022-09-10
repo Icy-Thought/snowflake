@@ -18,10 +18,10 @@ in
   config = mkMerge [
     (mkIf cfg.enable {
       user.packages = with pkgs; [
+        alejandra
         nix-output-monitor
         nix-review
-        rnix-lsp
-        nixpkgs-fmt
+        nil # Nix Expression Language
       ];
     })
 
