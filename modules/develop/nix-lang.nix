@@ -21,7 +21,7 @@ in {
         alejandra
         nix-output-monitor
         nix-review
-        # nil # Nix Expression Language
+        nil # Nix Expression Language
       ];
     })
 
