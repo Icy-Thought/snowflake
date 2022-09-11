@@ -77,7 +77,10 @@ in {
         config = {
           "check_for_updates_on_startup" = "0";
           "default_dark_mode" = "1";
-          # "single_main_window_size" = "1980 1080";
+          "startup_commands" = builtins.concatStringsSep ";" [
+            "toggle_custom_color"
+            "toggle_statusbar"
+          ];
 
           "should_launch_new_instance" = "1";
           "sort_bookmarks_by_location" = "1";

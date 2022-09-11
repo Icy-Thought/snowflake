@@ -167,7 +167,6 @@ in {
       hm.programs.sioyek.config = with cfg.font; {
         "custom_background_color " = "";
         "custom_text_color " = "";
-        "startup_commands" = "toggle_custom_color";
 
         "text_highlight_color" = "";
         "visual_mark_color" = "";
