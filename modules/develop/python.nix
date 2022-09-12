@@ -18,17 +18,21 @@ in {
   config = mkMerge [
     (mkIf cfg.enable {
       user.packages = with pkgs;
-        [
-          python3
-          nodePackages.pyright
-        ]
+        [python3]
         ++ (with python3Packages; [
+          # Language-Server
+          mypy
+          pylint
+          python-lsp-server
+
+          # Code-Formatter
           black
-          ipython
           isort
+
+          # Toolset
+          ipython
           pip
           poetry
-          pylint
           setuptools
         ]);
 
