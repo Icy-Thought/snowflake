@@ -13,7 +13,7 @@ in {
   config = mkIf (cfg.active == "tokyonight") (mkMerge [
     {
       modules.themes = {
-        wallpaper = mkDefault ./assets/luiz-guimaraes-nyc.jpg;
+        wallpaper = mkDefault ./assets/rella-hotaru.png;
 
         gtk = {
           theme = "Tokyonight-Dark-BL";
