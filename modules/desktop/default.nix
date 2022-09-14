@@ -30,12 +30,12 @@ in {
 
     user.packages = with pkgs; [
       hyperfine
-      libqalculate
+      kalker
       (makeDesktopItem {
         name = "kalker";
-        desktopName = "Qalculate";
+        desktopName = "Kalker";
         icon = "calc";
-        exec = "${getExe wezterm} start qalc";
+        exec = "${getExe wezterm} start kalker";
         categories = ["Development"];
       })
       qgnomeplatform
