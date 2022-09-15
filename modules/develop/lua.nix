@@ -23,9 +23,14 @@ in {
         stylua
       ];
 
-      home.configFile = with config.snowflake; {
-        "stylua/stylua.toml".source = "${configDir}/formatters/stylua.toml";
-      };
+      home.configFile."stylua/stylua.toml".text = ''
+        column_width = 80
+        line_endings = "Unix"
+        indent_type = "Spaces"
+        indent_width = 4
+        quote_style = "AutoPreferDouble"
+        call_parentheses = "Always"
+      '';
     })
 
     (mkIf cfg.fennel.enable {

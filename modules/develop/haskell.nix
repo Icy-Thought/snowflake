@@ -18,7 +18,7 @@ in {
   config = mkMerge [
     (mkIf cfg.enable {
       user.packages = with pkgs;
-        [ghc]
+        [haskell.compiler.ghc902]
         ++ (with haskellPackages; [
           cabal-install
           haskell-language-server
@@ -27,12 +27,6 @@ in {
           hpack
           stylish-haskell
         ]);
-
-      home.configFile = with config.snowflake; {
-        "stylish-haskell/config.yaml" = {
-          source = "${configDir}/formatters/stylish-haskell.yaml";
-        };
-      };
     })
 
     (mkIf codeCfg.enable {
