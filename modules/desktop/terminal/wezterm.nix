@@ -9,7 +9,6 @@ with lib;
 with lib.my; let
   cfg = config.modules.desktop.terminal.wezterm;
   configDir = config.snowflake.configDir;
-  themeCfg = config.modules.themes;
 in {
   options.modules.desktop.terminal.wezterm = {
     enable = mkBoolOpt false;
@@ -19,7 +18,7 @@ in {
     {
       user.packages = with pkgs; [wezterm];
 
-      home.configFile = with themeCfg;
+      home.configFile = with config.modules.themes;
         mkMerge [
           {
             "wezterm/wezterm.lua".text = ''

@@ -9,14 +9,13 @@ with lib;
 with lib.my; let
   cfg = config.modules.desktop.terminal.kitty;
   configDir = config.snowflake.configDir;
-  themeCfg = config.modules.themes;
 in {
   options.modules.desktop.terminal.kitty = with types; {
     enable = mkBoolOpt false;
   };
 
   config = mkIf cfg.enable {
-    hm.programs.kitty = with themeCfg; (mkMerge [
+    hm.programs.kitty = with config.modules.themes; (mkMerge [
       {
         enable = true;
         settings = {
@@ -104,7 +103,7 @@ in {
       })
     ]);
 
-    home.configFile = with themeCfg; (mkMerge [
+    home.configFile = with config.modules.themes; (mkMerge [
       {
         "kitty/tab_bar.py" = {
           source = "${configDir}/kitty/${active}-bar.py";

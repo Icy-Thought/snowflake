@@ -9,7 +9,6 @@
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.media.player;
-  themeCfg = config.modules.themes;
 in {
   options.modules.desktop.media.player = {
     music.enable = mkBoolOpt false;

@@ -8,7 +8,6 @@
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.extra.dunst;
-  themeCfg = config.modules.themes;
 in {
   options.modules.desktop.extra.dunst = {
     enable = mkBoolOpt false;
@@ -17,7 +16,7 @@ in {
   config = mkIf cfg.enable {
     hm.services.dunst = {
       enable = true;
-      settings = with themeCfg; (mkMerge [
+      settings = with config.modules.themes; (mkMerge [
         {
           global = mkMerge [
             {

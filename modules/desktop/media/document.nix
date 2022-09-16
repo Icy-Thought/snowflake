@@ -8,7 +8,6 @@
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.media.document;
-  themeCfg = config.modules.themes;
 in {
   options.modules.desktop.media.document = {
     zathura.enable = mkBoolOpt false;
@@ -19,7 +18,7 @@ in {
     (mkIf cfg.zathura.enable {
       hm.programs.zathura = {
         enable = true;
-        options = with themeCfg; (mkMerge [
+        options = with config.modules.themes; (mkMerge [
           {
             adjust-open = "width";
             first-page-column = "1:1";

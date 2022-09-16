@@ -8,8 +8,6 @@
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.terminal.alacritty;
-  configDir = config.snowflake.configDir;
-  themeCfg = config.modules.themes;
 in {
   options.modules.desktop.terminal.alacritty = {
     enable = mkBoolOpt false;
@@ -19,7 +17,7 @@ in {
     hm.programs.alacritty = {
       enable = true;
 
-      settings = with themeCfg; (mkMerge [
+      settings = with config.modules.themes; (mkMerge [
         {
           env = {
             TERM = "alacritty-direct";
@@ -127,7 +125,7 @@ in {
       ]);
     };
 
-    home.configFile = with themeCfg; (mkIf (active != null) {
+    home.configFile = with config.modules.themes; (mkIf (active != null) {
       "alacritty/config/${active}.yml".text =
         ''
           font:
@@ -159,7 +157,7 @@ in {
 
             use_thin_strokes: true
         ''
-        + (with themeCfg.colors.main; ''
+        + (with config.modules.themes.colors.main; ''
           colors:
             primary:
               foreground: "${types.fg}"
