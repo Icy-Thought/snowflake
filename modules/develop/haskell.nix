@@ -17,16 +17,15 @@ in {
 
   config = mkMerge [
     (mkIf cfg.enable {
-      user.packages = with pkgs;
-        [haskell.compiler.ghc902]
-        ++ (with haskellPackages; [
-          cabal-install
-          haskell-language-server
-          hasktags
-          hoogle
-          hpack
-          stylish-haskell
-        ]);
+      user.packages = with pkgs.haskellPackages; [
+        ghc
+        cabal-install
+        haskell-language-server
+        hasktags
+        hoogle
+        hpack
+        stylish-haskell
+      ];
     })
 
     (mkIf codeCfg.enable {

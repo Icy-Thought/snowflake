@@ -41,18 +41,16 @@ in {
     modules.shell.starship.enable = true;
     hm.programs.starship.enableZshIntegration = true;
 
+    # Enable system-packages completions:
+    environment.pathsToLink = ["/share/zsh"];
+
     hm.programs.zsh = {
       enable = true;
-      enableCompletion = true;
-      enableAutosuggestions = true;
-      enableSyntaxHighlighting = true;
-
-      # Default config directory:
       dotDir = ".config/zsh";
-
       history = {
         size = 10000;
         expireDuplicatesFirst = true;
+        path = "$XDG_CONFIG_HOME/zsh/history";
       };
       historySubstringSearch.enable = true;
 
@@ -91,7 +89,7 @@ in {
         eval "$(zoxide init zsh)"
 
         # Solution <- Invalid subscript range
-        typeset -A ZSH_HIGHLIGHT_STYLES
+        # typeset -A ZSH_HIGHLIGHT_STYLES
 
         # -------===[ Theming ]===------- #
         if [[ -f "$HOME/.config/zsh/${themeCfg.active}.zsh" ]]; then
@@ -120,6 +118,19 @@ in {
           name = "zsh-fzf-tab"; # TODO: Source before auto-suggestion
           src = zsh-fzf-tab.src;
         }
+        {
+          name = "zsh-syntax-highlighting";
+          src = zsh-syntax-highlighting.src;
+        }
+        # {
+        #   name = "zsh-autocomplete";
+        #   src = zsh-autocomplete.src;
+        # }
+        {
+          name = "zsh-autosuggestions";
+          src = zsh-autosuggestions.src;
+        }
+
         {
           name = "zsh-autopair";
           src = zsh-autopair.src;
