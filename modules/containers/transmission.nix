@@ -57,12 +57,10 @@ in {
     };
 
     containers.transmission.config = {
-      # FIXME: after enough nix knowledge has been obtained.
       # TODO: config file /= existant
-      # + wg-quick-akkadianVPN /= exist + no pinging.
+      # + wg-quick-VPN /= exist + no pinging.
       # + nixos-container root-login transmission => only way to access (currently).
       # (?) web-app status unknown due to failed login attempt.
-      # + fish completion (?)
 
       systemd.services.transmission = {
         bindsTo = ["wg-quick-akkadianVPN"];

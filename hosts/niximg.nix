@@ -19,10 +19,9 @@
   };
 
   environment.systemPackages = with pkgs; [
-    fish
+    zsh
     git
     nixFlakes
   ];
 }
 # nix-build '<nixpkgs/nixos>' -A config.system.build.isoImage -I nixos-config=./default.nix
-

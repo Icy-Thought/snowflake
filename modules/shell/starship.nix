@@ -7,18 +7,15 @@
 }:
 with lib;
 with lib.my; let
-  cfg = config.modules.shell;
+  cfg = config.modules.shell.starship;
 in {
   options.modules.shell.starship = {
     enable = mkBoolOpt false;
   };
 
-  config = mkIf (cfg.starship.enable || cfg.fish.enable) {
+  config = mkIf cfg.enable {
     hm.programs.starship = {
       enable = true;
-      enableBashIntegration = true;
-      enableFishIntegration = true;
-
       settings = with config.modules.themes.colors.main; {
         add_newline = true;
         scan_timeout = 10;

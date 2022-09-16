@@ -44,7 +44,7 @@
 
   modules.shell = {
     git.enable = true;
-    fish.enable = true;
+    zsh.enable = true;
     gnupg.enable = true;
   };
 

@@ -14,26 +14,18 @@ in {
     enable = mkBoolOpt false;
   };
 
-  config = mkIf (cfg.enable || term.alacritty.enable) {
-    user.packages = with pkgs; [tmux];
+  config = mkIf (cfg.enable || term.alacritty.enable) (mkMerge [
+    {
+      user.packages = with pkgs; [tmux];
 
-    env = {
-      PATH = ["$TMUXIFIER/bin"];
-      TMUX_HOME = "$XDG_CONFIG_HOME/tmux";
-    };
+      env = {
+        PATH = ["$TMUXIFIER/bin"];
+        TMUX_HOME = "$XDG_CONFIG_HOME/tmux";
+      };
 
-    modules.themes.onReload.tmux = "${getExe pkgs.tmux} source-file $TMUX_HOME/tmux.conf";
+      modules.themes.onReload.tmux = "${getExe pkgs.tmux} source-file $TMUX_HOME/tmux.conf";
 
-    home.configFile = {
-      "fish/conf.d/tmux.fish".text = ''
-        # Start Tmux on Fish start
-        if status is-interactive && if ! set -q TMUX
-            exec tmux
-            end
-        end
-      '';
-
-      "tmux/tmux.conf".text = with config.modules.themes; ''
+      home.configFile."tmux/tmux.conf".text = with config.modules.themes; ''
         # --------=== General-Configurations
         set-option -g default-terminal "tmux-256color"
         set-option -g base-index 1
@@ -122,6 +114,16 @@ in {
         set-window-option -g clock-mode-colour "${colors.types.border}"
         set-window-option -g mode-style "fg=${colors.types.bg} bg=${colors.types.highlight} bold"
       '';
-    };
-  };
+    }
+
+    (mkIf config.modules.fish.enable {
+      home.configFile. "fish/conf.d/tmux.fish".text = ''
+        # Start Tmux on Fish start
+        if status is-interactive && if ! set -q TMUX
+            exec tmux
+            end
+        end
+      '';
+    })
+  ]);
 }

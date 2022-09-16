@@ -7,14 +7,14 @@
 }:
 with lib;
 with lib.my; let
-  cfg = config.modules.shell;
+  cfg = config.modules.shell.xplr;
 in {
   options.modules.shell.xplr = {
     enable = mkBoolOpt false;
     fennel.enable = mkBoolOpt false;
   };
 
-  config = mkIf (cfg.xplr.enable || cfg.fish.enable) {
+  config = mkIf cfg.enable {
     user.packages = with pkgs; [xplr];
 
     home.configFile."xplr/init.lua".text = ''
@@ -84,7 +84,7 @@ in {
       xplr.config.general.show_hidden = true
       xplr.config.general.enable_recover_mode = true
 
-      ${optionalString (cfg.xplr.fennel.enable) ''
+      ${optionalString (cfg.fennel.enable) ''
         -- add support for fennel
         local fennel = require("fennel")
 

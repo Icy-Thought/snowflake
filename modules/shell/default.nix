@@ -12,7 +12,7 @@ in {
   options.modules.shell = {
     default = mkOption {
       type = with types; package;
-      default = pkgs.fish;
+      default = pkgs.zsh;
       description = "Default system shell";
       example = "bash";
     };

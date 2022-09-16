@@ -13,41 +13,31 @@ in {
     enable = mkBoolOpt true;
   };
 
-  config = mkIf cfg.enable (mkMerge [
-    {
-      hm.programs.direnv = {
-        enable = true;
-        nix-direnv.enable = true;
-        config.whitelist.prefix = ["/home"];
+  config = mkIf cfg.enable {
+    hm.programs.direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+      config.whitelist.prefix = ["/home"];
+    };
+
+    # Enable starship-rs:
+    modules.shell.starship.enable = true;
+    hm.programs.starship.enableBashIntegration = true;
+
+    hm.programs.bash = {
+      enable = true;
+      historySize = 5000;
+      historyFileSize = 5000;
+      historyIgnore = ["btm" "htop" "macchina" "neofetch"];
+      shellAliases = {
+        ls = "exa -Slhg --icons";
+        lsa = "exa -Slhga --icons";
+        wup = "systemctl start wg-quick-Akkadian-VPN.service";
+        wud = "systemctl stop wg-quick-Akkadian-VPN.service";
       };
-
-      hm.programs.bash = {
-        enable = true;
-        historySize = 5000;
-        historyFileSize = 5000;
-        historyIgnore = ["nvim" "neofetch"];
-
-        shellAliases = mkMerge [
-          {
-            ls = "exa -Slhg --icons";
-            lsa = "exa -Slhga --icons";
-
-            wup = "systemctl start wg-quick-Akkadian-VPN.service";
-            wud = "systemctl stop wg-quick-Akkadian-VPN.service";
-          }
-
-          (mkIf config.modules.desktop.editors.emacs.enable {
-            temacs = "emacsclient -t";
-          })
-        ];
-      };
-    }
-
-    # Starship intended for fish rice -> side-effect (hehe)
-    (mkIf config.modules.shell.fish.enable {
-      hm.programs.bash.bashrcExtra = ''
+      bashrcExtra = ''
         eval "$(starship init bash)"
       '';
-    })
-  ]);
+    };
+  };
 }

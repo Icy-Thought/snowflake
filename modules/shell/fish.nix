@@ -7,7 +7,7 @@
 }:
 with lib;
 with lib.my; let
-  cfg = config.modules.shell.fish;
+  cfg = config.modules.shell;
   fishCfg = "${config.snowflake.configDir}/fish";
   themeCfg = config.modules.themes;
 in {
@@ -16,23 +16,14 @@ in {
     theme = config.modules.themes;
   };
 
-  config = mkIf cfg.enable {
-    user.packages = with pkgs; [
-      any-nix-shell
-      fzf
-      pwgen
-      yt-dlp
-      csview
+  config = mkIf cfg.fish.enable {
+    # Custom shell modules:
+    modules.shell.xplr.enable = true;
+    modules.shell.macchina.enable = true;
 
-      # alternatives for several gnu-tools
-      bottom
-      exa
-      fd
-      (ripgrep.override {
-        withPCRE2 = true;
-      })
-      zoxide
-    ];
+    # Enable starship-rs:
+    modules.shell.starship.enable = true;
+    hm.programs.starship.enableFishIntegration = true;
 
     # Enables vendor completion: https://nixos.wiki/wiki/Fish
     programs.fish.enable = true;
