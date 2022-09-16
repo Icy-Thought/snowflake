@@ -272,11 +272,15 @@ in {
         ];
     }
 
+    (mkIf config.modules.shell.zsh.enable {
+      home.configFile."zsh/abbreviations".text = ''
+        abbr imgcat="wezterm imgcat"
+      '';
+    })
+
     (mkIf config.modules.shell.fish.enable {
-      hm.programs.fish.interactiveShellInit = let
-        fishCfg = "${config.snowflake.configDir}/fish";
-      in ''
-        ${builtins.readFile "${fishCfg}/abbreviations/wezterm.fish"}
+      hm.programs.fish.interactiveShellInit = ''
+        abbr -ag imgcat "wezterm imgcat"
       '';
     })
   ]);

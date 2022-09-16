@@ -8,7 +8,7 @@
 with lib;
 with lib.my; let
   cfg = config.modules.shell.zsh;
-  # configDir = config.dotfiles.configDir;
+  zshDir = "${config.snowflake.configDir}/zsh";
 in {
   options.modules.shell.zsh = {
     enable = mkBoolOpt false;
@@ -46,12 +46,12 @@ in {
       enableCompletion = true;
       enableSyntaxHighlighting = true;
 
-      dotDir = "$XDG_CONFIG_HOME/zsh";
+      # Default config directory:
+      dotDir = ".config/zsh";
 
       history = {
-        expireDuplicatesFirst = true;
         size = 10000;
-        path = "$XDG_DATA_HOME/zsh/history";
+        expireDuplicatesFirst = true;
       };
       historySubstringSearch.enable = true;
 
@@ -66,7 +66,7 @@ in {
         unsetopt BEEP                       # Don't disturb the silence.
         setopt HIST_BEEP                    # Beep on non-existent history access.
         setopt IGNORE_EOF                   # Don't exit on End-Of-File.
-        WORDCHARS='_-*?[]~&.;!#$%^(){}<>    # Special chars == part of a word!
+        WORDCHARS='_-*?[]~&.;!#$%^(){}<>'   # Special chars == part of a word!
 
         # -------===[ Jobs ]===------- #
         setopt LONG_LIST_JOBS               # Long format job list.
@@ -85,6 +85,12 @@ in {
         setopt EXTENDED_GLOB                # Use extended globbing syntax.
         unsetopt GLOB_DOTS
         unsetopt AUTO_NAME_DIRS             # Don't add variable-stored paths to ~ list
+
+        # -------===[ Aliases ]===------- #
+        alias exa="exa --group-directories-first"
+
+        # -------===[ External Plugins ]===------- #
+        eval "$(zoxide init zsh)"
       '';
 
       plugins = with pkgs; [
@@ -97,7 +103,7 @@ in {
           src = zsh-vi-mode.src;
         }
         {
-          name = "zsh-fzf-tab";
+          name = "zsh-fzf-tab"; # TODO: Source before auto-suggestion
           src = zsh-fzf-tab.src;
         }
         {
@@ -119,5 +125,10 @@ in {
         }
       ];
     };
+
+    home.configFile."zsh/abbreviations".text = ''
+      ${builtins.readFile "${zshDir}/abbreviations/main.zsh"}
+      ${builtins.readFile "${zshDir}/abbreviations/git.zsh"}
+    '';
   };
 }

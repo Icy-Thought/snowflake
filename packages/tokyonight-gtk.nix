@@ -5,7 +5,7 @@
   gtk-engine-murrine,
   jdupes,
 }:
-stdenv.mkDerivation rec {
+stdenv.mkDerivation {
   pname = "tokyonight-gtk-theme";
   version = "unstable-2022-08-31";
 
