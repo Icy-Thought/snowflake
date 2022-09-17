@@ -16,31 +16,15 @@ in {
   };
 
   config = mkIf cfg.enable {
-    user.packages = with pkgs; [
-      any-nix-shell
-      fzf
-      pwgen
-      yt-dlp
-      csview
-
-      # GNU Alternatives
-      bottom
-      exa
-      fd
-      (ripgrep.override {withPCRE2 = true;})
-      zoxide
-    ];
+    modules.shell.usefulPkgs.enable = true;
 
     # Custom shell modules:
-    modules.shell.xplr.enable = true;
     modules.shell.macchina.enable = true;
+    modules.shell.xplr.enable = true;
 
     # Enable starship-rs:
     modules.shell.starship.enable = true;
     hm.programs.starship.enableZshIntegration = true;
-
-    # Enable system-packages completions:
-    environment.pathsToLink = ["/share/zsh"];
 
     hm.programs.zsh = {
       enable = true;
@@ -113,16 +97,16 @@ in {
         unsetopt GLOB_DOTS
         unsetopt AUTO_NAME_DIRS             # Don't add variable-stored paths to ~ list
 
-        # -------===[ Colored Man-Pages ]===------- #
-        export LESS_TERMCAP_md=$'\e[01;31m'
-        export LESS_TERMCAP_me=$'\e[0m'
-        export LESS_TERMCAP_se=$'\e[0m'
-        export LESS_TERMCAP_so=$'\e[01;44;33m'
-        export LESS_TERMCAP_ue=$'\e[0m'
-        export LESS_TERMCAP_us=$'\e[1;33m't
-
         # -------===[ External Plugins ]===------- #
         eval "$(zoxide init zsh)"
+
+        # -------===[ Aesthetics ]===------- #
+        source "$HOME/.config/zsh/fzf.zsh"
+        export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+
+        typeset -A ZSH_HIGHLIGHT_STYLES
+        source "$HOME/.config/zsh/${themeCfg.active}.zsh"
+
       '';
 
       shellAliases = {

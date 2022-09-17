@@ -16,9 +16,11 @@ in {
   };
 
   config = mkIf cfg.fish.enable {
+    modules.shell.usefulPkgs.enable = true;
+
     # Custom shell modules:
-    modules.shell.xplr.enable = true;
     modules.shell.macchina.enable = true;
+    modules.shell.xplr.enable = true;
 
     # Enable starship-rs:
     modules.shell.starship.enable = true;
@@ -56,28 +58,25 @@ in {
         ${builtins.readFile "${fishCfg}/aliases/main.fish"}
       '';
 
-      plugins = with pkgs.fishPlugins; [
-        {
-          name = "done";
-          src = done.src;
-        }
-        {
-          name = "autopair-fish";
-          src = autopair-fish.src;
-        }
-        {
-          name = "fzf-fish";
-          src = fzf-fish.src;
-        }
-      ];
+      plugins = let
+        mkPlugin = name: {
+          inherit name;
+          inherit (pkgs.fishPlugins."${name}") src;
+        };
+      in
+        builtins.map (p: mkPlugin p) [
+          "done"
+          "autopair-fish"
+          "fzf-fish"
+        ];
     };
 
     home.configFile = with config.modules.themes; (mkIf (active != null) {
       "fish/conf.d/fzf.fish".text = with colors.main; ''
         set -Ux FZF_DEFAULT_OPTS "\
-        --color=bg+:${normal.black},bg:${types.bg},spinner:${types.highlight},hl:${normal.red} \
-        --color=fg:${types.border},header:${normal.red},info:${normal.magenta},pointer:${types.highlight} \
-        --color=marker:${types.highlight},fg+:${types.border},prompt:${normal.magenta},hl+:${normal.red}"
+        --color=bg:,bg+:${types.bg},spinner:${types.panelbg},hl:${normal.red} \
+        --color=fg:${types.border},header:${normal.red},info:${normal.magenta},pointer:${types.border} \
+        --color=marker:${normal.magenta},fg+:${types.border},prompt:${types.border},hl+:${normal.red}"
       '';
 
       "fish/conf.d/${config.modules.themes.active}.fish".text = with colors.fish; ''

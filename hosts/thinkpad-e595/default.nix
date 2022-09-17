@@ -85,7 +85,7 @@
 
     shell = {
       git.enable = true;
-      zsh.enable = true;
+      fish.enable = true;
       gnupg.enable = true;
     };
   };
