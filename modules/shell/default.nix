@@ -33,6 +33,7 @@ in {
         pwgen
         yt-dlp
         csview
+        ripdrag
 
         # GNU Alternatives
         bat
