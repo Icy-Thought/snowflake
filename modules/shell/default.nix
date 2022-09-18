@@ -25,6 +25,8 @@ in {
     })
 
     (mkIf cfg.usefulPkgs.enable {
+      modules.shell.htop.enable = true;
+
       user.packages = with pkgs; [
         any-nix-shell
         fzf
@@ -34,7 +36,6 @@ in {
 
         # GNU Alternatives
         bat
-        bottom
         exa
         fd
         (ripgrep.override {withPCRE2 = true;})

@@ -1,8 +1,8 @@
 from libqtile import bar, layout, widget
 from libqtile.command import lazy
 from libqtile.config import DropDown, EzClick, EzKey, Group, Match, ScratchPad
-
 from modules.keymaps import keys
+
 from modules.themes import palette
 
 # Requires CJK-font (using: Sarasa Gothic)
@@ -80,9 +80,7 @@ groups.append(
     ScratchPad(
         "SPD",
         [
-            DropDown(
-                "Bottom", "wezterm start --always-new-process btm", **next_maximum
-            ),
+            DropDown("htop", "wezterm start --always-new-process htop", **next_maximum),
             DropDown(
                 "Discord",
                 "discord",
@@ -110,8 +108,8 @@ groups.append(
 
 keys.extend(
     [
-        EzKey("M-A-b", lazy.group["SPD"].dropdown_toggle("Bottom")),
         EzKey("M-A-e", lazy.group["SPD"].dropdown_toggle("Neovide")),
+        EzKey("M-A-h", lazy.group["SPD"].dropdown_toggle("htop")),
         EzKey("M-A-j", lazy.group["SPD"].dropdown_toggle("Discord")),
         EzKey("M-A-k", lazy.group["SPD"].dropdown_toggle("Element")),
         EzKey("M-A-s", lazy.group["SPD"].dropdown_toggle("Spotify")),

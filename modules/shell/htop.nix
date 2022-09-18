@@ -8,7 +8,7 @@
 with lib;
 with lib.my; let
   cfg = config.modules.shell.htop;
-  htop = config.home-manager.users.${config.user.name}.lib.htop;
+  htopLib = config.home-manager.users.${config.user.name}.lib.htop;
 in {
   options.modules.shell.htop = {
     enable = mkBoolOpt false;
@@ -19,8 +19,8 @@ in {
       enable = true;
 
       settings = let
-        leftMeters = with htop;
-          htop.leftMeters [
+        leftM = with htopLib;
+          leftMeters [
             (bar "AllCPUs2")
             (bar "CPU")
             (bar "Memory")
@@ -29,8 +29,8 @@ in {
             (bar "Battery")
           ];
 
-        rightMeters = with htop;
-          htop.rightMeters [
+        rightM = with htopLib;
+          rightMeters [
             (text "Hostname")
             (text "Tasks")
             (text "LoadAverage")
@@ -41,7 +41,6 @@ in {
           ];
       in
         {
-          color_scheme = 0;
           enable_mouse = true;
           show_program_path = false;
           show_thread_names = true;
@@ -55,16 +54,16 @@ in {
 
           # By default when not in tree view, sort by the CPU usage.
           sort_direction = 0;
-          sort_key = htop.fields.PERCENT_CPU;
+          sort_key = htopLib.fields.PERCENT_CPU;
 
           # By default when in tree view, sort by PID.
           tree_view = false;
           tree_sort_direction = 1;
-          tree_sort_key = htop.fields.PID;
+          tree_sort_key = htopLib.fields.PID;
           tree_view_always_by_pid = false;
 
           # The fields in the htop table.
-          fields = with htop.fields; [
+          fields = with htopLib.fields; [
             PID
             USER
             NICE
@@ -80,7 +79,8 @@ in {
             COMM
           ];
         }
-        // leftMeters rightMeters;
+        // leftM
+        // rightM;
     };
   };
 }
