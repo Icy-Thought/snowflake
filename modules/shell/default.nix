@@ -25,7 +25,7 @@ in {
     })
 
     (mkIf cfg.usefulPkgs.enable {
-      modules.shell.htop.enable = true;
+      modules.shell.btop.enable = true;
 
       user.packages = with pkgs; [
         any-nix-shell
