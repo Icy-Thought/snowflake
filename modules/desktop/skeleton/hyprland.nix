@@ -19,7 +19,7 @@ in {
     hm.imports = [inputs.hyprland.homeManagerModule];
 
     environment.systemPackages = with pkgs; [
-      feh
+      imv
       # hyprpaper
       # hyprpicker
       libnotify
@@ -28,6 +28,7 @@ in {
       wf-recorder
       wl-clipboard
       wlr-randr
+      wireplumber
     ];
 
     # Our beloved modules
@@ -39,7 +40,10 @@ in {
         mimeApps.enable = true; # mimeApps -> default launch application
         dunst.enable = true;
         # TODO EWW-bar
-        wofi.enable = true;
+        rofi = {
+          enable = true;
+          package = pkgs.rofi-wayland;
+        };
       };
     };
 
@@ -50,15 +54,16 @@ in {
         lightdm.enable = true;
         lightdm.greeters.mini.enable = true;
       };
-      windowManager.hyprland = {
+    };
+
+    hm.wayland.windowManager.hyprland = {
+      enable = true;
+      systemdIntegration = true;
+      xwayland = {
         enable = true;
-        systemdIntegration = true;
-        xwayland = {
-          enable = true;
-          hidpi = true;
-        };
-        extraConfig = builtins.readFile "${configDir}/hyprland/hyprland.conf"; # TODO
+        hidpi = true;
       };
+      extraConfig = builtins.readFile "${configDir}/hyprland/hyprland.conf"; # TODO
     };
 
     hm.services = {

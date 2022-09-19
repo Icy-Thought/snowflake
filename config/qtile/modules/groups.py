@@ -108,8 +108,8 @@ groups.append(
 
 keys.extend(
     [
+        EzKey("M-A-b", lazy.group["SPD"].dropdown_toggle("btop")),
         EzKey("M-A-e", lazy.group["SPD"].dropdown_toggle("Neovide")),
-        EzKey("M-A-h", lazy.group["SPD"].dropdown_toggle("btop")),
         EzKey("M-A-j", lazy.group["SPD"].dropdown_toggle("Discord")),
         EzKey("M-A-k", lazy.group["SPD"].dropdown_toggle("Element")),
         EzKey("M-A-s", lazy.group["SPD"].dropdown_toggle("Spotify")),

@@ -8,7 +8,6 @@
 with lib;
 with lib.my; let
   cfg = config.modules.themes;
-  configDir = config.snowflake.configDir;
 in {
   config = mkIf (cfg.active == "decay") (mkMerge [
     {
@@ -132,27 +131,22 @@ in {
       ];
 
       fonts.fonts = with pkgs; [
-        (nerdfonts.override {
-          fonts = ["VictorMono"];
-        })
+        (nerdfonts.override {fonts = ["VictorMono"];})
         twitter-color-emoji
       ];
     })
 
-    (mkIf
-      (config.modules.desktop.xmonad.enable
-        || config.modules.desktop.qtile.enable)
-      {
-        services.xserver.displayManager = {
-          # LightDM: Replace with LightDM-Web-Greeter theme
-          lightdm.greeters.mini.extraConfig = with cfg.colors.main; ''
-            text-color = "${normal.blue}"
-            password-background-color = "${normal.black}"
-            window-color = "${types.border}"
-            border-color = "${types.border}"
-          '';
-        };
-      })
+    (mkIf (config.modules.desktop.gnome.enable) {
+      services.xserver.displayManager = {
+        # LightDM: Replace with LightDM-Web-Greeter theme
+        lightdm.greeters.mini.extraConfig = with cfg.colors.main; ''
+          text-color = "${normal.blue}"
+          password-background-color = "${normal.black}"
+          window-color = "${types.border}"
+          border-color = "${types.border}"
+        '';
+      };
+    })
 
     (mkIf config.modules.desktop.extra.fcitx5.enable {
       home.file.".local/share/fcitx5/themes".source = pkgs.fetchFromGitHub {

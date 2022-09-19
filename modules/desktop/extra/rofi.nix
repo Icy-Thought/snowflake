@@ -12,6 +12,11 @@ with lib.my; let
 in {
   options.modules.desktop.extra.rofi = {
     enable = mkBoolOpt false;
+    package = mkOption {
+      type = types.package;
+      default = pkgs.rofi;
+      example = "pkgs.rofi-wayland";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -29,6 +34,7 @@ in {
 
     hm.programs.rofi = {
       enable = true;
+      package = cfg.package;
       plugins = with pkgs; [rofi-emoji];
 
       extraConfig = {

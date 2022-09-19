@@ -8,7 +8,6 @@
 with lib;
 with lib.my; let
   cfg = config.modules.themes;
-  configDir = config.snowflake.configDir;
 in {
   config = mkIf (cfg.active == "ayu") (mkMerge [
     {
@@ -132,27 +131,22 @@ in {
       ];
 
       fonts.fonts = with pkgs; [
-        (nerdfonts.override {
-          fonts = ["VictorMono"];
-        })
+        (nerdfonts.override {fonts = ["VictorMono"];})
         twitter-color-emoji
       ];
     })
 
-    (mkIf
-      (config.modules.desktop.xmonad.enable
-        || config.modules.desktop.qtile.enable)
-      {
-        services.xserver.displayManager = {
-          # LightDM: Replace with LightDM-Web-Greeter theme
-          lightdm.greeters.mini.extraConfig = with cfg.colors.main; ''
-            text-color = "${types.bg}"
-            password-background-color = "${normal.black}"
-            window-color = "${normal.yellow}"
-            border-color = "${types.bg}"
-          '';
-        };
-      })
+    (mkIf (!config.modules.desktop.gnome.enable) {
+      services.xserver.displayManager = {
+        # LightDM: Replace with LightDM-Web-Greeter theme
+        lightdm.greeters.mini.extraConfig = with cfg.colors.main; ''
+          text-color = "${types.bg}"
+          password-background-color = "${normal.black}"
+          window-color = "${normal.yellow}"
+          border-color = "${types.bg}"
+        '';
+      };
+    })
 
     (mkIf config.modules.desktop.extra.fcitx5.enable {
       home.file.".local/share/fcitx5/themes".source = pkgs.fetchFromGitHub {
