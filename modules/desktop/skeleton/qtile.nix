@@ -58,10 +58,8 @@ in {
       enable = true;
       displayManager = {
         defaultSession = "none+qtile";
-        lightdm = {
-          enable = true;
-          greeters.mini.enable = true;
-        };
+        lightdm.enable = true;
+        lightdm.greeters.mini.enable = true;
       };
 
       windowManager.session = [
@@ -78,13 +76,7 @@ in {
       ];
     };
 
-    services = {
-      autorandr.enable = true;
-      blueman.enable = true;
-    };
-
     hm.services = {
-      blueman-applet.enable = true;
       gnome-keyring.enable = true;
       network-manager-applet.enable = true;
       status-notifier-watcher.enable = true;

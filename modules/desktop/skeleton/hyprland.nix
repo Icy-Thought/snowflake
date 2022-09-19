@@ -11,19 +11,23 @@ with lib.my; let
   cfg = config.modules.desktop.xmonad;
   configDir = config.snowflake.configDir;
 in {
-  options.modules.desktop.xmonad = {
+  options.modules.desktop.hyprland = {
     enable = mkBoolOpt false;
   };
 
   config = mkIf cfg.enable {
+    hm.imports = [inputs.hyprland.homeManagerModule];
+
     environment.systemPackages = with pkgs; [
-      lightdm
-      libnotify
-      playerctl
-      gxmessage
-      xdotool
-      xclip
       feh
+      # hyprpaper
+      # hyprpicker
+      libnotify
+      lightdm
+      playerctl
+      wf-recorder
+      wl-clipboard
+      wlr-randr
     ];
 
     # Our beloved modules
@@ -33,28 +37,27 @@ in {
         customLayout.enable = true;
         fcitx5.enable = true;
         mimeApps.enable = true; # mimeApps -> default launch application
-        picom.enable = true;
         dunst.enable = true;
-        rofi.enable = true;
-        taffybar.enable = true;
+        # TODO EWW-bar
+        wofi.enable = true;
       };
     };
 
     services.xserver = {
       enable = true;
       displayManager = {
-        defaultSession = "none+xmonad";
+        defaultSession = "none+hyprland";
         lightdm.enable = true;
         lightdm.greeters.mini.enable = true;
       };
-      windowManager.xmonad = {
+      windowManager.hyprland = {
         enable = true;
-        enableContribAndExtras = true;
-        enableConfiguredRecompile = true;
-        # haskellPackages = with pkgs; [];
-        # ghcArgs = [];
-        # xmonadCliArgs = [];
-        config = "${configDir}/xmonad/xmonad.hs";
+        systemdIntegration = true;
+        xwayland = {
+          enable = true;
+          hidpi = true;
+        };
+        extraConfig = builtins.readFile "${configDir}/hyprland/hyprland.conf"; # TODO
       };
     };
 
@@ -68,7 +71,6 @@ in {
       enable = true;
       numlock.enable = true;
       preferStatusNotifierItems = true;
-      importedVariables = ["GDK_PIXBUF_MODULE_FILE"]; # Taffybar
     };
   };
 }

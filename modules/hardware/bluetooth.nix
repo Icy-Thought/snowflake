@@ -14,6 +14,8 @@ in {
   };
 
   config = mkIf cfg.enable {
+    # user.packages = with pkgs; [blueman];
+
     hardware.bluetooth = {
       enable = true;
       package = pkgs.bluezFull;

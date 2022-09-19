@@ -40,7 +40,6 @@ in {
       })
       qgnomeplatform
       gucharmap
-      xcolor
     ];
 
     fonts = {

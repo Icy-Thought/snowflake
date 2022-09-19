@@ -1,5 +1,5 @@
 {
-  description = "λ well-tailored and configureable NixOS system!";
+  description = "λ simple and configureable Nix-Flake repository!";
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
@@ -8,17 +8,21 @@
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # System application(s)
     agenix = {
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Window Manager(s)
+    hyprland.url = "github:hyprwm/Hyprland";
+
+    # Useful tool(s)
     emacs.url = "github:nix-community/emacs-overlay";
     nvim-nightly.url = "github:nix-community/neovim-nightly-overlay";
     rust.url = "github:oxalica/rust-overlay";
-    spicetify-nix = {
-      url = "github:the-argus/spicetify-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    spicetify-nix.url = "github:the-argus/spicetify-nix";
   };
 
   outputs = inputs @ {
