@@ -3,7 +3,6 @@
   options,
   lib,
   pkgs,
-  inputs,
   ...
 }:
 with lib;
@@ -16,8 +15,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-    nixpkgs.overlays = [inputs.helix.overlay];
-
     hm.programs.helix = {
       enable = true;
       package = pkgs.helix;
@@ -34,7 +31,7 @@ in {
         {
           name = "nix";
           formatter = {
-            command = "nixpkgs-fmt";
+            command = "alejandra";
             args = ["--stdin"];
           };
         }
@@ -81,6 +78,7 @@ in {
           space.l = {f = ":format";};
           space.w = {f = ":w";};
           space.q = {q = ":q";};
+          space.space = "file_picker";
         };
       };
     };
