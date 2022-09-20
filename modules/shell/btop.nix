@@ -8,6 +8,7 @@
 with lib;
 with lib.my; let
   cfg = config.modules.shell.btop;
+  themeCfg = config.modules.themes;
 in {
   options.modules.shell.btop = {
     enable = mkBoolOpt false;
@@ -27,7 +28,7 @@ in {
         background_update = true;
         disks_filter = "exclude=/boot";
 
-        color_theme = "Default";
+        color_theme = "${themeCfg.active}";
         rounded_corners = true;
         theme_background = false;
         truecolor = true;
@@ -90,6 +91,53 @@ in {
         selected_battery = "Auto";
         log_level = "DEBUG";
       };
+    };
+
+    home.configFile = mkIf (themeCfg.active != null) {
+      "btop/themes/${themeCfg.active}.theme".text = with themeCfg.colors.main; ''
+        theme[main_bg]="${types.bg}"
+        theme[main_fg]="${types.fg}"
+        theme[title]="${types.fg}"
+        theme[hi_fg]="${types.highlight}"
+        theme[selected_bg]="${types.border}"
+        theme[selected_fg]="${types.bg}"
+        theme[inactive_fg]="${bright.black}"
+        theme[graph_text]="${bright.yellow}"
+        theme[meter_bg]="${bright.black}"
+        theme[proc_misc]="${bright.yellow}"
+        theme[cpu_box]="${bright.cyan}"
+        theme[mem_box]="${bright.green}"
+        theme[net_box]="${bright.magenta}"
+        theme[proc_box]="${bright.yellow}"
+        theme[div_line]="${bright.black}"
+        theme[temp_start]="${bright.yellow}"
+        theme[temp_mid]="${types.panelbg}"
+        theme[temp_end]="${bright.red}"
+        theme[cpu_start]="${bright.cyan}"
+        theme[cpu_mid]="${types.border}"
+        theme[cpu_end]="${bright.green}"
+        theme[free_start]="${bright.green}"
+        theme[free_mid]="${bright.green}"
+        theme[free_end]="${bright.green}"
+        theme[cached_start]="${bright.yellow}"
+        theme[cached_mid]="${bright.yellow}"
+        theme[cached_end]="${bright.magenta}"
+        theme[available_start]="${bright.yellow}"
+        theme[available_mid]="${bright.yellow}"
+        theme[available_end]="${bright.yellow}"
+        theme[used_start]="${types.panelbg}"
+        theme[used_mid]="${types.panelbg}"
+        theme[used_end]="${bright.red}"
+        theme[download_start]="${bright.blue}"
+        theme[download_mid]="${bright.blue}"
+        theme[download_end]="${bright.magenta}"
+        theme[upload_start]="${bright.blue}"
+        theme[upload_mid]="${bright.blue}"
+        theme[upload_end]="${bright.magenta}"
+        theme[process_start]="${bright.cyan}"
+        theme[process_mid]="${types.border}"
+        theme[process_end]="${bright.green}"
+      '';
     };
   };
 }
