@@ -31,6 +31,11 @@ in {
       wireplumber
     ];
 
+    # (Firefox) wayland awareness!
+    environment.variables = {
+      MOZ_ENABLE_WAYLAND = "1";
+    };
+
     # Our beloved modules
     modules.desktop = {
       media.browser.nautilus.enable = true;
