@@ -21,8 +21,7 @@ in {
     secrets =
       if pathExists secretsFile
       then
-        mapAttrs'
-        (n: _:
+        mapAttrs' (n: _:
           nameValuePair (removeSuffix ".age" n) {
             file = "${secretsDir}/${n}";
             owner = mkDefault config.user.name;

@@ -87,5 +87,10 @@ in {
         };
       };
     })
+
+    (mkIf config.modules.shell.xonsh.enable {
+      programs.xonsh.config = ''
+      '';
+    })
   ]);
 }

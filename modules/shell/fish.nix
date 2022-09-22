@@ -33,7 +33,6 @@ in {
       enable = true;
       # useBabelfish = true;
       interactiveShellInit = ''
-        ${getExe pkgs.starship} init fish | source
         ${getExe pkgs.zoxide} init fish | source
         ${getExe pkgs.any-nix-shell} fish | source
 
