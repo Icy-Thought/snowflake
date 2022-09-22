@@ -12,9 +12,9 @@ in {
   options.modules.shell = {
     default = mkOption {
       type = with types; package;
-      default = pkgs.xonsh;
-      description = "Default system shell";
-      example = "bash";
+      default = pkgs.fish;
+      description = "Default sys-shell";
+      example = "xonsh";
     };
     usefulPkgs.enable = mkBoolOpt false;
   };
