@@ -126,71 +126,76 @@ in {
     };
 
     home.configFile = with config.modules.themes; (mkIf (active != null) {
-      "alacritty/config/${active}.yml".text =
-        ''
-          font:
-            normal:
-              family: "${font.sans.family}"
-              style:  "${font.sans.weight}"
+      alacritty-conf = {
+        target = "alacritty/config/${active}.yml";
+        text =
+          ''
+            font:
+              normal:
+                family: "${font.sans.family}"
+                style:  "${font.sans.weight}"
 
-            bold:
-              family: "${font.sans.family}"
-              style:  "Bold"
+              bold:
+                family: "${font.sans.family}"
+                style:  "Bold"
 
-            italic:
-              family: "${font.sans.family}"
-              style:  "${font.sans.weight} Italic"
+              italic:
+                family: "${font.sans.family}"
+                style:  "${font.sans.weight} Italic"
 
-            bold_italics:
-              family: "${font.sans.family}"
-              style:  "${font.sans.weight} Italic"
+              bold_italics:
+                family: "${font.sans.family}"
+                style:  "${font.sans.weight} Italic"
 
-            size: ${toString (font.mono.size)}
+              size: ${toString (font.mono.size)}
 
-            offset:
-              x: 0
-              y: 0
+              offset:
+                x: 0
+                y: 0
 
-            glyph_offset:
-              x: 0
-              y: 0
+              glyph_offset:
+                x: 0
+                y: 0
 
-            use_thin_strokes: true
-        ''
-        + (with config.modules.themes.colors.main; ''
-          colors:
-            primary:
-              foreground: "${types.fg}"
-              background: "${types.bg}"
+              use_thin_strokes: true
+          ''
+          + (
+            with config.modules.themes.colors.main; ''
+              colors:
+                primary:
+                  foreground: "${types.fg}"
+                  background: "${types.bg}"
 
-            cursor:
-              text:   "${types.bg}"
-              cursor: "${normal.yellow}"
+                cursor:
+                  text:   "${types.bg}"
+                  cursor: "${normal.yellow}"
 
-            selection:
-              text:       "${types.bg}"
-              background: "${types.highlight}"
+                selection:
+                  text:       "${types.bg}"
+                  background: "${types.highlight}"
 
-            normal:
-              black:      "${normal.black}"
-              red:        "${normal.red}"
-              green:      "${normal.green}"
-              yellow:     "${normal.yellow}"
-              blue:       "${normal.blue}"
-              magenta:    "${normal.magenta}"
-              cyan:       "${normal.cyan}"
-              white:      "${normal.white}"
+                normal:
+                  black:      "${normal.black}"
+                  red:        "${normal.red}"
+                  green:      "${normal.green}"
+                  yellow:     "${normal.yellow}"
+                  blue:       "${normal.blue}"
+                  magenta:    "${normal.magenta}"
+                  cyan:       "${normal.cyan}"
+                  white:      "${normal.white}"
 
-            bright:
-              black:      "${bright.black}"
-              red:        "${bright.red}"
-              green:      "${bright.green}"
-              yellow:     "${bright.yellow}"
-              blue:       "${bright.blue}"
-              magenta:    "${bright.magenta}"
-              cyan:       "${bright.cyan}"
-              white:      "${bright.white}"
-        '');
+                bright:
+                  black:      "${bright.black}"
+                  red:        "${bright.red}"
+                  green:      "${bright.green}"
+                  yellow:     "${bright.yellow}"
+                  blue:       "${bright.blue}"
+                  magenta:    "${bright.magenta}"
+                  cyan:       "${bright.cyan}"
+                  white:      "${bright.white}"
+            ''
+          );
+      };
     });
   };
 }

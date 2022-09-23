@@ -80,78 +80,81 @@ in {
       package = pkgs.xonsh;
     };
 
-    home.configFile."xonsh/rc.xsh".text = let
-      aliases = {
-        exa = "exa --group-directories-first";
-      };
+    home.configFile.xonsh-init = {
+      target = "xonsh/rc.xsh";
+      text = let
+        aliases = {
+          exa = "exa --group-directories-first";
+        };
 
-      abbrevs = {
-        ls = "exa -Slhg --icons";
-        lsa = "exa -Slhga --icons";
-        tree = "exa -SlhgT --icons";
-        emc = "emacsclient -c";
-        tmc = "emacsclient -t";
-        usbStat = "watch rg -e Dirty: -e Writeback: /proc/meminfo";
-        wget = "curl -O";
+        abbrevs = {
+          ls = "exa -Slhg --icons";
+          lsa = "exa -Slhga --icons";
+          tree = "exa -SlhgT --icons";
+          emc = "emacsclient -c";
+          tmc = "emacsclient -t";
+          usbStat = "watch rg -e Dirty: -e Writeback: /proc/meminfo";
+          wget = "curl -O";
 
-        # -------===[ Nix ]===------- #
-        nb = "nix-build -E 'with import <nixpkgs> {}; callPackage ./. {}'";
-        np = "nix-shell -p";
-        nls = "nix-store --query --requisites /run/current-system | cut -d- -f2- | sort | uniq";
+          # -------===[ Nix ]===------- #
+          nb = "nix-build -E 'with import <nixpkgs> {}; callPackage ./. {}'";
+          np = "nix-shell -p";
+          nls = "nix-store --query --requisites /run/current-system | cut -d- -f2- | sort | uniq";
 
-        # -------===[ Sys-Management ]===------- #
-        bat0 = "upower -i /org/freedesktop/UPower/devices/battery_BAT0";
-        flkup = "nix flake update";
-        thkup = "nixos-rebuild switch --use-remote-sudo --flake .#thinkpad-e595 --impure";
-        proup = "nixos-rebuild switch --use-remote-sudo --flake .#probook-440g3 --impure";
-        d2nix = "dconf dump / | dconf2nix > dconf.nix";
+          # -------===[ Sys-Management ]===------- #
+          bat0 = "upower -i /org/freedesktop/UPower/devices/battery_BAT0";
+          flkup = "nix flake update";
+          thkup = "nixos-rebuild switch --use-remote-sudo --flake .#thinkpad-e595 --impure";
+          proup = "nixos-rebuild switch --use-remote-sudo --flake .#probook-440g3 --impure";
+          d2nix = "dconf dump / | dconf2nix > dconf.nix";
 
-        # -------===[ Others ]===------- #
-        wud = "systemctl stop wg-quick-akkadianVPN.service";
-        wup = "systemctl start wg-quick-akkadianVPN.service";
-        yta = "youtube-dl -x --audio-format mp3";
-        ytv = "youtube-dl --best-quality";
-      };
-    in ''
-      # -------===[ Settings ]===------- #
-      $AUTO_CD = True
-      $COLOR_RESULTS = True
-      $COMPLETIONS_BRACKETS = True
-      $ENABLE_ASYNC_PROMPT = True
-      $XONSH_HISTORY_SIZE = "10000 commands"
-      $XONSH_STORE_STDOUT = True
-      __xonsh__.env['XONTRIB_OUTPUT_SEARCH_KEY'] = 'i'
+          # -------===[ Others ]===------- #
+          wud = "systemctl stop wg-quick-akkadianVPN.service";
+          wup = "systemctl start wg-quick-akkadianVPN.service";
+          yta = "youtube-dl -x --audio-format mp3";
+          ytv = "youtube-dl --best-quality";
+        };
+      in ''
+        # -------===[ Settings ]===------- #
+        $AUTO_CD = True
+        $COLOR_RESULTS = True
+        $COMPLETIONS_BRACKETS = True
+        $ENABLE_ASYNC_PROMPT = True
+        $XONSH_HISTORY_SIZE = "10000 commands"
+        $XONSH_STORE_STDOUT = True
+        __xonsh__.env['XONTRIB_OUTPUT_SEARCH_KEY'] = 'i'
 
-      #$TITLE = '{current_job:{} | }{user}@{hostname}: {cwd}'
+        #$TITLE = '{current_job:{} | }{user}@{hostname}: {cwd}'
 
-      # -------===[ Core Plugins ]===------- #
-      xontrib load abbrevs
-      xontrib load bashisms
+        # -------===[ Core Plugins ]===------- #
+        xontrib load abbrevs
+        xontrib load bashisms
 
-      # -------===[ 3rd Party Plugins ]===------- #
-      import sys
-      sys.path.extend(${builtins.toJSON xontribs})
-      xontrib load cmd_done direnv fzf-widgets hist_navigator output_search readable-traceback schedule
+        # -------===[ 3rd Party Plugins ]===------- #
+        import sys
+        sys.path.extend(${builtins.toJSON xontribs})
+        xontrib load cmd_done direnv fzf-widgets hist_navigator output_search readable-traceback schedule
 
-      # -------===[ Aliases & Abbreviations ]===------- #
-      ${lib.concatStrings (lib.mapAttrsToList (k: v:
-        with lib.strings; ''
-          aliases[${escapeNixString k}] = ${escapeNixString v}
-        '')
-      aliases)}
+        # -------===[ Aliases & Abbreviations ]===------- #
+        ${lib.concatStrings (lib.mapAttrsToList (k: v:
+          with lib.strings; ''
+            aliases[${escapeNixString k}] = ${escapeNixString v}
+          '')
+        aliases)}
 
-      ${lib.concatStrings (lib.mapAttrsToList (k: v:
-        with lib.strings; ''
-          abbrevs[${escapeNixString k}] = ${escapeNixString v}
-        '')
-      abbrevs)}
+        ${lib.concatStrings (lib.mapAttrsToList (k: v:
+          with lib.strings; ''
+            abbrevs[${escapeNixString k}] = ${escapeNixString v}
+          '')
+        abbrevs)}
 
-      # -------===[ Executing 3rd-Plugins ]===------- #
-      ## Zoxide
-      execx($(zoxide init xonsh), 'exec', __xonsh__.ctx, filename='zoxide')
+        # -------===[ Executing 3rd-Plugins ]===------- #
+        ## Zoxide
+        execx($(zoxide init xonsh), 'exec', __xonsh__.ctx, filename='zoxide')
 
-      ## Starship-rs:
-      execx($(starship init xonsh))
-    '';
+        ## Starship-rs:
+        execx($(starship init xonsh))
+      '';
+    };
   };
 }

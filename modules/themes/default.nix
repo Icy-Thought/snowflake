@@ -159,7 +159,8 @@ in {
       let
         xrdb = ''cat "$XDG_CONFIG_HOME"/xtheme/* | ${getExe pkgs.xorg.xrdb} -load'';
       in {
-        home.configFile."xtheme.init" = {
+        home.configFile.xtheme-init = {
+          target = "xtheme.init";
           text = xrdb;
           executable = true;
         };
@@ -169,89 +170,101 @@ in {
 
     {
       home.configFile = {
-        "xtheme/00-init".text = with cfg.colors.main; ''
-          #define bg   ${types.bg}
-          #define fg   ${types.fg}
-          #define blk  ${normal.black}
-          #define bblk ${bright.black}
-          #define red  ${normal.red}
-          #define bred ${bright.red}
-          #define grn  ${normal.green}
-          #define bgrn ${bright.green}
-          #define ylw  ${normal.yellow}
-          #define bylw ${bright.yellow}
-          #define blu  ${normal.blue}
-          #define bblu ${bright.blue}
-          #define mag  ${normal.magenta}
-          #define bmag ${bright.magenta}
-          #define cyn  ${normal.cyan}
-          #define bcyn ${bright.cyan}
-          #define wht  ${normal.white}
-          #define bwht ${bright.white}
-        '';
+        xtheme-definitions = {
+          target = "xtheme/00-init";
+          text = with cfg.colors.main; ''
+            #define bg   ${types.bg}
+            #define fg   ${types.fg}
+            #define blk  ${normal.black}
+            #define bblk ${bright.black}
+            #define red  ${normal.red}
+            #define bred ${bright.red}
+            #define grn  ${normal.green}
+            #define bgrn ${bright.green}
+            #define ylw  ${normal.yellow}
+            #define bylw ${bright.yellow}
+            #define blu  ${normal.blue}
+            #define bblu ${bright.blue}
+            #define mag  ${normal.magenta}
+            #define bmag ${bright.magenta}
+            #define cyn  ${normal.cyan}
+            #define bcyn ${bright.cyan}
+            #define wht  ${normal.white}
+            #define bwht ${bright.white}
+          '';
+        };
+        xtheme-colors = {
+          target = "xtheme/05-colors";
+          text = ''
+            *.foreground: fg
+            *.background: bg
+            *.color0:  blk
+            *.color1:  red
+            *.color2:  grn
+            *.color3:  ylw
+            *.color4:  blu
+            *.color5:  mag
+            *.color6:  cyn
+            *.color7:  wht
+            *.color8:  bblk
+            *.color9:  bred
+            *.color10: bgrn
+            *.color11: bylw
+            *.color12: bblu
+            *.color13: bmag
+            *.color14: bcyn
+            *.color15: bwht
+          '';
+        };
+        xtheme-fonts = {
+          target = "xtheme/05-fonts";
+          text = with cfg.font.mono; ''
+            *.font: xft:${family}:style=${weight}:pixelsize=${toString size}
+            Emacs.font: ${family}:style=${weight}:pixelsize=${toString size}
+          '';
+        };
+        xtheme-cursor = {
+          target = "xtheme/06-cursor";
+          text = with cfg.pointer; ''
+            Xcursor.name: left_ptr
+            Xcursor.size: ${toString size}
+            Xcursor.theme: ${name}
+          '';
+        };
+        gtk3-settings = {
+          target = "gtk-3.0/settings.ini";
+          text = with cfg.gtk; ''
+            [Settings]
+            ${optionalString (theme != "")
+              "gtk-theme-name=${theme}"}
 
-        "xtheme/05-colors".text = ''
-          *.foreground: fg
-          *.background: bg
-          *.color0:  blk
-          *.color1:  red
-          *.color2:  grn
-          *.color3:  ylw
-          *.color4:  blu
-          *.color5:  mag
-          *.color6:  cyn
-          *.color7:  wht
-          *.color8:  bblk
-          *.color9:  bred
-          *.color10: bgrn
-          *.color11: bylw
-          *.color12: bblu
-          *.color13: bmag
-          *.color14: bcyn
-          *.color15: bwht
-        '';
+            ${optionalString (iconTheme != "")
+              "gtk-icon-theme-name=${iconTheme}"}
 
-        "xtheme/05-fonts".text = with cfg.font.mono; ''
-          *.font: xft:${family}:style=${weight}:pixelsize=${toString size}
-          Emacs.font: ${family}:style=${weight}:pixelsize=${toString size}
-        '';
-
-        "xtheme/06-cursor".text = with cfg.pointer; ''
-          Xcursor.name: left_ptr
-          Xcursor.size: ${toString size}
-          Xcursor.theme: ${name}
-        '';
-
-        # GTK
-        "gtk-3.0/settings.ini".text = with cfg.gtk; ''
-          [Settings]
-          ${optionalString (theme != "")
-            "gtk-theme-name=${theme}"}
-
-          ${optionalString (iconTheme != "")
-            "gtk-icon-theme-name=${iconTheme}"}
-
-          gtk-fallback-icon-theme=gnome
-          gtk-application-prefer-dark-theme=true
-          gtk-xft-hinting=1
-          gtk-xft-hintstyle=hintfull
-          gtk-xft-rgba=none
-        '';
-
-        # GTK2 global theme (widget and icon theme)
-        "gtk-2.0/gtkrc".text = with cfg; ''
-          ${optionalString (gtk.theme != "")
-            ''gtk-theme-name="${gtk.theme}"''}
-          ${optionalString (gtk.iconTheme != "")
-            ''gtk-icon-theme-name="${gtk.iconTheme}"''}
-          gtk-font-name="Sans ${toString (font.sans.size)}"
-        '';
-
-        # QT4/5 global theme
-        "Trolltech.conf".text = with cfg.gtk; ''
-          [Qt]
-          ${optionalString (theme != "") "style=${theme}"}
-        '';
+            gtk-fallback-icon-theme=gnome
+            gtk-application-prefer-dark-theme=true
+            gtk-xft-hinting=1
+            gtk-xft-hintstyle=hintfull
+            gtk-xft-rgba=none
+          '';
+        };
+        gtk2-settings = {
+          target = "gtk-2.0/gtkrc";
+          text = with cfg; ''
+            ${optionalString (gtk.theme != "")
+              ''gtk-theme-name="${gtk.theme}"''}
+            ${optionalString (gtk.iconTheme != "")
+              ''gtk-icon-theme-name="${gtk.iconTheme}"''}
+            gtk-font-name="Sans ${toString (font.sans.size)}"
+          '';
+        };
+        qt-settings = {
+          target = "Trolltech.conf";
+          text = with cfg.gtk; ''
+            [Qt]
+            ${optionalString (theme != "") "style=${theme}"}
+          '';
+        };
       };
 
       home.pointerCursor = with cfg.pointer; {

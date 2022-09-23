@@ -36,10 +36,13 @@ in {
         NODE_REPL_HISTORY = "$XDG_CACHE_HOME/node/repl_history";
       };
 
-      home.configFile."npm/config".text = ''
-        cache=$XDG_CACHE_HOME/npm
-        prefix=$XDG_DATA_HOME/npm
-      '';
+      home.configFile.npm-conf = {
+        target = "npm/config";
+        text = ''
+          cache=$XDG_CACHE_HOME/npm
+          prefix=$XDG_DATA_HOME/npm
+        '';
+      };
     })
   ];
 }

@@ -168,19 +168,22 @@ in {
       home.file = let
         cfgPath = ".mozilla/firefox";
       in {
-        "${cfgPath}/profiles.ini".text = ''
-          [Profile0]
-          Name=dev-edition-default
-          IsRelative=1
-          Path=${cfg.profileName}.dev-edition-default
-          Default=1
+        firefox-profiles = {
+          target = "${cfgPath}/profiles.ini";
+          text = ''
+            [Profile0]
+            Name=dev-edition-default
+            IsRelative=1
+            Path=${cfg.profileName}.dev-edition-default
+            Default=1
 
-          [General]
-          StartWithLastProfile=1
-          Version=2
-        '';
-
-        "${cfgPath}/${cfg.profileName}.dev-edition-default/user.js" = mkIf (cfg.settings != {} || cfg.extraConfig != "") {
+            [General]
+            StartWithLastProfile=1
+            Version=2
+          '';
+        };
+        user-js = mkIf (cfg.settings != {} || cfg.extraConfig != "") {
+          target = "${cfgPath}/${cfg.profileName}.dev-edition-default/user.js";
           text = ''
             ${concatStrings (mapAttrsToList (name: value: ''
                 user_pref("${name}", ${builtins.toJSON value});
@@ -189,12 +192,14 @@ in {
             ${cfg.extraConfig}
           '';
         };
-
-        "${cfgPath}/${cfg.profileName}.dev-edition-default/chrome/userChrome.css" =
-          mkIf (cfg.userChrome != "") {text = cfg.userChrome;};
-
-        "${cfgPath}/${cfg.profileName}.dev-edition-default/chrome/userContent.css" =
-          mkIf (cfg.userContent != "") {text = cfg.userContent;};
+        user-chome = mkIf (cfg.userChrome != "") {
+          target = "${cfgPath}/${cfg.profileName}.dev-edition-default/chrome/userChrome.css";
+          text = cfg.userChrome;
+        };
+        user-content = mkIf (cfg.userContent != "") {
+          target = "${cfgPath}/${cfg.profileName}.dev-edition-default/chrome/userContent.css";
+          text = cfg.userContent;
+        };
       };
     }
   ]);

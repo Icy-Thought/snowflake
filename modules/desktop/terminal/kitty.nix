@@ -112,53 +112,56 @@ in {
 
       (mkIf (active != null) {
         # TODO: Find ONE general nix-automation entry for VictorMono
-        "kitty/config/${active}.conf".text =
-          ''
-            font_family               Victor Mono SemiBold Nerd Font Complete
-            italic_font               Victor Mono SemiBold Italic Nerd Font Complete
-            bold_font                 Victor Mono Bold Nerd Font Complete
-            bold_italic_font          Victor Mono Bold Italic Nerd Font Complete
-            font_size                 ${toString (font.mono.size)}
-          ''
-          + (with colors.main; ''
+        kitty-conf = {
+          target = "kitty/config/${active}.conf";
+          text =
+            ''
+              font_family               Victor Mono SemiBold Nerd Font Complete
+              italic_font               Victor Mono SemiBold Italic Nerd Font Complete
+              bold_font                 Victor Mono Bold Nerd Font Complete
+              bold_italic_font          Victor Mono Bold Italic Nerd Font Complete
+              font_size                 ${toString (font.mono.size)}
+            ''
+            + (with colors.main; ''
 
-            foreground                ${types.fg}
-            background                ${types.bg}
+              foreground                ${types.fg}
+              background                ${types.bg}
 
-            cursor                    ${normal.yellow}
-            cursor_text_color         ${types.bg}
+              cursor                    ${normal.yellow}
+              cursor_text_color         ${types.bg}
 
-            tab_bar_background        ${types.bg}
-            tab_title_template        "{fmt.fg._7976ab}{fmt.bg.default} ○ {index}:{f'{title[:6]}…{title[-6:]}' if title.rindex(title[-1]) + 1 > 25 else title}{' []' if layout_name == 'stack' else '''} "
-            active_tab_title_template "{fmt.fg._f2cdcd}{fmt.bg.default} 綠{index}:{f'{title[:6]}…{title[-6:]}' if title.rindex(title[-1]) + 1 > 25 else title}{' []' if layout_name == 'stack' else '''} "
+              tab_bar_background        ${types.bg}
+              tab_title_template        "{fmt.fg._7976ab}{fmt.bg.default} ○ {index}:{f'{title[:6]}…{title[-6:]}' if title.rindex(title[-1]) + 1 > 25 else title}{' []' if layout_name == 'stack' else '''} "
+              active_tab_title_template "{fmt.fg._f2cdcd}{fmt.bg.default} 綠{index}:{f'{title[:6]}…{title[-6:]}' if title.rindex(title[-1]) + 1 > 25 else title}{' []' if layout_name == 'stack' else '''} "
 
-            selection_foreground      ${types.bg}
-            selection_background      ${types.highlight}
+              selection_foreground      ${types.bg}
+              selection_background      ${types.highlight}
 
-            color0                    ${normal.black}
-            color8                    ${bright.black}
+              color0                    ${normal.black}
+              color8                    ${bright.black}
 
-            color1                    ${normal.red}
-            color9                    ${bright.red}
+              color1                    ${normal.red}
+              color9                    ${bright.red}
 
-            color2                    ${normal.green}
-            color10                   ${bright.green}
+              color2                    ${normal.green}
+              color10                   ${bright.green}
 
-            color3                    ${normal.yellow}
-            color11                   ${bright.yellow}
+              color3                    ${normal.yellow}
+              color11                   ${bright.yellow}
 
-            color4                    ${normal.blue}
-            color12                   ${bright.blue}
+              color4                    ${normal.blue}
+              color12                   ${bright.blue}
 
-            color5                    ${normal.magenta}
-            color13                   ${bright.magenta}
+              color5                    ${normal.magenta}
+              color13                   ${bright.magenta}
 
-            color6                    ${normal.cyan}
-            color14                   ${bright.cyan}
+              color6                    ${normal.cyan}
+              color14                   ${bright.cyan}
 
-            color7                    ${normal.white}
-            color15                   ${bright.white}
-          '');
+              color7                    ${normal.white}
+              color15                   ${bright.white}
+            '');
+        };
       })
     ]);
   };
