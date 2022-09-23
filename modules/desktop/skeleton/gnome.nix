@@ -8,7 +8,6 @@
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.gnome;
-  configDir = config.snowflake.configDir;
 in {
   options.modules.desktop.gnome = {
     enable = mkBoolOpt false;

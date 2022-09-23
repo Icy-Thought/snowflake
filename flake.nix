@@ -14,6 +14,10 @@
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    kmonad = {
+      url = github:kmonad/kmonad?dir=nix;
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Window Manager(s)
     hyprland.url = "github:hyprwm/Hyprland";

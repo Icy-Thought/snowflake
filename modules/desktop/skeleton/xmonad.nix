@@ -30,7 +30,6 @@ in {
     modules.desktop = {
       media.browser.nautilus.enable = true;
       extra = {
-        customLayout.enable = true;
         fcitx5.enable = true;
         mimeApps.enable = true; # mimeApps -> default launch application
         picom.enable = true;

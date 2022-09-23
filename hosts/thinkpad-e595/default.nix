@@ -10,8 +10,12 @@
     hardware = {
       audio.enable = true;
       bluetooth.enable = true;
-      razer.enable = true;
       input.enable = true;
+      # kmonad = {
+      #   enable = true;
+      #   deviceID = "/dev/input/by-path/platform-i8042-serio-0-event-kbd";
+      # };
+      razer.enable = true;
     };
 
     networking = {
