@@ -31,7 +31,7 @@ in {
         {
           name = "nix";
           formatter = {
-            command = "alejandra";
+            command = "nixpkgs-fmt";
             args = ["--stdin"];
           };
         }

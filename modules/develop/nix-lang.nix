@@ -18,7 +18,7 @@ in {
   config = mkMerge [
     (mkIf cfg.enable {
       user.packages = with pkgs; [
-        alejandra
+        nixpkgs-fmt
         nix-output-monitor
         nix-review
         nil # Nix Expression Language
