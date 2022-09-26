@@ -76,7 +76,7 @@ in
     })
 
     (mkIf cfg.ereshkigal.enable {
-      modules.develop.lua.fennel.enable = true;
+      modules.develop.lua.fnlized.enable = true;
 
       home.configFile = {
         ereshkigal-config = {

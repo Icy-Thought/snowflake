@@ -31,7 +31,7 @@ stdenv.mkDerivation {
     description = "Free programming font with cursive italics and ligatures";
     homepage = "https://rubjo.github.io/victor-mono";
     license = licenses.ofl;
-    maintainers = with maintainers; [ Icy-Thought ];
+    # maintainers = with maintainers; [ Icy-Thought ];
     platforms = platforms.linux;
   };
 }

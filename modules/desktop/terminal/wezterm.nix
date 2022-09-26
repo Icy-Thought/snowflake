@@ -280,9 +280,10 @@ with lib.my; {
         text = ''
           abbr imgcat="wezterm imgcat"
         '';
-      })
+      };
+    })
 
-      (mkIf config.modules.shell.fish.enable {
+    (mkIf config.modules.shell.fish.enable {
       hm.programs.fish.interactiveShellInit = ''
         abbr -ag imgcat "wezterm imgcat"
       '';

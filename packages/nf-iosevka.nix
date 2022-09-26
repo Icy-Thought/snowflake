@@ -39,7 +39,7 @@ stdenv.mkDerivation {
     description = "Versatile typeface for code, from code";
     homepage = "https://be5invis.github.io/Iosevka";
     license = licenses.ofl;
-    maintainers = with maintainers; [ Icy-Thought ];
+    # maintainers = with maintainers; [ Icy-Thought ];
     platforms = platforms.all;
   };
 }

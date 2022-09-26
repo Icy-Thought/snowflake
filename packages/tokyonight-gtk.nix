@@ -37,7 +37,7 @@ stdenv.mkDerivation {
     description = "A GTK theme based on the Tokyo Night colour palette";
     homepage = "https://github.com/Fausto-Korpsvart/Tokyo-Night-GTK-Theme";
     license = licenses.gpl3Only;
+    # maintainers = [ Icy-Thought ];
     platforms = platforms.all;
-    maintainers = [ Icy-Thought ];
   };
 }
