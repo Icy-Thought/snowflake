@@ -1,10 +1,11 @@
-{
-  lib,
-  stdenv,
-  fetchFromGitHub,
-  gtk-engine-murrine,
-  jdupes,
+{ lib
+, stdenv
+, fetchFromGitHub
+, gtk-engine-murrine
+, jdupes
+,
 }:
+
 stdenv.mkDerivation {
   pname = "tokyonight-gtk-theme";
   version = "unstable-2022-08-31";
@@ -16,9 +17,9 @@ stdenv.mkDerivation {
     sha256 = "1mVXtWA5MB6Vj0/EGhvEYpj5avHsQvzHhWFeu1WE+VU=";
   };
 
-  nativeBuildInputs = [jdupes];
+  nativeBuildInputs = [ jdupes ];
 
-  propagatedUserEnvPkgs = [gtk-engine-murrine];
+  propagatedUserEnvPkgs = [ gtk-engine-murrine ];
 
   installPhase = ''
     runHook preInstall
@@ -37,6 +38,6 @@ stdenv.mkDerivation {
     homepage = "https://github.com/Fausto-Korpsvart/Tokyo-Night-GTK-Theme";
     license = licenses.gpl3Only;
     platforms = platforms.all;
-    maintainers = [];
+    maintainers = [ Icy-Thought ];
   };
 }

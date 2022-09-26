@@ -1,30 +1,22 @@
-{
-  inputs,
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
+{ inputs
+, config
+, options
+, lib
+, pkgs
+, ...
 }:
 with lib;
-with lib.my; let
-  cfg = config.modules.develop.dart;
-  devCfg = config.modules.develop.xdg;
-  codeCfg = config.modules.desktop.editors.vscodium;
-in {
+with lib.my; {
   options.modules.develop.dart = {
     enable = mkBoolOpt false;
   };
 
   config = mkMerge [
-    (mkIf cfg.enable {
-      user.packages = with pkgs; [
-        dart
-        flutter
-      ];
+    (mkIf config.modules.develop.dart.enable {
+      user.packages = with pkgs; [ dart flutter ];
     })
 
-    (mkIf codeCfg.enable {
+    (mkIf config.modules.desktop.editors.vscodium.enable {
       hm.programs.vscode.extensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace [
         {
           name = "dart-code";
@@ -41,7 +33,7 @@ in {
       ];
     })
 
-    (mkIf devCfg.enable {
+    (mkIf config.modules.develop.xdg.enable {
       # TODO:
     })
   ];

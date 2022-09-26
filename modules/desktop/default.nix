@@ -1,28 +1,28 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
+{ config
+, options
+, lib
+, pkgs
+, ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.desktop;
-in {
+in
+{
   config = mkIf config.services.xserver.enable {
     assertions = [
       {
         assertion = (countAttrs (n: v: n == "enable" && value) cfg) < 2;
-        message = "Can't enable DE/WM <2 at the same time.";
+        message = "Can't enable DE/WM < 2 at the same time.";
       }
       {
-        assertion = let
-          srv = config.services;
-        in
-          srv.xserver.enable
-          || srv.sway.enable
-          || !(anyAttrs
-            (n: v: isAttrs v && anyAttrs (n: v: isAttrs v && v.enable))
+        assertion =
+          let srv = config.services;
+          in srv.xserver.enable
+            || srv.sway.enable
+            || !(anyAttrs
+            (n: v: isAttrs v && anyAttrs
+              (n: v: isAttrs v && v.enable))
             cfg);
         message = "Can't enable a desktop-app without a DE/WM.";
       }
@@ -36,7 +36,7 @@ in {
         desktopName = "Kalker";
         icon = "calc";
         exec = "${getExe wezterm} start kalker";
-        categories = ["Development"];
+        categories = [ "Development" ];
       })
       qgnomeplatform
       gucharmap
@@ -45,10 +45,7 @@ in {
     fonts = {
       fontDir.enable = true;
       enableGhostscriptFonts = true;
-      fonts = with pkgs; [
-        sarasa-gothic
-        scheherazade-new
-      ];
+      fonts = with pkgs; [ sarasa-gothic scheherazade-new ];
     };
 
     # Call-forward: LightDM!
@@ -61,13 +58,13 @@ in {
 
     systemd.user.services.kdeconnect-indicator = {
       serviceConfig.ExecStart = "${pkgs.kdeconnect}/bin/kdeconnect-indicator";
-      wantedBy = ["graphical-session.target"];
-      partOf = ["graphical-session.target"];
+      wantedBy = [ "graphical-session.target" ];
+      partOf = [ "graphical-session.target" ];
     };
 
     # Try really hard to get QT to respect my GTK theme.
     env = {
-      GTK_DATA_PREFIX = ["${config.system.path}"];
+      GTK_DATA_PREFIX = [ "${config.system.path}" ];
       QT_QPA_PLATFORMTHEME = "gnome";
       # QT_STYLE_OVERRIDE = "kvantum";
     };

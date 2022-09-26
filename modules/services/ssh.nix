@@ -1,18 +1,15 @@
-{
-  options,
-  config,
-  lib,
-  ...
+{ options
+, config
+, lib
+, ...
 }:
 with lib;
-with lib.my; let
-  cfg = config.modules.services.ssh;
-in {
+with lib.my; {
   options.modules.services.ssh = {
     enable = mkBoolOpt false;
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf config.modules.services.ssh.enable {
     programs.ssh.startAgent = true;
 
     services.openssh = {
@@ -24,9 +21,7 @@ in {
 
     user.openssh.authorizedKeys.keys =
       if config.user.name == "icy-thought"
-      then [
-        # TODO: replace with functional ssh-key.
-      ]
-      else [];
+      then [ ] # TODO: replace with functional ssh-key.
+      else [ ];
   };
 }

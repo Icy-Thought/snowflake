@@ -1,59 +1,54 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  inputs,
-  ...
+{ config
+, options
+, lib
+, pkgs
+, inputs
+, ...
 }:
 with lib;
 with lib.my; let
-  cfg = config.modules.desktop.editors.vscodium;
   vscDir = "${config.snowflake.configDir}/vscodium";
-in {
+in
+{
   options.modules.desktop.editors.vscodium = {
     enable = mkBoolOpt false;
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf config.modules.desktop.editors.vscodium.enable {
     hm.programs.vscode = with config.snowflake; {
       enable = true;
       package = pkgs.vscodium;
       mutableExtensionsDir = true;
 
       # Config imports
-      extensions =
-        pkgs.vscode-utils.extensionsFromVscodeMarketplace
-        (
-          (import "${vscDir}/custom-extensions.nix").extensions
-        )
-        ++ (with pkgs.vscode-extensions; [
-          # Editor
-          eamodio.gitlens
-          editorconfig.editorconfig
-          mhutchie.git-graph
-          vscodevim.vim
+      extensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace
+        ((import "${vscDir}/custom-extensions.nix").extensions)
+      ++ (with pkgs.vscode-extensions; [
+        # Editor
+        eamodio.gitlens
+        editorconfig.editorconfig
+        mhutchie.git-graph
+        vscodevim.vim
 
-          # Aesthetics
-          esbenp.prettier-vscode
-          gruntfuggly.todo-tree
-          jock.svg
-          naumovs.color-highlight
+        # Aesthetics
+        esbenp.prettier-vscode
+        gruntfuggly.todo-tree
+        jock.svg
+        naumovs.color-highlight
 
-          # Toolset
-          christian-kohler.path-intellisense
-          formulahendry.code-runner
-          github.copilot
-          wix.vscode-import-cost
+        # Toolset
+        christian-kohler.path-intellisense
+        formulahendry.code-runner
+        github.copilot
+        wix.vscode-import-cost
 
-          # Language specific
-          james-yu.latex-workshop
-          tamasfe.even-better-toml
-          yzhang.markdown-all-in-one
-        ]);
-
-      userSettings = import "${vscDir}/settings.nix" {inherit config;};
-      keybindings = import "${vscDir}/keybindings.nix" {};
+        # Language specific
+        james-yu.latex-workshop
+        tamasfe.even-better-toml
+        yzhang.markdown-all-in-one
+      ]);
+      userSettings = import "${vscDir}/settings.nix" { inherit config; };
+      keybindings = import "${vscDir}/keybindings.nix" { };
     };
   };
 }

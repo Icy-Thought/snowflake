@@ -1,19 +1,16 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
+{ config
+, options
+, lib
+, pkgs
+, ...
 }:
 with lib;
-with lib.my; let
-  cfg = config.modules.hardware.input;
-in {
+with lib.my; {
   options.modules.hardware.input = {
     enable = mkBoolOpt false;
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf config.modules.hardware.input.enable {
     services.xserver.libinput = {
       enable = true;
 

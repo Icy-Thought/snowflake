@@ -1,16 +1,17 @@
-{
-  config,
-  options,
-  pkgs,
-  lib,
-  ...
+{ config
+, options
+, pkgs
+, lib
+, ...
 }:
 with lib;
-with lib.my; let
+with lib.my;
+let
   cfg = config.modules.shell.zsh;
   zshDir = "${config.snowflake.configDir}/zsh";
   themeCfg = config.modules.themes;
-in {
+in
+{
   options.modules.shell.zsh = {
     enable = mkBoolOpt false;
   };
@@ -51,7 +52,7 @@ in {
 
       localVariables = {
         KEYTIMEOUT = "1";
-        ZSH_AUTOSUGGEST_STRATEGY = ["completion"];
+        ZSH_AUTOSUGGEST_STRATEGY = [ "completion" ];
         ZSH_AUTOSUGGEST_USE_ASYNC = true;
         ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE = 40;
       };
@@ -109,28 +110,24 @@ in {
 
       '';
 
-      shellAliases = {
-        exa = "exa --group-directories-first";
-      };
+      shellAliases = { exa = "exa --group-directories-first"; };
 
-      plugins = let
-        mkPlugin = name: {
-          inherit name;
-          inherit (pkgs."zsh-${name}") src;
-        };
-      in
-        [
-          {
-            name = "zsh-abbr";
-            src = pkgs.fetchFromGitHub {
-              owner = "olets";
-              repo = "zsh-abbr";
-              rev = "v4.8.0";
-              sha256 = "diitszKbu530zXbJx4xmfOjLsITE9ucmWdsz9VTXsKg=";
-            };
-          }
-        ]
-        ++ (builtins.map (p: mkPlugin p) [
+      plugins =
+        let
+          mkPlugin = name: {
+            inherit name;
+            inherit (pkgs."zsh-${name}") src;
+          };
+        in
+        [{
+          name = "zsh-abbr";
+          src = pkgs.fetchFromGitHub {
+            owner = "olets";
+            repo = "zsh-abbr";
+            rev = "v4.8.0";
+            sha256 = "diitszKbu530zXbJx4xmfOjLsITE9ucmWdsz9VTXsKg=";
+          };
+        }] ++ (builtins.map (p: mkPlugin p) [
           "autopair"
           "nix-shell"
           "vi-mode"

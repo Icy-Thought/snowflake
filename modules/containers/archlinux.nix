@@ -1,20 +1,16 @@
-{
-  options,
-  config,
-  lib,
-  pkgs,
-  ...
+{ options
+, config
+, lib
+, pkgs
+, ...
 }:
 with lib;
-with lib.my; let
-  cfg = config.modules.containers.archlinux;
-  configDir = config.snowflake.configDir;
-in {
+with lib.my; {
   options.modules.containers.archlinux = {
     enable = mkBoolOpt false;
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf config.modules.containers.archlinux.enable {
     virtualisation.libvirtd = {
       enable = true;
       qemuVerbatimConfig = ''
@@ -24,8 +20,8 @@ in {
 
     systemd.nspawn."archLinux" = {
       enable = true;
-      wantedBy = ["machines.target"];
-      requiredBy = ["machines.target"];
+      wantedBy = [ "machines.target" ];
+      requiredBy = [ "machines.target" ];
 
       execConfig = {
         Timezone = "Bind";
@@ -35,7 +31,7 @@ in {
 
       filesConfig = {
         Volatile = false;
-        BindReadOnly = ["/home/icy-thought:/mnt/icy-thought"];
+        BindReadOnly = [ "/home/icy-thought:/mnt/icy-thought" ];
         Bind = [
           "/home/icy-thought/.container-arch:/home/icy-thought"
           "/run/user/1000/wayland-1"
@@ -56,7 +52,7 @@ in {
 
     # Vulkan support
     systemd.services."systemd-nspawn@".serviceConfig = {
-      DeviceAllow = ["char-drm rwx" "/dev/dri/renderD128"];
+      DeviceAllow = [ "char-drm rwx" "/dev/dri/renderD128" ];
     };
   };
 }

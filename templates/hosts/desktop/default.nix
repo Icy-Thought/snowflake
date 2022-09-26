@@ -1,8 +1,7 @@
-{
-  pkgs,
-  config,
-  lib,
-  ...
+{ pkgs
+, config
+, lib
+, ...
 }: {
   imports = [
     ../home.nix
@@ -10,9 +9,7 @@
   ];
 
   ## Modules
-  modules.themes = {
-    active = "catppuccin";
-  };
+  modules.themes = { active = "catppuccin"; };
 
   modules.desktop = {
     xmonad.enable = true;
@@ -25,16 +22,14 @@
       neovim.enable = true;
     };
     browsers = {
-      default = "brave";
+      default = "firefox";
       brave.enable = true;
     };
     media.player = {
       music.enable = true;
       video.enable = true;
     };
-    document = {
-      zathura.enable = true;
-    };
+    document.sioyek.enable = true;
   };
 
   modules.develop = {

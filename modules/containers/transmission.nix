@@ -1,16 +1,14 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
+{ config
+, options
+, lib
+, pkgs
+, ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.containers.transmission;
-  configDir = config.snowflake.configDir;
-  torrentDir = "${config.user.home}/Downloads/Torrents";
-in {
+in
+{
   options.modules.containers.transmission = {
     enable = mkBoolOpt false;
 
@@ -26,12 +24,19 @@ in {
       example = "password";
       description = "Transmission RPC User-Password";
     };
+
+    download-dir = mkOption {
+      type = types.path;
+      default = "${config.user.home}/Downloads/Torrents";
+      example = "xyz";
+      description = "The directory where torrents ought to be saved";
+    };
   };
 
   config = mkIf cfg.enable {
     user = {
-      packages = with pkgs; [transmission-remote-gtk];
-      extraGroups = ["transmission"];
+      packages = with pkgs; [ transmission-remote-gtk ];
+      extraGroups = [ "transmission" ];
     };
 
     containers.transmission = {
@@ -50,7 +55,7 @@ in {
         };
 
         "/home/torrents" = {
-          hostPath = "${torrentDir}";
+          hostPath = cfg.download-dir;
           isReadOnly = false;
         };
       };
@@ -63,14 +68,14 @@ in {
       # (?) web-app status unknown due to failed login attempt.
 
       systemd.services.transmission = {
-        bindsTo = ["wg-quick-akkadianVPN"];
-        after = ["wg-quick-akkadianVPN"];
+        bindsTo = [ "wg-quick-akkadianVPN" ];
+        after = [ "wg-quick-akkadianVPN" ];
       };
 
       networking.firewall = {
         enable = true;
-        allowedTCPPorts = [9091 51413];
-        allowedUDPPorts = [51413];
+        allowedTCPPorts = [ 9091 51413 ];
+        allowedUDPPorts = [ 51413 ];
       };
 
       services.transmission = {

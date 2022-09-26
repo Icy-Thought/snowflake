@@ -1,10 +1,9 @@
-{
-  pkgs,
-  config,
-  lib,
-  ...
+{ pkgs
+, config
+, lib
+, ...
 }: {
-  imports = [./hwCfg.nix];
+  imports = [ ./hwCfg.nix ];
 
   modules = {
     hardware = {
@@ -48,20 +47,14 @@
         brave.enable = true;
         firefox.enable = true;
       };
-      philomath.aula = {
-        zoom.enable = true;
-      };
+      philomath.aula = { zoom.enable = true; };
       media = {
-        downloader = {
-          transmission.enable = true;
-        };
+        downloader = { transmission.enable = true; };
         editor = {
           raster.enable = true;
           vector.enable = true;
         };
-        social = {
-          common.enable = true;
-        };
+        social = { common.enable = true; };
         player = {
           music.enable = true;
           video.enable = true;
@@ -100,7 +93,7 @@
     printing.enable = true;
 
     xserver = {
-      videoDrivers = ["amdgpu"];
+      videoDrivers = [ "amdgpu" ];
       deviceSection = ''
         Option "TearFree" "true"
       '';

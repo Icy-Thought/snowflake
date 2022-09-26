@@ -1,19 +1,16 @@
-{
-  options,
-  config,
-  lib,
-  pkgs,
-  ...
+{ options
+, config
+, lib
+, pkgs
+, ...
 }:
 with lib;
-with lib.my; let
-  cfg = config.modules.desktop.extra.fcitx5;
-in {
+with lib.my; {
   options.modules.desktop.extra.fcitx5 = {
     enable = mkBoolOpt false;
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf config.modules.desktop.extra.fcitx5.enable {
     i18n.inputMethod = {
       enabled = "fcitx5";
       fcitx5.addons = with pkgs; [

@@ -1,28 +1,29 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
+{ config
+, options
+, lib
+, pkgs
+, ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.media.downloader;
-in {
+in
+{
   options.modules.desktop.media.downloader = {
     transmission.enable = mkBoolOpt false;
   };
 
+  # TODO <- remote vs gui
   config = mkMerge [
     (mkIf cfg.transmission.enable {
       user = {
-        packages = with pkgs; [transmission-gtk];
-        extraGroups = ["transmission"];
+        packages = with pkgs; [ transmission-gtk ];
+        extraGroups = [ "transmission" ];
       };
 
       networking.firewall = {
-        allowedTCPPorts = [51413];
-        allowedUDPPorts = [51413];
+        allowedTCPPorts = [ 51413 ];
+        allowedUDPPorts = [ 51413 ];
       };
     })
   ];

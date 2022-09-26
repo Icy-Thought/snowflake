@@ -1,21 +1,20 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
+{ config
+, options
+, lib
+, pkgs
+, ...
 }:
 with lib;
 with lib.my; let
-  cfg = config.modules.shell;
   fishCfg = "${config.snowflake.configDir}/fish";
-in {
+in
+{
   options.modules.shell.fish = {
     enable = mkBoolOpt false;
     theme = config.modules.themes;
   };
 
-  config = mkIf cfg.fish.enable {
+  config = mkIf config.modules.shell.fish.enable {
     modules.shell.usefulPkgs.enable = true;
 
     # Custom shell modules:
@@ -57,17 +56,14 @@ in {
         ${builtins.readFile "${fishCfg}/aliases/main.fish"}
       '';
 
-      plugins = let
-        mkPlugin = name: {
-          inherit name;
-          inherit (pkgs.fishPlugins."${name}") src;
-        };
-      in
-        builtins.map (p: mkPlugin p) [
-          "done"
-          "autopair-fish"
-          "fzf-fish"
-        ];
+      plugins =
+        let
+          mkPlugin = name: {
+            inherit name;
+            inherit (pkgs.fishPlugins."${name}") src;
+          };
+        in
+        builtins.map (p: mkPlugin p) [ "done" "autopair-fish" "fzf-fish" ];
     };
 
     home.configFile = with config.modules.themes; (mkIf (active != null) {

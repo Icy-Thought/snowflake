@@ -1,19 +1,16 @@
-{
-  options,
-  config,
-  lib,
-  pkgs,
-  ...
+{ options
+, config
+, lib
+, pkgs
+, ...
 }:
 with lib;
-with lib.my; let
-  cfg = config.modules.desktop.extra.dunst;
-in {
+with lib.my; {
   options.modules.desktop.extra.dunst = {
     enable = mkBoolOpt false;
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf config.modules.desktop.extra.dunst.enable {
     hm.services.dunst = {
       enable = true;
       settings = with config.modules.themes; (mkMerge [
@@ -96,36 +93,32 @@ in {
             })
           ];
 
-          experimental = {
-            per_monitor_dpi = false;
-          };
-          fullscreen_pushback_everything = {
-            fullscreen = "pushback";
-          };
+          experimental = { per_monitor_dpi = false; };
+          fullscreen_pushback_everything = { fullscreen = "pushback"; };
         }
-        (mkIf (active != null)
-          (with colors.main; {
-            urgency_low = {
-              foreground = "${types.fg}";
-              background = "${types.bg}";
-              timeout = 5;
-              #icon = /path/to/icon;
-            };
-            urgency_normal = {
-              foreground = "${types.fg}";
-              background = "${types.bg}";
-              frame_color = "${types.border}";
-              timeout = 7;
-              #icon = /path/to/icon;
-            };
-            urgency_critical = {
-              foreground = "${types.fg}";
-              background = "${types.bg}";
-              frame_color = "${types.error}";
-              timeout = 10;
-              #icon = /path/to/icon
-            };
-          }))
+
+        (mkIf (active != null) (with colors.main; {
+          urgency_low = {
+            foreground = "${types.fg}";
+            background = "${types.bg}";
+            timeout = 5;
+            #icon = /path/to/icon;
+          };
+          urgency_normal = {
+            foreground = "${types.fg}";
+            background = "${types.bg}";
+            frame_color = "${types.border}";
+            timeout = 7;
+            #icon = /path/to/icon;
+          };
+          urgency_critical = {
+            foreground = "${types.fg}";
+            background = "${types.bg}";
+            frame_color = "${types.error}";
+            timeout = 10;
+            #icon = /path/to/icon
+          };
+        }))
       ]);
     };
   };

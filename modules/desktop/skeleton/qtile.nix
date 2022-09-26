@@ -1,16 +1,15 @@
-{
-  inputs,
-  options,
-  config,
-  lib,
-  pkgs,
-  ...
+{ inputs
+, options
+, config
+, lib
+, pkgs
+, ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.qtile;
-  qtileDir = "${config.snowflake.configDir}/qtile";
-in {
+in
+{
   options.modules.desktop.qtile = {
     enable = mkBoolOpt false;
     package = mkOption {
@@ -19,11 +18,11 @@ in {
     };
     configFile = mkOption {
       type = with types; nullOr path;
-      default = "${qtileDir}/config.py";
-      example = literalExpression "./config.py";
+      default = "${config.snowflake.configDir}/qtile/config.py";
+      example = "./config.py";
     };
     backend = mkOption {
-      type = types.enum ["x11" "wayland"];
+      type = types.enum [ "x11" "wayland" ];
       default = "x11";
     };
   };
@@ -65,9 +64,11 @@ in {
           name = "qtile";
           start = ''
             ${cfg.package}/bin/qtile start -b ${cfg.backend} \
-            ${optionalString (cfg.configFile != null) ''
-              --config ${cfg.configFile}
-            ''} &
+            ${
+              optionalString (cfg.configFile != null) ''
+                --config ${cfg.configFile}
+              ''
+            } &
             waitPID=$!
           '';
         }

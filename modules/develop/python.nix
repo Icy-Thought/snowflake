@@ -1,38 +1,31 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
+{ config
+, options
+, lib
+, pkgs
+, ...
 }:
 with lib;
-with lib.my; let
-  cfg = config.modules.develop.python;
-  devCfg = config.modules.develop.xdg;
-  codeCfg = config.modules.desktop.editors.vscodium;
-in {
+with lib.my; {
   options.modules.develop.python = {
     enable = mkBoolOpt false;
   };
 
   config = mkMerge [
-    (mkIf cfg.enable {
-      user.packages = with pkgs;
-        [
-          python3
-          nodePackages.pyright
-        ]
-        ++ (with python3Packages; [
-          # Code-Formatter
-          black
-          isort
+    (mkIf config.modules.develop.python.enable {
+      user.packages = with pkgs; [
+        python3
+        nodePackages.pyright
+      ] ++ (with python3Packages; [
+        # Code-Formatter
+        black
+        isort
 
-          # Toolset
-          ipython
-          pip
-          poetry
-          setuptools
-        ]);
+        # Toolset
+        ipython
+        pip
+        poetry
+        setuptools
+      ]);
 
       environment.shellAliases = {
         py = "python";
@@ -44,14 +37,14 @@ in {
       };
     })
 
-    (mkIf codeCfg.enable {
+    (mkIf config.modules.desktop.editors.vscodium.enable {
       hm.programs.vscode.extensions = with pkgs.vscode-extensions; [
         ms-python.python
         ms-toolsai.jupyter
       ];
     })
 
-    (mkIf devCfg.enable {
+    (mkIf config.modules.develop.xdg.enable {
       env = {
         IPYTHONDIR = "$XDG_CONFIG_HOME/ipython";
         PIP_CONFIG_FILE = "$XDG_CONFIG_HOME/pip/pip.conf";

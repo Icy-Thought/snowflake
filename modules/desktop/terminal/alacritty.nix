@@ -1,19 +1,16 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
+{ config
+, options
+, lib
+, pkgs
+, ...
 }:
 with lib;
-with lib.my; let
-  cfg = config.modules.desktop.terminal.alacritty;
-in {
+with lib.my; {
   options.modules.desktop.terminal.alacritty = {
     enable = mkBoolOpt false;
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf config.modules.desktop.terminal.alacritty.enable {
     hm.programs.alacritty = {
       enable = true;
 
@@ -53,7 +50,7 @@ in {
           };
 
           selection = {
-            semantic_escape_chars = ",│`|:\"' ()[]{}<>";
+            semantic_escape_chars = '',│`|:"' ()[]{}<>'';
             save_to_clipboard = false;
           };
 
@@ -159,42 +156,40 @@ in {
 
               use_thin_strokes: true
           ''
-          + (
-            with config.modules.themes.colors.main; ''
-              colors:
-                primary:
-                  foreground: "${types.fg}"
-                  background: "${types.bg}"
+          + (with config.modules.themes.colors.main; ''
+            colors:
+              primary:
+                foreground: "${types.fg}"
+                background: "${types.bg}"
 
-                cursor:
-                  text:   "${types.bg}"
-                  cursor: "${normal.yellow}"
+              cursor:
+                text:   "${types.bg}"
+                cursor: "${normal.yellow}"
 
-                selection:
-                  text:       "${types.bg}"
-                  background: "${types.highlight}"
+              selection:
+                text:       "${types.bg}"
+                background: "${types.highlight}"
 
-                normal:
-                  black:      "${normal.black}"
-                  red:        "${normal.red}"
-                  green:      "${normal.green}"
-                  yellow:     "${normal.yellow}"
-                  blue:       "${normal.blue}"
-                  magenta:    "${normal.magenta}"
-                  cyan:       "${normal.cyan}"
-                  white:      "${normal.white}"
+              normal:
+                black:      "${normal.black}"
+                red:        "${normal.red}"
+                green:      "${normal.green}"
+                yellow:     "${normal.yellow}"
+                blue:       "${normal.blue}"
+                magenta:    "${normal.magenta}"
+                cyan:       "${normal.cyan}"
+                white:      "${normal.white}"
 
-                bright:
-                  black:      "${bright.black}"
-                  red:        "${bright.red}"
-                  green:      "${bright.green}"
-                  yellow:     "${bright.yellow}"
-                  blue:       "${bright.blue}"
-                  magenta:    "${bright.magenta}"
-                  cyan:       "${bright.cyan}"
-                  white:      "${bright.white}"
-            ''
-          );
+              bright:
+                black:      "${bright.black}"
+                red:        "${bright.red}"
+                green:      "${bright.green}"
+                yellow:     "${bright.yellow}"
+                blue:       "${bright.blue}"
+                magenta:    "${bright.magenta}"
+                cyan:       "${bright.cyan}"
+                white:      "${bright.white}"
+          '');
       };
     });
   };

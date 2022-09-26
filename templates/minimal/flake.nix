@@ -5,7 +5,7 @@
     dotfiles.url = "github:icy-thought/snowflake";
   };
 
-  outputs = inputs @ {dotfiles, ...}: {
+  outputs = inputs @ { dotfiles, ... }: {
     nixosConfigurations = dotfiles.lib.mapHosts ./hosts {
       imports = [
         # If this is a linode machine

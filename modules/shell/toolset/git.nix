@@ -1,19 +1,16 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
+{ config
+, options
+, lib
+, pkgs
+, ...
 }:
 with lib;
-with lib.my; let
-  cfg = config.modules.shell.git;
-in {
+with lib.my; {
   options.modules.shell.git = {
     enable = mkBoolOpt false;
   };
 
-  config = mkIf cfg.enable (mkMerge [
+  config = mkIf config.modules.shell.git.enable (mkMerge [
     {
       user.packages = with pkgs; [
         act
@@ -45,7 +42,7 @@ in {
           '';
         };
 
-        attributes = ["*.lisp diff=lisp" "*.el diff=lisp" "*.org diff=org"];
+        attributes = [ "*.lisp diff=lisp" "*.el diff=lisp" "*.org diff=org" ];
 
         ignores = [
           # General:
@@ -126,7 +123,7 @@ in {
           };
 
           diff = {
-            "lisp".xfuncname = "^(((;;;+ )|\\(|([ \t]+\\(((cl-|el-patch-)?def(un|var|macro|method|custom)|gb/))).*)$";
+            "lisp".xfuncname = "^(((;;;+ )|\\(|([ 	]+\\(((cl-|el-patch-)?def(un|var|macro|method|custom)|gb/))).*)$";
             "org".xfuncname = "^(\\*+ +.*)$";
           };
 
@@ -140,11 +137,9 @@ in {
 
     (mkIf config.modules.shell.fish.enable {
       # easier gitignore fetching (fish)
-      hm.programs.fish = let
-        fishCfg = "${config.snowflake.configDir}/fish";
-      in {
+      hm.programs.fish = {
         interactiveShellInit = ''
-          ${builtins.readFile "${fishCfg}/abbreviations/git.fish"}
+          ${builtins.readFile "${config.snowflake.configDir}/fish/abbreviations/git.fish"}
         '';
 
         functions = {

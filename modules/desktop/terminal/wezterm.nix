@@ -1,22 +1,18 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
+{ config
+, options
+, lib
+, pkgs
+, ...
 }:
 with lib;
-with lib.my; let
-  cfg = config.modules.desktop.terminal.wezterm;
-  configDir = config.snowflake.configDir;
-in {
+with lib.my; {
   options.modules.desktop.terminal.wezterm = {
     enable = mkBoolOpt false;
   };
 
-  config = mkIf cfg.enable (mkMerge [
+  config = mkIf config.modules.desktop.terminal.wezterm.enable (mkMerge [
     {
-      user.packages = with pkgs; [wezterm];
+      user.packages = with pkgs; [ wezterm ];
 
       home.configFile = with config.modules.themes;
         mkMerge [
@@ -159,8 +155,8 @@ in {
                       "Unicode",
                   }),
 
-                  font_size = ${toString (font.mono.size)},
-                  char_select_font_size = ${toString (font.mono.size)},
+                  font_size = ${builtins.toString (font.mono.size)},
+                  char_select_font_size = ${builtins.toString (font.mono.size)},
 
                   window_frame = {
                       active_titlebar_bg = "${colors.main.types.bg}",
@@ -171,7 +167,7 @@ in {
                           weight = "${font.sans.weightAlt}",
                           style = "Italic",
                       }),
-                      font_size= ${toString (font.mono.size)},
+                      font_size= ${builtins.toString (font.mono.size)},
                   },
                 ''}
 
@@ -203,7 +199,7 @@ in {
           (mkIf (active != null) {
             wezterm-statusbar = {
               target = "wezterm/statusbar/${active}.lua";
-              source = "${configDir}/wezterm/statusbar/${active}.lua";
+              source = "${config.snowflake.configDir}/wezterm/statusbar/${active}.lua";
             };
 
             wezterm-theme = {
@@ -279,12 +275,14 @@ in {
     }
 
     (mkIf config.modules.shell.zsh.enable {
-      home.configFile."zsh/abbreviations".text = ''
-        abbr imgcat="wezterm imgcat"
-      '';
-    })
+      home.configFile.zsh-abbr = {
+        target = "zsh/abbreviations";
+        text = ''
+          abbr imgcat="wezterm imgcat"
+        '';
+      })
 
-    (mkIf config.modules.shell.fish.enable {
+      (mkIf config.modules.shell.fish.enable {
       hm.programs.fish.interactiveShellInit = ''
         abbr -ag imgcat "wezterm imgcat"
       '';

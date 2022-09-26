@@ -1,14 +1,16 @@
-{pkgs ? import <nixpkgs> {}}:
-with pkgs; let
-  nixBin = writeShellScriptBin "nix" ''
-    ${nixFlakes}/bin/nix --option experimental-features "nix-command flakes" "$@"
-  '';
-in
-  mkShell {
-    buildInputs = [git nix-bash-completions];
+{ pkgs ? import <nixpkgs> { } }:
 
-    shellHook = ''
+pkgs.mkShell {
+  buildInputs = with pkgs; [ git nix-bash-completions ];
+
+  shellHook =
+    let
+      nixBin = pkgs.writeShellScriptBin "nix" ''
+        ${pkgs.nixFlakes}/bin/nix --option experimental-features "nix-command flakes" "$@"
+      '';
+    in
+    ''
       export FLAKE="$(pwd)"
       export PATH="$FLAKE/bin:${nixBin}/bin:$PATH"
     '';
-  }
+}

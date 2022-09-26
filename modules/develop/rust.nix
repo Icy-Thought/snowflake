@@ -1,24 +1,19 @@
-{
-  inputs,
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
+{ inputs
+, config
+, options
+, lib
+, pkgs
+, ...
 }:
 with lib;
-with lib.my; let
-  cfg = config.modules.develop.rust;
-  devCfg = config.modules.develop.xdg;
-  codeCfg = config.modules.desktop.editors.vscodium;
-in {
+with lib.my; {
   options.modules.develop.rust = {
     enable = mkBoolOpt false;
   };
 
   config = mkMerge [
-    (mkIf cfg.enable {
-      nixpkgs.overlays = [inputs.rust.overlays.default];
+    (mkIf config.modules.develop.rust.enable {
+      nixpkgs.overlays = [ inputs.rust.overlays.default ];
 
       user.packages = with pkgs; [
         crate2nix
@@ -26,9 +21,7 @@ in {
         unstable.rust-analyzer
       ];
 
-      env.PATH = [
-        "$(${getExe pkgs.yarn} global bin)"
-      ];
+      env.PATH = [ "$(${getExe pkgs.yarn} global bin)" ];
 
       environment.shellAliases = {
         rs = "rustc";
@@ -36,16 +29,14 @@ in {
       };
     })
 
-    (mkIf codeCfg.enable {
-      hm.programs.vscode.extensions = with pkgs.vscode-extensions; [
-        rust-lang.rust-analyzer
-      ];
+    (mkIf config.modules.desktop.editors.vscodium.enable {
+      hm.programs.vscode.extensions = with pkgs.vscode-extensions; [ rust-lang.rust-analyzer ];
     })
 
-    (mkIf devCfg.enable {
+    (mkIf config.modules.develop.xdg.enable {
       env = {
         CARGO_HOME = "$XDG_DATA_HOME/cargo";
-        PATH = ["$CARGO_HOME/bin"];
+        PATH = [ "$CARGO_HOME/bin" ];
       };
     })
   ];

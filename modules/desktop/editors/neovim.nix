@@ -1,16 +1,16 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  inputs,
-  ...
+{ config
+, options
+, lib
+, pkgs
+, inputs
+, ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.editors.neovim;
   nvimDir = "${config.snowflake.configDir}/nvim.d";
-in {
+in
+{
   options.modules.desktop.editors.neovim = {
     agasaya.enable = mkBoolOpt false; # lua
     ereshkigal.enable = mkBoolOpt false; # fnl
@@ -18,7 +18,7 @@ in {
 
   config = mkMerge [
     {
-      nixpkgs.overlays = [inputs.nvim-nightly.overlay];
+      nixpkgs.overlays = [ inputs.nvim-nightly.overlay ];
 
       user.packages = with pkgs; [
         neovide

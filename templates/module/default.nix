@@ -1,19 +1,14 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
+{ config
+, options
+, lib
+, pkgs
+, ...
 }:
-with builtins;
 with lib;
-with lib.my; let
-  cfg = config.modules.X.Y;
-in {
+with lib.my; {
   options.modules.X.Y = {
     enable = mkBoolOpt false;
   };
 
-  config =
-    cfg.enable {};
+  config = config.modules.X.Y.enable { };
 }

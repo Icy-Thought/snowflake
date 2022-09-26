@@ -1,17 +1,16 @@
-{
-  inputs,
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
+{ inputs
+, config
+, options
+, lib
+, pkgs
+, ...
 }:
-with builtins;
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.extra.kmonad;
   configDir = config.snowflake.configDir;
-in {
+in
+{
   options.modules.desktop.extra.kmonad = {
     enable = mkBoolOpt false;
     deviceID = mkOption {
@@ -23,10 +22,10 @@ in {
   };
 
   config = mkIf cfg.enable {
-    nixpkgs.overlays = [inputs.kmonad.overlays.default];
+    nixpkgs.overlays = [ inputs.kmonad.overlays.default ];
 
     # Import KMonad Nix-Module
-    hm.imports = [inputs.kmonad.nixosModules.default];
+    hm.imports = [ inputs.kmonad.nixosModules.default ];
 
     hm.services.kmonad = {
       enable = true;

@@ -1,19 +1,16 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
+{ config
+, options
+, lib
+, pkgs
+, ...
 }:
 with lib;
-with lib.my; let
-  cfg = config.modules.shell.starship;
-in {
+with lib.my; {
   options.modules.shell.starship = {
     enable = mkBoolOpt false;
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf config.modules.shell.starship.enable {
     hm.programs.starship = {
       enable = true;
       settings = with config.modules.themes.colors.main; {
@@ -59,12 +56,10 @@ in {
           full_symbol = "🔋";
           charging_symbol = "⚡️";
           discharging_symbol = "💀";
-          display = [
-            {
-              style = "bold red";
-              threshold = 15;
-            }
-          ];
+          display = [{
+            style = "bold red";
+            threshold = 15;
+          }];
         };
       };
     };

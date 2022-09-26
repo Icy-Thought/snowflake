@@ -1,45 +1,41 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
+{ config
+, options
+, lib
+, pkgs
+, ...
 }:
 with lib;
-with lib.my; let
-  cfg = config.modules.desktop.editors.helix;
-  activeTheme = config.modules.themes.editor.helix;
-in {
+with lib.my; {
   options.modules.desktop.editors.helix = {
     enable = mkBoolOpt false;
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf config.modules.desktop.editors.helix.enable {
     hm.programs.helix = {
       enable = true;
       package = pkgs.helix;
 
       languages = [
-        {name = "latex";}
+        { name = "latex"; }
         {
           name = "haskell";
           formatter = {
             command = "stylish-haskell";
-            args = ["--stdin"];
+            args = [ "--stdin" ];
           };
         }
         {
           name = "nix";
           formatter = {
             command = "nixpkgs-fmt";
-            args = ["--stdin"];
+            # args = [ "--stdin" ];
           };
         }
-        {name = "rust";}
+        { name = "rust"; }
       ];
 
       settings = {
-        theme = activeTheme.dark;
+        theme = config.modules.themes.editor.helix.dark;
         editor = {
           true-color = true;
           color-modes = true;
@@ -75,9 +71,9 @@ in {
         };
 
         keys.normal = {
-          space.l = {f = ":format";};
-          space.w = {f = ":w";};
-          space.q = {q = ":q";};
+          space.l = { f = ":format"; };
+          space.w = { f = ":w"; };
+          space.q = { q = ":q"; };
           space.space = "file_picker";
         };
       };

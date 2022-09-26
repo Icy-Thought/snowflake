@@ -1,22 +1,17 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
+{ config
+, options
+, lib
+, pkgs
+, ...
 }:
 with lib;
-with lib.my; let
-  cfg = config.modules.develop.nix;
-  devCfg = config.modules.develop.xdg;
-  codeCfg = config.modules.desktop.editors.vscodium;
-in {
+with lib.my; {
   options.modules.develop.nix = {
     enable = mkBoolOpt true;
   };
 
   config = mkMerge [
-    (mkIf cfg.enable {
+    (mkIf config.modules.develop.nix.enable {
       user.packages = with pkgs; [
         nixpkgs-fmt
         nix-output-monitor
@@ -25,13 +20,11 @@ in {
       ];
     })
 
-    (mkIf codeCfg.enable {
-      hm.programs.vscode.extensions = with pkgs.vscode-extensions; [
-        jnoortheen.nix-ide
-      ];
+    (mkIf config.modules.desktop.editors.vscodium.enable {
+      hm.programs.vscode.extensions = with pkgs.vscode-extensions; [ jnoortheen.nix-ide ];
     })
 
-    (mkIf devCfg.enable {
+    (mkIf config.modules.develop.xdg.enable {
       # TODO:
     })
   ];

@@ -1,19 +1,16 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
+{ config
+, options
+, lib
+, pkgs
+, ...
 }:
 with lib;
-with lib.my; let
-  cfg = config.modules.hardware.razer;
-in {
+with lib.my; {
   options.modules.hardware.razer = {
     enable = mkBoolOpt false;
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf config.modules.hardware.razer.enable {
     hardware.openrazer = {
       enable = true;
       devicesOffOnScreensaver = false;
@@ -21,9 +18,9 @@ in {
       mouseBatteryNotifier = true;
     };
 
-    user.extraGroups = ["plugdev" "openrazer"];
+    user.extraGroups = [ "plugdev" "openrazer" ];
 
     # GUI for managing your openrazer devices
-    user.packages = with pkgs; [polychromatic];
+    user.packages = with pkgs; [ polychromatic ];
   };
 }

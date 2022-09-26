@@ -1,19 +1,16 @@
-{
-  options,
-  config,
-  lib,
-  pkgs,
-  ...
+{ options
+, config
+, lib
+, pkgs
+, ...
 }:
 with lib;
-with lib.my; let
-  cfg = config.modules.desktop.gnome;
-in {
+with lib.my; {
   options.modules.desktop.gnome = {
     enable = mkBoolOpt false;
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf config.modules.desktop.gnome.enable {
     programs.dconf.enable = true;
 
     services.xserver = {
@@ -32,11 +29,11 @@ in {
 
     services.dbus = {
       enable = true;
-      packages = with pkgs; [gnome.dconf];
+      packages = with pkgs; [ gnome.dconf ];
     };
 
     services.udev = {
-      packages = with pkgs; [gnome.gnome-settings-daemon];
+      packages = with pkgs; [ gnome.gnome-settings-daemon ];
       extraRules = ''
         ACTION=="add|change", KERNEL=="nvme[0-9]*", ATTR{queue/scheduler}="none"
         ACTION=="add|change", KERNEL=="sd[a-z]|mmcblk[0-9]*", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="mq-deadline"
@@ -56,16 +53,15 @@ in {
     ];
 
     # Our beloved modules
-    modules.desktop.extra = {
-      ibus.enable = true;
-    };
+    modules.desktop.extra = { ibus.enable = true; };
 
     # Force-enable wayland on FireFox
-    environment.variables = {
-      MOZ_ENABLE_WAYLAND = 1;
-    };
+    environment.variables = { MOZ_ENABLE_WAYLAND = 1; };
 
     # Enable chrome-gnome-shell in FireFox nightly (mozilla-overlay):
-    home.file.".mozilla/native-messaging-hosts/org.gnome.chrome_gnome_shell.json".source = "${pkgs.chrome-gnome-shell}/lib/mozilla/native-messaging-hosts/org.gnome.chrome_gnome_shell.json";
+    home.file.chrome-gnome-shell = {
+      target = ".mozilla/native-messaging-hosts/org.gnome.chrome_gnome_shell.json";
+      source = "${pkgs.chrome-gnome-shell}/lib/mozilla/native-messaging-hosts/org.gnome.chrome_gnome_shell.json";
+    };
   };
 }

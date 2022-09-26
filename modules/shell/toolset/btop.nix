@@ -1,20 +1,19 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
+{ config
+, options
+, lib
+, pkgs
+, ...
 }:
 with lib;
 with lib.my; let
-  cfg = config.modules.shell.btop;
   themeCfg = config.modules.themes;
-in {
+in
+{
   options.modules.shell.btop = {
     enable = mkBoolOpt false;
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf config.modules.shell.btop.enable {
     hm.programs.btop = {
       enable = true;
       settings = {
@@ -93,8 +92,9 @@ in {
       };
     };
 
-    home.configFile = mkIf (themeCfg.active != null) {
-      "btop/themes/${themeCfg.active}.theme".text = with themeCfg.colors.main; ''
+    home.configFile.btop-theme = mkIf (themeCfg.active != null) {
+      target = "btop/themes/${themeCfg.active}.theme";
+      text = with themeCfg.colors.main; ''
         theme[main_bg]="${types.bg}"
         theme[main_fg]="${types.fg}"
         theme[title]="${types.fg}"

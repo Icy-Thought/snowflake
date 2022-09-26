@@ -1,14 +1,14 @@
-{
-  options,
-  config,
-  lib,
-  pkgs,
-  ...
+{ options
+, config
+, lib
+, pkgs
+, ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.themes;
-in {
+in
+{
   config = mkIf (cfg.active == "ayu") (mkMerge [
     {
       modules.themes = {
@@ -125,13 +125,10 @@ in {
 
     # Desktop (X11) theming <- Change after gnome = independent of xserver.
     (mkIf config.services.xserver.enable {
-      user.packages = with pkgs; [
-        orchis-theme
-        whitesur-icon-theme
-      ];
+      user.packages = with pkgs; [ orchis-theme whitesur-icon-theme ];
 
       fonts.fonts = with pkgs; [
-        (nerdfonts.override {fonts = ["VictorMono"];})
+        (nerdfonts.override { fonts = [ "VictorMono" ]; })
         twitter-color-emoji
       ];
     })
@@ -179,14 +176,12 @@ in {
 
     (mkIf config.modules.desktop.editors.vscodium.enable {
       hm.programs.vscode.extensions = with cfg.vscode.extension;
-        pkgs.vscode-utils.extensionsFromVscodeMarketplace [
-          {
-            name = "${name}";
-            publisher = "${publisher}";
-            version = "${version}";
-            sha256 = "${sha256}";
-          }
-        ];
+        pkgs.vscode-utils.extensionsFromVscodeMarketplace [{
+          name = "${name}";
+          publisher = "${publisher}";
+          version = "${version}";
+          sha256 = "${sha256}";
+        }];
     })
 
     (mkIf config.modules.desktop.extra.rofi.enable {
@@ -196,9 +191,10 @@ in {
           font = with font; "${sans.family} ${sans.weight} ${toString (sans.size)}";
         };
 
-        theme = let
-          inherit (config.hm.lib.formats.rasi) mkLiteral;
-        in
+        theme =
+          let
+            inherit (config.hm.lib.formats.rasi) mkLiteral;
+          in
           with cfg.colors.rofi; {
             "*" = {
               fg = mkLiteral "${fg}";

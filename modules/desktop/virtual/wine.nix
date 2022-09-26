@@ -1,19 +1,16 @@
-{
-  options,
-  config,
-  lib,
-  pkgs,
-  ...
+{ options
+, config
+, lib
+, pkgs
+, ...
 }:
 with lib;
-with lib.my; let
-  cfg = config.modules.desktop.virtual.wine;
-in {
+with lib.my; {
   options.modules.desktop.virtual.wine = {
     enable = mkBoolOpt false;
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf config.modules.desktop.virtual.wine.enable {
     user.packages = with pkgs; [
       bottles
       wineWowPackages.fonts

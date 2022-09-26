@@ -1,26 +1,22 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
+{ config
+, options
+, lib
+, pkgs
+, ...
 }:
 with lib;
-with lib.my; let
-  cfg = config.modules.shell.htop;
-  htopLib = config.home-manager.users.${config.user.name}.lib.htop;
-in {
+with lib.my; {
   options.modules.shell.htop = {
     enable = mkBoolOpt false;
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf config.modules.shell.htop.enable {
     hm.programs.htop = {
       enable = true;
 
-      settings = let
-        leftM = with htopLib;
-          leftMeters [
+      settings =
+        let
+          leftM = hm.lib.htop.leftMeters [
             (bar "AllCPUs2")
             (bar "CPU")
             (bar "Memory")
@@ -28,9 +24,7 @@ in {
             (bar "PressureStallIOFull")
             (bar "Battery")
           ];
-
-        rightM = with htopLib;
-          rightMeters [
+          rightM = hm.lib.htop.rightMeters [
             (text "Hostname")
             (text "Tasks")
             (text "LoadAverage")
@@ -39,8 +33,8 @@ in {
             (text "Uptime")
             (text "Clock")
           ];
-      in
-        {
+        in
+        (with hm.lib.htop.fields; {
           enable_mouse = true;
           show_program_path = false;
           show_thread_names = true;
@@ -54,31 +48,17 @@ in {
 
           # By default when not in tree view, sort by the CPU usage.
           sort_direction = 0;
-          sort_key = htopLib.fields.PERCENT_CPU;
+          sort_key = PERCENT_CPU;
 
           # By default when in tree view, sort by PID.
           tree_view = false;
           tree_sort_direction = 1;
-          tree_sort_key = htopLib.fields.PID;
+          tree_sort_key = PID;
           tree_view_always_by_pid = false;
 
           # The fields in the htop table.
-          fields = with htopLib.fields; [
-            PID
-            USER
-            NICE
-            IO_PRIORITY
-            M_SIZE
-            M_RESIDENT
-            M_SHARE
-            STATE
-            PERCENT_CPU
-            PERCENT_MEM
-            TIME
-            STARTTIME
-            COMM
-          ];
-        }
+          fields = [ PID USER NICE IO_PRIORITY M_SIZE M_RESIDENT M_SHARE STATE PERCENT_CPU PERCENT_MEM TIME STARTTIME COMM ];
+        })
         // leftM
         // rightM;
     };

@@ -1,14 +1,14 @@
-{
-  options,
-  config,
-  lib,
-  pkgs,
-  ...
+{ options
+, config
+, lib
+, pkgs
+, ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.terminal;
-in {
+in
+{
   options.modules.desktop.terminal = {
     default = mkOption {
       type = with types; str;
@@ -19,8 +19,9 @@ in {
   };
 
   config = {
-    services.xserver.desktopManager.xterm.enable =
-      mkDefault (cfg.default == "xterm");
+    services.xserver.desktopManager.xterm.enable = mkDefault (
+      cfg.default == "xterm"
+    );
 
     env.TERMINAL = cfg.default;
   };

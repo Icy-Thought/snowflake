@@ -1,27 +1,22 @@
-{
-  options,
-  config,
-  lib,
-  pkgs,
-  ...
+{ options
+, config
+, lib
+, pkgs
+, ...
 }:
 with lib;
-with lib.my; let
-  cfg = config.modules.desktop.virtual.virtualbox;
-in {
+with lib.my; {
   options.modules.desktop.virtual.virtualbox = {
     enable = mkBoolOpt false;
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf config.modules.desktop.virtual.virtualbox.enable {
     virtualisation.virtualbox = {
       guest.enable = true;
-      host = {
-        enable = true;
-        # enableExtensionPack = true;
-      };
+      host.enable = true;
+      # host.enableExtensionPack = true;
     };
 
-    user.extraGroups = ["vboxusers"];
+    user.extraGroups = [ "vboxusers" ];
   };
 }

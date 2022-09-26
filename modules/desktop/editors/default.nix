@@ -1,14 +1,14 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
+{ config
+, options
+, lib
+, pkgs
+, ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.editors;
-in {
+in
+{
   options.modules.desktop.editors = {
     default = mkOption {
       type = with types; str;
@@ -31,12 +31,7 @@ in {
 
         # module dependencies
         ## checkers: aspell
-        (aspellWithDicts (dict:
-          with dict; [
-            en
-            en-computers
-            en-science
-          ]))
+        (aspellWithDicts (dict: with dict; [ en en-computers en-science ]))
 
         ## Markdown
         nodePackages.markdownlint-cli2

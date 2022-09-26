@@ -1,22 +1,21 @@
-{
-  options,
-  config,
-  lib,
-  pkgs,
-  ...
+{ options
+, config
+, lib
+, pkgs
+, ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.themes;
-in {
+in
+{
   options.modules.themes = with types; {
     active = mkOption {
       type = nullOr str;
       default = null;
-      apply = v: let
-        theme = builtins.getEnv "THEME";
-      in
-        if theme != ""
+      apply = v:
+        let theme = builtins.getEnv "THEME";
+        in if theme != ""
         then theme
         else v;
       description = ''
@@ -44,7 +43,7 @@ in {
       size = mkOpt int "";
     };
 
-    onReload = mkOpt (attrsOf lines) {};
+    onReload = mkOpt (attrsOf lines) { };
 
     font = {
       mono = {
@@ -156,8 +155,7 @@ in {
     # Read xresources files in ~/.config/xtheme/* to allow modular configuration
     # of Xresources.
     (
-      let
-        xrdb = ''cat "$XDG_CONFIG_HOME"/xtheme/* | ${getExe pkgs.xorg.xrdb} -load'';
+      let xrdb = ''cat "$XDG_CONFIG_HOME"/xtheme/* | ${getExe pkgs.xorg.xrdb} -load'';
       in {
         home.configFile.xtheme-init = {
           target = "xtheme.init";
@@ -235,8 +233,7 @@ in {
           target = "gtk-3.0/settings.ini";
           text = with cfg.gtk; ''
             [Settings]
-            ${optionalString (theme != "")
-              "gtk-theme-name=${theme}"}
+            ${optionalString (theme != "") "gtk-theme-name=${theme}"}
 
             ${optionalString (iconTheme != "")
               "gtk-icon-theme-name=${iconTheme}"}
@@ -273,17 +270,15 @@ in {
         size = size;
 
         # TODO: modify to wayland after migrating!
-        x11 = {
-          enable = true;
-          defaultCursor = "left_ptr";
-        };
+        x11.enable = true;
+        x11.defaultCursor = "left_ptr";
         gtk.enable = true;
       };
 
       fonts.fontconfig.defaultFonts = with cfg.font; {
-        sansSerif = [sans.family];
-        monospace = [mono.family];
-        emoji = [emoji];
+        sansSerif = [ sans.family ];
+        monospace = [ mono.family ];
+        emoji = [ emoji ];
       };
     }
 
@@ -301,13 +296,13 @@ in {
           $XDG_DATA_HOME/wallpaper
           fi
         '';
-      in {
+      in
+      {
         services.xserver.displayManager.sessionCommands = command;
         modules.themes.onReload.wallpaper = command;
 
-        home.dataFile = mkIf (cfg.wallpaper != null) {
-          "wallpaper".source = cfg.wallpaper;
-        };
+        home.dataFile =
+          mkIf (cfg.wallpaper != null) { "wallpaper".source = cfg.wallpaper; };
       }
     ))
 
@@ -317,7 +312,7 @@ in {
       };
     })
 
-    (mkIf (cfg.onReload != {}) (
+    (mkIf (cfg.onReload != { }) (
       let
         reloadTheme = with pkgs; (writeScriptBin "reloadTheme" ''
           #!${stdenv.shell}
@@ -328,8 +323,9 @@ in {
             '')
             cfg.onReload)}
         '');
-      in {
-        user.packages = [reloadTheme];
+      in
+      {
+        user.packages = [ reloadTheme ];
         system.userActivationScripts.reloadTheme = ''
           [ -z "$NORELOAD" ] && ${reloadTheme}/bin/reloadTheme
         '';

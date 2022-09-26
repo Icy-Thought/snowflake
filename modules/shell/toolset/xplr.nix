@@ -1,21 +1,21 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
+{ config
+, options
+, lib
+, pkgs
+, ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.shell.xplr;
-in {
+in
+{
   options.modules.shell.xplr = {
     enable = mkBoolOpt false;
     fennel.enable = mkBoolOpt false;
   };
 
   config = mkIf cfg.enable {
-    user.packages = with pkgs; [xplr];
+    user.packages = with pkgs; [ xplr ];
 
     home.configFile.xplr-init = {
       target = "xplr/init.lua";

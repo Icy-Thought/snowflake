@@ -1,19 +1,19 @@
-{
-  options,
-  config,
-  lib,
-  pkgs,
-  ...
+{ options
+, config
+, lib
+, pkgs
+, ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.browsers.firefox;
-in {
+in
+{
   options.modules.desktop.browsers.firefox = with types; {
     enable = mkBoolOpt false;
     profileName = mkOpt types.str config.user.name;
 
-    settings = mkOpt' (attrsOf (oneOf [bool int str])) {} ''
+    settings = mkOpt' (attrsOf (oneOf [ bool int str ])) { } ''
       Firefox preferences set in <filename>user.js</filename>
     '';
     extraConfig = mkOpt' lines "" ''
@@ -34,7 +34,7 @@ in {
           genericName = "Launch a Private Firefox-DevEdition Instance";
           icon = "firefox";
           exec = "${firefox-devedition-bin}/bin/firefox-devedition --private-window";
-          categories = ["Network" "WebBrowser"];
+          categories = [ "Network" "WebBrowser" ];
         })
       ];
 
@@ -165,42 +165,47 @@ in {
       };
 
       # Use a stable profile name so we can target it in themes
-      home.file = let
-        cfgPath = ".mozilla/firefox";
-      in {
-        firefox-profiles = {
-          target = "${cfgPath}/profiles.ini";
-          text = ''
-            [Profile0]
-            Name=dev-edition-default
-            IsRelative=1
-            Path=${cfg.profileName}.dev-edition-default
-            Default=1
+      home.file =
+        let
+          cfgPath = ".mozilla/firefox";
+        in
+        {
+          firefox-profiles = {
+            target = "${cfgPath}/profiles.ini";
+            text = ''
+              [Profile0]
+              Name=dev-edition-default
+              IsRelative=1
+              Path=${cfg.profileName}.dev-edition-default
+              Default=1
 
-            [General]
-            StartWithLastProfile=1
-            Version=2
-          '';
+              [General]
+              StartWithLastProfile=1
+              Version=2
+            '';
+          };
+
+          user-js = mkIf (cfg.settings != { } || cfg.extraConfig != "") {
+            target = "${cfgPath}/${cfg.profileName}.dev-edition-default/user.js";
+            text = ''
+              ${concatStrings (mapAttrsToList (name: value: ''
+                  user_pref("${name}", ${builtins.toJSON value});
+                '')
+                cfg.settings)}
+              ${cfg.extraConfig}
+            '';
+          };
+
+          user-chome = mkIf (cfg.userChrome != "") {
+            target = "${cfgPath}/${cfg.profileName}.dev-edition-default/chrome/userChrome.css";
+            text = cfg.userChrome;
+          };
+
+          user-content = mkIf (cfg.userContent != "") {
+            target = "${cfgPath}/${cfg.profileName}.dev-edition-default/chrome/userContent.css";
+            text = cfg.userContent;
+          };
         };
-        user-js = mkIf (cfg.settings != {} || cfg.extraConfig != "") {
-          target = "${cfgPath}/${cfg.profileName}.dev-edition-default/user.js";
-          text = ''
-            ${concatStrings (mapAttrsToList (name: value: ''
-                user_pref("${name}", ${builtins.toJSON value});
-              '')
-              cfg.settings)}
-            ${cfg.extraConfig}
-          '';
-        };
-        user-chome = mkIf (cfg.userChrome != "") {
-          target = "${cfgPath}/${cfg.profileName}.dev-edition-default/chrome/userChrome.css";
-          text = cfg.userChrome;
-        };
-        user-content = mkIf (cfg.userContent != "") {
-          target = "${cfgPath}/${cfg.profileName}.dev-edition-default/chrome/userContent.css";
-          text = cfg.userContent;
-        };
-      };
     }
   ]);
 }

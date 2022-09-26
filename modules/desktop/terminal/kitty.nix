@@ -1,20 +1,16 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
+{ config
+, options
+, lib
+, pkgs
+, ...
 }:
 with lib;
-with lib.my; let
-  cfg = config.modules.desktop.terminal.kitty;
-  configDir = config.snowflake.configDir;
-in {
-  options.modules.desktop.terminal.kitty = with types; {
+with lib.my; {
+  options.modules.desktop.terminal.kitty = {
     enable = mkBoolOpt false;
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf config.modules.desktop.terminal.kitty.enable {
     hm.programs.kitty = with config.modules.themes; (mkMerge [
       {
         enable = true;
@@ -39,7 +35,7 @@ in {
 
           strip_trailing_spaces = "smart";
           copy_on_select = "clipboard";
-          select_by_word_characters = ''@-./_~?&=%+#'';
+          select_by_word_characters = "@-./_~?&=%+#";
           clipboard_control = "write-clipboard write-primary no-append";
 
           default_pointer_shape = "beam";
@@ -74,7 +70,7 @@ in {
           draw_minimal_borders = "yes";
 
           tab_bar_style = "custom";
-          tab_separator = "\"\"";
+          tab_separator = ''""'';
           tab_fade = "0 0 0 0";
           tab_activity_symbol = "none";
           tab_bar_edge = "top";
@@ -105,8 +101,9 @@ in {
 
     home.configFile = with config.modules.themes; (mkMerge [
       {
-        "kitty/tab_bar.py" = {
-          source = "${configDir}/kitty/${active}-bar.py";
+        tab-bar = {
+          target = "kitty/tab_bar.py";
+          source = "${config.snowflake.configDir}/kitty/${active}-bar.py";
         };
       }
 

@@ -1,26 +1,19 @@
-{
-  options,
-  config,
-  lib,
-  pkgs,
-  ...
+{ options
+, config
+, lib
+, pkgs
+, ...
 }:
 with lib;
-with lib.my; let
-  cfg = config.modules.desktop.extra.ibus;
-in {
+with lib.my; {
   options.modules.desktop.extra.ibus = {
     enable = mkBoolOpt false;
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf config.modules.desktop.extra.ibus.enable {
     i18n.inputMethod = {
       enabled = "ibus";
-      ibus.engines = with pkgs.ibus-engines; [
-        libpinyin
-        hangul
-        mozc
-      ];
+      ibus.engines = with pkgs.ibus-engines; [ libpinyin hangul mozc ];
     };
 
     environment.variables = mkMerge [

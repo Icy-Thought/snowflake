@@ -1,14 +1,14 @@
-{
-  options,
-  config,
-  lib,
-  pkgs,
-  ...
+{ options
+, config
+, lib
+, pkgs
+, ...
 }:
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.media.document;
-in {
+in
+{
   options.modules.desktop.media.document = {
     zathura.enable = mkBoolOpt false;
     sioyek.enable = mkBoolOpt false;
@@ -28,7 +28,9 @@ in {
 
           (mkIf (active != null) (mkMerge [
             {
-              font = "${font.sans.family} ${font.sans.weight} ${toString (font.mono.size)}";
+              font = "${font.sans.family} ${font.sans.weight} ${
+                toString (font.mono.size)
+              }";
               recolor = true;
               recolor-keephue = true;
               recolor-reverse-video = true;

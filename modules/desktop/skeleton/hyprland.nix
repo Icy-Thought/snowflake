@@ -1,22 +1,18 @@
-{
-  inputs,
-  options,
-  config,
-  lib,
-  pkgs,
-  ...
+{ inputs
+, options
+, config
+, lib
+, pkgs
+, ...
 }:
 with lib;
-with lib.my; let
-  cfg = config.modules.desktop.xmonad;
-  configDir = config.snowflake.configDir;
-in {
+with lib.my; {
   options.modules.desktop.hyprland = {
     enable = mkBoolOpt false;
   };
 
-  config = mkIf cfg.enable {
-    hm.imports = [inputs.hyprland.homeManagerModule];
+  config = mkIf config.modules.desktop.xmonad.enable {
+    hm.imports = [ inputs.hyprland.homeManagerModule ];
 
     environment.systemPackages = with pkgs; [
       imv
@@ -31,9 +27,8 @@ in {
       wireplumber
     ];
 
-    # (Firefox) wayland awareness!
     environment.variables = {
-      MOZ_ENABLE_WAYLAND = "1";
+      MOZ_ENABLE_WAYLAND = "1"; # (Firefox) wayland awareness!
     };
 
     # Our beloved modules
@@ -67,7 +62,7 @@ in {
         enable = true;
         hidpi = true;
       };
-      extraConfig = builtins.readFile "${configDir}/hyprland/hyprland.conf"; # TODO
+      extraConfig = builtins.readFile "${config.snowflake.configDir}/hyprland/hyprland.conf"; # TODO
     };
 
     hm.services = {

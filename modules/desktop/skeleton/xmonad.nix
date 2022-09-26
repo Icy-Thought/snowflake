@@ -1,21 +1,17 @@
-{
-  inputs,
-  options,
-  config,
-  lib,
-  pkgs,
-  ...
+{ inputs
+, options
+, config
+, lib
+, pkgs
+, ...
 }:
 with lib;
-with lib.my; let
-  cfg = config.modules.desktop.xmonad;
-  configDir = config.snowflake.configDir;
-in {
+with lib.my; {
   options.modules.desktop.xmonad = {
     enable = mkBoolOpt false;
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf config.modules.desktop.xmonad.enable {
     environment.systemPackages = with pkgs; [
       lightdm
       libnotify
@@ -53,7 +49,7 @@ in {
         # haskellPackages = with pkgs; [];
         # ghcArgs = [];
         # xmonadCliArgs = [];
-        config = "${configDir}/xmonad/xmonad.hs";
+        config = "${config.snowflake.configDir}/xmonad/xmonad.hs";
       };
     };
 
@@ -67,7 +63,7 @@ in {
       enable = true;
       numlock.enable = true;
       preferStatusNotifierItems = true;
-      importedVariables = ["GDK_PIXBUF_MODULE_FILE"]; # Taffybar
+      importedVariables = [ "GDK_PIXBUF_MODULE_FILE" ]; # Taffybar
     };
   };
 }

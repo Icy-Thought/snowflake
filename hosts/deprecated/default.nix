@@ -1,10 +1,9 @@
-{
-  pkgs,
-  config,
-  lib,
-  ...
+{ pkgs
+, config
+, lib
+, ...
 }: {
-  imports = [./hwCfg.nix];
+  imports = [ ./hwCfg.nix ];
 
   modules = {
     hardware = {
@@ -39,12 +38,8 @@
         brave.enable = true;
       };
       media = {
-        player = {
-          video.enable = true;
-        };
-        document = {
-          zathura.enable = true;
-        };
+        player = { video.enable = true; };
+        document = { zathura.enable = true; };
       };
     };
   };
@@ -60,7 +55,7 @@
     printing.enable = true;
 
     xserver = {
-      videoDrivers = ["modesetting"];
+      videoDrivers = [ "modesetting" ];
       useGlamor = true;
     };
   };
