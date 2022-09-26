@@ -11,8 +11,8 @@
 - [ ] Magnify (view window => grows larger)
 
 ### `mod+alt` spawns:
-- [ ] `m` = "brave --new-window https://mail.proton.me/u/0/inbox" <- floating
-    - Make sure it floats for both firefox and brave.
+- [ ] `m` = "ungoogled-chromium --new-window https://mail.proton.me/u/0/inbox" <- floating
+    - Make sure it floats for both firefox and ungoogled-chromium.
 
 ```haskell
 isProtonMailTitle t = isInfixOf "@proton.me" t && isInfixOf "Proton Mail" t
@@ -30,7 +30,7 @@ isProtonMailTitle t = isInfixOf "@proton.me" t && isInfixOf "Proton Mail" t
     - Ability to cycle + switch focus on fullscreen to other application.
 - [ ] Add rofi power spawn on battery widget click.
 - [ ] Tray == missing lanched applications????
-- [ ] Brave seems to lose focus on tab kill???
+- [ ] ungoogled-chromium seems to lose focus on tab kill???
 
 # Keymaps
 ```python

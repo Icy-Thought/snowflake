@@ -34,12 +34,12 @@
         neovim.enable = true;
       };
       browsers = {
-        default = "brave";
-        brave.enable = true;
+        default = "ungoogled-chromium";
+        unGoogled.enable = true;
       };
       media = {
-        player = { video.enable = true; };
-        document = { zathura.enable = true; };
+        player.video.enable = true;
+        document.zathura.enable = true;
       };
     };
   };

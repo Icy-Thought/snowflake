@@ -43,18 +43,18 @@
         };
       };
       browsers = {
-        default = "brave";
-        brave.enable = true;
+        default = "ungoogled-chromium   ";
+        unGoogled.enable = true;
         firefox.enable = true;
       };
-      philomath.aula = { zoom.enable = true; };
+      philomath.aula.zoom.enable = true;
       media = {
-        downloader = { transmission.enable = true; };
+        downloader.transmission.enable = true;
         editor = {
           raster.enable = true;
           vector.enable = true;
         };
-        social = { common.enable = true; };
+        social.common.enable = true;
         player = {
           music.enable = true;
           video.enable = true;

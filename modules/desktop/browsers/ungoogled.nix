@@ -15,8 +15,8 @@ with lib.my; {
       (makeDesktopItem {
         name = "ungoogled-private";
         desktopName = "Ungoogled Web Browser (Private)";
-        genericName = "Launch a Private Ungoogled-Chromium Instance";
-        icon = "brave";
+        genericName = "Launch a Private Ungoogled Chromium Instance";
+        icon = "chromium";
         exec = "${getExe ungoogled-chromium} --incognito";
         categories = [ "Network" ];
       })
@@ -26,23 +26,23 @@ with lib.my; {
       enable = true;
       package = pkgs.ungoogled-chromium;
       extensions = [
-        {
-          id = "ocaahdebbfolfmndjeplogmgcagdmblk";
-          updateUrl = "https://raw.githubusercontent.com/NeverDecaf/chromium-web-store/master/updates.xml";
-        }
         { id = "jhnleheckmknfcgijgkadoemagpecfol"; } # Auto-Tab-Discard
         { id = "nngceckbapebfimnlniiiahkandclblb"; } # Bitwarden
+        { id = "dlnejlppicbjfcfcedcflplfjajinajd"; } # Bonjourr (New-Tab Page)
         { id = "eimadpbcbfnmbkopoojfekhnkhdbieeh"; } # Dark-Reader
         { id = "ldpochfccmkkmhdbclfhpagapcfdljkj"; } # Decentraleyes
         { id = "bkdgflcldnnnapblkhphbgpggdiikppg"; } # DuckDuckGo
-        { id = "gphhapmejobijbbhgpjhcjognlahblep"; } # Gnome-Shell-Integration
+        { id = "hlepfoohegkhhmjieoechaddaejaokhf"; } # Refined GitHub
         { id = "iaiomicjabeggjcfkbimgmglanimpnae"; } # Tab-Session-Manager
-        { id = "hipekcciheckooncpjeljhnekcoolahp"; } # Tabliss
         { id = "cjpalhdlnbpafiamejdnhcphjbkeiagm"; } # Ublock-Origin
+        { id = "jinjaccalgkegednnccohejagnlnfdag"; } # Violentmonkey
         {
           id = "dcpihecpambacapedldabdbpakmachpb";
-          updateUrl = "https://raw.githubusercontent.com/iamadamdev/bypass-paywalls-chrome/master/updates.xml";
+          updateUrl = "https://raw.githubusercontent.com/iamadamdev/bypass-paywalls-chrome/master/src/updates/updates.xml";
         }
+        (mkIf config.modules.desktop.gnome.enable [
+          { id = "gphhapmejobijbbhgpjhcjognlahblep"; } # Gnome-Shell-Integration
+        ])
       ];
     };
   };
