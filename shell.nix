@@ -6,7 +6,7 @@ pkgs.mkShell {
   shellHook =
     let
       nixBin = pkgs.writeShellScriptBin "nix" ''
-        ${pkgs.nixFlakes}/bin/nix --option experimental-features "nix-command flakes" "$@"
+        ${pkgs.nixVersions.stable}/bin/nix --option experimental-features "nix-command flakes" "$@"
       '';
     in
     ''

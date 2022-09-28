@@ -15,7 +15,7 @@ with lib.my; {
       user.packages = with pkgs; [
         nixpkgs-fmt
         nix-output-monitor
-        nix-review
+        nixpkgs-review
         nil # Nix Expression Language
       ];
     })

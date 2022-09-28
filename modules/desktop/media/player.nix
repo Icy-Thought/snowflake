@@ -23,16 +23,40 @@ in
         enable = true;
         spotifyPackage = pkgs.spotify-unwrapped;
         spicetifyPackage = pkgs.spicetify-cli;
-
-        enabledExtensions = [ "fullAppDisplay.js" "shuffle+.js" "adblock.js" "hidePodcasts.js" ];
-
+        enabledExtensions = [
+          "fullAppDisplay.js"
+          "shuffle+.js"
+          "adblock.js"
+          "hidePodcasts.js"
+        ];
         theme = "catppuccin-mocha";
         colorScheme = "flamingo";
       };
     })
 
     (mkIf cfg.video.enable {
-      user.packages = with pkgs; [ mpv-with-scripts mpvc ];
+      hm.programs.mpv = {
+        enable = true;
+        scripts = with pkgs.mpvScripts; [
+          autoload
+          mpris
+          sponsorblock
+          thumbnail
+        ];
+        config = {
+          profile = "gpu-hq";
+          force-window = true;
+          ytdl-format = "bestvideo+bestaudio";
+          cache-default = 4000000;
+          osc = "no"; # Thumbnail
+        };
+        bindings = {
+          WHEEL_UP = "seek 10";
+          WHEEL_DOWN = "seek -10";
+        };
+      };
+
+      user.packages = with pkgs; [ mpvc ];
     })
   ];
 }

@@ -57,7 +57,7 @@ in
     programs.kdeconnect.enable = true;
 
     systemd.user.services.kdeconnect-indicator = {
-      serviceConfig.ExecStart = "${pkgs.kdeconnect}/bin/kdeconnect-indicator";
+      serviceConfig.ExecStart = "${pkgs.plasma5Packages.kdeconnect-kde}/bin/kdeconnect-indicator";
       wantedBy = [ "graphical-session.target" ];
       partOf = [ "graphical-session.target" ];
     };
