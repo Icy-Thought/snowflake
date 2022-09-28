@@ -8,7 +8,6 @@ with lib;
 with lib.my;
 let
   cfg = config.modules.shell.zsh;
-  zshDir = "${config.snowflake.configDir}/zsh";
   themeCfg = config.modules.themes;
 in
 {
@@ -139,10 +138,15 @@ in
       {
         abbreviations = {
           target = "zsh/abbreviations";
-          text = ''
-            ${builtins.readFile "${zshDir}/abbreviations/main.zsh"}
-            ${builtins.readFile "${zshDir}/abbreviations/git.zsh"}
-          '';
+          text =
+            let abbrevs = import "${config.snowflake.configDir}/shell-abbr";
+            in ''
+              ${lib.concatStrings (lib.mapAttrsToList (k: v:
+                with lib.strings; ''
+                  abbr ${escapeNixString k} = ${escapeNixString v}
+                '')
+              abbrevs)}
+            '';
         };
       }
 

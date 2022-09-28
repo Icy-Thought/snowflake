@@ -80,38 +80,8 @@ in
     home.configFile.xonsh-init = {
       target = "xonsh/rc.xsh";
       text =
-        let
-          aliases = { exa = "exa --group-directories-first"; };
-
-          abbrevs = {
-            ls = "exa -Slhg --icons";
-            lsa = "exa -Slhga --icons";
-            tree = "exa -SlhgT --icons";
-            emc = "emacsclient -c";
-            tmc = "emacsclient -t";
-            usbStat = "watch rg -e Dirty: -e Writeback: /proc/meminfo";
-            wget = "curl -O";
-
-            # -------===[ Nix ]===------- #
-            nb = "nix-build -E 'with import <nixpkgs> {}; callPackage ./. {}'";
-            np = "nix-shell -p";
-            nls = "nix-store --query --requisites /run/current-system | cut -d- -f2- | sort | uniq";
-
-            # -------===[ Sys-Management ]===------- #
-            bat0 = "upower -i /org/freedesktop/UPower/devices/battery_BAT0";
-            flkup = "nix flake update";
-            thkup = "nixos-rebuild switch --use-remote-sudo --flake .#thinkpad-e595 --impure";
-            proup = "nixos-rebuild switch --use-remote-sudo --flake .#probook-440g3 --impure";
-            d2nix = "dconf dump / | dconf2nix > dconf.nix";
-
-            # -------===[ Others ]===------- #
-            wud = "systemctl stop wg-quick-akkadianVPN.service";
-            wup = "systemctl start wg-quick-akkadianVPN.service";
-            yta = "youtube-dl -x --audio-format mp3";
-            ytv = "youtube-dl --best-quality";
-          };
-        in
-        ''
+        let abbrevs = import "${config.snowflake.configDir}/shell-abbr";
+        in ''
           # -------===[ Settings ]===------- #
           $AUTO_CD = True
           $COLOR_RESULTS = True
@@ -133,11 +103,7 @@ in
           xontrib load cmd_done direnv fzf-widgets hist_navigator output_search readable-traceback schedule
 
           # -------===[ Aliases & Abbreviations ]===------- #
-          ${lib.concatStrings (lib.mapAttrsToList (k: v:
-            with lib.strings; ''
-              aliases[${escapeNixString k}] = ${escapeNixString v}
-            '')
-          aliases)}
+          aliases[exa] = "exa --group-directories-first"
 
           ${lib.concatStrings (lib.mapAttrsToList (k: v:
             with lib.strings; ''

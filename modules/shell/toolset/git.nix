@@ -137,14 +137,8 @@ with lib.my; {
 
     (mkIf config.modules.shell.fish.enable {
       # easier gitignore fetching (fish)
-      hm.programs.fish = {
-        interactiveShellInit = ''
-          ${builtins.readFile "${config.snowflake.configDir}/fish/abbreviations/git.fish"}
-        '';
-
-        functions = {
-          gitignore = "curl -sL https://www.gitignore.io/api/$argv";
-        };
+      hm.programs.fish.functions = {
+        gitignore = "curl -sL https://www.gitignore.io/api/$argv";
       };
     })
   ]);

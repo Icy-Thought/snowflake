@@ -5,10 +5,7 @@
 , ...
 }:
 with lib;
-with lib.my; let
-  fishCfg = "${config.snowflake.configDir}/fish";
-in
-{
+with lib.my; {
   options.modules.shell.fish = {
     enable = mkBoolOpt false;
     theme = config.modules.themes;
@@ -31,6 +28,12 @@ in
     hm.programs.fish = {
       enable = true;
       # useBabelfish = true;
+
+      shellAliases = {
+        exa = "exa --group-directories-first";
+      };
+      shellAbbrs = import "${config.snowflake.configDir}/shell-abbr";
+
       interactiveShellInit = ''
         ${getExe pkgs.zoxide} init fish | source
         ${getExe pkgs.any-nix-shell} fish | source
@@ -51,9 +54,6 @@ in
         set -xU LESS_TERMCAP_so (printf "\e[01;44;33m")
         set -xU LESS_TERMCAP_ue (printf "\e[0m")
         set -xU LESS_TERMCAP_us (printf "\e[01;32m"t)
-
-        ${builtins.readFile "${fishCfg}/abbreviations/main.fish"}
-        ${builtins.readFile "${fishCfg}/aliases/main.fish"}
       '';
 
       plugins =
@@ -70,7 +70,7 @@ in
       fzf-theme = {
         target = "fish/conf.d/fzf.fish";
         text = with colors.main; ''
-          set -Ux FZF_DEFAULT_OPTS "\
+              set -Ux FZF_DEFAULT_OPTS "\
           --color=bg:,bg+:${types.bg},spinner:${types.panelbg},hl:${normal.red} \
           --color=fg:${types.border},header:${normal.red},info:${normal.magenta},pointer:${types.border} \
           --color=marker:${normal.magenta},fg+:${types.border},prompt:${types.border},hl+:${normal.red}"
