@@ -19,7 +19,7 @@ with lib.my; {
         hasktags
         hoogle
         hpack
-        stylish-haskell
+        brittany
       ];
     })
 
