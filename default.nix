@@ -6,19 +6,15 @@
 }:
 with lib;
 with lib.my; {
-  imports =
-    [
-      inputs.home-manager.nixosModules.home-manager
-      (mkAliasOptionModule [ "hm" ] [ "home-manager" "users" config.user.name ])
-    ]
-    ++ (mapModulesRec' (toString ./modules) import);
+  imports = [
+    inputs.home-manager.nixosModules.home-manager
+    (mkAliasOptionModule [ "hm" ] [ "home-manager" "users" config.user.name ])
+  ] ++ (mapModulesRec' (toString ./modules) import);
 
   # Common config for all nixos machines;
   environment.variables = {
     SNOWFLAKE = config.snowflake.dir;
     SNOWFLAKE_BIN = config.snowflake.binDir;
-
-    # Configure nix and nixpkgs
     NIXPKGS_ALLOW_UNFREE = "1";
   };
 
@@ -32,12 +28,10 @@ with lib.my; {
       package = pkgs.nixVersions.stable;
       extraOptions = "experimental-features = nix-command flakes";
 
-      nixPath =
-        nixPathInputs
-        ++ [
-          "nixpkgs-overlays=${config.snowflake.dir}/overlays"
-          "snowflake=${config.snowflake.dir}"
-        ];
+      nixPath = nixPathInputs ++ [
+        "nixpkgs-overlays=${config.snowflake.dir}/overlays"
+        "snowflake=${config.snowflake.dir}"
+      ];
 
       registry = registryInputs // { snowflake.flake = inputs.self; };
 
