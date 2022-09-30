@@ -8,55 +8,48 @@
   modules = {
     hardware = {
       audio.enable = true;
+      bluetooth.enable = true;
       input.enable = true;
-      # razer.enable = true;
     };
 
     networking = {
       enable = true;
       networkManager.enable = true;
-      wireGuard = {
-        enable = true;
-        akkadianVPN.enable = true;
-      };
+      wireGuard.enable = true;
     };
 
-    themes.active = "one-dark";
+    themes.active = "catppuccin";
 
     desktop = {
       gnome.enable = true;
       terminal = {
-        default = "kitty";
-        kitty.enable = true;
+        default = "wezterm";
+        wezterm.enable = true;
       };
       editors = {
         default = "nvim";
-        neovim.enable = true;
+        neovim.agasaya.enable = true;
       };
       browsers = {
-        default = "ungoogled-chromium";
-        unGoogled.enable = true;
+        default = "firefox-devedition";
+        firefox.enable = true;
       };
       media = {
         player.video.enable = true;
         document.zathura.enable = true;
       };
     };
-  };
 
-  shell = {
-    git.enable = true;
-    fish.enable = true;
-    gnupg.enable = true;
+    shell = {
+      git.enable = true;
+      fish.enable = true;
+      gnupg.enable = true;
+    };
   };
 
   services = {
     upower.enable = true;
     printing.enable = true;
-
-    xserver = {
-      videoDrivers = [ "modesetting" ];
-      useGlamor = true;
-    };
+    xserver.videoDrivers = [ "modesetting" ];
   };
 }

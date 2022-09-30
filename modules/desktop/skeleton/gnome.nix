@@ -29,7 +29,7 @@ with lib.my; {
 
     services.dbus = {
       enable = true;
-      packages = with pkgs; [ gnome.dconf ];
+      packages = with pkgs; [ dconf ];
     };
 
     services.udev = {
@@ -43,20 +43,25 @@ with lib.my; {
 
     user.packages = with pkgs; [
       dconf2nix
-      gnome.polari
-      gnome.gnome-disk-utility
-      gnome.gnome-tweak-tool
-
-      # gnomeExtensions.pop-os-shell
-      gnomeExtensions.gsconnect
-      gnomeExtensions.user-themes
-    ];
+    ] ++ (with gnome; [
+      polari
+      gnome-disk-utility
+      gnome-tweaks
+    ]) ++ (with gnomeExtensions; [
+      blur-my-shell
+      gsconnect
+      user-themes
+    ]);
 
     # Our beloved modules
-    modules.desktop.extra = { ibus.enable = true; };
+    modules.desktop.extra = {
+      ibus.enable = true;
+    };
 
     # Force-enable wayland on FireFox
-    environment.variables = { MOZ_ENABLE_WAYLAND = 1; };
+    environment.variables = {
+      MOZ_ENABLE_WAYLAND = "1"; # (Firefox) wayland awareness!
+    };
 
     # Enable chrome-gnome-shell in FireFox nightly (mozilla-overlay):
     home.file.chrome-gnome-shell = {

@@ -25,6 +25,11 @@
 - [Showcase (Qtile)](#showcase-qtile)
 - [Introduction](#introduction)
 - [Getting Started](#getting-started)
+  * [Partitioning & Formatting](#partitioning--formatting)
+  * [WARNING](#warning)
+  * [Nix-Channels](#nix-channels)
+- [Minimal Installation Process](#minimal-installation-process)
+  * [Mount & Create Required Dirs](#mount--create-required-dirs)
   * [Prepare System Environment for Nix-Flake](#prepare-system-environment-for-nix-flake)
 - [Nix-Flake: Beginning of a Journey](#nix-flake-beginning-of-a-journey)
   * [Clone `Snowflake` and Link Files To Dir](#clone-snowflake-and-link-files-to-correct-path)
@@ -33,7 +38,7 @@
     + [Hardware-Configuration.nix](#hardware-configurationnix)
     + [Hide Your FileSystem From Nautilus & Dolphin](#hide-your-filesystem-from-nautilus--dolphin)
     + [Installing Nix-Flake System](#installing-nix-flake-system)
-- [(Optional) Doom Emacs](#doom-emacs)
+- [Doom Emacs](#doom-emacs)
 - [Congratulations! 🎉](#congratulations-)
 - [Useful Links](#useful-links)
 - [Special Thanks](#special-thanks)
@@ -73,10 +78,46 @@ their liking!
 > comes with the usage of such experimental features.
 
 # Getting Started
-## NixOS Installer
-As of `22.05` the NixOS ISO comes equipped with a well-developed installer that
-reduces the "*complexity*" of installing NixOS on your device! Therefore manual
-intervention should not be required for a minimal installation.
+## Partitioning & Formatting
+Here I advice you to follow to carefully written
+[guide](https://nixos.org/manual/nixos/stable/#sec-installation-partitioning) by
+the lovely NixOS members about partitions, how to setup your partitions & later
+format them to their desired file-systems.
+
+## WARNING
+> **Warning**
+The following guide is written with
+`nixos-gnome-21.05.1205.b72bde7c4a1-x86_64-linux.iso` in mind. Meaning that the
+attempt to install your Nix-Flake system from the LiveUSB won't work. You should
+instead proceed with a minimal NixOS installation and later attempt to upgrade
+to your Nix-Flake system!
+
+## Nix-Channels
+Setup your environment ot use the bleeding edge repository of NixOS and also add
+Home-Manager to your nix-channels:
+```sh
+sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos
+sudo nix-channel --update
+```
+
+# Minimal Installation Process
+> In `nixos-gnome-21.05.1205.b72bde7c4a1-x86_64-linux.iso`, it's unfortunately
+> not possible to setup your flake based system without having Nix fail the
+> installation process. Thus the user ought to install a minimal setup and later
+> switch to their flake-based system after rebooting their minimal setup.
+
+## Mount & Create Required Dirs
+```sh
+sudo mount /dev/disk/by-label/nixos /mnt
+sudo mkdir -p /mnt/BOOT
+sudo mount /dev/disk/by-label/BOOT /mnt/BOOT
+```
+
+To prevent future crashes throughout the installation process, enable your newly
+created swap partition:
+```sh
+sudo swapon /dev/sdX
+```
 
 ## Prepare System Environment for Nix-Flake
 Don't forget to append the following lines of code to your `configuration.nix`:
@@ -165,7 +206,7 @@ nixos-rebuild switch --use-remote-sudo --flake .#conf-name --impure";
 reboot
 ```
 
-# Doom Emacs
+# (Optional) Doom Emacs
 If you have replicated my setup, you need to do nothing but `git clone`
 doom-emacs repository and enable the `emacs` module in your `X/default.nix`:
 ```nix

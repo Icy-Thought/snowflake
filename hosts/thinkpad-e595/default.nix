@@ -44,7 +44,7 @@
         };
       };
       browsers = {
-        default = "ungoogled-chromium   ";
+        default = "firefox-devedition";
         unGoogled.enable = true;
         firefox.enable = true;
       };
@@ -98,6 +98,7 @@
       deviceSection = ''
         Option "TearFree" "true"
       '';
+
       libinput.touchpad = {
         accelSpeed = "0.5";
         accelProfile = "adaptive";
