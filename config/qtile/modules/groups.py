@@ -100,7 +100,12 @@ groups.append(
                 **next_maximum,
             ),
             DropDown("Spotify", "spotify", **next_maximum),
-            DropDown("Telegram", "telegram-desktop", **next_maximum),
+            DropDown(
+                "Telegram",
+                "telegram-desktop",
+                match=Match(wm_class="telegram-desktop"),
+                **next_maximum,
+            ),
             DropDown("Transmission", "transmission-gtk", **next_maximum),
             DropDown("Volume Control", "pavucontrol", **next_maximum),
         ],
