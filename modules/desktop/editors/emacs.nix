@@ -26,7 +26,14 @@ in
       hm.programs.emacs = {
         enable = true;
         package = pkgs.emacsPgtkNativeComp;
-        extraPackages = epkgs: with epkgs; [ vterm pdf-tools ];
+        extraPackages = epkgs: with epkgs; [
+          all-the-icons
+          all-the-icons-completion
+          all-the-icons-dired
+          emojify
+          pdf-tools
+          vterm
+        ];
       };
 
       user.packages = with pkgs; [
@@ -36,9 +43,6 @@ in
         zstd
         (mkIf (config.programs.gnupg.agent.enable) pinentry-emacs)
       ];
-
-      # Fonts -> icons + ligatures when specified:
-      fonts.fonts = with pkgs; [ emacs-all-the-icons-fonts ];
 
       # Enable access to doom (tool).
       env.PATH = [ "$XDG_CONFIG_HOME/emacs/bin" ];
