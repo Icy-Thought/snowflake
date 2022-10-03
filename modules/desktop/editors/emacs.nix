@@ -39,7 +39,7 @@ in
         binutils
         gnutls
         zstd
-        (mkIf (config.programs.gnupg.agent.enable) pinentry_emacs)
+        (mkIf (config.programs.gnupg.agent.enable) pinentry-emacs)
       ];
 
       # Fonts -> icons + ligatures when specified:
@@ -50,7 +50,7 @@ in
 
       environment.variables = {
         EMACSDIR = "$XDG_CONFIG_HOME/emacs";
-        DOOMDIR = "${configDir}/emacs.d/doom-emacs"; # TODO: personal
+        DOOMDIR = "${configDir}/emacs.d/doom-emacs";
       };
 
       system.userActivationScripts = mkIf cfg.doom.enable {

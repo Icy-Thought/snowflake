@@ -33,9 +33,8 @@ in
         ## checkers: aspell
         (aspellWithDicts (dict: with dict; [ en en-computers en-science ]))
 
-        ## Markdown
-        nodePackages.markdownlint-cli2
-        vale
+        ## JS/TS + Markdown 
+        deno
 
         ## lsp: LaTeX + Org-Mode
         pandoc
