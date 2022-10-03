@@ -7,7 +7,6 @@
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.editors.emacs;
-  configDir = config.snowflake.configDir;
 in
 {
   options.modules.desktop.editors.emacs = {
@@ -50,7 +49,7 @@ in
 
       environment.variables = {
         EMACSDIR = "$XDG_CONFIG_HOME/emacs";
-        DOOMDIR = "${configDir}/emacs.d/doom-emacs";
+        DOOMDIR = "${inputs.emacs-dir}/doom-emacs";
       };
 
       system.userActivationScripts = mkIf cfg.doom.enable {

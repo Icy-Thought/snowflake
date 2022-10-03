@@ -39,6 +39,24 @@
         "type": "github"
       }
     },
+    "emacs-dir": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1664143850,
+        "narHash": "sha256-f6Z5IV+j6PC2dD18PjQskSZnQGa1uCL6zEw4iooAtcw=",
+        "ref": "refs/heads/main",
+        "rev": "1e47d8b118894be26b86488dd1d20dc293f1ed93",
+        "revCount": 20,
+        "submodules": true,
+        "type": "git",
+        "url": "https://github.com/Icy-Thought/emacs.d.git"
+      },
+      "original": {
+        "submodules": true,
+        "type": "git",
+        "url": "https://github.com/Icy-Thought/emacs.d.git"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -293,6 +311,24 @@
         "type": "indirect"
       }
     },
+    "nvim-dir": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1664764982,
+        "narHash": "sha256-RFETgT/w/tn0mhE6o5G814xm8oqkzPJfJn841Lfv28I=",
+        "ref": "refs/heads/main",
+        "rev": "159049bf5c010b7a551bf090175276cb0498d7a1",
+        "revCount": 222,
+        "submodules": true,
+        "type": "git",
+        "url": "https://github.com/Icy-Thought/nvim.d.git"
+      },
+      "original": {
+        "submodules": true,
+        "type": "git",
+        "url": "https://github.com/Icy-Thought/nvim.d.git"
+      }
+    },
     "nvim-nightly": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -317,11 +353,13 @@
       "inputs": {
         "agenix": "agenix",
         "emacs": "emacs",
+        "emacs-dir": "emacs-dir",
         "home-manager": "home-manager",
         "hyprland": "hyprland",
         "kmonad": "kmonad",
         "nixpkgs": "nixpkgs_3",
         "nixpkgs-unstable": "nixpkgs-unstable",
+        "nvim-dir": "nvim-dir",
         "nvim-nightly": "nvim-nightly",
         "rust": "rust",
         "spicetify-nix": "spicetify-nix"

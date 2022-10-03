@@ -22,6 +22,20 @@
     # Window Manager(s)
     hyprland.url = "github:hyprwm/Hyprland";
 
+    # Submodules: (temporary)
+    emacs-dir = {
+      url = "https://github.com/Icy-Thought/emacs.d.git";
+      type = "git";
+      submodules = true;
+      flake = false;
+    };
+    nvim-dir = {
+      url = "https://github.com/Icy-Thought/nvim.d.git";
+      type = "git";
+      submodules = true;
+      flake = false;
+    };
+
     # Useful tool(s)
     emacs.url = "github:nix-community/emacs-overlay";
     nvim-nightly.url = "github:nix-community/neovim-nightly-overlay";

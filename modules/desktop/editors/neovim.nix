@@ -8,7 +8,6 @@
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.editors.neovim;
-  nvimDir = "${config.snowflake.configDir}/nvim.d";
 in
 {
   options.modules.desktop.editors.neovim = {
@@ -38,11 +37,11 @@ in
       modules.develop.lua.enable = true;
 
       home.configFile = {
-        # agasaya-config = {
-        #   source = nvimDir + "/agasaya";
-        #   target = "nvim";
-        #   recursive = true;
-        # };
+        agasaya-config = {
+          source = "${inputs.nvim-dir}/agasaya";
+          target = "nvim";
+          recursive = true;
+        };
 
         agasaya-init = {
           target = "nvim/init.lua";
@@ -80,7 +79,7 @@ in
 
       home.configFile = {
         ereshkigal-config = {
-          source = nvimDir + "/ereshkigal";
+          source = "${inputs.nvim-dir}/ereshkigal";
           target = "nvim";
           recursive = true;
         };
