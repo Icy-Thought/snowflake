@@ -23,18 +23,14 @@ in
     {
       nixpkgs.overlays = [ inputs.emacs.overlay ];
 
-      hm.services.emacs = {
+      hm.programs.emacs = {
         enable = true;
-        client.enable = true;
         package = pkgs.emacsPgtkNativeComp;
-        # extraOptions = ["-f" "exwm-enable"];
+        extraPackages = epkgs: with epkgs; [ vterm pdf-tools ];
       };
 
       user.packages = with pkgs; [
         # Emacs-packages to pull from emacs-overlay:
-        ((emacsPackagesFor emacsPgtkNativeComp).emacsWithPackages
-          (epkgs: with epkgs; [ vterm pdf-tools ]))
-
         binutils
         gnutls
         zstd
@@ -49,7 +45,15 @@ in
 
       environment.variables = {
         EMACSDIR = "$XDG_CONFIG_HOME/emacs";
-        DOOMDIR = "${inputs.emacs-dir}/doom-emacs";
+        # DOOMDIR = "${inputs.emacs-dir}/doom-emacs";
+      };
+
+      home.configFile = {
+        doom-config = {
+          source = "${inputs.emacs-dir}/doom-emacs";
+          target = "doom";
+          recursive = true;
+        };
       };
 
       system.userActivationScripts = mkIf cfg.doom.enable {
