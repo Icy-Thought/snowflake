@@ -1,4 +1,0 @@
-(defwidget horizon_layout []
-  (box :space-evenly false :class "lumin-layout-box" :spacing 35 ""))
-
-;; vim:ft=yuck

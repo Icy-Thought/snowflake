@@ -31,6 +31,7 @@
 
     desktop = {
       qtile.enable = true;
+      hyprland.enable = true;
       terminal = {
         default = "wezterm";
         wezterm.enable = true;

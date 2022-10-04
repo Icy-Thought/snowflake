@@ -21,6 +21,16 @@
 
     # Window Manager(s)
     hyprland.url = "github:hyprwm/Hyprland";
+    vile = {
+      url = "github:dharmx/vile";
+      flake = false;
+    };
+
+    # Toolset ++ Application(s)
+    emacs.url = "github:nix-community/emacs-overlay";
+    nvim-nightly.url = "github:nix-community/neovim-nightly-overlay";
+    rust.url = "github:oxalica/rust-overlay";
+    spicetify-nix.url = "github:the-argus/spicetify-nix";
 
     # Submodules: (temporary)
     emacs-dir = {
@@ -35,12 +45,6 @@
       submodules = true;
       flake = false;
     };
-
-    # Useful tool(s)
-    emacs.url = "github:nix-community/emacs-overlay";
-    nvim-nightly.url = "github:nix-community/neovim-nightly-overlay";
-    rust.url = "github:oxalica/rust-overlay";
-    spicetify-nix.url = "github:the-argus/spicetify-nix";
   };
 
   outputs =

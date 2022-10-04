@@ -1,8 +1,0 @@
-(include "./src/yuck/avatar/lib/_init.yuck")
-(include "./src/yuck/avatar/_layout.yuck")
-
-(defwindow avatar :stacking "fg" :windowtype "normal" :wm-ignore true
-  :geometry (geometry :width "26%" :height "100%" :anchor "right center") 
-  (avatar_layout))
-
-;; vim:ft=yuck

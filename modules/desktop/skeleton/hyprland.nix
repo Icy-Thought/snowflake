@@ -43,6 +43,7 @@ with lib.my; {
           enable = true;
           package = pkgs.rofi-wayland;
         };
+        waybar.enable = true;
       };
     };
 
