@@ -1,0 +1,9 @@
+**/.*-env
+**/__pycache__/
+**/.venv/
+.config.json
+config.json
+ewwrc
+.ewwrc
+themes/auto.scss
+eww.yuck

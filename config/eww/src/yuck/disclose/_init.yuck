@@ -1,0 +1,18 @@
+(include "./src/yuck/disclose/_env.yuck")
+
+(include "./src/yuck/disclose/cards/_cardimage.yuck")
+(include "./src/yuck/disclose/cards/_cardprog.yuck")
+(include "./src/yuck/disclose/cards/_cardscr.yuck")
+(include "./src/yuck/disclose/cards/_cardradial.yuck")
+
+(include "./src/yuck/disclose/_stats.yuck")
+(include "./src/yuck/disclose/_dnd.yuck")
+(include "./src/yuck/disclose/_layout.yuck")
+
+(defwindow disclose :stacking "fg"
+  :windowtype "normal"
+  :wm-ignore true
+  :geometry (geometry :width "26%" :height "100%" :anchor "right center") 
+  (disclose_layout))
+
+;; vim:ft=yuck
