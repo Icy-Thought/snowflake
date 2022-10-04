@@ -20,8 +20,7 @@ with lib.my; {
         {
           name = "haskell";
           formatter = {
-            command = "stylish-haskell";
-            args = [ "--stdin" ];
+            command = "brittany";
           };
         }
         {
