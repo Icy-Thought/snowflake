@@ -29,7 +29,11 @@ in
 
     # Photoshop replacement:
     (mkIf cfg.raster.enable {
-      user.packages = with pkgs; [ krita gimp gimpPlugins.resynthesizer ];
+      user.packages = with pkgs; [
+        krita
+        gimp
+        gimpPlugins.resynthesizer
+      ];
 
       # home.configFile."GIMP/2.10" = {
       #   source = "${configDir}/gimp";

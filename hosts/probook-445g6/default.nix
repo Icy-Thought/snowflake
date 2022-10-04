@@ -38,6 +38,10 @@
         player.video.enable = true;
         document.zathura.enable = true;
       };
+      gaming = {
+        steam.enable = true;
+        selection.osu.enable = true;
+      };
     };
 
     shell = {
