@@ -21,10 +21,6 @@
 
     # Window Manager(s)
     hyprland.url = "github:hyprwm/Hyprland";
-    vile = {
-      url = "github:dharmx/vile";
-      flake = false;
-    };
 
     # Toolset ++ Application(s)
     emacs.url = "github:nix-community/emacs-overlay";

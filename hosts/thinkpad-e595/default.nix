@@ -31,7 +31,6 @@
 
     desktop = {
       qtile.enable = true;
-      hyprland.enable = true;
       terminal = {
         default = "wezterm";
         wezterm.enable = true;
@@ -80,7 +79,7 @@
     containers.transmission = {
       enable = false; # TODO: Once fixed -> enable = true;
       username = "alonzo";
-      password = builtins.readFile config.age.secrets.torBylon.path;
+      #  password = builtins.readFile config.age.secrets.torBylon.path;
     };
 
     shell = {

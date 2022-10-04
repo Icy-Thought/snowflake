@@ -3,5 +3,5 @@ let
 in
 {
   "akkadianVPN.age".publicKeys = [ publicKey ];
-  "torBylon.age".publicKeys = [ publicKey ];
+  # "torBylon.age".publicKeys = [ publicKey ];
 }
