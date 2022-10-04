@@ -37,7 +37,6 @@ in
       };
 
       user.packages = with pkgs; [
-        # Emacs-packages to pull from emacs-overlay:
         binutils
         gnutls
         zstd
