@@ -48,7 +48,10 @@
         unGoogled.enable = true;
         firefox.enable = true;
       };
-      philomath.aula.zoom.enable = true;
+      education = {
+        memory.enable = true;
+        vidcom.enable = true;
+      };
       media = {
         downloader.transmission.enable = true;
         editor = {

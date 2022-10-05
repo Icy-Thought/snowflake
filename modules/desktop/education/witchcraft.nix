@@ -6,11 +6,11 @@
 }:
 with lib;
 with lib.my; {
-  options.modules.desktop.philomath.electroGears = {
+  options.modules.desktop.education.witchcraft = {
     enable = mkBoolOpt false;
   };
 
-  config = mkIf config.modules.desktop.philomath.electroGears.enable {
+  config = mkIf config.modules.desktop.education.witchcraft.enable {
     # TODO: OSS packages + configuration.
     user.packages = with pkgs; [ kicad ];
   };

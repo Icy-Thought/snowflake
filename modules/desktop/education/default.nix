@@ -6,21 +6,21 @@
 }:
 with lib;
 with lib.my; let
-  cfg = config.modules.desktop.philomath.aula;
+  cfg = config.modules.desktop.education;
 in
 {
-  options.modules.desktop.philomath.aula = {
-    anki.enable = mkBoolOpt false;
-    zoom.enable = mkBoolOpt false;
+  options.modules.desktop.education = {
+    memory.enable = mkBoolOpt false;
+    vidcom.enable = mkBoolOpt false;
   };
 
   config = mkMerge [
-    (mkIf cfg.anki.enable {
+    (mkIf cfg.memory.enable {
       # TODO: Configure anki OR replace with other software
       user.packages = with pkgs; [ anki ];
     })
 
-    (mkIf cfg.zoom.enable {
+    (mkIf cfg.vidcom.enable {
       programs.firejail = {
         enable = true;
         wrappedBinaries.zoom = {
