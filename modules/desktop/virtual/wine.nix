@@ -14,7 +14,7 @@ with lib.my; {
     user.packages = with pkgs; [
       bottles
       wineWowPackages.fonts
-      wineWowPackages.staging
+      wineWowPackages.stagingFull
       winetricks
     ];
   };

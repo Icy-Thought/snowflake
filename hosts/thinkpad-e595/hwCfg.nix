@@ -42,7 +42,6 @@
     kernelModules = [ "kvm-amd" ];
     kernelParams = [ "acpi_backlight=native" ];
     kernel.sysctl = {
-      # "abi.vsyscall32" = 0; # League of Legends..
       "net.ipv4.icmp_echo_ignore_broadcasts" = 1; # Refuse ICMP echo requests
     };
   };
