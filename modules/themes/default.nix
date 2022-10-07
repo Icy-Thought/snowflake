@@ -145,7 +145,7 @@ in
           name = mkOpt str "";
           publisher = mkOpt str "";
           version = mkOpt str "";
-          sha256 = mkOpt str "";
+          hash = mkOpt str "";
         };
       };
     };

@@ -10,43 +10,43 @@ with lib.my; let
     owner = "74th";
     repo = "xonsh-direnv";
     rev = "1.6.1";
-    sha256 = "979y+jUKZkdIyXx4q0f92jX/crFr9LDrA/5hfXm1CpU=";
+    hash = "sha256-979y+jUKZkdIyXx4q0f92jX/crFr9LDrA/5hfXm1CpU=";
   };
   xontrib-cmd-durations = pkgs.fetchFromGitHub {
     owner = "jnoortheen";
     repo = "xontrib-cmd-durations";
     rev = "v0.2.9";
-    sha256 = "WOhSRENIYFLXiCajlXbwoLzChRRHrwpRKlK4FvyubYo=";
+    hash = "sha256-WOhSRENIYFLXiCajlXbwoLzChRRHrwpRKlK4FvyubYo=";
   };
   xontrib-fzf-widgets = pkgs.fetchFromGitHub {
     owner = "laloch";
     repo = "xontrib-fzf-widgets";
     rev = "v0.0.4";
-    sha256 = "lz0oiQSLCIQbnoQUi+NJwX82SbUvXJ+3dEsSbOb20q4=";
+    hash = "sha256-lz0oiQSLCIQbnoQUi+NJwX82SbUvXJ+3dEsSbOb20q4=";
   };
   xontrib-hist-navigator = pkgs.fetchFromGitHub {
     owner = "jnoortheen";
     repo = "xontrib-hist-navigator";
     rev = "v0.6.4";
-    sha256 = "gxiBEp2HUeLW+alqeirRT2wvEI9f9SaA3X7pb3jTQRo=";
+    hash = "sha256-gxiBEp2HUeLW+alqeirRT2wvEI9f9SaA3X7pb3jTQRo=";
   };
   xontrib-output-search = pkgs.fetchFromGitHub {
     owner = "anki-code";
     repo = "xontrib-output-search";
     rev = "0.6.2";
-    sha256 = "Nrp5Sj36PVIYi8TPNZ2HrLanW9+JgaxH6/9Lzv0PxGI=";
+    hash = "sha256-Nrp5Sj36PVIYi8TPNZ2HrLanW9+JgaxH6/9Lzv0PxGI=";
   };
   xontrib-readable-traceback = pkgs.fetchFromGitHub {
     owner = "vaaaaanquish";
     repo = "xontrib-readable-traceback";
     rev = "0.4.0";
-    sha256 = "ek+GTWGUpm2b6lBw/7n4W46W2R0Gy6JxqWoLuQilCXQ=";
+    hash = "sha256-ek+GTWGUpm2b6lBw/7n4W46W2R0Gy6JxqWoLuQilCXQ=";
   };
   xontrib-schedule = pkgs.fetchFromGitHub {
     owner = "AstraLuma";
     repo = "xontrib-schedule";
     rev = "02c4d4f237451fce39b45545d69ab9ea67565b45";
-    sha256 = "Ahog47+Sq9xv03s0kPRm2wEOT989qI3GMaAzlnz/wS4=";
+    hash = "sha256-Ahog47+Sq9xv03s0kPRm2wEOT989qI3GMaAzlnz/wS4=";
   };
 
   xontribs = [

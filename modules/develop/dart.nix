@@ -22,13 +22,13 @@ with lib.my; {
           name = "dart-code";
           publisher = "dart-code";
           version = "3.39.20220408";
-          sha256 = "D7Pjde4MZDHbYel9YfXowEdy5UNS367Mhg3YHH3ty7c=";
+          hash = "sha256-D7Pjde4MZDHbYel9YfXowEdy5UNS367Mhg3YHH3ty7c=";
         }
         {
           name = "flutter";
           publisher = "dart-code";
           version = "3.39.20220405";
-          sha256 = "OqwzWO8Z/Ql4Y99ki/7/tMFQpltcU5W1cnQc3Wicq+s=";
+          hash = "sha256-OqwzWO8Z/Ql4Y99ki/7/tMFQpltcU5W1cnQc3Wicq+s=";
         }
       ];
     })

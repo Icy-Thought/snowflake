@@ -110,7 +110,7 @@ in
               name = "catppuccin-vsc";
               publisher = "Catppuccin";
               version = "1.0.6";
-              sha256 = "4M8y8dc8BpH1yhabYJsHDT9uDWeqYjnvPBgLS+lTa5I=";
+              hash = "sha256-4M8y8dc8BpH1yhabYJsHDT9uDWeqYjnvPBgLS+lTa5I=";
             };
           };
         };
@@ -153,7 +153,7 @@ in
         owner = "icy-thought";
         repo = "fcitx5-catppuccin";
         rev = "3b699870fb2806404e305fe34a3d2541d8ed5ef5";
-        sha256 = "hOAcjgj6jDWtCGMs4Gd49sAAOsovGXm++TKU3NhZt8w=";
+        hash = "sha256-hOAcjgj6jDWtCGMs4Gd49sAAOsovGXm++TKU3NhZt8w=";
       };
     })
 
@@ -183,7 +183,7 @@ in
           name = "${name}";
           publisher = "${publisher}";
           version = "${version}";
-          sha256 = "${sha256}";
+          hash = "${hash}";
         }];
     })
 

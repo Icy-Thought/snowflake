@@ -99,7 +99,7 @@ in
             name = "";
             publisher = "";
             version = "";
-            sha256 = "";
+            hash = "";
           };
           theme = {
             dark = "";
@@ -153,7 +153,7 @@ in
         owner = "";
         repo = "";
         rev = "";
-        sha256 = "";
+        hash = "";
       }; # WARN:
     })
 
@@ -185,7 +185,7 @@ in
             name = "${name}";
             publisher = "${publisher}";
             version = "${version}";
-            sha256 = "${sha256}";
+            hash = "${hash}";
           }
         ];
     })

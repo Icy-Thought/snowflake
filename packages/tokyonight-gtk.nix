@@ -13,8 +13,8 @@ stdenv.mkDerivation {
   src = fetchFromGitHub {
     owner = "Fausto-Korpsvart";
     repo = "Tokyo-Night-GTK-Theme";
-    rev = "12bd8dbc8316582325e382f6143532f6e6a72a09";
-    sha256 = "1mVXtWA5MB6Vj0/EGhvEYpj5avHsQvzHhWFeu1WE+VU=";
+    rev = "6fdc64763ccb1eb1f6e10bf45e4cb70109b577ac";
+    hash = "sha256-vU8zNi46DRqLr14KtPyN76vv9zLMrxItKi/ADkgdKto=";
   };
 
   nativeBuildInputs = [ jdupes ];

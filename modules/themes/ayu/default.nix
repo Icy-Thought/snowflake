@@ -110,7 +110,7 @@ in
               name = "ayu";
               publisher = "teabyii";
               version = "1.0.5";
-              sha256 = "+ifqgwlikr+qjblmqlzf44xnbn7br5a119v9wanzou4=";
+              hash = "sha256-+ifqgwlikr+qjblmqlzf44xnbn7br5a119v9wanzou4=";
             };
           };
         };
@@ -150,7 +150,7 @@ in
         owner = "icy-thought";
         repo = "fcitx5-catppuccin";
         rev = "3b699870fb2806404e305fe34a3d2541d8ed5ef5";
-        sha256 = "hOAcjgj6jDWtCGMs4Gd49sAAOsovGXm++TKU3NhZt8w=";
+        hash = "sha256-hOAcjgj6jDWtCGMs4Gd49sAAOsovGXm++TKU3NhZt8w=";
       };
     })
 
@@ -180,7 +180,7 @@ in
           name = "${name}";
           publisher = "${publisher}";
           version = "${version}";
-          sha256 = "${sha256}";
+          hash = "${hash}";
         }];
     })
 

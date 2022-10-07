@@ -110,7 +110,7 @@ in
               name = "tokyo-night";
               publisher = "enkia";
               version = "0.9.4";
-              sha256 = "pKokB6446SR6LsTHyJtQ+FEA07A0W9UAI+byqtGeMGw=";
+              hash = "sha256-pKokB6446SR6LsTHyJtQ+FEA07A0W9UAI+byqtGeMGw=";
             };
           };
         };
@@ -154,7 +154,7 @@ in
         owner = "icy-thought";
         repo = "fcitx5-catppuccin";
         rev = "3b699870fb2806404e305fe34a3d2541d8ed5ef5";
-        sha256 = "hOAcjgj6jDWtCGMs4Gd49sAAOsovGXm++TKU3NhZt8w=";
+        hash = "sha256-hOAcjgj6jDWtCGMs4Gd49sAAOsovGXm++TKU3NhZt8w=";
       };
     })
 
@@ -184,7 +184,7 @@ in
           name = "${name}";
           publisher = "${publisher}";
           version = "${version}";
-          sha256 = "${sha256}";
+          hash = "${hash}";
         }];
     })
 

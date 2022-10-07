@@ -124,7 +124,7 @@ in
             owner = "olets";
             repo = "zsh-abbr";
             rev = "v4.8.0";
-            sha256 = "diitszKbu530zXbJx4xmfOjLsITE9ucmWdsz9VTXsKg=";
+            hash = "sha256-diitszKbu530zXbJx4xmfOjLsITE9ucmWdsz9VTXsKg=";
           };
         }] ++ (builtins.map (p: mkPlugin p) [
           "autopair"
