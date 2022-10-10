@@ -63,7 +63,7 @@ with lib.my; {
       enable = true;
       numlock.enable = true;
       preferStatusNotifierItems = true;
-      # importedVariables = [ "GDK_PIXBUF_MODULE_FILE" ]; # Taffybar
+      importedVariables = [ "GDK_PIXBUF_MODULE_FILE" ]; # Taffybar
     };
   };
 }
