@@ -13,6 +13,7 @@ with lib.my; {
   config = mkMerge [
     (mkIf config.modules.develop.nix.enable {
       user.packages = with pkgs; [
+        manix
         nixpkgs-fmt
         nix-output-monitor
         nixpkgs-review
