@@ -5,10 +5,10 @@
 , ...
 }:
 with lib;
-with lib.my; let
-  cfg = config.modules.desktop.education;
-in
-{
+with lib.my;
+
+let cfg = config.modules.desktop.education;
+in {
   options.modules.desktop.education = {
     memory.enable = mkBoolOpt false;
     vidcom.enable = mkBoolOpt false;

@@ -5,11 +5,11 @@
 , ...
 }:
 with lib;
-with lib.my; let
-  cfg = config.modules.desktop.media.document;
-in
-{
-  options.modules.desktop.media.document = {
+with lib.my;
+
+let cfg = config.modules.desktop.toolset.viewer;
+in {
+  options.modules.desktop.toolset.viewer = {
     zathura.enable = mkBoolOpt false;
     sioyek.enable = mkBoolOpt false;
   };

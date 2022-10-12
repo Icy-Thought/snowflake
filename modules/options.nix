@@ -8,6 +8,7 @@ with lib;
 with lib.my; {
   options = with types; {
     user = mkOpt attrs { };
+
     snowflake = {
       dir = mkOpt path (findFirst pathExists (toString ../.) [
         "${config.user.home}/git/Icy-Thought/Snowflake"

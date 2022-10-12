@@ -34,9 +34,11 @@
         default = "firefox-devedition";
         firefox.enable = true;
       };
-      media = {
-        player.video.enable = true;
-        document.zathura.enable = true;
+      extensions.player = {
+        video.enable = true;
+      };
+      toolset.viewer = {
+        zathura.enable = true;
       };
     };
 

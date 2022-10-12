@@ -6,12 +6,15 @@
 
 }:
 with lib;
-with lib.my; {
-  options.modules.desktop.extra.waybar = {
+with lib.my;
+
+let cfg = config.modules.desktop.extensions.waybar;
+in {
+  options.modules.desktop.extensions.waybar = {
     enable = mkBoolOpt false;
   };
 
-  config = mkIf config.modules.desktop.extra.waybar.enable {
+  config = mkIf cfg.enable {
     hm.programs.waybar = {
       enable = true;
       package = pkgs.waybar;

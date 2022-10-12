@@ -6,12 +6,15 @@
 , ...
 }:
 with lib;
-with lib.my; {
-  options.modules.desktop.extra.taffybar = {
+with lib.my;
+
+let cfg = config.modules.desktop.extensions.taffybar;
+in {
+  options.modules.desktop.extensions.taffybar = {
     enable = mkBoolOpt false;
   };
 
-  config = mkIf config.modules.desktop.extra.taffybar.enable {
+  config = mkIf cfg.enable {
     nixpkgs.overlays = [ inputs.taffybar.overlay ];
 
     # 2-Step workaround (https://github.com/taffybar/taffybar/issues/403)

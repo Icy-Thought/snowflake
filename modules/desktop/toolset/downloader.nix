@@ -5,11 +5,11 @@
 , ...
 }:
 with lib;
-with lib.my; let
-  cfg = config.modules.desktop.media.downloader;
-in
-{
-  options.modules.desktop.media.downloader = {
+with lib.my;
+
+let cfg = config.modules.desktop.toolset.downloader;
+in {
+  options.modules.desktop.toolset.downloader = {
     transmission.enable = mkBoolOpt false;
   };
 

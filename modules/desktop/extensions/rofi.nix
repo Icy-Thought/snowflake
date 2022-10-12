@@ -5,11 +5,11 @@
 , ...
 }:
 with lib;
-with lib.my; let
-  cfg = config.modules.desktop.extra.rofi;
-in
-{
-  options.modules.desktop.extra.rofi = {
+with lib.my;
+
+let cfg = config.modules.desktop.extensions.rofi;
+in {
+  options.modules.desktop.extensions.rofi = {
     enable = mkBoolOpt false;
     package = mkOption {
       type = types.package;

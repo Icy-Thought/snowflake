@@ -5,11 +5,11 @@
 , ...
 }:
 with lib;
-with lib.my; let
-  cfg = config.modules.desktop.media.social;
-in
-{
-  options.modules.desktop.media.social = {
+with lib.my;
+
+let cfg = config.modules.desktop.toolset.social;
+in {
+  options.modules.desktop.toolset.social = {
     common.enable = mkBoolOpt true;
   };
 

@@ -5,10 +5,10 @@
 , ...
 }:
 with lib;
-with lib.my; let
-  cfg = config.modules.desktop.browsers;
-in
-{
+with lib.my;
+
+let cfg = config.modules.desktop.browsers;
+in {
   options.modules.desktop.browsers = {
     default = mkOption {
       type = with types; nullOr str;

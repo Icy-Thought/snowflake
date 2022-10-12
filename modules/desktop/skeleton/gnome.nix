@@ -11,20 +11,25 @@ with lib.my; {
   };
 
   config = mkIf config.modules.desktop.gnome.enable {
+    modules.desktop = {
+      envProtocol = "x11";
+      extensions.ibus.enable = true;
+    };
+
     programs.dconf.enable = true;
 
     services.xserver = {
       enable = true;
-      displayManager.gdm = {
+      desktopManager.gnome = {
         enable = true;
-        wayland = true;
+        # debug = true;
       };
-      desktopManager.gnome.enable = true;
     };
 
     services.gnome = {
       gnome-keyring.enable = true;
       chrome-gnome-shell.enable = true;
+      sushi.enable = true;
     };
 
     services.dbus = {
@@ -41,22 +46,16 @@ with lib.my; {
       '';
     };
 
-    user.packages = with pkgs; [
-      dconf2nix
-    ] ++ (with gnome; [
-      polari
-      gnome-disk-utility
-      gnome-tweaks
-    ]) ++ (with gnomeExtensions; [
-      blur-my-shell
-      gsconnect
-      user-themes
-    ]);
-
-    # Our beloved modules
-    modules.desktop.extra = {
-      ibus.enable = true;
-    };
+    user.packages = with pkgs;
+      [ dconf2nix ] ++ (with gnome; [
+        polari
+        gnome-disk-utility
+        gnome-tweaks
+      ]) ++ (with gnomeExtensions; [
+        blur-my-shell
+        gsconnect
+        user-themes
+      ]);
 
     # Force-enable wayland on FireFox
     environment.variables = {

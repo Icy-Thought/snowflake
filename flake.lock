@@ -314,10 +314,10 @@
     "nvim-dir": {
       "flake": false,
       "locked": {
-        "lastModified": 1665464506,
-        "narHash": "sha256-wC1+jgvuST7Pv/eWboPZYiCtRsHgmd4AQryTI7Ol98U=",
+        "lastModified": 1665562203,
+        "narHash": "sha256-C7MWC/nvjt9M6RNsquzztCbXv5T50psX1xb3iAH7x+M=",
         "ref": "refs/heads/main",
-        "rev": "086d3d141a9553e875d060e0ed66fe198541ac58",
+        "rev": "15c7c4e86791046aa422385d234d3f6992eb0ce1",
         "revCount": 231,
         "submodules": true,
         "type": "git",

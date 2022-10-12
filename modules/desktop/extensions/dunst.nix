@@ -5,12 +5,15 @@
 , ...
 }:
 with lib;
-with lib.my; {
-  options.modules.desktop.extra.dunst = {
+with lib.my;
+
+let cfg = config.modules.desktop.extensions.dunst;
+in {
+  options.modules.desktop.extensions.dunst = {
     enable = mkBoolOpt false;
   };
 
-  config = mkIf config.modules.desktop.extra.dunst.enable {
+  config = mkIf cfg.enable {
     hm.services.dunst = {
       enable = true;
       settings = with config.modules.themes; (mkMerge [

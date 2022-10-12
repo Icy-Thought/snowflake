@@ -5,11 +5,11 @@
 , ...
 }:
 with lib;
-with lib.my; let
-  cfg = config.modules.desktop.media.recorder;
-in
-{
-  options.modules.desktop.media.recorder = {
+with lib.my;
+
+let cfg = config.modules.desktop.toolset.recorder;
+in {
+  options.modules.desktop.toolset.recorder = {
     enable = mkBoolOpt false;
     audio.enable = mkBoolOpt true;
     video.enable = mkBoolOpt true;
@@ -20,10 +20,16 @@ in
 
     user.packages = with pkgs; [
       # Audio recording + Mastering:
-      (mkIf (cfg.audio.enable) unstable.audacity-gtk3 unstable.helvum)
+      (mkIf (cfg.audio.enable)
+        unstable.audacity-gtk3
+        unstable.helvum
+      )
 
       # Streaming + Screen-recodring:
-      (mkIf (cfg.video.enable) unstable.obs-studio unstable.handbrake)
+      (mkIf (cfg.video.enable)
+        unstable.obs-studio
+        unstable.handbrake
+      )
     ];
   };
 }

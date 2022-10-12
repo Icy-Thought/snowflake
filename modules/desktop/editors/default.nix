@@ -5,15 +5,15 @@
 , ...
 }:
 with lib;
-with lib.my; let
-  cfg = config.modules.desktop.editors;
-in
-{
+with lib.my;
+
+let cfg = config.modules.desktop.editors;
+in {
   options.modules.desktop.editors = {
     default = mkOption {
       type = with types; str;
       default = "nvim";
-      description = "Default editor";
+      description = "Default editor for text manipulation";
       example = "emacs";
     };
   };

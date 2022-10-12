@@ -5,7 +5,9 @@
 , ...
 }:
 with lib;
-with lib.my; let
+with lib.my;
+
+let
   xonsh-direnv = pkgs.fetchFromGitHub {
     owner = "74th";
     repo = "xonsh-direnv";

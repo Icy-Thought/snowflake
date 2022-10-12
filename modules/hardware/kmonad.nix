@@ -6,7 +6,9 @@
 , ...
 }:
 with lib;
-with lib.my; let
+with lib.my;
+
+let
   cfg = config.modules.desktop.extra.kmonad;
   configDir = config.snowflake.configDir;
 in

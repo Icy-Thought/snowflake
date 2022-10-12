@@ -5,10 +5,10 @@
 , ...
 }:
 with lib;
-with lib.my; let
-  cfg = config.modules.hardware.audio;
-in
-{
+with lib.my;
+
+let cfg = config.modules.hardware.audio;
+in {
   options.modules.hardware.audio = {
     enable = mkBoolOpt false;
 

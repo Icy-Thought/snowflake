@@ -5,12 +5,15 @@
 , ...
 }:
 with lib;
-with lib.my; {
-  options.modules.desktop.extra.picom = {
+with lib.my;
+
+let cfg = config.modules.desktop.extensions.picom;
+in {
+  options.modules.desktop.extensions.picom = {
     enable = mkBoolOpt false;
   };
 
-  config = mkIf config.modules.desktop.extra.picom.enable {
+  config = mkIf cfg.enable {
     services.picom = {
       enable = true;
       backend = "glx";

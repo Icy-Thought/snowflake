@@ -5,10 +5,10 @@
 , ...
 }:
 with lib;
-with lib.my; let
-  cfg = config.modules.desktop.browsers.firefox;
-in
-{
+with lib.my;
+
+let cfg = config.modules.desktop.browsers.firefox;
+in {
   options.modules.desktop.browsers.firefox = with types; {
     enable = mkBoolOpt false;
     profileName = mkOpt types.str config.user.name;

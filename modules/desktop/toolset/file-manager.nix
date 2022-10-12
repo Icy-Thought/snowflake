@@ -5,11 +5,11 @@
 , ...
 }:
 with lib;
-with lib.my; let
-  cfg = config.modules.desktop.media.browser;
-in
-{
-  options.modules.desktop.media.browser = {
+with lib.my;
+
+let cfg = config.modules.desktop.toolset.file-manager;
+in {
+  options.modules.desktop.toolset.file-manager = {
     dolphin.enable = mkBoolOpt false;
     nautilus.enable = mkBoolOpt false;
     thunar.enable = mkBoolOpt false;

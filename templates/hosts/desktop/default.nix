@@ -25,11 +25,13 @@
       default = "firefox";
       brave.enable = true;
     };
-    media.player = {
+    extensions.player = {
       music.enable = true;
       video.enable = true;
     };
-    document.sioyek.enable = true;
+    toolset.viewer = {
+      sioyek.enable = true;
+    };
   };
 
   modules.develop = {

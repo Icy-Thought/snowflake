@@ -5,10 +5,10 @@
 , ...
 }:
 with lib;
-with lib.my; let
-  cfg = config.modules.develop.lua;
-in
-{
+with lib.my;
+
+let cfg = config.modules.develop.lua;
+in {
   options.modules.develop.lua = {
     enable = mkBoolOpt false;
     fnlized.enable = mkBoolOpt false;

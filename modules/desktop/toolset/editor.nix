@@ -5,19 +5,19 @@
 , ...
 }:
 with lib;
-with lib.my; let
-  cfg = config.modules.desktop.media.editor;
-in
-{
-  options.modules.desktop.media.editor = {
+with lib.my;
+
+let cfg = config.modules.desktop.toolset.editor;
+in {
+  options.modules.desktop.toolset.editor = {
+    base.enable = mkBoolOpt true;
     modeling.enable = mkBoolOpt false;
     raster.enable = mkBoolOpt false;
-    toolset.enable = mkBoolOpt true;
     vector.enable = mkBoolOpt false;
   };
 
   config = mkMerge [
-    (mkIf cfg.toolset.enable {
+    (mkIf cfg.base.enable {
       user.packages = with pkgs; [ font-manager imagemagick ];
     })
 

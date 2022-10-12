@@ -5,10 +5,10 @@
 , ...
 }:
 with lib;
-with lib.my; let
-  cfg = config.modules.containers.transmission;
-in
-{
+with lib.my;
+
+let cfg = config.modules.containers.transmission;
+in {
   options.modules.containers.transmission = {
     enable = mkBoolOpt false;
 

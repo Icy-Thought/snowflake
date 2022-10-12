@@ -5,10 +5,10 @@
 , ...
 }:
 with lib;
-with lib.my; let
-  cfg = config.modules.desktop.editors.emacs;
-in
-{
+with lib.my;
+
+let cfg = config.modules.desktop.editors.emacs;
+in {
   options.modules.desktop.editors.emacs = {
     enable = mkBoolOpt false;
     doom = rec {

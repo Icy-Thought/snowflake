@@ -6,6 +6,7 @@
 }:
 with lib;
 with lib.my;
+
 let
   cfg = config.modules.shell.zsh;
   themeCfg = config.modules.themes;

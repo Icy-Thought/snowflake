@@ -5,10 +5,10 @@
 , ...
 }:
 with lib;
-with lib.my; let
-  themeCfg = config.modules.themes;
-in
-{
+with lib.my;
+
+let themeCfg = config.modules.themes;
+in {
   options.modules.shell.btop = {
     enable = mkBoolOpt false;
   };

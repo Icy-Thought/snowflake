@@ -6,10 +6,10 @@
 , ...
 }:
 with lib;
-with lib.my; let
-  cfg = config.modules.hardware.xkbLayout;
-in
-{
+with lib.my;
+
+let cfg = config.modules.hardware.xkbLayout;
+in {
   options.modules.hardware.xkbLayout = {
     hyperCtrl.enable = mkBoolOpt false;
   };

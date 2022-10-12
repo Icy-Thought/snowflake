@@ -5,10 +5,10 @@
 , ...
 }:
 with lib;
-with lib.my; let
-  cfg = config.modules.shell;
-in
-{
+with lib.my;
+
+let cfg = config.modules.shell;
+in {
   options.modules.shell = {
     default = mkOption {
       type = with types; package;

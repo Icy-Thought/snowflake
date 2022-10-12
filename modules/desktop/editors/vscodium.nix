@@ -6,10 +6,10 @@
 , ...
 }:
 with lib;
-with lib.my; let
-  vscDir = "${config.snowflake.configDir}/vscodium";
-in
-{
+with lib.my;
+
+let vscDir = "${config.snowflake.configDir}/vscodium";
+in {
   options.modules.desktop.editors.vscodium = {
     enable = mkBoolOpt false;
   };

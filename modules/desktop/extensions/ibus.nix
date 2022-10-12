@@ -5,12 +5,15 @@
 , ...
 }:
 with lib;
-with lib.my; {
-  options.modules.desktop.extra.ibus = {
+with lib.my;
+
+let cfg = config.modules.desktop.extensions.ibus;
+in {
+  options.modules.desktop.extensions.ibus = {
     enable = mkBoolOpt false;
   };
 
-  config = mkIf config.modules.desktop.extra.ibus.enable {
+  config = mkIf cfg.enable {
     i18n.inputMethod = {
       enabled = "ibus";
       ibus.engines = with pkgs.ibus-engines; [ libpinyin hangul mozc ];

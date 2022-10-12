@@ -5,10 +5,10 @@
 , ...
 }:
 with lib;
-with lib.my; let
-  cfg = config.modules.shell.xplr;
-in
-{
+with lib.my;
+
+let cfg = config.modules.shell.xplr;
+in {
   options.modules.shell.xplr = {
     enable = mkBoolOpt false;
     fennel.enable = mkBoolOpt false;

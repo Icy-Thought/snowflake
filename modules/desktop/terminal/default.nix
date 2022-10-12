@@ -5,10 +5,10 @@
 , ...
 }:
 with lib;
-with lib.my; let
-  cfg = config.modules.desktop.terminal;
-in
-{
+with lib.my;
+
+let cfg = config.modules.desktop.terminal;
+in {
   options.modules.desktop.terminal = {
     default = mkOption {
       type = with types; str;

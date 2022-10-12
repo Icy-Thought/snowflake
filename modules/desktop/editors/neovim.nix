@@ -6,10 +6,10 @@
 , ...
 }:
 with lib;
-with lib.my; let
-  cfg = config.modules.desktop.editors.neovim;
-in
-{
+with lib.my;
+
+let cfg = config.modules.desktop.editors.neovim;
+in {
   options.modules.desktop.editors.neovim = {
     agasaya.enable = mkBoolOpt false; # lua
     ereshkigal.enable = mkBoolOpt false; # fnl

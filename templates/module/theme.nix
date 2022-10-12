@@ -5,10 +5,10 @@
 , ...
 }:
 with lib;
-with lib.my; let
-  cfg = config.modules.themes;
-in
-{
+with lib.my;
+
+let cfg = config.modules.themes;
+in {
   config = mkIf (cfg.active == "") (mkMerge [
     {
       modules.themes = {

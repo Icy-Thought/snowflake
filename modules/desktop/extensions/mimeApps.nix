@@ -5,12 +5,15 @@
 , ...
 }:
 with lib;
-with lib.my; {
-  options.modules.desktop.extra.mimeApps = {
+with lib.my;
+
+let cfg = config.modules.desktop.extensions.mimeApps;
+in {
+  options.modules.desktop.extensions.mimeApps = {
     enable = mkBoolOpt false;
   };
 
-  config = mkIf config.modules.desktop.extra.mimeApps.enable {
+  config = mkIf cfg.enable {
     home.configFile."mimeapps.list".force = true;
 
     hm.xdg.mimeApps = {

@@ -6,11 +6,11 @@
 , ...
 }:
 with lib;
-with lib.my; let
-  cfg = config.modules.desktop.media.player;
-in
-{
-  options.modules.desktop.media.player = {
+with lib.my;
+
+let cfg = config.modules.desktop.toolset.player;
+in {
+  options.modules.desktop.toolset.player = {
     music.enable = mkBoolOpt false;
     video.enable = mkBoolOpt false;
   };

@@ -5,8 +5,11 @@
 , ...
 }:
 with lib;
-with lib.my; let
+with lib.my;
+
+let
   cfg = config.modules.themes;
+  dsktp = config.modules.desktop;
 in
 {
   options.modules.themes = with types; {
@@ -19,8 +22,8 @@ in
         then theme
         else v;
       description = ''
-        Name of the theme to enable. Can be overridden by the THEME environment
-        variable.
+        Name of the theme which ought to be applied. 
+        Can be overridden by the `THEME` environment variable.
       '';
     };
 
@@ -134,10 +137,12 @@ in
         light = mkOpt str "";
         dark = mkOpt str "";
       };
+
       neovim = {
         light = mkOpt str "";
         dark = mkOpt str "";
       };
+
       vscode = {
         dark = mkOpt str "";
         light = mkOpt str "";
@@ -152,83 +157,8 @@ in
   };
 
   config = mkIf (cfg.active != null) (mkMerge [
-    # Read xresources files in ~/.config/xtheme/* to allow modular configuration
-    # of Xresources.
-    (
-      let xrdb = ''cat "$XDG_CONFIG_HOME"/xtheme/* | ${getExe pkgs.xorg.xrdb} -load'';
-      in {
-        home.configFile.xtheme-init = {
-          target = "xtheme.init";
-          text = xrdb;
-          executable = true;
-        };
-        modules.themes.onReload.xtheme = xrdb;
-      }
-    )
-
     {
       home.configFile = {
-        xtheme-definitions = {
-          target = "xtheme/00-init";
-          text = with cfg.colors.main; ''
-            #define bg   ${types.bg}
-            #define fg   ${types.fg}
-            #define blk  ${normal.black}
-            #define bblk ${bright.black}
-            #define red  ${normal.red}
-            #define bred ${bright.red}
-            #define grn  ${normal.green}
-            #define bgrn ${bright.green}
-            #define ylw  ${normal.yellow}
-            #define bylw ${bright.yellow}
-            #define blu  ${normal.blue}
-            #define bblu ${bright.blue}
-            #define mag  ${normal.magenta}
-            #define bmag ${bright.magenta}
-            #define cyn  ${normal.cyan}
-            #define bcyn ${bright.cyan}
-            #define wht  ${normal.white}
-            #define bwht ${bright.white}
-          '';
-        };
-        xtheme-colors = {
-          target = "xtheme/05-colors";
-          text = ''
-            *.foreground: fg
-            *.background: bg
-            *.color0:  blk
-            *.color1:  red
-            *.color2:  grn
-            *.color3:  ylw
-            *.color4:  blu
-            *.color5:  mag
-            *.color6:  cyn
-            *.color7:  wht
-            *.color8:  bblk
-            *.color9:  bred
-            *.color10: bgrn
-            *.color11: bylw
-            *.color12: bblu
-            *.color13: bmag
-            *.color14: bcyn
-            *.color15: bwht
-          '';
-        };
-        xtheme-fonts = {
-          target = "xtheme/05-fonts";
-          text = with cfg.font.mono; ''
-            *.font: xft:${family}:style=${weight}:pixelsize=${toString size}
-            Emacs.font: ${family}:style=${weight}:pixelsize=${toString size}
-          '';
-        };
-        xtheme-cursor = {
-          target = "xtheme/06-cursor";
-          text = with cfg.pointer; ''
-            Xcursor.name: left_ptr
-            Xcursor.size: ${toString size}
-            Xcursor.theme: ${name}
-          '';
-        };
         gtk3-settings = {
           target = "gtk-3.0/settings.ini";
           text = with cfg.gtk; ''
@@ -268,10 +198,6 @@ in
         name = name;
         package = package;
         size = size;
-
-        # TODO: modify to wayland after migrating!
-        x11.enable = true;
-        x11.defaultCursor = "left_ptr";
         gtk.enable = true;
       };
 
@@ -282,18 +208,105 @@ in
       };
     }
 
+    # x11 related settings:
+    (mkIf (dsktp.envProto == "x11") (
+      let xrdb = ''cat "$XDG_CONFIG_HOME"/xtheme/* | ${getExe pkgs.xorg.xrdb} -load'';
+      in {
+        # Read xresources files in ~/.config/xtheme/* to allow modular configuration
+        # of Xresources.
+        modules.themes.onReload.xtheme = xrdb;
+
+        home.configFile = {
+          xtheme-init = {
+            target = "xtheme.init";
+            text = xrdb;
+            executable = true;
+          };
+
+          xtheme-definitions = {
+            target = "xtheme/00-init";
+            text = with cfg.colors.main; ''
+              #define bg   ${types.bg}
+              #define fg   ${types.fg}
+              #define blk  ${normal.black}
+              #define bblk ${bright.black}
+              #define red  ${normal.red}
+              #define bred ${bright.red}
+              #define grn  ${normal.green}
+              #define bgrn ${bright.green}
+              #define ylw  ${normal.yellow}
+              #define bylw ${bright.yellow}
+              #define blu  ${normal.blue}
+              #define bblu ${bright.blue}
+              #define mag  ${normal.magenta}
+              #define bmag ${bright.magenta}
+              #define cyn  ${normal.cyan}
+              #define bcyn ${bright.cyan}
+              #define wht  ${normal.white}
+              #define bwht ${bright.white}
+            '';
+          };
+
+          xtheme-colors = {
+            target = "xtheme/05-colors";
+            text = ''
+              *.foreground: fg
+              *.background: bg
+              *.color0:  blk
+              *.color1:  red
+              *.color2:  grn
+              *.color3:  ylw
+              *.color4:  blu
+              *.color5:  mag
+              *.color6:  cyn
+              *.color7:  wht
+              *.color8:  bblk
+              *.color9:  bred
+              *.color10: bgrn
+              *.color11: bylw
+              *.color12: bblu
+              *.color13: bmag
+              *.color14: bcyn
+              *.color15: bwht
+            '';
+          };
+
+          xtheme-fonts = {
+            target = "xtheme/05-fonts";
+            text = with cfg.font.mono; ''
+              *.font: xft:${family}:style=${weight}:pixelsize=${toString size}
+              Emacs.font: ${family}:style=${weight}:pixelsize=${toString size}
+            '';
+          };
+
+          xtheme-cursor = {
+            target = "xtheme/06-cursor";
+            text = with cfg.pointer; ''
+              Xcursor.name: left_ptr
+              Xcursor.size: ${toString size}
+              Xcursor.theme: ${name}
+            '';
+          };
+        };
+
+        home.pointerCursor.x11 = {
+          enable = true;
+          defaultCursor = "left_ptr";
+        };
+      }
+    ))
+
     # Set the wallpaper ourselves so we don't need .background-image and/or
     # .fehbg polluting $HOME
-    (mkIf (cfg.wallpaper != null) (
+    (mkIf (cfg.wallpaper != null) && (dsktp.envProto == "x11") (
       let
         wCfg = config.services.xserver.desktopManager.wallpaper;
         command = ''
-            if [ -e "$XDG_DATA_HOME/wallpaper" ];
-          then
-          ${getExe pkgs.feh} --bg-${wCfg.mode} \
-          ${optionalString wCfg.combineScreens "--no-xinerama"} \
-          --no-fehbg \
-          $XDG_DATA_HOME/wallpaper
+          if [ -e "$XDG_DATA_HOME/wallpaper" ]; then
+            ${getExe pkgs.feh} --bg-${wCfg.mode} \
+            ${optionalString wCfg.combineScreens "--no-xinerama"} \
+            --no-fehbg \
+            $XDG_DATA_HOME/wallpaper
           fi
         '';
       in
@@ -301,8 +314,9 @@ in
         services.xserver.displayManager.sessionCommands = command;
         modules.themes.onReload.wallpaper = command;
 
-        home.dataFile =
-          mkIf (cfg.wallpaper != null) { "wallpaper".source = cfg.wallpaper; };
+        home.dataFile = mkIf (cfg.wallpaper != null) {
+          "wallpaper".source = cfg.wallpaper;
+        };
       }
     ))
 

@@ -5,10 +5,10 @@
 , ...
 }:
 with lib;
-with lib.my; let
-  cfg = config.modules.networking;
-in
-{
+with lib.my;
+
+let cfg = config.modules.networking;
+in {
   options.modules.networking = {
     enable = mkBoolOpt false;
     networkManager.enable = mkBoolOpt false;

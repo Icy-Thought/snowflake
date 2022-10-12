@@ -12,29 +12,12 @@ with lib.my; {
   };
 
   config = mkIf config.modules.desktop.xmonad.enable {
-    hm.imports = [ inputs.hyprland.homeManagerModule ];
-
-    environment.systemPackages = with pkgs; [
-      imv
-      # hyprpaper
-      # hyprpicker
-      libnotify
-      lightdm
-      playerctl
-      wf-recorder
-      wl-clipboard
-      wlr-randr
-      wireplumber
-    ];
-
-    environment.variables = {
-      MOZ_ENABLE_WAYLAND = "1"; # (Firefox) wayland awareness!
-    };
-
-    # Our beloved modules
     modules.desktop = {
-      media.browser.nautilus.enable = true;
-      extra = {
+      envProtocol = "x11";
+      toolset.file-manager = {
+        nautilus.enable = true;
+      };
+      extensions = {
         fcitx5.enable = true;
         mimeApps.enable = true; # mimeApps -> default launch application
         dunst.enable = true;
@@ -47,13 +30,27 @@ with lib.my; {
       };
     };
 
+    hm.imports = [ inputs.hyprland.homeManagerModule ];
+
+    environment.systemPackages = with pkgs; [
+      imv
+      # hyprpaper
+      # hyprpicker
+      libnotify
+      playerctl
+      wf-recorder
+      wl-clipboard
+      wlr-randr
+      wireplumber
+    ];
+
+    environment.variables = {
+      MOZ_ENABLE_WAYLAND = "1"; # (Firefox) wayland awareness!
+    };
+
     services.xserver = {
       enable = true;
-      displayManager = {
-        defaultSession = "hyprland";
-        lightdm.enable = true;
-        lightdm.greeters.mini.enable = true;
-      };
+      displayManager.defaultSession = "hyprland";
     };
 
     hm.wayland.windowManager.hyprland = {

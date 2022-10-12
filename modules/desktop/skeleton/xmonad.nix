@@ -12,20 +12,12 @@ with lib.my; {
   };
 
   config = mkIf config.modules.desktop.xmonad.enable {
-    environment.systemPackages = with pkgs; [
-      lightdm
-      libnotify
-      playerctl
-      gxmessage
-      xdotool
-      xclip
-      feh
-    ];
-
-    # Our beloved modules
     modules.desktop = {
-      media.browser.nautilus.enable = true;
-      extra = {
+      envProtocol = "x11";
+      toolset.file-manager = {
+        nautilus.enable = true;
+      };
+      extensions = {
         fcitx5.enable = true;
         mimeApps.enable = true; # mimeApps -> default launch application
         picom.enable = true;
@@ -35,13 +27,18 @@ with lib.my; {
       };
     };
 
+    environment.systemPackages = with pkgs; [
+      libnotify
+      playerctl
+      gxmessage
+      xdotool
+      xclip
+      feh
+    ];
+
     services.xserver = {
       enable = true;
-      displayManager = {
-        defaultSession = "none+xmonad";
-        lightdm.enable = true;
-        lightdm.greeters.mini.enable = true;
-      };
+      displayManager.defaultSession = "none+xmonad";
       windowManager.xmonad = {
         enable = true;
         enableContribAndExtras = true;

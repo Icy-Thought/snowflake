@@ -6,7 +6,9 @@
 , ...
 }:
 with lib;
-with lib.my; let
+with lib.my;
+
+let
   inherit (inputs) agenix;
   secretsDir = "${builtins.toString ../hosts}/${config.networking.hostName}/secrets";
   secretsFile = "${secretsDir}/secrets.nix";
@@ -28,8 +30,7 @@ in
     else { };
 
   age.identityPaths =
-    options.age.identityPaths.default
-    ++ (filter pathExists [
+    options.age.identityPaths.default ++ (filter pathExists [
       "${config.user.home}/.ssh/id_ed25519"
       "${config.user.home}/.ssh/id_rsa"
     ]);

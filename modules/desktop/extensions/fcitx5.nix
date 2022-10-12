@@ -5,12 +5,15 @@
 , ...
 }:
 with lib;
-with lib.my; {
-  options.modules.desktop.extra.fcitx5 = {
+with lib.my;
+
+let cfg = config.modules.desktop.extensions.fcitx5;
+in {
+  options.modules.desktop.extensions.fcitx5 = {
     enable = mkBoolOpt false;
   };
 
-  config = mkIf config.modules.desktop.extra.fcitx5.enable {
+  config = mkIf cfg.enable {
     i18n.inputMethod = {
       enabled = "fcitx5";
       fcitx5.addons = with pkgs; [

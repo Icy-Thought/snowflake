@@ -52,8 +52,11 @@
         memory.enable = true;
         vidcom.enable = true;
       };
-      media = {
+      toolset = {
         downloader.transmission.enable = true;
+        viewer.sioyek.enable = true;
+      };
+      extensions = {
         editor = {
           raster.enable = true;
           vector.enable = true;
@@ -62,10 +65,6 @@
         player = {
           music.enable = true;
           video.enable = true;
-        };
-        document = {
-          sioyek.enable = true;
-          # zathura.enable = true;
         };
       };
       # virtual = {
