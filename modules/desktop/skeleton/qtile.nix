@@ -31,8 +31,8 @@ in {
 
   config = mkIf cfg.enable {
     modules.desktop = {
-      envProtocol = cfg.backend;
-      toolset.file-manager = {
+      envProto = cfg.backend;
+      toolset.fileBrowse = {
         nautilus.enable = true;
       };
       extensions = {

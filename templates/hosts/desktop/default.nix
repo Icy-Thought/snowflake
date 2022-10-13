@@ -29,7 +29,7 @@
       music.enable = true;
       video.enable = true;
     };
-    toolset.viewer = {
+    toolset.docView = {
       sioyek.enable = true;
     };
   };

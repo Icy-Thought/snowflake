@@ -137,12 +137,10 @@ in
         light = mkOpt str "";
         dark = mkOpt str "";
       };
-
       neovim = {
         light = mkOpt str "";
         dark = mkOpt str "";
       };
-
       vscode = {
         dark = mkOpt str "";
         light = mkOpt str "";
@@ -298,7 +296,7 @@ in
 
     # Set the wallpaper ourselves so we don't need .background-image and/or
     # .fehbg polluting $HOME
-    (mkIf (cfg.wallpaper != null) && (dsktp.envProto == "x11") (
+    (mkIf ((cfg.wallpaper != null) && (dsktp.envProto == "x11")) (
       let
         wCfg = config.services.xserver.desktopManager.wallpaper;
         command = ''

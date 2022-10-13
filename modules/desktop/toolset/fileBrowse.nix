@@ -7,9 +7,9 @@
 with lib;
 with lib.my;
 
-let cfg = config.modules.desktop.toolset.file-manager;
+let cfg = config.modules.desktop.toolset.fileBrowse;
 in {
-  options.modules.desktop.toolset.file-manager = {
+  options.modules.desktop.toolset.fileBrowse = {
     dolphin.enable = mkBoolOpt false;
     nautilus.enable = mkBoolOpt false;
     thunar.enable = mkBoolOpt false;

@@ -13,8 +13,8 @@ with lib.my; {
 
   config = mkIf config.modules.desktop.xmonad.enable {
     modules.desktop = {
-      envProtocol = "x11";
-      toolset.file-manager = {
+      envProto = "wayland";
+      toolset.fileBrowse = {
         nautilus.enable = true;
       };
       extensions = {

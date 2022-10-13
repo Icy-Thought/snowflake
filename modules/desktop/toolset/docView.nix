@@ -7,9 +7,9 @@
 with lib;
 with lib.my;
 
-let cfg = config.modules.desktop.toolset.viewer;
+let cfg = config.modules.desktop.toolset.docView;
 in {
-  options.modules.desktop.toolset.viewer = {
+  options.modules.desktop.toolset.docView = {
     zathura.enable = mkBoolOpt false;
     sioyek.enable = mkBoolOpt false;
   };

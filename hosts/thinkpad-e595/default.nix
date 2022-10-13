@@ -54,18 +54,16 @@
       };
       toolset = {
         downloader.transmission.enable = true;
-        viewer.sioyek.enable = true;
-      };
-      extensions = {
         editor = {
           raster.enable = true;
           vector.enable = true;
         };
-        social.common.enable = true;
         player = {
           music.enable = true;
           video.enable = true;
         };
+        social.common.enable = true;
+        docView.sioyek.enable = true;
       };
       # virtual = {
       #   wine.enable = true;

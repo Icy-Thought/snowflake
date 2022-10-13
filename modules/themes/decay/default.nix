@@ -123,7 +123,6 @@ in {
     #     ["${configDir}" /firefox/userChrome.css];
     # })
 
-    # Desktop (X11) theming <- Change after gnome = independent of xserver.
     (mkIf config.services.xserver.enable {
       user.packages = with pkgs; [ orchis-theme whitesur-icon-theme ];
 
@@ -133,9 +132,8 @@ in {
       ];
     })
 
-    (mkIf (config.modules.desktop.gnome.enable) {
+    (mkIf (config.modules.desktop.envProto == "x11") {
       services.xserver.displayManager = {
-        # LightDM: Replace with LightDM-Web-Greeter theme
         lightdm.greeters.mini.extraConfig = with cfg.colors.main; ''
           text-color = "${normal.blue}"
           password-background-color = "${normal.black}"
@@ -145,7 +143,7 @@ in {
       };
     })
 
-    (mkIf config.modules.desktop.extra.fcitx5.enable {
+    (mkIf config.modules.desktop.extensions.fcitx5.enable {
       home.file.".local/share/fcitx5/themes".source = pkgs.fetchFromGitHub {
         owner = "icy-thought";
         repo = "fcitx5-catppuccin";
@@ -154,7 +152,7 @@ in {
       };
     })
 
-    (mkIf config.modules.desktop.media.document.sioyek.enable {
+    (mkIf config.modules.desktop.toolset.docView.sioyek.enable {
       hm.programs.sioyek.config = with cfg.font; {
         "custom_background_color " = "";
         "custom_text_color " = "";
@@ -184,7 +182,7 @@ in {
         }];
     })
 
-    (mkIf config.modules.desktop.extra.rofi.enable {
+    (mkIf config.modules.desktop.extensions.rofi.enable {
       hm.programs.rofi = {
         extraConfig = with cfg; {
           icon-theme = "${gtk.iconTheme}";

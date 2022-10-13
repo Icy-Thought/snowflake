@@ -12,7 +12,7 @@ with lib.my; {
 
   config = mkIf config.modules.desktop.gnome.enable {
     modules.desktop = {
-      envProtocol = "x11";
+      envProto = "wayland";
       extensions.ibus.enable = true;
     };
 
