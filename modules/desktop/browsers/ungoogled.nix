@@ -31,6 +31,7 @@ with lib.my; {
         { id = "dlnejlppicbjfcfcedcflplfjajinajd"; } # Bonjourr (New-Tab Page)
         { id = "eimadpbcbfnmbkopoojfekhnkhdbieeh"; } # Dark-Reader
         { id = "ldpochfccmkkmhdbclfhpagapcfdljkj"; } # Decentraleyes
+        { id = "bkdgflcldnnnapblkhphbgpggdiikppg"; } # DuckDuckGo
         { id = "hlepfoohegkhhmjieoechaddaejaokhf"; } # Refined GitHub
         { id = "iaiomicjabeggjcfkbimgmglanimpnae"; } # Tab-Session-Manager
         { id = "cjpalhdlnbpafiamejdnhcphjbkeiagm"; } # Ublock-Origin
