@@ -11,7 +11,7 @@ with lib.my; {
   };
 
   config = mkIf config.modules.hardware.bluetooth.enable {
-    # user.packages = with pkgs; [blueman];
+    user.packages = with pkgs; [ blueman ];
 
     hardware.bluetooth = {
       enable = true;
