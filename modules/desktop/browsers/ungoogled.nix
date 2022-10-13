@@ -35,6 +35,7 @@ with lib.my; {
         { id = "hlepfoohegkhhmjieoechaddaejaokhf"; } # Refined GitHub
         { id = "iaiomicjabeggjcfkbimgmglanimpnae"; } # Tab-Session-Manager
         { id = "cjpalhdlnbpafiamejdnhcphjbkeiagm"; } # Ublock-Origin
+        { id = "dbepggeogbaibhgnhhndojpepiihcmeb"; } # Vimium
         { id = "jinjaccalgkegednnccohejagnlnfdag"; } # Violentmonkey
         {
           id = "dcpihecpambacapedldabdbpakmachpb";
