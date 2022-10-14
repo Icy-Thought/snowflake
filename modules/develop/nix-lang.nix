@@ -14,8 +14,9 @@ with lib.my; {
     (mkIf config.modules.develop.nix.enable {
       user.packages = with pkgs; [
         manix
-        nixpkgs-fmt
+        nix-index
         nix-output-monitor
+        nixpkgs-fmt
         nixpkgs-review
         nil # Nix Expression Language
       ];
