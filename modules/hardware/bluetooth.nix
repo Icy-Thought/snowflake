@@ -11,7 +11,7 @@ with lib.my; {
   };
 
   config = mkIf config.modules.hardware.bluetooth.enable {
-    user.packages = with pkgs; [ blueman ];
+    user.packages = with pkgs; [ blueman galaxyBudsClient ];
 
     hardware.bluetooth = {
       enable = true;
@@ -32,7 +32,6 @@ with lib.my; {
 
     services.pipewire.media-session.config.bluez-monitor.rules = [
       {
-        # Matches all cards
         matches = [{ "device.name" = "~bluez_card.*"; }];
         actions = {
           "update-props" = {
@@ -44,11 +43,7 @@ with lib.my; {
       }
       {
         matches = [
-          # Matches all sources
-          {
-            "node.name" = "~bluez_input.*";
-          }
-          # Matches all outputs
+          { "node.name" = "~bluez_input.*"; }
           { "node.name" = "~bluez_output.*"; }
         ];
         actions = { "node.pause-on-idle" = false; };
