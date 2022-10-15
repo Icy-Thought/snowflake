@@ -127,7 +127,7 @@ in {
       user.packages = with pkgs; [
         (fluent-icon-theme.override { colorVariants = [ "orange" ]; })
         my.tokyonight-gtk
-        whitesur-icon-theme
+        # whitesur-icon-theme
       ];
 
       fonts.fonts = with pkgs; [

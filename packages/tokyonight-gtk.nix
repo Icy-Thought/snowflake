@@ -13,8 +13,8 @@ stdenv.mkDerivation {
   src = fetchFromGitHub {
     owner = "Fausto-Korpsvart";
     repo = "Tokyo-Night-GTK-Theme";
-    rev = "6fdc64763ccb1eb1f6e10bf45e4cb70109b577ac";
-    hash = "sha256-vU8zNi46DRqLr14KtPyN76vv9zLMrxItKi/ADkgdKto=";
+    rev = "517716f1da4520e9db37c7d86907c54f76dfb936";
+    hash = "";
   };
 
   nativeBuildInputs = [ jdupes ];
@@ -25,7 +25,9 @@ stdenv.mkDerivation {
     runHook preInstall
 
     mkdir -p $out/share/themes
-    cp -a themes/Tokyonight* $out/share/themes
+
+    # GTK-3.0 && GTK-2.0
+    cp -a themes/Tokyonight-* $out/share/themes
 
     # Duplicate files -> hard-links = reduced install-size!
     jdupes -L -r $out/share
