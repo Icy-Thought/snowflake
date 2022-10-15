@@ -11,7 +11,7 @@ with lib.my; {
   };
 
   config = mkIf config.modules.hardware.bluetooth.enable {
-    user.packages = with pkgs; [ blueman galaxyBudsClient ];
+    user.packages = with pkgs; [ blueman galaxy-buds-client ];
 
     hardware.bluetooth = {
       enable = true;

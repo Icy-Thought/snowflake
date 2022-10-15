@@ -8,13 +8,13 @@
 
 stdenv.mkDerivation {
   pname = "tokyonight-gtk-theme";
-  version = "unstable-2022-08-31";
+  version = "unstable-2022-10-13";
 
   src = fetchFromGitHub {
     owner = "Fausto-Korpsvart";
     repo = "Tokyo-Night-GTK-Theme";
     rev = "517716f1da4520e9db37c7d86907c54f76dfb936";
-    hash = "";
+    hash = "sha256-fGjFKEOL9F1bFWRBKC1tJfDWIucRoU04YNHGuVlcrLQ=";
   };
 
   nativeBuildInputs = [ jdupes ];
