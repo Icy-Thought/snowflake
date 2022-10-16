@@ -1,9 +1,10 @@
+from lib.keymaps import keys
+from lib.themes import palette
+
+# Qtile
 from libqtile import bar, layout, widget
 from libqtile.command import lazy
 from libqtile.config import DropDown, EzClick, EzKey, Group, Match, ScratchPad
-from modules.keymaps import keys
-
-from modules.themes import palette
 
 # Requires CJK-font (using: Sarasa Gothic)
 groups = [

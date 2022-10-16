@@ -1,12 +1,13 @@
 # credits: the-argus
 # TODO: my own statusbar, use this to setup qtile for now.
 
+from lib.groups import borderline
+from lib.themes import palette
+
+# Qtile
 from libqtile import bar, qtile, widget
 from libqtile.config import Screen
 from libqtile.lazy import lazy
-
-from modules.groups import borderline
-from modules.themes import palette
 
 fontinfo = dict(
     font="VictorMono Nerd Font Semibold",

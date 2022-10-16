@@ -1,8 +1,8 @@
 from typing import List  # noqa: F401
 
-from modules.groups import floating_layout, groups, layouts
-from modules.keymaps import keys, mouse
-from modules.statusbar import extension_defaults, screens, widget_defaults
+from lib.groups import floating_layout, groups, layouts
+from lib.keymaps import keys, mouse
+from lib.statusbar import extension_defaults, screens, widget_defaults
 
 auto_fullscreen = True
 auto_minimize = False
