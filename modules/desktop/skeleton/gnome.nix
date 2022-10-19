@@ -57,11 +57,6 @@ with lib.my; {
         user-themes
       ]);
 
-    # Force-enable wayland on FireFox
-    environment.variables = {
-      MOZ_ENABLE_WAYLAND = "1"; # (Firefox) wayland awareness!
-    };
-
     # Enable chrome-gnome-shell in FireFox nightly (mozilla-overlay):
     home.file.chrome-gnome-shell = {
       target = ".mozilla/native-messaging-hosts/org.gnome.chrome_gnome_shell.json";

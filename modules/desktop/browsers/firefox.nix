@@ -207,5 +207,11 @@ in {
           };
         };
     }
+
+    (mkIf (config.modules.desktop.envProto == "wayland") {
+      environment.variables = {
+        MOZ_ENABLE_WAYLAND = "1";
+      };
+    })
   ]);
 }

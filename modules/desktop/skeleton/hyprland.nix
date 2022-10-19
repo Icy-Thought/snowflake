@@ -44,10 +44,6 @@ with lib.my; {
       wireplumber
     ];
 
-    environment.variables = {
-      MOZ_ENABLE_WAYLAND = "1"; # (Firefox) wayland awareness!
-    };
-
     services.xserver = {
       enable = true;
       displayManager.defaultSession = "hyprland";

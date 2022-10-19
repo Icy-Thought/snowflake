@@ -207,17 +207,18 @@ in
     }
 
     # x11 related settings:
-    (mkIf (dsktp.envProto == "x11") (
-      let xrdb = ''cat "$XDG_CONFIG_HOME"/xtheme/* | ${getExe pkgs.xorg.xrdb} -load'';
-      in {
+    (mkIf (dsktp.envProto == "x11") (mkMerge [
+      {
         # Read xresources files in ~/.config/xtheme/* to allow modular configuration
         # of Xresources.
-        modules.themes.onReload.xtheme = xrdb;
+        modules.themes.onReload.xtheme = ''
+          cat "$XDG_CONFIG_HOME"/xtheme/* | ${getExe pkgs.xorg.xrdb} -load
+        '';
 
         home.configFile = {
           xtheme-init = {
             target = "xtheme.init";
-            text = xrdb;
+            text = cfg.onReload.xtheme;
             executable = true;
           };
 
@@ -292,56 +293,56 @@ in
           defaultCursor = "left_ptr";
         };
       }
-    ))
 
-    # Set the wallpaper ourselves so we don't need .background-image and/or
-    # .fehbg polluting $HOME
-    (mkIf ((cfg.wallpaper != null) && (dsktp.envProto == "x11")) (
-      let
-        wCfg = config.services.xserver.desktopManager.wallpaper;
-        command = ''
-          if [ -e "$XDG_DATA_HOME/wallpaper" ]; then
-            ${getExe pkgs.feh} --bg-${wCfg.mode} \
-            ${optionalString wCfg.combineScreens "--no-xinerama"} \
-            --no-fehbg \
-            $XDG_DATA_HOME/wallpaper
-          fi
-        '';
-      in
-      {
-        services.xserver.displayManager.sessionCommands = command;
-        modules.themes.onReload.wallpaper = command;
+      # Set the wallpaper ourselves so we don't need .background-image and/or
+      # .fehbg polluting $HOME
+      (mkIf (cfg.wallpaper != null) (
+        let
+          wCfg = config.services.xserver.desktopManager.wallpaper;
+          command = ''
+            if [ -e "$XDG_DATA_HOME/wallpaper" ]; then
+              ${getExe pkgs.feh} --bg-${wCfg.mode} \
+              ${optionalString wCfg.combineScreens "--no-xinerama"} \
+              --no-fehbg \
+              $XDG_DATA_HOME/wallpaper
+            fi
+          '';
+        in
+        {
+          services.xserver.displayManager.sessionCommands = command;
+          modules.themes.onReload.wallpaper = command;
 
-        home.dataFile = mkIf (cfg.wallpaper != null) {
-          "wallpaper".source = cfg.wallpaper;
+          home.dataFile = mkIf (cfg.wallpaper != null) {
+            "wallpaper".source = cfg.wallpaper;
+          };
+        }
+      ))
+
+      (mkIf (cfg.loginWallpaper != null) {
+        services.xserver.displayManager = {
+          lightdm.background = cfg.loginWallpaper;
         };
-      }
-    ))
+      })
 
-    (mkIf (cfg.loginWallpaper != null) {
-      services.xserver.displayManager = {
-        lightdm.background = cfg.loginWallpaper;
-      };
-    })
-
-    (mkIf (cfg.onReload != { }) (
-      let
-        reloadTheme = with pkgs; (writeScriptBin "reloadTheme" ''
-          #!${stdenv.shell}
-          echo "Reloading current theme: ${cfg.active}"
-          ${concatStringsSep "\n" (mapAttrsToList (name: script: ''
-              echo "[${name}]"
-              ${script}
-            '')
-            cfg.onReload)}
-        '');
-      in
-      {
-        user.packages = [ reloadTheme ];
-        system.userActivationScripts.reloadTheme = ''
-          [ -z "$NORELOAD" ] && ${reloadTheme}/bin/reloadTheme
-        '';
-      }
-    ))
+      (mkIf (cfg.onReload != { }) (
+        let
+          reloadTheme = with pkgs; (writeScriptBin "reloadTheme" ''
+            #!${stdenv.shell}
+            echo "Reloading current theme: ${cfg.active}"
+            ${concatStringsSep "\n" (mapAttrsToList (name: script: ''
+                echo "[${name}]"
+                ${script}
+              '')
+              cfg.onReload)}
+          '');
+        in
+        {
+          user.packages = [ reloadTheme ];
+          system.userActivationScripts.reloadTheme = ''
+            [ -z "$NORELOAD" ] && ${reloadTheme}/bin/reloadTheme
+          '';
+        }
+      ))
+    ]))
   ]);
 }
