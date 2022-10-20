@@ -89,9 +89,9 @@ groups.append(
                 **next_maximum,
             ),
             DropDown(
-                "Element",
-                "element-desktop",
-                match=Match(wm_class="element"),
+                "Fractal",
+                "fractal",
+                match=Match(wm_class="fractal"),
                 **next_maximum,
             ),
             DropDown(
@@ -120,7 +120,7 @@ keys.extend(
         EzKey("M-A-e", lazy.group["SPD"].dropdown_toggle("Neovide")),
         EzKey("M-A-h", lazy.group["SPD"].dropdown_toggle("Telegram")),
         EzKey("M-A-j", lazy.group["SPD"].dropdown_toggle("Discord")),
-        EzKey("M-A-k", lazy.group["SPD"].dropdown_toggle("Element")),
+        EzKey("M-A-k", lazy.group["SPD"].dropdown_toggle("Fractal")),
         EzKey("M-A-s", lazy.group["SPD"].dropdown_toggle("Spotify")),
         EzKey("M-A-p", lazy.group["SPD"].dropdown_toggle("Transmission")),
         EzKey("M-A-v", lazy.group["SPD"].dropdown_toggle("Volume Control")),
