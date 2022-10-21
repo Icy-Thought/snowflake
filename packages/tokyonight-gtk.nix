@@ -1,9 +1,12 @@
-{ lib, stdenv, fetchFromGitHub, gtk-engine-murrine, jdupes, themeVariants ? [ ]
+{ lib
+, stdenv
+, fetchFromGitHub
+, gtk-engine-murrine
+, jdupes
+, themeVariants ? [ ]
 }:
 
-let pname = "tokyonight-gtk-theme";
-
-in lib.checkListOfEnum "${pname}: theme variants" [
+lib.checkListOfEnum "$Tokyonight: GTK Theme Variants" [
   "Dark-B-LB"
   "Dark-B"
   "Dark-BL-LB"
@@ -20,17 +23,19 @@ in lib.checkListOfEnum "${pname}: theme variants" [
   "Storm-B"
   "Storm-BL-LB"
   "Storm-BL"
-] themeVariants
+]
+  themeVariants
 
-stdenv.mkDerivation {
-  pname = pname;
-  version = "unstable-2022-10-13";
+  stdenv.mkDerivation
+{
+  pname = "tokyonight-gtk-theme";
+  version = "unstable-2022-10-21";
 
   src = fetchFromGitHub {
     owner = "Fausto-Korpsvart";
     repo = "Tokyo-Night-GTK-Theme";
-    rev = "517716f1da4520e9db37c7d86907c54f76dfb936";
-    hash = "sha256-fGjFKEOL9F1bFWRBKC1tJfDWIucRoU04YNHGuVlcrLQ=";
+    rev = "6247aafad59a9231d8638de2a09174779761ffeb";
+    hash = "sha256-vxSu5FW4XSvOyHK/Zl4Wh2Tik6cKBSE22C3AE9cRkoE=";
   };
 
   nativeBuildInputs = [ jdupes ];
@@ -43,9 +48,7 @@ stdenv.mkDerivation {
     mkdir -p $out/share/themes
 
     # GTK-Theme
-    cp -a $src/themes/Tokyonight-${
-      builtins.toString themeVariants
-    } $out/share/themes/Tokyonight-${builtins.toString themeVariants}
+    cp -r $src/themes/Tokyonight-${builtins.toString themeVariants} $out/share/themes
 
     # Duplicate files -> hard-links = reduced install-size!
     jdupes -L -r $out/share

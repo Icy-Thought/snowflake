@@ -15,8 +15,13 @@ in {
         wallpaper = mkDefault ./assets/blockbusters.png;
 
         gtk = {
-          theme = "Tokyonight-Dark-BL";
-          iconTheme = "Fluent-orange-dark";
+          name = "Tokyonight-Dark-BL";
+          package = pkgs.my.tokyonight-gtk.override { themeVariants = [ "Dark-BL" ]; };
+        };
+
+        iconTheme = {
+          name = "Fluent-orange-dark";
+          package = pkgs.fluent-icon-theme.override { colorVariants = [ "orange" ]; };
         };
 
         pointer = {
@@ -26,6 +31,7 @@ in {
         };
 
         font = {
+          package = pkgs.nerdfonts.override { fonts = [ "VictorMono" ]; };
           sans.family = "VictorMono Nerd Font";
           mono.family = "VictorMono Nerd Font Mono";
           emoji = "Twitter Color Emoji";
@@ -124,14 +130,8 @@ in {
     # })
 
     (mkIf config.services.xserver.enable {
-      user.packages = with pkgs; [
-        (my.tokyonight-gtk.override { themeVariants = [ "Dark-BL" ]; })
-        (fluent-icon-theme.override { colorVariants = [ "orange" ]; })
-        # whitesur-icon-theme
-      ];
-
       fonts.fonts = with pkgs; [
-        (nerdfonts.override { fonts = [ "VictorMono" ]; })
+        cfg.font.package
         twitter-color-emoji
       ];
     })
@@ -189,7 +189,7 @@ in {
     (mkIf config.modules.desktop.extensions.rofi.enable {
       hm.programs.rofi = {
         extraConfig = with cfg; {
-          icon-theme = "${gtk.iconTheme}";
+          icon-theme = "${iconTheme.name}";
           font = with font; "${sans.family} ${sans.weight} ${toString (sans.size)}";
         };
 

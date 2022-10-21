@@ -57,13 +57,6 @@ in {
     };
 
     services.xserver.displayManager = mkMerge [
-      {
-        sessionCommands = ''
-          # GTK2_RC_FILES must be available to the display manager.
-          export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
-        '';
-      }
-
       (mkIf (cfg.envProto == "x11") {
         lightdm.enable = true;
         lightdm.greeters.mini = {

@@ -36,8 +36,13 @@ in
     );
 
     gtk = {
-      theme = mkOpt str "";
-      iconTheme = mkOpt str "";
+      name = mkOpt str "";
+      package = mkOpt (either package null) null;
+    };
+
+    iconTheme = {
+      name = mkOpt str "";
+      package = mkOpt (either package null) null;
     };
 
     pointer = {
@@ -49,6 +54,7 @@ in
     onReload = mkOpt (attrsOf lines) { };
 
     font = {
+      package = mkOpt (either package null) null;
       mono = {
         family = mkOpt str "";
         weight = mkOpt str "SemiBold";
@@ -156,39 +162,35 @@ in
 
   config = mkIf (cfg.active != null) (mkMerge [
     {
-      home.configFile = {
-        gtk3-settings = {
-          target = "gtk-3.0/settings.ini";
-          text = with cfg.gtk; ''
-            [Settings]
-            ${optionalString (theme != "") "gtk-theme-name=${theme}"}
+      # Allow HM to control GTK Theme:
+      programs.dconf.enable = true;
 
-            ${optionalString (iconTheme != "")
-              "gtk-icon-theme-name=${iconTheme}"}
-
-            gtk-fallback-icon-theme=gnome
-            gtk-application-prefer-dark-theme=true
-            gtk-xft-hinting=1
-            gtk-xft-hintstyle=hintfull
-            gtk-xft-rgba=none
-          '';
+      hm.gtk = with cfg; {
+        enable = true;
+        font = with font; {
+          name = sans.family;
+          package = package;
+          size = sans.size;
         };
-        gtk2-settings = {
-          target = "gtk-2.0/gtkrc";
-          text = with cfg; ''
-            ${optionalString (gtk.theme != "")
-              ''gtk-theme-name="${gtk.theme}"''}
-            ${optionalString (gtk.iconTheme != "")
-              ''gtk-icon-theme-name="${gtk.iconTheme}"''}
-            gtk-font-name="Sans ${toString (font.sans.size)}"
-          '';
+        theme = with gtk; {
+          name = name;
+          package = package;
         };
-        qt-settings = {
-          target = "Trolltech.conf";
-          text = with cfg.gtk; ''
-            [Qt]
-            ${optionalString (theme != "") "style=${theme}"}
-          '';
+        iconTheme = with iconTheme; {
+          name = name;
+          package = package;
+        };
+        gtk3.bookmarks = builtins.map (dir: "file://${config.user.home}/" + dir) [
+          "git/Icy-Thought/snowflake"
+          "git/Icy-Thought/cs-notes"
+          "git/Icy-Thought/notebook"
+          "Library/Unexplored"
+          "Library/Unexplored/Mathematics"
+          "Library/Unexplored/Programming"
+        ];
+        gtk4.extraConfig = {
+          gtk-cursor-blink = false;
+          gtk-recent-files-limit = 20;
         };
       };
 

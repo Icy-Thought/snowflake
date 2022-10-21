@@ -15,8 +15,13 @@ in {
         wallpaper = mkDefault ./assets/antonio-brave-herakles.jpg;
 
         gtk = {
-          theme = "Orchis-Dark-Compact";
-          iconTheme = "WhiteSur-dark";
+          name = "Orchis-Dark-Compact";
+          package = pkgs.orchis-theme;
+        };
+
+        iconTheme = {
+          name = "WhiteSur-dark";
+          package = pkgs.whitesur-icon-theme;
         };
 
         pointer = {
@@ -26,6 +31,7 @@ in {
         };
 
         font = {
+          package = pkgs.nerdfonts.override { fonts = [ "VictorMono" ]; };
           sans.family = "VictorMono Nerd Font";
           mono.family = "VictorMono Nerd Font Mono";
           emoji = "Twitter Color Emoji";
@@ -127,7 +133,7 @@ in {
       user.packages = with pkgs; [ orchis-theme whitesur-icon-theme ];
 
       fonts.fonts = with pkgs; [
-        (nerdfonts.override { fonts = [ "VictorMono" ]; })
+        cfg.font.package
         twitter-color-emoji
       ];
     })
@@ -185,7 +191,7 @@ in {
     (mkIf config.modules.desktop.extensions.rofi.enable {
       hm.programs.rofi = {
         extraConfig = with cfg; {
-          icon-theme = "${gtk.iconTheme}";
+          icon-theme = "${iconTheme.name}";
           font = with font; "${sans.family} ${sans.weight} ${toString (sans.size)}";
         };
 
