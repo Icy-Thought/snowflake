@@ -1,13 +1,29 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, gtk-engine-murrine
-, jdupes
-,
+{ lib, stdenv, fetchFromGitHub, gtk-engine-murrine, jdupes, themeVariants ? [ ]
 }:
 
+let pname = "tokyonight-gtk-theme";
+
+in lib.checkListOfEnum "${pname}: theme variants" [
+  "Dark-B-LB"
+  "Dark-B"
+  "Dark-BL-LB"
+  "Dark-BL"
+  "Light-B-LB"
+  "Light-B"
+  "Light-BL-LB"
+  "Light-BL"
+  "Moon-B-LB"
+  "Moon-B"
+  "Moon-BL-LB"
+  "Moon-BL"
+  "Storm-B-LB"
+  "Storm-B"
+  "Storm-BL-LB"
+  "Storm-BL"
+] themeVariants
+
 stdenv.mkDerivation {
-  pname = "tokyonight-gtk-theme";
+  pname = pname;
   version = "unstable-2022-10-13";
 
   src = fetchFromGitHub {
@@ -26,8 +42,10 @@ stdenv.mkDerivation {
 
     mkdir -p $out/share/themes
 
-    # GTK-3.0 && GTK-2.0
-    cp -a themes/Tokyonight-* $out/share/themes
+    # GTK-Theme
+    cp -a $src/themes/Tokyonight-${
+      builtins.toString themeVariants
+    } $out/share/themes/Tokyonight-${builtins.toString themeVariants}
 
     # Duplicate files -> hard-links = reduced install-size!
     jdupes -L -r $out/share

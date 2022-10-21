@@ -125,8 +125,8 @@ in {
 
     (mkIf config.services.xserver.enable {
       user.packages = with pkgs; [
+        (my.tokyonight-gtk.override { themeVariants = [ "Dark-BL" ]; })
         (fluent-icon-theme.override { colorVariants = [ "orange" ]; })
-        my.tokyonight-gtk
         # whitesur-icon-theme
       ];
 
