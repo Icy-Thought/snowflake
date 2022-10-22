@@ -94,6 +94,7 @@ groups.append(
                 match=Match(wm_class="fractal"),
                 **next_maximum,
             ),
+            DropDown("Galaxy Buds Manager", "GalaxyBudsClient", **next_maximum),
             DropDown(
                 "Neovide",
                 "neovide --multigrid --frame none",
@@ -121,8 +122,9 @@ keys.extend(
         EzKey("M-A-h", lazy.group["SPD"].dropdown_toggle("Telegram")),
         EzKey("M-A-j", lazy.group["SPD"].dropdown_toggle("Discord")),
         EzKey("M-A-k", lazy.group["SPD"].dropdown_toggle("Fractal")),
-        EzKey("M-A-s", lazy.group["SPD"].dropdown_toggle("Spotify")),
+        EzKey("M-A-l", lazy.group["SPD"].dropdown_toggle("GalaxyBudsClient")),
         EzKey("M-A-p", lazy.group["SPD"].dropdown_toggle("Transmission")),
+        EzKey("M-A-s", lazy.group["SPD"].dropdown_toggle("Spotify")),
         EzKey("M-A-v", lazy.group["SPD"].dropdown_toggle("Volume Control")),
     ]
 )
