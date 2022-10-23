@@ -16,7 +16,7 @@ with lib.my; {
     hardware.bluetooth = {
       enable = true;
       package = pkgs.bluez;
-      powerOnBoot = false;
+      powerOnBoot = true;
       hsphfpd.enable = true;
       disabledPlugins = [ "sap" ];
       settings = {

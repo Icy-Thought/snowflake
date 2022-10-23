@@ -63,7 +63,8 @@
           video.enable = true;
         };
         social.common.enable = true;
-        docView.sioyek.enable = true;
+        # docView.sioyek.enable = true;
+        docView.zathura.enable = true;
       };
       # virtual = {
       #   wine.enable = true;

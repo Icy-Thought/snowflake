@@ -15,15 +15,23 @@ in {
         wallpaper = mkDefault ./wallpaper.png;
 
         gtk = {
-          theme = "";
-          iconTheme = "";
-          cursor = {
-            name = "";
-            size = 24;
-          };
+          name = "Tokyonight-Dark-BL";
+          package = pkgs.inser-gtk-theme;
+        };
+
+        iconTheme = {
+          name = "Fluent-orange-dark";
+          package = pkgs.inser-icon-theme;
+        };
+
+        pointer = {
+          name = "";
+          package = pkgs.insert-cursor-theme;
+          size = 24;
         };
 
         font = {
+          package = pkgs.nerdfonts.override { fonts = [ "" ]; };
           sans.family = "";
           mono.family = "";
           emoji = "";

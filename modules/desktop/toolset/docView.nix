@@ -22,15 +22,14 @@ in {
           {
             adjust-open = "width";
             first-page-column = "1:1";
-            window-title-basename = true;
             selection-clipboard = "clipboard";
+            statusbar-home-tilde = true;
+            window-title-basename = true;
           }
 
           (mkIf (active != null) (mkMerge [
             {
-              font = "${font.sans.family} ${font.sans.weight} ${
-                toString (font.mono.size)
-              }";
+              font = "${font.sans.family} Bold ${toString (font.sans.size)}";
               recolor = true;
               recolor-keephue = true;
               recolor-reverse-video = true;
@@ -39,8 +38,8 @@ in {
               default-fg = "${types.fg}";
               default-bg = "${types.bg}";
 
-              statusbar-fg = "${normal.white}";
-              statusbar-bg = "${types.bg}";
+              statusbar-fg = "${types.bg}";
+              statusbar-bg = "${types.highlight}";
 
               inputbar-fg = "${normal.yellow}";
               inputbar-bg = "${types.bg}";
@@ -55,7 +54,7 @@ in {
               notification-warning-bg = "${normal.black}";
 
               highlight-active-color = "${types.fg}";
-              highlight-color = "${types.highlight}";
+              highlight-color = "${types.panelbg}";
 
               completion-fg = "${normal.yellow}";
               completion-bg = "${types.bg}";
