@@ -45,9 +45,12 @@ lib.checkListOfEnum "$Tokyonight: GTK Theme Variants" [
   installPhase = ''
     runHook preInstall
 
-    mkdir -p $out/share/themes
+    mkdir -p $out/share/{gtk-4.0,themes}
 
-    # GTK-Theme
+    # GTK-4.0
+    cp -r $src/themes/Gnome42/Tokyonight-${builtins.toString themeVariants}.css $out/share/gtk-4.0
+
+    # GTK-3.0
     cp -r $src/themes/Tokyonight-${builtins.toString themeVariants} $out/share/themes
 
     # Duplicate files -> hard-links = reduced install-size!

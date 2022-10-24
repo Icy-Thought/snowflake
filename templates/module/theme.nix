@@ -157,12 +157,15 @@ in {
       })
 
     (mkIf config.modules.desktop.extra.fcitx5.enable {
-      home.file.".local/share/fcitx5/themes".source = pkgs.fetchFromGitHub {
-        owner = "";
-        repo = "";
-        rev = "";
-        hash = "";
-      }; # WARN:
+      home.dataFile.fcitx5-theme = {
+        target = "fcitx5/themes";
+        source = pkgs.fetchFromGitHub {
+          owner = "";
+          repo = "";
+          rev = "";
+          hash = "";
+        }; # WARN:
+      };
     })
 
     (mkIf config.modules.desktop.media.document.sioyek.enable {

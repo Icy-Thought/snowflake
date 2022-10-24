@@ -88,20 +88,16 @@ in {
               };
             };
           };
-          media-session.config.alsa-monitor = {
-            rules = [
-              {
-                matches = [{ node.name = "alsa_output.*"; }];
-                actions = {
-                  update-props = {
-                    "audio.format" = "S32LE";
-                    "audio.rate" = cfg.lowLatency.rate * 2;
-                    "api.alsa.period-size" = 2;
-                  };
-                };
-              }
-            ];
-          };
+          media-session.config.alsa-monitor.rules = [{
+            matches = [{ node.name = "alsa_output.*"; }];
+            actions = {
+              update-props = {
+                "audio.format" = "S32LE";
+                "audio.rate" = cfg.lowLatency.rate * 2;
+                "api.alsa.period-size" = 2;
+              };
+            };
+          }];
         };
       })
     ]);

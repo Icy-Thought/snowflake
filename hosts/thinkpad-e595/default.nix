@@ -54,7 +54,7 @@
       };
       toolset = {
         downloader.transmission.enable = true;
-        editor = {
+        graphics = {
           raster.enable = true;
           vector.enable = true;
         };

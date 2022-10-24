@@ -166,10 +166,8 @@ in {
 
       # Use a stable profile name so we can target it in themes
       home.file =
-        let
-          cfgPath = ".mozilla/firefox";
-        in
-        {
+        let cfgPath = ".mozilla/firefox";
+        in {
           firefox-profiles = {
             target = "${cfgPath}/profiles.ini";
             text = ''

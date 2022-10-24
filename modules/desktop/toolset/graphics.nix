@@ -7,9 +7,9 @@
 with lib;
 with lib.my;
 
-let cfg = config.modules.desktop.toolset.editor;
+let cfg = config.modules.desktop.toolset.graphics;
 in {
-  options.modules.desktop.toolset.editor = {
+  options.modules.desktop.toolset.graphics = {
     base.enable = mkBoolOpt true;
     modeling.enable = mkBoolOpt false;
     raster.enable = mkBoolOpt false;
@@ -18,19 +18,23 @@ in {
 
   config = mkMerge [
     (mkIf cfg.base.enable {
-      user.packages = with pkgs; [ font-manager imagemagick ];
+      user.packages = with pkgs; [
+        eyedropper
+        font-manager
+        imagemagick
+      ];
     })
 
     # Illustrator & Indesign replacement:
     (mkIf cfg.vector.enable {
-      user.packages = with pkgs; [ inkscape ];
+      user.packages = with pkgs; [ inkscape rnote ];
       # TODO: hard-coded inkscape config
     })
 
     # Photoshop replacement:
     (mkIf cfg.raster.enable {
       user.packages = with pkgs; [
-        krita
+        # krita
         gimp
         gimpPlugins.resynthesizer
       ];
