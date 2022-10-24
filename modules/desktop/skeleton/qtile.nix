@@ -57,20 +57,18 @@ in {
     services.xserver = {
       enable = true;
       displayManager.defaultSession = "none+qtile";
-      windowManager.session = [
-        {
-          name = "qtile";
-          start = ''
-            ${cfg.package}/bin/qtile start -b ${cfg.backend} \
-            ${
-              optionalString (cfg.configFile != null) ''
-                --config ${cfg.configFile}
-              ''
-            } &
-            waitPID=$!
-          '';
-        }
-      ];
+      windowManager.session = [{
+        name = "qtile";
+        start = ''
+          ${cfg.package}/bin/qtile start -b ${cfg.backend} \
+          ${
+            optionalString (cfg.configFile != null) ''
+              --config ${cfg.configFile}
+            ''
+          } &
+          waitPID=$!
+        '';
+      }];
     };
 
     hm.services = {

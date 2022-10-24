@@ -16,7 +16,7 @@ in {
   config = mkMerge [
     (mkIf cfg.common.enable {
       user.packages = with pkgs; [
-        fractal-next
+        element-desktop
         unstable.discord
         signal-desktop
         tdesktop
