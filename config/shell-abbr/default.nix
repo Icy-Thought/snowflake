@@ -28,27 +28,31 @@ let
   };
 
   git = {
+    # Lazygit
+    lzg = "lazygit";
+
+    # Git: general
     g = "git";
     ga = "git add";
     gaa = "git add --agll";
     gap = "git apply";
     gapa = "git add --patch";
 
-    # Branches
+    # Git: branches
     gb = "git branch -vv";
     gbD = "git branch -D";
     gba = "git branch -agv";
     gban = "git branch -agv --no-merged";
     gbd = "git branch -d";
 
-    # Bisect
+    # Git: bisect
     gbs = "git bisect";
     gbsb = "git bisect bad";
     gbsg = "git bisect good";
     gbsr = "git bisect reset";
     gbss = "git bisect start";
 
-    # Commit(s)
+    # Git: commit
     gc = "git commit -v";
     "gc!" = "git commit -v --agmend";
     gca = "git commit -v -ag";
@@ -63,22 +67,22 @@ let
     gcv = "git commit -v --no-verify";
     gscam = "it commit -S -ag -m";
 
-    # Config
+    # Git: config
     gcf = "git config --list";
     gcl = "git clone";
     gcount = "git shortlog -sn";
 
-    # Cleaning Up
+    # Git: clean-ups
     gclean = "git clean -di";
     "gclean!" = "git clean -dfx";
     "gclean!!" = "git reset --hard; and git clean -dfx";
 
-    # Cherry-Pick
+    # Git: cherry-pick
     gcp = "git cherry-pick";
     gcpa = "git cherry-pick --agbort";
     gcpc = "git cherry-pick --continue";
 
-    # Diff(s)
+    # Git: diff
     gd = "git diff";
     gda = "git diff --cached";
     gds = "git diff --stat";
@@ -87,16 +91,17 @@ let
     gdwc = "git diff --word-diff --cached";
     gdtool = "git difftool";
 
+    # Git: files to be ignored
     gignore = "git update-index --agssume-unchanged";
     gunignore = "git update-index --no-agssume-unchanged";
 
-    # Fetching / Pulling
+    # Git: fetch / pull
     gf = "git fetch";
     gfa = "git fetch --agll --prune";
     gl = "git pull";
     glr = "git pull --rebase";
 
-    # Log(s)
+    # Git: log
     glg = "git log --stat --max-count=10";
     glgg = "git log --graph --max-count=10";
     glgga = "git log --graph --decorate --agll";
@@ -105,7 +110,7 @@ let
     gloo = "git log --pretty=format:'%C(yellow)%h %Cred%ad %Cblue%an%Cgreen%d %Creset%s' --date=short";
 
 
-    # Push / Merger
+    # Git: push / merge
     gm = "git merge";
     gmt = "git mergetool --no-prompt";
     gp = "git push";
@@ -115,7 +120,7 @@ let
     gpa = "parallel git push --agll -- (git remote)";
     gpaf = "parallel git push --agll --force -- (git remote)";
 
-    # Remote
+    # Git: remote
     gr = "git remote -vv";
     gra = "git remote add";
     grmv = "git remote rename";
@@ -124,53 +129,53 @@ let
     grup = "git remote update";
     grv = "git remote -v";
 
-    # Rebase
+    # Git: rebase
     grb = "git rebase";
     grba = "git rebase --agbort";
     grbc = "git rebase --continue";
     grbi = "git rebase --interactive";
 
 
-    # Revert & Reset
+    # Git: revert & reset
     grev = "git revert";
     grst = "git reset";
     grsth = "git reset --hard";
     grstp = "git reset --patch";
 
-    # Remove ||  Restore
+    # Git: remove | restore
     grm = "git rm";
     grmc = "git rm --cached";
     grs = "git restore";
     grss = "git restore --source";
 
-    # Status
+    # Git: status
     gsh = "git show";
     gss = "git status -s";
     gst = "git status";
 
-    # Stash
+    # Git: stash
     gsta = "git stash";
     gstd = "git stash drop";
     gstp = "git stash pop";
     gsts = "git stash show --text";
 
-    # Submodule
+    # Git: submodule
     gsu = "git submodule update";
     gsur = "git submodule update --recursive";
     gsuri = "git submodule update --recursive --init";
 
-    # Tag(s)
+    # Git: tag
     gts = "git tag -s";
     gtv = "git tag | sort -V";
 
-    # Switch
+    # Git: switch
     gsw = "git switch";
     gswc = "git switch --create";
 
-    # What Changes?
+    # Git: what changed?
     gwch = "git whatchanged -p --agbbrev-commit --pretty=medium";
 
-    # Checkout
+    # Git: checkout
     gco = "git checkout";
     gcb = "git checkout -b";
   };
