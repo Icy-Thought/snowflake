@@ -15,7 +15,7 @@ with lib.my; {
       user.packages = with pkgs; [
         act
         dura
-        lazygit
+        gitui
         gitAndTools.gh
         gitAndTools.git-open
         (mkIf (config.modules.shell.gnupg.enable) gitAndTools.git-crypt)

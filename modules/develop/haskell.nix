@@ -14,12 +14,12 @@ with lib.my; {
     (mkIf config.modules.develop.haskell.enable {
       user.packages = with pkgs.haskellPackages; [
         ghc
+        brittany
         cabal-install
         haskell-language-server
         hasktags
         hoogle
         hpack
-        brittany
       ];
     })
 

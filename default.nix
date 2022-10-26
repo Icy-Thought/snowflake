@@ -58,11 +58,9 @@ with lib.my; {
   boot = {
     kernelPackages = mkDefault pkgs.linuxPackages_latest;
     kernelParams = [ "pcie_aspm.policy=performance" ];
-
     loader = {
       efi.efiSysMountPoint = "/boot";
       efi.canTouchEfiVariables = mkDefault true;
-
       grub = {
         enable = mkDefault true;
         version = 2;
