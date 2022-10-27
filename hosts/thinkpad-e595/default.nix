@@ -69,6 +69,10 @@
       # virtual = {
       #   wine.enable = true;
       # };
+      distraction.lutris = {
+        enable = true;
+        league.enable = true;
+      };
     };
 
     develop = {
