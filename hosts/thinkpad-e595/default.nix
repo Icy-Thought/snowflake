@@ -66,13 +66,10 @@
         # docView.sioyek.enable = true;
         docView.zathura.enable = true;
       };
-      # virtual = {
-      #   wine.enable = true;
+      # distraction.lutris = {
+      #   enable = true;
+      #   league.enable = true;
       # };
-      distraction.lutris = {
-        enable = true;
-        league.enable = true;
-      };
     };
 
     develop = {

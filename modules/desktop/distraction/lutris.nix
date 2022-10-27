@@ -12,17 +12,21 @@ in
 {
   options.modules.desktop.distraction.lutris = {
     enable = mkBoolOpt false;
+    package = mkOption {
+      type = with types; nullOr package;
+      default = with pkgs; lutris.override { extraLibraries = pkgs: [ jansson ]; };
+    };
     league.enable = mkBoolOpt false;
   };
 
   config = mkMerge [
     (mkIf (cfg.enable && wineCfg.enable) {
-      user.packages = with pkgs; [ lutris ];
+      user.packages = [ cfg.package ];
     })
 
     (mkIf (cfg.enable && !wineCfg.enable) {
       user.packages = with pkgs; [
-        lutris
+        cfg.package
         wineWowPackages.fonts
         wineWowPackages.stagingFull
         winetricks
@@ -32,54 +36,16 @@ in
     (mkIf cfg.league.enable {
       networking.firewall.allowedTCPPorts = [ 443 ];
 
-      user.packages = with pkgs; [
-        (writeScriptBin "lol-launch-script" ''
-          reset_environment() {
-            echo "Restoring environment to previous state. (abi.vsyscall32=1)"
-            sudo -S sysctl -w abi.vsyscall32=1
-            exit 0
-          }
-
-          main() {
-            trap 'reset_environment' INT
-            while [[ $exit_status_pass != 0 ]]; do
-              sudo sysctl -w abi.vsyscall32=0
-              if [ $? -eq 0 ]; then
-                exit_status_pass=0
-              fi
-            done
-
-            [[ $exit_status_pass == 0 ]] && {
-              echo "Launching League of Legends..."
-              env LUTRIS_SKIP_INIT=1 ${getExe lutris} lutris:rungame/league-of-legends
-            } 
-            reset_environment
-          } 
-
-          main
-        '')
-
-        (makeDesktopItem {
-          name = "League of Legends";
-          desktopName = "League of Legends";
-          icon = "league-of-legends";
-          exec = "lol-launch-script";
-          terminal = false;
-          mimeTypes = [ "x-scheme-handler/league-of-legends" ];
-          categories = [ "Network" "FileTransfer" "Game" ];
-        })
-      ];
-
       home.dataFile.wine-ge =
         let
-          version = "GE-Proton7-32";
-          name = "wine-lutris-${version}-x86_64";
+          name = "wine-lutris-ge-lol-7.0-5-x86_64";
+          version = "7.0-GE-5-LoL";
         in
         {
           target = "lutris/runners/wine/${name}";
           source = builtins.fetchTarball {
             url = "https://github.com/GloriousEggroll/wine-ge-custom/releases/download/${version}/${name}.tar.xz";
-            sha256 = "0fbn3z0ykilkyp8x29srkqalfx1680b6i4zr5brfsdfr7yv17gb4";
+            sha256 = "137sq6az3vnrbwz6gpysh8zd1zv15q5sm7jqqq3vpc4xqlkh53ks";
           };
         };
     })
