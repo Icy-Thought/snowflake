@@ -56,7 +56,7 @@ with lib.my; {
   fileSystems."/".device = mkDefault "/dev/disk/by-label/nixos";
 
   boot = {
-    kernelPackages = mkDefault pkgs.linuxPackages_latest;
+    kernelPackages = mkDefault pkgs.linuxPackages_xanmod_latest;
     kernelParams = [ "pcie_aspm.policy=performance" ];
     loader = {
       efi.efiSysMountPoint = "/boot";

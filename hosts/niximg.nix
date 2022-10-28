@@ -10,7 +10,7 @@
   hardware.enableRedistributableFirmware = true;
 
   boot = {
-    kernelPackages = pkgs.linuxKernel.packages.linux_5_16;
+    kernelPackages = pkgs.linuxPackages_xanmod_latest;
     kernelModules = [ "wl" ];
     extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
   };

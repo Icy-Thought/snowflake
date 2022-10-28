@@ -47,6 +47,6 @@
   };
 
   powerManagement = {
-    cpuFreqGovernor = "performance";
+    cpuFreqGovernor = "schedutil";
   };
 }
