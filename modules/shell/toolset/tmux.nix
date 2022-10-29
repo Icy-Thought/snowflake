@@ -28,6 +28,8 @@ with lib.my; {
         text = with config.modules.themes.colors.main; ''
           # --------=== General-Configurations
           set-option -g default-terminal "tmux-256color"
+          set-option -sg terminal-overrides ",*:RGB"
+
           set-option -g base-index 1
           set-window-option -g pane-base-index 1
 

@@ -22,7 +22,7 @@ import           XMonad.Util.EZConfig
 import           XMonad.Util.Ungrab
 
 myTerminal :: String
-myTerminal = "wezterm-gui"
+myTerminal = "alacritty"
 
 -- TODO: bind scratchpad to `M` + tilde (~)
 

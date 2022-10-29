@@ -23,8 +23,8 @@
     desktop = {
       gnome.enable = true;
       terminal = {
-        default = "wezterm";
-        wezterm.enable = true;
+        default = "alacritty";
+        alacritty.enable = true;
       };
       editors = {
         default = "nvim";

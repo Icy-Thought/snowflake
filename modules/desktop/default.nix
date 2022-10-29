@@ -43,7 +43,7 @@ in {
         name = "kalker";
         desktopName = "Kalker";
         icon = "calc";
-        exec = "${getExe wezterm} start kalker";
+        exec = "${getExe alacritty} -e kalker";
         categories = [ "Development" ];
       })
       qgnomeplatform

@@ -23,7 +23,7 @@ main = xmonad . ewmhFullscreen . ewmh $ myConfig
 myConfig :: XConfig
 myConfig = def
   { modMask         = mod4Mask
-  , terminal        = "wezterm"
+  , terminal        = "alacritty"
   , manageHook      = myManageHook <> namedScratchpadManageHook scratchpads
   , layoutHook      = myLayoutHook
   , borderWidth     = 2

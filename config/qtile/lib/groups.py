@@ -81,7 +81,7 @@ groups.append(
     ScratchPad(
         "SPD",
         [
-            DropDown("btop", "wezterm start --always-new-process btop", **next_maximum),
+            DropDown("SysMon", "alacritty -t System Monitor -e btop", **next_maximum),
             DropDown(
                 "Discord",
                 "discord",
@@ -117,7 +117,7 @@ groups.append(
 keys.extend(
     # WARN: Used keys (M-A): f = firefox, w = firefox-priv , g = ungoogled
     [
-        EzKey("M-A-b", lazy.group["SPD"].dropdown_toggle("btop")),
+        EzKey("M-A-b", lazy.group["SPD"].dropdown_toggle("SysMon")),
         EzKey("M-A-e", lazy.group["SPD"].dropdown_toggle("Neovide")),
         EzKey("M-A-h", lazy.group["SPD"].dropdown_toggle("Telegram")),
         EzKey("M-A-j", lazy.group["SPD"].dropdown_toggle("Discord")),

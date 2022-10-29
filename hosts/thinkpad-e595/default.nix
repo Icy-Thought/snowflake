@@ -32,9 +32,8 @@
     desktop = {
       qtile.enable = true;
       terminal = {
-        default = "wezterm";
+        default = "alacritty";
         alacritty.enable = true;
-        wezterm.enable = true;
       };
       editors = {
         default = "nvim";
