@@ -33,6 +33,7 @@
       qtile.enable = true;
       terminal = {
         default = "wezterm";
+        alacritty.enable = true;
         wezterm.enable = true;
       };
       editors = {

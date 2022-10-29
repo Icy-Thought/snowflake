@@ -5,7 +5,10 @@
 , ...
 }:
 with lib;
-with lib.my; {
+with lib.my;
+
+let active = config.modules.themes.active;
+in {
   options.modules.desktop.terminal.alacritty = {
     enable = mkBoolOpt false;
   };
@@ -17,30 +20,28 @@ with lib.my; {
       settings = with config.modules.themes; (mkMerge [
         {
           env = {
-            TERM = "alacritty-direct";
-            WINIT_X11_SCALE_FACTOR = 1.0;
+            TERM = "xterm-256color";
+            WINIT_X11_SCALE_FACTOR = "1.0";
           };
 
           window = {
+            dynamic_title = true;
+            dynamic_padding = false;
+            opacity = 0.8;
+            decorations = "none";
+
             dimensions = {
               columns = 96;
               lines = 28;
             };
-
             position = {
               x = 50;
               y = 50;
             };
-
             padding = {
-              x = 25;
-              y = 25;
+              x = 10;
+              y = 10;
             };
-
-            dynamic_title = true;
-            dynamic_padding = false;
-            opacity = 1.0;
-            decorations = "none";
           };
 
           scrolling = {
@@ -57,8 +58,8 @@ with lib.my; {
           live_config_reload = true;
 
           shell = {
-            program = "/usr/bin/env";
-            args = "- fish";
+            program = "${getExe pkgs.fish}";
+            args = [ "-l" "-c" "tmux attach || tmux" ];
           };
 
           cursor = {
@@ -67,48 +68,17 @@ with lib.my; {
           };
 
           key_bindings = [
-            {
-              key = "N";
-              mods = "Control|Shift";
-              action = "SpawnNewInstance";
-            }
-            {
-              key = "Q";
-              mods = "Control";
-              action = "Quit";
-            }
-            {
-              key = "V";
-              mods = "Control|Shift";
-              action = "Paste";
-            }
-            {
-              key = "C";
-              mods = "Control|Shift";
-              action = "Copy";
-            }
-            {
-              key = "NumpadAdd";
-              mods = "Control";
-              action = "IncreaseFontSize";
-            }
-            {
-              key = "NumpadSubtract";
-              mods = "Control";
-              action = "DecreaseFontSize";
-            }
-            {
-              key = "Key0";
-              mods = "Control";
-              action = "ResetFontSize";
-            }
+            { key = "N"; mods = "Control|Shift"; action = "SpawnNewInstance"; }
+            { key = "Q"; mods = "Control"; action = "Quit"; }
+            { key = "V"; mods = "Control|Shift"; action = "Paste"; }
+            { key = "C"; mods = "Control|Shift"; action = "Copy"; }
+            { key = "NumpadAdd"; mods = "Control"; action = "IncreaseFontSize"; }
+            { key = "NumpadSubtract"; mods = "Control"; action = "DecreaseFontSize"; }
+            { key = "Key0"; mods = "Control"; action = "ResetFontSize"; }
           ];
 
           mouse_bindings = [
-            {
-              mouse = "Middle";
-              action = "PasteSelection";
-            }
+            { mouse = "Middle"; action = "PasteSelection"; }
           ];
 
           url = {
@@ -116,35 +86,36 @@ with lib.my; {
             modifiers = "Shift";
           };
         }
+
         (mkIf (active != null) {
-          import = "~/.config/alacritty/config/${active}.yml";
+          import = [ "~/.config/alacritty/config/${active}.yml" ];
         })
       ]);
     };
 
-    home.configFile = with config.modules.themes; (mkIf (active != null) {
+    home.configFile = (mkIf (active != null) {
       alacritty-conf = {
         target = "alacritty/config/${active}.yml";
         text =
-          ''
+          (with config.modules.themes.font; ''
             font:
               normal:
-                family: "${font.sans.family}"
-                style:  "${font.sans.weight}"
+                family: "${sans.family}"
+                style:  "${sans.weight}"
 
               bold:
-                family: "${font.sans.family}"
+                family: "${sans.family}"
                 style:  "Bold"
 
               italic:
-                family: "${font.sans.family}"
-                style:  "${font.sans.weight} Italic"
+                family: "${sans.family}"
+                style:  "${sans.weight} Italic"
 
               bold_italics:
-                family: "${font.sans.family}"
-                style:  "${font.sans.weight} Italic"
+                family: "${sans.family}"
+                style:  "${sans.weight} Italic"
 
-              size: ${toString (font.mono.size)}
+              size: ${toString (mono.size)}
 
               offset:
                 x: 0
@@ -153,9 +124,7 @@ with lib.my; {
               glyph_offset:
                 x: 0
                 y: 0
-
-              use_thin_strokes: true
-          ''
+          '')
           + (with config.modules.themes.colors.main; ''
             colors:
               primary:
