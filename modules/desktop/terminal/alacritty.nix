@@ -59,7 +59,7 @@ in {
 
           shell = {
             program = "${getExe pkgs.fish}";
-            args = [ "-l" "-c" "tmux attach || tmux" ];
+            args = [ "-l" "-c" "tmux new || tmux" ];
           };
 
           cursor = {

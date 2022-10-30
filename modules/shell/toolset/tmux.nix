@@ -26,7 +26,7 @@ with lib.my; {
       home.configFile.tmux-conf = {
         target = "tmux/tmux.conf";
         text = with config.modules.themes.colors.main; ''
-          # --------=== General-Configurations
+          # -------===[ General-Configurations ]===------- #
           set-option -g default-terminal "tmux-256color"
           set-option -sg terminal-overrides ",*:RGB"
 
@@ -41,17 +41,12 @@ with lib.my; {
           unbind C-b
           bind-key C-a send-prefix
 
-          # Disables confirmation on exit
-          bind-key x kill-pane
-          bind-key X kill-window
-          bind-key q kill-session
-          bind-key Q kill-server
-
-          set-option  -g renumber-windows on
+          set-option -g renumber-windows on
           set-window-option -g aggressive-resize off
           set-window-option -g automatic-rename on
 
           set-window-option -g clock-mode-style 24
+          set-window-option -g mode-keys vi
           set-option -s escape-time 0
           set-option -g history-limit 5000
 
@@ -60,31 +55,44 @@ with lib.my; {
           set-option -g renumber-windows on
           set-option -g allow-rename off
 
-          # Activity/Sound
+          # -------===[ Activity/Sound ]===------- #
           set-option -g bell-action none
           set-option -g visual-bell off
           set-option -g visual-silence off
           set-option -g visual-activity off
           set-window-option -g monitor-activity off
 
-          # --------=== Keybindings
-          # Buffers
+          # -------===[ Keybindings ]===------- #
+          bind-key c clock-mode
+
+          # Window Control(s):
+          bind-key t new-window -c '#{pane_current_path}'
+          bind-key x kill-pane
+          bind-key X kill-window
+          bind-key q kill-session
+          bind-key Q kill-server
+
+          # (VIM) Smart pane switch:
+          bind-key k select-pane -U
+          bind-key j select-pane -D
+          bind-key h select-pane -L
+          bind-key l select-pane -R
+
+          # Buffers:
           bind-key b list-buffers
           bind-key p paste-buffer
           bind-key P choose-buffer
 
-          # Split bindings
+          # Split bindings:
           bind-key / split-window -h -c '#{pane_current_path}'
           bind-key - split-window -v -c '#{pane_current_path}'
-          bind-key c new-window -c '#{pane_current_path}'
 
-          # Copy/Paste bindings
-          bind-key P paste-buffer
+          # Copy/Paste bindings:
           bind-key -T copy-mode-vi v send-keys -X begin-selection
           bind-key -T copy-mode-vi y send-keys -X copy-selection
           bind-key -T copy-mode-vi r send-keys -X rectangle-toggle
 
-          # --------=== Status-bar
+          # -------===[ Status-Bar ]===------- #
           set-option -g status on
           set-option -g status-interval 1
           set-option -g status-style bg=default,bold,italics
@@ -95,24 +103,24 @@ with lib.my; {
           set-option -g status-left-length "40"
           set-option -g status-right-length "80"
 
-          # Messages
+          # Messages:
           set-option -g message-style fg="${types.bg}",bg="${types.highlight}",align="centre"
           set-option -g message-command-style fg="${types.bg}",bg="${types.highlight}",align="centre"
 
-          # Panes
+          # Panes:
           set-option -g pane-border-style fg="${normal.blue}"
           set-option -g pane-active-border-style fg="${types.border}"
 
-          # Windows
+          # Windows:
           set-option -g window-status-format "#[fg=${normal.white}] #W/#{window_panes} "
           set-option -g window-status-current-format "#[fg=${types.bg},bg=${types.border}]#{?client_prefix,#[fg=${types.bg}],}#{?client_prefix,#[bg=${normal.blue}],} #W "
 
-          # --------=== Status-line
-          set-option -g status-left "🦊 "
+          # -------===[ Statusline ]===------- #
+          set-option -g status-left "🌘 "
           set-option -g status-bg default
           set-option -g status-right "#[italics]∡ #H | %b %d, %H:%M:%S  #[fg=${types.bg},bg=${types.fg},bold,italics] base-#S "
 
-          # --------=== Clock & Selection
+          # -------===[ Clock & Selection ]===------- #
           set-window-option -g clock-mode-colour "${types.border}"
           set-window-option -g mode-style "fg=${types.bg} bg=${types.highlight} bold"
         '';

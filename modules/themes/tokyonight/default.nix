@@ -34,7 +34,7 @@ in {
           package = pkgs.nerdfonts.override { fonts = [ "VictorMono" ]; };
           sans.family = "VictorMono Nerd Font";
           mono.family = "VictorMono Nerd Font Mono";
-          emoji = "Twitter Color Emoji";
+          emoji = "Noto Color Emoji";
         };
 
         colors = {
@@ -137,7 +137,7 @@ in {
     (mkIf config.services.xserver.enable {
       fonts.fonts = with pkgs; [
         cfg.font.package
-        twitter-color-emoji
+        noto-fonts-emoji
       ];
     })
 

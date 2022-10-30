@@ -81,7 +81,7 @@ groups.append(
     ScratchPad(
         "SPD",
         [
-            DropDown("SysMon", "alacritty -t System Monitor -e btop", **next_maximum),
+            DropDown("SysMon", "alacritty -t 'System Monitor' -e btop", **next_maximum),
             DropDown(
                 "Discord",
                 "discord",
