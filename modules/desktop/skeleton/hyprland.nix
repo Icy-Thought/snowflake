@@ -21,12 +21,11 @@ with lib.my; {
         fcitx5.enable = true;
         mimeApps.enable = true; # mimeApps -> default launch application
         dunst.enable = true;
-        # TODO EWW-bar
+        eww.enable = true;
         rofi = {
           enable = true;
           package = pkgs.rofi-wayland;
         };
-        waybar.enable = true;
       };
     };
 
