@@ -21,6 +21,15 @@ with lib.my; {
         hoogle
         hpack
       ];
+
+      home.file.ghci-conf = {
+        target = ".ghci";
+        text = ''
+          :set -fobject-code
+          :set prompt "λ> "
+          :set prompt-cont "|> "
+        '';
+      };
     })
 
     (mkIf config.modules.desktop.editors.vscodium.enable {
