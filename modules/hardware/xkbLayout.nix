@@ -14,34 +14,29 @@ in {
     hyperCtrl.enable = mkBoolOpt false;
   };
 
-  config =
-    let
-      hyperCLayout = pkgs.writeText "hyper-ctrl-layout" ''
-        xkb_keymap {
-          xkb_keycodes  { include "evdev+aliases(qwerty)" };
-          xkb_types     { include "complete"      };
-          xkb_compat    { include "complete"      };
+  config = mkMerge [
+    (mkIf cfg.hyperCtrl.enable {
+      services.xserver = {
+        displayManager.sessionCommands = with pkgs; ''
+          ${getExe xorg.setxkbmap} -layout us-hyperCtrl
+        '';
 
-          partial modifier_keys
-          xkb_symbols "hyper" {
-            include "pc+us+inet(evdev)+terminate(ctrl_alt_bksp)"
-            key  <RCTL> { [ Hyper_R, Hyper_R ] };
-            modifier_map Mod3 { <HYPR>, Hyper_R };
-          };
+        extraLayouts.us-hyperCtrl = {
+          description = "US Layout with Right Ctrl = Hyper";
+          languages = [ "eng" ];
+          symbolsFile = pkgs.writeText "us-hyperCtrl" ''
+            partial alphanumeric_keys
 
-          xkb_geometry  { include "pc(pc104)"     };
+            partial modifier_keys
+            xkb_symbols "hyperCtrl" {
+                include "us(basic)"
+
+                replace key <RCTL> { [ Hyper_R ] };
+                modifier_map Mod3 { <RCTL>, <HYPR> };
+            };
+          '';
         };
-      '';
-    in
-    mkIf cfg.hyperCtrl.enable {
-      hm.xsession.initExtra = ''
-        # Set XKB layout = us+hyper on WM start:
-        ${getExe pkgs.xorg.xkbcomp} ${hyperCLayout} $DISPLAY
-      '';
-
-      environment.etc.hyperKey = {
-        target = "X11/keymap.xkb";
-        source = hyperCLayout;
       };
-    };
+    })
+  ];
 }
