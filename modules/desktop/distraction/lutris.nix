@@ -7,6 +7,7 @@
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.distraction.lutris;
+  steamCfg = config.modules.desktop.distraction.steam;
   wineCfg = config.modules.desktop.virtual.wine;
 in
 {
@@ -34,20 +35,20 @@ in
     })
 
     (mkIf cfg.league.enable {
+      boot.kernel.sysctl."abi.vsyscall32" = 0; # anti-cheat...
+
       networking.firewall.allowedTCPPorts = [ 443 ];
 
-      home.dataFile.wine-ge =
-        let
-          name = "wine-lutris-ge-lol-7.0-5-x86_64";
-          version = "7.0-GE-5-LoL";
-        in
-        {
-          target = "lutris/runners/wine/${name}";
-          source = builtins.fetchTarball {
-            url = "https://github.com/GloriousEggroll/wine-ge-custom/releases/download/${version}/${name}.tar.xz";
-            sha256 = "137sq6az3vnrbwz6gpysh8zd1zv15q5sm7jqqq3vpc4xqlkh53ks";
-          };
-        };
+      environment.sessionVariables = {
+        QT_X11_NO_MITSHM = "1";
+      };
+
+      user.packages = with pkgs; [
+        openssl
+        gnome.zenity
+        vulkan-tools
+        dxvk
+      ];
     })
   ];
 }

@@ -5,8 +5,9 @@
 , ...
 }:
 with lib;
-with lib.my; let
-  cfg = config.modules.desktop.distraction.steam;
+with lib.my;
+
+let cfg = config.modules.desktop.distraction.steam;
 in
 {
   options.modules.desktop.distraction.steam = with types; {
@@ -19,15 +20,6 @@ in
     {
       # I avoid programs.steam.enable because it installs another steam binary,
       # which the xdesktop package invokes, instead of my steam shims below.
-      hardware.opengl = {
-        enable = true;
-        driSupport32Bit = true;
-      };
-
-      environment.variables.VK_ICD_FILENAMES = [
-        "/run/opengl-driver/share/vulkan/icd.d/amd_icd64.json"
-      ];
-
       user.packages = with pkgs; [
         # Get steam to keep its garbage out of $HOME
         (writeScriptBin "steam" ''

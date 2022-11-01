@@ -63,6 +63,7 @@ floating_layout = layout.Floating(
         Match(wm_class="pinentry"),  # GPG key password entry
         Match(title="Picture-in-Picture"),  # FireFox
         Match(wm_class="ssh-askpass"),  # ssh-askpass
+        Match(wm_class="leagueclientux.exe"),
     ],
 )
 

@@ -66,10 +66,13 @@
         # docView.sioyek.enable = true;
         docView.zathura.enable = true;
       };
-      # distraction.lutris = {
-      #   enable = true;
-      #   league.enable = true;
-      # };
+      distraction = {
+        hardware.amdvlk.enable = true;
+        lutris = {
+          enable = true;
+          league.enable = true;
+        };
+      };
     };
 
     develop = {
