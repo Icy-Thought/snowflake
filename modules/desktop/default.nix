@@ -71,6 +71,12 @@ in {
       })
     ];
 
+    xdg.portal = {
+      enable = true;
+      wlr = mkIf (cfg.envProto == "wayland") { enable = true; };
+      extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    };
+
     env = {
       GTK_DATA_PREFIX = [ "${config.system.path}" ];
       QT_QPA_PLATFORMTHEME = "gnome";
