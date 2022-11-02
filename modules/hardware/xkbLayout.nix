@@ -37,6 +37,19 @@ in {
           '';
         };
       };
+
+      home.dataFile.fcitx5-hyprCtrl = mkIf config.modules.desktop.extensions.fcitx5 {
+        target = "fcitx5/inputmethod/keyboard-us-hyprCtrl.conf";
+        text = ''
+          [InputMethod]
+          Name=us-hyperCtrl
+          Icon=input-keyboard
+          LangCode=us-hctrl
+          Addon=keyboard
+          Configurable=True
+          Label=us-hctrl
+        '';
+      };
     })
   ];
 }

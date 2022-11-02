@@ -106,7 +106,7 @@ groups.append(
             DropDown(
                 "Telegram",
                 "telegram-desktop",
-                match=Match(wm_class="telegram-desktop"),
+                match=Match(wm_class="TelegramDesktop"),
                 **next_maximum,
             ),
             DropDown("Transmission", "transmission-gtk", **next_maximum),
