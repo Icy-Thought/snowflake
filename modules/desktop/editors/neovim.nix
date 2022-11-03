@@ -20,7 +20,7 @@ in {
       nixpkgs.overlays = [ inputs.nvim-nightly.overlay ];
 
       user.packages = with pkgs; [
-        neovide
+        (mkIf (!config.modules.desktop.editors.emacs.enable) neovide)
         (mkIf (!config.modules.develop.cc.enable) gcc) # Treesitter
       ];
 

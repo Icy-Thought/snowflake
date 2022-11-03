@@ -24,6 +24,11 @@
 
     # Toolset ++ Application(s)
     emacs.url = "github:nix-community/emacs-overlay";
+    doomemacs = {
+      url = "github:doomemacs/doomemacs";
+      flake = false;
+    };
+
     nvim-nightly.url = "github:nix-community/neovim-nightly-overlay";
     rust.url = "github:oxalica/rust-overlay";
     spicetify-nix.url = "github:the-argus/spicetify-nix";

@@ -11,8 +11,8 @@ with lib.my; {
 
     snowflake = {
       dir = mkOpt path (findFirst pathExists (toString ../.) [
-        "${config.user.home}/git/Icy-Thought/Snowflake"
-        "/etc/Snowflake"
+        "${config.user.home}/git/icy-thought/snowflake"
+        "/etc/snowflake"
       ]);
       binDir = mkOpt path "${config.snowflake.dir}/bin";
       configDir = mkOpt path "${config.snowflake.dir}/config";
@@ -25,6 +25,7 @@ with lib.my; {
       configFile = mkOpt' attrs { } "Files to place in $XDG_CONFIG_HOME";
       dataFile = mkOpt' attrs { } "Files to place in $XDG_DATA_HOME";
       pointerCursor = mkOpt' attrs { } "Cursor to be applied on running system";
+      activation = mkOpt' attrs { } "Script block to run after NixOS rebuild";
     };
 
     env = mkOption {
@@ -64,9 +65,10 @@ with lib.my; {
     # home.configFile  ->  home-manager.users.icy-thought.home.xdg.configFile
     # home.dataFile    ->  home-manager.users.icy-thought.home.xdg.dataFile
     hm.home = {
+      activation = mkAliasDefinitions options.home.activation;
       file = mkAliasDefinitions options.home.file;
-      stateVersion = config.system.stateVersion;
       pointerCursor = mkAliasDefinitions options.home.pointerCursor;
+      stateVersion = config.system.stateVersion;
     };
 
     hm.xdg = {

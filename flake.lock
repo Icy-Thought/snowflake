@@ -20,6 +20,22 @@
         "type": "github"
       }
     },
+    "doomemacs": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1667229496,
+        "narHash": "sha256-SURAFrtblyvkflQz1cEQogfo31UzSvKd+UOgczUyJ8k=",
+        "owner": "doomemacs",
+        "repo": "doomemacs",
+        "rev": "9d4d5b756a8598c4b5c842e9f1f33148af2af8fd",
+        "type": "github"
+      },
+      "original": {
+        "owner": "doomemacs",
+        "repo": "doomemacs",
+        "type": "github"
+      }
+    },
     "emacs": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -42,11 +58,11 @@
     "emacs-dir": {
       "flake": false,
       "locked": {
-        "lastModified": 1665289126,
-        "narHash": "sha256-GayI4q892Spdn6wMHHpFFuNOYZnFxDC5CLrgm6eQduI=",
+        "lastModified": 1667521650,
+        "narHash": "sha256-U6Z0hVx5VCMj+bd+ABZw4nwGuAEIJ+oi7OIsL7/n0HI=",
         "ref": "refs/heads/main",
-        "rev": "7b008a3c5642ba72f9446dff0a1c6dee56e77c56",
-        "revCount": 25,
+        "rev": "bfcbe90fe2faed55b2c44240a69b5fef4834d16b",
+        "revCount": 26,
         "submodules": true,
         "type": "git",
         "url": "https://github.com/Icy-Thought/emacs.d.git"
@@ -314,10 +330,10 @@
     "nvim-dir": {
       "flake": false,
       "locked": {
-        "lastModified": 1667441307,
-        "narHash": "sha256-FliwVcfSvntSDdHGuKAsBcBZAWwfKRAOTOqBZ+lwW5A=",
+        "lastModified": 1667487025,
+        "narHash": "sha256-kykeo7NE2IOza80OsKty3/yl1qGEEQZ4UrPqtDDvTBo=",
         "ref": "refs/heads/main",
-        "rev": "06805b534a558f94e2569b2ee22582eaee4a6155",
+        "rev": "052de471d17b5bf8056261036d045467c380e2ec",
         "revCount": 240,
         "submodules": true,
         "type": "git",
@@ -352,6 +368,7 @@
     "root": {
       "inputs": {
         "agenix": "agenix",
+        "doomemacs": "doomemacs",
         "emacs": "emacs",
         "emacs-dir": "emacs-dir",
         "home-manager": "home-manager",
