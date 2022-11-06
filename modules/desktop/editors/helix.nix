@@ -19,16 +19,12 @@ with lib.my; {
         { name = "latex"; }
         {
           name = "haskell";
-          formatter = {
-            command = "brittany";
-          };
+          formatter.command = "brittany";
         }
         {
           name = "nix";
-          formatter = {
-            command = "nixpkgs-fmt";
-            # args = [ "--stdin" ];
-          };
+          language-server.command = "nil";
+          formatter.command = "nixpkgs-fmt";
         }
         { name = "rust"; }
       ];
@@ -53,7 +49,6 @@ with lib.my; {
               tab = "all";
               newline = "none";
             };
-
             characters = {
               space = "·";
               nbsp = "⍽";
@@ -64,8 +59,9 @@ with lib.my; {
           };
 
           indent-guides = {
-            render = true;
             character = "╎";
+            rainbow = "normal";
+            render = true;
           };
         };
 
