@@ -85,7 +85,7 @@ application_spawns = [
     EzKey("M-S-<Return>", lazy.spawn(myTerm)),
     EzKey("M-A-f", lazy.spawn(myBrowser)),
     EzKey("M-A-w", lazy.spawn(myPrivateBrowser)),
-    EzKey("M-A-g", lazy.spawn("chromium")),
+    EzKey("M-A-g", lazy.spawn("epiphany")),
 ]
 
 audioctl = [
