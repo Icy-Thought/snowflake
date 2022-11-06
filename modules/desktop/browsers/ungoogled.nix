@@ -6,11 +6,11 @@
 }:
 with lib;
 with lib.my; {
-  options.modules.desktop.browsers.unGoogled = {
+  options.modules.desktop.browsers.ungoogled = {
     enable = mkBoolOpt false;
   };
 
-  config = mkIf config.modules.desktop.browsers.unGoogled.enable {
+  config = mkIf config.modules.desktop.browsers.ungoogled.enable {
     user.packages = with pkgs; [
       (makeDesktopItem {
         name = "ungoogled-private";
