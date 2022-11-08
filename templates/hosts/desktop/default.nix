@@ -14,16 +14,19 @@
   modules.desktop = {
     xmonad.enable = true;
     terminal = {
-      default = "kitty";
-      kitty.enable = true;
+      default = "alacritty";
+      alacritty.enable = true;
     };
     editors = {
       default = "nvim";
-      neovim.enable = true;
+      neovim = {
+        enable = true;
+        agasaya.enable = true;
+      };
     };
     browsers = {
       default = "firefox";
-      brave.enable = true;
+      firefox.enable = true;
     };
     extensions.player = {
       music.enable = true;

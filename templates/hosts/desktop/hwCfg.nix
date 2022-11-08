@@ -23,7 +23,7 @@
     audio.enable = true;
     bluetooth.enable = true;
     razer.enable = true;
-    touchpad.enable = true;
+    pointer.enable = true;
   };
 
   # CPU

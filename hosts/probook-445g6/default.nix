@@ -6,12 +6,6 @@
   imports = [ ./hwCfg.nix ];
 
   modules = {
-    hardware = {
-      audio.enable = true;
-      bluetooth.enable = true;
-      input.enable = true;
-    };
-
     networking = {
       enable = true;
       networkManager.enable = true;

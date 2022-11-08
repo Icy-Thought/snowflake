@@ -42,4 +42,11 @@
   powerManagement = {
     cpuFreqGovernor = "performance";
   };
+
+  # Finally, our beloved hardware module(s):
+  modules.hardware = {
+    audio.enable = true;
+    bluetooth.enable = true;
+    pointer.enable = true;
+  };
 }
