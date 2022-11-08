@@ -14,12 +14,10 @@ with lib.my; {
     {
       services.xserver.libinput = {
         enable = true;
-
         mouse = {
           middleEmulation = false;
           disableWhileTyping = true;
         };
-
         touchpad = {
           sendEventsMode = "disabled-on-external-mouse";
           scrollMethod = "twofinger";
@@ -36,9 +34,9 @@ with lib.my; {
         enable = true;
         extraOptions = [ "--buttons=45" ];
         rules = {
-          ".*" = ''
-            None,      Up,   Button4, 8
-            None,      Down, Button5, 8
+          "epiphany|chromium|discord" = ''
+            None,      Up,   Button4, 4
+            None,      Down, Button5, 4
             Shift_L,   Up,   Shift_L|Button4, 4
             Shift_L,   Down, Shift_L|Button5, 4
             Control_L, Up,   Control_L|Button4
