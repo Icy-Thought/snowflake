@@ -12,20 +12,20 @@ with lib.my; {
 
   config = mkMerge [
     (mkIf config.modules.develop.python.enable {
-      user.packages = with pkgs; [
-        python3
-        nodePackages.pyright
-      ] ++ (with python3Packages; [
-        # Code-Formatter
-        black
-        isort
-
-        # Toolset
-        ipython
-        pip
-        poetry
-        setuptools
-      ]);
+      user.packages = with pkgs;
+        [ python3 ]
+        ++ (with python3Packages; [
+          mypy
+          flake8
+          python-lsp-server
+          pylsp-mypy
+          black
+          isort
+          ipython
+          pip
+          poetry
+          types-setuptools
+        ]);
 
       environment.shellAliases = {
         py = "python";
