@@ -120,7 +120,7 @@ groups.append(
 )
 
 keys.extend(
-    # WARN: Used keys (M-A): f = firefox, w = firefox-priv , g = epiphany
+    # WARN: Used keys (M-A): f = firefox, w = firefox-priv , g = chromium (ungoogled)
     [
         EzKey("M-A-b", lazy.group["SPD"].dropdown_toggle("SysMon")),
         EzKey("M-A-e", lazy.group["SPD"].dropdown_toggle("Neovide")),

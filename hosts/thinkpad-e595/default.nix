@@ -33,7 +33,7 @@
       };
       browsers = {
         default = "firefox-devedition";
-        epiphany.enable = true;
+        ungoogled.enable = true;
         firefox.enable = true;
       };
       education = {

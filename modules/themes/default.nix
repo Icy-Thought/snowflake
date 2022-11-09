@@ -181,12 +181,12 @@ in
           package = package;
         };
         gtk3.bookmarks = builtins.map (dir: "file://${config.user.home}/" + dir) [
-          "git/Icy-Thought/snowflake"
-          "git/Icy-Thought/cs-notes"
-          "git/Icy-Thought/notebook"
-          "Library/Unexplored"
-          "Library/Unexplored/Mathematics"
-          "Library/Unexplored/Programming"
+          "git/icy-thought/snowflake"
+          "git/icy-thought/cs-notes"
+          "git/icy-thought/notebook"
+          "Library/unexplored"
+          "Library/unexplored/mathematics"
+          "Library/unexplored/programming"
         ];
         gtk4.extraConfig = {
           gtk-cursor-blink = false;
