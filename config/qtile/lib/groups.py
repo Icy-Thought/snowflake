@@ -82,7 +82,11 @@ groups.append(
     ScratchPad(
         "SPD",
         [
-            DropDown("SysMon", "alacritty -t 'System Monitor' -e btop", **next_maximum),
+            DropDown(
+                "SysMon",
+                "wezterm start --always-new-process btop",
+                **next_maximum,
+            ),
             DropDown(
                 "Discord",
                 "discord",

@@ -6,7 +6,7 @@ from libqtile.config import EzClick, EzDrag, EzKey
 HOME = os.path.expanduser("~")
 
 # Default applications
-myTerm = "alacritty"
+myTerm = "wezterm"
 myBrowser = "firefox-devedition"
 myPrivateBrowser = (
     myBrowser,
@@ -116,7 +116,7 @@ brightctl = [
 ]
 
 quick_launch = [
-    EzKey("<XF86Calculator>", lazy.spawn(myTerm, "start --always-new-process qalc")),
+    EzKey("<XF86Calculator>", lazy.spawn(myTerm, "start --always-new-process kalker")),
 ]
 
 keys = [

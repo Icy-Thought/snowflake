@@ -36,19 +36,22 @@ in {
       }
     ];
 
-    user.packages = with pkgs; [
-      hyperfine
-      kalker
-      (makeDesktopItem {
-        name = "kalker";
-        desktopName = "Kalker";
-        icon = "calc";
-        exec = "${getExe alacritty} -e kalker";
-        categories = [ "Development" ];
-      })
-      qgnomeplatform
-      gucharmap
-    ];
+    user.packages = with pkgs;
+      let myTerm = config.modules.desktop.terminal.default;
+      in [
+        hyperfine
+        qgnomeplatform
+        gucharmap
+
+        kalker
+        (makeDesktopItem {
+          name = "kalker";
+          desktopName = "Kalker";
+          icon = "calc";
+          exec = "${myTerm} start kalker";
+          categories = [ "Development" ];
+        })
+      ];
 
     fonts = {
       fontDir.enable = true;
