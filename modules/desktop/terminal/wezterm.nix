@@ -15,262 +15,187 @@ with lib.my; {
       user.packages = with pkgs; [ wezterm ];
 
       home.configFile = with config.modules.themes;
-        mkMerge [
+        let wezDir = "${config.snowflake.configDir}/wezterm";
+        in mkMerge [
           {
-            wezterm-conf = {
+            wezterm-utils = {
+              target = "wezterm/utils.lua";
+              source = "${wezDir}/utils/init.lua";
+            };
+
+            wezterm-init = {
               target = "wezterm/wezterm.lua";
               text = ''
-                local wezterm = require("wezterm")
+                require("modules.custom-title")
+
+                local config = require("modules.config")
+                local keys = require("modules.keys")
+                local mouse = require("modules.mouse")
+                local hyperlinks = require("modules.hyperlinks")
+
                 ${optionalString (active != null) ''
-                  local ${active} = require("themes.${active}")
                   require("statusbar.${active}")
+
+                  local colorscheme = require("theme.colorscheme")
+                  local font = require("theme.font")
                 ''}
 
-                local key_bindings = {
-                    { -- Focus -> left window
-                        key = "j",
-                        mods = "ALT",
-                        action = wezterm.action { ActivatePaneDirection = "Left" }
-                    }, { -- Focus -> right window
-                        key = "k",
-                        mods = "ALT",
-                        action = wezterm.action { ActivatePaneDirection = "Right" }
-                    }, { -- Cycle prompts -> left
-                        key = "h",
-                        mods = "ALT",
-                        action = wezterm.action({ ActivateTabRelative = -1 }),
-                    }, { -- Cycle prompts -> right
-                        key = "l",
-                        mods = "ALT",
-                        action = wezterm.action({ ActivateTabRelative = 1 }),
-                    }, { -- Split pane -> vertically
-                        key = '|',
-                        mods = "CTRL|SHIFT",
-                        action = wezterm.action({
-                            SplitVertical = { domain = "CurrentPaneDomain" },
-                        }),
-                    }, {
-                        key = "-",
-                        mods = "CTRL|SHIFT",
-                        action = wezterm.action({
-                            SplitHorizontal = { domain = "CurrentPaneDomain" },
-                        }),
-                    },
-                }
+                local merge = require("utils").merge_conf
 
-                local mouse_bindings = {
-                    {
-                        event = { Down = { streak = 1, button = "Left" } },
-                        mods = "NONE",
-                        action = wezterm.action { SelectTextAtMouseCursor = "Cell" }
-                    }, {
-                        event = { Down = { streak = 2, button = "Left" } },
-                        mods = "NONE",
-                        action = wezterm.action { SelectTextAtMouseCursor = "Word" }
-                    }, {
-                        event = { Down = { streak = 3, button = "Left" } },
-                        mods = "NONE",
-                        action = wezterm.action { SelectTextAtMouseCursor = "Line" }
-                    }, {
-                        event = { Drag = { streak = 1, button = "Left" } },
-                        mods = "NONE",
-                        action = wezterm.action { ExtendSelectionToMouseCursor = "Cell" }
-                    }, {
-                        event = { Drag = { streak = 2, button = "Left" } },
-                        mods = "NONE",
-                        action = wezterm.action { ExtendSelectionToMouseCursor = "Word" }
-                    }, {
-                        event = { Drag = { streak = 3, button = "Left" } },
-                        mods = "NONE",
-                        action = wezterm.action { ExtendSelectionToMouseCursor = "Line" }
-                    }, {
-                        event = { Up = { streak = 1, button = "Left" } },
-                        mods = "NONE",
-                        action = wezterm.action {
-                            CompleteSelection = "ClipboardAndPrimarySelection"
-                        }
-                    }, {
-                        event = { Up =  { streak = 2, button = "Left" } },
-                        mods = "NONE",
-                        action = wezterm.action {
-                            CompleteSelection = "ClipboardAndPrimarySelection"
-                        }
-                    }, {
-                        event = { Up = { streak = 3, button = "Left" } },
-                        mods = "NONE",
-                        action = wezterm.action { CompleteSelection = "PrimarySelection" }
-                    }, {
-                        event = { Up = { streak = 1, button = "Left" } },
-                        mods = "SUPER",
-                        action = wezterm.action {
-                            CompleteSelectionOrOpenLinkAtMouseCursor = "ClipboardAndPrimarySelection"
-                        }
-                    }
-                }
-
-                local hyperlink_rules = {
-                    { -- This is actually the default if you don't specify any hyperlink_rules
-                            regex = "\\b\\w+://(?:[\\w.-]+)\\.[a-z]{2,15}\\S*\\b",
-                            format = "$0",
-                    }, { -- linkify email addresses
-                        regex = "\\b\\w+@[\\w-]+(\\.[\\w-]+)+\\b",
-                        format = "mailto:$0",
-                    }, { -- file:// URI
-                        regex = "\\bfile://\\S*\\b",
-                        format = "$0",
-                    }, { -- nixpkgs review current program
-                        regex = "nixpkgs-review pr (\\d+)",
-                        format = "https://github.com/NixOS/nixpkgs/pull/$1",
-                    }, {
-                        regex = "pr-(\\d+)-?\\d?",
-                        format = "https://github.com/NixOS/nixpkgs/pull/$1",
-                    }, { -- nix flake github references
-                        regex = "github:([\\w\\d_-]+)/([\\w\\d_\\.-]+)",
-                        format = "https://github.com/$1/$2",
-                    }, { -- nix flake github references with commit
-                        regex = "github:([\\w\\d_-]+)/([\\w\\d_\\.-]+)/([\\d\\w-]+)",
-                        format = "https://github.com/$1/$2/commit/$3",
-                    }, { -- git ssh remote url
-                        regex = "git@(\\w+\\.\\w+):(\\w+/\\w+)\\.git",
-                        format = "https://$1/$2",
-                    },
-                }
-
-                return {
-                    term = "wezterm",
-                    audible_bell = "Disabled",
-                    automatically_reload_config = true,
-                    hide_tab_bar_if_only_one_tab = false,
-
-                    bold_brightens_ansi_colors = true,
-                    use_fancy_tab_bar = false,
-                    line_height = 1.0,
-
-                ${optionalString (active != null) ''
-                  colors = ${active},
-
-                  font = wezterm.font_with_fallback({
-                      { family = "${font.sans.family}", weight = "${font.sans.weightAlt}" },
-                      "DejaVu Sans",
-                      "Unicode",
-                  }),
-
-                  font_size = ${builtins.toString (font.mono.size)},
-                  char_select_font_size = ${builtins.toString (font.mono.size)},
-
-                  window_frame = {
-                      active_titlebar_bg = "${colors.main.types.bg}",
-                      inactive_titlebar_bg = "${colors.main.normal.black}",
-
-                      font = wezterm.font({
-                          family = "${font.sans.family}",
-                          weight = "${font.sans.weightAlt}",
-                          style = "Italic",
-                      }),
-                      font_size= ${builtins.toString (font.mono.size)},
-                  },
-                ''}
-
-                    window_padding = {
-                        left = 15,
-                        right = 15,
-                        top = 10,
-                        bottom = 0,
-                    },
-
-                    text_background_opacity = 1.0,
-                    warn_about_missing_glyphs = false,
-                    window_background_opacity = 0.80,
-                    enable_scroll_bar = false,
-                    scrollback_lines = 5000,
-
-                    cursor_blink_ease_in = "Constant",
-                    cursor_blink_ease_out = "Constant",
-                    -- default_cursor_style = "BlinkingBlock", <- high cpu-usage..
-
-                    hyperlink_rules = hyperlink_rules,
-                    keys = key_bindings,
-                    mouse_bindings = mouse_bindings,
-                }
+                return merge(config, colorscheme, font, keys, mouse, hyperlinks)
               '';
+            };
+
+            wezterm-conf = {
+              target = "wezterm/modules/config.lua";
+              source = "${wezDir}/modules/config.lua";
+            };
+
+            wezterm-custom-title = {
+              target = "wezterm/modules/custom-title.lua";
+              source = "${wezDir}/modules/custom-title.lua";
+            };
+
+            wezterm-keybindings = {
+              target = "wezterm/modules/keys.lua";
+              source = "${wezDir}/modules/keys.lua";
+            };
+
+            wezterm-mouse-bindings = {
+              target = "wezterm/modules/mouse.lua";
+              source = "${wezDir}/modules/mouse.lua";
+            };
+
+            wezterm-hyperlinks = {
+              target = "wezterm/modules/hyperlinks.lua";
+              source = "${wezDir}/modules/hyperlinks.lua";
             };
           }
 
-          (mkIf (active != null) {
-            wezterm-statusbar = {
-              target = "wezterm/statusbar/${active}.lua";
-              source = "${config.snowflake.configDir}/wezterm/statusbar/${active}.lua";
-            };
+          (mkIf (active != null)
+            {
+              wezterm-rice = {
+                target = "wezterm/theme/colorscheme.lua";
+                text = ''
+                  local M = {}
 
-            wezterm-theme = {
-              target = "wezterm/themes/${active}.lua";
-              text = with colors.main; ''
-                return {
-                    foreground      = "${types.fg}",
-                    background      = "${types.bg}",
+                  local ${active} = require("theme.${active}")
 
-                    cursor_fg       = "${types.bg}",
-                    cursor_bg       = "${normal.yellow}",
-                    cursor_border   = "${normal.yellow}",
+                  M.colors = ${active}
 
-                    selection_fg    = "${types.bg}",
-                    selection_bg    = "${types.highlight}",
+                  return M
+                '';
+              };
 
-                    scrollbar_thumb = "${normal.magenta}",
-                    split = "${normal.green}",
+              wezterm-font = {
+                target = "wezterm/theme/font.lua";
+                text = ''
+                  local wez = require("wezterm")
 
-                    tab_bar = {
-                        background = "${types.bg}",
-                        active_tab = {
-                            bg_color  = "${types.bg}",
-                            fg_color  = "${normal.magenta}",
-                            intensity = "Normal",
-                            italic    = true,
-                        },
-                        inactive_tab = {
-                            bg_color = "${types.bg}",
-                            fg_color = "${types.fg}",
-                        },
-                        inactive_tab_edge = "${normal.black}",
-                        inactive_tab_hover = {
-                            bg_color  = "${types.bg}",
-                            fg_color  = "${normal.yellow}",
-                            underline = "Single",
-                        },
-                        new_tab = {
-                            bg_color = "${types.bg}",
-                            fg_color = "${normal.green}",
-                        },
-                        new_tab_hover = {
-                            bg_color = "${types.bg}",
-                            fg_color = "${normal.yellow}",
-                            italic   = true,
-                        },
+                  local M = {}
+
+                  M.font = wez.font_with_fallback({ 
+                    { family = "${font.sans.family}",
+                      weight = "${font.sans.weightAlt}",
                     },
-                    ansi = {
-                        "${normal.black}",
-                        "${normal.red}",
-                        "${normal.green}",
-                        "${normal.yellow}",
-                        "${normal.blue}",
-                        "${normal.magenta}",
-                        "${normal.cyan}",
-                        "${normal.white}",
-                    },
-                    brights = {
-                        "${bright.black}",
-                        "${bright.red}",
-                        "${bright.green}",
-                        "${bright.yellow}",
-                        "${bright.blue}",
-                        "${bright.magenta}",
-                        "${bright.cyan}",
-                        "${bright.white}",
-                    },
-                }
-              '';
-            };
-          })
+                    "DejaVu Sans",
+                    "Unicode",
+                  })
+
+                  M.font_size = ${builtins.toString (font.mono.size)}
+                  M.char_select_font_size = ${builtins.toString (font.mono.size)}
+
+                  M.window_frame = {
+                    active_titlebar_bg = "${colors.main.types.bg}",
+                    inactive_titlebar_bg = "${colors.main.normal.black}",
+
+                    font = wez.font({
+                        family = "${font.sans.family}",
+                        weight = "${font.sans.weightAlt}",
+                        style = "Italic",
+                    }),
+
+                    font_size= ${builtins.toString (font.mono.size)},
+                  }
+
+                  return M
+                '';
+              };
+
+              wezterm-statusbar = {
+                target = "wezterm/statusbar/${active}.lua";
+                source = "${wezDir}/statusbar/${active}.lua";
+              };
+
+              wezterm-theme = {
+                target = "wezterm/theme/${active}.lua";
+                text = with colors.main; ''
+                  return {
+                      foreground      = "${types.fg}",
+                      background      = "${types.bg}",
+
+                      cursor_fg       = "${types.bg}",
+                      cursor_bg       = "${normal.yellow}",
+                      cursor_border   = "${normal.yellow}",
+
+                      selection_fg    = "${types.bg}",
+                      selection_bg    = "${types.highlight}",
+
+                      scrollbar_thumb = "${normal.magenta}",
+                      split = "${normal.green}",
+
+                      tab_bar = {
+                          background = "${types.bg}",
+                          active_tab = {
+                              bg_color  = "${types.bg}",
+                              fg_color  = "${normal.magenta}",
+                              intensity = "Normal",
+                              italic    = true,
+                          },
+                          inactive_tab = {
+                              bg_color = "${types.bg}",
+                              fg_color = "${types.fg}",
+                          },
+                          inactive_tab_edge = "${normal.black}",
+                          inactive_tab_hover = {
+                              bg_color  = "${types.bg}",
+                              fg_color  = "${normal.yellow}",
+                              underline = "Single",
+                          },
+                          new_tab = {
+                              bg_color = "${types.bg}",
+                              fg_color = "${normal.green}",
+                          },
+                          new_tab_hover = {
+                              bg_color = "${types.bg}",
+                              fg_color = "${normal.yellow}",
+                              italic   = true,
+                          },
+                      },
+                      ansi = {
+                          "${normal.black}",
+                          "${normal.red}",
+                          "${normal.green}",
+                          "${normal.yellow}",
+                          "${normal.blue}",
+                          "${normal.magenta}",
+                          "${normal.cyan}",
+                          "${normal.white}",
+                      },
+                      brights = {
+                          "${bright.black}",
+                          "${bright.red}",
+                          "${bright.green}",
+                          "${bright.yellow}",
+                          "${bright.blue}",
+                          "${bright.magenta}",
+                          "${bright.cyan}",
+                          "${bright.white}",
+                      },
+                  }
+                '';
+              };
+            })
         ];
     }
 
