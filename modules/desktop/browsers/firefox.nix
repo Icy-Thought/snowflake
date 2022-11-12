@@ -48,7 +48,7 @@ in {
         # Developer tools -> uses dark theme
         "devtools.theme" = "dark";
         # FIXME: IM-Wheel -> Manual scroll speed ctrl bcs == buggy...
-        "mousewheel.min_line_scroll_amount" = 25;
+        "mousewheel.min_line_scroll_amount" = 35;
         # Enables ETP = decent security -> firefox containers = redundent
         "browser.contentblocking.category" = "strict";
         "privacy.donottrackheader.enabled" = true;
