@@ -3,14 +3,14 @@ module Main where
 -- Haskell Imports
 import           Control.Monad
 import           Data.List
-import qualified Data.Map                      as M
+import qualified Data.Map                   as M
 import           Data.Maybe
 import           Data.Monoid
 -- Custom Imports
 import qualified Gibil.Keybindings
 import           Gibil.Layouts
-import           Gibil.Scratchpads              ( scratchpads )
-import           Gibil.Theme                    ( active )
+import           Gibil.Scratchpads          (scratchpads)
+import           Gibil.Theme                (active)
 -- XMonad Imports
 import           XMonad
 import           XMonad.Config

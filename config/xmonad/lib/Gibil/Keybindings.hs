@@ -1,23 +1,21 @@
 module Gibil.Keybindings where
 
 -- Custom Modules
-import qualified Gibil.Config                  as Cfg
-import qualified Gibil.Scratchpads             as NS
+import qualified Gibil.Config                   as Cfg
+import qualified Gibil.Scratchpads              as NS
 -- General
 import           XMonad
 -- Mapping
-import           XMonad.Actions.CopyWindow      ( kill1 )
-import           XMonad.Actions.CycleWS         ( toggleWS' )
-import           XMonad.Actions.OnScreen        ( viewOnScreen )
-import           XMonad.Actions.WithAll         ( killAll )
-import           XMonad.Layout.ResizableTile    ( MirrorResize(..) )
-import           XMonad.Layout.SubLayouts       ( GroupMsg(..)
-                                                , pullGroup
-                                                )
-import           XMonad.Layout.ToggleLayouts    ( ToggleLayout(..) )
-import           XMonad.Layout.WindowNavigation ( Direction2D(..) )
-import qualified XMonad.StackSet               as W
-import           XMonad.StackSet                ( sink )
+import           XMonad.Actions.CopyWindow      (kill1)
+import           XMonad.Actions.CycleWS         (toggleWS')
+import           XMonad.Actions.OnScreen        (viewOnScreen)
+import           XMonad.Actions.WithAll         (killAll)
+import           XMonad.Layout.ResizableTile    (MirrorResize (..))
+import           XMonad.Layout.SubLayouts       (GroupMsg (..), pullGroup)
+import           XMonad.Layout.ToggleLayouts    (ToggleLayout (..))
+import           XMonad.Layout.WindowNavigation (Direction2D (..))
+import qualified XMonad.StackSet                as W
+import           XMonad.StackSet                (sink)
 import           XMonad.Util.EZConfig
 import           XMonad.Util.Ungrab
 

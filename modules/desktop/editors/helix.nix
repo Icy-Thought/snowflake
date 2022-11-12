@@ -19,7 +19,7 @@ with lib.my; {
         { name = "latex"; }
         {
           name = "haskell";
-          formatter.command = "brittany";
+          formatter.command = "stylish-haskell";
         }
         {
           name = "nix";
@@ -45,7 +45,7 @@ with lib.my; {
 
           whitespace = {
             render = {
-              space = "all";
+              space = "none";
               tab = "all";
               newline = "none";
             };
@@ -59,7 +59,7 @@ with lib.my; {
           };
 
           indent-guides = {
-            character = "╎";
+            character = "▏";
             rainbow = "normal";
             render = true;
           };

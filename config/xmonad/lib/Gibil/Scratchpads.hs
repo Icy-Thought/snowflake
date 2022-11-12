@@ -3,7 +3,7 @@
 module Gibil.Scratchpads where
 
 import           XMonad
-import qualified XMonad.StackSet               as W
+import qualified XMonad.StackSet             as W
 import           XMonad.Util.NamedScratchpad
 
 -- FIXME

@@ -2,17 +2,16 @@ module Gibil.Layouts where
 
 -- Layouts
 -- General
-import           XMonad                  hiding ( (|||) )
-import           XMonad.Actions.MouseResize     ( mouseResize )
-import           XMonad.Layout.LayoutCombinators
-                                                ( (|||) )
+import           XMonad                              hiding ((|||))
+import           XMonad.Actions.MouseResize          (mouseResize)
+import           XMonad.Layout.LayoutCombinators     ((|||))
 -- Aesthetics
-import           XMonad.Layout.Magnifier hiding ( Toggle )
+import           XMonad.Layout.Magnifier             hiding (Toggle)
 import           XMonad.Layout.MultiColumns
 import           XMonad.Layout.MultiToggle
 import           XMonad.Layout.MultiToggle.Instances
 import           XMonad.Layout.NoBorders
-import qualified XMonad.Layout.Renamed         as RN
+import qualified XMonad.Layout.Renamed               as RN
 import           XMonad.Layout.Spacing
 import           XMonad.Layout.SubLayouts
 import           XMonad.Layout.Tabbed
