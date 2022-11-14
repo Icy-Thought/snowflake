@@ -89,10 +89,10 @@ application_spawns = [
 ]
 
 audioctl = [
-    EzKey("<XF86AudioMute>", lazy.spawn("volctl --mute")),
-    EzKey("<XF86AudioRaiseVolume>", lazy.spawn("volctl --up")),
-    EzKey("<XF86AudioLowerVolume>", lazy.spawn("volctl --down")),
-    EzKey("<XF86AudioMicMute>", lazy.spawn("micvol --mute")),
+    EzKey("<XF86AudioMute>", lazy.spawn("volctl toggle-mute")),
+    EzKey("<XF86AudioRaiseVolume>", lazy.spawn("volctl increase")),
+    EzKey("<XF86AudioLowerVolume>", lazy.spawn("volctl decrease")),
+    EzKey("<XF86AudioMicMute>", lazy.spawn("micvol toggle-mute")),
 ]
 
 mediactl = [
@@ -111,8 +111,8 @@ scrcap = [
 ]
 
 brightctl = [
-    EzKey("<XF86MonBrightnessUp>", lazy.spawn("brightctl --up")),
-    EzKey("<XF86MonBrightnessDown>", lazy.spawn("brightctl --down")),
+    EzKey("<XF86MonBrightnessUp>", lazy.spawn("brightctl increase -l 5")),
+    EzKey("<XF86MonBrightnessDown>", lazy.spawn("brightctl decrease -l 5")),
 ]
 
 quick_launch = [

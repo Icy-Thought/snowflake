@@ -29,7 +29,7 @@ in {
             image = [ "feh.desktop" ];
             magnet = [ "transmission-gtk.desktop" ];
             mail = [ "firefox.desktop" ]; # [ "org.gnome.Geary.desktop" ];
-            pdf = [ "sioyek.desktop" ];
+            pdf = [ "org.pwmt.zathura.desktop" ];
             text = [ "neovide.desktop" ];
             telegram = [ "telegramdesktop.desktop" ];
             video = [ "mpv.desktop" ];

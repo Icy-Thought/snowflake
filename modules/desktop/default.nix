@@ -93,6 +93,9 @@ in {
       popd
     '';
 
+    # Functional `pkgs.light`:
+    programs.light.enable = true;
+
     # KDE-Connect + Start-up indicator
     programs.kdeconnect.enable = true;
 

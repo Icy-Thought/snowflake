@@ -1,54 +1,103 @@
 #!/usr/bin/env cached-nix-shell
-#! nix-shell -i bash -p pamixer
+#! nix-shell -i python3 -p pamixer
 
-show_help() {
-    echo "Valid Options:
-        -u|--up     Increase microphone volume level
-        -d|--down   Decrease microphone volume level
-        -t|--mute   Toggle microphone mute
-        -s|--status Return current microphone level
-    "
-}
+import argparse
+import subprocess
+import time
 
-while [[ "$#" > 0 ]]; do case $1 in
-    -h|--help) show_help; exit 0;shift;;
-    -u|--up) PARAM='-i'; STEP='5';shift;;
-    -d|--down) PARAM='-d'; STEP='5';shift;;
-    -t|--mute) TOGGLE=1; PARAM='-t';shift;;
-    -s|--status) STATUS=1;shift;;
-    *) show_help; echo "Unknown parameter passed: $1"; exit 1; shift; shift;;
-esac; done
+parser = argparse.ArgumentParser(
+    prog="Microphone Volume Control",
+    description="A simple script to help control the internal microphone levels of your hardware device(s)!",
+    epilog="Please, try again.",
+)
 
-MUTE=$(pamixer --default-source --get-mute)
-MICVOL=$(pamixer --default-source --get-volume)
+subparser = parser.add_subparsers(dest="command")
 
-if [ "$MUTE" = false ] && [ "$TOGGLE" = 1 ]; then
-    ICON=''
-else 
-    ICON=''
-fi
+increase = subparser.add_parser("increase")
+decrease = subparser.add_parser("decrease")
+mute = subparser.add_parser("toggle-mute")
+status = subparser.add_parser("status")
 
-notify() {
-    notify-send "$ICON $1" \
-        -t 500 \
-        -h string:synchronous:volume \
-        -h "int:value:$2" \
-        -u low
-}
+increase.add_argument(
+    "-l", "--level",
+    type=int,
+    default=5,
+    help="Increase microphone levels by +x%. (default: +%(default)%)",
+)
 
-if [ "$STATUS" = 1 ]; then
-    while sleep 1; do
-        MVOL=$(pamixer --default-source --get-volume)
-        echo "$ICON ${MVOL}%"
-    done
-elif [ "$MUTE" = false ] && [ "$TOGGLE" = 1 ]; then
-    pamixer --default-source $PARAM
-    notify 'Muted! (0%)' '0'
-elif [ "$MUTE" = true ] || [ "$TOGGLE" = 0 ]; then
-    pamixer --default-source -t
-    notify "MicVol (${MICVOL}%)" "${MICVOL}"
-else
-    pamixer --default-source $PARAM $STEP
-    MICVOL=$(pamixer --default-source --get-volume)
-    notify "MicVol (${MICVOL}%)" "${MICVOL}"
-fi
+decrease.add_argument(
+    "-l", "--level",
+    type=int,
+    default=5,
+    help="Decrease microphone levels by -x%. (default: -%(default)%)",
+)
+
+mute.add_argument(
+    "-t", "--toggle-mute",
+    action="store_true",
+    help="Toggle mute for device microphone. (default: False)",
+)
+
+
+args = parser.parse_args()
+
+mute_status = subprocess.run(
+    ["pamixer", "--default-source", "--get-mute"],
+    stdout=subprocess.PIPE,
+    universal_newlines=True,
+)
+get_mute = mute_status.stdout.strip()
+
+get_micVol = subprocess.check_output(["pamixer", "--default-source", "--get-volume"])
+micVol_level = str(int(get_micVol))
+
+
+def notify(message):
+    subprocess.Popen(
+        [
+            "notify-send",
+            message,
+            "-t", "500",
+            "-h", "string:synchronous:volume",
+            "-h", "int:value:" + micVol_level,
+            "-u", "low",
+        ]
+    )
+    return
+
+
+def change_micVol_level():
+    if args.command == "toggle-mute" and get_mute == "true":
+        ICON = " "
+        subprocess.run(["pamixer", "--default-source", "-t"])
+        notify(ICON + "Microphone Volume: " + micVol_level + "%")
+    elif args.command == "toggle-mute" and get_mute == "false":
+        ICON = " "
+        subprocess.run(["pamixer", "--default-source", "-t"])
+        notify(ICON + "Mute Microphone!")
+    elif args.command == "increase":
+        ICON = " "
+        subprocess.run(["pamixer", "--default-source", "-i", str(args.level)])
+        notify(ICON + "Microphone Volume: " + micVol_level + "%")
+    elif args.command == "decrease":
+        ICON = " "
+        subprocess.run(["pamixer", "--default-source", "-d", str(args.level)])
+        notify(ICON + "Microphone Volume: " + micVol_level + "%")
+    else:
+        return
+
+
+change_micVol_level()
+
+
+def micVol_status():
+    if args.command == "status":
+        ICON = " "
+        while True:
+            print(ICON + micVol_level + "%")
+            time.sleep(60)
+    else:
+        return
+
+
+micVol_status()

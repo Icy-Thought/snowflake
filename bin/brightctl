@@ -1,49 +1,71 @@
-#!/usr/bin/env cached-nix-shell
-#! nix-shell -i bash -p bc
+#!/usr/bin/env python3
 
-show_help() {
-    echo "Valid Options:
-        -u|--up     Increase brightness level
-        -d|--down   Decrease brightness level
-    "
-}
+import argparse
+import subprocess
 
-while [[ "$#" > 0 ]]; do case $1 in
-    -h|--help) show_help; exit 0;shift;;
-    -u|--up) PARAM='+'; OPRT='>'; STEP='0.05'; VAL='1.0';shift;;
-    -d|--down) PARAM='-'; OPRT='<'; STEP='0.05'; VAL=0.1;shift;;
-    *) show_help; echo "Unknown parameter passed: $1"; exit 1; shift; shift;;
-esac; done
+parser = argparse.ArgumentParser(
+    prog="Brightness Control",
+    description="A simple script to help control the brightness levels of your environment!",
+    epilog="Please, try again.",
+)
 
-notify() {
-    BRIGHTNESS=$(echo "$NEWBRIGHT * 100" | bc | sed 's/\.00//')
-    if [[ "$PARAM" = '+' ]]; then
-        ICON=' '
-    else
-        ICON=' '
-    fi
-    
-    notify-send "$ICON Brightness: ${BRIGHTNESS}%" \
-        -t 500 \
-        -h string:synchronous:brightness \
-        -h "int:value:${BRIGHTNESS}" \
-        -u low
-}
+subparser = parser.add_subparsers(dest="command")
 
-monitor_xpos=$(xdotool getactivewindow getwindowgeometry | rg Position | rg -o '[0-9]*,' | sed 's/,//')
-active_monitor=$(xrandr | rg -w connected | rg "+$monitor_xpos+" | head -n 1 | cut -d " " -f1)
+increase = subparser.add_parser("increase")
+decrease = subparser.add_parser("decrease")
 
-# use primary monitor as fallback
-[ -z $active_monitor ] && active_monitor=$(xrandr | rg -w 'connected primary' | head -n 1 | cut -d " " -f1)
-BRIGHT=$(stdbuf -o0 xrandr --verbose | rg "^$active_monitor" -A 5 | awk '/Brightness/ { print $2; exit }')
+increase.add_argument(
+    "-l",
+    "--level",
+    type=int,
+    default=5,
+    help="Increase brightness levels by +x%. (default: +%(default)%)",
+)
 
-NEWBRIGHT=$(echo "$BRIGHT $PARAM $STEP" | bc)
-if [ "$(echo "$NEWBRIGHT $OPRT $VAL" | bc)" -eq 1 ]; then
-    NEWBRIGHT="$VAL"
-fi
+decrease.add_argument(
+    "-l",
+    "--level",
+    type=int,
+    default=5,
+    help="Decrease brightness levels by -x%. (default: -%(default)%)",
+)
 
-# first_monitor=$(xrandr | rg -w connected | head -n 1 | cut -d " " -f1)
-# xrandr --output "$first_monitor" --brightness "$NEWBRIGHT"
 
-xrandr --output "$active_monitor" --brightness "$NEWBRIGHT"
-notify
+args = parser.parse_args()
+
+get_brightness = subprocess.check_output(["light", "-G"], shell=True).strip()
+brightness_level = str(float(get_brightness))
+
+
+def notify(message):
+    subprocess.Popen(
+        [
+            "notify-send",
+            message,
+            "-t",
+            "500",
+            "-h",
+            "string:synchronous:brightness",
+            "-h",
+            "int:value:" + brightness_level,
+            "-u",
+            "low",
+        ]
+    )
+    return
+
+
+def change_brightness():
+    if args.command == "increase":
+        ICON = "  "
+        subprocess.run(["light", "-A", str(args.level)])
+    elif args.command == "decrease":
+        ICON = "  "
+        subprocess.run(["light", "-U", str(args.level)])
+    else:
+        return
+
+    notify(ICON + "Brightness: " + brightness_level + "%")
+
+
+change_brightness()

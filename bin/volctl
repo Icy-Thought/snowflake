@@ -1,58 +1,114 @@
 #!/usr/bin/env cached-nix-shell
-#! nix-shell -i bash -p pamixer
+#! nix-shell -i python3 -p pamixer
 
-show_help() {
-    echo "Valid Options:
-        -u|--up     Increase volume level
-        -d|--down   Decrease volume level
-        -t|--mute   Toggle speaker mute
-        -s|--status Return current volume level
-    "
-}
+import argparse
+import subprocess
+import time
 
-while [[ "$#" > 0 ]]; do case $1 in
-    -h|--help) show_help; exit 0;shift;;
-    -u|--up) PARAM='-i'; STEP='5';shift;;
-    -d|--down) PARAM='-d'; STEP='5';shift;;
-    -t|--mute) TOGGLE=1; PARAM='-t';shift;;
-    -s|--status) STATUS=1;shift;;
-    *) show_help; echo "Unknown parameter passed: $1"; exit 1; shift; shift;;
-esac; done
+parser = argparse.ArgumentParser(
+    prog="Audio Volume Control",
+    description="A simple script to help control the volume levels of the audio transmitted by your hardware device(s)!",
+    epilog="Please, try again.",
+)
 
-MUTE=$(pamixer --get-mute)
-VOLUME=$(pamixer --get-volume)
+subparser = parser.add_subparsers(dest="command")
 
-if [[ "$MUTE" = false && "$TOGGLE" = 1 ]]; then
-    ICON=''
-elif (( "$VOLUME" >= 0 && "$VOLUME" < 30 )); then
-    ICON=''
-elif (( "$VOLUME" >= 30 && "$VOLUME" < 70 )); then
-    ICON='墳'
-elif (( "$VOLUME" >= 70 )); then
-    ICON=''
-fi
+increase = subparser.add_parser("increase")
+decrease = subparser.add_parser("decrease")
+mute = subparser.add_parser("toggle-mute")
+status = subparser.add_parser("status")
 
-notify() {
-    notify-send "$ICON $1" \
-        -t 500 \
-        -h string:synchronous:volume \
-        -h "int:value:$2" \
-        -u low
-}
+increase.add_argument(
+    "-l", "--level",
+    type=int,
+    default=5,
+    help="Increase audio volume levels by +x%. (default: +%(default)%)",
+)
 
-if [ "$STATUS" = 1 ]; then
-    while sleep 1; do
-        VOL=$(pamixer --get-volume)
-        echo "$ICON ${VOL}%"
-    done
-elif [ "$MUTE" = false ] && [ "$TOGGLE" = 1 ]; then
-    pamixer $PARAM
-    notify 'Muted! (0%)' '0'
-elif [ "$MUTE" = true ] || [ "$TOGGLE" = 0 ]; then
-    pamixer -t
-    notify "Volume (${VOLUME}%)" "${VOLUME}"
-else
-    pamixer $PARAM $STEP
-    VOLUME=$(pamixer --get-volume)
-    notify "Volume (${VOLUME}%)" "${VOLUME}"
-fi
+decrease.add_argument(
+    "-l", "--level",
+    type=int,
+    default=5,
+    help="Decrease audio volume levels by -x%. (default: -%(default)%)",
+)
+
+mute.add_argument(
+    "-t", "--toggle-mute",
+    action="store_true",
+    help="Toggle mute for device audio system. (default: False)",
+)
+
+
+args = parser.parse_args()
+
+mute_status = subprocess.run(
+    ["pamixer", "--get-mute"],
+    stdout=subprocess.PIPE,
+    universal_newlines=True,
+)
+get_mute = mute_status.stdout.strip()
+
+get_volume = subprocess.check_output(["pamixer", "--get-volume"])
+volume_level = str(int(get_volume))
+
+
+def notify(message):
+    subprocess.Popen(
+        [
+            "notify-send",
+            message,
+            "-t", "500",
+            "-h", "string:synchronous:volume",
+            "-h", "int:value:" + volume_level,
+            "-u", "low",
+        ]
+    )
+    return
+
+
+LEVEL = [" ", " ", "墳 ", " "]
+
+percentage = int(get_volume)
+
+if args.command == "toggle-mute" and get_volume == "false":
+    ICON = LEVEL[0]
+elif percentage <= 30:
+    ICON = LEVEL[1]
+elif 30 < percentage <= 70:
+    ICON = LEVEL[2]
+elif percentage > 70:
+    ICON = LEVEL[3]
+else:
+    ICON = ""
+
+
+def change_volume_level():
+    if args.command == "toggle-mute" and get_mute == "true":
+        subprocess.run(["pamixer", "-t"])
+        notify(ICON + "Volume Level: " + volume_level + "%")
+    elif args.command == "toggle-mute" and get_mute == "false":
+        subprocess.run(["pamixer", "-t"])
+        notify(ICON + "Mute Output Audio!")
+    elif args.command == "increase":
+        subprocess.run(["pamixer", "-i", str(args.level)])
+        notify(ICON + "Volume Level: " + volume_level + "%")
+    elif args.command == "decrease":
+        subprocess.run(["pamixer", "-d", str(args.level)])
+        notify(ICON + "Volume Level: " + volume_level + "%")
+    else:
+        return
+
+
+change_volume_level()
+
+
+def volume_status():
+    if args.command == "status":
+        while True:
+            print(ICON + volume_level + "%")
+            time.sleep(60)
+    else:
+        return
+
+
+volume_status()
