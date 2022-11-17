@@ -48,15 +48,18 @@ mute_status = subprocess.run(
 )
 get_mute = mute_status.stdout.strip()
 
-get_micVol = subprocess.check_output(["pamixer", "--default-source", "--get-volume"])
-micVol_level = str(int(get_micVol))
+get_micVol = subprocess.run(
+    ["pamixer", "--default-source", "--get-volume"],
+    stdout=subprocess.PIPE,
+    universal_newlines=True,
+)
+micVol_level = get_micVol.stdout.strip()
 
 
 def notify(message):
     subprocess.Popen(
         [
-            "notify-send",
-            message,
+            "notify-send", message,
             "-t", "500",
             "-h", "string:synchronous:volume",
             "-h", "int:value:" + micVol_level,
@@ -66,23 +69,36 @@ def notify(message):
     return
 
 
+def notify_status(msg: str):
+    ICONS = [" ", " "]
+    if msg == "mute":
+        notify(ICONS[0] + "Muted Microphone!")
+    elif msg == "volume":
+        notify(ICONS[1] + "Microphone Volume: " + micVol_level + "%")
+    else:
+        return
+
+
+def pamixer(param: str, lvl: str):
+    subprocess.run(["pamixer", "--default-source", param, lvl])
+
+
 def change_micVol_level():
-    if args.command == "toggle-mute" and get_mute == "true":
-        ICON = " "
-        subprocess.run(["pamixer", "--default-source", "-t"])
-        notify(ICON + "Microphone Volume: " + micVol_level + "%")
-    elif args.command == "toggle-mute" and get_mute == "false":
-        ICON = " "
-        subprocess.run(["pamixer", "--default-source", "-t"])
-        notify(ICON + "Mute Microphone!")
+    if args.command == "toggle-mute" and get_mute == "false":
+        pamixer("-t", "")
+        notify_status("mute")
+    elif args.command == "toggle-mute" and get_mute == "true":
+        pamixer("-t", "")
+        notify_status("volume")
+    elif args.command != "toggle-mute" and get_mute == "true":
+        pamixer("-t", "")
+        notify_status("volume")
     elif args.command == "increase":
-        ICON = " "
-        subprocess.run(["pamixer", "--default-source", "-i", str(args.level)])
-        notify(ICON + "Microphone Volume: " + micVol_level + "%")
+        pamixer("-i", str(args.level))
+        notify_status("volume")
     elif args.command == "decrease":
-        ICON = " "
-        subprocess.run(["pamixer", "--default-source", "-d", str(args.level)])
-        notify(ICON + "Microphone Volume: " + micVol_level + "%")
+        pamixer("-d", str(args.level))
+        notify_status("volume")
     else:
         return
 
@@ -92,9 +108,8 @@ change_micVol_level()
 
 def micVol_status():
     if args.command == "status":
-        ICON = " "
         while True:
-            print(ICON + micVol_level + "%")
+            print(" " + micVol_level + "%")
             time.sleep(60)
     else:
         return

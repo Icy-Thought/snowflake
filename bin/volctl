@@ -48,15 +48,18 @@ mute_status = subprocess.run(
 )
 get_mute = mute_status.stdout.strip()
 
-get_volume = subprocess.check_output(["pamixer", "--get-volume"])
-volume_level = str(int(get_volume))
+get_volume = subprocess.run(
+    ["pamixer", "--get-volume"],
+    stdout=subprocess.PIPE,
+    universal_newlines=True,
+)
+volume_level = get_volume.stdout.strip()
 
 
 def notify(message):
     subprocess.Popen(
         [
-            "notify-send",
-            message,
+            "notify-send", message,
             "-t", "500",
             "-h", "string:synchronous:volume",
             "-h", "int:value:" + volume_level,
@@ -66,11 +69,10 @@ def notify(message):
     return
 
 
+percentage = int(volume_level)
 LEVEL = [" ", " ", "墳 ", " "]
 
-percentage = int(get_volume)
-
-if args.command == "toggle-mute" and get_volume == "false":
+if args.command == "toggle-mute" and get_mute == "false":
     ICON = LEVEL[0]
 elif percentage <= 30:
     ICON = LEVEL[1]
@@ -82,19 +84,36 @@ else:
     ICON = ""
 
 
+def notify_status(msg: str):
+    if msg == "mute":
+        notify(ICON + "Muted Output Audio!")
+    elif msg == "volume":
+        notify(ICON + "Volume Level: " + volume_level + "%")
+    else:
+        return
+
+
+def pamixer(param: str, lvl: str):
+    subprocess.run(["pamixer", param, lvl])
+
+
 def change_volume_level():
-    if args.command == "toggle-mute" and get_mute == "true":
-        subprocess.run(["pamixer", "-t"])
-        notify(ICON + "Volume Level: " + volume_level + "%")
-    elif args.command == "toggle-mute" and get_mute == "false":
-        subprocess.run(["pamixer", "-t"])
-        notify(ICON + "Mute Output Audio!")
+    if args.command == "toggle-mute" and get_mute == "false":
+        pamixer("-t", "")
+        notify_status("mute")
+    elif args.command == "toggle-mute" and get_mute == "true":
+        pamixer("-t", "")
+        notify_status("mute")
+        notify_status("volume")
+    elif args.command != "toggle-mute" and get_mute == "true":
+        pamixer("-t", "")
+        notify_status("volume")
     elif args.command == "increase":
-        subprocess.run(["pamixer", "-i", str(args.level)])
-        notify(ICON + "Volume Level: " + volume_level + "%")
+        pamixer("-i", str(args.level))
+        notify_status("volume")
     elif args.command == "decrease":
-        subprocess.run(["pamixer", "-d", str(args.level)])
-        notify(ICON + "Volume Level: " + volume_level + "%")
+        pamixer("-d", str(args.level))
+        notify_status("volume")
     else:
         return
 

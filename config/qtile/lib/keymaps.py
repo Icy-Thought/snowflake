@@ -101,13 +101,13 @@ mediactl = [
     EzKey("M-<Left>", lazy.spawn("playerctl previous")),
 ]
 
-scrcap = [
-    EzKey("<Print>", lazy.spawn("scrcap -w")),
-    EzKey("C-<Print>", lazy.spawn("scrcap -c -w")),
-    EzKey("A-<Print>", lazy.spawn("scrcap -a")),
-    EzKey("C-A-<Print>", lazy.spawn("scrcap -c -a")),
-    EzKey("S-<Print>", lazy.spawn("scrcap -r")),
-    EzKey("C-S-<Print>", lazy.spawn("scrcap -c -r")),
+scrcapy = [
+    EzKey("<Print>", lazy.spawn("scrcapy system --workspace")),
+    EzKey("C-<Print>", lazy.spawn("scrcapy clipboard --workspace")),
+    EzKey("A-<Print>", lazy.spawn("scrcapy system --active-window")),
+    EzKey("C-A-<Print>", lazy.spawn("scrcapy clipboard --active-window")),
+    EzKey("S-<Print>", lazy.spawn("scrcapy system --selection")),
+    EzKey("C-S-<Print>", lazy.spawn("scrcapy clipboard --selection")),
 ]
 
 brightctl = [
@@ -129,7 +129,7 @@ keys = [
     *application_spawns,
     *audioctl,
     *mediactl,
-    *scrcap,
+    *scrcapy,
     *brightctl,
     *quick_launch,
 ]

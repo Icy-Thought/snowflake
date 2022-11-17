@@ -1,0 +1,113 @@
+#!/usr/bin/env cached-nix-shell
+#! nix-shell -i python3 -p maim slop
+
+import argparse
+import subprocess
+from datetime import datetime
+from pathlib import Path
+
+parser = argparse.ArgumentParser(
+    prog="Capture Toolkit",
+    description="A simple script to help capture images of your environment(s)!",
+    epilog="Please, try again.",
+)
+
+# Necessary for confusion prevention by Py:
+parent_parser = argparse.ArgumentParser()
+
+parent_parser.add_argument(
+    "-w", "--workspace",
+    action="store_true",
+    help="Capture image of your active workspace.",
+)
+
+parent_parser.add_argument(
+    "-a", "--active-window",
+    action="store_true",
+    help="Capture image of the current active window.",
+)
+
+parent_parser.add_argument(
+    "-s", "--selection",
+    action="store_true",
+    help="Capture image of the highlighted region.",
+)
+
+subparser = parser.add_subparsers(dest="command")
+
+system = subparser.add_parser("system", parents=[parent_parser], add_help=False)
+clipboard = subparser.add_parser("clipboard", parents=[parent_parser], add_help=False)
+
+args = parser.parse_args()
+
+
+def notify(message: str, file: Path):
+    subprocess.Popen(
+        [
+            "notify-send", message,
+            "-t", "500",
+            "-h", "string:synchronous:screenshot",
+            "-i", file,
+            "-u", "low",
+        ]
+    )
+    return
+
+
+def sys_parse(cmd: str):
+    return parser.parse_args(["system", cmd])
+
+
+def clip_parse(cmd: str):
+    return parser.parse_args(["clipboard", cmd])
+
+
+if sys_parse("--workspace") or clip_parse("--workspace"):
+    TITLE = "Workspace"
+    PARAMETER = ""
+elif sys_parse("--active-window") or clip_parse("--active-window"):
+    TITLE = "Active-Win"
+    PARAMETER = "-i $(xdotool getactivewindow)"
+elif sys_parse("--selection") or clip_parse("--selection"):
+    TITLE = "Selected Region"
+    PARAMETER = "-s"
+
+
+def capture_screen():
+    CURRENT_DATETIME = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    FILENAME = str(TITLE + " " + CURRENT_DATETIME + ".png")
+    ICON = " "
+
+    if args.command == "system":
+        filepath = Path.home() / "Pictures" / "Screenshots" / repr(FILENAME)
+
+        maim_cmd = ["maim", "-u", PARAMETER, str(filepath)]
+        subprocess.run(" ".join(maim_cmd), shell=True)
+
+        notify(
+            " ".join(["Archived Screenshot!", ICON]) + "\n".join([CURRENT_DATETIME]),
+            filepath,
+        )
+    elif args.command == "clipboard":
+        filepath = Path("/tmp") / repr(FILENAME)
+
+        maim_cmd = ["maim", "-u", PARAMETER, str(filepath)]
+        subprocess.run(" ".join(maim_cmd), shell=True)
+
+        xclip_cmd = [
+            "xclip",
+            "-selection", "clipboard",
+            "-t", "image/png",
+            "<", str(filepath),
+        ]
+        subprocess.run(" ".join(xclip_cmd), shell=True)
+
+        notify(
+            " ".join(["Clipped Screenshot!", ICON]) + "\n".join([CURRENT_DATETIME]),
+            filepath,
+        )
+    else:
+        return
+
+
+capture_screen()

@@ -55,13 +55,17 @@ def notify(message):
     return
 
 
+def light(param: str):
+    subprocess.run(["light", param, str(args.level)])
+
+
 def change_brightness():
     if args.command == "increase":
         ICON = "  "
-        subprocess.run(["light", "-A", str(args.level)])
+        light("-A")
     elif args.command == "decrease":
         ICON = "  "
-        subprocess.run(["light", "-U", str(args.level)])
+        light("-U")
     else:
         return
 
