@@ -41,35 +41,27 @@ clipboard = subparser.add_parser("clipboard", parents=[parent_parser], add_help=
 args = parser.parse_args()
 
 
-def notify(message: str, file: Path):
-    subprocess.Popen(
+def notify(message: str, image: Path):
+    subprocess.run(
         [
             "notify-send", message,
             "-t", "500",
             "-h", "string:synchronous:screenshot",
-            "-i", file,
+            "-i", image,
             "-u", "low",
         ]
     )
     return
 
 
-def sys_parse(cmd: str):
-    return parser.parse_args(["system", cmd])
-
-
-def clip_parse(cmd: str):
-    return parser.parse_args(["clipboard", cmd])
-
-
-if sys_parse("--workspace") or clip_parse("--workspace"):
+if args.workspace:
     TITLE = "Workspace"
     PARAMETER = ""
-elif sys_parse("--active-window") or clip_parse("--active-window"):
+elif args.active_window:
     TITLE = "Active-Win"
     PARAMETER = "-i $(xdotool getactivewindow)"
-elif sys_parse("--selection") or clip_parse("--selection"):
-    TITLE = "Selected Region"
+elif args.selection:
+    TITLE = "Selection"
     PARAMETER = "-s"
 
 

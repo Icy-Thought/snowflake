@@ -14,20 +14,24 @@
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    kmonad = {
-      url = "github:kmonad/kmonad?dir=nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # kmonad = {
+    #   url = "github:kmonad/kmonad?dir=nix";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
 
-    # Window Manager(s)
+    # Window Manager(s) + Extensions
     hyprland.url = "github:hyprwm/Hyprland";
+    picom-animations = {
+      url = "github:dccsillag/picom/implement-window-animations";
+      flake = false;
+    };
 
     # Toolset ++ Application(s)
     emacs.url = "github:nix-community/emacs-overlay";
-    doomemacs = {
-      url = "github:doomemacs/doomemacs";
-      flake = false;
-    };
+    # doomemacs = {
+    #   url = "github:doomemacs/doomemacs";
+    #   flake = false;
+    # };
 
     nvim-nightly.url = "github:nix-community/neovim-nightly-overlay";
     rust.url = "github:oxalica/rust-overlay";

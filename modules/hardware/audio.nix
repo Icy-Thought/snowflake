@@ -30,10 +30,8 @@ in {
   };
 
   config =
-    let
-      qr = "${toString cfg.lowLatency.quantum}/${toString cfg.lowLatency.rate}";
-    in
-    mkIf cfg.enable (mkMerge [
+    let qr = "${toString cfg.lowLatency.quantum}/${toString cfg.lowLatency.rate}";
+    in mkIf cfg.enable (mkMerge [
       {
         environment.systemPackages = with pkgs; [ pavucontrol ];
         security.rtkit.enable = true;
