@@ -38,7 +38,7 @@ brightness_level = str(float(get_brightness))
 
 
 def notify(message):
-    subprocess.Popen(
+    return subprocess.run(
         [
             "notify-send",
             message,
@@ -52,7 +52,6 @@ def notify(message):
             "low",
         ]
     )
-    return
 
 
 def light(param: str):
