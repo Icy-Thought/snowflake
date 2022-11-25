@@ -9,13 +9,13 @@
   fileSystems."/" = {
     device = "/dev/disk/by-label/nixos";
     fsType = "ext4";
-    options = [ "noatime, x-gvfs-hide" ];
+    options = [ "noatime" "x-gvfs-hide" ];
   };
 
   fileSystems."/home" = {
     device = "/dev/disk/by-label/home";
     fsType = "ext4";
-    options = [ "noatime, x-gvfs-hide" ];
+    options = [ "noatime" "x-gvfs-hide" ];
   };
 
   fileSystems."/boot" = {

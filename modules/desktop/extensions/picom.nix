@@ -19,7 +19,7 @@ in {
     {
       services.picom = {
         enable = true;
-        backend = "glx";
+        backend = "egl";
         vSync = true;
 
         menuOpacity = 0.9;

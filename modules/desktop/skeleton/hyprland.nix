@@ -33,7 +33,7 @@ with lib.my; {
 
     environment.systemPackages = with pkgs; [
       imv
-      # hyprpaper
+      hyprpaper
       # hyprpicker
       libnotify
       playerctl
@@ -62,12 +62,6 @@ with lib.my; {
       gnome-keyring.enable = true;
       network-manager-applet.enable = true;
       status-notifier-watcher.enable = true;
-    };
-
-    hm.xsession = {
-      enable = true;
-      numlock.enable = true;
-      preferStatusNotifierItems = true;
     };
   };
 }

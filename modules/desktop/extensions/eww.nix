@@ -17,13 +17,13 @@ in {
   config = mkIf cfg.enable {
     hm.programs.eww = {
       enable = true;
+      configDir = "${config.snowflake.configDir}/eww";
       package =
         let dsktp = config.modules.desktop;
         in (with pkgs; mkMerge [
           (mkIf dsktp.envProto == "x11" [ eww ])
           (mkIf dsktp.envProto == "wayland" [ eww-wayland ])
         ]);
-      configDir = "${config.snowflake.configDir}/eww";
     };
   };
 }

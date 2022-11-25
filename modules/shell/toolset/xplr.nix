@@ -21,7 +21,7 @@ in {
       target = "xplr/init.lua";
       text = ''
         ---@diagnostic disable
-        version = "0.19.0"
+        version = "0.20.0"
         local xplr = xplr
         ---@diagnostic enable
 
