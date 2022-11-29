@@ -18,7 +18,7 @@ M.window_padding = {
 
 M.text_background_opacity = 1.0
 M.warn_about_missing_glyphs = false
-M.window_background_opacity = 0.80
+M.window_background_opacity = 0.70
 M.enable_scroll_bar = false
 M.scrollback_lines = 5000
 

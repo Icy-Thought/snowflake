@@ -23,6 +23,7 @@ with lib.my; {
         shell_integration = "no-cursor";
         confirm_os_window_close = -1;
 
+        background_opacity = 0.7;
         repaint_delay = 10;
         disable_ligatures = "cursor";
         adjust_line_height = "113%";
