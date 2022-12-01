@@ -19,10 +19,10 @@ in {
       enable = true;
       configDir = "${config.snowflake.configDir}/eww";
       package =
-        let dsktp = config.modules.desktop;
+        let envProto = config.modules.desktop.envProto;
         in (with pkgs; mkMerge [
-          (mkIf dsktp.envProto == "x11" [ eww ])
-          (mkIf dsktp.envProto == "wayland" [ eww-wayland ])
+          (mkIf (envProto == "x11") [ eww ])
+          (mkIf (envProto == "wayland") [ eww-wayland ])
         ]);
     };
   };

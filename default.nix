@@ -80,6 +80,9 @@ with lib.my; {
 
   i18n.defaultLocale = mkDefault "en_US.UTF-8";
 
+  # Free ourselves form the pre-defined
+  environment.defaultPackages = [ ];
+
   environment.systemPackages = with pkgs; [
     cached-nix-shell
     gnumake

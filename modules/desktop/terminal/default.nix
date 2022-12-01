@@ -18,11 +18,14 @@ in {
     };
   };
 
-  config = {
-    services.xserver.desktopManager.xterm.enable = mkDefault (
-      cfg.default == "xterm"
-    );
+  config = mkMerge ([
+    {
+      services.xserver.desktopManager.xterm.enable = mkDefault (cfg.default == "xterm");
+      env.TERMINAL = cfg.default;
+    }
 
-    env.TERMINAL = cfg.default;
-  };
+    (mkIf (config.modules.desktop.envProto == "x11") {
+      services.xserver.excludePackages = mkIf (cfg.default != "xterm") [ pkgs.xterm ];
+    })
+  ]);
 }
