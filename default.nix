@@ -46,7 +46,7 @@ with lib.my; {
     };
 
   system = {
-    stateVersion = "22.05";
+    stateVersion = "22.11";
     configurationRevision = with inputs; mkIf (self ? rev) self.rev;
   };
 
