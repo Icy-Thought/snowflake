@@ -32,12 +32,11 @@
     #   url = "github:doomemacs/doomemacs";
     #   flake = false;
     # };
-
     nvim-nightly.url = "github:nix-community/neovim-nightly-overlay";
     rust.url = "github:oxalica/rust-overlay";
     spicetify-nix.url = "github:the-argus/spicetify-nix";
 
-    # Submodules: (temporary)
+    # Submodules (temporary) # TODO
     emacs-dir = {
       url = "https://github.com/Icy-Thought/emacs.d.git";
       type = "git";

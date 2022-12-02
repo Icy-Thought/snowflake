@@ -40,9 +40,9 @@ in {
       let myTerm = config.modules.desktop.terminal.default;
       in [
         hyperfine
-        qgnomeplatform
         gucharmap
-
+        qgnomeplatform # Qt -> GTK Theme
+        adwaita-qt # Qt -> GTK Theme
         kalker
         (makeDesktopItem {
           name = "kalker";
@@ -83,7 +83,7 @@ in {
     env = {
       GTK_DATA_PREFIX = [ "${config.system.path}" ];
       QT_QPA_PLATFORMTHEME = "gnome";
-      # QT_STYLE_OVERRIDE = "kvantum";
+      QT_STYLE_OVERRIDE = "adwaita";
     };
 
     system.userActivationScripts.cleanupHome = ''

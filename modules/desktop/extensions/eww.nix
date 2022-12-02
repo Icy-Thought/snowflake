@@ -17,7 +17,7 @@ in {
   config = mkIf cfg.enable {
     hm.programs.eww = {
       enable = true;
-      configDir = "${config.snowflake.configDir}/eww";
+      configDir = "${config.snowflake.configDir}/eww"; # TODO
       package =
         let envProto = config.modules.desktop.envProto;
         in (with pkgs; mkMerge [
