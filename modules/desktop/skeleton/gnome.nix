@@ -52,8 +52,17 @@ with lib.my; {
         gnome-disk-utility
         gnome-tweaks
       ]) ++ (with gnomeExtensions; [
+        appindicator
+        aylurs-widgets
         blur-my-shell
+        dash-to-dock
         gsconnect
+        just-perfection
+        openweather
+        # pop-shell
+        removable-drive-menu
+        rounded-window-corners
+        space-bar
         user-themes
       ]);
 
