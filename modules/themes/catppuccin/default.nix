@@ -147,18 +147,6 @@ in {
       };
     })
 
-    (mkIf config.modules.desktop.extensions.fcitx5.enable {
-      home.dataFile.fcitx5-theme = {
-        target = "fcitx5/themes";
-        source = pkgs.fetchFromGitHub {
-          owner = "icy-thought";
-          repo = "fcitx5-catppuccin";
-          rev = "3b699870fb2806404e305fe34a3d2541d8ed5ef5";
-          hash = "sha256-hOAcjgj6jDWtCGMs4Gd49sAAOsovGXm++TKU3NhZt8w=";
-        };
-      };
-    })
-
     (mkIf config.modules.desktop.toolset.docView.sioyek.enable {
       hm.programs.sioyek.config = with cfg.font; {
         "custom_background_color " = "0.12 0.11 0.18";

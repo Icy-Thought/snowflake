@@ -19,17 +19,11 @@ in {
       ibus.engines = with pkgs.ibus-engines; [ libpinyin hangul mozc ];
     };
 
-    environment.variables = mkMerge [
-      {
-        GTK_IM_MODULE = "ibus";
-        QT_IM_MODULE = "ibus";
-        XMODIFIERS = "@im=ibus";
-        SDL_IM_MODULE = "ibus";
-      }
-
-      (mkIf config.modules.desktop.terminal.kitty.enable {
-        GLFW_IM_MODULE = "ibus";
-      })
-    ];
+    environment.variables = {
+      GTK_IM_MODULE = "ibus";
+      QT_IM_MODULE = "ibus";
+      XMODIFIERS = "@im=ibus";
+      SDL_IM_MODULE = "ibus";
+    };
   };
 }

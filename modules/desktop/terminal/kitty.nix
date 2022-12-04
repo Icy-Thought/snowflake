@@ -11,6 +11,10 @@ with lib.my; {
   };
 
   config = mkIf config.modules.desktop.terminal.kitty.enable {
+    environment.variables = {
+      GLFW_IM_MODULE = "ibus"; # Ibus & Fcitx5 solution..
+    };
+
     hm.programs.kitty = with config.modules.themes; {
       enable = true;
       settings = {

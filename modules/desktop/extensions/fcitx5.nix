@@ -21,20 +21,15 @@ in {
         fcitx5-chinese-addons
         # fcitx5-mozc
         # fcitx5-hangul
+        my.fcitx5-catppuccin
       ];
     };
 
-    environment.variables = mkMerge [
-      {
-        GTK_IM_MODULE = "fcitx";
-        QT_IM_MODULE = "fcitx";
-        XMODIFIERS = "@im=fcitx";
-        SDL_IM_MODULE = "fcitx";
-      }
-
-      (mkIf config.modules.desktop.terminal.kitty.enable {
-        GLFW_IM_MODULE = "ibus"; # ibus != fcitx kitty.. bruh
-      })
-    ];
+    environment.variables = {
+      GTK_IM_MODULE = "fcitx";
+      QT_IM_MODULE = "fcitx";
+      XMODIFIERS = "@im=fcitx";
+      SDL_IM_MODULE = "fcitx";
+    };
   };
 }

@@ -36,7 +36,7 @@ in {
         nautilus.enable = true;
       };
       extensions = {
-        ibus.enable = true;
+        fcitx5.enable = true;
         mimeApps.enable = true; # mimeApps -> default launch application
         picom.enable = true;
         dunst.enable = true;
