@@ -100,6 +100,7 @@ in
 
         # -------===[ External Plugins ]===------- #
         eval "$(zoxide init zsh)"
+        any-nix-shell zsh --info-right | source /dev/stdin
 
         # -------===[ Aesthetics ]===------- #
         source "$HOME/.config/zsh/fzf.zsh"

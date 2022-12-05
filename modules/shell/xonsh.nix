@@ -114,10 +114,8 @@ in
           abbrevs)}
 
           # -------===[ Executing 3rd-Plugins ]===------- #
-          ## Zoxide
+          execx($(any-nix-shell --info-right))
           execx($(zoxide init xonsh), 'exec', __xonsh__.ctx, filename='zoxide')
-
-          ## Starship-rs:
           execx($(starship init xonsh))
         '';
     };

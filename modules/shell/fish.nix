@@ -35,6 +35,7 @@ with lib.my; {
       shellAbbrs = import "${config.snowflake.configDir}/shell-abbr";
 
       interactiveShellInit = ''
+        ${getExe pkgs.any-nix-shell} fish --info-right | source
         ${getExe pkgs.zoxide} init fish | source
         ${getExe pkgs.any-nix-shell} fish | source
 
