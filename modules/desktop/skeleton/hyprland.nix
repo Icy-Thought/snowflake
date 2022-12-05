@@ -59,7 +59,6 @@ with lib.my; {
     };
 
     hm.services = {
-      gnome-keyring.enable = true;
       network-manager-applet.enable = true;
       status-notifier-watcher.enable = true;
     };

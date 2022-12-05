@@ -27,7 +27,6 @@ with lib.my; {
     };
 
     services.gnome = {
-      gnome-keyring.enable = true;
       chrome-gnome-shell.enable = true;
       sushi.enable = true;
     };
