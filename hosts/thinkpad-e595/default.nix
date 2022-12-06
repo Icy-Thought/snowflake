@@ -22,7 +22,6 @@
       terminal = {
         default = "wezterm";
         wezterm.enable = true;
-        alacritty.enable = true;
       };
       editors = {
         default = "nvim";
