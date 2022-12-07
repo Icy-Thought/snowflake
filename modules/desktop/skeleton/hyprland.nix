@@ -21,7 +21,7 @@ with lib.my; {
         fcitx5.enable = true;
         mimeApps.enable = true; # mimeApps -> default launch application
         dunst.enable = true;
-        eww.enable = true;
+        waybar.enable = true;
         rofi = {
           enable = true;
           package = pkgs.rofi-wayland;
