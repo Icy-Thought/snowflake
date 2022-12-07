@@ -3,13 +3,13 @@ _: pkgs: {
     overrides =
       pkgs.lib.composeExtensions (old.overrides or (_: _: { }))
         (final: prev: {
-          trufflebar =
-            final.callCabal2nix "trufflebar"
-              (pkgs.lib.sourceByRegex ./. [
+          raybar =
+            final.callCabal2nix "raybar"
+              (pkgs.lib.sourcebyregex ../config/taffybar [
                 "taffybar.hs"
                 "taffybar.css"
-                "palette/catppuccin.css"
-                "trufflebar.cabal"
+                "palette/tokyonight.css"
+                "raybar.cabal"
               ])
               { };
         });

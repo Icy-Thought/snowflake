@@ -66,9 +66,9 @@ makeCombinedWidget constructors = do
   Gtk.toWidget hbox
 
 mkRGBA (r, g, b, a) = (r / 256, g / 256, b / 256, a / 256)
-catBlue = mkRGBA (150, 205, 251, 256)
-catRed = mkRGBA (242, 143, 173, 256)
-catYellow = mkRGBA (248, 189, 150, 256)
+ctBlue = mkRGBA (122, 162, 247, 256)
+ctRed = mkRGBA (247, 118, 142, 256)
+ctYellow = mkRGBA (224, 175, 104, 256)
 
 myGraphConfig = defaultGraphConfig
   { graphPadding         = 0
@@ -76,10 +76,10 @@ myGraphConfig = defaultGraphConfig
   , graphWidth           = 75
   , graphBackgroundColor = (0.0, 0.0, 0.0, 0.0)
   }
-cpuCfg = myGraphConfig { graphDataColors = [catRed], graphLabel = Just "CPU" }
-memCfg = myGraphConfig { graphDataColors = [catBlue], graphLabel = Just "MEM" }
+cpuCfg = myGraphConfig { graphDataColors = [ctRed], graphLabel = Just "CPU" }
+memCfg = myGraphConfig { graphDataColors = [ctBlue], graphLabel = Just "MEM" }
 netCfg =
-  myGraphConfig { graphDataColors = [catYellow], graphLabel = Just "NET" }
+  myGraphConfig { graphDataColors = [ctYellow], graphLabel = Just "NET" }
 
 memCallback :: IO [Double]
 memCallback = do
@@ -127,7 +127,8 @@ logDebug = do
   -- enableLogger "System.Taffybar.Widget.Generic.PollingLabel"  DEBUG
 
 cssFilesByHostname =
-  [("thinkpad-e595", ["taffybar.css"]), ("probook-440g3", ["taffybar.css"])]
+  [("thinkpad-e595", ["taffybar.css"])
+  , ("probook-440g3", ["taffybar.css"])]
 
 main = do
   enableLogger "Graphics.UI.GIGtkStrut" DEBUG

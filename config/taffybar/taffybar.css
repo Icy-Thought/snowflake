@@ -1,4 +1,4 @@
-@import url("./palette/catppuccin.css");
+@import url("./palette/tokyonight.css");
 
 /* Top Level Styling */
 
@@ -14,7 +14,7 @@
 }
 
 .inner-pad { 
-    background-color: @sambucus;
+    background-color: @raisin-black;
     border-radius: 9px;
     padding: 7px;
     margin: 3px;
@@ -72,13 +72,13 @@
 
 .active .overlay-box {
     padding: 0px;
-    border-color: @white;
+    border-color: @lavender-blue ;
     border-width: 3px;
     opacity: 1;
 }
 
 .visible .contents {
-    border-color: @white;
+    border-color: @lavender-blue;
 }
 
 .window-icon-container {
@@ -128,7 +128,7 @@ button {
 }
 
 button:checked, button:hover .Contents:hover {
-    box-shadow: inset 0 -3px @sambucus;
+    box-shadow: inset 0 -3px @raisin-black;
 }
 
 /* Menu Styling */
@@ -144,9 +144,9 @@ button:checked, button:hover .Contents:hover {
 }
 
 .taffy-window menuitem:hover, menuitem:hover {
-    background-color: @sambucus;
+    background-color: @raisin-black;
 }
 
 .taffy-window menuitem:hover > label, menuitem:hover > label {
-    color: @white;
+    color: @lavender-blue;
 }

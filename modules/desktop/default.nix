@@ -11,9 +11,9 @@ let cfg = config.modules.desktop;
 in {
   options.modules.desktop = {
     envProto = mkOption {
-      type = types.enum [ "x11" "wayland" "" ];
-      description = "The display protocol to use, incl. packages to install";
-      default = "";
+      type = with types; nullOr (enum [ "x11" "wayland" ]);
+      description = "What display protocol to use";
+      default = null;
     };
   };
 
@@ -67,7 +67,6 @@ in {
           user = config.user.name;
         };
       })
-
       (mkIf (cfg.envProto == "wayland") {
         gdm.enable = true;
         gdm.wayland = true;

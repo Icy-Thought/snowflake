@@ -30,7 +30,7 @@ in {
 
     hm.services.taffybar = {
       enable = true;
-      package = pkgs.haskellPackages.my-taffybar;
+      package = pkgs.haskellPackages.raybar;
     };
   };
 }

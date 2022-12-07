@@ -1,0 +1,31 @@
+name:           birostris
+version:        0.1.0.0
+synopsis:       A fruitful XMonad configuration based on IvanMalison's work.
+homepage:       https://github.com/Icy-Thought/snowflake
+author:         Icy-Thought
+maintainer:     Icy-Thought
+build-type:     Simple
+cabal-version:  >=1.10
+
+executable birostris
+  main-is:             xmonad.hs
+  build-depends:       aeson>=0.11.2.1
+                     , X11>=1.8
+                     , base >=4.7
+                     , bytestring>=0.10.8.1
+                     , containers>=0.5.7.1
+                     , directory>=1.2.6.2
+                     , filepath>=1.4.1.0
+                     , hostname>=1.0
+                     , multimap>=1.2.1
+                     , process>=1.4.3.0
+                     , safe
+                     , split
+                     , xdg-desktop-entry
+                     , transformers>=0.5.2.0
+                     , tuple >= 0.3.0.2
+                     , utf8-string
+                     , xmonad-contrib
+                     , xmonad
+  hs-source-dirs: .
+  default-language: Haskell2010

@@ -39,15 +39,13 @@ with lib.my; {
     services.xserver = {
       enable = true;
       displayManager.defaultSession = "none+xmonad";
-      windowManager.xmonad = {
-        enable = true;
-        enableContribAndExtras = true;
-        enableConfiguredRecompile = true;
-        # haskellPackages = with pkgs; [];
-        # ghcArgs = [];
-        # xmonadCliArgs = [];
-        config = "${config.snowflake.configDir}/xmonad/xmonad.hs";
-      };
+      windowManager.session = [{
+        name = "xmonad";
+        start = ''
+          /usr/bin/env birostris &
+          waitPID=$!
+        '';
+      }];
     };
 
     hm.services = {
@@ -59,6 +57,7 @@ with lib.my; {
       enable = true;
       numlock.enable = true;
       preferStatusNotifierItems = true;
+      windowManager.command = "${getExe pkgs.haskellPackages.birostris}";
       importedVariables = [ "GDK_PIXBUF_MODULE_FILE" ]; # Taffybar
     };
   };

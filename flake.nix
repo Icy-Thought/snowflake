@@ -20,11 +20,13 @@
     # };
 
     # Window Manager(s) + Extensions
+    xmonad-contrib.url = "github:icy-thought/xmonad-contrib"; # TODO: replace with official after #582 == merged!
     hyprland.url = "github:hyprwm/Hyprland";
     picom-animations = {
       url = "github:dccsillag/picom/implement-window-animations";
       flake = false;
     };
+    taffybar.url = "github:taffybar/taffybar";
 
     # Toolset ++ Application(s)
     emacs.url = "github:nix-community/emacs-overlay";

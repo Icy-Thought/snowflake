@@ -15,7 +15,7 @@
     themes.active = "tokyonight";
 
     desktop = {
-      qtile.enable = true;
+      xmonad.enable = true;
       terminal = {
         default = "wezterm";
         wezterm.enable = true;
