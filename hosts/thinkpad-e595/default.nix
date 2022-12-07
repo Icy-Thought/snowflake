@@ -15,7 +15,7 @@
     themes.active = "tokyonight";
 
     desktop = {
-      xmonad.enable = true;
+      hyprland.enable = true;
       terminal = {
         default = "wezterm";
         wezterm.enable = true;

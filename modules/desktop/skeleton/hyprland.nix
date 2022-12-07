@@ -46,6 +46,11 @@ in {
       wireplumber
     ];
 
+    services.xserver = {
+      enable = true;
+      displayManager.defaultSession = "hyprland";
+    };
+
     programs.hyprland.enable = true;
 
     hm.imports = [ hyprland.homeManagerModules.default ];
@@ -58,6 +63,17 @@ in {
     hm.services = {
       network-manager-applet.enable = true;
       status-notifier-watcher.enable = true;
+    };
+
+
+    # Setting our system wallpaper:
+    home.configFile.hypr-wallpaper = {
+      target = "hypr/hyprpaper.conf";
+      text = ''
+        preload = ${builtins.toPath ../../themes/tokyonight/assets/zaynstewart-anime-girl-night-alone.png}
+        wallpaper = eDP-1,${builtins.toPath ../../themes/tokyonight/assets/zaynstewart-anime-girl-night-alone.png}
+        ipc = off
+      '';
     };
   };
 }
