@@ -1,15 +1,20 @@
-{ inputs
-, options
+{ options
 , config
+, inputs
 , lib
 , pkgs
 , ...
 }:
 with lib;
-with lib.my; {
+with lib.my;
+
+let inherit (inputs) hyprland;
+in {
   options.modules.desktop.hyprland = {
     enable = mkBoolOpt false;
   };
+
+  imports = [ hyprland.nixosModules.default ];
 
   config = mkIf config.modules.desktop.xmonad.enable {
     modules.desktop = {
@@ -29,8 +34,6 @@ with lib.my; {
       };
     };
 
-    hm.imports = [ inputs.hyprland.homeManagerModule ];
-
     environment.systemPackages = with pkgs; [
       imv
       hyprpaper
@@ -43,18 +46,12 @@ with lib.my; {
       wireplumber
     ];
 
-    services.xserver = {
-      enable = true;
-      displayManager.defaultSession = "hyprland";
-    };
+    programs.hyprland.enable = true;
+
+    hm.imports = [ hyprland.homeManagerModules.default ];
 
     hm.wayland.windowManager.hyprland = {
       enable = true;
-      systemdIntegration = true;
-      xwayland = {
-        enable = true;
-        hidpi = true;
-      };
       extraConfig = builtins.readFile "${config.snowflake.configDir}/hyprland/hyprland.conf"; # TODO
     };
 

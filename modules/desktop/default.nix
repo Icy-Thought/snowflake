@@ -11,9 +11,9 @@ let cfg = config.modules.desktop;
 in {
   options.modules.desktop = {
     envProto = mkOption {
-      type = types.enum [ "x11" "wayland" ];
+      type = types.enum [ "x11" "wayland" "" ];
       description = "The display protocol to use, incl. packages to install";
-      default = "x11";
+      default = "";
     };
   };
 
