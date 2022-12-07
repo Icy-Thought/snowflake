@@ -16,7 +16,7 @@ in {
 
   imports = [ hyprland.nixosModules.default ];
 
-  config = mkIf config.modules.desktop.xmonad.enable {
+  config = mkIf config.modules.desktop.hyprland.enable {
     modules.desktop = {
       envProto = "wayland";
       toolset.fileBrowse = {
