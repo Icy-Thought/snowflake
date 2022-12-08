@@ -754,15 +754,8 @@ nearFullFloat = customFloating $ W.RationalRect l t w h
   t = 0.02
   l = 0.02
 
-termFloat = customFloating $ W.RationalRect l t w h
- where
-  h = 0.5
-  w = 0.5
-  t = 0.02
-  l = 0.02
-
 scratchpads =
-  [ NS "SysMon"             sysMonCommand       sysMonSelector       termFloat
+  [ NS "SysMon"             sysMonCommand       sysMonSelector       nearFullFloat
   , NS "Discord"            discordCommand      discordSelector      nearFullFloat
   , NS "Element"            elementCommand      elementSelector      nearFullFloat
   , NS "GalaxyBudsClient"   gBudsCommand        gBudsSelector        nearFullFloat

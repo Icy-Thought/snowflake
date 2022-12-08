@@ -22,25 +22,6 @@ in {
         backend = "egl";
         vSync = true;
 
-        menuOpacity = 0.9;
-        inactiveOpacity = 0.65;
-        opacityRules = [
-          "100:window_type = 'combo'"
-          "100:window_type = 'desktop'"
-          "100:window_type = 'dialog'"
-          "100:window_type = 'dnd'"
-          "100:window_type = 'dock'"
-          "100:window_type = 'dropdown_menu'"
-          "100:window_type = 'menu'"
-          "100:window_type = 'normal'"
-          "100:window_type = 'notification'"
-          "100:window_type = 'popup_menu'"
-          "100:window_type = 'splash'"
-          "100:window_type = 'toolbar'"
-          "100:window_type = 'unknown'"
-          "100:window_type = 'utility'"
-        ];
-
         shadow = false;
         shadowOffsets = [ (-7) (-7) ];
         shadowOpacity = 0.75;
@@ -63,6 +44,9 @@ in {
         ];
 
         settings = {
+          inactive-dim = 0.2;
+          focus-exclude = [ "class_g ?= 'rofi'" "class_g ?= 'Steam'" ];
+
           shadow-radius = 10;
           corner-radius = 10;
           rounded-corners-exclude = [
@@ -80,8 +64,8 @@ in {
 
           daemon = false;
           dbus = false;
-          mark-wmwin-focused = true;
-          mark-ovredir-focused = true;
+          mark-wmwin-focused = false;
+          mark-ovredir-focused = false;
           detect-rounded-corners = true;
           detect-client-opacity = true;
 
@@ -94,9 +78,6 @@ in {
           glx-no-stencil = true;
           use-damage = false;
           transparent-clipping = false;
-          inactive-opacity-override = false;
-
-          focus-exclude = [ "class_g ?= 'rofi'" "class_g ?= 'Steam'" ];
         };
       };
     }
