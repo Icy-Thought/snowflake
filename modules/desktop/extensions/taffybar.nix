@@ -33,5 +33,27 @@ in {
       enable = true;
       package = pkgs.haskellPackages.raybar;
     };
+
+    # Symlink necessary files for config to load:
+    home.configFile =
+      let
+        taffyDir = "${config.snowflake.configDir}/taffybar";
+        active = config.modules.themes.active;
+      in
+      {
+        taffybar-base = {
+          target = "taffybar/taffybar.css";
+          text = ''
+            ${optionalString (active != null) ''
+                @import url("./palette/${active}.css");
+            ''}
+            ${builtins.readFile "${taffyDir}/taffybar.css"}
+          '';
+        };
+        taffybar-theme = mkIf (active != null) {
+          target = "taffybar/palette/${active}.css";
+          source = "${taffyDir}/palette/${active}.css";
+        };
+      };
   };
 }

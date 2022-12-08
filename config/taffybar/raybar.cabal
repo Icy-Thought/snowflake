@@ -6,8 +6,6 @@ author:         Icy-Thought
 maintainer:     Icy-Thought
 build-type:     Simple
 cabal-version:  >=1.10
-data-files:     taffybar.css
-                palette/tokyonight.css
 
 executable taffybar
   hs-source-dirs:      .

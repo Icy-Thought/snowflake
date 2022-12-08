@@ -6,8 +6,6 @@ _: pkgs: {
           raybar = final.callCabal2nix "raybar"
             (pkgs.lib.sourceByRegex ../config/taffybar [
               "taffybar.hs"
-              "taffybar.css"
-              "palette/tokyonight.css"
               "raybar.cabal"
             ])
             { };
