@@ -6,7 +6,7 @@
     font-family: "VictorMono Nerd Font";
     font-size: 12px;
     font-weight: 600; /* SemiBold */
-    color: @main-color;
+    color: @atomic-tangerine;
 }
 
 .taffy-box {

@@ -6,7 +6,7 @@
 
   outputs = { self, flake-utils, nixpkgs, taffybar }:
     let
-      overlay = import ./taffybar.nix;
+      overlay = import ../../overlays/taffybar.nix;
       overlays = taffybar.overlays ++ [ overlay ];
     in
     flake-utils.lib.eachDefaultSystem
@@ -19,8 +19,8 @@
         in
         {
           devShells.default = pkgs.haskellPackages.shellFor {
-            packages = p: [ p.my-taffybar ];
+            packages = p: [ p.raybar ];
           };
-          packages.default = pkgs.haskellPackages.my-taffybar;
+          packages.default = pkgs.haskellPackages.raybar;
         }) // { inherit overlay overlays; };
 }

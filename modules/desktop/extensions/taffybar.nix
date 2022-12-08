@@ -27,6 +27,7 @@ in {
         systemctl --user import-environment GDK_PIXBUF_MODULE_FILE DBUS_SESSION_BUS_ADDRESS PATH
       '';
     };
+    hm.xsession.importedVariables = [ "GDK_PIXBUF_MODULE_FILE" ];
 
     hm.services.taffybar = {
       enable = true;

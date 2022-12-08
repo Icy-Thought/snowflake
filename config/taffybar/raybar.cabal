@@ -1,5 +1,5 @@
 name:           raybar
-version:        0.0.1
+version:        0.1.0.0
 synopsis:       a minimal bar that will evolve within time.
 homepage:       https://github.com/Icy-Thought/snowflake
 author:         Icy-Thought
@@ -7,9 +7,9 @@ maintainer:     Icy-Thought
 build-type:     Simple
 cabal-version:  >=1.10
 data-files:     taffybar.css
-                ./palette/tokyonight.css
+                palette/tokyonight.css
 
-executable raybar
+executable taffybar
   hs-source-dirs:      .
   main-is:             taffybar.hs
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N

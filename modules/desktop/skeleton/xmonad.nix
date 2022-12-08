@@ -27,6 +27,8 @@ with lib.my; {
       };
     };
 
+    nixpkgs.overlays = [ inputs.xmonad-contrib.overlay ];
+
     environment.systemPackages = with pkgs; [
       libnotify
       playerctl
@@ -42,7 +44,7 @@ with lib.my; {
       windowManager.session = [{
         name = "xmonad";
         start = ''
-          /usr/bin/env birostris &
+          /usr/bin/env birostrisWM &
           waitPID=$!
         '';
       }];
@@ -57,8 +59,7 @@ with lib.my; {
       enable = true;
       numlock.enable = true;
       preferStatusNotifierItems = true;
-      windowManager.command = "${getExe pkgs.haskellPackages.birostris}";
-      importedVariables = [ "GDK_PIXBUF_MODULE_FILE" ]; # Taffybar
+      windowManager.command = "${getExe pkgs.haskellPackages.birostrisWM}";
     };
   };
 }

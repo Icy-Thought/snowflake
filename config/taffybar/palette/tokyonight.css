@@ -1,13 +1,13 @@
 @define-color mountain-meadow rgba(26, 188, 156, 1);
 @define-color atomic-tangerine rgba(255, 158, 100, 1);
-@define-color sky-blue-crayola rgba(42, 195, 222, 1)
-@define-color little-boy-blue rgba(122, 162, 247, 1)
+@define-color sky-blue-crayola rgba(42, 195, 222, 1);
+@define-color little-boy-blue rgba(122, 162, 247, 1);
 
 @define-color transparent rgba(0, 0, 0, 0.0);
 @define-color raisin-black rgba(26, 27, 38, 1);
 @define-color lavender-blue rgba(192, 202, 245, 1);
 
-@define-color main-color @atomic-tangerine;
+@define-color main-color @mountain-meadow;
 @define-color menu-background-color @lavender-blue;
 @define-color menu-font-color @raisin-black;
 @define-color bar-background @transparent;

@@ -127,7 +127,11 @@ with lib.my; {
             "org".xfuncname = "^(\\*+ +.*)$";
           };
 
-          credential.helper = "${pkgs.gitFull}/bin/git-credential-libsecret";
+          # credential.helper = "${pkgs.gitFull}/bin/git-credential-libsecret";
+          credential = {
+            "https://github.com".helper = "!gh auth git-credential";
+            "https://gist.github.com".helper = "!gh auth git-credential";
+          };
         };
       };
     }

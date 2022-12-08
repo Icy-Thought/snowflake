@@ -27,7 +27,7 @@
         in
         {
           devShells.default = pkgs.haskellPackages.shellFor {
-            packages = p: [ p.my-xmonad ];
+            packages = p: [ p.birostrisWM ];
             buildInputs = with pkgs.haskellPackages; [
               cabal-install
               ghcid
@@ -37,6 +37,6 @@
               stylish-haskell
             ];
           };
-          packages.default = pkgs.haskellPackages.my-xmonad;
+          packages.default = pkgs.haskellPackages.birostrisWM;
         }) // { inherit overlay overlays; };
 }

@@ -60,7 +60,6 @@ import           XMonad.Config                  ( )
 import           XMonad.Core                    ( getDirectories )
 import           XMonad.Hooks.DynamicProperty
 import           XMonad.Hooks.EwmhDesktops
-import           XMonad.Hooks.FadeInactive
 import           XMonad.Hooks.Focus      hiding ( currentWorkspace )
 import           XMonad.Hooks.ManageDocks
 import           XMonad.Hooks.ManageHelpers
@@ -104,7 +103,6 @@ myConfig = def
   , normalBorderColor  = icyInactive
   , focusedBorderColor = icyActive
   , logHook            = updatePointer (0.5, 0.5) (0, 0)
-                         <> toggleFadeInactiveLogHook 0.9
                          <> workspaceHistoryHook
                          <> setWorkspaceNames
                          <> logHook def
@@ -561,62 +559,6 @@ setWorkspaceNames = withWindowSet $ \s -> withDisplay $ \dpy -> do
         map fromIntegral $ concatMap ((++ [0]) . UTF8String.encode) names
   io $ changeProperty8 dpy r a c propModeReplace names'
 
--- Toggleable fade
-newtype ToggleFade a = ToggleFade {fadesMap :: M.Map a Bool}
-  deriving (Typeable, Read, Show)
-
-instance
-  (Typeable a, Read a, Show a, Ord a) =>
-  ExtensionClass (ToggleFade a)
-  where
-  initialValue  = ToggleFade M.empty
-  extensionType = PersistentExtension
-
-fadeEnabledFor query =
-  M.findWithDefault True <$> query <*> liftX (fadesMap <$> XS.get)
-
-fadeEnabledForWindow = fadeEnabledFor ask
-
-fadeEnabledForWorkspace = fadeEnabledFor getWindowWorkspace
-
-fadeEnabledForScreen = fadeEnabledFor getWindowScreen
-
-getScreens = withWindowSet $ return . W.screens
-
-getWindowWorkspace' = W.findTag <$> ask <*> liftX (withWindowSet return)
-
-getWindowWorkspace = flip fromMaybe <$> getWindowWorkspace' <*> pure "1"
-
-getWorkspaceToScreen =
-  M.fromList . mapP' (W.tag . W.workspace) W.screen <$> getScreens
-
-getWindowScreen =
-  M.lookup <$> getWindowWorkspace <*> liftX getWorkspaceToScreen
-
-getCurrentScreen = join (withFocusedD Nothing (runQuery getWindowScreen))
-
-fadeCondition =
-  isUnfocused
-    <&&> fadeEnabledForWindow
-    <&&> fadeEnabledForWorkspace
-    <&&> fadeEnabledForScreen
-
-toggleFadeInactiveLogHook = fadeOutLogHook . fadeIf fadeCondition
-
-toggleFadingForActiveWindow =
-  withWindowSet $ maybe (return ()) toggleFading . W.peek
-
-toggleFadingForActiveWorkspace =
-  withWindowSet $ \ws -> toggleFading $ W.currentTag ws
-
-toggleFadingForActiveScreen = getCurrentScreen >>= toggleFading
-
-toggleFading w = setFading' $ toggleInMap w
-
-setFading w f = setFading' $ M.insert w f
-
-setFading' f = XS.get >>= XS.put . (ToggleFade . f . fadesMap)
-
 -- Minimize not in class
 restoreFocus action =
   withFocused $ \orig -> action >> windows (W.focusWindow orig)
@@ -807,20 +749,20 @@ swapMinimizeStateAfter action = withFocused $ \originalWindow -> do
 -- Named Scratchpads
 nearFullFloat = customFloating $ W.RationalRect l t w h
  where
-  h = 0.9
-  w = 0.9
-  t = 0.95 - h
-  l = 0.95 - w
+  h = 0.95
+  w = 0.95
+  t = 0.02
+  l = 0.02
 
 termFloat = customFloating $ W.RationalRect l t w h
  where
   h = 0.5
   w = 0.5
-  t = 0.55 - h
-  l = 0.1 - w
+  t = 0.02
+  l = 0.02
 
 scratchpads =
-  [ NS "SysMon"             sysMonCommand       sysMonSelector       nearFullFloat
+  [ NS "SysMon"             sysMonCommand       sysMonSelector       termFloat
   , NS "Discord"            discordCommand      discordSelector      nearFullFloat
   , NS "Element"            elementCommand      elementSelector      nearFullFloat
   , NS "GalaxyBudsClient"   gBudsCommand        gBudsSelector        nearFullFloat
@@ -839,7 +781,7 @@ scratchpads =
   discordSelector      = className =? "discord"
 
   elementCommand       = "element-desktop"
-  elementSelector      = className =? "element"
+  elementSelector      = className =? "Element"
 
   gBudsCommand         = "GalaxyBudsClient"
   gBudsSelector        = className =? "GalaxyBudsClient"
@@ -1011,10 +953,7 @@ addKeys conf@XConfig { modMask = modm } =
          ((hyper, xK_e), moveTo Next emptyWS)
        ,
          -- Miscellaneous XMonad
-         ((hyper, xK_1), toggleFadingForActiveWindow)
-       , ((hyper .|. shiftMask, xK_1), toggleFadingForActiveWorkspace)
-       , ((hyper .|. controlMask, xK_1), toggleFadingForActiveScreen)
-       , ((hyper, xK_t), selectToggle)
+         ((hyper, xK_t), selectToggle)
        , ((modalt, xK_4), selectLimit)
        , ((hyper, xK_3), addWorkspacePrompt def)
        , ((modalt, xK_3), selectWorkspace def)
@@ -1043,7 +982,7 @@ addKeys conf@XConfig { modMask = modm } =
          -- , ((modalt, xK_p)               , spawn "rofi -show power") <- rofi power controls
        ,
          -- Playerctl
-       , ((modm, xK_Left), spawn "playerctl previous")
+         ((modm, xK_Left), spawn "playerctl previous")
        , ((modm, xK_Down), spawn "playerctl play-pause")
        , ((modm, xK_Right), spawn "playerctl next")
        ,
