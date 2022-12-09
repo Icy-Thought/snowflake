@@ -997,11 +997,11 @@ addKeys conf@XConfig { modMask = modm } =
        ,
          -- (Sc) active window
          ((mod1Mask, xK_Print), spawn "scrcapy system --active-window")
-       , ((controlMask .|. mod1Mask, xK_Print), spawn "scracpy clipboard --active-window")
+       , ((controlMask .|. mod1Mask, xK_Print), spawn "scrcapy clipboard --active-window")
        ,
          -- (Sc) selected area
-         ((shiftMask, xK_Print), spawn "scracpy system --selection")
-       , ((controlMask .|. shiftMask, xK_Print), spawn "scracpy clipboard --selection")
+         ((shiftMask, xK_Print), spawn "scrcapy system --selection")
+       , ((controlMask .|. shiftMask, xK_Print), spawn "scrcapy clipboard --selection")
        ]
     ++
     -- Replace moving bindings
