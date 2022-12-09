@@ -192,13 +192,13 @@ main = do
       }
     myBattery =
       [ deocrateWithSetClassAndBoxes "battery" $ makeCombinedWidget
-          [batteryIconNew, textBatteryNew "$percentage$%"]
+          [batteryIconNew, textBatteryNew " $percentage$%"]
       ]
     baseEndWidgets   = [myTray, myNet, myMem, myCPU, myMpris]
     fullEndWidgets   = baseEndWidgets
     laptopEndWidgets = myBattery ++ baseEndWidgets
     baseConfig       = defaultSimpleTaffyConfig
-      { startWidgets  = [myWorkspaces, myLayout, myWindows]
+      { startWidgets  = [myWorkspaces, myLayout]
       , endWidgets    = fullEndWidgets
       , barPosition   = Top
       , widgetSpacing = 0

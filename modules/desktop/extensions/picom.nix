@@ -54,13 +54,18 @@ in {
             "window_type = 'dock'"
             "window_type = 'desktop'"
           ];
+
           round-borders = 0;
           round-borders-exclude = [
             "! name~=''" # Qtile == empty wm_class..
           ];
-          blur-background = false;
+
+          blur-method = "dual_kawase";
+          blur-strength = 10.0;
+          blur-background = true;
           blur-background-frame = false;
           blur-background-fixed = false;
+          blur-background-exclude = [ "window_type != 'dock'" ];
 
           daemon = false;
           dbus = false;
