@@ -192,7 +192,7 @@ main = do
       }
     myBattery =
       [ deocrateWithSetClassAndBoxes "battery" $ makeCombinedWidget
-          [batteryIconNew, textBatteryNew " $percentage$%"]
+          [batteryIconNew, textBatteryNew "$percentage$%"]
       ]
     baseEndWidgets   = [myTray, myNet, myMem, myCPU, myMpris]
     fullEndWidgets   = baseEndWidgets

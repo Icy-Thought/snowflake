@@ -16,6 +16,7 @@ with lib.my; {
         manix
         nix-index
         nix-output-monitor
+        nix-tree
         nixpkgs-fmt
         nixpkgs-review
         nil # Nix Expression Language

@@ -63,7 +63,7 @@ let
 in
 {
   options.modules.shell.xonsh = {
-    enable = mkBoolOpt true;
+    enable = mkBoolOpt false;
   };
 
   config = mkIf config.modules.shell.xonsh.enable {
