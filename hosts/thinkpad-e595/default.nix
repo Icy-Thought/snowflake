@@ -54,6 +54,7 @@
     };
 
     develop = {
+      dart.enable = true;
       haskell.enable = true;
       python.enable = true;
       rust.enable = true;
