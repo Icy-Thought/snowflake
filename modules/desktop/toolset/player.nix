@@ -17,7 +17,7 @@ in {
 
   config = mkMerge [
     (mkIf cfg.music.enable {
-      hm.imports = [ inputs.spicetify-nix.homeManagerModule ];
+      hm.imports = [ inputs.spicetify-nix.homeManagerModules.default ];
 
       hm.programs.spicetify = {
         enable = true;

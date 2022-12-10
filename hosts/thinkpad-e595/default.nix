@@ -9,7 +9,7 @@
     networking = {
       enable = true;
       networkManager.enable = true;
-      # akkadianVPN.enable = true;
+      akkadianVPN.enable = true;
     };
 
     themes.active = "tokyonight";

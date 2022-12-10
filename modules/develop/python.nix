@@ -20,7 +20,7 @@ with lib.my; {
         isort
         ipython
         pip
-        poetry
+        # poetry
         setuptools
       ]);
 
