@@ -110,6 +110,23 @@ specified `hosts/deviceX` (where `deviceX` is the name of your device folder.
 
 ## Replacing Necessary Configuration Entries
 
+### Remove `wgConnect` Directory
+
+> **Note** Files contained within the `wgConnect` directory are intended for my
+> personal usage.
+
+_**Command**_ :
+
+```bash
+rm -rf ./modules/networking/wgConnect
+```
+
+If you choose to retain that directory, make sure to remove the files contained
+within that directory and replace it with your personal WireGuard config files.
+
+> **Warning** Failing to do so will result in `nixos-rebuild` failure because of
+> the encrypted files!
+
 ### Create Your Hosts Directory
 
 Create a directory inside the `hosts` with the name of the desired hostname for
