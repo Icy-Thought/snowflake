@@ -23,7 +23,7 @@
 
 # Table of Contents
 
-- [Showcase (Qtile)](#showcase-qtile)
+- [Showcase (XMonad)](#showcase-xmonad)
 - [Introduction](#introduction)
 - [Getting Started](#getting-started)
   - [Prepare System Environment for Nix-Flake](#prepare-system-environment-for-nix-flake)
@@ -39,9 +39,9 @@
 - [Useful Links](#useful-links)
 - [Special Thanks](#special-thanks)
 
-# Showcase (Qtile)
+# Showcase (XMonad)
 
-![Qtile Desktop](./assets/themes/tokyonight-qtile.png)
+![XMonad Desktop](./assets/themes/tokyonight-xmonad.png)
 
 # Introduction
 
