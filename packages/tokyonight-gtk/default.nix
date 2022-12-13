@@ -29,35 +29,33 @@ lib.checkListOfEnum "$Tokyonight: GTK Theme Variants" [
   stdenv.mkDerivation
 {
   pname = "tokyonight-gtk-theme";
-  version = "unstable-2022-10-21";
+  version = "unstable-2022-12-09";
 
   src = fetchFromGitHub {
     owner = "Fausto-Korpsvart";
     repo = "Tokyo-Night-GTK-Theme";
-    rev = "6247aafad59a9231d8638de2a09174779761ffeb";
-    hash = "sha256-vxSu5FW4XSvOyHK/Zl4Wh2Tik6cKBSE22C3AE9cRkoE=";
+    rev = "d17eec24180b890bc4a9aa64162074b1bfc7258a";
+    hash = "sha256-b35J6NsFkUNM/yxMe7bi0kpyuI/pGLnCywCEDLHLf5A=";
   };
 
   nativeBuildInputs = [ jdupes ];
 
   propagatedUserEnvPkgs = [ gtk-engine-murrine ];
 
-  installPhase = ''
-    runHook preInstall
+  installPhase =
+    let gtkTheme = "Tokyonight-${builtins.toString themeVariants}";
+    in ''
+      runHook preInstall
 
-    mkdir -p $out/share/{gtk-4.0,themes}
+      mkdir -p $out/share/themes
 
-    # GTK-4.0
-    cp -r $src/themes/Gnome42/Tokyonight-${builtins.toString themeVariants}.css $out/share/gtk-4.0
+      cp -r $src/themes/${gtkTheme} $out/share/themes
 
-    # GTK-3.0
-    cp -r $src/themes/Tokyonight-${builtins.toString themeVariants} $out/share/themes
+      # Duplicate files -> hard-links = reduced install-size!
+      jdupes -L -r $out/share
 
-    # Duplicate files -> hard-links = reduced install-size!
-    jdupes -L -r $out/share
-
-    runHook postInstall
-  '';
+      runHook postInstall
+    '';
 
   meta = with lib; {
     description = "A GTK theme based on the Tokyo Night colour palette";

@@ -38,8 +38,8 @@ in {
 
       home.configFile = {
         agasaya-config = {
-          source = "${inputs.nvim-dir}/agasaya";
           target = "nvim";
+          source = "${inputs.nvim-dir}/agasaya";
           recursive = true;
         };
 
