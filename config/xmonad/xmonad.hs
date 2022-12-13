@@ -131,7 +131,7 @@ icyInactive = "#1a1b26"
 restartEventHook e@ClientMessageEvent { ev_message_type = mt } = do
   a <- getAtom "XMONAD_RESTART"
   if mt == a
-    then XMonad.Operations.restart "icy-xmonad" True >> return (All True)
+    then XMonad.Operations.restart "birostrisWM" True >> return (All True)
     else return $ All True
 restartEventHook _ = return $ All True
 
