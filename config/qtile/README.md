@@ -1,16 +1,19 @@
-<img alt="Qtile Desktop" src="../../.github/assets/themes/tokyonight-qtile.png" align="center">
+<img alt="Qtile Desktop" src="../../.github/assets/themes/tokyonight/qtile.png" align="center">
 
 # (def) Qtile
+
 > A full-featured, hackable tiling window manager written and configured in
 > Python - [Qtile](http://www.qtile.org)
 
 # NOTE
+
 The following keybindings does not work 100% as expected due to either lack of
 implementation or an outdated `README.md`.
 
 ## Keybindings
 
 ### Definitions:
+
 - <kbd>M</kbd> = <kbd>super</kbd> (Windows-Key)
 - <kbd>A</kbd> = <kbd>Alt</kbd>
 - <kbd>S</kbd> = <kbd>Shift</kbd>
@@ -19,7 +22,7 @@ implementation or an outdated `README.md`.
 ### Action Keybindings
 
 | Keybinding                                      | Action                                                       |
-|-------------------------------------------------|--------------------------------------------------------------|
+| ----------------------------------------------- | ------------------------------------------------------------ |
 | <kbd>M</kbd> + <kbd>S</kbd> + <kbd>Return</kbd> | Launch terminal. (Kitty)                                     |
 | <kbd>M</kbd> + <kbd>A</kbd> + <kbd>f</kbd>      | Launch Firefox Browser.                                      |
 | <kbd>M</kbd> + <kbd>A</kbd> + <kbd>h</kbd>      | Launch Bottom.                                               |
@@ -38,7 +41,7 @@ implementation or an outdated `README.md`.
 ### Window Movement Keybindings
 
 | Keybinding                                         | Action                                                  |
-|----------------------------------------------------|---------------------------------------------------------|
+| -------------------------------------------------- | ------------------------------------------------------- |
 | <kbd>M</kbd> + <kbd>space</kbd>                    | Cycle through available layouts.                        |
 | <kbd>M</kbd> + <kbd>S</kbd> + <kbd>space</kbd>     | Focused window -> fullscreen.                           |
 | <kbd>M</kbd> + <kbd>n</kbd>                        | Reset resized windows -> default size.                  |
@@ -60,7 +63,7 @@ implementation or an outdated `README.md`.
 ### Window Movement Mouse Keybindings
 
 | Keybinding                        | Action                                       |
-|-----------------------------------|----------------------------------------------|
+| --------------------------------- | -------------------------------------------- |
 | <kbd>M</kbd> + <kbd>Button1</kbd> | Window -> floating mode, move by dragging.   |
 | <kbd>M</kbd> + <kbd>Button2</kbd> | Window -> floating mode, resize by dragging. |
 | <kbd>M</kbd> + <kbd>Button3</kbd> | Window -> top of stack.                      |
@@ -68,7 +71,7 @@ implementation or an outdated `README.md`.
 ### Workspace Movement Keybindings
 
 | Keybinding                                      | Action                                    |
-|-------------------------------------------------|-------------------------------------------|
+| ----------------------------------------------- | ----------------------------------------- |
 | <kbd>M</kbd> + <kbd>[1..9]</kbd>                | Switch to n-workspace.                    |
 | <kbd>M</kbd> + <kbd>S</kbd> + <kbd>[1..9]</kbd> | Move client to n-workspace.               |
 | <kbd>H</kbd> + <kbd>e                           | Move to empty workspace.                  |
@@ -77,6 +80,6 @@ implementation or an outdated `README.md`.
 ### Screen Movement Keybindings
 
 | Keybinding                                       | Action                                          |
-|--------------------------------------------------|-------------------------------------------------|
+| ------------------------------------------------ | ----------------------------------------------- |
 | <kbd>M</kbd> + <kbd>{w,e,r}</kbd>                | Switch to physical/Xinerama screens 1, 2, or 3. |
 | <kbd>M</kbd> + <kbd>S</kbd> + <kbd>{w,e,r}</kbd> | Move client to screen 1, 2, or 3.               |

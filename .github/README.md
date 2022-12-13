@@ -41,7 +41,7 @@
 
 # Showcase (XMonad)
 
-![XMonad Desktop](./assets/themes/tokyonight-xmonad.png)
+![XMonad Desktop](./assets/themes/tokyonight/xmonad.png)
 
 # Introduction
 

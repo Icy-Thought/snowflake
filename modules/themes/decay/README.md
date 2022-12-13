@@ -1,8 +1,11 @@
 # Decay
+
 A work-in-progress theme that I am looking forward to use full time!
 
 # Minimal Capture
-![Decay](../../../.github/assets/themes/decay.png)
+
+![Decay](../../../.github/assets/themes/decay/xmonad.png)
 
 # Useful Links
-1. [Decay Repository](https://github.com/catppuccin/catppuccin) (GitHub)
+
+1. [Decay Repository](https://github.com/decaycs) (GitHub)

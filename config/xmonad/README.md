@@ -1,13 +1,17 @@
-<img alt="XMonad Desktop" src="../../.assets/main/png/xmonad-desktop.png" align="center">
+<img alt="XMonad Desktop" src="../../.github/assets/themes/tokyonight/xmonad.png" align="center">
 
 # (>>=) XMonad
+
 > A dynamically tiling X11 window manager that is written and configured in
 > Haskell. - [XMonad](https://xmonad.org)
 
 ## Keybindings
-*Credits:* [micrub](https://gist.github.com)/[xmonad-default-key-bindings.md](https://gist.github.com/micrub/aeebe7eb4d2df9e5e203e76a0fd89542)
+
+_Credits:_
+[micrub](https://gist.github.com)/[xmonad-default-key-bindings.md](https://gist.github.com/micrub/aeebe7eb4d2df9e5e203e76a0fd89542)
 
 ### Definitions:
+
 - <kbd>modm</kbd> = <kbd>super</kbd> (windows key)
 - <kbd>modalt</kbd> = <kbd>super</kbd> + <kbd>alt</kbd>
 - <kbd>hyper</kbd> = <kbd>super</kbd> + <kbd>ctrl</kbd> + <kbd>shift</kbd>
@@ -15,7 +19,7 @@
 ### Action Keybindings
 
 | Keybinding                                             | Action                                                       |
-|--------------------------------------------------------|--------------------------------------------------------------|
+| ------------------------------------------------------ | ------------------------------------------------------------ |
 | <kbd>modm</kbd> + <kbd>shift</kbd> + <kbd>/</kbd>      | XMessage -> summary of default keybindings.                  |
 | <kbd>modm</kbd> + <kbd>shift</kbd> + <kbd>return</kbd> | Launch terminal. (Alacritty)                                 |
 | <kbd>modm</kbd> + <kbd>alt</kbd> + <kbd>f</kbd>        | Launch Firefox Browser.                                      |
@@ -33,7 +37,7 @@
 ### Window Movement Keybindings
 
 | Keybinding                                                | Action                                                  |
-|-----------------------------------------------------------|---------------------------------------------------------|
+| --------------------------------------------------------- | ------------------------------------------------------- |
 | <kbd>modm</kbd> + <kbd>space</kbd>                        | Cycle through available layouts.                        |
 | <kbd>modm</kbd> + <kbd>shift</kbd> + <kbd>space</kbd>     | Reset current workspace layout -> default.              |
 | <kbd>modm</kbd> + <kbd>n</kbd>                            | Reset resized window -> default size.                   |
@@ -56,7 +60,7 @@
 ### Window Movement Mouse Keybindings
 
 | Keybinding                           | Action                                       |
-|--------------------------------------|----------------------------------------------|
+| ------------------------------------ | -------------------------------------------- |
 | <kbd>modm</kbd> + <kbd>button1</kbd> | Window -> floating mode, move by dragging.   |
 | <kbd>modm</kbd> + <kbd>button3</kbd> | Window -> floating mode, resize by dragging. |
 | <kbd>modm</kbd> + <kbd>button2</kbd> | Window -> top of the stack.                  |
@@ -64,7 +68,7 @@
 ### Workspace Movement Keybindings
 
 | Keybinding                                             | Action                                    |
-|--------------------------------------------------------|-------------------------------------------|
+| ------------------------------------------------------ | ----------------------------------------- |
 | <kbd>modm</kbd> + <kbd>[1..9]</kbd>                    | Switch to n-workspace.                    |
 | <kbd>modm</kbd> + <kbd>shift</kbd> + <kbd>[1..9]</kbd> | Move client to n-workspace.               |
 | <kbd>hyper</kbd> + <kbd>e                              | Move to empty workspace.                  |
@@ -73,9 +77,10 @@
 ### Screen Movement Keybindings
 
 | Keybinding                                              | Action                                          |
-|---------------------------------------------------------|-------------------------------------------------|
+| ------------------------------------------------------- | ----------------------------------------------- |
 | <kbd>modm</kbd> + <kbd>{w,e,r}</kbd>                    | Switch to physical/Xinerama screens 1, 2, or 3. |
 | <kbd>modm</kbd> + <kbd>shift</kbd> + <kbd>{w,e,r}</kbd> | Move client to screen 1, 2, or 3.               |
 
 # Special Thanks 🪔
+
 - [IvanMalison](https://github.com/IvanMalison): XMonad Setup.
