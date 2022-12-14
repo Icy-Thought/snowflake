@@ -37,7 +37,7 @@ with lib.my; {
       interactiveShellInit = ''
         ${getExe pkgs.any-nix-shell} fish --info-right | source
         ${getExe pkgs.zoxide} init fish | source
-        ${getExe pkgs.any-nix-shell} fish | source
+        ${getExe pkgs.direnv} hook fish | source
 
         # Vi-Bindings:
         set fish_greeting
@@ -68,7 +68,7 @@ with lib.my; {
     };
 
     home.configFile = with config.modules.themes; (mkIf (active != null) {
-      fzf-theme = {
+      fish-fzf-theme = {
         target = "fish/conf.d/fzf.fish";
         text = with colors.main; ''
               set -Ux FZF_DEFAULT_OPTS "\

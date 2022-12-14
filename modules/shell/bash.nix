@@ -11,12 +11,6 @@ with lib.my; {
   };
 
   config = mkIf config.modules.shell.bash.enable {
-    hm.programs.direnv = {
-      enable = true;
-      nix-direnv.enable = true;
-      config.whitelist.prefix = [ "/home" ];
-    };
-
     # Enable starship-rs:
     modules.shell.starship.enable = true;
     hm.programs.starship.enableBashIntegration = true;
@@ -34,6 +28,7 @@ with lib.my; {
       };
       bashrcExtra = ''
         eval "$(starship init bash)"
+        eval "$(direnv hook bash)"
       '';
     };
   };

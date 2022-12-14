@@ -12,7 +12,7 @@ in {
   options.modules.shell = {
     default = mkOption {
       type = with types; package;
-      default = pkgs.fish;
+      default = pkgs.zsh;
       description = "Default sys-shell";
       example = "xonsh";
     };
@@ -26,6 +26,12 @@ in {
 
     (mkIf cfg.usefulPkgs.enable {
       modules.shell.btop.enable = true;
+
+      hm.programs.direnv = {
+        enable = true;
+        nix-direnv.enable = true;
+        config.whitelist.prefix = [ "/home" ];
+      };
 
       user.packages = with pkgs; [
         any-nix-shell

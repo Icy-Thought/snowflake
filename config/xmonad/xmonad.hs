@@ -236,7 +236,7 @@ chromiumSelectorBase = isChromiumClass <$> className
 
 chromiumSelector = className =? "chromium-browser"
 
-firefoxSelector = className =? "firefox-aurora"
+firefoxSelector = className =? "firefox-aurora" <&&> appName =? "Navigator"
 
 protonMailSelector = chromiumSelectorBase <&&> fmap isProtonMailTitle title
 

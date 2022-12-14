@@ -107,10 +107,9 @@ in
           # -------===[ Aliases & Abbreviations ]===------- #
           aliases[exa] = "exa --group-directories-first"
 
-          ${lib.concatStrings (lib.mapAttrsToList (k: v:
-            with lib.strings; ''
+          ${concatStrings (mapAttrsToList (k: v: with strings; ''
               abbrevs[${escapeNixString k}] = ${escapeNixString v}
-            '')
+          '')
           abbrevs)}
 
           # -------===[ Executing 3rd-Plugins ]===------- #
