@@ -31,6 +31,7 @@ with lib.my; {
 
       shellAliases = {
         exa = "exa --group-directories-first";
+        less = "less -R";
       };
       shellAbbrs = import "${config.snowflake.configDir}/shell-abbr";
 

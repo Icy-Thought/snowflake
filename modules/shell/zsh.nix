@@ -42,24 +42,34 @@ in
       };
       historySubstringSearch.enable = true;
 
-      enableCompletion = false;
+      enableCompletion = true;
       initExtraBeforeCompInit = ''
-        # zstyle ':completion:*' menu select
+        # -------===[ Uncategorized ]===------- #
+        zstyle ':completion:*'                      completer _extensions _complete _approximate
+        zstyle ':completion:*'                      accept-exact '*(N)'
+        zstyle ':completion:*'                      file-sort modification
+        zstyle ':completion:*'                      matcher-list ''' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+        zstyle ':completion:*'                      menu select=2
+        zstyle ':completion:*'                      separate-sections 'yes'
+        zstyle ':completion:*'                      squeeze-slashes true
+        zstyle ':completion:*:default'              list-colors ''${(s.:.)LS_COLORS}
+        zstyle ':completion::complete:*'            use-cache on
+        zstyle ':completion:*'                      cache-path "$XDG_CACHE_HOME/zsh/.zcompcache"
 
-        # AUTO-COMPLETE
-        zstyle ':autocomplete:*' min-delay 0.5
-        zstyle ':autocomplete:*' min-input 1
-        zstyle ':autocomplete:*' insert-unambiguous yes
-        zstyle ':autocomplete:*' fzf-completion yes
+        # -------===[ Aesthetics ]===------- #
+        zstyle ':completion:*:messages'             format ' %F{purple} -- %d --%f'
+        zstyle ':completion:*:warnings'             format ' %F{red}-- no matches found --%f'
+        zstyle ':completion:*:*:*:*:descriptions'   format '%F{green}-- %d --%f'
+        zstyle ':completion:*:*:*:*:corrections'    format '%F{yellow}!- %d (errors: %e) -!%f'
       '';
 
-      # enableAutosuggestions = true;
+      enableAutosuggestions = true;
 
       localVariables = {
         KEYTIMEOUT = "1";
-        # ZSH_AUTOSUGGEST_USE_ASYNC = true;
-        # ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE = 40;
-        # ZSH_AUTOSUGGEST_STRATEGY = [ "history" "completion" ];
+        ZSH_AUTOSUGGEST_USE_ASYNC = true;
+        ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE = 40;
+        ZSH_AUTOSUGGEST_STRATEGY = [ "history" "completion" ];
       };
 
       initExtra = ''
@@ -117,14 +127,17 @@ in
         source "$HOME/.config/zsh/${themeCfg.active}.zsh"
 
         # -------===[ KeyBindings ]===------- #
-        bindkey "^[[1;5C" forward-word
-        bindkey "^[[1;5D" backward-word
-
-        # C-<Enter> => accept suggestion:
-        # bindkey '^ ' autosuggest-accept
+        bindkey "^[[1;5C" forward-word                          # Ctrl-<R-arrow> -> move forward 1 word
+        bindkey "^[[1;5D" backward-word                         # Ctrl-<L-arrow> -> move back 1 word
+        bindkey -M menuselect '^[[Z' reverse-menu-complete      # Shift-Tab -> reverse menu navigation
+        bindkey -M main "^M" accept-line                        # Hide autosuggestion != used
+        bindkey '^_' autosuggest-accept                         # C-/ => accept suggestion
       '';
 
-      shellAliases = { exa = "exa --group-directories-first"; };
+      shellAliases = {
+        exa = "exa --group-directories-first";
+        less = "less -R";
+      };
 
       plugins =
         let
@@ -142,7 +155,6 @@ in
             hash = "sha256-SUu/0vXK6glItxmPZjZMaMLqoTfU7nYtoBS7Lcm6cgk=";
           };
         }] ++ (builtins.map (p: mkPlugin p) [
-          "autocomplete"
           "autopair"
           "nix-shell"
           "vi-mode"
@@ -238,6 +250,10 @@ in
             ZSH_HIGHLIGHT_STYLES[arg0]='fg=${bright.cyan}'
             ZSH_HIGHLIGHT_STYLES[default]='fg=${bright.cyan}'
             ZSH_HIGHLIGHT_STYLES[cursor]='fg=${bright.cyan}'
+
+             # -------===[ Patterns ]===------- #
+            ZSH_HIGHLIGHT_PATTERNS+=('sudo ' 'fg=${types.fg},bold,bg=${normal.red}')
+            ZSH_HIGHLIGHT_PATTERNS+=('rm -rf *' 'fg=${types.fg},bold,bg=${normal.red}')
 
              # -------===[ Plugins ]===------- #
              # ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=${bright.black},bold,underline"

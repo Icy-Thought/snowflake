@@ -106,6 +106,7 @@ in
 
           # -------===[ Aliases & Abbreviations ]===------- #
           aliases[exa] = "exa --group-directories-first"
+          aliases[less] = "less -R"
 
           ${concatStrings (mapAttrsToList (k: v: with strings; ''
               abbrevs[${escapeNixString k}] = ${escapeNixString v}
