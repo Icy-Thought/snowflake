@@ -9,7 +9,7 @@
     networking = {
       enable = true;
       networkManager.enable = true;
-      # akkadianVPN.enable = true;
+      akkadianVPN.enable = true;
     };
 
     themes.active = "tokyonight";
@@ -67,8 +67,8 @@
     };
 
     shell = {
+      default = "zsh";
       git.enable = true;
-      zsh.enable = true;
       gnupg.enable = true;
     };
   };

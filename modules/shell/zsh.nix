@@ -7,16 +7,14 @@
 with lib;
 with lib.my;
 
-let
-  cfg = config.modules.shell.zsh;
-  themeCfg = config.modules.themes;
+let themeCfg = config.modules.themes;
 in
 {
   options.modules.shell.zsh = {
     enable = mkBoolOpt false;
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf (config.modules.shell.default == "zsh") {
     modules.shell.usefulPkgs.enable = true;
 
     # Custom shell modules:
@@ -127,11 +125,11 @@ in
         source "$HOME/.config/zsh/${themeCfg.active}.zsh"
 
         # -------===[ KeyBindings ]===------- #
-        bindkey "^[[1;5C" forward-word                          # Ctrl-<R-arrow> -> move forward 1 word
-        bindkey "^[[1;5D" backward-word                         # Ctrl-<L-arrow> -> move back 1 word
-        bindkey -M menuselect '^[[Z' reverse-menu-complete      # Shift-Tab -> reverse menu navigation
-        bindkey -M main "^M" accept-line                        # Hide autosuggestion != used
-        bindkey '^_' autosuggest-accept                         # C-/ => accept suggestion
+        bindkey "^[[1;5C" forward-word                  # Ctrl-<R-arrow> -> move forward 1 word
+        bindkey "^[[1;5D" backward-word                 # Ctrl-<L-arrow> -> move back 1 word
+        bindkey '^[[Z' reverse-menu-complete            # Shift-Tab -> reverse menu navigation
+        bindkey -M main "^M" accept-line                # Hide autosuggestion != used
+        bindkey '^_' autosuggest-accept                 # C-/ => accept suggestion
       '';
 
       shellAliases = {
@@ -195,10 +193,10 @@ in
             ZSH_HIGHLIGHT_STYLES[comment]='fg=${normal.black}'
 
             # -------===[ Functions/Methods ]===------- #
-            ZSH_HIGHLIGHT_STYLES[alias]='fg=${normal.green}'
-            ZSH_HIGHLIGHT_STYLES[suffix-alias]='fg=${normal.green}'
-            ZSH_HIGHLIGHT_STYLES[global-alias]='fg=${normal.green}'
-            ZSH_HIGHLIGHT_STYLES[function]='fg=${normal.green}'
+            ZSH_HIGHLIGHT_STYLES[alias]='fg=${normal.magenta}'
+            ZSH_HIGHLIGHT_STYLES[suffix-alias]='fg=${normal.magenta}'
+            ZSH_HIGHLIGHT_STYLES[global-alias]='fg=${normal.magenta}'
+            ZSH_HIGHLIGHT_STYLES[function]='fg=${normal.blue}'
             ZSH_HIGHLIGHT_STYLES[command]='fg=${normal.green}'
             ZSH_HIGHLIGHT_STYLES[precommand]='fg=${normal.green},italic'
             ZSH_HIGHLIGHT_STYLES[autodirectory]='fg=${normal.yellow},italic'
@@ -207,7 +205,7 @@ in
             ZSH_HIGHLIGHT_STYLES[back-quoted-argument]='fg=${normal.magenta}'
 
             # -------===[ Built-ins ]===------- #
-            ZSH_HIGHLIGHT_STYLES[builtin]='fg=${normal.green}'
+            ZSH_HIGHLIGHT_STYLES[builtin]='fg=${normal.blue}'
             ZSH_HIGHLIGHT_STYLES[reserved-word]='fg=${normal.green}'
             ZSH_HIGHLIGHT_STYLES[hashed-command]='fg=${normal.green}'
 
@@ -230,26 +228,26 @@ in
             ZSH_HIGHLIGHT_STYLES[rc-quote]='fg=${bright.yellow}'
 
             # -------===[ Variables ]===------- #
-            ZSH_HIGHLIGHT_STYLES[dollar-quoted-argument]='fg=${bright.cyan}'
+            ZSH_HIGHLIGHT_STYLES[dollar-quoted-argument]='fg=${types.highlight}'
             ZSH_HIGHLIGHT_STYLES[dollar-quoted-argument-unclosed]='fg=${bright.red}'
-            ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]='fg=${bright.cyan}'
-            ZSH_HIGHLIGHT_STYLES[assign]='fg=${bright.cyan}'
-            ZSH_HIGHLIGHT_STYLES[named-fd]='fg=${bright.cyan}'
-            ZSH_HIGHLIGHT_STYLES[numeric-fd]='fg=${bright.cyan}'
+            ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]='fg=${types.highlight}'
+            ZSH_HIGHLIGHT_STYLES[assign]='fg=${types.highlight}'
+            ZSH_HIGHLIGHT_STYLES[named-fd]='fg=${types.highlight}'
+            ZSH_HIGHLIGHT_STYLES[numeric-fd]='fg=${types.highlight}'
 
             # -------===[ Non-Exclusive ]===------- #
             ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=${normal.red}'
-            ZSH_HIGHLIGHT_STYLES[path]='fg=${bright.cyan},underline'
+            ZSH_HIGHLIGHT_STYLES[path]='fg=${types.highlight},underline'
             ZSH_HIGHLIGHT_STYLES[path_pathseparator]='fg=${bright.red},underline'
-            ZSH_HIGHLIGHT_STYLES[path_prefix]='fg=${bright.cyan},underline'
+            ZSH_HIGHLIGHT_STYLES[path_prefix]='fg=${types.highlight},underline'
             ZSH_HIGHLIGHT_STYLES[path_prefix_pathseparator]='fg=${bright.red},underline'
-            ZSH_HIGHLIGHT_STYLES[globbing]='fg=${bright.cyan}'
+            ZSH_HIGHLIGHT_STYLES[globbing]='fg=${types.highlight}'
             ZSH_HIGHLIGHT_STYLES[history-expansion]='fg=${normal.magenta}'
             ZSH_HIGHLIGHT_STYLES[back-quoted-argument-unclosed]='fg=${normal.red}'
-            ZSH_HIGHLIGHT_STYLES[redirection]='fg=${bright.cyan}'
-            ZSH_HIGHLIGHT_STYLES[arg0]='fg=${bright.cyan}'
-            ZSH_HIGHLIGHT_STYLES[default]='fg=${bright.cyan}'
-            ZSH_HIGHLIGHT_STYLES[cursor]='fg=${bright.cyan}'
+            ZSH_HIGHLIGHT_STYLES[redirection]='fg=${types.highlight}'
+            ZSH_HIGHLIGHT_STYLES[arg0]='fg=${types.highlight}'
+            ZSH_HIGHLIGHT_STYLES[default]='fg=${types.highlight}'
+            ZSH_HIGHLIGHT_STYLES[cursor]='fg=${types.highlight}'
 
              # -------===[ Patterns ]===------- #
             ZSH_HIGHLIGHT_PATTERNS+=('sudo ' 'fg=${types.fg},bold,bg=${normal.red}')

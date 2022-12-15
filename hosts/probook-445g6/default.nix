@@ -35,8 +35,8 @@
     };
 
     shell = {
+      default = "fish";
       git.enable = true;
-      fish.enable = true;
       gnupg.enable = true;
     };
   };

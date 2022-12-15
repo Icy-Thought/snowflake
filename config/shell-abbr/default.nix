@@ -13,6 +13,7 @@ let
     nb = "nix-build -E 'with import <nixpkgs> {}; callPackage ./. {}'";
     np = "nix-shell -p";
     nls = "nix-store --query --requisites /run/current-system | cut -d- -f2- | sort | uniq";
+    nfl = "nix flake lock --update-input";
 
     # Sys-Management
     bat0 = "upower -i /org/freedesktop/UPower/devices/battery_BAT0";

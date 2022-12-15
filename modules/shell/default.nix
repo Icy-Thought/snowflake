@@ -11,9 +11,9 @@ let cfg = config.modules.shell;
 in {
   options.modules.shell = {
     default = mkOption {
-      type = with types; package;
-      default = pkgs.zsh;
-      description = "Default sys-shell";
+      type = with types; nullOr (enum [ "fish" "zsh" "xonsh" ]);
+      default = null;
+      description = "Default system shell";
       example = "xonsh";
     };
     usefulPkgs.enable = mkBoolOpt false;
@@ -21,7 +21,7 @@ in {
 
   config = mkMerge [
     (mkIf (cfg.default != null) {
-      users.defaultUserShell = cfg.default;
+      users.defaultUserShell = pkgs."${cfg.default}";
     })
 
     (mkIf cfg.usefulPkgs.enable {

@@ -11,7 +11,7 @@ with lib.my; {
     theme = config.modules.themes;
   };
 
-  config = mkIf config.modules.shell.fish.enable {
+  config = mkIf (config.modules.shell.default == "fish") {
     modules.shell.usefulPkgs.enable = true;
 
     # Custom shell modules:
