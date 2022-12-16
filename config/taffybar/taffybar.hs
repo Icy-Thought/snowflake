@@ -76,10 +76,10 @@ myGraphConfig = defaultGraphConfig
   , graphWidth           = 75
   , graphBackgroundColor = (0.0, 0.0, 0.0, 0.0)
   }
-cpuCfg = myGraphConfig { graphDataColors = [ctRed], graphLabel = Just "CPU" }
-memCfg = myGraphConfig { graphDataColors = [ctBlue], graphLabel = Just "MEM" }
+cpuCfg = myGraphConfig { graphDataColors = [ctRed], graphLabel = Just "Cpu" }
+memCfg = myGraphConfig { graphDataColors = [ctBlue], graphLabel = Just "Mem" }
 netCfg =
-  myGraphConfig { graphDataColors = [ctYellow], graphLabel = Just "NET" }
+  myGraphConfig { graphDataColors = [ctYellow], graphLabel = Just "Net" }
 
 memCallback :: IO [Double]
 memCallback = do
@@ -178,7 +178,7 @@ main = do
       n   -> n
     myClock = deocrateWithSetClassAndBoxes "clock" $ textClockNewWith
       defaultClockConfig { clockUpdateStrategy = RoundedTargetInterval 60 0.0
-                         , clockFormatString   = "%a %b %_d, %H:%M"
+                         , clockFormatString   = "\61463  %H:%M   \61555  %d/%m/%y"
                          }
     myTray = deocrateWithSetClassAndBoxes "tray" $ sniTrayNewFromParams
       defaultTrayParams { trayRightClickAction = PopupMenu

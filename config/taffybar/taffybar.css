@@ -3,7 +3,8 @@
 .taffy-window * {
     font-family: "VictorMono Nerd Font";
     font-size: 12px;
-    font-weight: 600; /* SemiBold */
+    font-style: italic; 
+    font-weight: 900;
     color: @bar-foreground;
 }
 

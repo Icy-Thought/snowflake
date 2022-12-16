@@ -17,7 +17,7 @@ with lib.my; {
       enable = true;
       package = pkgs.bluez;
       powerOnBoot = true;
-      hsphfpd.enable = true;
+      hsphfpd.enable = false;
       disabledPlugins = [ "sap" ];
       settings = {
         # Xbox X Controller Settings:

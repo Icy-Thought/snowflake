@@ -34,7 +34,9 @@ in {
 
       environment.variables =
         let closedAI-path = config.age.secrets.closedAI.path;
-        in if pathExists closedAI-path then { OPENAI_API_KEY = readFile closedAI-path; } else null;
+        in if pathExists closedAI-path
+        then { OPENAI_API_KEY = removeSuffix "\n" (readFile closedAI-path); }
+        else { };
     }
 
     (mkIf cfg.agasaya.enable {
