@@ -5,12 +5,10 @@
 , ...
 }:
 with lib;
-with lib.my; {
-  options.modules.shell.fish = {
-    enable = mkBoolOpt false;
-    theme = config.modules.themes;
-  };
+with lib.my;
 
+let themeCfg = config.modules.themes;
+in {
   config = mkIf (config.modules.shell.default == "fish") {
     modules.shell.usefulPkgs.enable = true;
 
@@ -68,7 +66,7 @@ with lib.my; {
         builtins.map (p: mkPlugin p) [ "done" "autopair-fish" "fzf-fish" ];
     };
 
-    home.configFile = with config.modules.themes; (mkIf (active != null) {
+    home.configFile = with themeCfg; (mkIf (active != null) {
       fish-fzf-theme = {
         target = "fish/conf.d/fzf.fish";
         text = with colors.main; ''
@@ -80,7 +78,7 @@ with lib.my; {
       };
 
       fish-theme = {
-        target = "fish/conf.d/${config.modules.themes.active}.fish";
+        target = "fish/conf.d/${cfg.active}.fish";
         text = with colors.fish; ''
           # --> General
           set -l foreground ${fg}

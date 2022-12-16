@@ -44,7 +44,7 @@ in {
         taffybar-base = {
           target = "taffybar/taffybar.css";
           text = ''
-            ${optionalString (active != null) ''
+            ${strings.optionalString (active != null) ''
                 @import url("./palette/${active}.css");
             ''}
             ${builtins.readFile "${taffyDir}/taffybar.css"}

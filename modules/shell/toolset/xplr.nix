@@ -86,7 +86,7 @@ in {
         xplr.config.general.show_hidden = true
         xplr.config.general.enable_recover_mode = true
 
-        ${optionalString (cfg.fennel.enable) ''
+        ${strings.optionalString (cfg.fennel.enable) ''
           -- add support for fennel
           local fennel = require("fennel")
 

@@ -304,7 +304,7 @@ in
           command = ''
             if [ -e "$XDG_DATA_HOME/wallpaper" ]; then
               ${getExe pkgs.feh} --bg-${wCfg.mode} \
-              ${optionalString wCfg.combineScreens "--no-xinerama"} \
+              ${strings.optionalString wCfg.combineScreens "--no-xinerama"} \
               --no-fehbg \
               $XDG_DATA_HOME/wallpaper
             fi

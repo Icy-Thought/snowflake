@@ -136,7 +136,7 @@ with lib.my; {
       };
     }
 
-    (mkIf config.modules.shell.fish.enable {
+    (mkIf (config.modules.shell.default == "fish") {
       # easier gitignore fetching (fish)
       hm.programs.fish.functions = {
         gitignore = "curl -sL https://www.gitignore.io/api/$argv";

@@ -31,6 +31,10 @@ in {
         vimAlias = true;
         vimdiffAlias = true;
       };
+
+      environment.variables =
+        let closedAI-path = config.age.secrets.closedAI.path;
+        in if pathExists closedAI-path then { OPENAI_API_KEY = readFile closedAI-path; } else null;
     }
 
     (mkIf cfg.agasaya.enable {

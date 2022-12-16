@@ -14,7 +14,6 @@ in {
       type = with types; nullOr (enum [ "fish" "zsh" "xonsh" ]);
       default = null;
       description = "Default system shell";
-      example = "xonsh";
     };
     usefulPkgs.enable = mkBoolOpt false;
   };

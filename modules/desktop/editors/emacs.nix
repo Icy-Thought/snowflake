@@ -47,7 +47,7 @@ in {
       };
 
       # Allow fish-shell to send information to vterm via properly escaped sequences.
-      hm.programs.fish = mkIf config.modules.shell.fish.enable {
+      hm.programs.fish = mkIf (config.modules.shell.default == "fish") {
         interactiveShellInit = ''
           function vterm_printf;
               if begin; [  -n "$TMUX" ]  ; and  string match -q -r "screen|tmux" "$TERM"; end
@@ -69,7 +69,7 @@ in {
         };
       };
 
-      programs.xonsh.config = mkIf config.modules.shell.xonsh.enable ''
+      programs.xonsh.config = mkIf (config.modules.shell.default == "xonsh") ''
       ''; # TODO
     }
 

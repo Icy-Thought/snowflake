@@ -61,12 +61,10 @@ in {
         name = "qtile";
         start = ''
           ${cfg.package}/bin/qtile start -b ${cfg.backend} \
-          ${
-            optionalString (cfg.configFile != null) ''
+          ${ strings.optionalString (cfg.configFile != null) ''
               --config ${cfg.configFile}
             ''
-          } &
-          waitPID=$!
+          } & waitPID=$!
         '';
       }];
     };

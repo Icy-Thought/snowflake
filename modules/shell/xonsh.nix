@@ -62,10 +62,6 @@ let
   ];
 in
 {
-  options.modules.shell.xonsh = {
-    enable = mkBoolOpt false;
-  };
-
   config = mkIf (config.modules.shell.default == "xonsh") {
     modules.shell.usefulPkgs.enable = true;
 

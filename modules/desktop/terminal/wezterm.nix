@@ -32,7 +32,7 @@ with lib.my; {
               local mouse = require("modules.mouse")
               local hyperlinks = require("modules.hyperlinks")
 
-              ${optionalString (active != null) ''
+              ${strings.optionalString (active != null) ''
                 require("statusbar.${active}")
 
                 local colorscheme = require("theme.colorscheme")

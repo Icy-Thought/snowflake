@@ -7,14 +7,12 @@
 with lib;
 with lib.my;
 
-let themeCfg = config.modules.themes;
+let
+  cfg = config.modules.shell;
+  themeCfg = config.modules.themes;
 in
 {
-  options.modules.shell.zsh = {
-    enable = mkBoolOpt false;
-  };
-
-  config = mkIf (config.modules.shell.default == "zsh") {
+  config = mkIf (cfg.default == "zsh") {
     modules.shell.usefulPkgs.enable = true;
 
     # Custom shell modules:
@@ -111,11 +109,6 @@ in
         unsetopt GLOB_DOTS
         unsetopt AUTO_NAME_DIRS                 # Don't add variable-stored paths to ~ list
 
-        # -------===[ External Plugins ]===------- #
-        any-nix-shell zsh --info-right | source /dev/stdin
-        eval "$(zoxide init zsh)"
-        eval "$(direnv hook zsh)"
-
         # -------===[ Aesthetics ]===------- #
         source "$HOME/.config/zsh/fzf.zsh"
         export MANPAGER="sh -c 'col -bx | bat -l man -p'"
@@ -130,6 +123,11 @@ in
         bindkey '^[[Z' reverse-menu-complete            # Shift-Tab -> reverse menu navigation
         bindkey -M main "^M" accept-line                # Hide autosuggestion != used
         bindkey '^_' autosuggest-accept                 # C-/ => accept suggestion
+
+        # -------===[ External Plugins ]===------- #
+        any-nix-shell zsh --info-right | source /dev/stdin
+        eval "$(zoxide init zsh)"
+        eval "$(direnv hook zsh)"
       '';
 
       shellAliases = {
