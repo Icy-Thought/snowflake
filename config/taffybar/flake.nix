@@ -20,6 +20,15 @@
         {
           devShells.default = pkgs.haskellPackages.shellFor {
             packages = p: [ p.raybar ];
+            buildInputs = with pkgs.haskellPackages; [
+              cabal-install
+              ghcid
+              haskell-language-server
+              hlint
+              implicit-hie
+              stylish-haskell
+            ];
+
           };
           packages.default = pkgs.haskellPackages.raybar;
         }) // { inherit overlay overlays; };

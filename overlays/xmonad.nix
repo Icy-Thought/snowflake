@@ -4,7 +4,10 @@ _: pkgs: {
       pkgs.lib.composeExtensions (old.overrides or (_: _: { }))
         (final: prev: {
           birostrisWM = final.callCabal2nix "birostrisWM"
-            (pkgs.lib.sourceByRegex ../config/xmonad [ "xmonad.hs" "birostrisWM.cabal" ])
+            (pkgs.lib.sourceByRegex ../config/xmonad [
+              "xmonad.hs"
+              "birostrisWM.cabal"
+            ])
             { };
         });
   });

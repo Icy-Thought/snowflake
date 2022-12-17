@@ -13,11 +13,14 @@ with lib.my; {
   config = mkMerge [
     (mkIf config.modules.develop.haskell.enable {
       user.packages = with pkgs.haskellPackages; [
-        ghc
+        (ghcWithHoogle (p: with p; [
+          taffybar
+          xmonad
+          xmonad-contrib
+        ]))
         cabal-install
         haskell-language-server
         hasktags
-        hoogle
         hpack
         stylish-haskell
       ];
@@ -26,8 +29,9 @@ with lib.my; {
         target = ".ghci";
         text = ''
           :set -fobject-code
-          :set prompt "λ> "
+          :set prompt "\ESC[38;5;3m\STXλ>\ESC[m\STX "
           :set prompt-cont "|> "
+          :def hoogle \x -> pure $ ":!hoogle search \"" ++ x ++ "\""
         '';
       };
     })
