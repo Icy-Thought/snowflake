@@ -121,7 +121,6 @@ in
         bindkey "^[[1;5C" forward-word                  # Ctrl-<R-arrow> -> move forward 1 word
         bindkey "^[[1;5D" backward-word                 # Ctrl-<L-arrow> -> move back 1 word
         bindkey '^[[Z' reverse-menu-complete            # Shift-Tab -> reverse menu navigation
-        bindkey -M main "^M" accept-line                # Hide autosuggestion != used
         bindkey '^_' autosuggest-accept                 # C-/ => accept suggestion
 
         # -------===[ External Plugins ]===------- #
@@ -147,8 +146,8 @@ in
           src = pkgs.fetchFromGitHub {
             owner = "olets";
             repo = "zsh-abbr";
-            rev = "v4.8.2";
-            hash = "sha256-SUu/0vXK6glItxmPZjZMaMLqoTfU7nYtoBS7Lcm6cgk=";
+            rev = "v4.8.3";
+            hash = "sha256-paCybqh6hJlDhIZKFEdypjpgbuPV4x3ezdtL4UZRoWw=";
           };
         }] ++ (builtins.map (p: mkPlugin p) [
           "autopair"
