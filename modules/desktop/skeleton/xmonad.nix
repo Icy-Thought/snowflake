@@ -39,7 +39,6 @@ with lib.my; {
     ];
 
     services.xserver = {
-      enable = true;
       displayManager.defaultSession = "none+xmonad";
       windowManager.session = [{
         name = "xmonad";
@@ -50,16 +49,8 @@ with lib.my; {
       }];
     };
 
-    hm.services = {
-      network-manager-applet.enable = true;
-      status-notifier-watcher.enable = true;
-    };
-
-    hm.xsession = {
-      enable = true;
-      numlock.enable = true;
-      preferStatusNotifierItems = true;
-      windowManager.command = "${getExe pkgs.haskellPackages.birostrisWM}";
+    hm.xsession.windowManager = {
+      command = "${getExe pkgs.haskellPackages.birostrisWM}";
     };
   };
 }

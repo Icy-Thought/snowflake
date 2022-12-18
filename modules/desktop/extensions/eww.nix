@@ -15,6 +15,11 @@ in {
   };
 
   config = mkIf cfg.enable {
+    hm.services = {
+      network-manager-applet.enable = true;
+      status-notifier-watcher.enable = true;
+    };
+
     hm.programs.eww = {
       enable = true;
       configDir = "${config.snowflake.configDir}/eww"; # TODO

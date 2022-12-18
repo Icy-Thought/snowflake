@@ -27,7 +27,12 @@ with lib.my; {
       hm.programs.git = {
         enable = true;
         package = pkgs.gitFull;
-        delta.enable = true;
+        difftastic = {
+          enable = true;
+          background = "dark";
+          color = "always";
+          # display = "inline";
+        };
 
         aliases = {
           unadd = "reset HEAD";
@@ -84,8 +89,8 @@ with lib.my; {
         userName = "Icy-Thought";
         userEmail = "icy-thought@pm.me";
         signing = {
-          signByDefault = true;
           key = "B593E438DDAB3C66";
+          signByDefault = true;
         };
 
         extraConfig = {

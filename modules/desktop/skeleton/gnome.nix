@@ -18,22 +18,14 @@ with lib.my; {
 
     programs.dconf.enable = true;
 
-    services.xserver = {
+    services.xserver.desktopManager.gnome = {
       enable = true;
-      desktopManager.gnome = {
-        enable = true;
-        # debug = true;
-      };
+      # debug = true;
     };
 
     services.gnome = {
       chrome-gnome-shell.enable = true;
       sushi.enable = true;
-    };
-
-    services.dbus = {
-      enable = true;
-      packages = with pkgs; [ dconf ];
     };
 
     services.udev = {

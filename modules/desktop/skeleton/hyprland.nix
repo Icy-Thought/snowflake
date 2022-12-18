@@ -46,9 +46,8 @@ in {
       wireplumber
     ];
 
-    services.xserver = {
-      enable = true;
-      displayManager.defaultSession = "hyprland";
+    services.xserver.displayManager = {
+      defaultSession = "hyprland";
     };
 
     programs.hyprland.enable = true;
@@ -59,12 +58,6 @@ in {
       enable = true;
       extraConfig = builtins.readFile "${config.snowflake.configDir}/hyprland/hyprland.conf"; # TODO
     };
-
-    hm.services = {
-      network-manager-applet.enable = true;
-      status-notifier-watcher.enable = true;
-    };
-
 
     # Setting our system wallpaper:
     home.configFile.hypr-wallpaper = {

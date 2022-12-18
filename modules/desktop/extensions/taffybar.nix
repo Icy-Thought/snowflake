@@ -17,7 +17,7 @@ in {
   config = mkIf cfg.enable {
     nixpkgs.overlays = [ inputs.taffybar.overlay ];
 
-    # 2-Step workaround (https://github.com/taffybar/taffybar/issues/403)
+    # WARN: 2-Step workaround (https://github.com/taffybar/taffybar/issues/403)
     gtk.iconCache.enable = true;
 
     services.xserver = {
@@ -29,9 +29,16 @@ in {
     };
     hm.xsession.importedVariables = [ "GDK_PIXBUF_MODULE_FILE" ];
 
-    hm.services.taffybar = {
-      enable = true;
-      package = pkgs.haskellPackages.raybar;
+    # WARN: Error retrieving accessibility bus address: org.freedesktop.DBus.Error.ServiceUnknown: The name org.a11y.Bus was not provided by any .service files
+    services.gnome.at-spi2-core.enable = true;
+
+    hm.services = {
+      network-manager-applet.enable = true;
+      status-notifier-watcher.enable = true;
+      taffybar = {
+        enable = true;
+        package = pkgs.haskellPackages.raybar;
+      };
     };
 
     # Symlink necessary files for config to load:

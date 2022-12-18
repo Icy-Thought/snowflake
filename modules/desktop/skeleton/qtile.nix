@@ -55,7 +55,6 @@ in {
     ];
 
     services.xserver = {
-      enable = true;
       displayManager.defaultSession = "none+qtile";
       windowManager.session = [{
         name = "qtile";
@@ -67,17 +66,6 @@ in {
           } & waitPID=$!
         '';
       }];
-    };
-
-    hm.services = {
-      network-manager-applet.enable = true;
-      status-notifier-watcher.enable = true;
-    };
-
-    hm.xsession = {
-      enable = true;
-      numlock.enable = true;
-      preferStatusNotifierItems = true;
     };
   };
 }
