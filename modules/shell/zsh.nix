@@ -26,6 +26,9 @@ in
     # Enable completion for sys-packages:
     environment.pathsToLink = [ "/share/zsh" ];
 
+    # Enable nixpkgs suggestions:
+    programs.zsh.enable = true;
+
     hm.programs.zsh = {
       enable = true;
       dotDir = ".config/zsh";

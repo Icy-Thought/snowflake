@@ -31,7 +31,7 @@ with lib.my; {
           enable = true;
           background = "dark";
           color = "always";
-          # display = "inline";
+          display = "inline";
         };
 
         aliases = {
