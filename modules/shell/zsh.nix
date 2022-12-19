@@ -39,7 +39,12 @@ in
         size = 10000;
         path = "$XDG_CONFIG_HOME/zsh/history";
       };
-      historySubstringSearch.enable = true;
+
+      historySubstringSearch = {
+        enable = true;
+        searchUpKey = "^[OA";
+        searchDownKey = "^[OB";
+      };
 
       enableCompletion = true;
       initExtraBeforeCompInit = ''
@@ -48,10 +53,12 @@ in
         zstyle ':completion:*'                      accept-exact '*(N)'
         zstyle ':completion:*'                      file-sort modification
         zstyle ':completion:*'                      matcher-list ''' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+        zstyle ':completion:*'                      group-name '''
         zstyle ':completion:*'                      menu select=2
         zstyle ':completion:*'                      separate-sections 'yes'
         zstyle ':completion:*'                      squeeze-slashes true
         zstyle ':completion:*:default'              list-colors ''${(s.:.)LS_COLORS}
+        zstyle ':completion:*:commands'             list-colors '=*=1;32'
         zstyle ':completion::complete:*'            use-cache on
         zstyle ':completion:*'                      cache-path "$XDG_CACHE_HOME/zsh/.zcompcache"
 
