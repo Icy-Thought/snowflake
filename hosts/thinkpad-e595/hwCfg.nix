@@ -28,12 +28,24 @@
 
   boot = {
     initrd = {
-      availableKernelModules = [ "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" "rtsx_pci_sdmmc" ];
+      availableKernelModules = [
+        "ahci"
+        "amdgpu"
+        "rtsx_pci_sdmmc"
+        "sd_mod"
+        "usb_storage"
+        "usbhid"
+        "xhci_pci"
+      ];
       kernelModules = [ ];
     };
-    extraModulePackages = [ ];
-    kernelModules = [ "kvm-amd" ];
-    kernelParams = [ "acpi_backlight=native" ];
+    extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
+    kernelModules = [
+      "thinkpad_acpi"
+      "acpi_call"
+      "kvm_amd"
+    ];
+    kernelParams = [ ];
     kernel.sysctl = {
       "net.ipv4.icmp_echo_ignore_broadcasts" = 1; # Refuse ICMP echo requests
     };
@@ -49,6 +61,9 @@
   powerManagement = {
     cpuFreqGovernor = "schedutil";
   };
+
+  # Speeding up garbage network card..
+  networking.enableIPv6 = false;
 
   # Finally, our beloved hardware module(s):
   modules.hardware = {
