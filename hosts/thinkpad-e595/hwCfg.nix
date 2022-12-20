@@ -62,9 +62,6 @@
     cpuFreqGovernor = "schedutil";
   };
 
-  # Speeding up garbage network card..
-  networking.enableIPv6 = false;
-
   # Finally, our beloved hardware module(s):
   modules.hardware = {
     audio.enable = true;
