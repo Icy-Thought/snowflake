@@ -58,7 +58,7 @@ import           XMonad.Actions.WindowGo
 import           XMonad.Actions.WorkspaceNames
 import           XMonad.Config                  ( )
 import           XMonad.Core                    ( getDirectories )
-import           XMonad.Hooks.DynamicProperty
+import           XMonad.Hooks.OnPropertyChange
 import           XMonad.Hooks.EwmhDesktops
 import           XMonad.Hooks.Focus      hiding ( currentWorkspace )
 import           XMonad.Hooks.ManageDocks
@@ -230,11 +230,11 @@ isProtonMailTitle t = isInfixOf "@proton.me" t && isInfixOf "Proton Mail" t
 isChromiumClass = isInfixOf "Chromium"
 
 noSpecialChromiumTitles = helper <$> title
-  where helper t = not $ any ($ t) [isProtonMailTitle]
+  where helper t = not $ ($ t) isProtonMailTitle
 
 chromiumSelectorBase = isChromiumClass <$> className
 
-chromiumSelector = className =? "chromium-browser"
+chromiumSelector = className =? "chromium-browser" <&&> appName =? "Chromium"
 
 firefoxSelector = className =? "firefox-aurora" <&&> appName =? "Navigator"
 
@@ -472,10 +472,9 @@ desktopEntriesMap =
 
 lookupIconFromClasses classes =
   getFirst
-    $   fold
-    $   First
-    .   deIcon
-    <$> (classes >>= idAndLower >>= flip MM.lookup desktopEntriesMap)
+    $ foldMap
+    (First . deIcon)
+    (classes >>= idAndLower >>= flip MM.lookup desktopEntriesMap)
   where idAndLower value = [value, map toLower value]
 
 xGetWindowProperty8 :: Atom -> Window -> X (Maybe [CChar])
@@ -799,8 +798,8 @@ myScratchPadManageHook = namedScratchpadManageHook scratchpads
 -- We need this event hook because some scratchpad applications (Spotify) don't
 -- actually properly set their class at startup.
 myScratchPadEventHook =
-  dynamicPropertyChange "WM_CLASS" myScratchPadManageHook
-    <> dynamicPropertyChange "WM_NAME" myScratchPadManageHook
+  onXPropertyChange "WM_CLASS" myScratchPadManageHook
+    <> onXPropertyChange "WM_NAME" myScratchPadManageHook
 
 runScratchPadManageHookOnCurrent =
   join (withFocusedD (Endo id) $ runQuery myScratchPadManageHook)
