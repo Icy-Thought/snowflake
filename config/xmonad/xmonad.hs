@@ -778,7 +778,7 @@ scratchpads =
   gBudsCommand         = "GalaxyBudsClient"
   gBudsSelector        = className =? "GalaxyBudsClient"
 
-  neovideCommand       = "neovide --multigrid --frame none"
+  neovideCommand       = "neovide --multigrid --frame none --maximized"
   neovideSelector      = className =? "neovide"
 
   firefoxPPCommand     = "Picture-in-Picture"
