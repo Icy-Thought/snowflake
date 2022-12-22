@@ -9,7 +9,7 @@ with lib.my;
 
 let
   cfg = config.modules.themes;
-  dsktp = config.modules.desktop;
+  envProto = config.modules.desktop.envProto;
 in
 {
   options.modules.themes = with types; {
@@ -209,7 +209,7 @@ in
     }
 
     # x11 related settings:
-    (mkIf (dsktp.envProto == "x11") (mkMerge [
+    (mkIf (envProto == "x11") (mkMerge [
       {
         # Read xresources files in ~/.config/xtheme/* to allow modular configuration
         # of Xresources.

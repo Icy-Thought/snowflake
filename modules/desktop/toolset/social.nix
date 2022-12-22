@@ -7,20 +7,35 @@
 with lib;
 with lib.my;
 
-let cfg = config.modules.desktop.toolset.social;
-in {
+let
+  cfg = config.modules.desktop.toolset.social;
+  envProto = config.modules.desktop.envProto;
+in
+{
   options.modules.desktop.toolset.social = {
-    common.enable = mkBoolOpt true;
+    base.enable = mkBoolOpt false;
+    discord.enable = mkBoolOpt false;
+    element.enable = mkBoolOpt false;
   };
 
   config = mkMerge [
-    (mkIf cfg.common.enable {
-      user.packages = with pkgs;
+    (mkIf cfg.base.enable {
+      # Enable modules that users ought to have installed by default:
+      modules.desktop.toolset.social = {
+        discord.enable = true;
+        element.enable = true;
+      };
+
+      # Install packages that have not been configured:
+      user.packages = with pkgs; [ signal-desktop tdesktop ];
+    })
+
+    (mkIf cfg.element.enable {
+      user.packages =
         let
-          # Copyright (c) 2022 roosemberth. All Rights Reserved.
           element-desktop' = pkgs.symlinkJoin {
             name = "element-desktop-in-dataHome";
-            paths = [ element-desktop ];
+            paths = [ pkgs.element-desktop ];
             nativeBuildInputs = [ pkgs.makeWrapper ];
             postBuild = ''
               wrapProgram "$out/bin/element-desktop" \
@@ -28,12 +43,65 @@ in {
             '';
           };
         in
-        [
-          element-desktop'
-          unstable.discord
-          signal-desktop
-          tdesktop
-        ];
+        [ element-desktop' ];
+    })
+
+    (mkIf cfg.discord.enable {
+      home.configFile.openSAR-settings = {
+        target = "discordcanary/settings.json";
+        text =
+          let
+            theme = pkgs.fetchurl {
+              url = "https://catppuccin.github.io/discord/dist/catppuccin-mocha.theme.css";
+              hash = "sha256-oET6HcUE6bPnwpJUdpe2eVsth9TjHewTaeIe/HM71RQ=";
+            };
+          in
+          builtins.toJSON {
+            openasar = {
+              setup = true;
+              quickstart = true;
+              noTyping = false;
+              cmdPreset = "balanced";
+              css = builtins.readFile theme;
+            };
+            SKIP_HOST_UPDATE = true;
+            IS_MAXIMIZED = true;
+            IS_MINIMIZED = false;
+            trayBalloonShown = true;
+          };
+      };
+
+      user.packages =
+        let
+          flags = [
+            "--flag-switches-begin"
+            "--flag-switches-end"
+            "--disable-gpu-memory-buffer-video-frames"
+            "--enable-accelerated-mjpeg-decode"
+            "--enable-accelerated-video"
+            "--enable-gpu-rasterization"
+            "--enable-native-gpu-memory-buffers"
+            "--enable-zero-copy"
+            "--ignore-gpu-blocklist"
+          ] ++ lists.optionals (envProto == "x11") [
+            "--disable-features=UseOzonePlatform"
+            "--enable-features=VaapiVideoDecoder"
+          ] ++ lists.optionals (envProto == "wayland") [
+            "--enable-features=UseOzonePlatform,WebRTCPipeWireCapturer"
+            "--ozone-platform=wayland"
+            "--enable-webrtc-pipewire-capturer"
+          ];
+
+          discord-canary' =
+            (pkgs.discord-canary.override {
+              withOpenASAR = true;
+            }).overrideAttrs (old: {
+              preInstall = ''
+                gappsWrapperArgs+=("--add-flags" "${lib.concatStringsSep " " flags}")
+              '';
+            });
+        in
+        [ discord-canary' ];
     })
   ];
 }

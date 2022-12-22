@@ -755,7 +755,7 @@ nearFullFloat = customFloating $ W.RationalRect l t w h
 
 scratchpads =
   [ NS "SysMon"             sysMonCommand       sysMonSelector       nearFullFloat
-  , NS "Discord"            discordCommand      discordSelector      nearFullFloat
+  , NS "CanaryCord"         discordCommand      discordSelector      nearFullFloat
   , NS "Element"            elementCommand      elementSelector      nearFullFloat
   , NS "GalaxyBudsClient"   gBudsCommand        gBudsSelector        nearFullFloat
   , NS "Neovide"            neovideCommand      neovideSelector      nearFullFloat
@@ -769,7 +769,7 @@ scratchpads =
   sysMonCommand        = "wezterm start --always-new-process -- -t 'System Monitor' btop"
   sysMonSelector       = title =? "System Monitor"
 
-  discordCommand       = "discord"
+  discordCommand       = "discordcanary"
   discordSelector      = className =? "discord"
 
   elementCommand       = "element-desktop"
@@ -955,7 +955,7 @@ addKeys conf@XConfig { modMask = modm } =
        ,
          -- ScratchPad(s)
          ((modalt, xK_b), doScratchpad "SysMon")
-       , ((modalt, xK_j), doScratchpad "Discord")
+       , ((modalt, xK_j), doScratchpad "CanaryCord")
        , ((modalt, xK_k), doScratchpad "Element")
        , ((modalt, xK_e), doScratchpad "Neovide")
        , ((modalt, xK_m), doScratchpad "ProtonMail")

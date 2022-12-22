@@ -47,7 +47,7 @@
           music.enable = true;
           video.enable = true;
         };
-        social.common.enable = true;
+        social.base.enable = true;
         # docView.sioyek.enable = true;
         docView.zathura.enable = true;
       };
