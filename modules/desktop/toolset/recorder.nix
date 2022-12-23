@@ -18,18 +18,17 @@ in {
   config = mkIf cfg.enable {
     services.pipewire.jack.enable = true;
 
-    user.packages = with pkgs; [
+    user.packages = with pkgs;
+      [ ffmpeg ]
       # Audio recording + Mastering:
-      (mkIf (cfg.audio.enable)
+      ++ lists.optionals cfg.audio.enable [
         unstable.audacity-gtk3
         unstable.helvum
-      )
-
+      ]
       # Streaming + Screen-recodring:
-      (mkIf (cfg.video.enable)
+      ++ lists.optionals cfg.video.enable [
         unstable.obs-studio
         unstable.handbrake
-      )
-    ];
+      ];
   };
 }
