@@ -14,10 +14,10 @@
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # kmonad = {
-    #   url = "github:kmonad/kmonad?dir=nix";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
+    kmonad = {
+      url = "github:kmonad/kmonad?dir=nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Window Manager(s) + Extensions
     xmonad-contrib.url = "github:icy-thought/xmonad-contrib"; # TODO: replace with official after #582 == merged!
@@ -30,10 +30,6 @@
 
     # Toolset ++ Application(s)
     emacs.url = "github:nix-community/emacs-overlay";
-    # doomemacs = {
-    #   url = "github:doomemacs/doomemacs";
-    #   flake = false;
-    # };
     nvim-nightly.url = "github:nix-community/neovim-nightly-overlay";
     rust.url = "github:oxalica/rust-overlay";
     spicetify-nix.url = "github:the-argus/spicetify-nix";

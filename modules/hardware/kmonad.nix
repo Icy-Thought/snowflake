@@ -8,40 +8,42 @@
 with lib;
 with lib.my;
 
-let
-  cfg = config.modules.desktop.extra.kmonad;
-  configDir = config.snowflake.configDir;
+let cfg = config.modules.hardware.kmonad;
 in
 {
-  options.modules.desktop.extra.kmonad = {
+  options.modules.hardware.kmonad = {
     enable = mkBoolOpt false;
     deviceID = mkOption {
-      type = with types; nullOr str;
+      type = with types; nullOr path;
       default = null;
       example = "/dev/input/by-path/platform-i8042-serio-0-event-kbd";
       description = "path to device.kbd file";
     };
   };
 
+  imports = [ inputs.kmonad.nixosModules.default ];
+
   config = mkIf cfg.enable {
-    nixpkgs.overlays = [ inputs.kmonad.overlays.default ];
+    # Allow our user to benefit from KMonad:
+    user.extraGroups = [ "uinput" ];
 
-    # Import KMonad Nix-Module
-    hm.imports = [ inputs.kmonad.nixosModules.default ];
-
-    hm.services.kmonad = {
-      enable = true;
-      keyboards.hyperCtl = {
-        device = cfg.deviceID;
-        defcfg = {
-          enable = true;
-          fallthrough = true;
-          allowCommands = false;
-          compose.key = null;
+    services.kmonad =
+      let layoutFile = "${builtins.toString ../hosts}/${config.networking.hostName}/kmonad/layout.kbd";
+      in {
+        enable = true;
+        keyboards.options = {
+          device = cfg.deviceID;
+          defcfg = {
+            enable = true;
+            fallthrough = true; # when keys /= assigned -> defsrc value
+            allowCommands = false;
+            compose.key = null;
+          };
+          config =
+            if pathExists layoutFile
+            then [ layoutFile ]
+            else { };
         };
-        # TODO Fetch from hostname + fix conf
-        config = builtins.readFile (configDir + "/kmonad/hyperCtl.kbd");
       };
-    };
   };
 }

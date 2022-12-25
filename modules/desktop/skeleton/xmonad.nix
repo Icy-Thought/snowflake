@@ -26,6 +26,7 @@ with lib.my; {
         taffybar.enable = true;
       };
     };
+    modules.hardware.kmonad.enable = true;
 
     nixpkgs.overlays = [ inputs.xmonad-contrib.overlay ];
 

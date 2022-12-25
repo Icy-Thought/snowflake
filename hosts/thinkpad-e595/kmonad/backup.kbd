@@ -2,14 +2,20 @@
    Tutorial: https://github.com/kmonad/kmonad/blob/master/keymap/tutorial.kbd
 |#
 
-;; (default) US-layout
+;; (def) US-layout
 (defsrc
-  esc  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12  home  end  ins del  ;; kp=  kp(  kp)  kpbspc
+  esc  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12  home  end  ins del  kp=  kp(  kp)  kpbspc
   grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc                nlck kp/  kp*  kp-
   tab  q    w    e    r    t    y    u    i    o    p    [    ]    \                   kp7  kp8  kp9  kp+
   caps a    s    d    f    g    h    j    k    l    ;    '    ret                      kp4  kp5  kp6
   lsft z    x    c    v    b    n    m    ,    .    /    rsft    pgdn  up  pgup        kp1  kp2  kp3  kprt
   lctl lmet lalt           spc            ralt  prnt  rctl     left   down   right     kp0  kp.
+)
+
+;; (def) Our useful aliases!
+(defalias
+  stb (tap-hold-next 1000 tab met :timeout-button XX)
+  scp (tap-hold-next 1000 caps ralt :timeout-button XX)
 )
 
 #| Blank layer template
@@ -23,11 +29,11 @@
 )
 |#
 
-(deflayer hyper-rctl
-  esc  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12  home  end  ins del  ;; kp=  kp(  kp)  kpbspc
-  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc                nlck kp/  kp*  kp-
-  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \                   kp7  kp8  kp9  kp+
-  caps a    s    d    f    g    h    j    k    l    ;    '    ret                      kp4  kp5  kp6
-  lsft z    x    c    v    b    n    m    ,    .    /    rsft    pgdn  up  pgup        kp1  kp2  kp3  kprt
-  lctl lmet lalt           spc            ralt  prnt  rctl     left   down   right     kp0  kp.
+(deflayer primary
+    _     _    _    _    _    _    _    _    _    _    _    _    _    _    _   _    _    _   _    _
+    _     _    _    _    _    _    _    _    _    _    _    _    _    _             _    _   _    _
+    @stb  _    _    _    _    _    _    _    _    _    _    _    _    _             _    _   _    _
+    @scp  _         _         _         _         _    _    _       _               _    _   _
+    _     _         _         _         _    _    _    _        _   _   _  _        _    _   _    _
+    _     _    _             _                    _    _     _    _    _     _      _    _
 )

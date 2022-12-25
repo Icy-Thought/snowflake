@@ -43,6 +43,7 @@ in {
         rofi.enable = true;
       };
     };
+    modules.hardware.kmonad.enable = true;
 
     environment.systemPackages = with pkgs; [
       (cfg.package.unwrapped or cfg.package)

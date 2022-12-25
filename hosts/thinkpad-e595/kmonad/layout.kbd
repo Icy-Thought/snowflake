@@ -1,0 +1,16 @@
+#| KMonad: Thinkpad E595
+   Tutorial: https://github.com/kmonad/kmonad/blob/master/keymap/tutorial.kbd
+|#
+
+;; (def) US-layout
+(defsrc
+    tab caps)
+
+;; (def) Our useful aliases!
+(defalias
+    hold-tab-as-meta (tap-hold-next 1000 tab met :timeout-button XX)
+    hold-caps-as-ralt (tap-hold-next 1000 caps ralt :timeout-button XX))
+
+(deflayer primary
+    @hold-tab-as-meta
+    @hold-caps-as-ralt)

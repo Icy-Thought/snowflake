@@ -66,12 +66,8 @@
   modules.hardware = {
     audio.enable = true;
     bluetooth.enable = true;
+    kmonad.deviceID = "/dev/input/by-path/platform-i8042-serio-0-event-kbd";
     pointer.enable = true;
-    # kmonad = {
-    #   enable = true;
-    #   deviceID = "/dev/input/by-path/platform-i8042-serio-0-event-kbd";
-    # };
-    xkbLayout.hyperCtrl.enable = true;
     razer.enable = true;
   };
 }
