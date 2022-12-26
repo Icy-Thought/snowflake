@@ -872,19 +872,11 @@ goToNextScreenX = windows goToNextScreen
 shiftToEmptyOnScreen direction =
   followingWindow (windowToScreen direction True) >> shiftToEmptyAndView
 
-directionalUp = xK_k
-
-directionalDown = xK_j
-
-directionalLeft = xK_h
-
-directionalRight = xK_l
-
 buildDirectionalBindings mask commandFn =
-  [ ((mask, directionalUp)   , commandFn U)
-  , ((mask, directionalDown) , commandFn D)
-  , ((mask, directionalLeft) , commandFn L)
-  , ((mask, directionalRight), commandFn R)
+  [ ((mask, xK_k), commandFn U)
+  , ((mask, xK_j), commandFn D)
+  , ((mask, xK_h), commandFn L)
+  , ((mask, xK_l), commandFn R)
   ]
 
 myWindowGo direction = do
@@ -901,60 +893,54 @@ addKeys conf@XConfig { modMask = modm } =
   -- Directional navigation
   buildDirectionalBindings modm myWindowGo
     ++ buildDirectionalBindings (modm .|. shiftMask) (`windowSwap` True)
-    ++ buildDirectionalBindings (modm .|. controlMask)
-                                (followingWindow . (`windowToScreen` True))
+    ++ buildDirectionalBindings (modm .|. controlMask) (followingWindow . (`windowToScreen` True))
     ++ buildDirectionalBindings hyper (`screenGo` True)
-    ++ buildDirectionalBindings (hyper .|. shiftMask)
-                                (followingWindow . (`screenSwap` True))
-    ++ buildDirectionalBindings (hyper .|. controlMask) shiftToEmptyOnScreen
-    ++
+    ++ buildDirectionalBindings (hyper .|. shiftMask) (followingWindow . (`screenSwap` True))
+    -- ++ buildDirectionalBindings (hyper .|. controlMask) shiftToEmptyOnScreen
+
     -- Specific program spawning
-       bindBringAndRaiseMany
+    ++  bindBringAndRaiseMany
          [ (modalt, xK_g, spawn chromiumCommand   , chromiumSelector)
          , (modalt, xK_f, spawn firefoxCommand    , firefoxSelector)
          , (modalt, xK_w, spawn firefoxPrvtCommand, firefoxSelector)
          ]
-    ++
+
     -- Window manipulation
-       [ ((modm, xK_g), myGoToWindow)
+    ++ [ ((modm, xK_g), myGoToWindow)
        , ((modm, xK_b), myBringWindow)
        , ((modm .|. shiftMask, xK_b), myReplaceWindow)
        , ((modm .|. controlMask, xK_space), deactivateFullOr goFullscreen)
        , ((modm, xK_m), withFocused minimizeWindow)
-       , ( (modm .|. shiftMask, xK_m)
-         , deactivateFullOr $ withLastMinimized maximizeWindowAndFocus
-         )
+       , ((modm .|. shiftMask, xK_m) , deactivateFullOr $ withLastMinimized maximizeWindowAndFocus)
        , ((modm, xK_x), addHiddenWorkspace "NSP" >> windows (W.shift "NSP"))
        , ((modalt, xK_space), deactivateFullOr restoreOrMinimizeOtherClasses)
        , ((modalt, xK_Return), deactivateFullAnd restoreAllMinimized)
        , ((hyper, xK_g), gatherThisClass)
-       ,
+
          -- Focus/layout manipulation
-         ((modm, xK_e), goToNextScreenX)
+       , ((modm, xK_e), goToNextScreenX)
        , ((modm, xK_slash), sendMessage $ Toggle MIRROR)
-       , ( (modm, xK_backslash)
-         , cycleWorkspaceOnCurrentScreen [xK_Super_L] xK_backslash xK_slash
-         )
+       , ((modm, xK_backslash) , cycleWorkspaceOnCurrentScreen [xK_Super_L] xK_backslash xK_slash)
        , ((modm, xK_space), deactivateFullOr $ sendMessage NextLayout)
        , ((modm, xK_z), shiftToNextScreenX)
        , ((modm .|. shiftMask, xK_z), shiftToEmptyNextScreen)
        , ((modm .|. shiftMask, xK_h), shiftToEmptyAndView)
        , ((hyper, xK_5), getWorkspaceDmenu >>= windows . SW.swapWithCurrent)
-       ,
+
          -- These ought to be rebound for boringWindows support
-         ((hyper, xK_e), moveTo Next emptyWS)
-       ,
+       , ((hyper, xK_e), moveTo Next emptyWS)
+
          -- Miscellaneous XMonad
-         ((hyper, xK_t), selectToggle)
+       , ((hyper, xK_t), selectToggle)
        , ((modalt, xK_4), selectLimit)
        , ((hyper, xK_3), addWorkspacePrompt def)
        , ((modalt, xK_3), selectWorkspace def)
-       , ((hyper .|. mod1Mask, xK_3), removeWorkspace)
-       , ((hyper .|. mod1Mask, xK_r), renameWorkspace def)
+       , ((hyper, xK_w), removeWorkspace)
+       , ((hyper .|. shiftMask, xK_r), renameWorkspace def)
        , ((hyper, xK_l), selectLayout)
-       ,
+
          -- ScratchPad(s)
-         ((modalt, xK_b), doScratchpad "SysMon")
+       , ((modalt, xK_b), doScratchpad "SysMon")
        , ((modalt, xK_j), doScratchpad "CanaryCord")
        , ((modalt, xK_k), doScratchpad "Element")
        , ((modalt, xK_e), doScratchpad "Neovide")
@@ -962,44 +948,43 @@ addKeys conf@XConfig { modMask = modm } =
        , ((modalt, xK_s), doScratchpad "Spotify")
        , ((modalt, xK_h), doScratchpad "Telegram")
        , ((modalt, xK_t), doScratchpad "Transmission")
-       ,
+
          -- Rofi(s)
-         ((modm, xK_p), spawn "rofi -show drun -show-icons")
+       , ((modm, xK_p), spawn "rofi -show drun -show-icons")
        , ((modm .|. shiftMask, xK_p), spawn "rofi -show run")
        , ((hyper, xK_p), spawn "rofi-systemd")
-       ,
+
          -- Specific program spawning
-         ((modalt, xK_v), spawn "pavucontrol")
+       , ((modalt, xK_v), spawn "pavucontrol")
          -- , ((modm .|. shiftMask, xK_x)   , spawn "whatever-lock") <- lockscreen when found!
          -- , ((modalt, xK_p)               , spawn "rofi -show power") <- rofi power controls
-       ,
+
          -- Playerctl
-         ((modm, xK_Left), spawn "playerctl previous")
+       , ((modm, xK_Left), spawn "playerctl previous")
        , ((modm, xK_Down), spawn "playerctl play-pause")
        , ((modm, xK_Right), spawn "playerctl next")
-       ,
+
          -- Volume control
-         ((0, xF86XK_AudioRaiseVolume), spawn "volctl increase")
+       , ((0, xF86XK_AudioRaiseVolume), spawn "volctl increase")
        , ((0, xF86XK_AudioLowerVolume), spawn "volctl decrease")
        , ((0, xF86XK_AudioMute), spawn "volctl toggle-mute")
-         -- , ((hyper .|. shiftMask, xK_q)  , spawn "volctl --mute-active")
-         -- , ((halt, xK_q)                 , spawn "volctl --mute-active only")
+         -- , ((hyper .|. shiftMask, xK_q)  , spawn "volctl --mute-winOther")
        , ((0, xF86XK_AudioMicMute), spawn "micvol toggle-mute")
-       ,
+
          -- Brightness control
-         ((0, xF86XK_MonBrightnessUp), spawn "brightctl increase -l 5")
+       , ((0, xF86XK_MonBrightnessUp), spawn "brightctl increase -l 5")
        , ((0, xF86XK_MonBrightnessDown), spawn "brightctl decrease -l 5")
-       ,
+
          -- (Sc) current workspace
-         ((0, xK_Print), spawn "scrcapy system --workspace")
+       , ((0, xK_Print), spawn "scrcapy system --workspace")
        , ((controlMask, xK_Print), spawn "scrcapy clipboard -w")
-       ,
+
          -- (Sc) active window
-         ((mod1Mask, xK_Print), spawn "scrcapy system --active-window")
+       , ((mod1Mask, xK_Print), spawn "scrcapy system --active-window")
        , ((controlMask .|. mod1Mask, xK_Print), spawn "scrcapy clipboard --active-window")
-       ,
+
          -- (Sc) selected area
-         ((shiftMask, xK_Print), spawn "scrcapy system --selection")
+       , ((shiftMask, xK_Print), spawn "scrcapy system --selection")
        , ((controlMask .|. shiftMask, xK_Print), spawn "scrcapy clipboard --selection")
        ]
     ++
@@ -1011,8 +996,7 @@ addKeys conf@XConfig { modMask = modm } =
        ]
  where
   modalt = modm .|. mod1Mask
-  hyper  = mod3Mask
-  halt   = hyper .|. mod1Mask
+  hyper  = controlMask .|. modalt
 
 -- Local Variables:
 -- flycheck-ghc-args: ("-Wno-missing-signatures")
