@@ -10,7 +10,7 @@ with lib.my;
 
 let
   inherit (inputs) agenix;
-  secretsDir = "${builtins.toString ../hosts}/${config.networking.hostName}/secrets";
+  secretsDir = "${config.snowflake.hostDir}/secrets";
   secretsFile = "${secretsDir}/secrets.nix";
 in
 {

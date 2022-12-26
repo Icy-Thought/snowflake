@@ -28,7 +28,7 @@ in
     user.extraGroups = [ "uinput" ];
 
     services.kmonad =
-      let layoutFile = "${builtins.toString ../hosts}/${config.networking.hostName}/kmonad/layout.kbd";
+      let layoutFile = "${config.snowflake.hostDir}/kmonad/layout.kbd";
       in {
         enable = true;
         keyboards.options = {
@@ -40,9 +40,9 @@ in
             compose.key = null;
           };
           config =
-            if pathExists layoutFile
-            then [ layoutFile ]
-            else { };
+            if builtins.pathExists layoutFile
+            then builtins.readFile layoutFile
+            else "";
         };
       };
   };

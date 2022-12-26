@@ -14,6 +14,7 @@ with lib.my; {
         "${config.user.home}/git/icy-thought/snowflake"
         "/etc/snowflake"
       ]);
+      hostDir = mkOpt path "${config.snowflake.dir}/hosts/${config.networking.hostName}";
       binDir = mkOpt path "${config.snowflake.dir}/bin";
       configDir = mkOpt path "${config.snowflake.dir}/config";
       modulesDir = mkOpt path "${config.snowflake.dir}/modules";
