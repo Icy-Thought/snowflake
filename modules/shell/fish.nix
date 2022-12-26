@@ -33,6 +33,11 @@ in {
       };
       shellAbbrs = import "${config.snowflake.configDir}/shell-abbr";
 
+      functions = {
+        fish_title = "echo $argv[1]";
+        gitignore = "curl -sL https://www.gitignore.io/api/$argv";
+      };
+
       interactiveShellInit = ''
         ${getExe pkgs.any-nix-shell} fish --info-right | source
         ${getExe pkgs.zoxide} init fish | source
@@ -41,11 +46,6 @@ in {
         # Vi-Bindings:
         set fish_greeting
         set -g fish_key_bindings fish_vi_key_bindings
-
-        # Customizable `fish_title`:
-        function fish_title
-            echo $argv[1]
-        end
 
         # Color our Man-pages:
         set -xU LESS_TERMCAP_md (printf "\e[01;31m")

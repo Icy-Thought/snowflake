@@ -19,19 +19,30 @@ in {
     (mkIf cfg.music.enable {
       hm.imports = [ inputs.spicetify-nix.homeManagerModules.default ];
 
-      hm.programs.spicetify = {
-        enable = true;
-        spotifyPackage = pkgs.spotify-unwrapped;
-        spicetifyPackage = pkgs.spicetify-cli;
-        enabledExtensions = [
-          "fullAppDisplay.js"
-          "shuffle+.js"
-          "adblock.js"
-          "hidePodcasts.js"
-        ];
-        theme = "catppuccin-mocha";
-        colorScheme = "flamingo";
-      };
+      hm.programs.spicetify =
+        let spicePkgs = inputs.spicetify-nix.packages.${pkgs.system}.default;
+        in {
+          enable = true;
+          spotifyPackage = pkgs.spotify-unwrapped;
+          spicetifyPackage = pkgs.spicetify-cli;
+
+          theme = spicePkgs.themes.catppuccin-mocha;
+          colorScheme = "flamingo";
+
+          enabledCustomApps = with spicePkgs.apps; [
+            new-releases
+            lyrics-plus
+          ];
+          enabledExtensions = with spicePkgs.extensions; [
+            adblock
+            fullAppDisplay
+            hidePodcasts
+            keyboardShortcut
+            playNext
+            showQueueDuration
+            shuffle
+          ];
+        };
     })
 
     (mkIf cfg.video.enable {

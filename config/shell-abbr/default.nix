@@ -30,31 +30,27 @@ let
   };
 
   git = {
-    # Lazygit
-    lzg = "lazygit";
-
-    # Git: general
     g = "git";
     ga = "git add";
     gaa = "git add --agll";
     gap = "git apply";
     gapa = "git add --patch";
 
-    # Git: branches
+    # (Git) branches
     gb = "git branch -vv";
     gbD = "git branch -D";
     gba = "git branch -agv";
     gban = "git branch -agv --no-merged";
     gbd = "git branch -d";
 
-    # Git: bisect
+    # (Git) bisect
     gbs = "git bisect";
     gbsb = "git bisect bad";
     gbsg = "git bisect good";
     gbsr = "git bisect reset";
     gbss = "git bisect start";
 
-    # Git: commit
+    # (Git) commit
     gc = "git commit -v";
     "gc!" = "git commit -v --agmend";
     gca = "git commit -v -ag";
@@ -69,22 +65,22 @@ let
     gcv = "git commit -v --no-verify";
     gscam = "it commit -S -ag -m";
 
-    # Git: config
+    # (Git) config
     gcf = "git config --list";
     gcl = "git clone";
     gcount = "git shortlog -sn";
 
-    # Git: clean-ups
+    # (Git) clean-ups
     gclean = "git clean -di";
     "gclean!" = "git clean -dfx";
     "gclean!!" = "git reset --hard; and git clean -dfx";
 
-    # Git: cherry-pick
+    # (Git) cherry-pick
     gcp = "git cherry-pick";
     gcpa = "git cherry-pick --agbort";
     gcpc = "git cherry-pick --continue";
 
-    # Git: diff
+    # (Git) diff
     gd = "git diff";
     gda = "git diff --cached";
     gds = "git diff --stat";
@@ -93,17 +89,17 @@ let
     gdwc = "git diff --word-diff --cached";
     gdtool = "git difftool";
 
-    # Git: files to be ignored
+    # (Git) files to be ignored
     gignore = "git update-index --agssume-unchanged";
     gunignore = "git update-index --no-agssume-unchanged";
 
-    # Git: fetch / pull
+    # (Git) fetch / pull
     gf = "git fetch";
     gfa = "git fetch --agll --prune";
     gl = "git pull";
     glr = "git pull --rebase";
 
-    # Git: log
+    # (Git) log
     glg = "git log --stat --max-count=10";
     glgg = "git log --graph --max-count=10";
     glgga = "git log --graph --decorate --agll";
@@ -112,7 +108,7 @@ let
     gloo = "git log --pretty=format:'%C(yellow)%h %Cred%ad %Cblue%an%Cgreen%d %Creset%s' --date=short";
 
 
-    # Git: push / merge
+    # (Git) push / merge
     gm = "git merge";
     gmt = "git mergetool --no-prompt";
     gp = "git push";
@@ -122,7 +118,7 @@ let
     gpa = "parallel git push --agll -- (git remote)";
     gpaf = "parallel git push --agll --force -- (git remote)";
 
-    # Git: remote
+    # (Git) remote
     gr = "git remote -vv";
     gra = "git remote add";
     grmv = "git remote rename";
@@ -131,53 +127,53 @@ let
     grup = "git remote update";
     grv = "git remote -v";
 
-    # Git: rebase
+    # (Git) rebase
     grb = "git rebase";
     grba = "git rebase --agbort";
     grbc = "git rebase --continue";
     grbi = "git rebase --interactive";
 
 
-    # Git: revert & reset
+    # (Git) revert & reset
     grev = "git revert";
     grst = "git reset";
     grsth = "git reset --hard";
     grstp = "git reset --patch";
 
-    # Git: remove | restore
+    # (Git) remove | restore
     grm = "git rm";
     grmc = "git rm --cached";
     grs = "git restore";
     grss = "git restore --source";
 
-    # Git: status
+    # (Git) status
     gsh = "git show";
     gss = "git status -s";
     gst = "git status";
 
-    # Git: stash
+    # (Git) stash
     gsta = "git stash";
     gstd = "git stash drop";
     gstp = "git stash pop";
     gsts = "git stash show --text";
 
-    # Git: submodule
+    # (Git) submodule
     gsu = "git submodule update";
     gsur = "git submodule update --recursive";
     gsuri = "git submodule update --recursive --init";
 
-    # Git: tag
+    # (Git) tag
     gts = "git tag -s";
     gtv = "git tag | sort -V";
 
-    # Git: switch
+    # (Git) switch
     gsw = "git switch";
     gswc = "git switch --create";
 
-    # Git: what changed?
+    # (Git) what changed?
     gwch = "git whatchanged -p --agbbrev-commit --pretty=medium";
 
-    # Git: checkout
+    # (Git) checkout
     gco = "git checkout";
     gcb = "git checkout -b";
   };

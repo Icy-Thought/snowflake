@@ -120,7 +120,14 @@ in
         unsetopt AUTO_NAME_DIRS                 # Don't add variable-stored paths to ~ list
 
         # -------===[ Aesthetics ]===------- #
-        source "$HOME/.config/zsh/fzf.zsh"
+        ${strings.optionalString (themeCfg.active != null)
+        (with themeCfg.colors.main; ''
+            export FZF_DEFAULT_OPTS=" \
+            --color=bg:,bg+:${types.bg},spinner:${types.panelbg},hl:${normal.red} \
+            --color=fg:${types.border},header:${normal.red},info:${normal.magenta},pointer:${types.border} \
+            --color=marker:${normal.magenta},fg+:${types.border},prompt:${types.border},hl+:${normal.red}"
+        '')}
+
         export MANPAGER="sh -c 'col -bx | bat -l man -p'"
         export ZSH_HIGHLIGHT_DIRS_BLACKLIST=(/nix/store)
 
@@ -132,6 +139,11 @@ in
         bindkey "^[[1;5D" backward-word                 # Ctrl-<L-arrow> -> move back 1 word
         bindkey '^[[Z' reverse-menu-complete            # Shift-Tab -> reverse menu navigation
         bindkey '^_' autosuggest-accept                 # C-/ => accept suggestion
+
+        # -------===[ Useful Functions ]===------- #
+        gitignore() {
+          curl -s -o .gitignore https://gitignore.io/api/$1
+        }
 
         # -------===[ External Exports ]===------- #
         export OPENAI_API_KEY=$(cat /run/agenix/closedAI)
@@ -170,104 +182,90 @@ in
         ]);
     };
 
-    home.configFile = mkMerge [
-      {
-        zsh-abbreviations = {
-          target = "zsh/abbreviations";
-          text =
-            let abbrevs = import "${config.snowflake.configDir}/shell-abbr";
-            in ''
-              ${concatStrings (mapAttrsToList (k: v: with strings; ''
-                  abbr ${k}=${escapeNixString v}
-              '') abbrevs)}
-            '';
-        };
-      }
-
-      (mkIf (themeCfg.active != null) {
-        zsh-fzf-theme = {
-          target = "zsh/fzf.zsh";
-          text = with themeCfg.colors.main; ''
-            export FZF_DEFAULT_OPTS=" \
-            --color=bg:,bg+:${types.bg},spinner:${types.panelbg},hl:${normal.red} \
-            --color=fg:${types.border},header:${normal.red},info:${normal.magenta},pointer:${types.border} \
-            --color=marker:${normal.magenta},fg+:${types.border},prompt:${types.border},hl+:${normal.red}"
+    home.configFile = {
+      zsh-abbreviations = {
+        target = "zsh/abbreviations";
+        text =
+          let abbrevs = import "${config.snowflake.configDir}/shell-abbr";
+          in ''
+            ${concatStrings (mapAttrsToList (k: v: with strings; ''
+                abbr ${k}=${escapeNixString v}
+            '') abbrevs)}
           '';
-        };
+      };
 
-        #  Reference: https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters/main.md
-        zsh-theme = {
-          target = "zsh/${themeCfg.active}.zsh";
-          text = with themeCfg.colors.main; ''
-            # -------===[ Comments ]===------- #
-            ZSH_HIGHLIGHT_STYLES[comment]='fg=${normal.black}'
+      #  Reference: https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters/main.md
+      zsh-theme = mkIf (themeCfg.active != null) {
+        target = "zsh/${themeCfg.active}.zsh";
+        text = with themeCfg.colors.main; ''
+          # -------===[ Comments ]===------- #
+          ZSH_HIGHLIGHT_STYLES[comment]='fg=${normal.black}'
 
-            # -------===[ Functions/Methods ]===------- #
-            ZSH_HIGHLIGHT_STYLES[alias]='fg=${normal.magenta}'
-            ZSH_HIGHLIGHT_STYLES[suffix-alias]='fg=${normal.magenta}'
-            ZSH_HIGHLIGHT_STYLES[global-alias]='fg=${normal.magenta}'
-            ZSH_HIGHLIGHT_STYLES[function]='fg=${normal.blue}'
-            ZSH_HIGHLIGHT_STYLES[command]='fg=${normal.green}'
-            ZSH_HIGHLIGHT_STYLES[precommand]='fg=${normal.green},italic'
-            ZSH_HIGHLIGHT_STYLES[autodirectory]='fg=${normal.yellow},italic'
-            ZSH_HIGHLIGHT_STYLES[single-hyphen-option]='fg=${normal.yellow}'
-            ZSH_HIGHLIGHT_STYLES[double-hyphen-option]='fg=${normal.yellow}'
-            ZSH_HIGHLIGHT_STYLES[back-quoted-argument]='fg=${normal.magenta}'
+          # -------===[ Functions/Methods ]===------- #
+          ZSH_HIGHLIGHT_STYLES[alias]='fg=${normal.magenta}'
+          ZSH_HIGHLIGHT_STYLES[suffix-alias]='fg=${normal.magenta}'
+          ZSH_HIGHLIGHT_STYLES[global-alias]='fg=${normal.magenta}'
+          ZSH_HIGHLIGHT_STYLES[function]='fg=${normal.blue}'
+          ZSH_HIGHLIGHT_STYLES[command]='fg=${normal.green}'
+          ZSH_HIGHLIGHT_STYLES[precommand]='fg=${normal.green},italic'
+          ZSH_HIGHLIGHT_STYLES[autodirectory]='fg=${normal.yellow},italic'
+          ZSH_HIGHLIGHT_STYLES[single-hyphen-option]='fg=${normal.yellow}'
+          ZSH_HIGHLIGHT_STYLES[double-hyphen-option]='fg=${normal.yellow}'
+          ZSH_HIGHLIGHT_STYLES[back-quoted-argument]='fg=${normal.magenta}'
 
-            # -------===[ Built-ins ]===------- #
-            ZSH_HIGHLIGHT_STYLES[builtin]='fg=${normal.blue}'
-            ZSH_HIGHLIGHT_STYLES[reserved-word]='fg=${normal.green}'
-            ZSH_HIGHLIGHT_STYLES[hashed-command]='fg=${normal.green}'
+          # -------===[ Built-ins ]===------- #
+          ZSH_HIGHLIGHT_STYLES[builtin]='fg=${normal.blue}'
+          ZSH_HIGHLIGHT_STYLES[reserved-word]='fg=${normal.green}'
+          ZSH_HIGHLIGHT_STYLES[hashed-command]='fg=${normal.green}'
 
-            # -------===[ Punctuation ]===------- #
-            ZSH_HIGHLIGHT_STYLES[commandseparator]='fg=${bright.red}'
-            ZSH_HIGHLIGHT_STYLES[command-substitution-delimiter]='fg=${types.border}'
-            ZSH_HIGHLIGHT_STYLES[command-substitution-delimiter-unquoted]='fg=${types.border}'
-            ZSH_HIGHLIGHT_STYLES[process-substitution-delimiter]='fg=${types.border}'
-            ZSH_HIGHLIGHT_STYLES[back-quoted-argument-delimiter]='fg=${bright.red}'
-            ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]='fg=${bright.red}'
-            ZSH_HIGHLIGHT_STYLES[back-dollar-quoted-argument]='fg=${bright.red}'
+          # -------===[ Punctuation ]===------- #
+          ZSH_HIGHLIGHT_STYLES[commandseparator]='fg=${bright.red}'
+          ZSH_HIGHLIGHT_STYLES[command-substitution-delimiter]='fg=${types.border}'
+          ZSH_HIGHLIGHT_STYLES[command-substitution-delimiter-unquoted]='fg=${types.border}'
+          ZSH_HIGHLIGHT_STYLES[process-substitution-delimiter]='fg=${types.border}'
+          ZSH_HIGHLIGHT_STYLES[back-quoted-argument-delimiter]='fg=${bright.red}'
+          ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]='fg=${bright.red}'
+          ZSH_HIGHLIGHT_STYLES[back-dollar-quoted-argument]='fg=${bright.red}'
 
-            # -------===[ Strings ]===------- #
-            ZSH_HIGHLIGHT_STYLES[command-substitution-quoted]='fg=${bright.yellow}'
-            ZSH_HIGHLIGHT_STYLES[command-substitution-delimiter-quoted]='fg=${bright.yellow}'
-            ZSH_HIGHLIGHT_STYLES[single-quoted-argument]='fg=${bright.yellow}'
-            ZSH_HIGHLIGHT_STYLES[single-quoted-argument-unclosed]='fg=${normal.red}'
-            ZSH_HIGHLIGHT_STYLES[double-quoted-argument]='fg=${bright.yellow}'
-            ZSH_HIGHLIGHT_STYLES[double-quoted-argument-unclosed]='fg=${normal.red}'
-            ZSH_HIGHLIGHT_STYLES[rc-quote]='fg=${bright.yellow}'
+          # -------===[ Strings ]===------- #
+          ZSH_HIGHLIGHT_STYLES[command-substitution-quoted]='fg=${bright.yellow}'
+          ZSH_HIGHLIGHT_STYLES[command-substitution-delimiter-quoted]='fg=${bright.yellow}'
+          ZSH_HIGHLIGHT_STYLES[single-quoted-argument]='fg=${bright.yellow}'
+          ZSH_HIGHLIGHT_STYLES[single-quoted-argument-unclosed]='fg=${normal.red}'
+          ZSH_HIGHLIGHT_STYLES[double-quoted-argument]='fg=${bright.yellow}'
+          ZSH_HIGHLIGHT_STYLES[double-quoted-argument-unclosed]='fg=${normal.red}'
+          ZSH_HIGHLIGHT_STYLES[rc-quote]='fg=${bright.yellow}'
 
-            # -------===[ Variables ]===------- #
-            ZSH_HIGHLIGHT_STYLES[dollar-quoted-argument]='fg=${types.highlight}'
-            ZSH_HIGHLIGHT_STYLES[dollar-quoted-argument-unclosed]='fg=${bright.red}'
-            ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]='fg=${types.highlight}'
-            ZSH_HIGHLIGHT_STYLES[assign]='fg=${types.highlight}'
-            ZSH_HIGHLIGHT_STYLES[named-fd]='fg=${types.highlight}'
-            ZSH_HIGHLIGHT_STYLES[numeric-fd]='fg=${types.highlight}'
+          # -------===[ Variables ]===------- #
+          ZSH_HIGHLIGHT_STYLES[dollar-quoted-argument]='fg=${types.highlight}'
+          ZSH_HIGHLIGHT_STYLES[dollar-quoted-argument-unclosed]='fg=${bright.red}'
+          ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]='fg=${types.highlight}'
+          ZSH_HIGHLIGHT_STYLES[assign]='fg=${types.highlight}'
+          ZSH_HIGHLIGHT_STYLES[named-fd]='fg=${types.highlight}'
+          ZSH_HIGHLIGHT_STYLES[numeric-fd]='fg=${types.highlight}'
 
-            # -------===[ Non-Exclusive ]===------- #
-            ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=${normal.red}'
-            ZSH_HIGHLIGHT_STYLES[path]='fg=${types.highlight},underline'
-            ZSH_HIGHLIGHT_STYLES[path_pathseparator]='fg=${bright.red},underline'
-            ZSH_HIGHLIGHT_STYLES[path_prefix]='fg=${types.highlight},underline'
-            ZSH_HIGHLIGHT_STYLES[path_prefix_pathseparator]='fg=${bright.red},underline'
-            ZSH_HIGHLIGHT_STYLES[globbing]='fg=${types.highlight}'
-            ZSH_HIGHLIGHT_STYLES[history-expansion]='fg=${normal.magenta}'
-            ZSH_HIGHLIGHT_STYLES[back-quoted-argument-unclosed]='fg=${normal.red}'
-            ZSH_HIGHLIGHT_STYLES[redirection]='fg=${types.highlight}'
-            ZSH_HIGHLIGHT_STYLES[arg0]='fg=${types.highlight}'
-            ZSH_HIGHLIGHT_STYLES[default]='fg=${types.highlight}'
-            ZSH_HIGHLIGHT_STYLES[cursor]='fg=${types.highlight}'
+          # -------===[ Non-Exclusive ]===------- #
+          ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=${normal.red}'
+          ZSH_HIGHLIGHT_STYLES[path]='fg=${types.highlight},underline'
+          ZSH_HIGHLIGHT_STYLES[path_pathseparator]='fg=${bright.red},underline'
+          ZSH_HIGHLIGHT_STYLES[path_prefix]='fg=${types.highlight},underline'
+          ZSH_HIGHLIGHT_STYLES[path_prefix_pathseparator]='fg=${bright.red},underline'
+          ZSH_HIGHLIGHT_STYLES[globbing]='fg=${types.highlight}'
+          ZSH_HIGHLIGHT_STYLES[history-expansion]='fg=${normal.magenta}'
+          ZSH_HIGHLIGHT_STYLES[back-quoted-argument-unclosed]='fg=${normal.red}'
+          ZSH_HIGHLIGHT_STYLES[redirection]='fg=${types.highlight}'
+          ZSH_HIGHLIGHT_STYLES[arg0]='fg=${types.highlight}'
+          ZSH_HIGHLIGHT_STYLES[default]='fg=${types.highlight}'
+          ZSH_HIGHLIGHT_STYLES[cursor]='fg=${types.highlight}'
 
-             # -------===[ Patterns ]===------- #
-            ZSH_HIGHLIGHT_PATTERNS+=('sudo ' 'fg=${types.fg},bold,bg=${normal.red}')
-            ZSH_HIGHLIGHT_PATTERNS+=('rm -rf *' 'fg=${types.fg},bold,bg=${normal.red}')
+           # -------===[ Patterns ]===------- #
+          ZSH_HIGHLIGHT_PATTERNS+=('sudo ' 'fg=${types.fg},bold,bg=${normal.red}')
+          ZSH_HIGHLIGHT_PATTERNS+=('rm -rf *' 'fg=${types.fg},bold,bg=${normal.red}')
 
-             # -------===[ Plugins ]===------- #
-             # ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=${bright.black},bold,underline"
-          '';
-        };
-      })
-    ];
+           # -------===[ Plugins ]===------- #
+           # ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=${bright.black},bold,underline"
+        '';
+      };
+    };
   };
 }

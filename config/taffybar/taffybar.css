@@ -10,13 +10,16 @@
 
 .taffy-box {
     background-color: @bar-background;
+    padding-top: 3px;
+    padding-bottom: 3px;
 }
 
 .inner-pad { 
     background-color: @widget-background;
     border-radius: 9px;
     padding: 7px;
-    margin: 3px;
+    margin-left: 3px;
+    margin-right: 3px;
     transition: background-color .5s;
     opacity: 1;
 }

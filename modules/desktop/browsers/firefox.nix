@@ -99,6 +99,8 @@ in {
         "extensions.pocket.enabled" = false;
         "extensions.shield-recipe-client.enabled" = false;
         "reader.parse-on-load.enabled" = false;
+        # Allow seperate search-engine usage in private mode!
+        "browser.search.separatePrivateDefault.ui.enabled" = true;
 
         # Security-oriented defaults:
         "security.family_safety.mode" = 0;
