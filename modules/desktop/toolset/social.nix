@@ -49,26 +49,21 @@ in
     (mkIf cfg.discord.enable {
       home.configFile.openSAR-settings = {
         target = "discordcanary/settings.json";
-        text =
-          let
-            theme = pkgs.fetchurl {
-              url = "https://catppuccin.github.io/discord/dist/catppuccin-mocha.theme.css";
-              hash = "sha256-oET6HcUE6bPnwpJUdpe2eVsth9TjHewTaeIe/HM71RQ=";
-            };
-          in
-          builtins.toJSON {
-            openasar = {
-              setup = true;
-              quickstart = true;
-              noTyping = false;
-              cmdPreset = "balanced";
-              css = builtins.readFile theme;
-            };
-            SKIP_HOST_UPDATE = true;
-            IS_MAXIMIZED = true;
-            IS_MINIMIZED = false;
-            trayBalloonShown = true;
+        text = builtins.toJSON {
+          openasar = {
+            setup = true;
+            quickstart = true;
+            noTyping = false;
+            cmdPreset = "balanced";
+            css = ''
+              @import url("https://catppuccin.github.io/discord/dist/catppuccin-mocha.theme.css");
+            '';
           };
+          SKIP_HOST_UPDATE = true;
+          IS_MAXIMIZED = true;
+          IS_MINIMIZED = false;
+          trayBalloonShown = true;
+        };
       };
 
       user.packages =
