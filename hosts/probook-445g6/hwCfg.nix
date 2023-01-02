@@ -51,7 +51,7 @@
 
   # Finally, our beloved hardware module(s):
   modules.hardware = {
-    audio.enable = true;
+    pipewire.enable = true;
     bluetooth.enable = true;
     pointer.enable = true;
   };

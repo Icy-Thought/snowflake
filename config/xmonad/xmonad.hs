@@ -243,16 +243,6 @@ protonMailSelector = chromiumSelectorBase <&&> fmap isProtonMailTitle title
 virtualClasses =
   [(protonMailSelector, "Proton Mail"), (chromiumSelector, "Chromium")]
 
--- Commands
-chromiumCommand = "chromium"
-
-protonMailCommand = "chromium --new-window https://mail.proton.me/u/1/inbox"
-
-firefoxCommand = "firefox-devedition"
-
-firefoxPrvtCommand =
-  "firefox-devedition --profile ~/.mozilla/firefox/z5dgw9v6.dev-edition-private"
-
 -- Startup hook
 hostNameToAction = M.fromList [("my-hostname", return ())]
 
@@ -754,44 +744,18 @@ nearFullFloat = customFloating $ W.RationalRect l t w h
   l = 0.02
 
 scratchpads =
-  [ NS "SysMon"             sysMonCommand       sysMonSelector       nearFullFloat
-  , NS "CanaryCord"         discordCommand      discordSelector      nearFullFloat
-  , NS "Element"            elementCommand      elementSelector      nearFullFloat
-  , NS "GalaxyBudsClient"   gBudsCommand        gBudsSelector        nearFullFloat
-  , NS "Neovide"            neovideCommand      neovideSelector      nearFullFloat
-  , NS "Picture-in-Picture" firefoxPPCommand    firefoxPPSelector    defaultFloating
-  , NS "ProtonMail"         protonMailCommand   protonMailSelector   nearFullFloat
-  , NS "Spotify"            spotifyCommand      spotifySelector      nearFullFloat
-  , NS "Telegram"           telegramCommand     telegramSelector     nearFullFloat
-  , NS "Transmission"       transmissionCommand transmissionSelector nearFullFloat
+  [ NS "Discord"            "discordcanary"                                                  (className =? "discord")           nearFullFloat
+  , NS "EasyEffects"        "easyeffects"                                                    (title =? "Easy Effects")          nearFullFloat
+  , NS "Element"            "element-desktop"                                                (className =? "Element")           nearFullFloat
+  , NS "GalaxyBudsClient"   "GalaxyBudsClient"                                               (className =? "GalaxyBudsClient")  nearFullFloat
+  , NS "Neovide"            "neovide --multigrid --frame none --maximized"                   (className =? "neovide")           nearFullFloat
+  , NS "Picture-in-Picture" "Picture-in-Picture"                                             (title =? "Picture-in-Picture")    defaultFloating
+  , NS "ProtonMail"         "chromium --new-window https://mail.proton.me/u/1/inbox"         protonMailSelector                 nearFullFloat
+  , NS "Spotify"            "spotify"                                                        (className =? "Spotify")           nearFullFloat
+  , NS "System Monitor"     "wezterm start --always-new-process -- -t 'System Monitor' btop" (title =? "System Monitor")        nearFullFloat
+  , NS "Telegram"           "telegram-desktop"                                               (className =? "TelegramDesktop")   nearFullFloat
+  , NS "Transmission"       "transmission-gtk"                                               (className =? "Transmission-gtk")  nearFullFloat
   ]
- where
-  sysMonCommand        = "wezterm start --always-new-process -- -t 'System Monitor' btop"
-  sysMonSelector       = title =? "System Monitor"
-
-  discordCommand       = "discordcanary"
-  discordSelector      = className =? "discord"
-
-  elementCommand       = "element-desktop"
-  elementSelector      = className =? "Element"
-
-  gBudsCommand         = "GalaxyBudsClient"
-  gBudsSelector        = className =? "GalaxyBudsClient"
-
-  neovideCommand       = "neovide --multigrid --frame none --maximized"
-  neovideSelector      = className =? "neovide"
-
-  firefoxPPCommand     = "Picture-in-Picture"
-  firefoxPPSelector    = title =? "Picture-in-Picture"
-
-  spotifyCommand       = "spotify"
-  spotifySelector      = className =? "Spotify"
-
-  telegramCommand      = "telegram-desktop"
-  telegramSelector     = className =? "TelegramDesktop"
-
-  transmissionCommand  = "transmission-gtk"
-  transmissionSelector = className =? "Transmission-gtk"
 
 myScratchPadManageHook = namedScratchpadManageHook scratchpads
 
@@ -900,9 +864,9 @@ addKeys conf@XConfig { modMask = modm } =
 
     -- Specific program spawning
     ++  bindBringAndRaiseMany
-         [ (modalt, xK_g, spawn chromiumCommand   , chromiumSelector)
-         , (modalt, xK_f, spawn firefoxCommand    , firefoxSelector)
-         , (modalt, xK_w, spawn firefoxPrvtCommand, firefoxSelector)
+         [ (modalt, xK_g, spawn "chromium", chromiumSelector)
+         , (modalt, xK_f, spawn "firefox-devedition", firefoxSelector)
+         , (modalt, xK_w, spawn "firefox-devedition --profile ~/.mozilla/firefox/z5dgw9v6.dev-edition-private", firefoxSelector)
          ]
 
     -- Window manipulation
@@ -940,14 +904,15 @@ addKeys conf@XConfig { modMask = modm } =
        , ((hyper, xK_l), selectLayout)
 
          -- ScratchPad(s)
-       , ((modalt, xK_b), doScratchpad "SysMon")
-       , ((modalt, xK_j), doScratchpad "CanaryCord")
-       , ((modalt, xK_k), doScratchpad "Element")
+       , ((modalt, xK_b), doScratchpad "System Monitor")
        , ((modalt, xK_e), doScratchpad "Neovide")
+       , ((modalt, xK_h), doScratchpad "Telegram")
+       , ((modalt, xK_j), doScratchpad "Discord")
+       , ((modalt, xK_k), doScratchpad "Element")
        , ((modalt, xK_m), doScratchpad "ProtonMail")
        , ((modalt, xK_s), doScratchpad "Spotify")
-       , ((modalt, xK_h), doScratchpad "Telegram")
        , ((modalt, xK_t), doScratchpad "Transmission")
+       , ((modalt, xK_v), doScratchpad "EasyEffects")
 
          -- Rofi(s)
        , ((modm, xK_p), spawn "rofi -show drun -show-icons")
@@ -955,9 +920,8 @@ addKeys conf@XConfig { modMask = modm } =
        , ((hyper, xK_p), spawn "rofi-systemd")
 
          -- Specific program spawning
-       , ((modalt, xK_v), spawn "pavucontrol")
          -- , ((modm .|. shiftMask, xK_x)   , spawn "whatever-lock") <- lockscreen when found!
-         -- , ((modalt, xK_p)               , spawn "rofi -show power") <- rofi power controls
+         -- , ((hyper, xK_q)                , spawn "rofi -show power") <- rofi power controls
 
          -- Playerctl
        , ((modm, xK_Left), spawn "playerctl previous")

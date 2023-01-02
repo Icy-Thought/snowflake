@@ -20,7 +20,7 @@
 
   # Modules
   modules.hardware = {
-    audio.enable = true;
+    pipewire.enable = true;
     bluetooth.enable = true;
     razer.enable = true;
     pointer.enable = true;

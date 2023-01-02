@@ -114,7 +114,7 @@ groups.append(
                 **next_maximum,
             ),
             DropDown("Transmission", "transmission-gtk", **next_maximum),
-            DropDown("Volume Control", "pavucontrol", **next_maximum),
+            DropDown("Volume Control", "eassyeffects", **next_maximum),
         ],
     )
 )

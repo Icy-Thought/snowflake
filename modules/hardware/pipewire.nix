@@ -7,9 +7,9 @@
 with lib;
 with lib.my;
 
-let cfg = config.modules.hardware.audio;
+let cfg = config.modules.hardware.pipewire;
 in {
-  options.modules.hardware.audio = {
+  options.modules.hardware.pipewire = {
     enable = mkBoolOpt false;
 
     lowLatency = {
@@ -31,9 +31,8 @@ in {
 
   config =
     let qr = "${toString cfg.lowLatency.quantum}/${toString cfg.lowLatency.rate}";
-    in mkIf cfg.enable (mkMerge [
-      {
-        environment.systemPackages = with pkgs; [ pavucontrol ];
+    in mkMerge [
+      (mkIf cfg.enable {
         security.rtkit.enable = true;
         hardware.pulseaudio.enable = false;
 
@@ -43,9 +42,11 @@ in {
           alsa.support32Bit = true;
           pulse.enable = true;
         };
-      }
 
-      (mkIf cfg.lowLatency.enable {
+        user.packages = with pkgs; [ easyeffects ];
+      })
+
+      (mkIf (cfg.enable && cfg.lowLatency.enable) {
         services.pipewire = {
           config = {
             pipewire = {
@@ -98,5 +99,5 @@ in {
           }];
         };
       })
-    ]);
+    ];
 }
