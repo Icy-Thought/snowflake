@@ -71,8 +71,7 @@ with lib.my; {
           };
         }
 
-        (mkIf (active != null)
-          {
+        (mkIf (active != null) {
             wezterm-rice = {
               target = "wezterm/theme/colorscheme.lua";
               text = ''

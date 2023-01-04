@@ -134,50 +134,7 @@ in {
         cfg.font.package
         twitter-color-emoji
       ];
-    })
 
-    (mkIf (config.modules.desktop.envProto == "x11") {
-      services.xserver.displayManager = {
-        lightdm.greeters.mini.extraConfig = with cfg.colors.main; ''
-          text-color = "${types.bg}"
-          password-background-color = "${normal.black}"
-          window-color = "${types.border}"
-          border-color = "${types.border}"
-        '';
-      };
-    })
-
-    (mkIf config.modules.desktop.toolset.docView.sioyek.enable {
-      hm.programs.sioyek.config = with cfg.font; {
-        "custom_background_color " = "0.12 0.11 0.18";
-        "custom_text_color " = "0.85 0.88 0.93";
-
-        "text_highlight_color" = "0.85 0.88 0.93";
-        "visual_mark_color" = "0.27 0.28 0.35 1.0";
-        "search_highlight_color" = "0.95 0.55 0.66";
-        "link_highlight_color" = "0.59 0.80 0.98";
-        "synctex_highlight_color" = "0.96 0.88 0.86";
-
-        "page_separator_width" = "2";
-        "page_separator_color" = "0.95 0.80 0.80";
-        "status_bar_color" = "0.19 0.20 0.27";
-
-        "font_size" = "${toString (mono.size)}";
-        "ui_font" = "${mono.family} ${mono.weight}";
-      };
-    })
-
-    (mkIf config.modules.desktop.editors.vscodium.enable {
-      hm.programs.vscode.extensions = with cfg.vscode.extension;
-        pkgs.vscode-utils.extensionsFromVscodeMarketplace [{
-          name = "${name}";
-          publisher = "${publisher}";
-          version = "${version}";
-          hash = "${hash}";
-        }];
-    })
-
-    (mkIf config.modules.desktop.extensions.rofi.enable {
       hm.programs.rofi = {
         extraConfig = with cfg; {
           icon-theme = "${iconTheme.name}";
@@ -185,10 +142,8 @@ in {
         };
 
         theme =
-          let
-            inherit (config.hm.lib.formats.rasi) mkLiteral;
-          in
-          with cfg.colors.rofi; {
+          let inherit (config.hm.lib.formats.rasi) mkLiteral;
+          in with cfg.colors.rofi; {
             "*" = {
               fg = mkLiteral "${fg}";
               bg = mkLiteral "${bg.main}";
@@ -321,6 +276,43 @@ in {
               color = mkLiteral "@fg";
             };
           };
+      };
+
+      hm.programs.sioyek.config = with cfg.font; {
+        "custom_background_color " = "0.12 0.11 0.18";
+        "custom_text_color " = "0.85 0.88 0.93";
+
+        "text_highlight_color" = "0.85 0.88 0.93";
+        "visual_mark_color" = "0.27 0.28 0.35 1.0";
+        "search_highlight_color" = "0.95 0.55 0.66";
+        "link_highlight_color" = "0.59 0.80 0.98";
+        "synctex_highlight_color" = "0.96 0.88 0.86";
+
+        "page_separator_width" = "2";
+        "page_separator_color" = "0.95 0.80 0.80";
+        "status_bar_color" = "0.19 0.20 0.27";
+
+        "font_size" = "${toString (mono.size)}";
+        "ui_font" = "${mono.family} ${mono.weight}";
+      };
+
+      hm.programs.vscode.extensions = with cfg.vscode.extension;
+        pkgs.vscode-utils.extensionsFromVscodeMarketplace [{
+          name = "${name}";
+          publisher = "${publisher}";
+          version = "${version}";
+          hash = "${hash}";
+        }];
+    })
+
+    (mkIf (config.modules.desktop.envProto == "x11") {
+      services.xserver.displayManager = {
+        lightdm.greeters.mini.extraConfig = with cfg.colors.main; ''
+          text-color = "${types.bg}"
+          password-background-color = "${normal.black}"
+          window-color = "${types.border}"
+          border-color = "${types.border}"
+        '';
       };
     })
   ]);

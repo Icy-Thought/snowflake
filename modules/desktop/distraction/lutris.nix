@@ -7,7 +7,6 @@
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.distraction.lutris;
-  steamCfg = config.modules.desktop.distraction.steam;
   wineCfg = config.modules.desktop.virtual.wine;
 in
 {
@@ -21,20 +20,18 @@ in
   };
 
   config = mkMerge [
-    (mkIf (cfg.enable && wineCfg.enable) {
-      user.packages = [ cfg.package ];
+    (mkIf cfg.enable {
+      user.packages = with pkgs;
+        (if wineCfg.enable then [ cfg.package ]
+        else [
+          cfg.package
+          wineWowPackages.fonts
+          wineWowPackages.stagingFull
+          winetricks
+        ]);
     })
 
-    (mkIf (cfg.enable && !wineCfg.enable) {
-      user.packages = with pkgs; [
-        cfg.package
-        wineWowPackages.fonts
-        wineWowPackages.stagingFull
-        winetricks
-      ];
-    })
-
-    (mkIf cfg.league.enable {
+    (mkIf (cfg.enable && cfg.league.enable) {
       boot.kernel.sysctl."abi.vsyscall32" = 0; # anti-cheat...
 
       networking.firewall.allowedTCPPorts = [ 443 ];

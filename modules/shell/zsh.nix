@@ -140,11 +140,6 @@ in
         bindkey '^[[Z' reverse-menu-complete            # Shift-Tab -> reverse menu navigation
         bindkey '^_' autosuggest-accept                 # C-/ => accept suggestion
 
-        # -------===[ Useful Functions ]===------- #
-        gitignore() {
-          curl -s -o .gitignore https://gitignore.io/api/$1
-        }
-
         # -------===[ External Exports ]===------- #
         export OPENAI_API_KEY=$(cat /run/agenix/closedAI)
 

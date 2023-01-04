@@ -33,10 +33,7 @@ in {
       };
       shellAbbrs = import "${config.snowflake.configDir}/shell-abbr";
 
-      functions = {
-        fish_title = "echo $argv[1]";
-        gitignore = "curl -sL https://www.gitignore.io/api/$argv";
-      };
+      functions = { fish_title = "echo $argv[1]"; };
 
       interactiveShellInit = ''
         ${getExe pkgs.any-nix-shell} fish --info-right | source
