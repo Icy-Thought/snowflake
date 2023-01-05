@@ -57,13 +57,13 @@ in {
           gucharmap
           qgnomeplatform # Qt -> GTK Theme
           adwaita-qt # Qt -> GTK Theme
-          kalker
+          libqalculate
           (makeDesktopItem {
-            name = "kalker";
-            desktopName = "Kalker";
+            name = "Qalc";
+            desktopName = "Qalc";
             icon = "calc";
-            exec = "${myTerm} start kalker";
-            categories = [ "Development" ];
+            exec = "${myTerm} start qalc";
+            categories = [ "Education" "Science" "Math" ];
           })
         ];
 

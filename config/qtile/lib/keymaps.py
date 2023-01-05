@@ -116,7 +116,7 @@ brightctl = [
 ]
 
 quick_launch = [
-    EzKey("<XF86Calculator>", lazy.spawn(myTerm, "start --always-new-process kalker")),
+    EzKey("<XF86Calculator>", lazy.spawn(myTerm, "start --always-new-process qalc")),
 ]
 
 keys = [
