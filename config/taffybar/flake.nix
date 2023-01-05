@@ -6,7 +6,7 @@
 
   outputs = { self, flake-utils, nixpkgs, taffybar }:
     let
-      overlay = import ../../overlays/taffybar.nix;
+      overlay = import ./overlay.nix;
       overlays = taffybar.overlays ++ [ overlay ];
     in
     flake-utils.lib.eachDefaultSystem

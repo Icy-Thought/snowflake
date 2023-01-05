@@ -8,8 +8,11 @@
 with lib;
 with lib.my;
 
-let cfg = config.modules.desktop.extensions.taffybar;
-in {
+let
+  cfg = config.modules.desktop.extensions.taffybar;
+  taffyDir = "${config.snowflake.configDir}/taffybar";
+in
+{
   options.modules.desktop.extensions.taffybar = {
     enable = mkBoolOpt false;
   };
@@ -25,7 +28,6 @@ in {
         systemctl --user import-environment GDK_PIXBUF_MODULE_FILE DBUS_SESSION_BUS_ADDRESS PATH
       '';
     };
-    hm.xsession.importedVariables = [ "GDK_PIXBUF_MODULE_FILE" ];
 
     # WARN: Error retrieving accessibility bus address: org.freedesktop.DBus.Error.ServiceUnknown: The name org.a11y.Bus was not provided by any .service files
     services.gnome.at-spi2-core.enable = true;
@@ -35,18 +37,26 @@ in {
       status-notifier-watcher.enable = true;
       taffybar = {
         enable = true;
-        package = pkgs.haskellPackages.raybar;
+        package = pkgs.taffybar.override {
+          packages = haskellPackages: with haskellPackages; [ hostname ];
+        };
       };
     };
 
     # Symlink necessary files for config to load:
     home.configFile =
-      let
-        taffyDir = "${config.snowflake.configDir}/taffybar";
-        active = config.modules.themes.active;
-      in
-      {
+      let active = config.modules.themes.active;
+      in {
         taffybar-base = {
+          target = "taffybar/taffybar.hs";
+          source = "${taffyDir}/taffybar.hs";
+          onChange = "rm -rf $XDG_CACHE_HOME/taffybar";
+        };
+        taffybar-palette = mkIf (active != null) {
+          target = "taffybar/palette/${active}.css";
+          source = "${taffyDir}/palette/${active}.css";
+        };
+        taffybar-css = {
           target = "taffybar/taffybar.css";
           text = ''
             ${strings.optionalString (active != null) ''
@@ -54,10 +64,6 @@ in {
             ''}
             ${builtins.readFile "${taffyDir}/taffybar.css"}
           '';
-        };
-        taffybar-theme = mkIf (active != null) {
-          target = "taffybar/palette/${active}.css";
-          source = "${taffyDir}/palette/${active}.css";
         };
       };
   };
