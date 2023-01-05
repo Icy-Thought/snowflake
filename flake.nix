@@ -26,7 +26,6 @@
       url = "github:dccsillag/picom/implement-window-animations";
       flake = false;
     };
-    taffybar.url = "github:taffybar/taffybar";
 
     # Toolset ++ Application(s)
     emacs.url = "github:nix-community/emacs-overlay";

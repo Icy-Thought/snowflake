@@ -15,8 +15,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-    nixpkgs.overlays = [ inputs.taffybar.overlay ];
-
     # WARN: 2-Step workaround (https://github.com/taffybar/taffybar/issues/403)
     gtk.iconCache.enable = true;
 
