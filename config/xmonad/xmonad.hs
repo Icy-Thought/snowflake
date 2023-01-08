@@ -738,17 +738,61 @@ nearFullFloat = customFloating $ W.RationalRect l t w h
         l = 0.02
 
 scratchpads =
-    [ NS "Discord"            "discordcanary"                                                  (className =? "discord")           nearFullFloat
-    , NS "EasyEffects"        "easyeffects"                                                    (title =? "Easy Effects")          nearFullFloat
-    , NS "Element"            "element-desktop"                                                (className =? "Element")           nearFullFloat
-    , NS "GalaxyBudsClient"   "GalaxyBudsClient"                                               (className =? "GalaxyBudsClient")  nearFullFloat
-    , NS "Neovide"            "neovide --multigrid --frame none --maximized"                   (className =? "neovide")           nearFullFloat
-    , NS "Picture-in-Picture" "Picture-in-Picture"                                             (title =? "Picture-in-Picture")    defaultFloating
-    , NS "ProtonMail"         "chromium --new-window https://mail.proton.me/u/1/inbox"         protonMailSelector                 nearFullFloat
-    , NS "Spotify"            "spotify"                                                        (className =? "Spotify")           nearFullFloat
-    , NS "System Monitor"     "wezterm start --always-new-process -- -t 'System Monitor' btop" (title =? "System Monitor")        nearFullFloat
-    , NS "Telegram"           "telegram-desktop"                                               (className =? "TelegramDesktop")   nearFullFloat
-    , NS "Transmission"       "transmission-gtk"                                               (className =? "Transmission-gtk")  nearFullFloat
+    [ NS
+        "Discord"
+        "discordcanary"
+        (className =? "discord")
+        nearFullFloat
+    , NS
+        "EasyEffects"
+        "easyeffects"
+        (title =? "Easy Effects")
+        nearFullFloat
+    , NS
+        "Element"
+        "element-desktop"
+        (className =? "Element")
+        nearFullFloat
+    , NS
+        "GalaxyBudsClient"
+        "GalaxyBudsClient"
+        (className =? "GalaxyBudsClient")
+        nearFullFloat
+    , NS
+        "Neovide"
+        "neovide --multigrid --frame none --maximized"
+        (className =? "neovide")
+        nearFullFloat
+    , NS
+        "Picture-in-Picture"
+        "Picture-in-Picture"
+        (title =? "Picture-in-Picture")
+        defaultFloating
+    , NS
+        "ProtonMail"
+        "chromium --new-window https://mail.proton.me/u/1/inbox"
+        protonMailSelector
+        nearFullFloat
+    , NS
+        "Spotify"
+        "spotify"
+        (className =? "Spotify")
+        nearFullFloat
+    , NS
+        "System Monitor"
+        "wezterm start --always-new-process -- -t 'System Monitor' btop"
+        (title =? "System Monitor")
+        nearFullFloat
+    , NS
+        "Telegram"
+        "telegram-desktop"
+        (className =? "TelegramDesktop")
+        nearFullFloat
+    , NS
+        "Transmission"
+        "transmission-gtk"
+        (className =? "Transmission-gtk")
+        nearFullFloat
     ]
 
 myScratchPadManageHook = namedScratchpadManageHook scratchpads
