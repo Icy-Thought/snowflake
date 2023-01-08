@@ -18,23 +18,15 @@ in {
     };
   };
 
-  config = mkIf cfg.enable {
-    user.packages = with pkgs; [
-      rofi-systemd
+  # TODO: re-create theming -> general + changable banner (drun, run, systemd and power-menu)
 
-      # TODO: powermenu + screenshot
-      # (makeDesktopItem {
-      #   name = "lock-display";
-      #   desktopName = "Lock screen";
-      #   icon = "system-lock-screen";
-      #   exec = "${config.dotfiles.binDir}/zzz";
-      # })
-    ];
+  config = mkIf cfg.enable {
+    user.packages = with pkgs; [ rofi-systemd ];
 
     hm.programs.rofi = {
       enable = true;
       package = cfg.package;
-      plugins = with pkgs; [ rofi-emoji ];
+      plugins = with pkgs; [ rofi-emoji rofi-power-menu ];
 
       extraConfig = {
         terminal = with pkgs; "${getExe config.modules.desktop.terminal.default}";
@@ -43,12 +35,14 @@ in {
         sidebar-mode = false;
         sort = true;
 
-        display-drun = "   Run ";
-        display-emoji = "  Emoji ";
-        display-window = " 﩯  Window ";
-
         drun-display-format = "{icon} {name}";
-        modi = "run,drun,filebrowser,emoji";
+
+        display-drun = "   Run ";
+        display-emoji = "   Emoji ";
+        display-window = " 﩯 Window ";
+        display-power-menu = "  Power Menu ";
+
+        modi = "run,drun,filebrowser,emoji,power-menu:${getExe pkgs.rofi-power-menu}";
 
         xoffset = 0;
         yoffset = 0;

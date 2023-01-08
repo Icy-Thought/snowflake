@@ -906,7 +906,8 @@ addKeys conf@XConfig { modMask = modm } =
            , ((modalt, xK_v), doScratchpad "EasyEffects")
 
              -- Rofi(s)
-           , ((modm, xK_p), spawn "rofi -show drun -show-icons")
+           , ((modm, xK_p), spawn "rofi -show power-menu")
+           , ((modalt, xK_p), spawn "rofi -show drun")
            , ((modm .|. shiftMask, xK_p), spawn "rofi -show run")
            , ((hyper, xK_p), spawn "rofi-systemd")
 

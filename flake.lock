@@ -293,11 +293,11 @@
       },
       "locked": {
         "dir": "contrib",
-        "lastModified": 1672792760,
-        "narHash": "sha256-gjmp7L8hVdguIXY7z8aQoJUeG9cklL28sjoBl9O0dMU=",
+        "lastModified": 1672941981,
+        "narHash": "sha256-SRNJbo35U0l2B5j1QrAKrlgXwTZV5PEk5/pxkd789R8=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "ef18c9f9b05caf1f39ed32762f53802e378f143b",
+        "rev": "08ebf8d3a80c65b01d493ca84ad2ab7304a669f9",
         "type": "github"
       },
       "original": {
@@ -470,11 +470,11 @@
     "nvim-dir": {
       "flake": false,
       "locked": {
-        "lastModified": 1672761551,
-        "narHash": "sha256-dyL+xdftCgByQfg392sGSa7rbSQoaKjnXNPruQEVnuo=",
+        "lastModified": 1673167347,
+        "narHash": "sha256-CkwgeVloZJ0Aj5ZcEU5k3ZIlZAktJmvEBIA3yWU07FQ=",
         "ref": "refs/heads/main",
-        "rev": "8a3443e3605d87c9b29cefda2c5dcc68e9398387",
-        "revCount": 267,
+        "rev": "f5c2b8ca2f1525ddf14b1c65267f9988fe87fed6",
+        "revCount": 268,
         "submodules": true,
         "type": "git",
         "url": "https://github.com/Icy-Thought/nvim.d.git"
@@ -492,11 +492,11 @@
         "nixpkgs": "nixpkgs_4"
       },
       "locked": {
-        "lastModified": 1672820083,
-        "narHash": "sha256-pXlcDte6htaEJIX2CQ7VQ2o8rPBygOYKWcz3DO19/ak=",
+        "lastModified": 1672992869,
+        "narHash": "sha256-O1RL7D6Ce77EEEDCRk0A8Eub84Uj4x5Q7gDsYhd8nlM=",
         "owner": "nix-community",
         "repo": "neovim-nightly-overlay",
-        "rev": "fdb2d33c942bfa07762c0e5357920f41d2f734a9",
+        "rev": "72ff8b1ca0331a8735c1eeaefb95c12dfe21d30a",
         "type": "github"
       },
       "original": {
