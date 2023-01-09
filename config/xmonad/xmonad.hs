@@ -9,25 +9,24 @@
 
 module Main where
 
-import           Codec.Binary.UTF8.String      as UTF8
-import qualified Codec.Binary.UTF8.String      as UTF8String
-                                                ( encode )
-import qualified Control.Arrow                 as A
+import           Codec.Binary.UTF8.String              as UTF8
+import qualified Codec.Binary.UTF8.String              as UTF8String (encode)
+import qualified Control.Arrow                         as A
 import           Control.Monad
 import           Control.Monad.Trans.Class
 import           Control.Monad.Trans.Maybe
 import           Data.Aeson
-import qualified Data.ByteString.Lazy          as B
+import qualified Data.ByteString.Lazy                  as B
 import           Data.Char
 import           Data.Foldable
 import           Data.List
 import           Data.List.Split
-import qualified Data.Map                      as M
+import qualified Data.Map                              as M
 import           Data.Maybe
 import           Data.Monoid
-import qualified Data.MultiMap                 as MM
+import qualified Data.MultiMap                         as MM
 import           Data.Proxy
-import           Data.Tuple.Sequence            ( sequenceT )
+import           Data.Tuple.Sequence                   (sequenceT)
 import           Data.Typeable
 import           Foreign.C.Types
 import           Graphics.X11.ExtraTypes.XF86
@@ -40,30 +39,27 @@ import           System.IO.Unsafe
 import           System.Process
 import           Text.Printf
 import           Unsafe.Coerce
-import           XMonad                  hiding ( (|||) )
-import           XMonad.Actions.CycleWS  hiding ( nextScreen )
+import           XMonad                                hiding ((|||))
 import           XMonad.Actions.CycleWorkspaceByScreen
-import qualified XMonad.Actions.DynamicWorkspaceOrder
-                                               as DWO
-import           XMonad.Actions.DynamicWorkspaces
-                                         hiding ( renameWorkspace
-                                                , withWorkspace
-                                                )
+import           XMonad.Actions.CycleWS                hiding (nextScreen)
+import qualified XMonad.Actions.DynamicWorkspaceOrder  as DWO
+import           XMonad.Actions.DynamicWorkspaces      hiding (renameWorkspace,
+                                                        withWorkspace)
 import           XMonad.Actions.Minimize
 import           XMonad.Actions.Navigation2D
-import qualified XMonad.Actions.SwapWorkspaces as SW
+import qualified XMonad.Actions.SwapWorkspaces         as SW
 import           XMonad.Actions.UpdatePointer
 import           XMonad.Actions.WindowBringer
 import           XMonad.Actions.WindowGo
 import           XMonad.Actions.WorkspaceNames
-import           XMonad.Config                  ( )
-import           XMonad.Core                    ( getDirectories )
-import           XMonad.Hooks.OnPropertyChange
+import           XMonad.Config                         ()
+import           XMonad.Core                           (getDirectories)
 import           XMonad.Hooks.EwmhDesktops
-import           XMonad.Hooks.Focus      hiding ( currentWorkspace )
+import           XMonad.Hooks.Focus                    hiding (currentWorkspace)
 import           XMonad.Hooks.ManageDocks
 import           XMonad.Hooks.ManageHelpers
 import           XMonad.Hooks.Minimize
+import           XMonad.Hooks.OnPropertyChange
 import           XMonad.Hooks.TaffybarPagerHints
 import           XMonad.Hooks.WorkspaceHistory
 import           XMonad.Layout.BoringWindows
@@ -73,28 +69,38 @@ import           XMonad.Layout.LayoutCombinators
 import           XMonad.Layout.LayoutModifier
 import           XMonad.Layout.LimitWindows
 import           XMonad.Layout.MagicFocus
-import           XMonad.Layout.Magnifier hiding ( Toggle )
+import           XMonad.Layout.Magnifier               hiding (Toggle)
 import           XMonad.Layout.Minimize
 import           XMonad.Layout.MultiColumns
 import           XMonad.Layout.MultiToggle
 import           XMonad.Layout.MultiToggle.Instances
 import           XMonad.Layout.NoBorders
-import qualified XMonad.Layout.Renamed         as RN
+import qualified XMonad.Layout.Renamed                 as RN
 import           XMonad.Layout.Spacing
 import           XMonad.Layout.Tabbed
-import           XMonad.Main                    ( launch )
+import           XMonad.Main                           (launch)
 import qualified XMonad.Operations
-import qualified XMonad.StackSet               as W
+import qualified XMonad.StackSet                       as W
 import           XMonad.Util.CustomKeys
-import qualified XMonad.Util.Dmenu             as DM
-import qualified XMonad.Util.ExtensibleState   as XS
+import qualified XMonad.Util.Dmenu                     as DM
+import qualified XMonad.Util.ExtensibleState           as XS
 import           XMonad.Util.Minimize
-import           XMonad.Util.NamedScratchpad   as NS
-import           XMonad.Util.NamedWindows       ( getName )
+import           XMonad.Util.NamedScratchpad           as NS
+import           XMonad.Util.NamedWindows              (getName)
 import           XMonad.Util.Run
 import           XMonad.Util.WorkspaceCompare
 
-myConfig = 
+main =
+    xmonad
+      . docks
+      . pagerHints
+      . setEwmhActivateHook activateSwitchWs
+      . ewmh
+      . ewmhFullscreen
+      . withNavigation2DConfig myNavigation2DConfig
+      $ myConfig
+
+myConfig =
     def { modMask            = mod4Mask
         , terminal           = "wezterm"
         , manageHook         = namedScratchpadManageHook scratchpads
@@ -114,7 +120,7 @@ myConfig =
         , keys               = customKeys (const []) addKeys
         }
 
-icyTheme = 
+icyTheme =
     def { activeColor         = icyActive
         , activeBorderColor   = icyActive
         , activeTextColor     = icyInactive
@@ -137,16 +143,6 @@ restartEventHook e@ClientMessageEvent { ev_message_type = mt } = do
 restartEventHook _ = return $ All True
 
 myNavigation2DConfig = def { defaultTiledNavigation = centerNavigation }
-
-main =
-    xmonad
-      . docks
-      . pagerHints
-      . setEwmhActivateHook activateSwitchWs
-      . ewmh
-      . ewmhFullscreen
-      . withNavigation2DConfig myNavigation2DConfig
-      $ myConfig
 
 -- Utility functions:
 -- Log to a file from anywhere
@@ -439,7 +435,7 @@ myLayoutHook =
         $ fst layoutInfo
 
 -- WindowBringer
-myWindowBringerConfig = 
+myWindowBringerConfig =
     def { menuCommand  = "rofi"
         , menuArgs     = myDmenuArgs ++ ["-format", "i"]
         , windowTitler = myDecorateName
