@@ -206,6 +206,14 @@ in
         monospace = [ mono.family ];
         emoji = [ emoji ];
       };
+
+      hm.programs.vscode.extensions = with cfg.vscode.extension;
+        pkgs.vscode-utils.extensionsFromVscodeMarketplace [{
+          name = "${name}";
+          publisher = "${publisher}";
+          version = "${version}";
+          hash = "${hash}";
+        }];
     }
 
     # x11 related settings:

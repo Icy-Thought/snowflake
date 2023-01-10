@@ -297,14 +297,6 @@ in {
         "font_size" = "${toString (mono.size)}";
         "ui_font" = "${mono.family} ${mono.weight}";
       };
-
-      hm.programs.vscode.extensions = with cfg.vscode.extension;
-        pkgs.vscode-utils.extensionsFromVscodeMarketplace [{
-          name = "${name}";
-          publisher = "${publisher}";
-          version = "${version}";
-          hash = "${hash}";
-        }];
     })
 
     (mkIf (config.modules.desktop.envProto == "x11") {

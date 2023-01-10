@@ -9,32 +9,32 @@ with lib.my;
 
 let cfg = config.modules.themes;
 in {
-  config = mkIf (cfg.active == "") (mkMerge [
+  config = mkIf (cfg.active == "tokyonight") (mkMerge [
     {
       modules.themes = {
-        wallpaper = mkDefault ./wallpaper.png;
+        wallpaper = mkDefault ./assets/zaynstewart-anime-girl-night-alone.png;
 
         gtk = {
           name = "Tokyonight-Dark-BL";
-          package = pkgs.inser-gtk-theme;
+          package = pkgs.my.tokyonight-gtk.override { themeVariants = [ "Dark-BL" ]; };
         };
 
         iconTheme = {
           name = "Fluent-orange-dark";
-          package = pkgs.inser-icon-theme;
+          package = pkgs.fluent-icon-theme.override { colorVariants = [ "orange" ]; };
         };
 
         pointer = {
-          name = "";
-          package = pkgs.insert-cursor-theme;
+          name = "Bibata-Modern-Classic";
+          package = pkgs.bibata-cursors;
           size = 24;
         };
 
         font = {
-          package = pkgs.nerdfonts.override { fonts = [ "" ]; };
-          sans.family = "";
-          mono.family = "";
-          emoji = "";
+          package = pkgs.nerdfonts.override { fonts = [ "VictorMono" ]; };
+          sans.family = "VictorMono Nerd Font";
+          mono.family = "VictorMono Nerd Font Mono";
+          emoji = "Noto Color Emoji";
         };
 
         colors = {
@@ -96,25 +96,49 @@ in {
             };
             selected = "";
             urgent = "";
-            transparent = "";
+            transparent = "hsla(0, 0%, 0%, 0)";
           };
         };
 
-        neovim.theme = "";
-
-        vscode = {
-          extension = {
-            name = "";
-            publisher = "";
-            version = "";
-            hash = "";
-          };
-          theme = {
+        editor = {
+          helix = {
             dark = "";
             light = "";
           };
+          neovim = {
+            dark = "";
+            light = "";
+          };
+          vscode = {
+            dark = "";
+            light = "";
+            extension = {
+              name = "";
+              publisher = "";
+              version = "";
+              hash = "";
+            };
+          };
         };
       };
+
+      home.configFile =
+        let themeDir = "${cfg.gtk.package}/share/themes/${cfg.gtk.name}/gtk-4.0/";
+        in {
+          gtk4Theme-light = {
+            target = "gtk-4.0/gtk.css";
+            source = "${themeDir}/gtk.css";
+          };
+          gtk4Theme-dark = {
+            target = "gtk-4.0/gtk-dark.css";
+            source = "${themeDir}/gtk-dark.css";
+          };
+          gtk4Theme-assets = {
+            target = "gtk-4.0/assets";
+            source = "${themeDir}/assets";
+            recursive = true;
+          };
+        };
     }
 
     # (mkIf config.modules.desktop.browsers.firefox.enable {
@@ -123,96 +147,21 @@ in {
     #     ["${configDir}" /firefox/userChrome.css];
     # })
 
-    # Desktop (X11) theming <- Change after gnome = independent of xserver.
     (mkIf config.services.xserver.enable {
-      user.packages = with cfg.gtk; [
-        theme-package # WARN:
-        icon-package # WARN:
-        cursor-package # WARN:
-      ];
-
       fonts.fonts = with pkgs; [
-        victor-mono
-        emoji-theme # WARN:
+        cfg.font.package
+        noto-fonts-emoji
       ];
-    })
 
-    (mkIf
-      (config.modules.desktop.xmonad.enable
-        || config.modules.desktop.qtile.enable)
-      {
-        services.xserver.displayManager = {
-          sessionCommands = with cfg.gtk; ''
-            ${getExe pkgs.xorg.xsetroot} -xcf ${pkgs.cursor-package}/share/icons/${cursor.name}/cursors/${cursor.default} ${toString (cursor.size)}
-          ''; # WARN:
-
-          # LightDM: Replace with LightDM-Web-Greeter theme
-          lightdm.greeters.mini.extraConfig = with cfg.colors.main; ''
-            text-color = "${types.bg}"
-            password-background-color = "${normal.black}"
-            window-color = "${types.border}"
-            border-color = "${types.border}"
-          '';
-        };
-      })
-
-    (mkIf config.modules.desktop.extra.fcitx5.enable {
-      home.dataFile.fcitx5-theme = {
-        target = "fcitx5/themes";
-        source = pkgs.fetchFromGitHub {
-          owner = "";
-          repo = "";
-          rev = "";
-          hash = "";
-        }; # WARN:
-      };
-    })
-
-    (mkIf config.modules.desktop.media.document.sioyek.enable {
-      hm.programs.sioyek.config = with cfg.font; {
-        "custom_background_color " = "";
-        "custom_text_color " = "";
-        "startup_commands" = "toggle_custom_color";
-
-        "text_highlight_color" = "";
-        "visual_mark_color" = "";
-        "search_highlight_color" = "";
-        "link_highlight_color" = "";
-        "synctex_highlight_color" = "";
-
-        "page_separator_width" = "2";
-        "page_separator_color" = "";
-        "status_bar_color" = "";
-
-        "font_size" = "${toString (mono.size)}";
-        "ui_font" = "${mono.family} ${mono.weight}";
-      }; # WARN:
-    })
-
-    (mkIf config.modules.desktop.editors.vscodium.enable {
-      hm.programs.vscode.extensions = with cfg.vscode.extension;
-        pkgs.vscode-utils.extensionsFromVscodeMarketplace [
-          {
-            name = "${name}";
-            publisher = "${publisher}";
-            version = "${version}";
-            hash = "${hash}";
-          }
-        ];
-    })
-
-    (mkIf config.modules.desktop.extra.rofi.enable {
       hm.programs.rofi = {
         extraConfig = with cfg; {
-          icon-theme = "${gtk.iconTheme}";
-          font = "${font.sans.family} ${font.sans.weight} ${toString (font.sans.size)}";
+          icon-theme = "${iconTheme.name}";
+          font = with font; "${sans.family} ${sans.weight} ${toString (sans.size)}";
         };
 
         theme =
-          let
-            inherit (config.hm.lib.formats.rasi) mkLiteral;
-          in
-          with cfg.colors.rofi; {
+          let inherit (config.hm.lib.formats.rasi) mkLiteral;
+          in with cfg.colors.rofi; {
             "*" = {
               fg = mkLiteral "${fg}";
               bg = mkLiteral "${bg.main}";
@@ -345,6 +294,35 @@ in {
               color = mkLiteral "@fg";
             };
           };
+      };
+
+      hm.programs.sioyek.config = with cfg.font; {
+        "custom_background_color " = "0.10 0.11 0.15";
+        "custom_text_color " = "0.75 0.79 0.96";
+
+        "text_highlight_color" = "0.24 0.35 0.63";
+        "visual_mark_color" = "1.00 0.62 0.39 1.0";
+        "search_highlight_color" = "0.97 0.46 0.56";
+        "link_highlight_color" = "0.48 0.64 0.97";
+        "synctex_highlight_color" = "0.62 0.81 0.42";
+
+        "page_separator_width" = "2";
+        "page_separator_color" = "0.81 0.79 0.76";
+        "status_bar_color" = "0.34 0.37 0.54";
+
+        "font_size" = "${toString (mono.size)}";
+        "ui_font" = "${mono.family} ${mono.weight}";
+      };
+    })
+
+    (mkIf (config.modules.desktop.envProto == "x11") {
+      services.xserver.displayManager = {
+        lightdm.greeters.mini.extraConfig = with cfg.colors.main; ''
+          text-color = "${types.bg}"
+          password-background-color = "${normal.black}"
+          window-color = "${types.border}"
+          border-color = "${types.border}"
+        '';
       };
     })
   ]);
