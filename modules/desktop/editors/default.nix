@@ -24,23 +24,25 @@ in {
     })
 
     (mkIf (cfg.default == "nvim" || cfg.default == "emacs") {
-      user.packages = with pkgs; [
-        imagemagick
-        editorconfig-core-c
-        sqlite
+      user.packages =
+        let latexindent = pkgs.texlive.latexindent.pkgs;
+        in with pkgs; [
+          imagemagick
+          editorconfig-core-c
+          sqlite
 
-        # module dependencies
-        ## checkers: aspell
-        (aspellWithDicts (dict: with dict; [ en en-computers en-science ]))
+          # module dependencies
+          ## checkers: aspell
+          (aspellWithDicts (dict: with dict; [ en en-computers en-science ]))
 
-        ## JS/TS + Markdown 
-        deno
+          ## JS/TS + Markdown 
+          deno
 
-        ## lsp: LaTeX + Org-Mode
-        pandoc
-        tectonic
-        texlab
-      ];
+          ## lsp: LaTeX + Org-Mode
+          pandoc
+          tectonic
+          texlab
+        ] ++ latexindent;
     })
   ];
 }

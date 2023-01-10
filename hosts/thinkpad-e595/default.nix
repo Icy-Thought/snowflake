@@ -22,11 +22,8 @@
       };
       editors = {
         default = "nvim";
-        helix.enable = true;
-        neovim = {
-          agasaya.enable = true;
-          # ereshkigal.enable = true;
-        };
+        emacs.irkalla.enable = true;
+        neovim.agasaya.enable = true;
       };
       browsers = {
         default = "firefox-devedition";

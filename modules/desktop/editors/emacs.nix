@@ -10,29 +10,23 @@ with lib.my;
 let cfg = config.modules.desktop.editors.emacs;
 in {
   options.modules.desktop.editors.emacs = {
-    enable = mkBoolOpt false;
     doomemacs = rec {
       enable = mkBoolOpt false;
       forgeUrl = mkOpt types.str "https://github.com";
       repoUrl = mkOpt types.str "${forgeUrl}/doomemacs/doomemacs";
       configRepoUrl = mkOpt types.str "${forgeUrl}/icy-thought/emacs/";
     };
+    irkalla.enable = mkBoolOpt false;
   };
 
-  config = mkIf cfg.enable (mkMerge [
+  config = mkMerge [
     {
       nixpkgs.overlays = [ inputs.emacs.overlay ];
 
       hm.programs.emacs = {
         enable = true;
-        package = pkgs.emacsNativeComp;
-        extraPackages = epkgs: with epkgs; [
-          all-the-icons
-          all-the-icons-completion
-          all-the-icons-dired
-          pdf-tools
-          vterm
-        ];
+        package = pkgs.emacsPgtk;
+        extraPackages = epkgs: with epkgs; [ pdf-tools vterm ];
       };
 
       user.packages = with pkgs; [
@@ -99,8 +93,15 @@ in {
       ''; # TODO
     }
 
+    (mkIf cfg.irkalla.enable {
+      home.configFile.irkalla-conf = {
+        target = "emacs";
+        source = "${inputs.emacs-dir}/irkalla";
+        recursive = true;
+      };
+    })
+
     (mkIf cfg.doomemacs.enable {
-      # Enable access to doom (tool).
       env.PATH = [ "$XDG_CONFIG_HOME/emacs/bin" ];
 
       environment.variables = {
@@ -108,7 +109,7 @@ in {
         DOOMLOCALDIR = "$XDG_DATA_HOME/doomemacs";
       };
 
-      home.configFile.doom-config = {
+      home.configFile.doom-conf = {
         target = "doomemacs";
         source = "${inputs.emacs-dir}/doom-config";
         recursive = true;
@@ -124,5 +125,5 @@ in {
       #   '';
       # };
     })
-  ]);
+  ];
 }
