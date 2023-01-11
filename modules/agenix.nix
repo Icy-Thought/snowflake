@@ -5,6 +5,7 @@
 , pkgs
 , ...
 }:
+
 with lib;
 with lib.my;
 
@@ -29,9 +30,9 @@ in
         (import secretsFile)
     else { };
 
-  age.identityPaths =
-    options.age.identityPaths.default ++ (filter pathExists [
-      "${config.user.home}/.ssh/id_ed25519"
-      "${config.user.home}/.ssh/id_rsa"
-    ]);
+  # age.identityPaths =
+  #   options.age.identityPaths.default ++ (filter pathExists [
+  #     "${config.user.home}/.ssh/id_ed25519"
+  #     "${config.user.home}/.ssh/id_rsa"
+  #   ]);
 }

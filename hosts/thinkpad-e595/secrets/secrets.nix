@@ -1,6 +1,10 @@
-let publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOXkztyXeTnXZ/EztfKnfskgprghDLxO6jczEFnj5DER";
-in {
-  "akkadianVPN.age".publicKeys = [ publicKey ];
-  "closedAI.age".publicKeys = [ publicKey ];
-  # "torBylon.age".publicKeys = [ publicKey ];
+let
+  inherit (builtins) pathExists readFile;
+  keyFile = "/etc/ssh/ed25519_key.pub";
+  hostKey = if pathExists keyFile then readFile keyFile else "";
+in
+{
+  "akkadianVPN.age".publicKeys = [ hostKey ];
+  "closedAI.age".publicKeys = [ hostKey ];
+  # "torBylon.age".publicKeys = [ hostKey ];
 }

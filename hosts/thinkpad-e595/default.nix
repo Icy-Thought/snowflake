@@ -6,10 +6,31 @@
   imports = [ ./hwCfg.nix ];
 
   modules = {
+    shell = {
+      default = "zsh";
+      git.enable = true;
+      gnupg.enable = true;
+    };
+
     networking = {
       enable = true;
       networkManager.enable = true;
       akkadianVPN.enable = true;
+    };
+
+    services = { ssh.enable = true; };
+
+    containers.transmission = {
+      enable = false; # TODO: Once fixed -> enable = true;
+      username = "alonzo";
+      #  password = builtins.readFile config.age.secrets.torBylon.path;
+    };
+
+    develop = {
+      dart.enable = true;
+      haskell.enable = true;
+      python.enable = true;
+      rust.enable = true;
     };
 
     themes.active = "tokyonight";
@@ -49,30 +70,11 @@
         docView.zathura.enable = true;
       };
     };
-
-    develop = {
-      dart.enable = true;
-      haskell.enable = true;
-      python.enable = true;
-      rust.enable = true;
-    };
-
-    containers.transmission = {
-      enable = false; # TODO: Once fixed -> enable = true;
-      username = "alonzo";
-      #  password = builtins.readFile config.age.secrets.torBylon.path;
-    };
-
-    shell = {
-      default = "zsh";
-      git.enable = true;
-      gnupg.enable = true;
-    };
   };
 
   services = {
-    upower.enable = true;
     printing.enable = true;
+    upower.enable = true;
 
     xserver = {
       videoDrivers = [ "amdgpu" ];
