@@ -5,11 +5,13 @@
 , pkgs
 , ...
 }:
-with lib;
-with lib.my;
 
-let cfg = config.modules.hardware.xkbLayout;
-in {
+let inherit (lib) mkIf mkMerge getExe;
+  inherit (lib.my) mkBoolOpt;
+
+  cfg = config.modules.hardware.xkbLayout;
+in
+{
   options.modules.hardware.xkbLayout = {
     hyperCtrl.enable = mkBoolOpt false;
   };

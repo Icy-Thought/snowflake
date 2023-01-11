@@ -4,15 +4,19 @@
 , pkgs
 , ...
 }:
-with lib;
-with lib.my;
 
-let cfg = config.modules.desktop.extensions.rofi;
-in {
+let
+  inherit (lib) mkIf mkOption getExe;
+  inherit (lib.types) package;
+  inherit (lib.my) mkBoolOpt;
+
+  cfg = config.modules.desktop.extensions.rofi;
+in
+{
   options.modules.desktop.extensions.rofi = {
     enable = mkBoolOpt false;
     package = mkOption {
-      type = types.package;
+      type = package;
       default = pkgs.rofi;
       example = "pkgs.rofi-wayland";
     };
@@ -29,7 +33,7 @@ in {
       plugins = with pkgs; [ rofi-emoji rofi-power-menu ];
 
       extraConfig = {
-        terminal = with pkgs; "${getExe config.modules.desktop.terminal.default}";
+        terminal = "${getExe config.modules.desktop.terminal.default}";
         disable-history = false;
         show-icons = true;
         sidebar-mode = false;

@@ -4,11 +4,13 @@
 , pkgs
 , ...
 }:
-with lib;
-with lib.my;
 
-let cfg = config.modules.shell.xplr;
-in {
+let inherit (lib) mkIf optionalString;
+  inherit (lib.my) mkBoolOpt;
+
+  cfg = config.modules.shell.xplr;
+in
+{
   options.modules.shell.xplr = {
     enable = mkBoolOpt false;
     fennel.enable = mkBoolOpt false;
@@ -86,7 +88,7 @@ in {
         xplr.config.general.show_hidden = true
         xplr.config.general.enable_recover_mode = true
 
-        ${strings.optionalString (cfg.fennel.enable) ''
+        ${optionalString (cfg.fennel.enable) ''
           -- add support for fennel
           local fennel = require("fennel")
 

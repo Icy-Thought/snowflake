@@ -5,10 +5,12 @@
 , pkgs
 , ...
 }:
-with lib;
-with lib.my;
 
 let
+  inherit (builtins) readFile;
+  inherit (lib) mkIf optionalString;
+  inherit (lib.my) mkBoolOpt;
+
   cfg = config.modules.desktop.extensions.taffybar;
   taffyDir = "${config.snowflake.configDir}/taffybar";
 in
@@ -59,10 +61,10 @@ in
         taffybar-css = {
           target = "taffybar/taffybar.css";
           text = ''
-            ${strings.optionalString (active != null) ''
+            ${optionalString (active != null) ''
                 @import url("./palette/${active}.css");
             ''}
-            ${builtins.readFile "${taffyDir}/taffybar.css"}
+            ${readFile "${taffyDir}/taffybar.css"}
           '';
         };
       };

@@ -5,11 +5,14 @@
 , ...
 
 }:
-with lib;
-with lib.my;
 
-let cfg = config.modules.desktop.extensions.eww;
-in {
+let
+  inherit (lib) mkIf;
+  inherit (lib.my) mkBoolOpt;
+
+  cfg = config.modules.desktop.extensions.eww;
+in
+{
   options.modules.desktop.extensions.eww = {
     enable = mkBoolOpt false;
   };

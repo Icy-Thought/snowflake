@@ -4,11 +4,14 @@
 , pkgs
 , ...
 }:
-with lib;
-with lib.my;
 
-let cfg = config.modules.hardware.pipewire;
-in {
+let inherit (lib) mkIf mkMerge mkOption;
+  inherit (lib.types) int;
+  inherit (lib.my) mkBoolOpt;
+
+  cfg = config.modules.hardware.pipewire;
+in
+{
   options.modules.hardware.pipewire = {
     enable = mkBoolOpt false;
 
@@ -16,13 +19,13 @@ in {
       enable = mkBoolOpt false;
       quantum = mkOption {
         description = "Minimum quantum to set";
-        type = types.int;
+        type = int;
         default = 64;
         example = 32;
       };
       rate = mkOption {
         description = "Rate to set";
-        type = types.int;
+        type = int;
         default = 48000;
         example = 96000;
       };

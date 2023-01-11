@@ -5,11 +5,13 @@
 , pkgs
 , ...
 }:
-with lib;
-with lib.my;
 
 let inherit (inputs) hyprland;
-in {
+  inherit (builtins) readFile toPath;
+  inherit (lib) mkIf;
+  inherit (lib.my) mkBoolOpt;
+in
+{
   options.modules.desktop.hyprland = {
     enable = mkBoolOpt false;
   };
@@ -56,15 +58,15 @@ in {
 
     hm.wayland.windowManager.hyprland = {
       enable = true;
-      extraConfig = builtins.readFile "${config.snowflake.configDir}/hyprland/hyprland.conf"; # TODO
+      extraConfig = readFile "${config.snowflake.configDir}/hyprland/hyprland.conf"; # TODO
     };
 
     # Setting our system wallpaper:
     home.configFile.hypr-wallpaper = {
       target = "hypr/hyprpaper.conf";
       text = ''
-        preload = ${builtins.toPath ../../themes/tokyonight/assets/zaynstewart-anime-girl-night-alone.png}
-        wallpaper = eDP-1,${builtins.toPath ../../themes/tokyonight/assets/zaynstewart-anime-girl-night-alone.png}
+        preload = ${toPath ../../themes/tokyonight/assets/zaynstewart-anime-girl-night-alone.png}
+        wallpaper = eDP-1,${toPath ../../themes/tokyonight/assets/zaynstewart-anime-girl-night-alone.png}
         ipc = off
       '';
     };

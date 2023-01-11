@@ -5,8 +5,12 @@
 , pkgs
 , ...
 }:
-with lib;
-with lib.my; {
+
+let
+  inherit (lib) mkIf getExe;
+  inherit (lib.my) mkBoolOpt;
+in
+{
   options.modules.desktop.xmonad = {
     enable = mkBoolOpt false;
   };

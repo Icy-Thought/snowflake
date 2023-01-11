@@ -4,14 +4,18 @@
 , pkgs
 , ...
 }:
-with lib;
-with lib.my;
 
-let cfg = config.modules.desktop.browsers.firefox;
-in {
-  options.modules.desktop.browsers.firefox = with types; {
+let inherit (builtins) toJSON;
+  inherit (lib) concatStrings mkIf mkMerge mapAttrsToList;
+  inherit (lib.types) attrsOf oneOf bool int lines str;
+  inherit (lib.my) mkBoolOpt mkOpt mkOpt';
+
+  cfg = config.modules.desktop.browsers.firefox;
+in
+{
+  options.modules.desktop.browsers.firefox = {
     enable = mkBoolOpt false;
-    profileName = mkOpt types.str config.user.name;
+    profileName = mkOpt str config.user.name;
 
     settings = mkOpt' (attrsOf (oneOf [ bool int str ])) { } ''
       Firefox preferences set in <filename>user.js</filename>
@@ -191,7 +195,7 @@ in {
             target = "${cfgPath}/${cfg.profileName}.dev-edition-default/user.js";
             text = ''
               ${concatStrings (mapAttrsToList (name: value: ''
-                  user_pref("${name}", ${builtins.toJSON value});
+                  user_pref("${name}", ${toJSON value});
                 '')
                 cfg.settings)}
               ${cfg.extraConfig}

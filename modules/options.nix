@@ -4,9 +4,22 @@
 , home-manager
 , ...
 }:
-with lib;
-with lib.my; {
-  options = with types; {
+
+
+let inherit (builtins) elem pathExists toString;
+  inherit (lib)
+    concatMapStringsSep
+    concatStringsSep
+    findFirst
+    isList
+    mapAttrs
+    mapAttrsToList
+    mkOption;
+  inherit (lib.types) attrsOf either listOf mkAliasDefinitions oneOf path str;
+  inherit (lib.my) attrs mkOpt mkOpt';
+in
+{
+  options = {
     user = mkOpt attrs { };
 
     snowflake = {

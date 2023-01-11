@@ -4,11 +4,14 @@
 , pkgs
 , ...
 }:
-with lib;
-with lib.my;
 
-let cfg = config.modules.desktop.education;
-in {
+let
+  inherit (lib) mkIf mkMerge getExe;
+  inherit (lib.my) mkBoolOpt;
+
+  cfg = config.modules.desktop.education;
+in
+{
   options.modules.desktop.education = {
     memory.enable = mkBoolOpt false;
     vidcom.enable = mkBoolOpt false;

@@ -4,11 +4,15 @@
 , lib
 , ...
 }:
-with lib;
-with lib.my;
 
-let cfg = config.modules.desktop.extensions.mimeApps;
-in {
+let
+  inherit (builtins) listToAttrs;
+  inherit (lib) mkIf mapAttrsToList nameValuePair flatten;
+  inherit (lib.my) mkBoolOpt;
+
+  cfg = config.modules.desktop.extensions.mimeApps;
+in
+{
   options.modules.desktop.extensions.mimeApps = {
     enable = mkBoolOpt false;
   };
@@ -18,7 +22,7 @@ in {
 
     hm.xdg.mimeApps = {
       enable = true;
-      defaultApplications = with lists;
+      defaultApplications =
         let
           defaultApps = {
             audio = [ "mpv.desktop" ];
@@ -106,7 +110,7 @@ in {
           };
         in
         listToAttrs (flatten (mapAttrsToList
-          (key: types: map (type: attrsets.nameValuePair type (defaultApps."${key}")) types)
+          (key: types: map (type: nameValuePair type (defaultApps."${key}")) types)
           mimeMap)
         );
     };

@@ -4,11 +4,14 @@
 , pkgs
 , ...
 }:
-with lib;
-with lib.my;
 
-let cfg = config.modules.themes;
-in {
+let
+  inherit (builtins) toString;
+  inherit (lib) mkDefault mkIf mkMerge;
+
+  cfg = config.modules.themes;
+in
+{
   config = mkIf (cfg.active == "decay") (mkMerge [
     {
       modules.themes = {
@@ -21,7 +24,7 @@ in {
 
         iconTheme = {
           name = "Fluent-orange-dark";
-          package = fluent-icon-theme.override { colorVariants = [ "orange" ]; };
+          package = pkgs.fluent-icon-theme.override { colorVariants = [ "orange" ]; };
         };
 
         pointer = {

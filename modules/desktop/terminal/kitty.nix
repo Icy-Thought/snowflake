@@ -4,8 +4,13 @@
 , pkgs
 , ...
 }:
-with lib;
-with lib.my; {
+
+let
+  inherit (builtins) toString;
+  inherit (lib) mkIf mkMerge;
+  inherit (lib.my) mkBoolOpt;
+in
+{
   options.modules.desktop.terminal.kitty = {
     enable = mkBoolOpt false;
   };

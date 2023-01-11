@@ -4,11 +4,15 @@
 , pkgs
 , ...
 }:
-with lib;
-with lib.my;
 
-let active = config.modules.themes.active;
-in {
+let
+  inherit (builtins) toString;
+  inherit (lib) mkIf mkMerge;
+  inherit (lib.my) mkBoolOpt;
+
+  active = config.modules.themes.active;
+in
+{
   options.modules.desktop.terminal.alacritty = {
     enable = mkBoolOpt false;
   };

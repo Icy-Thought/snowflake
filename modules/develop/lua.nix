@@ -4,11 +4,14 @@
 , pkgs
 , ...
 }:
-with lib;
-with lib.my;
 
-let cfg = config.modules.develop.lua;
-in {
+let
+  inherit (lib) mkIf mkMerge;
+  inherit (lib.my) mkBoolOpt;
+
+  cfg = config.modules.develop.lua;
+in
+{
   options.modules.develop.lua = {
     enable = mkBoolOpt false;
     fnlized.enable = mkBoolOpt false;

@@ -4,14 +4,17 @@
 , pkgs
 , ...
 }:
-with lib;
-with lib.my;
 
-let cfg = config.modules.desktop.browsers;
-in {
+let
+  inherit (lib) mkIf mkOption;
+  inherit (lib.types) nullOr str;
+
+  cfg = config.modules.desktop.browsers;
+in
+{
   options.modules.desktop.browsers = {
     default = mkOption {
-      type = with types; nullOr str;
+      type = nullOr str;
       default = null;
       description = "Default system browser";
       example = "brave";

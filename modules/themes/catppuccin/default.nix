@@ -4,11 +4,14 @@
 , pkgs
 , ...
 }:
-with lib;
-with lib.my;
 
-let cfg = config.modules.themes;
-in {
+let
+  inherit (builtins) toString;
+  inherit (lib) mkDefault mkIf mkMerge;
+
+  cfg = config.modules.themes;
+in
+{
   config = mkIf (cfg.active == "catppuccin") (mkMerge [
     {
       modules.themes = {

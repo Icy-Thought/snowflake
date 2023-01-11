@@ -2,10 +2,21 @@
 , lib
 , ...
 }:
+
 let
-  inherit (builtins) attrValues readDir pathExists concatLists;
-  inherit (lib) id mapAttrsToList filterAttrs hasPrefix hasSuffix nameValuePair removeSuffix;
+  inherit (builtins)
+    attrValues
+    readDir
+    pathExists
+    concatLists;
+  inherit (lib)
+    id
+    mapAttrsToList
+    filterAttrs
+    nameValuePair;
+  inherit (lib.strings) hasPrefix hasSuffix removeSuffix;
   inherit (self.attrs) mapFilterAttrs;
+
 in
 rec {
   mapModules = dir: fn:

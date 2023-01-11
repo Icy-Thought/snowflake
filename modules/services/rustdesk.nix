@@ -4,8 +4,12 @@
 , pkgs
 , ...
 }:
-with lib;
-with lib.my; {
+
+let
+  inherit (lib) mkIf;
+  inherit (lib.my) mkBoolOpt;
+in
+{
   options.modules.services.rustdesk = {
     enable = mkBoolOpt false;
   };

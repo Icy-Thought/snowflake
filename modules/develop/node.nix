@@ -4,8 +4,13 @@
 , pkgs
 , ...
 }:
-with lib;
-with lib.my; {
+
+
+let
+  inherit (lib) mkIf mkMerge getExe;
+  inherit (lib.my) mkBoolOpt;
+in
+{
   options.modules.develop.node = {
     enable = mkBoolOpt false;
   };

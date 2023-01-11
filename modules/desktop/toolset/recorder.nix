@@ -4,11 +4,14 @@
 , pkgs
 , ...
 }:
-with lib;
-with lib.my;
 
-let cfg = config.modules.desktop.toolset.recorder;
-in {
+let
+  inherit (lib) mkIf;
+  inherit (lib.my) mkBoolOpt;
+
+  cfg = config.modules.desktop.toolset.recorder;
+in
+{
   options.modules.desktop.toolset.recorder = {
     enable = mkBoolOpt false;
     audio.enable = mkBoolOpt true;

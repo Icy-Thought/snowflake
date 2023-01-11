@@ -4,8 +4,13 @@
 , pkgs
 , ...
 }:
-with lib;
-with lib.my; {
+
+let
+  inherit (builtins) toString;
+  inherit (lib) filterAttrs mkDefault mkIf mkAliasOptionModule mapAttrs mapAttrsToList;
+  inherit (lib.my) mapModulesRec';
+in
+{
   imports = [
     inputs.home-manager.nixosModules.home-manager
     (mkAliasOptionModule [ "hm" ] [ "home-manager" "users" config.user.name ])

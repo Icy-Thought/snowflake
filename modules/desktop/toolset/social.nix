@@ -4,10 +4,11 @@
 , pkgs
 , ...
 }:
-with lib;
-with lib.my;
 
 let
+  inherit (lib) mkIf mkMerge optionals;
+  inherit (lib.my) mkBoolOpt;
+
   cfg = config.modules.desktop.toolset.social;
   envProto = config.modules.desktop.envProto;
 in
@@ -78,10 +79,10 @@ in
             "--enable-native-gpu-memory-buffers"
             "--enable-zero-copy"
             "--ignore-gpu-blocklist"
-          ] ++ lists.optionals (envProto == "x11") [
+          ] ++ optionals (envProto == "x11") [
             "--disable-features=UseOzonePlatform"
             "--enable-features=VaapiVideoDecoder"
-          ] ++ lists.optionals (envProto == "wayland") [
+          ] ++ optionals (envProto == "wayland") [
             "--enable-features=UseOzonePlatform,WebRTCPipeWireCapturer"
             "--ozone-platform=wayland"
             "--enable-webrtc-pipewire-capturer"

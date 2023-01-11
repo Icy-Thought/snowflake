@@ -4,13 +4,16 @@
 , pkgs
 , ...
 }:
-with lib;
-with lib.my;
 
-let cfg = config.modules.desktop.distraction.steam;
+let
+  inherit (lib) mkIf mkMerge;
+  inherit (lib.types) str;
+  inherit (lib.my) mkBoolOpt mkOpt;
+
+  cfg = config.modules.desktop.distraction.steam;
 in
 {
-  options.modules.desktop.distraction.steam = with types; {
+  options.modules.desktop.distraction.steam = {
     enable = mkBoolOpt false;
     hardware.enable = mkBoolOpt false;
     libDir = mkOpt str "$XDG_DATA_HOME/steamlib";

@@ -5,16 +5,19 @@
 , pkgs
 , ...
 }:
-with lib;
-with lib.my;
 
-let cfg = config.modules.hardware.kmonad;
+let inherit (builtins) pathExists readFile;
+  inherit (lib) mkIf mkOption;
+  inherit (lib.types) nullOr path null;
+  inherit (lib.my) mkBoolOpt;
+
+  cfg = config.modules.hardware.kmonad;
 in
 {
   options.modules.hardware.kmonad = {
     enable = mkBoolOpt false;
     deviceID = mkOption {
-      type = with types; nullOr path;
+      type = nullOr path;
       default = null;
       example = "/dev/input/by-path/platform-i8042-serio-0-event-kbd";
       description = "path to device.kbd file";
@@ -40,8 +43,8 @@ in
             compose.key = null;
           };
           config =
-            if builtins.pathExists layoutFile
-            then builtins.readFile layoutFile
+            if pathExists layoutFile
+            then readFile layoutFile
             else "";
         };
       };

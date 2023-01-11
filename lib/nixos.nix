@@ -3,8 +3,18 @@
 , pkgs
 , ...
 }:
-with lib;
-with lib.my; {
+
+let
+  inherit (builtins) baseNameOf elem;
+  inherit (lib)
+    filterAttrs
+    mkDefault
+    nixosSystem
+    removeSuffix;
+  inherit (lib.my) mapModules mkHost;
+
+in
+{
   mkHost = path: attrs @ { system ? "x86_64-linux", ... }:
     nixosSystem {
       inherit system;

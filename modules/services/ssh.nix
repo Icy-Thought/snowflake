@@ -3,8 +3,13 @@
 , lib
 , ...
 }:
-with lib;
-with lib.my; {
+
+let
+  inherit (builtins) filter pathExists;
+  inherit (lib) mkIf;
+  inherit (lib.my) mkBoolOpt;
+in
+{
   options.modules.services.ssh = {
     enable = mkBoolOpt false;
   };

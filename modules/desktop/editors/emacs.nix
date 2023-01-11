@@ -4,17 +4,21 @@
 , inputs
 , ...
 }:
-with lib;
-with lib.my;
 
-let cfg = config.modules.desktop.editors.emacs;
-in {
+let
+  inherit (lib) mkIf mkMerge;
+  inherit (lib.types) str;
+  inherit (lib.my) mkBoolOpt mkOpt;
+
+  cfg = config.modules.desktop.editors.emacs;
+in
+{
   options.modules.desktop.editors.emacs = {
     doomemacs = rec {
       enable = mkBoolOpt false;
-      forgeUrl = mkOpt types.str "https://github.com";
-      repoUrl = mkOpt types.str "${forgeUrl}/doomemacs/doomemacs";
-      configRepoUrl = mkOpt types.str "${forgeUrl}/icy-thought/emacs/";
+      forgeUrl = mkOpt str "https://github.com";
+      repoUrl = mkOpt str "${forgeUrl}/doomemacs/doomemacs";
+      configRepoUrl = mkOpt str "${forgeUrl}/icy-thought/emacs/";
     };
     irkalla.enable = mkBoolOpt false;
   };

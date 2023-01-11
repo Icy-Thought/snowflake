@@ -4,11 +4,14 @@
 , pkgs
 , ...
 }:
-with lib;
-with lib.my;
 
-let cfg = config.modules.desktop.extensions.dunst;
-in {
+let
+  inherit (lib) mkIf;
+  inherit (lib.my) mkBoolOpt;
+
+  cfg = config.modules.desktop.extensions.dunst;
+in
+{
   options.modules.desktop.extensions.dunst = {
     enable = mkBoolOpt false;
   };

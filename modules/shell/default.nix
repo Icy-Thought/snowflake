@@ -4,14 +4,17 @@
 , pkgs
 , ...
 }:
-with lib;
-with lib.my;
 
-let cfg = config.modules.shell;
-in {
+let inherit (lib) mkIf mkMerge mkOption;
+  inherit (lib.types) nullOr enum;
+  inherit (lib.my) mkBoolOpt;
+
+  cfg = config.modules.shell;
+in
+{
   options.modules.shell = {
     default = mkOption {
-      type = with types; nullOr (enum [ "fish" "zsh" "xonsh" ]);
+      type = nullOr (enum [ "fish" "zsh" "xonsh" ]);
       default = null;
       description = "Default system shell";
     };

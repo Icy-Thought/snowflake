@@ -5,26 +5,30 @@
 , pkgs
 , ...
 }:
-with lib;
-with lib.my;
 
-let cfg = config.modules.desktop.qtile;
-in {
+let
+  inherit (lib) mkIf mkOption optionalString;
+  inherit (lib.types) enum nullOr path package;
+  inherit (lib.my) mkBoolOpt;
+
+  cfg = config.modules.desktop.qtile;
+in
+{
   options.modules.desktop.qtile = {
     enable = mkBoolOpt false;
     package = mkOption {
-      type = types.package;
+      type = package;
       default = pkgs.qtile;
     };
 
     configFile = mkOption {
-      type = with types; nullOr path;
+      type = nullOr path;
       default = "${config.snowflake.configDir}/qtile/config.py";
       example = "./config.py";
     };
 
     backend = mkOption {
-      type = types.enum [ "x11" "wayland" ];
+      type = enum [ "x11" "wayland" ];
       default = "x11";
     };
   };
@@ -61,7 +65,7 @@ in {
         name = "qtile";
         start = ''
           ${cfg.package}/bin/qtile start -b ${cfg.backend} \
-          ${strings.optionalString (cfg.configFile != null) ''
+          ${optionalString (cfg.configFile != null) ''
               --config ${cfg.configFile}
             ''
           } & waitPID=$!

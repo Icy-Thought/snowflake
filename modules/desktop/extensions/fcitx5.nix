@@ -4,11 +4,14 @@
 , pkgs
 , ...
 }:
-with lib;
-with lib.my;
 
-let cfg = config.modules.desktop.extensions.fcitx5;
-in {
+let
+  inherit (lib) mkIf;
+  inherit (lib.my) mkBoolOpt;
+
+  cfg = config.modules.desktop.extensions.fcitx5;
+in
+{
   options.modules.desktop.extensions.fcitx5 = {
     enable = mkBoolOpt false;
   };

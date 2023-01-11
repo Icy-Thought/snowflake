@@ -4,11 +4,14 @@
 , pkgs
 , ...
 }:
-with lib;
-with lib.my;
 
-let cfg = config.modules.desktop.toolset.downloader;
-in {
+let
+  inherit (lib) mkIf mkMerge;
+  inherit (lib.my) mkBoolOpt;
+
+  cfg = config.modules.desktop.toolset.downloader;
+in
+{
   options.modules.desktop.toolset.downloader = {
     transmission.enable = mkBoolOpt false;
   };

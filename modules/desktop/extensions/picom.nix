@@ -5,11 +5,14 @@
 , pkgs
 , ...
 }:
-with lib;
-with lib.my;
 
-let cfg = config.modules.desktop.extensions.picom;
-in {
+let
+  inherit (lib) mkIf mkMerge;
+  inherit (lib.my) mkBoolOpt;
+
+  cfg = config.modules.desktop.extensions.picom;
+in
+{
   options.modules.desktop.extensions.picom = {
     enable = mkBoolOpt false;
     animations.enable = mkBoolOpt false; # own module + flake input overlay

@@ -2,11 +2,18 @@
 , pkgs
 , ...
 }:
-with lib; {
+
+let inherit (builtins) baseNameOf;
+  inherit (lib) removeSuffix;
+in
+{
   toCSSFile = file:
     let
-      fileName = removeSuffix ".scss" (builtins.baseNameOf file);
-      compiledStyles = pkgs.runCommand "compileScssFile" { buildInputs = [ pkgs.sass ]; } ''
+      fileName = removeSuffix ".scss" (baseNameOf file);
+      compiledStyles = pkgs.runCommand "compileScssFile"
+        {
+          buildInputs = [ pkgs.sass ];
+        } ''
         mkdir "$out"
         scss --sourcemap=none \
              --no-cache \
@@ -22,10 +29,7 @@ with lib; {
     let
       result = "result.png";
       filteredImage =
-        pkgs.runCommand "filterWallpaper"
-          {
-            buildInputs = [ pkgs.imagemagick ];
-          } ''
+        pkgs.runCommand "filterWallpaper" { buildInputs = [ pkgs.imagemagick ]; } ''
           mkdir "$out"
           convert ${options} ${imageFile} $out/${result}
         '';

@@ -4,11 +4,13 @@
 , pkgs
 , ...
 }:
-with lib;
-with lib.my;
 
-let themeCfg = config.modules.themes;
-in {
+let inherit (lib) concatStringsSep mkIf;
+  inherit (lib.my) mkBoolOpt;
+
+  themeCfg = config.modules.themes;
+in
+{
   options.modules.shell.btop = {
     enable = mkBoolOpt false;
   };
@@ -31,7 +33,7 @@ in {
         rounded_corners = true;
         theme_background = false;
         truecolor = true;
-        presets = builtins.concatStringsSep "," [
+        presets = concatStringsSep "," [
           "cpu:1:default"
           "proc:0:default cpu:0:default"
           "mem:0:default"

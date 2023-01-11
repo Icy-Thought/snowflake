@@ -5,11 +5,14 @@
 , ...
 
 }:
-with lib;
-with lib.my;
 
-let cfg = config.modules.desktop.extensions.waybar;
-in {
+let
+  inherit (lib) mkIf;
+  inherit (lib.my) mkBoolOpt;
+
+  cfg = config.modules.desktop.extensions.waybar;
+in
+{
   options.modules.desktop.extensions.waybar = {
     enable = mkBoolOpt false;
   };

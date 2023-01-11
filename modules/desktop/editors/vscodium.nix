@@ -5,11 +5,14 @@
 , inputs
 , ...
 }:
-with lib;
-with lib.my;
 
-let vscDir = "${config.snowflake.configDir}/vscodium";
-in {
+let
+  inherit (lib) mkIf;
+  inherit (lib.my) mkBoolOpt;
+
+  vscDir = "${config.snowflake.configDir}/vscodium";
+in
+{
   options.modules.desktop.editors.vscodium = {
     enable = mkBoolOpt false;
   };

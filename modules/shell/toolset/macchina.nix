@@ -4,9 +4,14 @@
 , pkgs
 , ...
 }:
-with lib;
-with lib.my; {
-  options.modules.shell.macchina = { enable = mkBoolOpt false; };
+
+let inherit (lib) mkIf;
+  inherit (lib.my) mkBoolOpt;
+in
+{
+  options.modules.shell.macchina = {
+    enable = mkBoolOpt false;
+  };
 
   config = mkIf config.modules.shell.macchina.enable {
     user.packages = with pkgs; [ macchina ];

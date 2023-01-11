@@ -5,11 +5,14 @@
 , inputs
 , ...
 }:
-with lib;
-with lib.my;
 
-let cfg = config.modules.desktop.editors.neovim;
-in {
+let
+  inherit (lib) mkIf mkMerge;
+  inherit (lib.my) mkBoolOpt;
+
+  cfg = config.modules.desktop.editors.neovim;
+in
+{
   options.modules.desktop.editors.neovim = {
     agasaya.enable = mkBoolOpt false; # lua
     ereshkigal.enable = mkBoolOpt false; # fnl

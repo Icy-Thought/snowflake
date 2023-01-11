@@ -4,11 +4,14 @@
 , pkgs
 , ...
 }:
-with lib;
-with lib.my;
 
-let cfg = config.modules.desktop.distraction.hardware;
-in {
+let
+  inherit (lib) mkIf mkMerge;
+  inherit (lib.my) mkBoolOpt;
+
+  cfg = config.modules.desktop.distraction.hardware;
+in
+{
   options.modules.desktop.distraction = {
     hardware = {
       amdvlk.enable = mkBoolOpt false;

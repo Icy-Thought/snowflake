@@ -4,11 +4,13 @@
 , pkgs
 , ...
 }:
-with lib;
-with lib.my;
 
-let themeCfg = config.modules.themes;
-in {
+let inherit (builtins) map;
+  inherit (lib) mkIf getExe;
+
+  themeCfg = config.modules.themes;
+in
+{
   config = mkIf (config.modules.shell.default == "fish") {
     modules.shell.usefulPkgs.enable = true;
 
@@ -60,7 +62,11 @@ in {
             inherit (pkgs.fishPlugins."${name}") src;
           };
         in
-        builtins.map (p: mkPlugin p) [ "done" "autopair-fish" "fzf-fish" ];
+        map (p: mkPlugin p) [
+          "done"
+          "autopair-fish"
+          "fzf-fish"
+        ];
     };
 
     home.configFile = with themeCfg; (mkIf (active != null) {

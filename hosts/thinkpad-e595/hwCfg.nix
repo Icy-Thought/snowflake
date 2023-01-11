@@ -3,7 +3,10 @@
 , pkgs
 , modulesPath
 , ...
-}: {
+}:
+
+let inherit (lib) mkDefault;
+in {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
   fileSystems."/" = {
@@ -51,11 +54,11 @@
     };
   };
 
-  nix.settings.max-jobs = lib.mkDefault 4;
+  nix.settings.max-jobs = mkDefault 4;
 
   hardware.cpu.amd = {
     updateMicrocode = true;
-    # updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+    # updateMicrocode = mkDefault config.hardware.enableRedistributableFirmware;
   };
 
   powerManagement = {

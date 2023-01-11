@@ -4,8 +4,12 @@
 , pkgs
 , ...
 }:
-with lib;
-with lib.my; {
+
+let inherit (builtins) toString;
+  inherit (lib) mkIf mkMerge;
+  inherit (lib.my) mkBoolOpt;
+in
+{
   options.modules.desktop.terminal.wezterm = {
     enable = mkBoolOpt false;
   };
@@ -72,128 +76,128 @@ with lib.my; {
         }
 
         (mkIf (active != null) {
-            wezterm-rice = {
-              target = "wezterm/theme/colorscheme.lua";
-              text = ''
-                local M = {}
+          wezterm-rice = {
+            target = "wezterm/theme/colorscheme.lua";
+            text = ''
+              local M = {}
 
-                local ${active} = require("theme.${active}")
+              local ${active} = require("theme.${active}")
 
-                M.colors = ${active}
+              M.colors = ${active}
 
-                return M
-              '';
-            };
+              return M
+            '';
+          };
 
-            wezterm-font = {
-              target = "wezterm/theme/font.lua";
-              text = ''
-                local wez = require("wezterm")
+          wezterm-font = {
+            target = "wezterm/theme/font.lua";
+            text = ''
+              local wez = require("wezterm")
 
-                local M = {}
+              local M = {}
 
-                M.font = wez.font_with_fallback({ 
-                  { family = "${font.sans.family}",
+              M.font = wez.font_with_fallback({ 
+                { family = "${font.sans.family}",
+                  weight = "${font.sans.weightAlt}",
+                },
+                "DejaVu Sans",
+                "Unicode",
+              })
+
+              M.font_size = ${toString (font.mono.size)}
+              M.char_select_font_size = ${toString (font.mono.size)}
+
+              M.window_frame = {
+                active_titlebar_bg = "${colors.main.types.bg}",
+                inactive_titlebar_bg = "${colors.main.normal.black}",
+
+                font = wez.font({
+                    family = "${font.sans.family}",
                     weight = "${font.sans.weightAlt}",
+                    style = "Italic",
+                }),
+
+                font_size= ${toString (font.mono.size)},
+              }
+
+              return M
+            '';
+          };
+
+          wezterm-statusbar = {
+            target = "wezterm/statusbar/${active}.lua";
+            source = "${wezDir}/statusbar/${active}.lua";
+          };
+
+          wezterm-theme = {
+            target = "wezterm/theme/${active}.lua";
+            text = with colors.main; ''
+              return {
+                  foreground      = "${types.fg}",
+                  background      = "${types.bg}",
+
+                  cursor_fg       = "${types.bg}",
+                  cursor_bg       = "${normal.yellow}",
+                  cursor_border   = "${normal.yellow}",
+
+                  selection_fg    = "${types.bg}",
+                  selection_bg    = "${types.highlight}",
+
+                  scrollbar_thumb = "${normal.magenta}",
+                  split = "${normal.green}",
+
+                  tab_bar = {
+                      background = "${types.bg}",
+                      active_tab = {
+                          bg_color  = "${types.bg}",
+                          fg_color  = "${normal.magenta}",
+                          intensity = "Normal",
+                          italic    = true,
+                      },
+                      inactive_tab = {
+                          bg_color = "${types.bg}",
+                          fg_color = "${types.fg}",
+                      },
+                      inactive_tab_edge = "${normal.black}",
+                      inactive_tab_hover = {
+                          bg_color  = "${types.bg}",
+                          fg_color  = "${normal.yellow}",
+                          underline = "Single",
+                      },
+                      new_tab = {
+                          bg_color = "${types.bg}",
+                          fg_color = "${normal.green}",
+                      },
+                      new_tab_hover = {
+                          bg_color = "${types.bg}",
+                          fg_color = "${normal.yellow}",
+                          italic   = true,
+                      },
                   },
-                  "DejaVu Sans",
-                  "Unicode",
-                })
-
-                M.font_size = ${builtins.toString (font.mono.size)}
-                M.char_select_font_size = ${builtins.toString (font.mono.size)}
-
-                M.window_frame = {
-                  active_titlebar_bg = "${colors.main.types.bg}",
-                  inactive_titlebar_bg = "${colors.main.normal.black}",
-
-                  font = wez.font({
-                      family = "${font.sans.family}",
-                      weight = "${font.sans.weightAlt}",
-                      style = "Italic",
-                  }),
-
-                  font_size= ${builtins.toString (font.mono.size)},
-                }
-
-                return M
-              '';
-            };
-
-            wezterm-statusbar = {
-              target = "wezterm/statusbar/${active}.lua";
-              source = "${wezDir}/statusbar/${active}.lua";
-            };
-
-            wezterm-theme = {
-              target = "wezterm/theme/${active}.lua";
-              text = with colors.main; ''
-                return {
-                    foreground      = "${types.fg}",
-                    background      = "${types.bg}",
-
-                    cursor_fg       = "${types.bg}",
-                    cursor_bg       = "${normal.yellow}",
-                    cursor_border   = "${normal.yellow}",
-
-                    selection_fg    = "${types.bg}",
-                    selection_bg    = "${types.highlight}",
-
-                    scrollbar_thumb = "${normal.magenta}",
-                    split = "${normal.green}",
-
-                    tab_bar = {
-                        background = "${types.bg}",
-                        active_tab = {
-                            bg_color  = "${types.bg}",
-                            fg_color  = "${normal.magenta}",
-                            intensity = "Normal",
-                            italic    = true,
-                        },
-                        inactive_tab = {
-                            bg_color = "${types.bg}",
-                            fg_color = "${types.fg}",
-                        },
-                        inactive_tab_edge = "${normal.black}",
-                        inactive_tab_hover = {
-                            bg_color  = "${types.bg}",
-                            fg_color  = "${normal.yellow}",
-                            underline = "Single",
-                        },
-                        new_tab = {
-                            bg_color = "${types.bg}",
-                            fg_color = "${normal.green}",
-                        },
-                        new_tab_hover = {
-                            bg_color = "${types.bg}",
-                            fg_color = "${normal.yellow}",
-                            italic   = true,
-                        },
-                    },
-                    ansi = {
-                        "${normal.black}",
-                        "${normal.red}",
-                        "${normal.green}",
-                        "${normal.yellow}",
-                        "${normal.blue}",
-                        "${normal.magenta}",
-                        "${normal.cyan}",
-                        "${normal.white}",
-                    },
-                    brights = {
-                        "${bright.black}",
-                        "${bright.red}",
-                        "${bright.green}",
-                        "${bright.yellow}",
-                        "${bright.blue}",
-                        "${bright.magenta}",
-                        "${bright.cyan}",
-                        "${bright.white}",
-                    },
-                }
-              '';
-            };
-          })
+                  ansi = {
+                      "${normal.black}",
+                      "${normal.red}",
+                      "${normal.green}",
+                      "${normal.yellow}",
+                      "${normal.blue}",
+                      "${normal.magenta}",
+                      "${normal.cyan}",
+                      "${normal.white}",
+                  },
+                  brights = {
+                      "${bright.black}",
+                      "${bright.red}",
+                      "${bright.green}",
+                      "${bright.yellow}",
+                      "${bright.blue}",
+                      "${bright.magenta}",
+                      "${bright.cyan}",
+                      "${bright.white}",
+                  },
+              }
+            '';
+          };
+        })
       ];
   };
 }

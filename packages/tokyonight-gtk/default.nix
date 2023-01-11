@@ -6,7 +6,12 @@
 , themeVariants ? [ ]
 }:
 
-lib.checkListOfEnum "$Tokyonight: GTK Theme Variants" [
+let
+  inherit (lib) checkListOfEnum;
+  inherit (builtins) toString;
+
+in
+checkListOfEnum "$Tokyonight: GTK Theme Variants" [
   "Dark-B-LB"
   "Dark-B"
   "Dark-BL-LB"
@@ -26,6 +31,7 @@ lib.checkListOfEnum "$Tokyonight: GTK Theme Variants" [
 ]
   themeVariants
 
+
   stdenv.mkDerivation
 {
   pname = "tokyonight-gtk-theme";
@@ -43,7 +49,7 @@ lib.checkListOfEnum "$Tokyonight: GTK Theme Variants" [
   propagatedUserEnvPkgs = [ gtk-engine-murrine ];
 
   installPhase =
-    let gtkTheme = "Tokyonight-${builtins.toString themeVariants}";
+    let gtkTheme = "Tokyonight-${toString themeVariants}";
     in ''
       runHook preInstall
 

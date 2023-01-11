@@ -4,11 +4,14 @@
 , pkgs
 , ...
 }:
-with lib;
-with lib.my;
 
-let cfg = config.modules.desktop.toolset.fileBrowse;
-in {
+let
+  inherit (lib) mkIf mkMerge;
+  inherit (lib.my) mkBoolOpt;
+
+  cfg = config.modules.desktop.toolset.fileBrowse;
+in
+{
   options.modules.desktop.toolset.fileBrowse = {
     dolphin.enable = mkBoolOpt false;
     nautilus.enable = mkBoolOpt false;

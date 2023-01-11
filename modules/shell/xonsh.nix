@@ -4,10 +4,15 @@
 , pkgs
 , ...
 }:
-with lib;
-with lib.my;
 
 let
+  inherit (builtins) toJSON;
+  inherit (lib)
+    concatStrings
+    escapeNixString
+    mapAttrsToList
+    mkIf;
+
   xonsh-direnv = pkgs.fetchFromGitHub {
     owner = "74th";
     repo = "xonsh-direnv";
@@ -97,14 +102,14 @@ in
 
           # -------===[ 3rd Party Plugins ]===------- #
           import sys
-          sys.path.extend(${builtins.toJSON xontribs})
+          sys.path.extend(${toJSON xontribs})
           xontrib load cmd_done direnv fzf-widgets hist_navigator output_search readable-traceback schedule
 
           # -------===[ Aliases & Abbreviations ]===------- #
           aliases[exa] = "exa --group-directories-first"
           aliases[less] = "less -R"
 
-          ${concatStrings (mapAttrsToList (k: v: with strings; ''
+          ${concatStrings (mapAttrsToList (k: v: ''
               abbrevs[${escapeNixString k}] = ${escapeNixString v}
           '')
           abbrevs)}

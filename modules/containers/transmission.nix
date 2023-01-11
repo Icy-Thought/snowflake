@@ -4,29 +4,32 @@
 , pkgs
 , ...
 }:
-with lib;
-with lib.my;
 
-let cfg = config.modules.containers.transmission;
-in {
+let inherit (lib) mkIf mkOption;
+  inherit (lib.types) path str;
+  inherit (lib.my) mkBoolOpt;
+
+  cfg = config.modules.containers.transmission;
+in
+{
   options.modules.containers.transmission = {
     enable = mkBoolOpt false;
 
     username = mkOption {
-      type = types.str;
+      type = str;
       default = "alonzo";
       example = "username";
       description = "Transmission RPC User-Name";
     };
 
     password = mkOption {
-      type = types.str;
+      type = str;
       example = "password";
       description = "Transmission RPC User-Password";
     };
 
     download-dir = mkOption {
-      type = types.path;
+      type = path;
       default = "${config.user.home}/Downloads/Torrents";
       example = "xyz";
       description = "The directory where torrents ought to be saved";

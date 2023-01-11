@@ -4,10 +4,11 @@
 , lib
 , ...
 }:
-with lib;
-with lib.my;
 
 let
+  inherit (builtins) map;
+  inherit (lib) concatStrings escapeNixString mapAttrsToList mkIf optionalString;
+
   cfg = config.modules.shell;
   themeCfg = config.modules.themes;
 in
@@ -120,7 +121,7 @@ in
         unsetopt AUTO_NAME_DIRS                 # Don't add variable-stored paths to ~ list
 
         # -------===[ Aesthetics ]===------- #
-        ${strings.optionalString (themeCfg.active != null)
+        ${optionalString (themeCfg.active != null)
         (with themeCfg.colors.main; ''
             export FZF_DEFAULT_OPTS=" \
             --color=bg:,bg+:${types.bg},spinner:${types.panelbg},hl:${normal.red} \
@@ -169,7 +170,7 @@ in
             rev = "v4.8.3";
             hash = "sha256-paCybqh6hJlDhIZKFEdypjpgbuPV4x3ezdtL4UZRoWw=";
           };
-        }] ++ (builtins.map (p: mkPlugin p) [
+        }] ++ (map (p: mkPlugin p) [
           "autopair"
           "nix-shell"
           "vi-mode"
@@ -183,7 +184,7 @@ in
         text =
           let abbrevs = import "${config.snowflake.configDir}/shell-abbr";
           in ''
-            ${concatStrings (mapAttrsToList (k: v: with strings; ''
+            ${concatStrings (mapAttrsToList (k: v: ''
                 abbr ${k}=${escapeNixString v}
             '') abbrevs)}
           '';

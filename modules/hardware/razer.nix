@@ -4,8 +4,11 @@
 , pkgs
 , ...
 }:
-with lib;
-with lib.my; {
+
+let inherit (lib) mkIf;
+  inherit (lib.my) mkBoolOpt;
+in
+{
   options.modules.hardware.razer = {
     enable = mkBoolOpt false;
   };

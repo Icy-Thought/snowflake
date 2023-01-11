@@ -4,14 +4,17 @@
 , pkgs
 , ...
 }:
-with lib;
-with lib.my;
 
-let cfg = config.modules.desktop.editors;
-in {
+let
+  inherit (lib) mkIf mkMerge mkOption;
+  inherit (lib.types) str;
+
+  cfg = config.modules.desktop.editors;
+in
+{
   options.modules.desktop.editors = {
     default = mkOption {
-      type = with types; str;
+      type = str;
       default = "nvim";
       description = "Default editor for text manipulation";
       example = "emacs";

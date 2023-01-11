@@ -4,9 +4,13 @@
 , pkgs
 , ...
 }:
-with lib;
-with lib.my; {
-  options.modules.shell.gnupg = with types; {
+
+let inherit (lib) mkIf;
+  inherit (lib.types) mkOpt int;
+  inherit (lib.my) mkBoolOpt;
+in
+{
+  options.modules.shell.gnupg = {
     enable = mkBoolOpt false;
     cacheTTL = mkOpt int 3600; # 1hr
   };

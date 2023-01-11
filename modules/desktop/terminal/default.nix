@@ -4,14 +4,17 @@
 , pkgs
 , ...
 }:
-with lib;
-with lib.my;
 
-let cfg = config.modules.desktop.terminal;
-in {
+let
+  inherit (lib) mkDefault mkIf mkMerge mkOption;
+  inherit (lib.types) str;
+
+  cfg = config.modules.desktop.terminal;
+in
+{
   options.modules.desktop.terminal = {
     default = mkOption {
-      type = with types; str;
+      type = str;
       default = "xterm";
       description = "Default terminal";
       example = "kitty";

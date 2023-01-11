@@ -4,11 +4,14 @@
 , pkgs
 , ...
 }:
-with lib;
-with lib.my;
 
-let cfg = config.modules.desktop.toolset.docView;
-in {
+let inherit (builtins) toString;
+  inherit (lib) concatStringsSep mkIf mkMerge;
+  inherit (lib.my) mkBoolOpt;
+
+  cfg = config.modules.desktop.toolset.docView;
+in
+{
   options.modules.desktop.toolset.docView = {
     zathura.enable = mkBoolOpt false;
     sioyek.enable = mkBoolOpt false;
@@ -77,7 +80,7 @@ in {
         config = {
           "check_for_updates_on_startup" = "0";
           "default_dark_mode" = "1";
-          "startup_commands" = builtins.concatStringsSep ";" [
+          "startup_commands" = concatStringsSep ";" [
             "toggle_custom_color"
             "toggle_statusbar"
           ];

@@ -4,8 +4,12 @@
 , pkgs
 , ...
 }:
-with lib;
-with lib.my; {
+
+let
+  inherit (lib) mkIf mkMerge;
+  inherit (lib.my) mkBoolOpt;
+in
+{
   options.modules.develop.cc = {
     enable = mkBoolOpt false;
   };

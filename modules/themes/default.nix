@@ -4,20 +4,28 @@
 , pkgs
 , ...
 }:
-with lib;
-with lib.my;
 
 let
+  inherit (builtins) getEnv map;
+  inherit (lib)
+    mkOption
+    mkMerge
+    mkIf
+    optionalString
+    getExe;
+  inherit (lib.types) attrsOf either int lines nullOr package path str;
+  inherit (lib.my) mkOpt toFilteredImage;
+
   cfg = config.modules.themes;
   envProto = config.modules.desktop.envProto;
 in
 {
-  options.modules.themes = with types; {
+  options.modules.themes = {
     active = mkOption {
       type = nullOr str;
       default = null;
       apply = v:
-        let theme = builtins.getEnv "THEME";
+        let theme = getEnv "THEME";
         in if theme != ""
         then theme
         else v;
@@ -180,7 +188,7 @@ in
           name = name;
           package = package;
         };
-        gtk3.bookmarks = builtins.map (dir: "file://${config.user.home}/" + dir) [
+        gtk3.bookmarks = map (dir: "file://${config.user.home}/" + dir) [
           "git/icy-thought/snowflake"
           "git/icy-thought/cs-notes"
           "git/icy-thought/notebook"
@@ -312,7 +320,7 @@ in
           command = ''
             if [ -e "$XDG_DATA_HOME/wallpaper" ]; then
               ${getExe pkgs.feh} --bg-${wCfg.mode} \
-              ${strings.optionalString wCfg.combineScreens "--no-xinerama"} \
+              ${optionalString wCfg.combineScreens "--no-xinerama"} \
               --no-fehbg \
               $XDG_DATA_HOME/wallpaper
             fi

@@ -5,10 +5,12 @@
 ,
 }:
 
-stdenv.mkDerivation {
+let inherit (builtins) parseDrvName;
+
+in stdenv.mkDerivation {
   pname = "NF-VictorMono";
 
-  version = (builtins.parseDrvName victor-mono.name).version;
+  version = (parseDrvName victor-mono.name).version;
 
   nativeBuildInputs = [ nerd-font-patcher victor-mono ];
 

@@ -5,11 +5,14 @@
 , pkgs
 , ...
 }:
-with lib;
-with lib.my;
 
-let cfg = config.modules.desktop.toolset.player;
-in {
+let
+  inherit (lib) mkIf mkMerge;
+  inherit (lib.my) mkBoolOpt;
+
+  cfg = config.modules.desktop.toolset.player;
+in
+{
   options.modules.desktop.toolset.player = {
     music.enable = mkBoolOpt false;
     video.enable = mkBoolOpt false;

@@ -4,8 +4,12 @@
 , pkgs
 , ...
 }:
-with lib;
-with lib.my; let
+
+let
+  inherit (lib) mkIf mkMerge mkOption;
+  inherit (lib.types) nullOr package;
+  inherit (lib.my) mkBoolOpt;
+
   cfg = config.modules.desktop.distraction.lutris;
   wineCfg = config.modules.desktop.virtual.wine;
 in
@@ -13,7 +17,7 @@ in
   options.modules.desktop.distraction.lutris = {
     enable = mkBoolOpt false;
     package = mkOption {
-      type = with types; nullOr package;
+      type = nullOr package;
       default = with pkgs; lutris.override { extraLibraries = pkgs: [ jansson ]; };
     };
     league.enable = mkBoolOpt false;

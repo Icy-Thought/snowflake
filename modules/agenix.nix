@@ -6,11 +6,11 @@
 , ...
 }:
 
-with lib;
-with lib.my;
-
 let
+  inherit (builtins) filter pathExists;
+  inherit (lib) mapAttrs' mkDefault nameValuePair removeSuffix;
   inherit (inputs) agenix;
+
   secretsDir = "${config.snowflake.hostDir}/secrets";
   secretsFile = "${secretsDir}/secrets.nix";
 in

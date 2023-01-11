@@ -4,11 +4,14 @@
 , pkgs
 , ...
 }:
-with lib;
-with lib.my;
 
-let cfg = config.modules.desktop.toolset.graphics;
-in {
+let
+  inherit (lib) mkIf mkMerge;
+  inherit (lib.my) mkBoolOpt;
+
+  cfg = config.modules.desktop.toolset.graphics;
+in
+{
   options.modules.desktop.toolset.graphics = {
     base.enable = mkBoolOpt true;
     modeling.enable = mkBoolOpt false;

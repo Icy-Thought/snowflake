@@ -4,15 +4,20 @@
 , pkgs
 , ...
 }:
-with lib;
-with lib.my;
 
-let cfg = config.modules.desktop;
-in {
+let
+  inherit (builtins) isAttrs;
+  inherit (lib) mkIf mkMerge mkOption;
+  inherit (lib.types) nullOr enum;
+  inherit (lib.my) anyAttrs countAttrs value;
+
+  cfg = config.modules.desktop;
+in
+{
   options.modules.desktop = {
     envProto = mkOption {
-      type = with types; nullOr (enum [ "x11" "wayland" ]);
-      description = "What display protocol to use";
+      type = nullOr (enum [ "x11" "wayland" ]);
+      description = "What display protocol to use.";
       default = null;
     };
   };
@@ -22,7 +27,7 @@ in {
       assertions = [
         {
           assertion = (countAttrs (n: v: n == "enable" && value) cfg) < 2;
-          message = "Can't enable DE/WM < 2 at the same time.";
+          message = "Prevent DE/WM > 1 from being enabled.";
         }
         {
           assertion =
@@ -33,7 +38,7 @@ in {
               (n: v: isAttrs v && anyAttrs
                 (n: v: isAttrs v && v.enable))
               cfg);
-          message = "Can't enable a desktop-app without a DE/WM.";
+          message = "Prevent desktop applications from enabling without a DE/WM.";
         }
       ];
 
