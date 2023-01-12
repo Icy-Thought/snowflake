@@ -6,8 +6,8 @@
 }:
 
 let inherit (lib) mkIf;
-  inherit (lib.types) mkOpt int;
-  inherit (lib.my) mkBoolOpt;
+  inherit (lib.types) int;
+  inherit (lib.my) mkBoolOpt mkOpt;
 in
 {
   options.modules.shell.gnupg = {

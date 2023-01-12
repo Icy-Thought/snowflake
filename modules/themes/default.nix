@@ -8,12 +8,13 @@
 let
   inherit (builtins) getEnv map;
   inherit (lib)
-    mkOption
-    mkMerge
+    getExe
+    mapAttrsToList
     mkIf
-    optionalString
-    getExe;
-  inherit (lib.types) attrsOf either int lines nullOr package path str;
+    mkMerge
+    mkOption;
+  inherit (lib.strings) concatStringsSep optionalString;
+  inherit (lib.types) attrsOf int lines nullOr package path str;
   inherit (lib.my) mkOpt toFilteredImage;
 
   cfg = config.modules.themes;
@@ -35,9 +36,9 @@ in
       '';
     };
 
-    wallpaper = mkOpt (either path null) null;
+    wallpaper = mkOpt (nullOr path) null;
 
-    loginWallpaper = mkOpt (either path null) (
+    loginWallpaper = mkOpt (nullOr path) (
       if cfg.wallpaper != null
       then toFilteredImage cfg.wallpaper "-gaussian-blur 0x2 -modulate 70 -level 5%"
       else null
@@ -45,24 +46,24 @@ in
 
     gtk = {
       name = mkOpt str "";
-      package = mkOpt (either package null) null;
+      package = mkOpt (nullOr package) null;
     };
 
     iconTheme = {
       name = mkOpt str "";
-      package = mkOpt (either package null) null;
+      package = mkOpt (nullOr package) null;
     };
 
     pointer = {
       name = mkOpt str "";
-      package = mkOpt (either package null) null;
+      package = mkOpt (nullOr package) null;
       size = mkOpt int "";
     };
 
     onReload = mkOpt (attrsOf lines) { };
 
     font = {
-      package = mkOpt (either package null) null;
+      package = mkOpt (nullOr package) null;
       mono = {
         family = mkOpt str "";
         weight = mkOpt str "SemiBold";
@@ -175,18 +176,18 @@ in
 
       hm.gtk = with cfg; {
         enable = true;
-        font = with font; {
-          name = sans.family;
-          package = package;
-          size = sans.size;
+        font = {
+          name = font.sans.family;
+          package = font.package;
+          size = font.sans.size;
         };
-        theme = with gtk; {
-          name = name;
-          package = package;
+        theme = {
+          name = gtk.name;
+          package = gtk.package;
         };
-        iconTheme = with iconTheme; {
-          name = name;
-          package = package;
+        iconTheme = {
+          name = iconTheme.name;
+          package = iconTheme.package;
         };
         gtk3.bookmarks = map (dir: "file://${config.user.home}/" + dir) [
           "git/icy-thought/snowflake"
@@ -202,10 +203,10 @@ in
         };
       };
 
-      home.pointerCursor = with cfg.pointer; {
-        name = name;
-        package = package;
-        size = size;
+      home.pointerCursor = with cfg; {
+        name = pointer.name;
+        package = pointer.package;
+        size = pointer.size;
         gtk.enable = true;
       };
 

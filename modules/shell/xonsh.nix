@@ -7,11 +7,8 @@
 
 let
   inherit (builtins) toJSON;
-  inherit (lib)
-    concatStrings
-    escapeNixString
-    mapAttrsToList
-    mkIf;
+  inherit (lib) mapAttrsToList mkIf;
+  inherit (lib.strings) concatStrings escapeNixString;
 
   xonsh-direnv = pkgs.fetchFromGitHub {
     owner = "74th";

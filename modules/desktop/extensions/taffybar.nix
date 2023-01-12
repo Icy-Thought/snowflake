@@ -8,7 +8,8 @@
 
 let
   inherit (builtins) readFile;
-  inherit (lib) mkIf optionalString;
+  inherit (lib) mkIf;
+  inherit (lib.strings) optionalString;
   inherit (lib.my) mkBoolOpt;
 
   cfg = config.modules.desktop.extensions.taffybar;

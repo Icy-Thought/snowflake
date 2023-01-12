@@ -8,15 +8,15 @@
 
 let inherit (builtins) elem pathExists toString;
   inherit (lib)
-    concatMapStringsSep
-    concatStringsSep
     findFirst
     isList
     mapAttrs
     mapAttrsToList
+    mkAliasDefinitions
     mkOption;
-  inherit (lib.types) attrsOf either listOf mkAliasDefinitions oneOf path str;
-  inherit (lib.my) attrs mkOpt mkOpt';
+  inherit (lib.strings) concatMapStringsSep concatStringsSep;
+  inherit (lib.types) attrs attrsOf either listOf oneOf path str;
+  inherit (lib.my) mkOpt mkOpt';
 in
 {
   options = {

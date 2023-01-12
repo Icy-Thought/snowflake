@@ -7,6 +7,7 @@
 
 let inherit (builtins) toString;
   inherit (lib) mkIf mkMerge;
+  inherit (lib.strings) optionalString;
   inherit (lib.my) mkBoolOpt;
 in
 {
@@ -36,7 +37,7 @@ in
               local mouse = require("modules.mouse")
               local hyperlinks = require("modules.hyperlinks")
 
-              ${strings.optionalString (active != null) ''
+              ${optionalString (active != null) ''
                 require("statusbar.${active}")
 
                 local colorscheme = require("theme.colorscheme")

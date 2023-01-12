@@ -5,7 +5,8 @@
 , ...
 }:
 
-let inherit (lib) mkIf optionalString;
+let inherit (lib) mkIf;
+  inherit (lib.strings) optionalString;
   inherit (lib.my) mkBoolOpt;
 
   cfg = config.modules.shell.xplr;

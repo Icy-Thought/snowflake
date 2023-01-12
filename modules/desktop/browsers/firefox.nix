@@ -6,7 +6,8 @@
 }:
 
 let inherit (builtins) toJSON;
-  inherit (lib) concatStrings mkIf mkMerge mapAttrsToList;
+  inherit (lib) mkIf mkMerge mapAttrsToList;
+  inherit (lib.strings) concatStrings;
   inherit (lib.types) attrsOf oneOf bool int lines str;
   inherit (lib.my) mkBoolOpt mkOpt mkOpt';
 

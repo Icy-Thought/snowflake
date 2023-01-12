@@ -7,7 +7,8 @@
 
 let
   inherit (builtins) map;
-  inherit (lib) concatStrings escapeNixString mapAttrsToList mkIf optionalString;
+  inherit (lib) mapAttrsToList mkIf;
+  inherit (lib.strings) concatStrings escapeNixString optionalString;
 
   cfg = config.modules.shell;
   themeCfg = config.modules.themes;

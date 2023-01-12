@@ -4,7 +4,7 @@
 }:
 
 let inherit (builtins) baseNameOf;
-  inherit (lib) removeSuffix;
+  inherit (lib.strings) removeSuffix;
 in
 {
   toCSSFile = file:

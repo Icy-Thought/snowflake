@@ -6,7 +6,8 @@
 }:
 
 let inherit (builtins) toString;
-  inherit (lib) concatStringsSep mkIf mkMerge;
+  inherit (lib) mkIf mkMerge;
+  inherit (lib.strings) concatStringsSep;
   inherit (lib.my) mkBoolOpt;
 
   cfg = config.modules.desktop.toolset.docView;

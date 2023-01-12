@@ -5,7 +5,8 @@
 , ...
 }:
 
-let inherit (lib) concatStringsSep mkIf;
+let inherit (lib) mkIf;
+  inherit (lib.strings) concatStringsSep;
   inherit (lib.my) mkBoolOpt;
 
   themeCfg = config.modules.themes;

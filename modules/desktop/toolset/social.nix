@@ -7,6 +7,7 @@
 
 let
   inherit (lib) mkIf mkMerge optionals;
+  inherit (lib.strings) concatStringsSep;
   inherit (lib.my) mkBoolOpt;
 
   cfg = config.modules.desktop.toolset.social;
@@ -93,7 +94,7 @@ in
               withOpenASAR = true;
             }).overrideAttrs (old: {
               preInstall = ''
-                gappsWrapperArgs+=("--add-flags" "${lib.concatStringsSep " " flags}")
+                gappsWrapperArgs+=("--add-flags" "${concatStringsSep " " flags}")
               '';
             });
         in

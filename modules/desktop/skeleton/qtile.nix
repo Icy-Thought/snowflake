@@ -7,7 +7,8 @@
 }:
 
 let
-  inherit (lib) mkIf mkOption optionalString;
+  inherit (lib) mkIf mkOption;
+  inherit (lib.strings) optionalString;
   inherit (lib.types) enum nullOr path package;
   inherit (lib.my) mkBoolOpt;
 

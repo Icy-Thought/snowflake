@@ -8,7 +8,7 @@
 
 let inherit (builtins) pathExists readFile;
   inherit (lib) mkIf mkOption;
-  inherit (lib.types) nullOr path null;
+  inherit (lib.types) nullOr path;
   inherit (lib.my) mkBoolOpt;
 
   cfg = config.modules.hardware.kmonad;
