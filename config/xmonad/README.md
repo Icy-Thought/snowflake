@@ -13,26 +13,29 @@ _Credits:_
 ### Definitions:
 
 - <kbd>modm</kbd> = <kbd>super</kbd> (windows key)
-- <kbd>modalt</kbd> = <kbd>super</kbd> + <kbd>alt</kbd>
-- <kbd>hyper</kbd> = <kbd>super</kbd> + <kbd>ctrl</kbd> + <kbd>shift</kbd>
+- <kbd>hold-cap</kbd> (KMonad) = <kbd>modalt</kbd> = <kbd>super</kbd> +
+  <kbd>alt</kbd>
+- <kbd>hold-tab</kbd> (KMonad) = <kbd>hyper</kbd> = <kbd>super</kbd> +
+  <kbd>ctrl</kbd> + <kbd>shift</kbd>
 
 ### Action Keybindings
 
-| Keybinding                                             | Action                                                       |
-| ------------------------------------------------------ | ------------------------------------------------------------ |
-| <kbd>modm</kbd> + <kbd>shift</kbd> + <kbd>/</kbd>      | XMessage -> summary of default keybindings.                  |
-| <kbd>modm</kbd> + <kbd>shift</kbd> + <kbd>return</kbd> | Launch terminal. (Alacritty)                                 |
-| <kbd>modm</kbd> + <kbd>alt</kbd> + <kbd>f</kbd>        | Launch Firefox Browser.                                      |
-| <kbd>modm</kbd> + <kbd>alt</kbd> + <kbd>h</kbd>        | Launch htop.                                                 |
-| <kbd>modm</kbd> + <kbd>alt</kbd> + <kbd>s</kbd>        | Launch Spotify.                                              |
-| <kbd>modm</kbd> + <kbd>p</kbd>                         | Rofi -> launch selected application.                         |
-| <kbd>modm</kbd> + <kbd>g</kbd>                         | Rofi -> select window to shift focus towards.                |
-| <kbd>modm</kbd> + <kbd>b</kbd>                         | Rofi -> bring window + shift focus.                          |
-| <kbd>modm</kbd> + <kbd>shift</kbd> + <kbd>b</kbd>      | Rofi -> select window to replace current active window with. |
-| <kbd>hyper</kbd> + <kbd>l</kbd>                        | Rofi -> select from available layouts.                       |
-| <kbd>modm</kbd> + <kbd>shift</kbd> + <kbd>c</kbd>      | Close focused window.                                        |
-| <kbd>modm</kbd> + <kbd>q</kbd>                         | Restart XMonad.                                              |
-| <kbd>modm</kbd> + <kbd>shift</kbd> + <kbd>q</kbd>      | Quit XMonad.                                                 |
+| Keybinding                                             | Action                                                      |
+| ------------------------------------------------------ | ----------------------------------------------------------- |
+| <kbd>modm</kbd> + <kbd>shift</kbd> + <kbd>/</kbd>      | XMessage -> summary of default keybindings.                 |
+| <kbd>modm</kbd> + <kbd>shift</kbd> + <kbd>return</kbd> | Launch terminal. (WezTerm)                                  |
+| <kbd>modm</kbd> + <kbd>alt</kbd> + <kbd>f</kbd>        | Launch FireFox Browser.                                     |
+| <kbd>modm</kbd> + <kbd>alt</kbd> + <kbd>b</kbd>        | Launch btop++.                                              |
+| <kbd>modm</kbd> + <kbd>alt</kbd> + <kbd>s</kbd>        | Launch Spotify.                                             |
+| <kbd>modm</kbd> + <kbd>p</kbd>                         | (Rofi) Power-menu.                                          |
+| <kbd>modm</kbd> + <kbd>shift</kbd> + <kbd>p</kbd>      | (Rofi) Application launcher.                                |
+| <kbd>modm</kbd> + <kbd>g</kbd>                         | (Rofi) select window to shift focus towards.                |
+| <kbd>modm</kbd> + <kbd>b</kbd>                         | (Rofi) bring window + shift focus.                          |
+| <kbd>modm</kbd> + <kbd>shift</kbd> + <kbd>b</kbd>      | (Rofi) select window to replace current active window with. |
+| <kbd>hyper</kbd> + <kbd>l</kbd>                        | (Rofi) select from available layouts.                       |
+| <kbd>modm</kbd> + <kbd>shift</kbd> + <kbd>c</kbd>      | Close focused window.                                       |
+| <kbd>modm</kbd> + <kbd>q</kbd>                         | Restart XMonad.                                             |
+| <kbd>modm</kbd> + <kbd>shift</kbd> + <kbd>q</kbd>      | Quit XMonad.                                                |
 
 ### Window Movement Keybindings
 

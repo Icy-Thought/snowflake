@@ -45,7 +45,7 @@ in
       env = {
         GTK_DATA_PREFIX = [ "${config.system.path}" ];
         QT_QPA_PLATFORMTHEME = "gnome";
-        QT_STYLE_OVERRIDE = "adwaita";
+        QT_STYLE_OVERRIDE = "Adwaita";
       };
 
       system.userActivationScripts.cleanupHome = ''
@@ -61,7 +61,6 @@ in
           hyperfine
           gucharmap
           qgnomeplatform # Qt -> GTK Theme
-          adwaita-qt # Qt -> GTK Theme
           libqalculate
           (makeDesktopItem {
             name = "Qalc";
