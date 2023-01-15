@@ -29,10 +29,7 @@ in
         mimeApps.enable = true; # mimeApps -> default launch application
         dunst.enable = true;
         waybar.enable = true;
-        rofi = {
-          enable = true;
-          package = pkgs.rofi-wayland;
-        };
+        rofi.enable = true;
       };
     };
 

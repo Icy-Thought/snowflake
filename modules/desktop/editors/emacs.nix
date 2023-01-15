@@ -6,14 +6,21 @@
 }:
 
 let
-  inherit (lib) mkIf mkMerge;
-  inherit (lib.types) str;
+  inherit (lib) mkIf mkMerge mkOption;
+  inherit (lib.types) str package;
   inherit (lib.my) mkBoolOpt mkOpt;
 
   cfg = config.modules.desktop.editors.emacs;
+  envProto = config.modules.desktop.envProto;
 in
 {
   options.modules.desktop.editors.emacs = {
+    package = mkOption {
+      type = package;
+      default =
+        if (envProto == "wayland") then pkgs.emacsPgtk
+        else pkgs.emacsUnstable;
+    };
     doomemacs = rec {
       enable = mkBoolOpt false;
       forgeUrl = mkOpt str "https://github.com";
@@ -29,7 +36,7 @@ in
 
       hm.programs.emacs = {
         enable = true;
-        package = pkgs.emacsPgtk;
+        package = cfg.package;
         extraPackages = epkgs: with epkgs; [ pdf-tools vterm ];
       };
 

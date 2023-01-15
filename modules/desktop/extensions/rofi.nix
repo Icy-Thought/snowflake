@@ -11,14 +11,16 @@ let
   inherit (lib.my) mkBoolOpt;
 
   cfg = config.modules.desktop.extensions.rofi;
+  envProto = config.modules.desktop.envProto;
 in
 {
   options.modules.desktop.extensions.rofi = {
     enable = mkBoolOpt false;
     package = mkOption {
       type = package;
-      default = pkgs.rofi;
-      example = "pkgs.rofi-wayland";
+      default =
+        if (envProto == "wayland") then pkgs.rofi-wayland
+        else pkgs.rofi;
     };
   };
 

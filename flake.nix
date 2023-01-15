@@ -29,7 +29,11 @@
 
     # Toolset ++ Application(s)
     emacs.url = "github:nix-community/emacs-overlay";
-    nvim-nightly.url = "github:nix-community/neovim-nightly-overlay";
+    nvim-nightly = {
+      url = "github:nix-community/neovim-nightly-overlay";
+      # WARN: temporary solution until #164 solved...
+      inputs.nixpkgs.url = "github:nixos/nixpkgs?rev=fad51abd42ca17a60fc1d4cb9382e2d79ae31836";
+    };
     rust.url = "github:oxalica/rust-overlay";
     spicetify-nix.url = "github:the-argus/spicetify-nix";
 
