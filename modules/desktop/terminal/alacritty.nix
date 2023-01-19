@@ -7,7 +7,7 @@
 
 let
   inherit (builtins) toString;
-  inherit (lib) mkIf mkMerge;
+  inherit (lib) mkIf mkMerge getExe;
   inherit (lib.my) mkBoolOpt;
 
   active = config.modules.themes.active;
@@ -18,6 +18,9 @@ in
   };
 
   config = mkIf config.modules.desktop.terminal.alacritty.enable {
+    # Enabling useful/configured term-tools:
+    modules.shell.tmux.enable = true;
+
     hm.programs.alacritty = {
       enable = true;
 

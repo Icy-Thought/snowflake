@@ -168,8 +168,8 @@ in
           src = pkgs.fetchFromGitHub {
             owner = "olets";
             repo = "zsh-abbr";
-            rev = "v4.8.3";
-            hash = "sha256-paCybqh6hJlDhIZKFEdypjpgbuPV4x3ezdtL4UZRoWw=";
+            rev = "v4.9.1";
+            hash = "sha256-pVhhViYa5bsFDp66m2sTrnnzfXvcZw6qqQKWRLDXK/Y=";
           };
         }] ++ (map (p: mkPlugin p) [
           "autopair"
