@@ -24,7 +24,10 @@ in
       extensions = {
         fcitx5.enable = true;
         mimeApps.enable = true; # mimeApps -> default launch application
-        picom.enable = true;
+        picom = {
+          enable = true;
+          animation.enable = true;
+        };
         dunst.enable = true;
         rofi.enable = true;
         taffybar.enable = true;

@@ -497,23 +497,6 @@
         "type": "github"
       }
     },
-    "picom-animations": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1653865492,
-        "narHash": "sha256-crCwRJd859DCIC0pEerpDqdX2j8ZrNAzVaSSB3mTPN8=",
-        "owner": "dccsillag",
-        "repo": "picom",
-        "rev": "51b21355696add83f39ccdb8dd82ff5009ba0ae5",
-        "type": "github"
-      },
-      "original": {
-        "owner": "dccsillag",
-        "ref": "implement-window-animations",
-        "repo": "picom",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "agenix": "agenix",
@@ -526,7 +509,6 @@
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nvim-dir": "nvim-dir",
         "nvim-nightly": "nvim-nightly",
-        "picom-animations": "picom-animations",
         "rust": "rust",
         "spicetify-nix": "spicetify-nix",
         "xmonad-contrib": "xmonad-contrib"

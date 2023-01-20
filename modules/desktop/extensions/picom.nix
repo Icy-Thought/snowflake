@@ -1,5 +1,4 @@
-{ inputs
-, options
+{ options
 , config
 , lib
 , pkgs
@@ -15,20 +14,18 @@ in
 {
   options.modules.desktop.extensions.picom = {
     enable = mkBoolOpt false;
-    animations.enable = mkBoolOpt false; # own module + flake input overlay
+    animation.enable = mkBoolOpt false;
   };
 
   config = mkMerge [
     {
-      services.picom = {
+      hm.services.picom = {
         enable = true;
-        backend = "egl";
         vSync = true;
 
         shadow = false;
         shadowOffsets = [ (-7) (-7) ];
         shadowOpacity = 0.75;
-
         shadowExclude = [
           "! name~=''" # Qtile == empty wm_class..
           "_COMPTON_SHADOW@:32c = 0"
@@ -63,12 +60,14 @@ in
             "! name~=''" # Qtile == empty wm_class..
           ];
 
-          blur-method = "dual_kawase";
-          blur-strength = 10.0;
-          blur-background = true;
-          blur-background-frame = false;
-          blur-background-fixed = false;
-          blur-background-exclude = [ "window_type != 'dock'" ];
+          blur = {
+            method = "dual_kawase";
+            strength = 10.0;
+            background = true;
+            background-frame = false;
+            background-fixed = false;
+            background-exclude = [ "window_type != 'dock'" ];
+          };
 
           daemon = false;
           dbus = false;
@@ -90,12 +89,32 @@ in
       };
     }
 
-    (mkIf cfg.enable { services.picom.fade = false; })
-
-    (mkIf cfg.animations.enable {
-      nixpkgs.overlays = [ inputs.picom-animations ];
-
+    (mkIf (cfg.enable && !cfg.animation.enable) {
       services.picom = {
+        backend = "egl";
+        fade = false;
+      };
+    })
+
+    (mkIf cfg.animation.enable {
+      hm.nixpkgs.overlays = [
+        (final: prev: {
+          picom = prev.picom.overrideAttrs (old: {
+            version = "2022-05-30";
+            src = prev.fetchFromGitHub {
+              owner = "dccsillag";
+              repo = "picom";
+              rev = "51b21355696add83f39ccdb8dd82ff5009ba0ae5";
+              sha256 = "crCwRJd859DCIC0pEerpDqdX2j8ZrNAzVaSSB3mTPN8=";
+            };
+          });
+        })
+      ];
+
+      hm.services.picom = {
+        backend = "glx";
+        extraArgs = [ "--experimental-backends" ];
+
         fade = true;
         fadeDelta = 2;
         fadeSteps = [ 2.5e-2 2.5e-2 ];
