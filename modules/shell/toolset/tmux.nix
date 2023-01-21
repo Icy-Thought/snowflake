@@ -70,12 +70,10 @@ in
         set-window-option -g monitor-activity off
 
         # -------===[ Keybindings ]===------- #
-        bind-key Space clock-mode
-
         # Window Control(s):
-        bind-key t new-window -c '#{pane_current_path}'
         bind-key q kill-session
         bind-key Q kill-server
+        bind-key c new-window -c '#{pane_current_path}'
 
         # Buffers:
         bind-key b list-buffers
@@ -83,8 +81,8 @@ in
         bind-key P choose-buffer
 
         # Split bindings:
-        bind-key / split-window -h -c '#{pane_current_path}'
         bind-key - split-window -v -c '#{pane_current_path}'
+        bind-key / split-window -h -c '#{pane_current_path}'
 
         # Copy/Paste bindings:
         bind-key -T copy-mode-vi v send-keys -X begin-selection     -N "Start visual mode for selection"
