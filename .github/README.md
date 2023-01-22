@@ -23,7 +23,9 @@
 
 # Table of Contents
 
-- [Showcase (XMonad)](#showcase-xmonad)
+- [Desktop Preview](#desktop-preview)
+  - [XMonad](#xmonad)
+  - [Neovim](#neovim)
 - [Introduction](#introduction)
 - [Getting Started](#getting-started)
   - [Prepare System Environment for Nix-Flake](#prepare-system-environment-for-nix-flake)
@@ -39,9 +41,15 @@
 - [Useful Links](#useful-links)
 - [Special Thanks](#special-thanks)
 
-# Showcase (XMonad)
+# Desktop Preview
 
-![XMonad Desktop](./assets/themes/tokyonight/xmonad.png)
+## XMonad
+
+![XMonad](./assets/themes/tokyonight/xmonad.png)
+
+## Neovim
+
+![Neovim](./assets/other/neovim.png)
 
 # Introduction
 
