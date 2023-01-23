@@ -18,10 +18,8 @@ in
   };
 
   config = mkIf cfg.enable {
-    hm.services = {
-      network-manager-applet.enable = true;
-      status-notifier-watcher.enable = true;
-    };
+    # Allow tray-icons to be displayed:
+    hm.services.status-notifier-watcher.enable = true;
 
     hm.programs.eww = {
       enable = true;

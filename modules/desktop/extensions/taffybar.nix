@@ -36,8 +36,9 @@ in
     services.gnome.at-spi2-core.enable = true;
 
     hm.services = {
-      network-manager-applet.enable = true;
+      # Allow tray-icons to be displayed:
       status-notifier-watcher.enable = true;
+
       taffybar = {
         enable = true;
         package = pkgs.taffybar.override {

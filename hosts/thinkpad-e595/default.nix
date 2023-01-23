@@ -13,8 +13,7 @@
     };
 
     networking = {
-      enable = true;
-      networkManager.enable = true;
+      iwd.enable = true;
       akkadianVPN.enable = true;
     };
 

@@ -6,34 +6,64 @@
 }:
 
 let
-  inherit (lib) mkDefault mkIf mkMerge;
+  inherit (lib) getExe mkDefault mkIf mkMerge;
   inherit (lib.my) mkBoolOpt;
 
   cfg = config.modules.networking;
 in
 {
   options.modules.networking = {
-    enable = mkBoolOpt false;
-    networkManager.enable = mkBoolOpt false;
+    iwd.enable = mkBoolOpt false;
     networkd.enable = mkBoolOpt false;
+    networkManager.enable = mkBoolOpt false;
   };
 
-  config = mkIf cfg.enable (mkMerge [
-    {
-      # Global useDHCP => deprecated.
-      networking.useDHCP = false;
-    }
+  config = mkMerge [
+    (mkIf cfg.iwd.enable {
+      networking.wireless.iwd = {
+        enable = true;
+        settings = {
+          General = {
+            AddressRandomization = "network";
+            AddressRandomizationRange = "full";
+            EnableNetworkConfiguration = true;
+            RoamRetryInterval = 15;
+          };
+          Network = {
+            EnableIPv6 = true;
+            RoutePriorityOffset = 300;
+            # NameResolvingService = "resolvconf";
+          };
+          Settings = {
+            AutoConnect = true;
+            # AlwaysRandomizeAddress = false;
+          };
+          Rank.BandModifier5Ghz = 2.0;
+          Scan.DisablePeriodicScan = true;
+        };
+      };
+
+      # A GUI for easier network management:
+      user.packages = [ pkgs.iwgtk ];
+
+      # Launch indicator as a daemon on login:
+      systemd.user.services.iwgtk = {
+        serviceConfig.ExecStart = "${getExe pkgs.iwgtk} -i";
+        wantedBy = [ "graphical-session.target" ];
+        partOf = [ "graphical-session.target" ];
+      };
+    })
 
     (mkIf cfg.networkManager.enable {
       systemd.services.NetworkManager-wait-online.enable = false;
 
       networking.networkmanager = {
         enable = mkDefault true;
-        wifi = {
-          # backend = "iwd";
-          backend = "wpa_supplicant";
-        };
+        wifi.backend = "wpa_supplicant";
       };
+
+      # Display a network-manager applet:
+      hm.services.network-manager-applet.enable = true;
     })
 
     # TODO: add network connections + agenix.
@@ -51,5 +81,5 @@ in
         wlan0.useDHCP = true;
       };
     })
-  ]);
+  ];
 }

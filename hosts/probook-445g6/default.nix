@@ -7,7 +7,6 @@
 
   modules = {
     networking = {
-      enable = true;
       networkManager.enable = true;
       wireGuard.enable = true;
     };
