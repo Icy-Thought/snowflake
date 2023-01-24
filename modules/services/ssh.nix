@@ -19,9 +19,11 @@ in
 
     services.openssh = {
       enable = true;
-      kbdInteractiveAuthentication = false;
-      passwordAuthentication = false;
-      # startWhenNeeded = true;
+      settings = {
+        kbdInteractiveAuthentication = false;
+        PasswordAuthentication = false;
+        # startWhenNeeded = true;
+      };
 
       hostKeys = [{
         comment = "icy-thought@host";

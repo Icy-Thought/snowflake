@@ -19,7 +19,7 @@ in
       type = package;
       default =
         if (envProto == "wayland") then pkgs.emacsPgtk
-        else pkgs.emacsUnstable;
+        else pkgs.emacsGit;
     };
     doomemacs = rec {
       enable = mkBoolOpt false;
