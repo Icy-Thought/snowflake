@@ -142,9 +142,6 @@ in
         bindkey '^[[Z' reverse-menu-complete            # Shift-Tab -> reverse menu navigation
         bindkey '^_' autosuggest-accept                 # C-/ => accept suggestion
 
-        # -------===[ External Exports ]===------- #
-        export OPENAI_API_KEY=$(cat /run/agenix/closedAI)
-
         # -------===[ External Plugins ]===------- #
         any-nix-shell zsh --info-right | source /dev/stdin
         eval "$(zoxide init zsh)"

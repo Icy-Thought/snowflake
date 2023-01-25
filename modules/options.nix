@@ -49,7 +49,7 @@ in
         then concatMapStringsSep ":" (x: toString x) v
         else (toString v));
       default = { };
-      description = "TODO";
+      description = "Provides easy-access to `environment.extraInit`";
     };
   };
 

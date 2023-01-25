@@ -34,6 +34,9 @@ in
         vimAlias = true;
         vimdiffAlias = true;
       };
+
+      # Required API key for ChatGPT:
+      env.OPENAI_API_KEY = "$(cat /run/agenix/closedAI)";
     }
 
     (mkIf cfg.agasaya.enable {

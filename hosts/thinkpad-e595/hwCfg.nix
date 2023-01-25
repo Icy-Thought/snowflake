@@ -18,6 +18,7 @@ in {
   fileSystems."/home" = {
     device = "/dev/disk/by-label/home";
     fsType = "ext4";
+    neededForBoot = true;
     options = [ "noatime" "x-gvfs-hide" ];
   };
 
