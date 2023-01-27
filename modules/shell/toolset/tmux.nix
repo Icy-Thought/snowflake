@@ -105,17 +105,17 @@ in
         set-option -g message-command-style fg="${types.bg}",bg="${types.highlight}",align="centre"
 
         # Panes:
-        set-option -g pane-border-style fg="${normal.blue}"
+        set-option -g pane-border-style fg="${types.fg}"
         set-option -g pane-active-border-style fg="${types.border}"
 
         # Windows:
-        set-option -g window-status-format "#[fg=${normal.white}] #W/#{window_panes} "
-        set-option -g window-status-current-format "#[fg=${types.bg},bg=${types.border}]#{?client_prefix,#[fg=${types.bg}],}#{?client_prefix,#[bg=${normal.blue}],} #W "
+        set-option -g window-status-format "#[fg=${types.fg}] #W/#{window_panes} "
+        set-option -g window-status-current-format "#{?client_prefix,#[fg=${types.bg}]#[bg=${normal.red}] #I:#W #[fg=${normal.red}]#[bg=default],#[fg=${types.bg}]#[bg=${types.border}] #I:#W #[fg=${types.border}]#[bg=default]}"
 
         # -------===[ Statusline ]===------- #
-        set-option -g status-left "🌘 "
+        set-option -g status-left "#[fg=${types.bg}]#[bg=${normal.blue}]#[bold]   #[fg=${normal.blue}]#[bg=default]"
         set-option -g status-bg default
-        set-option -g status-right "#[italics]∡ #H | %b %d, %H:%M  #[fg=${types.bg},bg=${types.fg},bold,italics] base-#S "
+        set-option -g status-right "#[italics]∡ #H | %b %d, %H:%M  #[fg=${types.bg},bg=${types.panelbg},bold,italics] base-#S "
 
         # -------===[ Clock & Selection ]===------- #
         set-window-option -g clock-mode-colour "${types.border}"
