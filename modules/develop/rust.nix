@@ -21,7 +21,7 @@ in
 
       user.packages = with pkgs; [
         crate2nix
-        rust-bin.beta.latest.default
+        rust-bin.stable.latest.default
         unstable.rust-analyzer
       ];
 
