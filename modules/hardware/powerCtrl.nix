@@ -22,6 +22,8 @@ in
         settings = {
           START_CHARGE_THRESH_BAT0 = 75;
           STOP_CHARGE_THRESH_BAT0 = 80;
+          RESTORE_THRESHOLDS_ON_BAT = 1;
+
           CPU_BOOST_ON_AC = 1;
           CPU_BOOST_ON_BAT = 0;
           CPU_SCALING_GOVERNOR_ON_AC = "performance";

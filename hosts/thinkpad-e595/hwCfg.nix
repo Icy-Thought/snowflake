@@ -62,6 +62,12 @@ in {
     # updateMicrocode = mkDefault config.hardware.enableRedistributableFirmware;
   };
 
+  # TLP-specific:
+  services.tlp.settings = {
+    # USB_DENYLIST = "04:00.3 04:00.4";
+    USB_EXCLUDE_BTUSB = 1;
+  };
+
   # Finally, our beloved hardware module(s):
   modules.hardware = {
     powerCtrl.enable = true;
