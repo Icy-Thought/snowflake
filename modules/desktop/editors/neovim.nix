@@ -74,7 +74,7 @@ in
             vim.g.sqlite_clib_path = "${pkgs.sqlite.out}/lib/libsqlite3.so"
 
             -- Call-forward Agasaya:
-            require("core").init()
+            require("config").init()
           '';
         };
       };

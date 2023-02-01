@@ -462,11 +462,11 @@
     "nvim-dir": {
       "flake": false,
       "locked": {
-        "lastModified": 1674939599,
-        "narHash": "sha256-MM56Bn6dP62e7ZdVPJBX37Vr2SVvKMU3oDAZsX2yUSY=",
+        "lastModified": 1675333164,
+        "narHash": "sha256-jXq6+Tis7hr0CsXqX+iNY7dfb4JueJpO0iEHfM2g/HE=",
         "ref": "refs/heads/main",
-        "rev": "fcb0b8f1e17a226d0ed35eefd9089959ae2d33cd",
-        "revCount": 274,
+        "rev": "19eb5c116bcb5ef8ec19ebaea89062e78d6285c7",
+        "revCount": 277,
         "submodules": true,
         "type": "git",
         "url": "https://github.com/Icy-Thought/nvim.d.git"
