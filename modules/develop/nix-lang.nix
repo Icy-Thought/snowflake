@@ -19,6 +19,7 @@ in
       user.packages = with pkgs; [
         manix
         nix-index
+        nix-init
         nix-output-monitor
         nix-tree
         nixpkgs-fmt

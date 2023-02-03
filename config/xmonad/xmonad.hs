@@ -92,13 +92,13 @@ import           XMonad.Util.WorkspaceCompare
 
 main =
     xmonad
-      . docks
-      . pagerHints
-      . setEwmhActivateHook activateSwitchWs
-      . ewmh
-      . ewmhFullscreen
-      . withNavigation2DConfig myNavigation2DConfig
-      $ myConfig
+        . docks
+        . pagerHints
+        . setEwmhActivateHook activateSwitchWs
+        . ewmh
+        . ewmhFullscreen
+        . withNavigation2DConfig myNavigation2DConfig
+        $ myConfig
 
 myConfig =
     def { modMask            = mod4Mask
