@@ -3,7 +3,7 @@
 , lib
 , ...
 }: {
-  imports = [ ./hwCfg.nix ];
+  imports = [ ./hardware.nix ];
 
   modules = {
     networking = {
