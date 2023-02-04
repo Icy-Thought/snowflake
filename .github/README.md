@@ -118,6 +118,16 @@ specified `hosts/deviceX` (where `deviceX` is the name of your device folder.
 
 ## Replacing Necessary Configuration Entries
 
+### Snowflake Directory
+
+> **Warning** As of now, my snowflake directory is expected to be placed inside
+> `~/git/icy-thought/`. And for your configuration to work properly you are
+> expected to place the directory in that exact location!
+
+Modify `snowflake.dir` to point to the location where you are keeping the
+snowflake repository:
+https://github.com/Icy-Thought/snowflake/blob/f576ca018a7dd97e0f9d887835e2559e1e5cc02c/modules/options.nix#L26-L29
+
 ### Remove `wgConnect` Directory
 
 > **Note** Files contained within the `wgConnect` directory are intended for my
