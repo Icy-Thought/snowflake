@@ -1,9 +1,4 @@
-{ config
-, options
-, pkgs
-, lib
-, ...
-}:
+{ config, options, pkgs, lib, ... }:
 
 let
   inherit (builtins) map;
@@ -12,8 +7,7 @@ let
 
   cfg = config.modules.shell;
   themeCfg = config.modules.themes;
-in
-{
+in {
   config = mkIf (cfg.default == "zsh") {
     modules.shell.usefulPkgs.enable = true;
 
@@ -124,10 +118,10 @@ in
         # -------===[ Aesthetics ]===------- #
         ${optionalString (themeCfg.active != null)
         (with themeCfg.colors.main; ''
-            export FZF_DEFAULT_OPTS=" \
-            --color=bg:,bg+:${types.bg},spinner:${types.panelbg},hl:${normal.red} \
-            --color=fg:${types.border},header:${normal.red},info:${normal.magenta},pointer:${types.border} \
-            --color=marker:${normal.magenta},fg+:${types.border},prompt:${types.border},hl+:${normal.red}"
+          export FZF_DEFAULT_OPTS=" \
+          --color=bg:,bg+:${types.bg},spinner:${types.panelbg},hl:${normal.red} \
+          --color=fg:${types.border},header:${normal.red},info:${normal.magenta},pointer:${types.border} \
+          --color=marker:${normal.magenta},fg+:${types.border},prompt:${types.border},hl+:${normal.red}"
         '')}
 
         export MANPAGER="sh -c 'col -bx | bat -l man -p'"
@@ -153,39 +147,36 @@ in
         less = "less -R";
       };
 
-      plugins =
-        let
-          mkPlugin = name: {
-            inherit name;
-            inherit (pkgs."zsh-${name}") src;
-          };
-        in
-        [{
-          name = "zsh-abbr";
-          src = pkgs.fetchFromGitHub {
-            owner = "olets";
-            repo = "zsh-abbr";
-            rev = "v4.9.1";
-            hash = "sha256-pVhhViYa5bsFDp66m2sTrnnzfXvcZw6qqQKWRLDXK/Y=";
-          };
-        }] ++ (map (p: mkPlugin p) [
-          "autopair"
-          "nix-shell"
-          "vi-mode"
-          "you-should-use"
-        ]);
+      plugins = let
+        mkPlugin = name: {
+          inherit name;
+          inherit (pkgs."zsh-${name}") src;
+        };
+      in [{
+        name = "zsh-abbr";
+        src = pkgs.fetchFromGitHub {
+          owner = "olets";
+          repo = "zsh-abbr";
+          rev = "v4.9.1";
+          hash = "sha256-pVhhViYa5bsFDp66m2sTrnnzfXvcZw6qqQKWRLDXK/Y=";
+        };
+      }] ++ (map (p: mkPlugin p) [
+        "autopair"
+        "nix-shell"
+        "vi-mode"
+        "you-should-use"
+      ]);
     };
 
     home.configFile = {
       zsh-abbreviations = {
         target = "zsh/abbreviations";
-        text =
-          let abbrevs = import "${config.snowflake.configDir}/shell-abbr";
-          in ''
-            ${concatStrings (mapAttrsToList (k: v: ''
-                abbr ${k}=${escapeNixString v}
-            '') abbrevs)}
-          '';
+        text = let abbrevs = import "${config.snowflake.configDir}/shell-abbr";
+        in ''
+          ${concatStrings (mapAttrsToList (k: v: ''
+            abbr ${k}=${escapeNixString v}
+          '') abbrevs)}
+        '';
       };
 
       #  Reference: https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters/main.md

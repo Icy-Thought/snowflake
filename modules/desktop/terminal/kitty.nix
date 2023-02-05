@@ -1,19 +1,11 @@
-{ config
-, options
-, lib
-, pkgs
-, ...
-}:
+{ config, options, lib, pkgs, ... }:
 
 let
   inherit (builtins) toString;
   inherit (lib) mkIf mkMerge;
   inherit (lib.my) mkBoolOpt;
-in
-{
-  options.modules.desktop.terminal.kitty = {
-    enable = mkBoolOpt false;
-  };
+in {
+  options.modules.desktop.terminal.kitty = { enable = mkBoolOpt false; };
 
   config = mkIf config.modules.desktop.terminal.kitty.enable {
     environment.variables = {
@@ -106,27 +98,26 @@ in
       '';
     };
 
-    home.configFile = with config.modules.themes; (mkMerge [
-      {
-        tab-bar = {
-          target = "kitty/tab_bar.py";
-          source = "${config.snowflake.configDir}/kitty/${active}-bar.py";
-        };
-      }
+    home.configFile = with config.modules.themes;
+      (mkMerge [
+        {
+          tab-bar = {
+            target = "kitty/tab_bar.py";
+            source = "${config.snowflake.configDir}/kitty/${active}-bar.py";
+          };
+        }
 
-      (mkIf (active != null) {
-        # TODO: Find ONE general nix-automation entry for VictorMono
-        kitty-theme = {
-          target = "kitty/config/${active}.conf";
-          text =
-            ''
+        (mkIf (active != null) {
+          # TODO: Find ONE general nix-automation entry for VictorMono
+          kitty-theme = {
+            target = "kitty/config/${active}.conf";
+            text = ''
               font_family               Victor Mono SemiBold Nerd Font Complete
               italic_font               Victor Mono SemiBold Italic Nerd Font Complete
               bold_font                 Victor Mono Bold Nerd Font Complete
               bold_italic_font          Victor Mono Bold Italic Nerd Font Complete
               font_size                 ${toString (font.mono.size)}
-            ''
-            + (with colors.main; ''
+            '' + (with colors.main; ''
 
               foreground                ${types.fg}
               background                ${types.bg}
@@ -165,8 +156,8 @@ in
               color7                    ${normal.white}
               color15                   ${bright.white}
             '');
-        };
-      })
-    ]);
+          };
+        })
+      ]);
   };
 }

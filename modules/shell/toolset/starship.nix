@@ -1,17 +1,10 @@
-{ config
-, options
-, lib
-, pkgs
-, ...
-}:
+{ config, options, lib, pkgs, ... }:
 
-let inherit (lib) mkIf;
+let
+  inherit (lib) mkIf;
   inherit (lib.my) mkBoolOpt;
-in
-{
-  options.modules.shell.starship = {
-    enable = mkBoolOpt false;
-  };
+in {
+  options.modules.shell.starship = { enable = mkBoolOpt false; };
 
   config = mkIf config.modules.shell.starship.enable {
     hm.programs.starship = {
@@ -21,7 +14,8 @@ in
         add_newline = true;
         line_break.disabled = true;
 
-        format = "[$directory](fg:${normal.blue}) ($git_branch)($git_status )($nix_shell)($character)";
+        format =
+          "[$directory](fg:${normal.blue}) ($git_branch)($git_status )($nix_shell)($character)";
         right_format = "[$cmd_duration](bg:none fg:${normal.magenta})";
 
         cmd_duration = {
@@ -39,12 +33,14 @@ in
         };
 
         git_branch = {
-          format = "[[](fg:${types.border})( $branch)[](fg:${types.border})]($style) ";
+          format =
+            "[[](fg:${types.border})( $branch)[](fg:${types.border})]($style) ";
           style = "bg:${types.border} fg:${types.bg} bold";
         };
 
         git_status = {
-          format = "[([](fg:${types.panelbg})( 『 $all_status$ahead_behind 』)[](fg:${types.panelbg}))]($style)";
+          format =
+            "[([](fg:${types.panelbg})( 『 $all_status$ahead_behind 』)[](fg:${types.panelbg}))]($style)";
           style = "bg:${types.panelbg} fg:${types.bg} bold";
         };
 

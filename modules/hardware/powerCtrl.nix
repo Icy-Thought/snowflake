@@ -1,17 +1,10 @@
-{ config
-, options
-, lib
-, pkgs
-, ...
-}:
+{ config, options, lib, pkgs, ... }:
 
-let inherit (lib) mkIf;
+let
+  inherit (lib) mkIf;
   inherit (lib.my) mkBoolOpt;
-in
-{
-  options.modules.hardware.powerCtrl = {
-    enable = mkBoolOpt false;
-  };
+in {
+  options.modules.hardware.powerCtrl = { enable = mkBoolOpt false; };
 
   config = mkIf config.modules.hardware.powerCtrl.enable {
     services = {

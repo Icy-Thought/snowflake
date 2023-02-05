@@ -1,26 +1,15 @@
-{ inputs
-, options
-, config
-, lib
-, pkgs
-, ...
-}:
+{ inputs, options, config, lib, pkgs, ... }:
 
 let
   inherit (lib) mkIf getExe;
   inherit (lib.my) mkBoolOpt;
-in
-{
-  options.modules.desktop.xmonad = {
-    enable = mkBoolOpt false;
-  };
+in {
+  options.modules.desktop.xmonad = { enable = mkBoolOpt false; };
 
   config = mkIf config.modules.desktop.xmonad.enable {
     modules.desktop = {
       envProto = "x11";
-      toolset.fileBrowse = {
-        nautilus.enable = true;
-      };
+      toolset.fileBrowse = { nautilus.enable = true; };
       extensions = {
         fcitx5.enable = true;
         mimeApps.enable = true; # mimeApps -> default launch application

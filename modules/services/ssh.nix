@@ -1,18 +1,11 @@
-{ options
-, config
-, lib
-, ...
-}:
+{ options, config, lib, ... }:
 
 let
   inherit (builtins) filter pathExists;
   inherit (lib) mkIf;
   inherit (lib.my) mkBoolOpt;
-in
-{
-  options.modules.services.ssh = {
-    enable = mkBoolOpt false;
-  };
+in {
+  options.modules.services.ssh = { enable = mkBoolOpt false; };
 
   config = mkIf config.modules.services.ssh.enable {
     programs.ssh.startAgent = true;
@@ -39,6 +32,7 @@ in
           "${config.user.home}/.ssh/id_ed25519.pub"
           "${config.user.home}/.ssh/id_rsa.pub"
         ]
-      else [ ];
+      else
+        [ ];
   };
 }

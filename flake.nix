@@ -20,7 +20,8 @@
     };
 
     # Window Manager(s) + Extensions
-    xmonad-contrib.url = "github:icy-thought/xmonad-contrib"; # TODO: replace with official after #582 == merged!
+    xmonad-contrib.url =
+      "github:icy-thought/xmonad-contrib"; # TODO: replace with official after #582 == merged!
     hyprland.url = "github:hyprwm/Hyprland";
 
     # Toolset ++ Application(s)
@@ -28,7 +29,8 @@
     nvim-nightly = {
       url = "github:nix-community/neovim-nightly-overlay";
       # WARN: temporary solution until #164 solved...
-      inputs.nixpkgs.url = "github:nixos/nixpkgs?rev=fad51abd42ca17a60fc1d4cb9382e2d79ae31836";
+      inputs.nixpkgs.url =
+        "github:nixos/nixpkgs?rev=fad51abd42ca17a60fc1d4cb9382e2d79ae31836";
     };
     rust.url = "github:oxalica/rust-overlay";
     spicetify-nix.url = "github:the-argus/spicetify-nix";
@@ -48,12 +50,7 @@
     };
   };
 
-  outputs =
-    inputs @ { self
-    , nixpkgs
-    , nixpkgs-unstable
-    , ...
-    }:
+  outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, ... }:
     let
       inherit (lib.my) mapModules mapModulesRec mapHosts;
       system = "x86_64-linux";
@@ -73,8 +70,7 @@
           lib = final;
         };
       });
-    in
-    {
+    in {
       lib = lib.my;
 
       overlays = (mapModules ./overlays import) // {

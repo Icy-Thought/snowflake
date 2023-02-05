@@ -1,16 +1,9 @@
-{ lib
-, ...
-}:
+{ lib, ... }:
 
 let
   inherit (lib) any count;
-  inherit (lib.attrsets)
-    filterAttrs
-    listToAttrs
-    mapAttrs'
-    mapAttrsToList;
-in
-rec {
+  inherit (lib.attrsets) filterAttrs listToAttrs mapAttrs' mapAttrsToList;
+in rec {
   # attrsToList
   attrsToList = attrs:
     mapAttrsToList (name: value: { inherit name value; }) attrs;

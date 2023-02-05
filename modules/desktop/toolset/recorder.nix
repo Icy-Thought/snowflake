@@ -1,17 +1,11 @@
-{ config
-, options
-, lib
-, pkgs
-, ...
-}:
+{ config, options, lib, pkgs, ... }:
 
 let
   inherit (lib) mkIf;
   inherit (lib.my) mkBoolOpt;
 
   cfg = config.modules.desktop.toolset.recorder;
-in
-{
+in {
   options.modules.desktop.toolset.recorder = {
     enable = mkBoolOpt false;
     audio.enable = mkBoolOpt true;
@@ -22,7 +16,9 @@ in
     services.pipewire.jack.enable = true;
 
     user.packages = with pkgs;
-      [ ffmpeg ]
+      [
+        ffmpeg
+      ]
       # Audio recording + Mastering:
       ++ lists.optionals cfg.audio.enable [
         unstable.audacity-gtk3

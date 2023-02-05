@@ -1,17 +1,11 @@
-{ config
-, options
-, lib
-, pkgs
-, ...
-}:
+{ config, options, lib, pkgs, ... }:
 
 let
   inherit (lib) mkIf mkMerge;
   inherit (lib.my) mkBoolOpt;
 
   cfg = config.modules.develop.lua;
-in
-{
+in {
   options.modules.develop.lua = {
     enable = mkBoolOpt false;
     fnlized.enable = mkBoolOpt false;
@@ -19,11 +13,7 @@ in
 
   config = mkMerge [
     (mkIf cfg.enable {
-      user.packages = with pkgs; [
-        lua
-        sumneko-lua-language-server
-        stylua
-      ];
+      user.packages = with pkgs; [ lua sumneko-lua-language-server stylua ];
 
       home.configFile.stylua-conf = {
         target = "stylua/stylua.toml";
@@ -38,9 +28,7 @@ in
       };
     })
 
-    (mkIf cfg.fnlized.enable {
-      user.packages = with pkgs; [ fennel fnlfmt ];
-    })
+    (mkIf cfg.fnlized.enable { user.packages = with pkgs; [ fennel fnlfmt ]; })
 
     (mkIf config.modules.develop.xdg.enable { }) # TODO
   ];

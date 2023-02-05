@@ -1,10 +1,4 @@
-{ inputs
-, options
-, config
-, lib
-, pkgs
-, ...
-}:
+{ inputs, options, config, lib, pkgs, ... }:
 
 let
   inherit (builtins) readFile;
@@ -14,11 +8,8 @@ let
 
   cfg = config.modules.desktop.extensions.taffybar;
   taffyDir = "${config.snowflake.configDir}/taffybar";
-in
-{
-  options.modules.desktop.extensions.taffybar = {
-    enable = mkBoolOpt false;
-  };
+in {
+  options.modules.desktop.extensions.taffybar = { enable = mkBoolOpt false; };
 
   config = mkIf cfg.enable {
     # WARN: 2-Step workaround (https://github.com/taffybar/taffybar/issues/403)
@@ -48,27 +39,26 @@ in
     };
 
     # Symlink necessary files for config to load:
-    home.configFile =
-      let active = config.modules.themes.active;
-      in {
-        taffybar-base = {
-          target = "taffybar/taffybar.hs";
-          source = "${taffyDir}/taffybar.hs";
-          onChange = "rm -rf $XDG_CACHE_HOME/taffybar";
-        };
-        taffybar-palette = mkIf (active != null) {
-          target = "taffybar/palette/${active}.css";
-          source = "${taffyDir}/palette/${active}.css";
-        };
-        taffybar-css = {
-          target = "taffybar/taffybar.css";
-          text = ''
-            ${optionalString (active != null) ''
-                @import url("./palette/${active}.css");
-            ''}
-            ${readFile "${taffyDir}/taffybar.css"}
-          '';
-        };
+    home.configFile = let active = config.modules.themes.active;
+    in {
+      taffybar-base = {
+        target = "taffybar/taffybar.hs";
+        source = "${taffyDir}/taffybar.hs";
+        onChange = "rm -rf $XDG_CACHE_HOME/taffybar";
       };
+      taffybar-palette = mkIf (active != null) {
+        target = "taffybar/palette/${active}.css";
+        source = "${taffyDir}/palette/${active}.css";
+      };
+      taffybar-css = {
+        target = "taffybar/taffybar.css";
+        text = ''
+          ${optionalString (active != null) ''
+            @import url("./palette/${active}.css");
+          ''}
+          ${readFile "${taffyDir}/taffybar.css"}
+        '';
+      };
+    };
   };
 }

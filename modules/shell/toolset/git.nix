@@ -1,17 +1,10 @@
-{ config
-, options
-, lib
-, pkgs
-, ...
-}:
+{ config, options, lib, pkgs, ... }:
 
-let inherit (lib) mkIf;
+let
+  inherit (lib) mkIf;
   inherit (lib.my) mkBoolOpt;
-in
-{
-  options.modules.shell.git = {
-    enable = mkBoolOpt false;
-  };
+in {
+  options.modules.shell.git = { enable = mkBoolOpt false; };
 
   config = mkIf config.modules.shell.git.enable {
     user.packages = with pkgs; [
@@ -141,7 +134,8 @@ in
         };
 
         diff = {
-          "lisp".xfuncname = "^(((;;;+ )|\\(|([ 	]+\\(((cl-|el-patch-)?def(un|var|macro|method|custom)|gb/))).*)$";
+          "lisp".xfuncname =
+            "^(((;;;+ )|\\(|([ 	]+\\(((cl-|el-patch-)?def(un|var|macro|method|custom)|gb/))).*)$";
           "org".xfuncname = "^(\\*+ +.*)$";
         };
 

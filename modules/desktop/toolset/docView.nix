@@ -1,18 +1,13 @@
-{ options
-, config
-, lib
-, pkgs
-, ...
-}:
+{ options, config, lib, pkgs, ... }:
 
-let inherit (builtins) toString;
+let
+  inherit (builtins) toString;
   inherit (lib) mkIf mkMerge;
   inherit (lib.strings) concatStringsSep;
   inherit (lib.my) mkBoolOpt;
 
   cfg = config.modules.desktop.toolset.docView;
-in
-{
+in {
   options.modules.desktop.toolset.docView = {
     zathura.enable = mkBoolOpt false;
     sioyek.enable = mkBoolOpt false;
@@ -22,55 +17,56 @@ in
     (mkIf cfg.zathura.enable {
       hm.programs.zathura = {
         enable = true;
-        options = with config.modules.themes; (mkMerge [
-          {
-            adjust-open = "width";
-            first-page-column = "1:1";
-            selection-clipboard = "clipboard";
-            statusbar-home-tilde = true;
-            window-title-basename = true;
-          }
-
-          (mkIf (active != null) (mkMerge [
+        options = with config.modules.themes;
+          (mkMerge [
             {
-              font = "${font.sans.family} Bold ${toString (font.sans.size)}";
-              recolor = true;
-              recolor-keephue = true;
-              recolor-reverse-video = true;
+              adjust-open = "width";
+              first-page-column = "1:1";
+              selection-clipboard = "clipboard";
+              statusbar-home-tilde = true;
+              window-title-basename = true;
             }
-            (with colors.main; {
-              default-fg = "${types.fg}";
-              default-bg = "${types.bg}";
 
-              statusbar-fg = "${types.bg}";
-              statusbar-bg = "${types.highlight}";
+            (mkIf (active != null) (mkMerge [
+              {
+                font = "${font.sans.family} Bold ${toString (font.sans.size)}";
+                recolor = true;
+                recolor-keephue = true;
+                recolor-reverse-video = true;
+              }
+              (with colors.main; {
+                default-fg = "${types.fg}";
+                default-bg = "${types.bg}";
 
-              inputbar-fg = "${normal.yellow}";
-              inputbar-bg = "${types.bg}";
+                statusbar-fg = "${types.bg}";
+                statusbar-bg = "${types.highlight}";
 
-              notification-fg = "${normal.white}";
-              notification-bg = "${normal.black}";
+                inputbar-fg = "${normal.yellow}";
+                inputbar-bg = "${types.bg}";
 
-              notification-error-fg = "${normal.white}";
-              notification-error-bg = "${normal.black}";
+                notification-fg = "${normal.white}";
+                notification-bg = "${normal.black}";
 
-              notification-warning-fg = "${normal.red}";
-              notification-warning-bg = "${normal.black}";
+                notification-error-fg = "${normal.white}";
+                notification-error-bg = "${normal.black}";
 
-              highlight-active-color = "${types.fg}";
-              highlight-color = "${types.panelbg}";
+                notification-warning-fg = "${normal.red}";
+                notification-warning-bg = "${normal.black}";
 
-              completion-fg = "${normal.yellow}";
-              completion-bg = "${types.bg}";
+                highlight-active-color = "${types.fg}";
+                highlight-color = "${types.panelbg}";
 
-              completion-highlight-fg = "${types.bg}";
-              completion-highlight-bg = "${normal.yellow}";
+                completion-fg = "${normal.yellow}";
+                completion-bg = "${types.bg}";
 
-              recolor-lightcolor = "${types.bg}";
-              recolor-darkcolor = "${normal.white}";
-            })
-          ]))
-        ]);
+                completion-highlight-fg = "${types.bg}";
+                completion-highlight-bg = "${normal.yellow}";
+
+                recolor-lightcolor = "${types.bg}";
+                recolor-darkcolor = "${normal.white}";
+              })
+            ]))
+          ]);
       };
     })
 
@@ -81,10 +77,8 @@ in
         config = {
           "check_for_updates_on_startup" = "0";
           "default_dark_mode" = "1";
-          "startup_commands" = concatStringsSep ";" [
-            "toggle_custom_color"
-            "toggle_statusbar"
-          ];
+          "startup_commands" =
+            concatStringsSep ";" [ "toggle_custom_color" "toggle_statusbar" ];
 
           "should_launch_new_instance" = "1";
           "sort_bookmarks_by_location" = "1";

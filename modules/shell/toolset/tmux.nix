@@ -1,17 +1,10 @@
-{ config
-, options
-, lib
-, pkgs
-, ...
-}:
+{ config, options, lib, pkgs, ... }:
 
-let inherit (lib) mkIf;
+let
+  inherit (lib) mkIf;
   inherit (lib.my) mkBoolOpt;
-in
-{
-  options.modules.shell.tmux = {
-    enable = mkBoolOpt false;
-  };
+in {
+  options.modules.shell.tmux = { enable = mkBoolOpt false; };
 
   config = mkIf config.modules.shell.tmux.enable {
     hm.programs.tmux = {

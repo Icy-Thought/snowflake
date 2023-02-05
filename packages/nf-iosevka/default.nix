@@ -1,18 +1,13 @@
-{ stdenv
-, lib
-, nerd-font-patcher
-, iosevka ? iosevka.override {
-    privateBuildPlan = {
-      family = "Iosevka Custom";
-      spacing = "normal";
-      serifs = "sans";
-      no-cv-ss = true;
-      no-litigation = false;
-    };
-    set = "custom";
-  }
-,
-}:
+{ stdenv, lib, nerd-font-patcher, iosevka ? iosevka.override {
+  privateBuildPlan = {
+    family = "Iosevka Custom";
+    spacing = "normal";
+    serifs = "sans";
+    no-cv-ss = true;
+    no-litigation = false;
+  };
+  set = "custom";
+}, }:
 
 stdenv.mkDerivation {
   pname = "NF-Iosevka";

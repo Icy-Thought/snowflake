@@ -1,17 +1,12 @@
-{ config
-, options
-, lib
-, pkgs
-, ...
-}:
+{ config, options, lib, pkgs, ... }:
 
-let inherit (lib) mkIf mkOption;
+let
+  inherit (lib) mkIf mkOption;
   inherit (lib.types) path str;
   inherit (lib.my) mkBoolOpt;
 
   cfg = config.modules.containers.transmission;
-in
-{
+in {
   options.modules.containers.transmission = {
     enable = mkBoolOpt false;
 

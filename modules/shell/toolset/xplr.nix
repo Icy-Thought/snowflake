@@ -1,17 +1,12 @@
-{ config
-, options
-, lib
-, pkgs
-, ...
-}:
+{ config, options, lib, pkgs, ... }:
 
-let inherit (lib) mkIf;
+let
+  inherit (lib) mkIf;
   inherit (lib.strings) optionalString;
   inherit (lib.my) mkBoolOpt;
 
   cfg = config.modules.shell.xplr;
-in
-{
+in {
   options.modules.shell.xplr = {
     enable = mkBoolOpt false;
     fennel.enable = mkBoolOpt false;

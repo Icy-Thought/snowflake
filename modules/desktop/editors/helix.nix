@@ -1,18 +1,10 @@
-{ config
-, options
-, lib
-, pkgs
-, ...
-}:
+{ config, options, lib, pkgs, ... }:
 
 let
   inherit (lib) mkIf;
   inherit (lib.my) mkBoolOpt;
-in
-{
-  options.modules.desktop.editors.helix = {
-    enable = mkBoolOpt false;
-  };
+in {
+  options.modules.desktop.editors.helix = { enable = mkBoolOpt false; };
 
   config = mkIf config.modules.desktop.editors.helix.enable {
     hm.programs.helix = {

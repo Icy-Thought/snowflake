@@ -1,27 +1,15 @@
-{ config
-, options
-, lib
-, pkgs
-, ...
-}:
+{ config, options, lib, pkgs, ... }:
 
 let
   inherit (lib) mkIf mkMerge;
   inherit (lib.my) mkBoolOpt;
-in
-{
-  options.modules.develop.haskell = {
-    enable = mkBoolOpt false;
-  };
+in {
+  options.modules.develop.haskell = { enable = mkBoolOpt false; };
 
   config = mkMerge [
     (mkIf config.modules.develop.haskell.enable {
       user.packages = with pkgs.haskellPackages; [
-        (ghcWithHoogle (p: with p; [
-          taffybar
-          xmonad
-          xmonad-contrib
-        ]))
+        (ghcWithHoogle (p: with p; [ taffybar xmonad xmonad-contrib ]))
         cabal-install
         haskell-language-server
         hasktags

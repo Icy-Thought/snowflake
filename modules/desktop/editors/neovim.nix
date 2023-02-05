@@ -1,18 +1,11 @@
-{ config
-, options
-, lib
-, pkgs
-, inputs
-, ...
-}:
+{ config, options, lib, pkgs, inputs, ... }:
 
 let
   inherit (lib) mkIf mkMerge;
   inherit (lib.my) mkBoolOpt;
 
   cfg = config.modules.desktop.editors.neovim;
-in
-{
+in {
   options.modules.desktop.editors.neovim = {
     agasaya.enable = mkBoolOpt false; # lua
     ereshkigal.enable = mkBoolOpt false; # fnl

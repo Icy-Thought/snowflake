@@ -12,14 +12,17 @@ let
     # Nix
     nb = "nix-build -E 'with import <nixpkgs> {}; callPackage ./. {}'";
     np = "nix-shell -p";
-    nls = "nix-store --query --requisites /run/current-system | cut -d- -f2- | sort | uniq";
+    nls =
+      "nix-store --query --requisites /run/current-system | cut -d- -f2- | sort | uniq";
     nfl = "nix flake lock --update-input";
 
     # Sys-Management
     bat0 = "upower -i /org/freedesktop/UPower/devices/battery_BAT0";
     flkup = "nix flake update";
-    thkup = "nixos-rebuild switch --use-remote-sudo --flake .#thinkpad-e595 --impure";
-    proup = "nixos-rebuild switch --use-remote-sudo --flake .#probook-445g6 --impure";
+    thkup =
+      "nixos-rebuild switch --use-remote-sudo --flake .#thinkpad-e595 --impure";
+    proup =
+      "nixos-rebuild switch --use-remote-sudo --flake .#probook-445g6 --impure";
     d2nix = "dconf dump / | dconf2nix > dconf.nix";
 
     # Other
@@ -105,8 +108,8 @@ let
     glgga = "git log --graph --decorate --agll";
     glo = "git log --oneline --decorate --color";
     glog = "git log --oneline --decorate --color --graph";
-    gloo = "git log --pretty=format:'%C(yellow)%h %Cred%ad %Cblue%an%Cgreen%d %Creset%s' --date=short";
-
+    gloo =
+      "git log --pretty=format:'%C(yellow)%h %Cred%ad %Cblue%an%Cgreen%d %Creset%s' --date=short";
 
     # (Git) push / merge
     gm = "git merge";
@@ -132,7 +135,6 @@ let
     grba = "git rebase --agbort";
     grbc = "git rebase --continue";
     grbi = "git rebase --interactive";
-
 
     # (Git) revert & reset
     grev = "git revert";
@@ -178,5 +180,4 @@ let
     gcb = "git checkout -b";
   };
 
-in
-main // git
+in main // git

@@ -1,17 +1,12 @@
-{ options
-, config
-, lib
-, pkgs
-, ...
-}:
+{ options, config, lib, pkgs, ... }:
 
-let inherit (lib) mkIf mkMerge mkOption;
+let
+  inherit (lib) mkIf mkMerge mkOption;
   inherit (lib.types) nullOr enum;
   inherit (lib.my) mkBoolOpt;
 
   cfg = config.modules.shell;
-in
-{
+in {
   options.modules.shell = {
     default = mkOption {
       type = nullOr (enum [ "fish" "zsh" "xonsh" ]);

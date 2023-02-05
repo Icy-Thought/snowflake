@@ -1,17 +1,11 @@
-{ config
-, options
-, lib
-, pkgs
-, ...
-}:
+{ config, options, lib, pkgs, ... }:
 
 let
   inherit (lib) mkIf mkMerge;
   inherit (lib.my) mkBoolOpt;
 
   cfg = config.modules.desktop.toolset.graphics;
-in
-{
+in {
   options.modules.desktop.toolset.graphics = {
     base.enable = mkBoolOpt true;
     modeling.enable = mkBoolOpt false;
@@ -21,11 +15,7 @@ in
 
   config = mkMerge [
     (mkIf cfg.base.enable {
-      user.packages = with pkgs; [
-        eyedropper
-        font-manager
-        imagemagick
-      ];
+      user.packages = with pkgs; [ eyedropper font-manager imagemagick ];
     })
 
     # Illustrator & Indesign replacement:
@@ -49,8 +39,6 @@ in
     })
 
     # 3D-Modelling
-    (mkIf cfg.modeling.enable {
-      user.packages = with pkgs; [ blender ];
-    })
+    (mkIf cfg.modeling.enable { user.packages = with pkgs; [ blender ]; })
   ];
 }

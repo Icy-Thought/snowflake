@@ -8,28 +8,27 @@
     let
       overlay = import ./overlay.nix;
       overlays = taffybar.overlays ++ [ overlay ];
-    in
-    flake-utils.lib.eachDefaultSystem
-      (system:
-        let
-          pkgs = import nixpkgs {
-            inherit system overlays;
-            config.allowBroken = true;
-          };
-        in
-        {
-          devShells.default = pkgs.haskellPackages.shellFor {
-            packages = p: [ p.raybar ];
-            buildInputs = with pkgs.haskellPackages; [
-              cabal-install
-              ghcid
-              haskell-language-server
-              hlint
-              implicit-hie
-              stylish-haskell
-            ];
+    in flake-utils.lib.eachDefaultSystem (system:
+      let
+        pkgs = import nixpkgs {
+          inherit system overlays;
+          config.allowBroken = true;
+        };
+      in {
+        devShells.default = pkgs.haskellPackages.shellFor {
+          packages = p: [ p.raybar ];
+          buildInputs = with pkgs.haskellPackages; [
+            cabal-install
+            ghcid
+            haskell-language-server
+            hlint
+            implicit-hie
+            stylish-haskell
+          ];
 
-          };
-          packages.default = pkgs.haskellPackages.raybar;
-        }) // { inherit overlay overlays; };
+        };
+        packages.default = pkgs.haskellPackages.raybar;
+      }) // {
+        inherit overlay overlays;
+      };
 }

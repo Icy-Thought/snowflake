@@ -1,24 +1,13 @@
-{ config
-, options
-, lib
-, home-manager
-, ...
-}:
+{ config, options, lib, home-manager, ... }:
 
-
-let inherit (builtins) elem pathExists toString;
+let
+  inherit (builtins) elem pathExists toString;
   inherit (lib)
-    findFirst
-    isList
-    mapAttrs
-    mapAttrsToList
-    mkAliasDefinitions
-    mkOption;
+    findFirst isList mapAttrs mapAttrsToList mkAliasDefinitions mkOption;
   inherit (lib.strings) concatMapStringsSep concatStringsSep;
   inherit (lib.types) attrs attrsOf either listOf oneOf path str;
   inherit (lib.my) mkOpt mkOpt';
-in
-{
+in {
   options = {
     user = mkOpt attrs { };
 
@@ -27,7 +16,8 @@ in
         "${config.user.home}/git/icy-thought/snowflake"
         "/etc/snowflake"
       ]);
-      hostDir = mkOpt path "${config.snowflake.dir}/hosts/${config.networking.hostName}";
+      hostDir = mkOpt path
+        "${config.snowflake.dir}/hosts/${config.networking.hostName}";
       binDir = mkOpt path "${config.snowflake.dir}/bin";
       configDir = mkOpt path "${config.snowflake.dir}/config";
       modulesDir = mkOpt path "${config.snowflake.dir}/modules";
@@ -45,32 +35,28 @@ in
     env = mkOption {
       type = attrsOf (oneOf [ str path (listOf (either str path)) ]);
       apply = mapAttrs (n: v:
-        if isList v
-        then concatMapStringsSep ":" (x: toString x) v
-        else (toString v));
+        if isList v then
+          concatMapStringsSep ":" (x: toString x) v
+        else
+          (toString v));
       default = { };
       description = "Provides easy-access to `environment.extraInit`";
     };
   };
 
   config = {
-    user =
-      let
-        user = builtins.getEnv "USER";
-        name =
-          if elem user [ "" "root" ]
-          then "icy-thought"
-          else user;
-      in
-      {
-        inherit name;
-        description = "Primary user account";
-        extraGroups = [ "wheel" "input" "audio" "video" "storage" ];
-        isNormalUser = true;
-        home = "/home/${name}";
-        group = "users";
-        uid = 1000;
-      };
+    user = let
+      user = builtins.getEnv "USER";
+      name = if elem user [ "" "root" ] then "icy-thought" else user;
+    in {
+      inherit name;
+      description = "Primary user account";
+      extraGroups = [ "wheel" "input" "audio" "video" "storage" ];
+      isNormalUser = true;
+      home = "/home/${name}";
+      group = "users";
+      uid = 1000;
+    };
 
     # Necessary for nixos-rebuild build-vm to work.
     home-manager.useUserPackages = true;
@@ -92,17 +78,15 @@ in
 
     users.users.${config.user.name} = mkAliasDefinitions options.user;
 
-    nix.settings =
-      let users = [ "root" config.user.name ];
-      in {
-        trusted-users = users;
-        allowed-users = users;
-      };
+    nix.settings = let users = [ "root" config.user.name ];
+    in {
+      trusted-users = users;
+      allowed-users = users;
+    };
 
     env.PATH = [ "$SNOWFLAKE_BIN" "$XDG_BIN_HOME" "$PATH" ];
 
-    environment.extraInit =
-      concatStringsSep "\n"
-        (mapAttrsToList (n: v: ''export ${n}="${v}"'') config.env);
+    environment.extraInit = concatStringsSep "\n"
+      (mapAttrsToList (n: v: ''export ${n}="${v}"'') config.env);
   };
 }

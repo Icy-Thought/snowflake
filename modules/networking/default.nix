@@ -1,17 +1,11 @@
-{ config
-, options
-, lib
-, pkgs
-, ...
-}:
+{ config, options, lib, pkgs, ... }:
 
 let
   inherit (lib) getExe mkDefault mkIf mkMerge;
   inherit (lib.my) mkBoolOpt;
 
   cfg = config.modules.networking;
-in
-{
+in {
   options.modules.networking = {
     iwd.enable = mkBoolOpt false;
     networkd.enable = mkBoolOpt false;

@@ -1,13 +1,11 @@
-{ config
-, ...
-}:
+{ config, ... }:
 let
   cfg = config.modules.themes;
   myTerm = config.modules.desktop.terminal.default;
-in
-{
+in {
   # Introduction
-  "__comment" = "(VSCode) settings.json => immutable conf-file, managed via (Nix) Home-Manager";
+  "__comment" =
+    "(VSCode) settings.json => immutable conf-file, managed via (Nix) Home-Manager";
   "update.mode" = "none";
   "workbench.settings.editor" = "ui";
   "files.exclude" = {
@@ -99,12 +97,10 @@ in
   "vim.useSystemClipboard" = true;
   "vim.useCtrlKeys" = true;
   "vim.hlsearch" = true;
-  "vim.insertModeKeyBindings" = [
-    {
-      "before" = [ "j" "j" ];
-      "after" = [ "<Esc>" ];
-    }
-  ];
+  "vim.insertModeKeyBindings" = [{
+    "before" = [ "j" "j" ];
+    "after" = [ "<Esc>" ];
+  }];
   "vim.normalModeKeyBindingsNonRecursive" = [
     {
       "before" = [ "<leader>" "d" ];

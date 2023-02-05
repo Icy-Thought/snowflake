@@ -1,9 +1,4 @@
-{ config
-, lib
-, pkgs
-, inputs
-, ...
-}:
+{ config, lib, pkgs, inputs, ... }:
 
 let
   inherit (lib) mkIf mkMerge mkOption;
@@ -12,14 +7,12 @@ let
 
   cfg = config.modules.desktop.editors.emacs;
   envProto = config.modules.desktop.envProto;
-in
-{
+in {
   options.modules.desktop.editors.emacs = {
     package = mkOption {
       type = package;
       default =
-        if (envProto == "wayland") then pkgs.emacsPgtk
-        else pkgs.emacsGit;
+        if (envProto == "wayland") then pkgs.emacsPgtk else pkgs.emacsGit;
     };
     doomemacs = rec {
       enable = mkBoolOpt false;
@@ -47,9 +40,7 @@ in
         (mkIf (config.programs.gnupg.agent.enable) pinentry-emacs)
       ];
 
-      environment.variables = {
-        EMACSDIR = "$XDG_CONFIG_HOME/emacs";
-      };
+      environment.variables = { EMACSDIR = "$XDG_CONFIG_HOME/emacs"; };
 
       hm.programs.zsh.initExtra = ''
         # -------===[ VTerm Integration ]===------- #
@@ -100,8 +91,7 @@ in
         '';
       };
 
-      programs.xonsh.config = ''
-      ''; # TODO
+      programs.xonsh.config = ""; # TODO
     }
 
     (mkIf cfg.irkalla.enable {

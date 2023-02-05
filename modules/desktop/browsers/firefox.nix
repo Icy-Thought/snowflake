@@ -1,19 +1,14 @@
-{ options
-, config
-, lib
-, pkgs
-, ...
-}:
+{ options, config, lib, pkgs, ... }:
 
-let inherit (builtins) toJSON;
+let
+  inherit (builtins) toJSON;
   inherit (lib) mkIf mkMerge mapAttrsToList;
   inherit (lib.strings) concatStrings;
   inherit (lib.types) attrsOf oneOf bool int lines str;
   inherit (lib.my) mkBoolOpt mkOpt mkOpt';
 
   cfg = config.modules.desktop.browsers.firefox;
-in
-{
+in {
   options.modules.desktop.browsers.firefox = {
     enable = mkBoolOpt false;
     profileName = mkOpt str config.user.name;
@@ -38,7 +33,8 @@ in
           desktopName = "Firefox-DevEdition (Private)";
           genericName = "Launch a Private Firefox-DevEdition Instance";
           icon = "firefox";
-          exec = "${firefox-devedition-bin}/bin/firefox-devedition --private-window";
+          exec =
+            "${firefox-devedition-bin}/bin/firefox-devedition --private-window";
           categories = [ "Network" "WebBrowser" ];
         })
       ];
@@ -114,7 +110,8 @@ in
         # https://github.com/tlswg/tls13-spec/issues/1001
         "security.tls.enable_0rtt_data" = false;
         # Uses Mozilla geolocation service instead of Google if given permission
-        "geo.provider.network.url" = "https://location.services.mozilla.com/v1/geolocate?key=%MOZILLA_API_KEY%";
+        "geo.provider.network.url" =
+          "https://location.services.mozilla.com/v1/geolocate?key=%MOZILLA_API_KEY%";
         "geo.provider.use_gpsd" = false;
         # https://support.mozilla.org/en-US/kb/extension-recommendations
         "browser.newtabpage.activity-stream.asrouter.userprefs.cfr" = false;
@@ -174,51 +171,49 @@ in
       };
 
       # Use a stable profile name so we can target it in themes
-      home.file =
-        let cfgPath = ".mozilla/firefox";
-        in {
-          firefox-profiles = {
-            target = "${cfgPath}/profiles.ini";
-            text = ''
-              [Profile0]
-              Name=dev-edition-default
-              IsRelative=1
-              Path=${cfg.profileName}.dev-edition-default
-              Default=1
+      home.file = let cfgPath = ".mozilla/firefox";
+      in {
+        firefox-profiles = {
+          target = "${cfgPath}/profiles.ini";
+          text = ''
+            [Profile0]
+            Name=dev-edition-default
+            IsRelative=1
+            Path=${cfg.profileName}.dev-edition-default
+            Default=1
 
-              [General]
-              StartWithLastProfile=1
-              Version=2
-            '';
-          };
-
-          user-js = mkIf (cfg.settings != { } || cfg.extraConfig != "") {
-            target = "${cfgPath}/${cfg.profileName}.dev-edition-default/user.js";
-            text = ''
-              ${concatStrings (mapAttrsToList (name: value: ''
-                  user_pref("${name}", ${toJSON value});
-                '')
-                cfg.settings)}
-              ${cfg.extraConfig}
-            '';
-          };
-
-          user-chome = mkIf (cfg.userChrome != "") {
-            target = "${cfgPath}/${cfg.profileName}.dev-edition-default/chrome/userChrome.css";
-            text = cfg.userChrome;
-          };
-
-          user-content = mkIf (cfg.userContent != "") {
-            target = "${cfgPath}/${cfg.profileName}.dev-edition-default/chrome/userContent.css";
-            text = cfg.userContent;
-          };
+            [General]
+            StartWithLastProfile=1
+            Version=2
+          '';
         };
+
+        user-js = mkIf (cfg.settings != { } || cfg.extraConfig != "") {
+          target = "${cfgPath}/${cfg.profileName}.dev-edition-default/user.js";
+          text = ''
+            ${concatStrings (mapAttrsToList (name: value: ''
+              user_pref("${name}", ${toJSON value});
+            '') cfg.settings)}
+            ${cfg.extraConfig}
+          '';
+        };
+
+        user-chome = mkIf (cfg.userChrome != "") {
+          target =
+            "${cfgPath}/${cfg.profileName}.dev-edition-default/chrome/userChrome.css";
+          text = cfg.userChrome;
+        };
+
+        user-content = mkIf (cfg.userContent != "") {
+          target =
+            "${cfgPath}/${cfg.profileName}.dev-edition-default/chrome/userContent.css";
+          text = cfg.userContent;
+        };
+      };
     }
 
     (mkIf (config.modules.desktop.envProto == "wayland") {
-      environment.variables = {
-        MOZ_ENABLE_WAYLAND = "1";
-      };
+      environment.variables = { MOZ_ENABLE_WAYLAND = "1"; };
     })
   ]);
 }

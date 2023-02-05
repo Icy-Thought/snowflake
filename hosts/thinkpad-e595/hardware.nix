@@ -1,9 +1,4 @@
-{ config
-, lib
-, pkgs
-, modulesPath
-, ...
-}:
+{ config, lib, pkgs, modulesPath, ... }:
 
 let inherit (lib) mkDefault;
 in {
@@ -44,11 +39,7 @@ in {
       kernelModules = [ ];
     };
     extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
-    kernelModules = [
-      "thinkpad_acpi"
-      "acpi_call"
-      "kvm_amd"
-    ];
+    kernelModules = [ "thinkpad_acpi" "acpi_call" "kvm_amd" ];
     kernelParams = [ ];
     kernel.sysctl = {
       "net.ipv4.icmp_echo_ignore_broadcasts" = 1; # Refuse ICMP echo requests

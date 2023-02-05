@@ -1,8 +1,4 @@
-{ modulesPath
-, pkgs
-, config
-, ...
-}: {
+{ modulesPath, pkgs, config, ... }: {
   imports = [ "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix" ];
 
   # In case of proprietary wireless drivers

@@ -1,9 +1,4 @@
-{ options
-, config
-, lib
-, pkgs
-, ...
-}:
+{ options, config, lib, pkgs, ... }:
 
 let
   inherit (lib) mkIf mkMerge;
@@ -11,8 +6,7 @@ let
   inherit (lib.my) mkBoolOpt mkOpt;
 
   cfg = config.modules.desktop.distraction.steam;
-in
-{
+in {
   options.modules.desktop.distraction.steam = {
     enable = mkBoolOpt false;
     hardware.enable = mkBoolOpt false;
@@ -56,8 +50,6 @@ in
       systemd.extraConfig = "DefaultLimitNOFILE=1048576";
     }
 
-    (mkIf cfg.hardware.enable {
-      hardware.steam-hardware.enable = true;
-    })
+    (mkIf cfg.hardware.enable { hardware.steam-hardware.enable = true; })
   ]);
 }

@@ -1,9 +1,4 @@
-{ config
-, options
-, lib
-, pkgs
-, ...
-}:
+{ config, options, lib, pkgs, ... }:
 
 let
   inherit (builtins) toString;
@@ -11,11 +6,8 @@ let
   inherit (lib.my) mkBoolOpt;
 
   active = config.modules.themes.active;
-in
-{
-  options.modules.desktop.terminal.alacritty = {
-    enable = mkBoolOpt false;
-  };
+in {
+  options.modules.desktop.terminal.alacritty = { enable = mkBoolOpt false; };
 
   config = mkIf config.modules.desktop.terminal.alacritty.enable {
     # Enabling useful/configured term-tools:
@@ -24,7 +16,7 @@ in
     hm.programs.alacritty = {
       enable = true;
 
-      settings = with config.modules.themes; (mkMerge [
+      settings = (mkMerge [
         {
           env = {
             TERM = "xterm-256color";
@@ -75,18 +67,47 @@ in
           };
 
           key_bindings = [
-            { key = "N"; mods = "Control|Shift"; action = "SpawnNewInstance"; }
-            { key = "Q"; mods = "Control"; action = "Quit"; }
-            { key = "V"; mods = "Control|Shift"; action = "Paste"; }
-            { key = "C"; mods = "Control|Shift"; action = "Copy"; }
-            { key = "NumpadAdd"; mods = "Control"; action = "IncreaseFontSize"; }
-            { key = "NumpadSubtract"; mods = "Control"; action = "DecreaseFontSize"; }
-            { key = "Key0"; mods = "Control"; action = "ResetFontSize"; }
+            {
+              key = "N";
+              mods = "Control|Shift";
+              action = "SpawnNewInstance";
+            }
+            {
+              key = "Q";
+              mods = "Control";
+              action = "Quit";
+            }
+            {
+              key = "V";
+              mods = "Control|Shift";
+              action = "Paste";
+            }
+            {
+              key = "C";
+              mods = "Control|Shift";
+              action = "Copy";
+            }
+            {
+              key = "NumpadAdd";
+              mods = "Control";
+              action = "IncreaseFontSize";
+            }
+            {
+              key = "NumpadSubtract";
+              mods = "Control";
+              action = "DecreaseFontSize";
+            }
+            {
+              key = "Key0";
+              mods = "Control";
+              action = "ResetFontSize";
+            }
           ];
 
-          mouse_bindings = [
-            { mouse = "Middle"; action = "PasteSelection"; }
-          ];
+          mouse_bindings = [{
+            mouse = "Middle";
+            action = "PasteSelection";
+          }];
 
           url = {
             launcher = "open";
@@ -103,69 +124,67 @@ in
     home.configFile = (mkIf (active != null) {
       alacritty-conf = {
         target = "alacritty/config/${active}.yml";
-        text =
-          (with config.modules.themes.font; ''
-            font:
-              normal:
-                family: "${sans.family}"
-                style:  "${sans.weight}"
+        text = (with config.modules.themes.font; ''
+          font:
+            normal:
+              family: "${sans.family}"
+              style:  "${sans.weight}"
 
-              bold:
-                family: "${sans.family}"
-                style:  "Bold"
+            bold:
+              family: "${sans.family}"
+              style:  "Bold"
 
-              italic:
-                family: "${sans.family}"
-                style:  "${sans.weight} Italic"
+            italic:
+              family: "${sans.family}"
+              style:  "${sans.weight} Italic"
 
-              bold_italics:
-                family: "${sans.family}"
-                style:  "${sans.weight} Italic"
+            bold_italics:
+              family: "${sans.family}"
+              style:  "${sans.weight} Italic"
 
-              size: ${toString (mono.size)}
+            size: ${toString (mono.size)}
 
-              offset:
-                x: 0
-                y: 0
+            offset:
+              x: 0
+              y: 0
 
-              glyph_offset:
-                x: 0
-                y: 0
-          '')
-          + (with config.modules.themes.colors.main; ''
-            colors:
-              primary:
-                foreground: "${types.fg}"
-                background: "${types.bg}"
+            glyph_offset:
+              x: 0
+              y: 0
+        '') + (with config.modules.themes.colors.main; ''
+          colors:
+            primary:
+              foreground: "${types.fg}"
+              background: "${types.bg}"
 
-              cursor:
-                text:   "${types.bg}"
-                cursor: "${normal.yellow}"
+            cursor:
+              text:   "${types.bg}"
+              cursor: "${normal.yellow}"
 
-              selection:
-                text:       "${types.bg}"
-                background: "${types.highlight}"
+            selection:
+              text:       "${types.bg}"
+              background: "${types.highlight}"
 
-              normal:
-                black:      "${normal.black}"
-                red:        "${normal.red}"
-                green:      "${normal.green}"
-                yellow:     "${normal.yellow}"
-                blue:       "${normal.blue}"
-                magenta:    "${normal.magenta}"
-                cyan:       "${normal.cyan}"
-                white:      "${normal.white}"
+            normal:
+              black:      "${normal.black}"
+              red:        "${normal.red}"
+              green:      "${normal.green}"
+              yellow:     "${normal.yellow}"
+              blue:       "${normal.blue}"
+              magenta:    "${normal.magenta}"
+              cyan:       "${normal.cyan}"
+              white:      "${normal.white}"
 
-              bright:
-                black:      "${bright.black}"
-                red:        "${bright.red}"
-                green:      "${bright.green}"
-                yellow:     "${bright.yellow}"
-                blue:       "${bright.blue}"
-                magenta:    "${bright.magenta}"
-                cyan:       "${bright.cyan}"
-                white:      "${bright.white}"
-          '');
+            bright:
+              black:      "${bright.black}"
+              red:        "${bright.red}"
+              green:      "${bright.green}"
+              yellow:     "${bright.yellow}"
+              blue:       "${bright.blue}"
+              magenta:    "${bright.magenta}"
+              cyan:       "${bright.cyan}"
+              white:      "${bright.white}"
+        '');
       };
     });
   };

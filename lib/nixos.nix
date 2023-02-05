@@ -1,36 +1,31 @@
-{ inputs
-, lib
-, pkgs
-, ...
-}:
+{ inputs, lib, pkgs, ... }:
 
 let
   inherit (builtins) baseNameOf elem;
-  inherit (lib)
-    filterAttrs
-    mkDefault
-    nixosSystem
-    removeSuffix;
+  inherit (lib) filterAttrs mkDefault nixosSystem removeSuffix;
   inherit (lib.my) mapModules mkHost;
 
-in
-{
-  mkHost = path: attrs @ { system ? "x86_64-linux", ... }:
+in {
+  mkHost = path:
+    attrs@{ system ? "x86_64-linux", ... }:
     nixosSystem {
       inherit system;
 
       specialArgs = { inherit lib inputs system; };
 
-      modules = [{
-        nixpkgs.pkgs = pkgs;
-        networking.hostName =
-          mkDefault (removeSuffix ".nix" (baseNameOf path));
-      }
+      modules = [
+        {
+          nixpkgs.pkgs = pkgs;
+          networking.hostName =
+            mkDefault (removeSuffix ".nix" (baseNameOf path));
+        }
         (filterAttrs (n: v: !elem n [ "system" ]) attrs)
         ../. # /default.nix
-        (import path)];
+        (import path)
+      ];
     };
 
-  mapHosts = dir: attrs @ { system ? system, ... }:
+  mapHosts = dir:
+    attrs@{ system ? system, ... }:
     mapModules dir (hostPath: mkHost hostPath attrs);
 }

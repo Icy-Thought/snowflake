@@ -1,30 +1,23 @@
-{ config
-, options
-, lib
-, pkgs
-, ...
-}:
+{ config, options, lib, pkgs, ... }:
 
 let
   inherit (lib) mkIf getExe;
   inherit (lib.my) mkBoolOpt;
-in
-{
-  options.modules.desktop.browsers.ungoogled = {
-    enable = mkBoolOpt false;
-  };
+in {
+  options.modules.desktop.browsers.ungoogled = { enable = mkBoolOpt false; };
 
   config = mkIf config.modules.desktop.browsers.ungoogled.enable {
-    user.packages = with pkgs; [
-      (makeDesktopItem {
-        name = "ungoogled-private";
-        desktopName = "Ungoogled Web Browser (Private)";
-        genericName = "Launch a Private Ungoogled Chromium Instance";
-        icon = "chromium";
-        exec = "${getExe ungoogled-chromium} --incognito";
-        categories = [ "Network" ];
-      })
-    ];
+    user.packages = with pkgs;
+      [
+        (makeDesktopItem {
+          name = "ungoogled-private";
+          desktopName = "Ungoogled Web Browser (Private)";
+          genericName = "Launch a Private Ungoogled Chromium Instance";
+          icon = "chromium";
+          exec = "${getExe ungoogled-chromium} --incognito";
+          categories = [ "Network" ];
+        })
+      ];
 
     hm.programs.chromium = {
       enable = true;
@@ -43,11 +36,13 @@ in
         { id = "jinjaccalgkegednnccohejagnlnfdag"; } # Violentmonkey
         {
           id = "dcpihecpambacapedldabdbpakmachpb";
-          updateUrl = "https://raw.githubusercontent.com/iamadamdev/bypass-paywalls-chrome/master/src/updates/updates.xml";
+          updateUrl =
+            "https://raw.githubusercontent.com/iamadamdev/bypass-paywalls-chrome/master/src/updates/updates.xml";
         }
-        (mkIf config.modules.desktop.gnome.enable [
-          { id = "gphhapmejobijbbhgpjhcjognlahblep"; } # Gnome-Shell-Integration
-        ])
+        (mkIf config.modules.desktop.gnome.enable [{
+          id = "gphhapmejobijbbhgpjhcjognlahblep";
+        } # Gnome-Shell-Integration
+          ])
       ];
     };
   };

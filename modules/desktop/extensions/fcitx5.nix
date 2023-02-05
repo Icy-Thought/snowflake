@@ -1,20 +1,12 @@
-{ options
-, config
-, lib
-, pkgs
-, ...
-}:
+{ options, config, lib, pkgs, ... }:
 
 let
   inherit (lib) mkIf;
   inherit (lib.my) mkBoolOpt;
 
   cfg = config.modules.desktop.extensions.fcitx5;
-in
-{
-  options.modules.desktop.extensions.fcitx5 = {
-    enable = mkBoolOpt false;
-  };
+in {
+  options.modules.desktop.extensions.fcitx5 = { enable = mkBoolOpt false; };
 
   config = mkIf cfg.enable {
     i18n.inputMethod = {

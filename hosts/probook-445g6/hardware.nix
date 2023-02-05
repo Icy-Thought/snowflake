@@ -1,9 +1,4 @@
-{ config
-, lib
-, pkgs
-, modulesPath
-, ...
-}:
+{ config, lib, pkgs, modulesPath, ... }:
 
 let inherit (lib) mkDefault;
 in {
@@ -25,13 +20,8 @@ in {
 
   boot = {
     initrd = {
-      availableKernelModules = [
-        "xhci_pci"
-        "ahci"
-        "usb_storage"
-        "sd_mod"
-        "rtsx_pci_sdmmc"
-      ];
+      availableKernelModules =
+        [ "xhci_pci" "ahci" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
       kernelModules = [ ];
     };
     extraModulePackages = [ ];
@@ -48,9 +38,7 @@ in {
     updateMicrocode = mkDefault config.hardware.enableRedistributableFirmware;
   };
 
-  powerManagement = {
-    cpuFreqGovernor = "performance";
-  };
+  powerManagement = { cpuFreqGovernor = "performance"; };
 
   # Finally, our beloved hardware module(s):
   modules.hardware = {

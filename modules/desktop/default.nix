@@ -1,9 +1,4 @@
-{ config
-, options
-, lib
-, pkgs
-, ...
-}:
+{ config, options, lib, pkgs, ... }:
 
 let
   inherit (builtins) isAttrs;
@@ -12,8 +7,7 @@ let
   inherit (lib.my) anyAttrs countAttrs value;
 
   cfg = config.modules.desktop;
-in
-{
+in {
   options.modules.desktop = {
     envProto = mkOption {
       type = nullOr (enum [ "x11" "wayland" ]);
@@ -30,15 +24,11 @@ in
           message = "Prevent DE/WM > 1 from being enabled.";
         }
         {
-          assertion =
-            let srv = config.services;
-            in srv.xserver.enable
-              || srv.sway.enable
-              || !(anyAttrs
-              (n: v: isAttrs v && anyAttrs
-                (n: v: isAttrs v && v.enable))
-              cfg);
-          message = "Prevent desktop applications from enabling without a DE/WM.";
+          assertion = let srv = config.services;
+          in srv.xserver.enable || srv.sway.enable || !(anyAttrs
+            (n: v: isAttrs v && anyAttrs (n: v: isAttrs v && v.enable)) cfg);
+          message =
+            "Prevent desktop applications from enabling without a DE/WM.";
         }
       ];
 
@@ -92,7 +82,8 @@ in
       programs.kdeconnect.enable = true;
 
       systemd.user.services.kdeconnect-indicator = {
-        serviceConfig.ExecStart = "${pkgs.plasma5Packages.kdeconnect-kde}/bin/kdeconnect-indicator";
+        serviceConfig.ExecStart =
+          "${pkgs.plasma5Packages.kdeconnect-kde}/bin/kdeconnect-indicator";
         wantedBy = [ "graphical-session.target" ];
         partOf = [ "graphical-session.target" ];
       };

@@ -1,9 +1,4 @@
-{ options
-, config
-, lib
-, pkgs
-, ...
-}:
+{ options, config, lib, pkgs, ... }:
 
 let
   inherit (lib) mkIf mkMerge mkOption;
@@ -12,13 +7,13 @@ let
 
   cfg = config.modules.desktop.distraction.lutris;
   wineCfg = config.modules.desktop.virtual.wine;
-in
-{
+in {
   options.modules.desktop.distraction.lutris = {
     enable = mkBoolOpt false;
     package = mkOption {
       type = nullOr package;
-      default = with pkgs; lutris.override { extraLibraries = pkgs: [ jansson ]; };
+      default = with pkgs;
+        lutris.override { extraLibraries = pkgs: [ jansson ]; };
     };
     league.enable = mkBoolOpt false;
   };
@@ -26,7 +21,8 @@ in
   config = mkMerge [
     (mkIf cfg.enable {
       user.packages = with pkgs;
-        (if wineCfg.enable then [ cfg.package ]
+        (if wineCfg.enable then
+          [ cfg.package ]
         else [
           cfg.package
           wineWowPackages.fonts
@@ -40,16 +36,9 @@ in
 
       networking.firewall.allowedTCPPorts = [ 443 ];
 
-      environment.sessionVariables = {
-        QT_X11_NO_MITSHM = "1";
-      };
+      environment.sessionVariables = { QT_X11_NO_MITSHM = "1"; };
 
-      user.packages = with pkgs; [
-        openssl
-        gnome.zenity
-        vulkan-tools
-        dxvk
-      ];
+      user.packages = with pkgs; [ openssl gnome.zenity vulkan-tools dxvk ];
     })
   ];
 }

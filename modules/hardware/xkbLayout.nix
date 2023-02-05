@@ -1,20 +1,12 @@
-{ inputs
-, options
-, config
-, lib
-, pkgs
-, ...
-}:
+{ inputs, options, config, lib, pkgs, ... }:
 
-let inherit (lib) mkIf mkMerge getExe;
+let
+  inherit (lib) mkIf mkMerge getExe;
   inherit (lib.my) mkBoolOpt;
 
   cfg = config.modules.hardware.xkbLayout;
-in
-{
-  options.modules.hardware.xkbLayout = {
-    hyperCtrl.enable = mkBoolOpt false;
-  };
+in {
+  options.modules.hardware.xkbLayout = { hyperCtrl.enable = mkBoolOpt false; };
 
   config = mkMerge [
     (mkIf cfg.hyperCtrl.enable {

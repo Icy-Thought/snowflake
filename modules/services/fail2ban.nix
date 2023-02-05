@@ -1,18 +1,10 @@
-{ config
-, options
-, lib
-, pkgs
-, ...
-}:
+{ config, options, lib, pkgs, ... }:
 
 let
   inherit (lib) mkIf;
   inherit (lib.my) mkBoolOpt;
-in
-{
-  options.modules.services.fail2ban = {
-    enable = mkBoolOpt false;
-  };
+in {
+  options.modules.services.fail2ban = { enable = mkBoolOpt false; };
 
   config = mkIf config.modules.services.fail2ban.enable {
     services.fail2ban = {

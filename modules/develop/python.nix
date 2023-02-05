@@ -1,32 +1,22 @@
-{ config
-, options
-, lib
-, pkgs
-, ...
-}:
+{ config, options, lib, pkgs, ... }:
 
 let
   inherit (lib) mkIf mkMerge;
   inherit (lib.my) mkBoolOpt;
-in
-{
-  options.modules.develop.python = {
-    enable = mkBoolOpt false;
-  };
+in {
+  options.modules.develop.python = { enable = mkBoolOpt false; };
 
   config = mkMerge [
     (mkIf config.modules.develop.python.enable {
-      user.packages = with pkgs; [
-        python3
-        nodePackages.pyright
-      ] ++ (with python3Packages; [
-        black
-        isort
-        ipython
-        pip
-        # poetry
-        setuptools
-      ]);
+      user.packages = with pkgs;
+        [ python3 nodePackages.pyright ] ++ (with python3Packages; [
+          black
+          isort
+          ipython
+          pip
+          # poetry
+          setuptools
+        ]);
 
       environment.shellAliases = {
         py = "python";

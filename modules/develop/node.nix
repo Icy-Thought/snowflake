@@ -1,19 +1,10 @@
-{ config
-, options
-, lib
-, pkgs
-, ...
-}:
-
+{ config, options, lib, pkgs, ... }:
 
 let
   inherit (lib) mkIf mkMerge getExe;
   inherit (lib.my) mkBoolOpt;
-in
-{
-  options.modules.develop.node = {
-    enable = mkBoolOpt false;
-  };
+in {
+  options.modules.develop.node = { enable = mkBoolOpt false; };
 
   config = mkMerge [
     (mkIf config.modules.develop.node.enable {

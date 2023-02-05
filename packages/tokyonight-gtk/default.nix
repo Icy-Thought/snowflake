@@ -1,17 +1,11 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, gtk-engine-murrine
-, jdupes
-, themeVariants ? [ ]
+{ lib, stdenv, fetchFromGitHub, gtk-engine-murrine, jdupes, themeVariants ? [ ]
 }:
 
 let
   inherit (lib) checkListOfEnum;
   inherit (builtins) toString;
 
-in
-checkListOfEnum "$Tokyonight: GTK Theme Variants" [
+in checkListOfEnum "$Tokyonight: GTK Theme Variants" [
   "Dark-B-LB"
   "Dark-B"
   "Dark-BL-LB"
@@ -28,12 +22,9 @@ checkListOfEnum "$Tokyonight: GTK Theme Variants" [
   "Storm-B"
   "Storm-BL-LB"
   "Storm-BL"
-]
-  themeVariants
+] themeVariants
 
-
-  stdenv.mkDerivation
-{
+stdenv.mkDerivation {
   pname = "tokyonight-gtk-theme";
   version = "unstable-2022-12-09";
 
@@ -48,20 +39,19 @@ checkListOfEnum "$Tokyonight: GTK Theme Variants" [
 
   propagatedUserEnvPkgs = [ gtk-engine-murrine ];
 
-  installPhase =
-    let gtkTheme = "Tokyonight-${toString themeVariants}";
-    in ''
-      runHook preInstall
+  installPhase = let gtkTheme = "Tokyonight-${toString themeVariants}";
+  in ''
+    runHook preInstall
 
-      mkdir -p $out/share/themes
+    mkdir -p $out/share/themes
 
-      cp -r $src/themes/${gtkTheme} $out/share/themes
+    cp -r $src/themes/${gtkTheme} $out/share/themes
 
-      # Duplicate files -> hard-links = reduced install-size!
-      jdupes -L -r $out/share
+    # Duplicate files -> hard-links = reduced install-size!
+    jdupes -L -r $out/share
 
-      runHook postInstall
-    '';
+    runHook postInstall
+  '';
 
   meta = with lib; {
     description = "A GTK theme based on the Tokyo Night colour palette";

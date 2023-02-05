@@ -1,18 +1,10 @@
-{ options
-, config
-, lib
-, pkgs
-, ...
-}:
+{ options, config, lib, pkgs, ... }:
 
 let
   inherit (lib) mkIf;
   inherit (lib.my) mkBoolOpt;
-in
-{
-  options.modules.desktop.virtual.docker = {
-    enable = mkBoolOpt false;
-  };
+in {
+  options.modules.desktop.virtual.docker = { enable = mkBoolOpt false; };
 
   config = mkIf config.modules.desktop.virtual.docker.enable {
     user.packages = with pkgs; [ docker docker-compose ];

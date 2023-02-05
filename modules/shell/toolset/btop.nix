@@ -1,20 +1,13 @@
-{ config
-, options
-, lib
-, pkgs
-, ...
-}:
+{ config, options, lib, pkgs, ... }:
 
-let inherit (lib) mkIf;
+let
+  inherit (lib) mkIf;
   inherit (lib.strings) concatStringsSep;
   inherit (lib.my) mkBoolOpt;
 
   themeCfg = config.modules.themes;
-in
-{
-  options.modules.shell.btop = {
-    enable = mkBoolOpt false;
-  };
+in {
+  options.modules.shell.btop = { enable = mkBoolOpt false; };
 
   config = mkIf config.modules.shell.btop.enable {
     hm.programs.btop = {

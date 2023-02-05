@@ -1,19 +1,10 @@
-{ inputs
-, config
-, options
-, lib
-, pkgs
-, ...
-}:
+{ inputs, config, options, lib, pkgs, ... }:
 
 let
   inherit (lib) mkIf mkMerge getExe;
   inherit (lib.my) mkBoolOpt;
-in
-{
-  options.modules.develop.rust = {
-    enable = mkBoolOpt false;
-  };
+in {
+  options.modules.develop.rust = { enable = mkBoolOpt false; };
 
   config = mkMerge [
     (mkIf config.modules.develop.rust.enable {
@@ -34,7 +25,8 @@ in
     })
 
     (mkIf config.modules.desktop.editors.vscodium.enable {
-      hm.programs.vscode.extensions = with pkgs.vscode-extensions; [ rust-lang.rust-analyzer ];
+      hm.programs.vscode.extensions = with pkgs.vscode-extensions;
+        [ rust-lang.rust-analyzer ];
     })
 
     (mkIf config.modules.develop.xdg.enable {

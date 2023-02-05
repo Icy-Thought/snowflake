@@ -1,18 +1,11 @@
-{ inputs
-, options
-, config
-, lib
-, pkgs
-, ...
-}:
+{ inputs, options, config, lib, pkgs, ... }:
 
 let
   inherit (lib) mkIf mkMerge;
   inherit (lib.my) mkBoolOpt;
 
   cfg = config.modules.desktop.toolset.player;
-in
-{
+in {
   options.modules.desktop.toolset.player = {
     music.enable = mkBoolOpt false;
     video.enable = mkBoolOpt false;
@@ -32,10 +25,7 @@ in
           theme = spicePkgs.themes.catppuccin-mocha;
           colorScheme = "flamingo";
 
-          enabledCustomApps = with spicePkgs.apps; [
-            new-releases
-            lyrics-plus
-          ];
+          enabledCustomApps = with spicePkgs.apps; [ new-releases lyrics-plus ];
           enabledExtensions = with spicePkgs.extensions; [
             adblock
             fullAppDisplay

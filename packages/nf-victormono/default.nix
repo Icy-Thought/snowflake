@@ -1,9 +1,4 @@
-{ stdenv
-, lib
-, nerd-font-patcher
-, victor-mono
-,
-}:
+{ stdenv, lib, nerd-font-patcher, victor-mono, }:
 
 let inherit (builtins) parseDrvName;
 

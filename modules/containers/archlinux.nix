@@ -1,17 +1,10 @@
-{ options
-, config
-, lib
-, pkgs
-, ...
-}:
+{ options, config, lib, pkgs, ... }:
 
-let inherit (lib) mkIf;
+let
+  inherit (lib) mkIf;
   inherit (lib.my) mkBoolOpt;
-in
-{
-  options.modules.containers.archlinux = {
-    enable = mkBoolOpt false;
-  };
+in {
+  options.modules.containers.archlinux = { enable = mkBoolOpt false; };
 
   config = mkIf config.modules.containers.archlinux.enable {
     virtualisation.libvirtd = {

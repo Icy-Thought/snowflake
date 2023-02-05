@@ -1,16 +1,11 @@
-{ config
-, options
-, lib
-, pkgs
-, ...
-}:
+{ config, options, lib, pkgs, ... }:
 
-let inherit (builtins) map;
+let
+  inherit (builtins) map;
   inherit (lib) mkIf getExe;
 
   themeCfg = config.modules.themes;
-in
-{
+in {
   config = mkIf (config.modules.shell.default == "fish") {
     modules.shell.usefulPkgs.enable = true;
 
@@ -55,79 +50,74 @@ in
         set -xU LESS_TERMCAP_us (printf "\e[01;32m"t)
       '';
 
-      plugins =
-        let
-          mkPlugin = name: {
-            inherit name;
-            inherit (pkgs.fishPlugins."${name}") src;
-          };
-        in
-        map (p: mkPlugin p) [
-          "done"
-          "autopair-fish"
-          "fzf-fish"
-        ];
+      plugins = let
+        mkPlugin = name: {
+          inherit name;
+          inherit (pkgs.fishPlugins."${name}") src;
+        };
+      in map (p: mkPlugin p) [ "done" "autopair-fish" "fzf-fish" ];
     };
 
-    home.configFile = with themeCfg; (mkIf (active != null) {
-      fish-fzf-theme = {
-        target = "fish/conf.d/fzf.fish";
-        text = with colors.main; ''
-              set -Ux FZF_DEFAULT_OPTS "\
-          --color=bg:,bg+:${types.bg},spinner:${types.panelbg},hl:${normal.red} \
-          --color=fg:${types.border},header:${normal.red},info:${normal.magenta},pointer:${types.border} \
-          --color=marker:${normal.magenta},fg+:${types.border},prompt:${types.border},hl+:${normal.red}"
-        '';
-      };
+    home.configFile = with themeCfg;
+      (mkIf (active != null) {
+        fish-fzf-theme = {
+          target = "fish/conf.d/fzf.fish";
+          text = with colors.main; ''
+                set -Ux FZF_DEFAULT_OPTS "\
+            --color=bg:,bg+:${types.bg},spinner:${types.panelbg},hl:${normal.red} \
+            --color=fg:${types.border},header:${normal.red},info:${normal.magenta},pointer:${types.border} \
+            --color=marker:${normal.magenta},fg+:${types.border},prompt:${types.border},hl+:${normal.red}"
+          '';
+        };
 
-      fish-theme = {
-        target = "fish/conf.d/${cfg.active}.fish";
-        text = with colors.fish; ''
-          # --> General
-          set -l foreground ${fg}
-          set -l highlight  ${highlight}
+        fish-theme = {
+          target = "fish/conf.d/${cfg.active}.fish";
+          text = with colors.fish; ''
+            # --> General
+            set -l foreground ${fg}
+            set -l highlight  ${highlight}
 
-          # --> palette
-          set -l base01     ${base01}
-          set -l base02     ${base02}
-          set -l base03     ${base03}
-          set -l base04     ${base04}
-          set -l base05     ${base05}
-          set -l base06     ${base06}
-          set -l base07     ${base07}
-          set -l base08     ${base08}
-          set -l base09     ${base09}
-          set -l base10     ${base10}
+            # --> palette
+            set -l base01     ${base01}
+            set -l base02     ${base02}
+            set -l base03     ${base03}
+            set -l base04     ${base04}
+            set -l base05     ${base05}
+            set -l base06     ${base06}
+            set -l base07     ${base07}
+            set -l base08     ${base08}
+            set -l base09     ${base09}
+            set -l base10     ${base10}
 
-          # Syntax Highlighting
-          set -g fish_color_normal                     $foreground
-          set -g fish_color_command                    $base09
-          set -g fish_color_param                      $base02
-          set -g fish_color_keyword                    $base08
-          set -g fish_color_quote                      $base07
-          set -g fish_color_redirection                $foreground
-          set -g fish_color_end                        $base06
-          set -g fish_color_error                      $base05
-          set -g fish_color_gray                       $base10
-          set -g fish_color_selection     --background=$highlight
-          set -g fish_color_search_match  --background=$highlight
-          set -g fish_color_operator                   $base04
-          set -g fish_color_escape                     $base08
-          set -g fish_color_autosuggestion             $base10
-          set -g fish_color_cancel                     $base05
+            # Syntax Highlighting
+            set -g fish_color_normal                     $foreground
+            set -g fish_color_command                    $base09
+            set -g fish_color_param                      $base02
+            set -g fish_color_keyword                    $base08
+            set -g fish_color_quote                      $base07
+            set -g fish_color_redirection                $foreground
+            set -g fish_color_end                        $base06
+            set -g fish_color_error                      $base05
+            set -g fish_color_gray                       $base10
+            set -g fish_color_selection     --background=$highlight
+            set -g fish_color_search_match  --background=$highlight
+            set -g fish_color_operator                   $base04
+            set -g fish_color_escape                     $base08
+            set -g fish_color_autosuggestion             $base10
+            set -g fish_color_cancel                     $base05
 
-          # Prompt
-          set -g fish_color_cwd                        $base08
-          set -g fish_color_user                       $base01
-          set -g fish_color_host                       $base09
+            # Prompt
+            set -g fish_color_cwd                        $base08
+            set -g fish_color_user                       $base01
+            set -g fish_color_host                       $base09
 
-          # Completion Pager
-          set -g fish_pager_color_progress             $base10
-          set -g fish_pager_color_prefix               $base07
-          set -g fish_pager_color_completion           $foreground
-          set -g fish_pager_color_description          $base10
-        '';
-      };
-    });
+            # Completion Pager
+            set -g fish_pager_color_progress             $base10
+            set -g fish_pager_color_prefix               $base07
+            set -g fish_pager_color_completion           $foreground
+            set -g fish_pager_color_description          $base10
+          '';
+        };
+      });
   };
 }

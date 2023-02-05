@@ -1,9 +1,4 @@
-{ config
-, options
-, lib
-, pkgs
-, ...
-}:
+{ config, options, lib, pkgs, ... }:
 
 let
   inherit (lib) mkIf mkMerge optionals;
@@ -12,8 +7,7 @@ let
 
   cfg = config.modules.desktop.toolset.social;
   envProto = config.modules.desktop.envProto;
-in
-{
+in {
   options.modules.desktop.toolset.social = {
     base.enable = mkBoolOpt false;
     discord.enable = mkBoolOpt false;
@@ -33,19 +27,17 @@ in
     })
 
     (mkIf cfg.element.enable {
-      user.packages =
-        let
-          element-desktop' = pkgs.symlinkJoin {
-            name = "element-desktop-in-dataHome";
-            paths = [ pkgs.element-desktop ];
-            nativeBuildInputs = [ pkgs.makeWrapper ];
-            postBuild = ''
-              wrapProgram "$out/bin/element-desktop" \
-                --add-flags '--profile-dir $XDG_DATA_HOME/Element'
-            '';
-          };
-        in
-        [ element-desktop' ];
+      user.packages = let
+        element-desktop' = pkgs.symlinkJoin {
+          name = "element-desktop-in-dataHome";
+          paths = [ pkgs.element-desktop ];
+          nativeBuildInputs = [ pkgs.makeWrapper ];
+          postBuild = ''
+            wrapProgram "$out/bin/element-desktop" \
+              --add-flags '--profile-dir $XDG_DATA_HOME/Element'
+          '';
+        };
+      in [ element-desktop' ];
     })
 
     (mkIf cfg.discord.enable {
@@ -68,37 +60,34 @@ in
         };
       };
 
-      user.packages =
-        let
-          flags = [
-            "--flag-switches-begin"
-            "--flag-switches-end"
-            "--disable-gpu-memory-buffer-video-frames"
-            "--enable-accelerated-mjpeg-decode"
-            "--enable-accelerated-video"
-            "--enable-gpu-rasterization"
-            "--enable-native-gpu-memory-buffers"
-            "--enable-zero-copy"
-            "--ignore-gpu-blocklist"
-          ] ++ optionals (envProto == "x11") [
-            "--disable-features=UseOzonePlatform"
-            "--enable-features=VaapiVideoDecoder"
-          ] ++ optionals (envProto == "wayland") [
-            "--enable-features=UseOzonePlatform,WebRTCPipeWireCapturer"
-            "--ozone-platform=wayland"
-            "--enable-webrtc-pipewire-capturer"
-          ];
+      user.packages = let
+        flags = [
+          "--flag-switches-begin"
+          "--flag-switches-end"
+          "--disable-gpu-memory-buffer-video-frames"
+          "--enable-accelerated-mjpeg-decode"
+          "--enable-accelerated-video"
+          "--enable-gpu-rasterization"
+          "--enable-native-gpu-memory-buffers"
+          "--enable-zero-copy"
+          "--ignore-gpu-blocklist"
+        ] ++ optionals (envProto == "x11") [
+          "--disable-features=UseOzonePlatform"
+          "--enable-features=VaapiVideoDecoder"
+        ] ++ optionals (envProto == "wayland") [
+          "--enable-features=UseOzonePlatform,WebRTCPipeWireCapturer"
+          "--ozone-platform=wayland"
+          "--enable-webrtc-pipewire-capturer"
+        ];
 
-          discord-canary' =
-            (pkgs.discord-canary.override {
-              withOpenASAR = true;
-            }).overrideAttrs (old: {
-              preInstall = ''
-                gappsWrapperArgs+=("--add-flags" "${concatStringsSep " " flags}")
-              '';
-            });
-        in
-        [ discord-canary' ];
+        discord-canary' =
+          (pkgs.discord-canary.override { withOpenASAR = true; }).overrideAttrs
+          (old: {
+            preInstall = ''
+              gappsWrapperArgs+=("--add-flags" "${concatStringsSep " " flags}")
+            '';
+          });
+      in [ discord-canary' ];
     })
   ];
 }

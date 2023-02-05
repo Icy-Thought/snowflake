@@ -1,18 +1,10 @@
-{ config
-, options
-, lib
-, pkgs
-, ...
-}:
+{ config, options, lib, pkgs, ... }:
 
 let
   inherit (lib) mkIf mkMerge;
   inherit (lib.my) mkBoolOpt;
-in
-{
-  options.modules.develop.clojure = {
-    enable = mkBoolOpt false;
-  };
+in {
+  options.modules.develop.clojure = { enable = mkBoolOpt false; };
 
   config = mkMerge [
     (mkIf config.modules.develop.clojure.enable {

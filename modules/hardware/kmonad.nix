@@ -1,19 +1,13 @@
-{ inputs
-, config
-, options
-, lib
-, pkgs
-, ...
-}:
+{ inputs, config, options, lib, pkgs, ... }:
 
-let inherit (builtins) pathExists readFile;
+let
+  inherit (builtins) pathExists readFile;
   inherit (lib) mkIf mkOption;
   inherit (lib.types) nullOr path;
   inherit (lib.my) mkBoolOpt;
 
   cfg = config.modules.hardware.kmonad;
-in
-{
+in {
   options.modules.hardware.kmonad = {
     enable = mkBoolOpt false;
     deviceID = mkOption {
@@ -42,10 +36,7 @@ in
             allowCommands = false;
             compose.key = null;
           };
-          config =
-            if pathExists layoutFile
-            then readFile layoutFile
-            else "";
+          config = if pathExists layoutFile then readFile layoutFile else "";
         };
       };
   };

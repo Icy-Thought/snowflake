@@ -1,18 +1,10 @@
-{ options
-, config
-, lib
-, pkgs
-, ...
-}:
+{ options, config, lib, pkgs, ... }:
 
 let
   inherit (lib) mkIf;
   inherit (lib.my) mkBoolOpt;
-in
-{
-  options.modules.desktop.gnome = {
-    enable = mkBoolOpt false;
-  };
+in {
+  options.modules.desktop.gnome = { enable = mkBoolOpt false; };
 
   config = mkIf config.modules.desktop.gnome.enable {
     modules.desktop = {
@@ -42,11 +34,8 @@ in
     };
 
     user.packages = with pkgs;
-      [ dconf2nix ] ++ (with gnome; [
-        polari
-        gnome-disk-utility
-        gnome-tweaks
-      ]) ++ (with gnomeExtensions; [
+      [ dconf2nix ] ++ (with gnome; [ polari gnome-disk-utility gnome-tweaks ])
+      ++ (with gnomeExtensions; [
         appindicator
         aylurs-widgets
         blur-my-shell
@@ -63,8 +52,10 @@ in
 
     # Enable chrome-gnome-shell in FireFox nightly (mozilla-overlay):
     home.file.chrome-gnome-shell = {
-      target = ".mozilla/native-messaging-hosts/org.gnome.chrome_gnome_shell.json";
-      source = "${pkgs.chrome-gnome-shell}/lib/mozilla/native-messaging-hosts/org.gnome.chrome_gnome_shell.json";
+      target =
+        ".mozilla/native-messaging-hosts/org.gnome.chrome_gnome_shell.json";
+      source =
+        "${pkgs.chrome-gnome-shell}/lib/mozilla/native-messaging-hosts/org.gnome.chrome_gnome_shell.json";
     };
   };
 }

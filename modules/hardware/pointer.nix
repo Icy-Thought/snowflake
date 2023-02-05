@@ -1,17 +1,10 @@
-{ config
-, options
-, lib
-, pkgs
-, ...
-}:
+{ config, options, lib, pkgs, ... }:
 
-let inherit (lib) mkIf mkMerge;
+let
+  inherit (lib) mkIf mkMerge;
   inherit (lib.my) mkBoolOpt;
-in
-{
-  options.modules.hardware.pointer = {
-    enable = mkBoolOpt false;
-  };
+in {
+  options.modules.hardware.pointer = { enable = mkBoolOpt false; };
 
   config = mkIf config.modules.hardware.pointer.enable (mkMerge [
     {

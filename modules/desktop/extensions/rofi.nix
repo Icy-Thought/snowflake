@@ -1,9 +1,4 @@
-{ options
-, config
-, lib
-, pkgs
-, ...
-}:
+{ options, config, lib, pkgs, ... }:
 
 let
   inherit (lib) mkIf mkOption getExe;
@@ -12,15 +7,13 @@ let
 
   cfg = config.modules.desktop.extensions.rofi;
   envProto = config.modules.desktop.envProto;
-in
-{
+in {
   options.modules.desktop.extensions.rofi = {
     enable = mkBoolOpt false;
     package = mkOption {
       type = package;
       default =
-        if (envProto == "wayland") then pkgs.rofi-wayland
-        else pkgs.rofi;
+        if (envProto == "wayland") then pkgs.rofi-wayland else pkgs.rofi;
     };
   };
 
@@ -48,7 +41,9 @@ in
         display-window = " 﩯 Window ";
         display-power-menu = "  Power Menu ";
 
-        modi = "run,drun,filebrowser,emoji,power-menu:${getExe pkgs.rofi-power-menu}";
+        modi = "run,drun,filebrowser,emoji,power-menu:${
+            getExe pkgs.rofi-power-menu
+          }";
 
         xoffset = 0;
         yoffset = 0;

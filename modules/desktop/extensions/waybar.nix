@@ -1,8 +1,4 @@
-{ options
-, config
-, lib
-, pkgs
-, ...
+{ options, config, lib, pkgs, ...
 
 }:
 
@@ -11,11 +7,8 @@ let
   inherit (lib.my) mkBoolOpt;
 
   cfg = config.modules.desktop.extensions.waybar;
-in
-{
-  options.modules.desktop.extensions.waybar = {
-    enable = mkBoolOpt false;
-  };
+in {
+  options.modules.desktop.extensions.waybar = { enable = mkBoolOpt false; };
 
   config = mkIf cfg.enable {
     # Allow tray-icons to be displayed:
@@ -34,14 +27,8 @@ in
           "mpd"
         ];
         modules-center = [ "clock" ];
-        modules-right = [
-          "memory"
-          "cpu"
-          "network"
-          "battery"
-          "custom/powermenu"
-          "tray"
-        ];
+        modules-right =
+          [ "memory" "cpu" "network" "battery" "custom/powermenu" "tray" ];
         "custom/launcher" = {
           "format" = " ";
           "on-click" = "rofi -no-lazy-grab -show drun -modi drun";
@@ -80,15 +67,17 @@ in
           "interval" = 1;
           "format" = "{:%I:%M %p  %A %b %d}";
           "tooltip" = true;
-          /* "tooltip-format"= "{=%A; %d %B %Y}\n<tt>{calendar}</tt>" */
-          "tooltip-format" = "上午：高数\n下午：Ps\n晚上：Golang\n<tt>{calendar}</tt>";
+          # "tooltip-format"= "{=%A; %d %B %Y}\n<tt>{calendar}</tt>"
+          "tooltip-format" = ''
+            上午：高数
+            下午：Ps
+            晚上：Golang
+            <tt>{calendar}</tt>'';
         };
         "memory" = {
           "interval" = 1;
           "format" = "﬙ {percentage}%";
-          "states" = {
-            "warning" = 85;
-          };
+          "states" = { "warning" = 85; };
         };
         "cpu" = {
           "interval" = 1;
@@ -106,7 +95,8 @@ in
           "on-scroll-up" = "mpc --quiet prev";
           "on-scroll-down" = "mpc --quiet next";
           "smooth-scrolling-threshold" = 5;
-          "tooltip-format" = "{title} - {artist} ({elapsedTime:%M:%S}/{totalTime:%H:%M:%S})";
+          "tooltip-format" =
+            "{title} - {artist} ({elapsedTime:%M:%S}/{totalTime:%H:%M:%S})";
         };
         "network" = {
           "interval" = 1;
@@ -124,7 +114,7 @@ in
         };
         "custom/powermenu" = {
           "format" = "";
-          "on-click" = ""; # TODO 
+          "on-click" = ""; # TODO
           "tooltip" = false;
         };
         "tray" = {

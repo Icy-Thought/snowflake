@@ -1,18 +1,10 @@
-{ options
-, config
-, lib
-, pkgs
-, ...
-}:
+{ options, config, lib, pkgs, ... }:
 
 let
   inherit (lib) mkIf;
   inherit (lib.my) mkBoolOpt;
-in
-{
-  options.modules.networking.wireGuard = {
-    enable = mkBoolOpt false;
-  };
+in {
+  options.modules.networking.wireGuard = { enable = mkBoolOpt false; };
 
   config = mkIf config.modules.networking.wireGuard.enable {
     user.packages = with pkgs; [ wireguard-tools ];

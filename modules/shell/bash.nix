@@ -1,17 +1,10 @@
-{ config
-, options
-, lib
-, pkgs
-, ...
-}:
+{ config, options, lib, pkgs, ... }:
 
-let inherit (lib) mkIf;
+let
+  inherit (lib) mkIf;
   inherit (lib.my) mkBoolOpt;
-in
-{
-  options.modules.shell.bash = {
-    enable = mkBoolOpt true;
-  };
+in {
+  options.modules.shell.bash = { enable = mkBoolOpt true; };
 
   config = mkIf config.modules.shell.bash.enable {
     # Enable starship-rs:

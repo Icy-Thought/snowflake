@@ -1,10 +1,4 @@
-{ inputs
-, options
-, config
-, lib
-, pkgs
-, ...
-}:
+{ inputs, options, config, lib, pkgs, ... }:
 
 let
   inherit (lib) mkIf mkOption;
@@ -13,8 +7,7 @@ let
   inherit (lib.my) mkBoolOpt;
 
   cfg = config.modules.desktop.qtile;
-in
-{
+in {
   options.modules.desktop.qtile = {
     enable = mkBoolOpt false;
     package = mkOption {
@@ -37,9 +30,7 @@ in
   config = mkIf cfg.enable {
     modules.desktop = {
       envProto = cfg.backend;
-      toolset.fileBrowse = {
-        nautilus.enable = true;
-      };
+      toolset.fileBrowse = { nautilus.enable = true; };
       extensions = {
         fcitx5.enable = true;
         mimeApps.enable = true; # mimeApps -> default launch application
@@ -66,9 +57,9 @@ in
         name = "qtile";
         start = ''
           ${cfg.package}/bin/qtile start -b ${cfg.backend} \
-          ${optionalString (cfg.configFile != null) ''
-              --config ${cfg.configFile}
-            ''
+          ${
+            optionalString (cfg.configFile != null)
+            "--config ${cfg.configFile} "
           } & waitPID=$!
         '';
       }];

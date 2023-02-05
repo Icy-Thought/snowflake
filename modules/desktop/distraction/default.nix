@@ -1,21 +1,13 @@
-{ config
-, options
-, lib
-, pkgs
-, ...
-}:
+{ config, options, lib, pkgs, ... }:
 
 let
   inherit (lib) mkIf mkMerge;
   inherit (lib.my) mkBoolOpt;
 
   cfg = config.modules.desktop.distraction.hardware;
-in
-{
+in {
   options.modules.desktop.distraction = {
-    hardware = {
-      amdvlk.enable = mkBoolOpt false;
-    };
+    hardware = { amdvlk.enable = mkBoolOpt false; };
   };
 
   config = mkMerge [
@@ -23,16 +15,12 @@ in
       hardware.opengl = {
         enable = true;
         driSupport = true;
-        extraPackages = with pkgs; [
-          rocm-opencl-icd
-          rocm-opencl-runtime
-        ];
+        extraPackages = with pkgs; [ rocm-opencl-icd rocm-opencl-runtime ];
         driSupport32Bit = true;
       };
 
-      environment.variables.VK_ICD_FILENAMES = [
-        "/run/opengl-driver/share/vulkan/icd.d/amd_icd64.json"
-      ];
+      environment.variables.VK_ICD_FILENAMES =
+        [ "/run/opengl-driver/share/vulkan/icd.d/amd_icd64.json" ];
     })
   ];
 }

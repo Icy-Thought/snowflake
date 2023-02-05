@@ -1,18 +1,10 @@
-{ config
-, options
-, lib
-, pkgs
-, ...
-}:
+{ config, options, lib, pkgs, ... }:
 
 let
   inherit (lib) mkIf;
   inherit (lib.my) mkBoolOpt;
-in
-{
-  options.modules.desktop.browsers.epiphany = {
-    enable = mkBoolOpt false;
-  };
+in {
+  options.modules.desktop.browsers.epiphany = { enable = mkBoolOpt false; };
 
   config = mkIf config.modules.desktop.browsers.epiphany.enable {
     user.packages = with pkgs;
@@ -45,7 +37,6 @@ in
           '';
         };
 
-      in
-      [ epiphany' ];
+      in [ epiphany' ];
   };
 }

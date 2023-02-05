@@ -1,29 +1,19 @@
-{ options
-, config
-, inputs
-, lib
-, pkgs
-, ...
-}:
+{ options, config, inputs, lib, pkgs, ... }:
 
-let inherit (inputs) hyprland;
+let
+  inherit (inputs) hyprland;
   inherit (builtins) readFile toPath;
   inherit (lib) mkIf;
   inherit (lib.my) mkBoolOpt;
-in
-{
-  options.modules.desktop.hyprland = {
-    enable = mkBoolOpt false;
-  };
+in {
+  options.modules.desktop.hyprland = { enable = mkBoolOpt false; };
 
   imports = [ hyprland.nixosModules.default ];
 
   config = mkIf config.modules.desktop.hyprland.enable {
     modules.desktop = {
       envProto = "wayland";
-      toolset.fileBrowse = {
-        nautilus.enable = true;
-      };
+      toolset.fileBrowse = { nautilus.enable = true; };
       extensions = {
         fcitx5.enable = true;
         mimeApps.enable = true; # mimeApps -> default launch application
@@ -45,9 +35,7 @@ in
       wireplumber
     ];
 
-    services.xserver.displayManager = {
-      defaultSession = "hyprland";
-    };
+    services.xserver.displayManager = { defaultSession = "hyprland"; };
 
     programs.hyprland.enable = true;
 
@@ -55,15 +43,22 @@ in
 
     hm.wayland.windowManager.hyprland = {
       enable = true;
-      extraConfig = readFile "${config.snowflake.configDir}/hyprland/hyprland.conf"; # TODO
+      extraConfig =
+        readFile "${config.snowflake.configDir}/hyprland/hyprland.conf"; # TODO
     };
 
     # Setting our system wallpaper:
     home.configFile.hypr-wallpaper = {
       target = "hypr/hyprpaper.conf";
       text = ''
-        preload = ${toPath ../../themes/tokyonight/assets/zaynstewart-anime-girl-night-alone.png}
-        wallpaper = eDP-1,${toPath ../../themes/tokyonight/assets/zaynstewart-anime-girl-night-alone.png}
+        preload = ${
+          toPath
+          ../../themes/tokyonight/assets/zaynstewart-anime-girl-night-alone.png
+        }
+        wallpaper = eDP-1,${
+          toPath
+          ../../themes/tokyonight/assets/zaynstewart-anime-girl-night-alone.png
+        }
         ipc = off
       '';
     };

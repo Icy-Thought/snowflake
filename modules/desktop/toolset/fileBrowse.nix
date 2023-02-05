@@ -1,17 +1,11 @@
-{ options
-, config
-, lib
-, pkgs
-, ...
-}:
+{ options, config, lib, pkgs, ... }:
 
 let
   inherit (lib) mkIf mkMerge;
   inherit (lib.my) mkBoolOpt;
 
   cfg = config.modules.desktop.toolset.fileBrowse;
-in
-{
+in {
   options.modules.desktop.toolset.fileBrowse = {
     dolphin.enable = mkBoolOpt false;
     nautilus.enable = mkBoolOpt false;

@@ -1,12 +1,5 @@
-{ pkgs
-, config
-, lib
-, ...
-}: {
-  imports = [
-    ../home.nix
-    ./hardware-configuration.nix
-  ];
+{ pkgs, config, lib, ... }: {
+  imports = [ ../home.nix ./hardware-configuration.nix ];
 
   ## Modules
   modules.themes = { active = "catppuccin"; };
@@ -32,9 +25,7 @@
       music.enable = true;
       video.enable = true;
     };
-    toolset.docView = {
-      sioyek.enable = true;
-    };
+    toolset.docView = { sioyek.enable = true; };
   };
 
   modules.develop = {

@@ -1,19 +1,12 @@
-{ config
-, options
-, lib
-, pkgs
-, ...
-}:
+{ config, options, lib, pkgs, ... }:
 
-let inherit (builtins) toString;
+let
+  inherit (builtins) toString;
   inherit (lib) mkIf mkMerge;
   inherit (lib.strings) optionalString;
   inherit (lib.my) mkBoolOpt;
-in
-{
-  options.modules.desktop.terminal.wezterm = {
-    enable = mkBoolOpt false;
-  };
+in {
+  options.modules.desktop.terminal.wezterm = { enable = mkBoolOpt false; };
 
   config = mkIf config.modules.desktop.terminal.wezterm.enable {
     user.packages = with pkgs; [ wezterm ];

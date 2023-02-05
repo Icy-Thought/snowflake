@@ -1,17 +1,11 @@
-{ options
-, config
-, lib
-, pkgs
-, ...
-}:
+{ options, config, lib, pkgs, ... }:
 
 let
   inherit (lib) mkIf mkOption;
   inherit (lib.types) nullOr str;
 
   cfg = config.modules.desktop.browsers;
-in
-{
+in {
   options.modules.desktop.browsers = {
     default = mkOption {
       type = nullOr str;
@@ -21,7 +15,5 @@ in
     };
   };
 
-  config = mkIf (cfg.default != null) {
-    env.BROWSER = cfg.default;
-  };
+  config = mkIf (cfg.default != null) { env.BROWSER = cfg.default; };
 }

@@ -1,9 +1,4 @@
-{ options
-, config
-, lib
-, pkgs
-, ...
-}:
+{ options, config, lib, pkgs, ... }:
 
 let
   inherit (lib) mkIf mkMerge;
@@ -11,8 +6,7 @@ let
 
   cfg = config.modules.desktop.extensions.picom;
   # mkIndividual = ;
-in
-{
+in {
   options.modules.desktop.extensions.picom = {
     enable = mkBoolOpt false;
     animation.enable = mkBoolOpt false;

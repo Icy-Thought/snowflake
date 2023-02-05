@@ -1,17 +1,11 @@
-{ config
-, options
-, lib
-, pkgs
-, ...
-}:
+{ config, options, lib, pkgs, ... }:
 
 let
   inherit (lib) mkIf mkMerge;
   inherit (lib.my) mkBoolOpt;
 
   cfg = config.modules.desktop.toolset.downloader;
-in
-{
+in {
   options.modules.desktop.toolset.downloader = {
     transmission.enable = mkBoolOpt false;
   };
