@@ -71,7 +71,7 @@ in {
         };
 
         fish-theme = {
-          target = "fish/conf.d/${cfg.active}.fish";
+          target = "fish/conf.d/${themeCfg.active}.fish";
           text = with colors.fish; ''
             # --> General
             set -l foreground ${fg}
