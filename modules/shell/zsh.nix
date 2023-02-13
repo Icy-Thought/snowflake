@@ -136,6 +136,11 @@ in {
         bindkey '^[[Z' reverse-menu-complete            # Shift-Tab -> reverse menu navigation
         bindkey '^_' autosuggest-accept                 # C-/ => accept suggestion
 
+        # -------===[ Useful Functions ]===------- #
+        function sys_update {
+            nixos-rebuild switch --use-remote-sudo --flake .#"$(hostname)" --impure
+        }
+
         # -------===[ External Plugins ]===------- #
         any-nix-shell zsh --info-right | source /dev/stdin
         eval "$(zoxide init zsh)"

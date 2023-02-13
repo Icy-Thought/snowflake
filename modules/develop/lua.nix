@@ -13,7 +13,7 @@ in {
 
   config = mkMerge [
     (mkIf cfg.enable {
-      user.packages = with pkgs; [ lua sumneko-lua-language-server stylua ];
+      user.packages = with pkgs; [ lua lua-language-server stylua ];
 
       home.configFile.stylua-conf = {
         target = "stylua/stylua.toml";

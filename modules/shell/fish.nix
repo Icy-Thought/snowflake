@@ -30,7 +30,12 @@ in {
       };
       shellAbbrs = import "${config.snowflake.configDir}/shell-abbr";
 
-      functions = { fish_title = "echo $argv[1]"; };
+      functions = {
+        fish_title = "echo $argv[1]";
+        sys_update = ''
+          nixos-rebuild switch --use-remote-sudo --flake .#(hostname) --impure
+        '';
+      };
 
       interactiveShellInit = ''
         ${getExe pkgs.any-nix-shell} fish --info-right | source

@@ -21,6 +21,12 @@ in {
           CPU_BOOST_ON_BAT = 0;
           CPU_SCALING_GOVERNOR_ON_AC = "performance";
           CPU_SCALING_GOVERNOR_ON_BAT = "schedutil";
+
+          PCIE_ASPM_ON_AC = "performance";
+          PCIE_ASPM_ON_BAT = "powersave";
+
+          # Prevents bluez from hanging:
+          USB_EXCLUDE_BTUSB = 1;
         };
       };
     };

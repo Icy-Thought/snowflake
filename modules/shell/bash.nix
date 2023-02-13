@@ -24,6 +24,12 @@ in {
         wud = "systemctl stop wg-quick-Akkadian-VPN.service";
       };
       bashrcExtra = ''
+        # -------===[ Useful Functions ]===------- #
+        function sys_update {
+            nixos-rebuild switch --use-remote-sudo --flake .#"$(hostname)" --impure
+        }
+
+        # -------===[ External Plugins ]===------- #
         eval "$(starship init bash)"
         eval "$(direnv hook bash)"
       '';

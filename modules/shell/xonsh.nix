@@ -86,7 +86,7 @@ in {
 
         #$TITLE = '{current_job:{} | }{user}@{hostname}: {cwd}'
 
-        # -------===[ Core Plugins ]===------- #
+        # -------===[ Main Plugins ]===------- #
         xontrib load abbrevs
         xontrib load bashisms
 
@@ -102,6 +102,11 @@ in {
         ${concatStrings (mapAttrsToList (k: v: ''
           abbrevs[${escapeNixString k}] = ${escapeNixString v}
         '') abbrevs)}
+
+
+        # -------===[ Useful Functions ]===------- #
+        def sys_update():
+            subprocess.run(['nixos-rebuild', 'switch', '--use-remote-sudo', '--flake', '.' + str(subprocess.run(['hostname'], stdout=subprocess.PIPE).stdout.decode().strip()), '--impure'])
 
         # -------===[ Executing 3rd-Plugins ]===------- #
         execx($(any-nix-shell --info-right))

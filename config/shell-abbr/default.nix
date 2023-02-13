@@ -17,12 +17,9 @@ let
     nfl = "nix flake lock --update-input";
 
     # Sys-Management
+    restart = "nix store diff-closures /run/current-system /run/booted-system";
     bat0 = "upower -i /org/freedesktop/UPower/devices/battery_BAT0";
-    flkup = "nix flake update";
-    thkup =
-      "nixos-rebuild switch --use-remote-sudo --flake .#thinkpad-e595 --impure";
-    proup =
-      "nixos-rebuild switch --use-remote-sudo --flake .#probook-445g6 --impure";
+    flup = "nix flake update";
     d2nix = "dconf dump / | dconf2nix > dconf.nix";
 
     # Other
