@@ -9,7 +9,6 @@ let
 in {
   options.modules.hardware.pipewire = {
     enable = mkBoolOpt false;
-
     lowLatency = {
       enable = mkBoolOpt false;
       quantum = mkOption {
@@ -27,26 +26,27 @@ in {
     };
   };
 
-  config = let
-    qr = "${toString cfg.lowLatency.quantum}/${toString cfg.lowLatency.rate}";
-  in mkMerge [
+  config = mkMerge [
     (mkIf cfg.enable {
-      security.rtkit.enable = true;
-      hardware.pulseaudio.enable = false;
+      user.packages = with pkgs; [ easyeffects ];
 
+      security.rtkit.enable = true;
       services.pipewire = {
         enable = true;
         alsa.enable = true;
         alsa.support32Bit = true;
         pulse.enable = true;
+        #jack.enable = true;
       };
-
-      user.packages = with pkgs; [ easyeffects ];
     })
 
     (mkIf (cfg.enable && cfg.lowLatency.enable) {
       services.pipewire = {
-        config = {
+        config = let
+          qr = "${toString cfg.lowLatency.quantum}/${
+              toString cfg.lowLatency.rate
+            }";
+        in {
           pipewire = {
             "context.properties" = {
               "default.clock.min-quantum" = cfg.lowLatency.quantum;
