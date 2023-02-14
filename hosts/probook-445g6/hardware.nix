@@ -38,11 +38,33 @@ in {
     updateMicrocode = mkDefault config.hardware.enableRedistributableFirmware;
   };
 
-  powerManagement = { cpuFreqGovernor = "performance"; };
+  # Manage device power-control:
+  services = {
+    power-profiles-daemon.enable = false;
+    thermald.enable = false;
+    tlp = {
+      enable = true;
+      settings = {
+        START_CHARGE_THRESH_BAT0 = 75;
+        STOP_CHARGE_THRESH_BAT0 = 80;
+        RESTORE_THRESHOLDS_ON_BAT = 1;
+
+        CPU_BOOST_ON_AC = 1;
+        CPU_BOOST_ON_BAT = 0;
+        CPU_SCALING_GOVERNOR_ON_AC = "performance";
+        CPU_SCALING_GOVERNOR_ON_BAT = "schedutil";
+
+        PCIE_ASPM_ON_AC = "performance";
+        PCIE_ASPM_ON_BAT = "powersave";
+
+        # Prevents bluez from hanging:
+        USB_EXCLUDE_BTUSB = 1;
+      };
+    };
+  };
 
   # Finally, our beloved hardware module(s):
   modules.hardware = {
-    powerCtrl.enable = true;
     pipewire.enable = true;
     bluetooth.enable = true;
     pointer.enable = true;

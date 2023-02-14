@@ -40,7 +40,7 @@ in {
     };
     extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
     kernelModules = [ "thinkpad_acpi" "acpi_call" "kvm_amd" ];
-    kernelParams = [ ];
+    kernelParams = [ "pcie_aspm.policy=performance" ];
     kernel.sysctl = {
       "net.ipv4.icmp_echo_ignore_broadcasts" = 1; # Refuse ICMP echo requests
     };
@@ -53,15 +53,16 @@ in {
     # updateMicrocode = mkDefault config.hardware.enableRedistributableFirmware;
   };
 
-  # TLP-specific:
-  services.tlp.settings = {
-    # USB_DENYLIST = "04:00.3 04:00.4";
-    USB_EXCLUDE_BTUSB = 1;
+  powerManagement.cpuFreqGovernor = mkDefault "schedutil";
+
+  # Manage device power-control:
+  services = {
+    power-profiles-daemon.enable = true;
+    thermald.enable = true;
   };
 
   # Finally, our beloved hardware module(s):
   modules.hardware = {
-    powerCtrl.enable = true;
     pipewire.enable = true;
     bluetooth.enable = true;
     kmonad.deviceID = "/dev/input/by-path/platform-i8042-serio-0-event-kbd";
