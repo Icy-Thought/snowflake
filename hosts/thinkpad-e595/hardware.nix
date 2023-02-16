@@ -38,7 +38,7 @@ in {
       ];
       kernelModules = [ ];
     };
-    extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
+    extraModulePackages = [ config.boot.kernelPackages.acpi_call ];
     kernelModules = [ "thinkpad_acpi" "acpi_call" "kvm_amd" ];
     kernelParams = [ "pcie_aspm.policy=performance" ];
     kernel.sysctl = {

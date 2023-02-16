@@ -1,7 +1,7 @@
 { options, config, lib, pkgs, ... }:
 
 let
-  inherit (lib) mkIf mkMerge;
+  inherit (lib) mkIf mkMerge getExe;
   inherit (lib.types) str;
   inherit (lib.my) mkBoolOpt mkOpt;
 
@@ -17,7 +17,10 @@ in {
     {
       # I avoid programs.steam.enable because it installs another steam binary,
       # which the xdesktop package invokes, instead of my steam shims below.
-      user.packages = with pkgs; [
+      user.packages = let
+        inherit (pkgs)
+          makeDesktopItem stdenv steam steam-run-native writeScriptBin;
+      in [
         # Get steam to keep its garbage out of $HOME
         (writeScriptBin "steam" ''
           #!${stdenv.shell}

@@ -1,13 +1,13 @@
 { options, config, lib, pkgs, ... }:
 
 let
-  inherit (lib) mkIf;
+  inherit (lib) attrValues mkIf;
   inherit (lib.my) mkBoolOpt;
 in {
   options.modules.desktop.virtual.docker = { enable = mkBoolOpt false; };
 
   config = mkIf config.modules.desktop.virtual.docker.enable {
-    user.packages = with pkgs; [ docker docker-compose ];
+    user.packages = attrValues ({ inherit (pkgs) docker docker-compose; });
 
     env = {
       DOCKER_CONFIG = "$XDG_CONFIG_HOME/docker";

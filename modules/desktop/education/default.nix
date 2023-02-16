@@ -14,7 +14,7 @@ in {
   config = mkMerge [
     (mkIf cfg.memory.enable {
       # TODO: Configure anki OR replace with other software
-      user.packages = with pkgs; [ anki ];
+      user.packages = [ pkgs.anki ];
     })
 
     (mkIf cfg.vidcom.enable {
@@ -26,17 +26,16 @@ in {
         };
       };
 
-      user.packages = with pkgs;
-        [
-          (makeDesktopItem {
-            name = "zoom-us";
-            desktopName = "Zoom (Jailed)";
-            icon = "Zoom";
-            exec = "/run/current-system/sw/bin/zoom";
-            genericName = "Video Conference";
-            categories = [ "Network" "VideoConference" ];
-          })
-        ];
+      user.packages = [
+        (pkgs.makeDesktopItem {
+          name = "zoom-us";
+          desktopName = "Zoom (Jailed)";
+          icon = "Zoom";
+          exec = "/run/current-system/sw/bin/zoom";
+          genericName = "Video Conference";
+          categories = [ "Network" "VideoConference" ];
+        })
+      ];
     })
   ];
 }

@@ -1,7 +1,7 @@
 { inputs, options, config, lib, pkgs, ... }:
 
 let
-  inherit (lib) mkIf getExe;
+  inherit (lib) attrValues mkIf getExe;
   inherit (lib.my) mkBoolOpt;
 in {
   options.modules.desktop.xmonad = { enable = mkBoolOpt false; };
@@ -26,14 +26,9 @@ in {
 
     nixpkgs.overlays = [ inputs.xmonad-contrib.overlay ];
 
-    environment.systemPackages = with pkgs; [
-      libnotify
-      playerctl
-      gxmessage
-      xdotool
-      xclip
-      feh
-    ];
+    environment.systemPackages = attrValues ({
+      inherit (pkgs) libnotify playerctl gxmessage xdotool xclip feh;
+    });
 
     services.xserver = {
       displayManager.defaultSession = "none+xmonad";

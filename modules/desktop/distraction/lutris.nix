@@ -1,8 +1,7 @@
 { options, config, lib, pkgs, ... }:
 
 let
-  inherit (lib) mkIf mkMerge mkOption;
-  inherit (lib.types) nullOr package;
+  inherit (lib) attrValues optionalAttrs mkIf mkMerge;
   inherit (lib.my) mkBoolOpt;
 
   cfg = config.modules.desktop.distraction.lutris;
@@ -10,25 +9,18 @@ let
 in {
   options.modules.desktop.distraction.lutris = {
     enable = mkBoolOpt false;
-    package = mkOption {
-      type = nullOr package;
-      default = with pkgs;
-        lutris.override { extraLibraries = pkgs: [ jansson ]; };
-    };
     league.enable = mkBoolOpt false;
   };
 
   config = mkMerge [
     (mkIf cfg.enable {
-      user.packages = with pkgs;
-        (if wineCfg.enable then
-          [ cfg.package ]
-        else [
-          cfg.package
-          wineWowPackages.fonts
-          wineWowPackages.stagingFull
-          winetricks
-        ]);
+      user.packages = attrValues ({
+        lutris =
+          pkgs.lutris.override { extraLibraries = pkgs: [ pkgs.jansson ]; };
+      } // optionalAttrs (wineCfg.enable == false) {
+        inherit (pkgs) winetricks;
+        inherit (pkgs.wineWowPackages) fonts stagingFull;
+      });
     })
 
     (mkIf (cfg.enable && cfg.league.enable) {
@@ -38,7 +30,10 @@ in {
 
       environment.sessionVariables = { QT_X11_NO_MITSHM = "1"; };
 
-      user.packages = with pkgs; [ openssl gnome.zenity vulkan-tools dxvk ];
+      user.packages = attrValues ({
+        inherit (pkgs) openssl vulkan-tools dxvk;
+        inherit (pkgs.gnome) zenity;
+      });
     })
   ];
 }

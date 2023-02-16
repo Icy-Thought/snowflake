@@ -1,14 +1,14 @@
 { inputs, config, options, lib, pkgs, ... }:
 
 let
-  inherit (lib) mkIf mkMerge;
+  inherit (lib) attrValues mkIf mkMerge;
   inherit (lib.my) mkBoolOpt;
 in {
   options.modules.develop.dart = { enable = mkBoolOpt false; };
 
   config = mkMerge [
     (mkIf config.modules.develop.dart.enable {
-      user.packages = with pkgs; [ dart flutter ];
+      user.packages = attrValues ({ inherit (pkgs) dart flutter; });
     })
 
     (mkIf config.modules.desktop.editors.vscodium.enable {

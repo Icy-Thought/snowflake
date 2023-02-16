@@ -11,8 +11,10 @@ in {
       enable = true;
 
       settings = let
-        inherit (config.hm.lib.htop.leftMeters)
-          bar fields leftMeters rightMeters text;
+        inherit (config.hm.lib.htop.leftMeters) bar leftMeters rightMeters text;
+        inherit (config.hm.lib.htop.leftMeters.fields)
+          PID USER NICE IO_PRIORITY M_SIZE M_RESIDENT M_SHARE STATE PERCENT_CPU
+          PERCENT_MEM TIME STARTTIME COMM;
       in {
         enable_mouse = true;
         show_program_path = false;
@@ -27,16 +29,16 @@ in {
 
         # By default when not in tree view, sort by the CPU usage.
         sort_direction = 0;
-        sort_key = fields.PERCENT_CPU;
+        sort_key = PERCENT_CPU;
 
         # By default when in tree view, sort by PID.
         tree_view = false;
         tree_sort_direction = 1;
-        tree_sort_key = fields.PID;
+        tree_sort_key = PID;
         tree_view_always_by_pid = false;
 
         # The fields in the htop table.
-        fields = with fields; [
+        fields = [
           PID
           USER
           NICE

@@ -3,7 +3,7 @@
 let
   inherit (inputs) hyprland;
   inherit (builtins) readFile toPath;
-  inherit (lib) mkIf;
+  inherit (lib) attrValues mkIf;
   inherit (lib.my) mkBoolOpt;
 in {
   options.modules.desktop.hyprland = { enable = mkBoolOpt false; };
@@ -23,17 +23,12 @@ in {
       };
     };
 
-    environment.systemPackages = with pkgs; [
-      imv
-      hyprpaper
+    environment.systemPackages = attrValues ({
+      inherit (pkgs)
       # hyprpicker
-      libnotify
-      playerctl
-      wf-recorder
-      wl-clipboard
-      wlr-randr
-      wireplumber
-    ];
+        imv hyprpaper libnotify playerctl wf-recorder wl-clipboard wlr-randr
+        wireplumber;
+    });
 
     services.xserver.displayManager = { defaultSession = "hyprland"; };
 

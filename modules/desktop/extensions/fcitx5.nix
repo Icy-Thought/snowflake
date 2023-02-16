@@ -1,7 +1,7 @@
 { options, config, lib, pkgs, ... }:
 
 let
-  inherit (lib) mkIf;
+  inherit (lib) attrValues mkIf;
   inherit (lib.my) mkBoolOpt;
 
   cfg = config.modules.desktop.extensions.fcitx5;
@@ -11,13 +11,14 @@ in {
   config = mkIf cfg.enable {
     i18n.inputMethod = {
       enabled = "fcitx5";
-      fcitx5.addons = with pkgs; [
-        fcitx5-configtool
-        fcitx5-chinese-addons
-        # fcitx5-mozc
-        # fcitx5-hangul
-        my.fcitx5-catppuccin
-      ];
+      fcitx5.addons = attrValues ({
+        inherit (pkgs)
+          fcitx5-configtool fcitx5-chinese-addons
+          # fcitx5-mozc
+          # fcitx5-hangul
+        ;
+        inherit (pkgs.my) fcitx5-catppuccin;
+      });
     };
 
     environment.variables = {

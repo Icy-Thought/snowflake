@@ -1,4 +1,7 @@
-{ modulesPath, pkgs, config, ... }: {
+{ modulesPath, lib, pkgs, config, ... }:
+
+let inherit (lib) attrValues;
+in {
   imports = [ "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix" ];
 
   # In case of proprietary wireless drivers
@@ -11,6 +14,7 @@
     extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
   };
 
-  environment.systemPackages = with pkgs; [ zsh git nixVersions.stable ];
+  environment.systemPackages =
+    attrValues ({ inherit (pkgs) zsh git nixStable; });
 }
 # nix-build '<nixpkgs/nixos>' -A config.system.build.isoImage -I nixos-config=./default.nix

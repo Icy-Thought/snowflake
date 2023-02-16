@@ -1,7 +1,7 @@
 { options, config, lib, pkgs, ... }:
 
 let
-  inherit (lib) mkIf;
+  inherit (lib) attrValues mkIf;
   inherit (lib.my) mkBoolOpt;
 in {
   options.modules.desktop.gnome = { enable = mkBoolOpt false; };
@@ -25,7 +25,7 @@ in {
     };
 
     services.udev = {
-      packages = with pkgs; [ gnome.gnome-settings-daemon ];
+      packages = [ pkgs.gnome.gnome-settings-daemon ];
       extraRules = ''
         ACTION=="add|change", KERNEL=="nvme[0-9]*", ATTR{queue/scheduler}="none"
         ACTION=="add|change", KERNEL=="sd[a-z]|mmcblk[0-9]*", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="mq-deadline"
@@ -33,22 +33,14 @@ in {
       '';
     };
 
-    user.packages = with pkgs;
-      [ dconf2nix ] ++ (with gnome; [ polari gnome-disk-utility gnome-tweaks ])
-      ++ (with gnomeExtensions; [
-        appindicator
-        aylurs-widgets
-        blur-my-shell
-        dash-to-dock
-        gsconnect
-        just-perfection
-        openweather
-        # pop-shell
-        removable-drive-menu
-        rounded-window-corners
-        space-bar
-        user-themes
-      ]);
+    user.packages = attrValues ({
+      inherit (pkgs) dconf2nix;
+      inherit (pkgs.gnome) polari gnome-disk-utility gnome-tweaks;
+      inherit (pkgs.gnomeExtensions)
+        appindicator aylurs-widgets blur-my-shell dash-to-dock gsconnect
+        just-perfection openweather # pop-shell
+        removable-drive-menu rounded-window-corners space-bar user-themes;
+    });
 
     # Enable chrome-gnome-shell in FireFox nightly (mozilla-overlay):
     home.file.chrome-gnome-shell = {

@@ -1,7 +1,7 @@
 { config, options, lib, pkgs, ... }:
 
 let
-  inherit (lib) mkIf mkMerge mkOption;
+  inherit (lib) attrValues mkIf mkMerge mkOption;
   inherit (lib.types) str;
 
   cfg = config.modules.desktop.editors;
@@ -19,25 +19,13 @@ in {
     (mkIf (cfg.default != null) { env.EDITOR = cfg.default; })
 
     (mkIf (cfg.default == "nvim" || cfg.default == "emacs") {
-      user.packages = let latexindent = pkgs.texlive.latexindent.pkgs;
-      in with pkgs;
-      [
-        imagemagick
-        editorconfig-core-c
-        sqlite
-
-        # module dependencies
-        ## checkers: aspell
-        (aspellWithDicts (dict: with dict; [ en en-computers en-science ]))
-
-        ## JS/TS + Markdown 
-        deno
-
-        ## lsp: LaTeX + Org-Mode
-        pandoc
-        tectonic
-        texlab
-      ] ++ latexindent;
+      user.packages = attrValues ({
+        inherit (pkgs)
+          imagemagick editorconfig-core-c sqlite deno pandoc tectonic texlab;
+        aspellPlusDict = pkgs.aspellWithDicts
+          (dict: with dict; [ en en-computers en-science ]);
+        # latexindent = pkgs.texlive.latexindent.pkgs;
+      });
     })
   ];
 }

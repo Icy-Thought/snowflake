@@ -12,7 +12,7 @@ in {
       GLFW_IM_MODULE = "ibus"; # Ibus & Fcitx5 solution..
     };
 
-    hm.programs.kitty = with config.modules.themes; {
+    hm.programs.kitty = {
       enable = true;
       settings = {
         term = "xterm-kitty";
@@ -93,71 +93,74 @@ in {
         "ctrl+shift+page_down" = "previous_tab";
       };
 
-      extraConfig = mkIf (active != null) ''
+      extraConfig = let inherit (config.modules.themes) active;
+      in mkIf (active != null) ''
         include ~/.config/kitty/config/${active}.conf
       '';
     };
 
-    home.configFile = with config.modules.themes;
-      (mkMerge [
-        {
-          tab-bar = {
-            target = "kitty/tab_bar.py";
-            source = "${config.snowflake.configDir}/kitty/${active}-bar.py";
-          };
-        }
+    home.configFile = let inherit (config.modules.themes) active;
+    in (mkMerge [
+      {
+        tab-bar = {
+          target = "kitty/tab_bar.py";
+          source = "${config.snowflake.configDir}/kitty/${active}-bar.py";
+        };
+      }
 
-        (mkIf (active != null) {
-          # TODO: Find ONE general nix-automation entry for VictorMono
-          kitty-theme = {
-            target = "kitty/config/${active}.conf";
-            text = ''
-              font_family               Victor Mono SemiBold Nerd Font Complete
-              italic_font               Victor Mono SemiBold Italic Nerd Font Complete
-              bold_font                 Victor Mono Bold Nerd Font Complete
-              bold_italic_font          Victor Mono Bold Italic Nerd Font Complete
-              font_size                 ${toString (font.mono.size)}
-            '' + (with colors.main; ''
+      (mkIf (active != null) {
+        # TODO: Find ONE general nix-automation entry for VictorMono
+        kitty-theme = {
+          target = "kitty/config/${active}.conf";
+          text = let
+            inherit (config.modules.themes.colors.main) bright normal types;
+            inherit (config.modules.themes.font.mono) size;
+          in ''
+            font_family               Victor Mono SemiBold Nerd Font Complete
+            italic_font               Victor Mono SemiBold Italic Nerd Font Complete
+            bold_font                 Victor Mono Bold Nerd Font Complete
+            bold_italic_font          Victor Mono Bold Italic Nerd Font Complete
+            font_size                 ${toString (size)}
 
-              foreground                ${types.fg}
-              background                ${types.bg}
+            foreground                ${types.fg}
+            background                ${types.bg}
 
-              cursor                    ${normal.yellow}
-              cursor_text_color         ${types.bg}
+            cursor                    ${normal.yellow}
+            cursor_text_color         ${types.bg}
 
-              tab_bar_background        ${types.bg}
-              tab_title_template        "{fmt.fg._7976ab}{fmt.bg.default} ○ {index}:{f'{title[:6]}…{title[-6:]}' if title.rindex(title[-1]) + 1 > 25 else title}{' []' if layout_name == 'stack' else '''} "
-              active_tab_title_template "{fmt.fg._f2cdcd}{fmt.bg.default} 綠{index}:{f'{title[:6]}…{title[-6:]}' if title.rindex(title[-1]) + 1 > 25 else title}{' []' if layout_name == 'stack' else '''} "
+            tab_bar_background        ${types.bg}
+            tab_title_template        "{fmt.fg._7976ab}{fmt.bg.default} ○ {index}:{f'{title[:6]}…{title[-6:]}' if title.rindex(title[-1]) + 1 > 25 else title}{' []' if layout_name == 'stack' else '''} "
+            active_tab_title_template "{fmt.fg._f2cdcd}{fmt.bg.default} 綠{index}:{f'{title[:6]}…{title[-6:]}' if title.rindex(title[-1]) + 1 > 25 else title}{' []' if layout_name == 'stack' else '''} "
 
-              selection_foreground      ${types.bg}
-              selection_background      ${types.highlight}
+            selection_foreground      ${types.bg}
+            selection_background      ${types.highlight}
 
-              color0                    ${normal.black}
-              color8                    ${bright.black}
+            color0                    ${normal.black}
+            color8                    ${bright.black}
 
-              color1                    ${normal.red}
-              color9                    ${bright.red}
+            color1                    ${normal.red}
+            color9                    ${bright.red}
 
-              color2                    ${normal.green}
-              color10                   ${bright.green}
+            color2                    ${normal.green}
+            color10                   ${bright.green}
 
-              color3                    ${normal.yellow}
-              color11                   ${bright.yellow}
+            color3                    ${normal.yellow}
+            color11                   ${bright.yellow}
 
-              color4                    ${normal.blue}
-              color12                   ${bright.blue}
+            color4                    ${normal.blue}
+            color12                   ${bright.blue}
 
-              color5                    ${normal.magenta}
-              color13                   ${bright.magenta}
+            color5                    ${normal.magenta}
+            color13                   ${bright.magenta}
 
-              color6                    ${normal.cyan}
-              color14                   ${bright.cyan}
+            color6                    ${normal.cyan}
+            color14                   ${bright.cyan}
 
-              color7                    ${normal.white}
-              color15                   ${bright.white}
-            '');
-          };
-        })
-      ]);
+            color7                    ${normal.white}
+            color15                   ${bright.white}
+          '';
+        };
+      })
+    ]);
   };
 }

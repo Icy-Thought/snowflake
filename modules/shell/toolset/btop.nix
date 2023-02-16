@@ -4,13 +4,14 @@ let
   inherit (lib) mkIf;
   inherit (lib.strings) concatStringsSep;
   inherit (lib.my) mkBoolOpt;
-
-  themeCfg = config.modules.themes;
 in {
   options.modules.shell.btop = { enable = mkBoolOpt false; };
 
   config = mkIf config.modules.shell.btop.enable {
-    hm.programs.btop = {
+    hm.programs.btop = let
+
+      inherit (config.modules.themes) active;
+    in {
       enable = true;
       settings = {
         force_tty = false;
@@ -23,7 +24,7 @@ in {
         background_update = true;
         disks_filter = "exclude=/boot";
 
-        color_theme = "${themeCfg.active}";
+        color_theme = "${active}";
         rounded_corners = true;
         theme_background = false;
         truecolor = true;
@@ -88,9 +89,11 @@ in {
       };
     };
 
-    home.configFile.btop-theme = mkIf (themeCfg.active != null) {
-      target = "btop/themes/${themeCfg.active}.theme";
-      text = with themeCfg.colors.main; ''
+    home.configFile.btop-theme = let inherit (config.modules.themes) active;
+    in mkIf (active != null) {
+      target = "btop/themes/${active}.theme";
+      text = let inherit (config.modules.themes.colors.main) bright types;
+      in ''
         theme[main_bg]="${types.bg}"
         theme[main_fg]="${types.fg}"
         theme[title]="${types.fg}"

@@ -1,7 +1,7 @@
 { options, config, lib, pkgs, ... }:
 
 let
-  inherit (lib) mkIf mkMerge mkOption;
+  inherit (lib) attrValues mkIf mkMerge mkOption;
   inherit (lib.types) nullOr enum;
   inherit (lib.my) mkBoolOpt;
 
@@ -30,21 +30,13 @@ in {
         config.whitelist.prefix = [ "/home" ];
       };
 
-      user.packages = with pkgs; [
-        any-nix-shell
-        fzf
-        pwgen
-        yt-dlp
-        csview
-        ripdrag
+      user.packages = attrValues ({
+        inherit (pkgs) any-nix-shell fzf pwgen yt-dlp csview ripdrag;
 
         # GNU Alternatives
-        bat
-        exa
-        fd
-        (ripgrep.override { withPCRE2 = true; })
-        zoxide
-      ];
+        inherit (pkgs) bat exa fd zoxide;
+        rgFull = pkgs.ripgrep.override { withPCRE2 = true; };
+      });
     })
   ];
 }

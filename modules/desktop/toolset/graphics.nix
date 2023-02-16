@@ -1,7 +1,7 @@
 { config, options, lib, pkgs, ... }:
 
 let
-  inherit (lib) mkIf mkMerge;
+  inherit (lib) attrValues optionalAttrs;
   inherit (lib.my) mkBoolOpt;
 
   cfg = config.modules.desktop.toolset.graphics;
@@ -13,32 +13,13 @@ in {
     vector.enable = mkBoolOpt false;
   };
 
-  config = mkMerge [
-    (mkIf cfg.base.enable {
-      user.packages = with pkgs; [ eyedropper font-manager imagemagick ];
-    })
-
-    # Illustrator & Indesign replacement:
-    (mkIf cfg.vector.enable {
-      user.packages = with pkgs; [ inkscape rnote ];
-      # TODO: hard-coded inkscape config
-    })
-
-    # Photoshop replacement:
-    (mkIf cfg.raster.enable {
-      user.packages = with pkgs; [
-        # krita
-        gimp
-        gimpPlugins.resynthesizer
-      ];
-
-      # home.configFile."GIMP/2.10" = {
-      #   source = "${configDir}/gimp";
-      #   recursive = true;
-      # };
-    })
-
-    # 3D-Modelling
-    (mkIf cfg.modeling.enable { user.packages = with pkgs; [ blender ]; })
-  ];
+  config = {
+    user.packages = attrValues ({ } // optionalAttrs cfg.base.enable {
+      inherit (pkgs) eyedropper font-manager imagemagick;
+    } // optionalAttrs cfg.vector.enable { inherit (pkgs) inkscape rnote; }
+      // optionalAttrs cfg.raster.enable {
+        inherit (pkgs) gimp;
+        inherit (pkgs.gimpPlugins) resynthesizer;
+      } // optionalAttrs cfg.modeling.enable { inherit (pkgs) blender; });
+  };
 }

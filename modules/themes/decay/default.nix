@@ -2,7 +2,7 @@
 
 let
   inherit (builtins) toString;
-  inherit (lib) mkDefault mkIf mkMerge;
+  inherit (lib) attrValues mkDefault mkIf mkMerge;
 
   cfg = config.modules.themes;
 in {
@@ -128,17 +128,22 @@ in {
     # })
 
     (mkIf config.services.xserver.enable {
-      fonts.fonts = with pkgs; [ cfg.font.package twitter-color-emoji ];
+      fonts.fonts = attrValues ({
+        inherit (pkgs) twitter-color-emoji;
+        font = cfg.font.package;
+      });
 
       hm.programs.rofi = {
-        extraConfig = with cfg; {
-          icon-theme = "${iconTheme.name}";
-          font = with font;
-            "${sans.family} ${sans.weight} ${toString (sans.size)}";
+        extraConfig = {
+          icon-theme = let inherit (cfg.iconTheme) name; in "${name}";
+          font = let inherit (cfg.font.sans) family weight size;
+          in "${family} ${weight} ${toString (size)}";
         };
 
-        theme = let inherit (config.hm.lib.formats.rasi) mkLiteral;
-        in with cfg.colors.rofi; {
+        theme = let
+          inherit (config.hm.lib.formats.rasi) mkLiteral;
+          inherit (cfg.colors.rofi) bg fg ribbon selected transparent urgent;
+        in {
           "*" = {
             fg = mkLiteral "${fg}";
             bg = mkLiteral "${bg.main}";
@@ -273,33 +278,37 @@ in {
         };
       };
 
-      hm.programs.sioyek.config = with cfg.font; {
-        "custom_background_color " = "";
-        "custom_text_color " = "";
+      hm.programs.sioyek.config =
+        let inherit (cfg.font.mono) family size weight;
+        in {
+          "custom_background_color " = "";
+          "custom_text_color " = "";
 
-        "text_highlight_color" = "";
-        "visual_mark_color" = "";
-        "search_highlight_color" = "";
-        "link_highlight_color" = "";
-        "synctex_highlight_color" = "";
+          "text_highlight_color" = "";
+          "visual_mark_color" = "";
+          "search_highlight_color" = "";
+          "link_highlight_color" = "";
+          "synctex_highlight_color" = "";
 
-        "page_separator_width" = "2";
-        "page_separator_color" = "";
-        "status_bar_color" = "";
+          "page_separator_width" = "2";
+          "page_separator_color" = "";
+          "status_bar_color" = "";
 
-        "font_size" = "${toString (mono.size)}";
-        "ui_font" = "${mono.family} ${mono.weight}";
-      };
+          "font_size" = "${toString (size)}";
+          "ui_font" = "${family} ${weight}";
+        };
     })
 
     (mkIf (config.modules.desktop.envProto == "x11") {
       services.xserver.displayManager = {
-        lightdm.greeters.mini.extraConfig = with cfg.colors.main; ''
-          text-color = "${normal.blue}"
-          password-background-color = "${normal.black}"
-          window-color = "${types.border}"
-          border-color = "${types.border}"
-        '';
+        lightdm.greeters.mini.extraConfig =
+          let inherit (cfg.colors.main) normal types;
+          in ''
+            text-color = "${normal.blue}"
+            password-background-color = "${normal.black}"
+            window-color = "${types.border}"
+            border-color = "${types.border}"
+          '';
       };
     })
   ]);

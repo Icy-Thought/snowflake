@@ -1,7 +1,7 @@
 { options, config, lib, pkgs, ... }:
 
 let
-  inherit (lib) mkIf mkOption getExe;
+  inherit (lib) attrValues mkIf mkOption getExe;
   inherit (lib.types) package;
   inherit (lib.my) mkBoolOpt;
 
@@ -20,12 +20,12 @@ in {
   # TODO: re-create theming -> general + changable banner (drun, run, systemd and power-menu)
 
   config = mkIf cfg.enable {
-    user.packages = with pkgs; [ rofi-systemd ];
+    user.packages = [ pkgs.rofi-systemd ];
 
     hm.programs.rofi = {
       enable = true;
       package = cfg.package;
-      plugins = with pkgs; [ rofi-emoji rofi-power-menu ];
+      plugins = attrValues ({ inherit (pkgs) rofi-emoji rofi-power-menu; });
 
       extraConfig = {
         terminal = "${getExe config.modules.desktop.terminal.default}";

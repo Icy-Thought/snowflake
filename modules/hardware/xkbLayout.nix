@@ -2,6 +2,7 @@
 
 let
   inherit (lib) mkIf mkMerge getExe;
+  inherit (pkgs) writeText xorg;
   inherit (lib.my) mkBoolOpt;
 
   cfg = config.modules.hardware.xkbLayout;
@@ -11,14 +12,14 @@ in {
   config = mkMerge [
     (mkIf cfg.hyperCtrl.enable {
       services.xserver = {
-        displayManager.sessionCommands = with pkgs; ''
+        displayManager.sessionCommands = ''
           ${getExe xorg.setxkbmap} -layout us-hyperCtrl
         '';
 
         extraLayouts.us-hyperCtrl = {
           description = "US Layout with Right Ctrl = Hyper";
           languages = [ "eng" ];
-          symbolsFile = pkgs.writeText "us-hyperCtrl" ''
+          symbolsFile = writeText "us-hyperCtrl" ''
             partial alphanumeric_keys
 
             partial modifier_keys

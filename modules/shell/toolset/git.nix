@@ -1,20 +1,19 @@
 { config, options, lib, pkgs, ... }:
 
 let
-  inherit (lib) mkIf;
+  inherit (lib) attrValues optionalAttrs mkIf;
   inherit (lib.my) mkBoolOpt;
 in {
   options.modules.shell.git = { enable = mkBoolOpt false; };
 
   config = mkIf config.modules.shell.git.enable {
-    user.packages = with pkgs; [
-      act
-      dura
-      gitui
-      gitAndTools.gh
-      gitAndTools.git-open
-      (mkIf (config.modules.shell.gnupg.enable) gitAndTools.git-crypt)
-    ];
+    user.packages = attrValues ({
+      inherit (pkgs) act dura gitui;
+      inherit (pkgs.gitAndTools) gh git-open;
+    } // optionalAttrs config.modules.shell.gnupg.enable {
+      inherit (pkgs.gitAndTools) git-crypt;
+
+    });
 
     # Prevent x11 askPass prompt on git push:
     programs.ssh.askPassword = "";

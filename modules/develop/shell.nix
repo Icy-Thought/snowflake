@@ -8,7 +8,7 @@ in {
 
   config = mkMerge [
     (mkIf config.modules.develop.shell.enable {
-      user.packages = with pkgs; [ shellcheck ];
+      user.packages = [ pkgs.shellcheck ];
     })
 
     (mkIf config.modules.develop.xdg.enable {

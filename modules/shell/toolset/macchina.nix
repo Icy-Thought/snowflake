@@ -7,7 +7,7 @@ in {
   options.modules.shell.macchina = { enable = mkBoolOpt false; };
 
   config = mkIf config.modules.shell.macchina.enable {
-    user.packages = with pkgs; [ macchina ];
+    user.packages = [ pkgs.macchina ];
 
     home.configFile = let configDir = config.snowflake.configDir;
     in {

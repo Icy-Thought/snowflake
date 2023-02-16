@@ -8,7 +8,7 @@ in {
 
   config = mkMerge [
     (mkIf config.modules.develop.julia.enable {
-      user.packages = with pkgs; [ julia-bin ];
+      user.packages = [ pkgs.julia-bin ];
       # TODO: automate the installation of: [ Gadfly LanguageServer ]
     })
 

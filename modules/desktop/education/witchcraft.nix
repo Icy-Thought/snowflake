@@ -8,6 +8,6 @@ in {
 
   config = mkIf config.modules.desktop.education.witchcraft.enable {
     # TODO: OSS packages + configuration.
-    user.packages = with pkgs; [ kicad ];
+    user.packages = [ pkgs.kicad ];
   };
 }

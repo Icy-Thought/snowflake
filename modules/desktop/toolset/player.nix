@@ -1,7 +1,7 @@
 { inputs, options, config, lib, pkgs, ... }:
 
 let
-  inherit (lib) mkIf mkMerge;
+  inherit (lib) attrValues mkIf mkMerge;
   inherit (lib.my) mkBoolOpt;
 
   cfg = config.modules.desktop.toolset.player;
@@ -15,38 +15,36 @@ in {
     (mkIf cfg.music.enable {
       hm.imports = [ inputs.spicetify-nix.homeManagerModules.default ];
 
-      hm.programs.spicetify =
-        let spicePkgs = inputs.spicetify-nix.packages.${pkgs.system}.default;
-        in {
-          enable = true;
-          spotifyPackage = pkgs.spotify-unwrapped;
-          spicetifyPackage = pkgs.spicetify-cli;
+      hm.programs.spicetify = let
+        inherit (inputs.spicetify-nix.packages.${pkgs.system}.default)
+          apps extensions themes;
+      in {
+        enable = true;
+        spotifyPackage = pkgs.spotify-unwrapped;
+        spicetifyPackage = pkgs.spicetify-cli;
 
-          theme = spicePkgs.themes.catppuccin-mocha;
-          colorScheme = "flamingo";
+        theme = themes.catppuccin-mocha;
+        colorScheme = "flamingo";
 
-          enabledCustomApps = with spicePkgs.apps; [ new-releases lyrics-plus ];
-          enabledExtensions = with spicePkgs.extensions; [
-            adblock
-            fullAppDisplay
-            hidePodcasts
-            keyboardShortcut
-            playNext
-            showQueueDuration
-            shuffle
-          ];
-        };
+        enabledCustomApps = [ apps.new-releases apps.lyrics-plus ];
+        enabledExtensions = [
+          extensions.adblock
+          extensions.fullAppDisplay
+          extensions.hidePodcasts
+          extensions.keyboardShortcut
+          extensions.playNext
+          extensions.showQueueDuration
+          extensions.shuffle
+        ];
+      };
     })
 
     (mkIf cfg.video.enable {
       hm.programs.mpv = {
         enable = true;
-        scripts = with pkgs.mpvScripts; [
-          autoload
-          mpris
-          sponsorblock
-          thumbnail
-        ];
+        scripts = attrValues ({
+          inherit (pkgs.mpvScripts) autoload mpris sponsorblock thumbnail;
+        });
         config = {
           profile = "gpu-hq";
           force-window = true;
@@ -60,7 +58,7 @@ in {
         };
       };
 
-      user.packages = with pkgs; [ mpvc ];
+      user.packages = [ pkgs.mpvc ];
     })
   ];
 }

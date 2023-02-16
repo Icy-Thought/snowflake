@@ -26,7 +26,8 @@ in {
 
   config = mkIf cfg.enable (mkMerge [
     {
-      user.packages = with pkgs; [
+      user.packages = let inherit (pkgs) firefox-devedition-bin makeDesktopItem;
+      in [
         firefox-devedition-bin
         (makeDesktopItem {
           name = "firefox-devedition-private";

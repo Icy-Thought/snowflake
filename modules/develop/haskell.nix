@@ -1,21 +1,19 @@
 { config, options, lib, pkgs, ... }:
 
 let
-  inherit (lib) mkIf mkMerge;
+  inherit (lib) attrValues mkIf mkMerge;
   inherit (lib.my) mkBoolOpt;
 in {
   options.modules.develop.haskell = { enable = mkBoolOpt false; };
 
   config = mkMerge [
     (mkIf config.modules.develop.haskell.enable {
-      user.packages = with pkgs.haskellPackages; [
-        (ghcWithHoogle (p: with p; [ taffybar xmonad xmonad-contrib ]))
-        cabal-install
-        haskell-language-server
-        hasktags
-        hpack
-        stylish-haskell
-      ];
+      user.packages = attrValues ({
+        inherit (pkgs.haskellPackages)
+          cabal-install haskell-language-server hasktags hpack stylish-haskell;
+        ghc-with-hoogle = pkgs.haskellPackages.ghcWithHoogle
+          (p: with p; [ taffybar xmonad xmonad-contrib ]);
+      });
 
       home.file.ghci-conf = {
         target = ".ghci";

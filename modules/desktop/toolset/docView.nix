@@ -2,7 +2,7 @@
 
 let
   inherit (builtins) toString;
-  inherit (lib) mkIf mkMerge;
+  inherit (lib) optionalAttrs mkIf mkMerge;
   inherit (lib.strings) concatStringsSep;
   inherit (lib.my) mkBoolOpt;
 
@@ -17,56 +17,52 @@ in {
     (mkIf cfg.zathura.enable {
       hm.programs.zathura = {
         enable = true;
-        options = with config.modules.themes;
-          (mkMerge [
-            {
-              adjust-open = "width";
-              first-page-column = "1:1";
-              selection-clipboard = "clipboard";
-              statusbar-home-tilde = true;
-              window-title-basename = true;
-            }
+        options = let
+          inherit (config.modules.themes) active;
+          inherit (config.modules.themes.colors.main) normal types;
+        in {
+          adjust-open = "width";
+          first-page-column = "1:1";
+          selection-clipboard = "clipboard";
+          statusbar-home-tilde = true;
+          window-title-basename = true;
+        } // optionalAttrs (active != null) {
+          font = let inherit (config.modules.themes.font.sans) family size;
+          in "${family} Bold ${toString (size)}";
+          recolor = true;
+          recolor-keephue = true;
+          recolor-reverse-video = true;
 
-            (mkIf (active != null) (mkMerge [
-              {
-                font = "${font.sans.family} Bold ${toString (font.sans.size)}";
-                recolor = true;
-                recolor-keephue = true;
-                recolor-reverse-video = true;
-              }
-              (with colors.main; {
-                default-fg = "${types.fg}";
-                default-bg = "${types.bg}";
+          default-fg = "${types.fg}";
+          default-bg = "${types.bg}";
 
-                statusbar-fg = "${types.bg}";
-                statusbar-bg = "${types.highlight}";
+          statusbar-fg = "${types.bg}";
+          statusbar-bg = "${types.highlight}";
 
-                inputbar-fg = "${normal.yellow}";
-                inputbar-bg = "${types.bg}";
+          inputbar-fg = "${normal.yellow}";
+          inputbar-bg = "${types.bg}";
 
-                notification-fg = "${normal.white}";
-                notification-bg = "${normal.black}";
+          notification-fg = "${normal.white}";
+          notification-bg = "${normal.black}";
 
-                notification-error-fg = "${normal.white}";
-                notification-error-bg = "${normal.black}";
+          notification-error-fg = "${normal.white}";
+          notification-error-bg = "${normal.black}";
 
-                notification-warning-fg = "${normal.red}";
-                notification-warning-bg = "${normal.black}";
+          notification-warning-fg = "${normal.red}";
+          notification-warning-bg = "${normal.black}";
 
-                highlight-active-color = "${types.fg}";
-                highlight-color = "${types.panelbg}";
+          highlight-active-color = "${types.fg}";
+          highlight-color = "${types.panelbg}";
 
-                completion-fg = "${normal.yellow}";
-                completion-bg = "${types.bg}";
+          completion-fg = "${normal.yellow}";
+          completion-bg = "${types.bg}";
 
-                completion-highlight-fg = "${types.bg}";
-                completion-highlight-bg = "${normal.yellow}";
+          completion-highlight-fg = "${types.bg}";
+          completion-highlight-bg = "${normal.yellow}";
 
-                recolor-lightcolor = "${types.bg}";
-                recolor-darkcolor = "${normal.white}";
-              })
-            ]))
-          ]);
+          recolor-lightcolor = "${types.bg}";
+          recolor-darkcolor = "${normal.white}";
+        };
       };
     })
 

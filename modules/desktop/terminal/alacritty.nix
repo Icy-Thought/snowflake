@@ -124,25 +124,28 @@ in {
     home.configFile = (mkIf (active != null) {
       alacritty-conf = {
         target = "alacritty/config/${active}.yml";
-        text = (with config.modules.themes.font; ''
+        text = let
+          inherit (config.modules.themes.font.sans) family weight size;
+          inherit (config.modules.themes.colors.main) bright normal types;
+        in ''
           font:
             normal:
-              family: "${sans.family}"
-              style:  "${sans.weight}"
+              family: "${family}"
+              style:  "${weight}"
 
             bold:
-              family: "${sans.family}"
+              family: "${family}"
               style:  "Bold"
 
             italic:
-              family: "${sans.family}"
-              style:  "${sans.weight} Italic"
+              family: "${family}"
+              style:  "${weight} Italic"
 
             bold_italics:
-              family: "${sans.family}"
-              style:  "${sans.weight} Italic"
+              family: "${family}"
+              style:  "${weight} Italic"
 
-            size: ${toString (mono.size)}
+            size: ${toString (size + 3)}
 
             offset:
               x: 0
@@ -151,7 +154,7 @@ in {
             glyph_offset:
               x: 0
               y: 0
-        '') + (with config.modules.themes.colors.main; ''
+
           colors:
             primary:
               foreground: "${types.fg}"
@@ -184,7 +187,7 @@ in {
               magenta:    "${bright.magenta}"
               cyan:       "${bright.cyan}"
               white:      "${bright.white}"
-        '');
+        '';
       };
     });
   };

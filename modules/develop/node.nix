@@ -1,14 +1,14 @@
 { config, options, lib, pkgs, ... }:
 
 let
-  inherit (lib) mkIf mkMerge getExe;
+  inherit (lib) attrValues mkIf mkMerge getExe;
   inherit (lib.my) mkBoolOpt;
 in {
   options.modules.develop.node = { enable = mkBoolOpt false; };
 
   config = mkMerge [
     (mkIf config.modules.develop.node.enable {
-      user.packages = with pkgs; [ nodejs_latest yarn ];
+      user.packages = attrValues ({ inherit (pkgs) nodejs_latest yarn; });
 
       # Run locally installed bin-script, e.g. n coffee file.coffee
       environment.shellAliases = {

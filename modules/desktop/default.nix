@@ -2,7 +2,7 @@
 
 let
   inherit (builtins) isAttrs;
-  inherit (lib) mkIf mkMerge mkOption;
+  inherit (lib) attrValues mkIf mkMerge mkOption;
   inherit (lib.types) nullOr enum;
   inherit (lib.my) anyAttrs countAttrs value;
 
@@ -45,26 +45,24 @@ in {
         popd
       '';
 
-      user.packages = with pkgs;
-        let myTerm = config.modules.desktop.terminal.default;
-        in [
-          hyperfine
-          gucharmap
-          qgnomeplatform # Qt -> GTK Theme
-          libqalculate
-          (makeDesktopItem {
-            name = "Qalc";
-            desktopName = "Qalc";
-            icon = "calc";
-            exec = "${myTerm} start qalc";
-            categories = [ "Education" "Science" "Math" ];
-          })
-        ];
+      user.packages = attrValues ({
+        inherit (pkgs)
+          hyperfine gucharmap qgnomeplatform # Qt -> GTK Theme
+          libqalculate;
+
+        qalc-launcher = pkgs.makeDesktopItem {
+          name = "Qalc";
+          desktopName = "Qalc";
+          icon = "calc";
+          exec = "${config.modules.desktop.terminal.default} start qalc";
+          categories = [ "Education" "Science" "Math" ];
+        };
+      });
 
       fonts = {
         fontDir.enable = true;
         enableGhostscriptFonts = true;
-        fonts = with pkgs; [ sarasa-gothic scheherazade-new ];
+        fonts = attrValues ({ inherit (pkgs) sarasa-gothic scheherazade-new; });
       };
 
       xdg.portal = {

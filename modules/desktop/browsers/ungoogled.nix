@@ -7,17 +7,17 @@ in {
   options.modules.desktop.browsers.ungoogled = { enable = mkBoolOpt false; };
 
   config = mkIf config.modules.desktop.browsers.ungoogled.enable {
-    user.packages = with pkgs;
-      [
-        (makeDesktopItem {
-          name = "ungoogled-private";
-          desktopName = "Ungoogled Web Browser (Private)";
-          genericName = "Launch a Private Ungoogled Chromium Instance";
-          icon = "chromium";
-          exec = "${getExe ungoogled-chromium} --incognito";
-          categories = [ "Network" ];
-        })
-      ];
+    user.packages = let inherit (pkgs) makeDesktopItem ungoogled-chromium;
+    in [
+      (makeDesktopItem {
+        name = "ungoogled-private";
+        desktopName = "Ungoogled Web Browser (Private)";
+        genericName = "Launch a Private Ungoogled Chromium Instance";
+        icon = "chromium";
+        exec = "${getExe ungoogled-chromium} --incognito";
+        categories = [ "Network" ];
+      })
+    ];
 
     hm.programs.chromium = {
       enable = true;

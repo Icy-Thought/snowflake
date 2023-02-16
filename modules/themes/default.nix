@@ -89,15 +89,18 @@ in {
           cyan = mkOpt str "#88FFFF"; # 14
           white = mkOpt str "#FFFFFF"; # 15
         };
-        types = with cfg.colors.main; {
-          bg = mkOpt str normal.black;
-          fg = mkOpt str normal.white;
-          panelbg = mkOpt str types.bg;
-          panelfg = mkOpt str types.fg;
-          border = mkOpt str types.bg;
-          error = mkOpt str normal.red;
-          warning = mkOpt str normal.yellow;
-          highlight = mkOpt str normal.white;
+        types = let
+          inherit (cfg.colors.main.normal) black red white yellow;
+          inherit (cfg.colors.main.types) bg fg;
+        in {
+          bg = mkOpt str black;
+          fg = mkOpt str white;
+          panelbg = mkOpt str bg;
+          panelfg = mkOpt str fg;
+          border = mkOpt str bg;
+          error = mkOpt str red;
+          warning = mkOpt str yellow;
+          highlight = mkOpt str white;
         };
       };
 
@@ -160,21 +163,29 @@ in {
       # Allow HM to control GTK Theme:
       programs.dconf.enable = true;
 
-      hm.gtk = with cfg; {
+      hm.gtk = {
         enable = true;
-        font = {
-          name = font.sans.family;
-          package = font.package;
-          size = font.sans.size;
+        font = let
+          inherit (cfg.font) package;
+          inherit (cfg.font.sans) family size;
+        in {
+          name = family;
+          package = package;
+          size = size;
         };
-        theme = {
-          name = gtk.name;
-          package = gtk.package;
+
+        theme = let inherit (cfg.gtk) name package;
+        in {
+          name = name;
+          package = package;
         };
-        iconTheme = {
-          name = iconTheme.name;
-          package = iconTheme.package;
+
+        iconTheme = let inherit (cfg.iconTheme) name package;
+        in {
+          name = name;
+          package = package;
         };
+
         gtk3.bookmarks = map (dir: "file://${config.user.home}/" + dir) [
           "git/icy-thought/snowflake"
           "git/icy-thought/cs-notes"
@@ -189,21 +200,24 @@ in {
         };
       };
 
-      home.pointerCursor = with cfg; {
-        name = pointer.name;
-        package = pointer.package;
-        size = pointer.size;
+      home.pointerCursor = let inherit (cfg.pointer) name package size;
+      in {
+        name = name;
+        package = package;
+        size = size;
         gtk.enable = true;
       };
 
-      fonts.fontconfig.defaultFonts = with cfg.font; {
+      fonts.fontconfig.defaultFonts = let inherit (cfg.font) emoji mono sans;
+      in {
         sansSerif = [ sans.family ];
         monospace = [ mono.family ];
         emoji = [ emoji ];
       };
 
-      hm.programs.vscode.extensions = with cfg.vscode.extension;
-        pkgs.vscode-utils.extensionsFromVscodeMarketplace [{
+      hm.programs.vscode.extensions =
+        let inherit (cfg.vscode.extension) name publisher version hash;
+        in pkgs.vscode-utils.extensionsFromVscodeMarketplace [{
           name = "${name}";
           publisher = "${publisher}";
           version = "${version}";
@@ -229,7 +243,8 @@ in {
 
           xtheme-definitions = {
             target = "xtheme/00-init";
-            text = with cfg.colors.main; ''
+            text = let inherit (cfg.colors.main) bright normal types;
+            in ''
               #define bg   ${types.bg}
               #define fg   ${types.fg}
               #define blk  ${normal.black}
@@ -277,7 +292,8 @@ in {
 
           xtheme-fonts = {
             target = "xtheme/05-fonts";
-            text = with cfg.font.mono; ''
+            text = let inherit (cfg.font.mono) family size weight;
+            in ''
               *.font: xft:${family}:style=${weight}:pixelsize=${toString size}
               Emacs.font: ${family}:style=${weight}:pixelsize=${toString size}
             '';
@@ -285,7 +301,8 @@ in {
 
           xtheme-cursor = {
             target = "xtheme/06-cursor";
-            text = with cfg.pointer; ''
+            text = let inherit (cfg.pointer) name size;
+            in ''
               Xcursor.name: left_ptr
               Xcursor.size: ${toString size}
               Xcursor.theme: ${name}
@@ -326,15 +343,15 @@ in {
       })
 
       (mkIf (cfg.onReload != { }) (let
-        reloadTheme = with pkgs;
-          (writeScriptBin "reloadTheme" ''
-            #!${stdenv.shell}
-            echo "Reloading current theme: ${cfg.active}"
-            ${concatStringsSep "\n" (mapAttrsToList (name: script: ''
-              echo "[${name}]"
-              ${script}
-            '') cfg.onReload)}
-          '');
+        reloadTheme = let inherit (pkgs) stdenv writeScriptBin;
+        in (writeScriptBin "reloadTheme" ''
+          #!${stdenv.shell}
+          echo "Reloading current theme: ${cfg.active}"
+          ${concatStringsSep "\n" (mapAttrsToList (name: script: ''
+            echo "[${name}]"
+            ${script}
+          '') cfg.onReload)}
+        '');
       in {
         user.packages = [ reloadTheme ];
         system.userActivationScripts.reloadTheme = ''

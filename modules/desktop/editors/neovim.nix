@@ -1,7 +1,7 @@
 { config, options, lib, pkgs, inputs, ... }:
 
 let
-  inherit (lib) mkIf mkMerge;
+  inherit (lib) attrValues optionalAttrs mkIf mkMerge;
   inherit (lib.my) mkBoolOpt;
 
   cfg = config.modules.desktop.editors.neovim;
@@ -15,10 +15,11 @@ in {
     {
       nixpkgs.overlays = [ inputs.nvim-nightly.overlay ];
 
-      user.packages = with pkgs; [
-        neovide
-        (mkIf (!config.modules.develop.cc.enable) gcc) # Treesitter
-      ];
+      user.packages = attrValues ({
+        inherit (pkgs) neovide;
+      } // optionalAttrs (config.modules.develop.cc.enable == false) {
+        inherit (pkgs) gcc; # Treesitter
+      });
 
       hm.programs.neovim = {
         enable = true;
@@ -74,7 +75,7 @@ in {
     })
 
     (mkIf cfg.ereshkigal.enable {
-      modules.develop.lua.fnlized.enable = true;
+      modules.develop.lua.fennel.enable = true;
 
       home.configFile = {
         ereshkigal-config = {

@@ -1,22 +1,19 @@
 { config, options, lib, pkgs, ... }:
 
 let
-  inherit (lib) mkIf mkMerge;
+  inherit (lib) attrValues mkIf mkMerge;
   inherit (lib.my) mkBoolOpt;
 in {
   options.modules.develop.python = { enable = mkBoolOpt false; };
 
   config = mkMerge [
     (mkIf config.modules.develop.python.enable {
-      user.packages = with pkgs;
-        [ python3 nodePackages.pyright ] ++ (with python3Packages; [
-          black
-          isort
-          ipython
-          pip
-          # poetry
-          setuptools
-        ]);
+      user.packages = attrValues ({
+        inherit (pkgs) python3;
+        inherit (pkgs.nodePackages) pyright;
+        inherit (pkgs.python3Packages) black isort ipython pip setuptools;
+        # poetry
+      });
 
       environment.shellAliases = {
         py = "python";
@@ -29,10 +26,10 @@ in {
     })
 
     (mkIf config.modules.desktop.editors.vscodium.enable {
-      hm.programs.vscode.extensions = with pkgs.vscode-extensions; [
-        ms-python.python
-        ms-toolsai.jupyter
-      ];
+      hm.programs.vscode.extensions = attrValues ({
+        inherit (pkgs.vscode-extensions.ms-python) python;
+        inherit (pkgs.vscode-extensions.ms-toolsai) jupyter;
+      });
     })
 
     (mkIf config.modules.develop.xdg.enable {

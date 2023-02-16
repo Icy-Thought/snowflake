@@ -9,7 +9,8 @@ in {
   config = mkIf config.modules.shell.starship.enable {
     hm.programs.starship = {
       enable = true;
-      settings = with config.modules.themes.colors.main; {
+      settings = let inherit (config.modules.themes.colors.main) normal types;
+      in {
         scan_timeout = 10;
         add_newline = true;
         line_break.disabled = true;

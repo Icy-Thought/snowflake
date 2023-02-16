@@ -1,7 +1,7 @@
 { config, options, lib, pkgs, ... }:
 
 let
-  inherit (lib) mkIf;
+  inherit (lib) attrValues optionalAttrs mkIf;
   inherit (lib.my) mkBoolOpt;
 
   cfg = config.modules.desktop.toolset.recorder;
@@ -15,19 +15,12 @@ in {
   config = mkIf cfg.enable {
     services.pipewire.jack.enable = true;
 
-    user.packages = with pkgs;
-      [
-        ffmpeg
-      ]
-      # Audio recording + Mastering:
-      ++ lists.optionals cfg.audio.enable [
-        unstable.audacity-gtk3
-        unstable.helvum
-      ]
-      # Streaming + Screen-recodring:
-      ++ lists.optionals cfg.video.enable [
-        unstable.obs-studio
-        unstable.handbrake
-      ];
+    user.packages = attrValues ({
+      inherit (pkgs) ffmpeg;
+    } // optionalAttrs cfg.audio.enable {
+      inherit (pkgs.unstable) audacity-gtk3 helvum;
+    } // optionalAttrs cfg.video.enable {
+      inherit (pkgs.unstable) obs-studio handbrake;
+    });
   };
 }

@@ -9,7 +9,7 @@ in {
   options.modules.desktop.editors.vscodium = { enable = mkBoolOpt false; };
 
   config = mkIf config.modules.desktop.editors.vscodium.enable {
-    hm.programs.vscode = with config.snowflake; {
+    hm.programs.vscode = {
       enable = true;
       package = pkgs.vscodium;
       mutableExtensionsDir = true;

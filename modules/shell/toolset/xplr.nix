@@ -13,7 +13,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    user.packages = with pkgs; [ xplr ];
+    user.packages = [ pkgs.xplr ];
 
     home.configFile.xplr-init = {
       target = "xplr/init.lua";

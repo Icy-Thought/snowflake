@@ -3,7 +3,7 @@
 }:
 
 let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf mkMerge;
   inherit (lib.my) mkBoolOpt;
 
   cfg = config.modules.desktop.extensions.eww;
@@ -17,12 +17,13 @@ in {
     hm.programs.eww = {
       enable = true;
       configDir = "${config.snowflake.configDir}/eww"; # TODO
-      package = let envProto = config.modules.desktop.envProto;
-      in (with pkgs;
-        mkMerge [
-          (mkIf (envProto == "x11") [ eww ])
-          (mkIf (envProto == "wayland") [ eww-wayland ])
-        ]);
+      package = let
+        inherit (pkgs) eww eww-wayland;
+        envProto = config.modules.desktop.envProto;
+      in mkMerge [
+        (mkIf (envProto == "x11") [ eww ])
+        (mkIf (envProto == "wayland") [ eww-wayland ])
+      ];
     };
   };
 }

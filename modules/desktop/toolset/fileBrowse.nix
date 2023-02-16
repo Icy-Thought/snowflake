@@ -1,7 +1,7 @@
 { options, config, lib, pkgs, ... }:
 
 let
-  inherit (lib) mkIf mkMerge;
+  inherit (lib) attrValues optionalAttrs mkIf mkMerge;
   inherit (lib.my) mkBoolOpt;
 
   cfg = config.modules.desktop.toolset.fileBrowse;
@@ -13,27 +13,21 @@ in {
   };
 
   config = mkMerge [
-    { services.gvfs.enable = true; }
+    {
+      services.gvfs.enable = true;
 
-    (mkIf cfg.dolphin.enable {
-      environment.systemPackages = with pkgs.libsForQt5; [
-        dolphin
-        dolphin-plugins
-      ];
-    })
-
-    (mkIf cfg.nautilus.enable {
-      environment.systemPackages = with pkgs.gnome; [ nautilus ];
-    })
+      environment.systemPackages = attrValues ({ }
+        // optionalAttrs (cfg.dolphin.enable) {
+          inherit (pkgs) dolphin dolphin-plugins;
+        } // optionalAttrs (cfg.nautilus.enable) {
+          inherit (pkgs.gnome) nautilus;
+        } // optionalAttrs (cfg.thunar.enable) {
+          inherit (pkgs.xfce)
+            thunar thunar-volman thunar-archive-plugin thunar-media-tags-plugin;
+        });
+    }
 
     (mkIf cfg.thunar.enable {
-      environment.systemPackages = with pkgs.xfce; [
-        thunar
-        thunar-volman
-        thunar-archive-plugin
-        thunar-media-tags-plugin
-      ];
-
       services.tumbler.enable = true;
 
       home.configFile = {

@@ -1,7 +1,7 @@
 { inputs, options, config, lib, pkgs, ... }:
 
 let
-  inherit (lib) mkIf mkOption;
+  inherit (lib) attrValues mkIf mkOption;
   inherit (lib.strings) optionalString;
   inherit (lib.types) enum nullOr path package;
   inherit (lib.my) mkBoolOpt;
@@ -41,15 +41,10 @@ in {
     };
     modules.hardware.kmonad.enable = true;
 
-    environment.systemPackages = with pkgs; [
-      (cfg.package.unwrapped or cfg.package)
-      libnotify
-      playerctl
-      gxmessage
-      xdotool
-      xclip
-      feh
-    ];
+    environment.systemPackages = attrValues ({
+      inherit (pkgs) libnotify playerctl gxmessage xdotool xclip feh;
+      qtilePkg = cfg.package.unwrapped or cfg.package;
+    });
 
     services.xserver = {
       displayManager.defaultSession = "none+qtile";

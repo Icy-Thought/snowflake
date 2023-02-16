@@ -1,7 +1,7 @@
 { config, lib, pkgs, inputs, ... }:
 
 let
-  inherit (lib) mkIf mkMerge mkOption;
+  inherit (lib) attrValues optionalAttrs mkIf mkMerge mkOption;
   inherit (lib.types) str package;
   inherit (lib.my) mkBoolOpt mkOpt;
 
@@ -33,12 +33,11 @@ in {
         extraPackages = epkgs: with epkgs; [ pdf-tools vterm ];
       };
 
-      user.packages = with pkgs; [
-        binutils
-        gnutls
-        zstd
-        (mkIf (config.programs.gnupg.agent.enable) pinentry-emacs)
-      ];
+      user.packages = attrValues ({
+        inherit (pkgs) binutils gnutls zstd;
+      } // optionalAttrs config.programs.gnupg.agent.enable {
+        inherit (pkgs) pinentry-emacs;
+      });
 
       environment.variables = { EMACSDIR = "$XDG_CONFIG_HOME/emacs"; };
 

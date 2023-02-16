@@ -1,7 +1,7 @@
 { config, options, lib, pkgs, ... }:
 
 let
-  inherit (lib) mkIf mkMerge;
+  inherit (lib) attrValues mkIf mkMerge;
   inherit (lib.my) mkBoolOpt;
 
   cfg = config.modules.desktop.distraction.hardware;
@@ -15,7 +15,8 @@ in {
       hardware.opengl = {
         enable = true;
         driSupport = true;
-        extraPackages = with pkgs; [ rocm-opencl-icd rocm-opencl-runtime ];
+        extraPackages =
+          attrValues ({ inherit (pkgs) rocm-opencl-icd rocm-opencl-runtime; });
         driSupport32Bit = true;
       };
 

@@ -3,7 +3,8 @@
 let
   inherit (builtins) toString;
   inherit (lib)
-    filterAttrs mkDefault mkIf mkAliasOptionModule mapAttrs mapAttrsToList;
+    attrValues filterAttrs mkDefault mkIf mkAliasOptionModule mapAttrs
+    mapAttrsToList;
   inherit (lib.my) mapModulesRec';
 in {
   imports = [
@@ -79,13 +80,9 @@ in {
 
   i18n.defaultLocale = mkDefault "en_US.UTF-8";
 
-  # Free ourselves form the pre-defined
+  # WARNING: prevent installing pre-defined packages
   environment.defaultPackages = [ ];
 
-  environment.systemPackages = with pkgs; [
-    cached-nix-shell
-    gnumake
-    unrar
-    unzip
-  ];
+  environment.systemPackages =
+    attrValues ({ inherit (pkgs) cached-nix-shell gnumake unrar unzip; });
 }

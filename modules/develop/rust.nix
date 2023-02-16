@@ -1,7 +1,7 @@
 { inputs, config, options, lib, pkgs, ... }:
 
 let
-  inherit (lib) mkIf mkMerge getExe;
+  inherit (lib) attrValues mkIf mkMerge getExe;
   inherit (lib.my) mkBoolOpt;
 in {
   options.modules.develop.rust = { enable = mkBoolOpt false; };
@@ -10,11 +10,11 @@ in {
     (mkIf config.modules.develop.rust.enable {
       nixpkgs.overlays = [ inputs.rust.overlays.default ];
 
-      user.packages = with pkgs; [
-        crate2nix
-        rust-bin.stable.latest.default
-        unstable.rust-analyzer
-      ];
+      user.packages = attrValues ({
+        rust-package = pkgs.rust-bin.stable.latest.default;
+        inherit (pkgs) crate2nix;
+        inherit (pkgs.unstable) rust-analyzer;
+      });
 
       env.PATH = [ "$(${getExe pkgs.yarn} global bin)" ];
 
@@ -25,8 +25,9 @@ in {
     })
 
     (mkIf config.modules.desktop.editors.vscodium.enable {
-      hm.programs.vscode.extensions = with pkgs.vscode-extensions;
-        [ rust-lang.rust-analyzer ];
+      hm.programs.vscode.extensions = attrValues ({
+        inherit (pkgs.vscode-extensions.rust-lang) rust-analyzer;
+      });
     })
 
     (mkIf config.modules.develop.xdg.enable {

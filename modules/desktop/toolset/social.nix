@@ -1,7 +1,7 @@
 { config, options, lib, pkgs, ... }:
 
 let
-  inherit (lib) mkIf mkMerge optionals;
+  inherit (lib) attrValues mkIf mkMerge optionals;
   inherit (lib.strings) concatStringsSep;
   inherit (lib.my) mkBoolOpt;
 
@@ -23,15 +23,16 @@ in {
       };
 
       # Install packages that have not been configured:
-      user.packages = with pkgs; [ signal-desktop tdesktop ];
+      user.packages = attrValues ({ inherit (pkgs) signal-desktop tdesktop; });
     })
 
     (mkIf cfg.element.enable {
       user.packages = let
-        element-desktop' = pkgs.symlinkJoin {
+        inherit (pkgs) makeWrapper symlinkJoin element-desktop;
+        element-desktop' = symlinkJoin {
           name = "element-desktop-in-dataHome";
-          paths = [ pkgs.element-desktop ];
-          nativeBuildInputs = [ pkgs.makeWrapper ];
+          paths = [ element-desktop ];
+          nativeBuildInputs = [ makeWrapper ];
           postBuild = ''
             wrapProgram "$out/bin/element-desktop" \
               --add-flags '--profile-dir $XDG_DATA_HOME/Element'

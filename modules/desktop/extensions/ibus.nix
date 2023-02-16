@@ -1,7 +1,7 @@
 { options, config, lib, pkgs, ... }:
 
 let
-  inherit (lib) mkIf;
+  inherit (lib) attrValues mkIf;
   inherit (lib.my) mkBoolOpt;
 
   cfg = config.modules.desktop.extensions.ibus;
@@ -11,7 +11,8 @@ in {
   config = mkIf cfg.enable {
     i18n.inputMethod = {
       enabled = "ibus";
-      ibus.engines = with pkgs.ibus-engines; [ libpinyin hangul mozc ];
+      ibus.engines =
+        attrValues ({ inherit (pkgs.ibus-engines) libpinyin hangul mozc; });
     };
 
     environment.variables = {

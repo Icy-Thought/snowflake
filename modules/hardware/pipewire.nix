@@ -28,7 +28,7 @@ in {
 
   config = mkMerge [
     (mkIf cfg.enable {
-      user.packages = with pkgs; [ easyeffects ];
+      user.packages = [ pkgs.easyeffects ];
 
       security.rtkit.enable = true;
       services.pipewire = {
