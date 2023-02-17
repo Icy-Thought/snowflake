@@ -138,7 +138,7 @@ in {
         bindkey '^_' autosuggest-accept                 # C-/ => accept suggestion
 
         # -------===[ Useful Functions ]===------- #
-        function sys_update {
+        function sysdate {
             nixos-rebuild switch --use-remote-sudo --flake .#"$(hostname)" --impure
         }
 

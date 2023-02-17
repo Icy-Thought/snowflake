@@ -30,7 +30,7 @@ in {
 
       functions = {
         fish_title = "echo $argv[1]";
-        sys_update = ''
+        sysdate = ''
           nixos-rebuild switch --use-remote-sudo --flake .#(hostname) --impure
         '';
       };

@@ -76,7 +76,7 @@ in {
     useXkbConfig = mkDefault true;
   };
 
-  time.timeZone = mkDefault "Europe/Berlin";
+  time.timeZone = mkDefault "Europe/Stockholm";
 
   i18n.defaultLocale = mkDefault "en_US.UTF-8";
 

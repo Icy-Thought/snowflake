@@ -105,7 +105,7 @@ in {
 
 
         # -------===[ Useful Functions ]===------- #
-        def sys_update():
+        def sysdate():
             subprocess.run(['nixos-rebuild', 'switch', '--use-remote-sudo', '--flake', '.' + str(subprocess.run(['hostname'], stdout=subprocess.PIPE).stdout.decode().strip()), '--impure'])
 
         # -------===[ Executing 3rd-Plugins ]===------- #

@@ -485,10 +485,10 @@
     "nvim-dir": {
       "flake": false,
       "locked": {
-        "lastModified": 1676590324,
-        "narHash": "sha256-AW8EpB4r9jy7jHOFqyxud5BNCH3vdxJORZvvE8Rslrw=",
+        "lastModified": 1676601269,
+        "narHash": "sha256-iMycre63owVqyMCFeR5liFCgAfb1XazAMbG0yhOd6aA=",
         "ref": "refs/heads/main",
-        "rev": "156916a08038bca8406b4e00d1ac5729979f46a2",
+        "rev": "57a7e39c431adf2199852a8dd85130a0623a166d",
         "revCount": 281,
         "submodules": true,
         "type": "git",
