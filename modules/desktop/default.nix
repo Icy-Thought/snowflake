@@ -48,13 +48,13 @@ in {
       user.packages = attrValues ({
         inherit (pkgs)
           hyperfine gucharmap qgnomeplatform # Qt -> GTK Theme
-          libqalculate;
+          kalker;
 
-        qalc-launcher = pkgs.makeDesktopItem {
-          name = "Qalc";
-          desktopName = "Qalc";
+        kalker-launcher = pkgs.makeDesktopItem {
+          name = "Kalker";
+          desktopName = "Kalker";
           icon = "calc";
-          exec = "${config.modules.desktop.terminal.default} start qalc";
+          exec = "${config.modules.desktop.terminal.default} start kalker";
           categories = [ "Education" "Science" "Math" ];
         };
       });
