@@ -4,9 +4,9 @@ let
   inherit (lib) mkIf;
   inherit (lib.my) mkBoolOpt;
 in {
-  options.modules.networking.wireGuard = { enable = mkBoolOpt false; };
+  options.modules.networking.wireguard = { enable = mkBoolOpt false; };
 
-  config = mkIf config.modules.networking.wireGuard.enable {
+  config = mkIf config.modules.networking.wireguard.enable {
     user.packages = [ pkgs.wireguard-tools ];
 
     networking = {

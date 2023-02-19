@@ -23,8 +23,6 @@ let
     d2nix = "dconf dump / | dconf2nix > dconf.nix";
 
     # Other
-    wud = "systemctl stop wg-quick-akkadianVPN.service";
-    wup = "systemctl start wg-quick-akkadianVPN.service";
     yta = "youtube-dl -x --audio-format mp3";
     ytv = "youtube-dl --best-quality";
   };

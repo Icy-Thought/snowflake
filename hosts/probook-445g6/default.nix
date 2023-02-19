@@ -2,10 +2,7 @@
   imports = [ ./hardware.nix ];
 
   modules = {
-    networking = {
-      networkManager.enable = true;
-      wireGuard.enable = true;
-    };
+    networking = { networkManager.enable = true; };
 
     themes.active = "catppuccin";
 

@@ -66,8 +66,8 @@ in {
       # (?) web-app status unknown due to failed login attempt.
 
       systemd.services.transmission = {
-        bindsTo = [ "wg-quick-akkadianVPN" ];
-        after = [ "wg-quick-akkadianVPN" ];
+        bindsTo = [ "" ];
+        after = [ "" ];
       };
 
       networking.firewall = {

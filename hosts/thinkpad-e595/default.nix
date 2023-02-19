@@ -10,7 +10,7 @@
 
     networking = {
       networkManager.enable = true;
-      akkadianVPN.enable = true;
+      # borsippaNET.enable = true;
     };
 
     services = { ssh.enable = true; };
