@@ -32,10 +32,4 @@
       gnupg.enable = true;
     };
   };
-
-  services = {
-    upower.enable = true;
-    printing.enable = true;
-    xserver.videoDrivers = [ "modesetting" ];
-  };
 }

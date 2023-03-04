@@ -69,4 +69,9 @@ in {
     bluetooth.enable = true;
     pointer.enable = true;
   };
+
+  services = {
+    upower.enable = true;
+    xserver.videoDrivers = [ "modesetting" ];
+  };
 }

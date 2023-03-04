@@ -755,9 +755,9 @@ scratchpads =
         (className =? "GalaxyBudsClient")
         nearFullFloat
     , NS
-        "Neovide"
-        "neovide --multigrid --frame none --maximized"
-        (className =? "neovide")
+        "Emacs"
+        "emacsclient -c"
+        (className =? "Emacs")
         nearFullFloat
     , NS
         "Picture-in-Picture"
@@ -936,7 +936,7 @@ addKeys conf@XConfig { modMask = modm } =
 
              -- ScratchPad(s)
            , ((modalt, xK_b), doScratchpad "System Monitor")
-           , ((modalt, xK_e), doScratchpad "Neovide")
+           , ((modalt, xK_e), doScratchpad "Emacs")
            , ((modalt, xK_h), doScratchpad "Telegram")
            , ((modalt, xK_j), doScratchpad "Discord")
            , ((modalt, xK_k), doScratchpad "Element")

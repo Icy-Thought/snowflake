@@ -70,6 +70,21 @@ in {
     bluetooth.enable = true;
     kmonad.deviceID = "/dev/input/by-path/platform-i8042-serio-0-event-kbd";
     pointer.enable = true;
+    printer.enable = true;
     razer.enable = true;
+  };
+
+  services = {
+    upower.enable = true;
+    xserver = {
+      videoDrivers = [ "amdgpu" ];
+      deviceSection = ''
+        Option "TearFree" "true"
+      '';
+      libinput.touchpad = {
+        accelSpeed = "0.5";
+        accelProfile = "adaptive";
+      };
+    };
   };
 }

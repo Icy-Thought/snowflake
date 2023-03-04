@@ -66,21 +66,4 @@
       };
     };
   };
-
-  services = {
-    printing.enable = true;
-    upower.enable = true;
-
-    xserver = {
-      videoDrivers = [ "amdgpu" ];
-      deviceSection = ''
-        Option "TearFree" "true"
-      '';
-
-      libinput.touchpad = {
-        accelSpeed = "0.5";
-        accelProfile = "adaptive";
-      };
-    };
-  };
 }

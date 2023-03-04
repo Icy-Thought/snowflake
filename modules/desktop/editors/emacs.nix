@@ -30,7 +30,15 @@ in {
       hm.programs.emacs = {
         enable = true;
         package = cfg.package;
-        extraPackages = epkgs: with epkgs; [ pdf-tools vterm ];
+        extraPackages = epkgs: [ epkgs.pdf-tools epkgs.vterm ];
+      };
+      hm.services.emacs = {
+        enable = true;
+        client = {
+          enable = true;
+          arguments = [ "-c" ];
+        };
+        socketActivation.enable = true;
       };
 
       user.packages = attrValues ({
