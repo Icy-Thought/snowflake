@@ -11,8 +11,13 @@ in {
   options.modules.desktop.editors.emacs = {
     package = mkOption {
       type = package;
-      default =
-        if (envProto == "wayland") then pkgs.emacsPgtk else pkgs.emacsGit;
+      default = if (envProto == "wayland") then
+        pkgs.emacsPgtk
+      else
+        pkgs.emacsGit.override { # TODO: automate build...
+          withGTK3 = true;
+          withX = true;
+        };
     };
     doomemacs = rec {
       enable = mkBoolOpt false;
@@ -30,8 +35,9 @@ in {
       hm.programs.emacs = {
         enable = true;
         package = cfg.package;
-        extraPackages = epkgs: [ epkgs.pdf-tools epkgs.vterm ];
+        extraPackages = epkgs: with epkgs; [ pdf-tools vterm ];
       };
+
       hm.services.emacs = {
         enable = true;
         client = {

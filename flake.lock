@@ -65,11 +65,11 @@
     "emacs-dir": {
       "flake": false,
       "locked": {
-        "lastModified": 1677971477,
-        "narHash": "sha256-8FF6JDrKMj5QDJ1unQngUhzOOSMOtObIYxOvLky0F8I=",
+        "lastModified": 1678144946,
+        "narHash": "sha256-Mi/c9R6v9avxNgr70EUdvm+ovPwUUfMWQXEoaWp8zc0=",
         "ref": "refs/heads/main",
-        "rev": "98ccb583e7d007327635836823ccd38b05e72fd7",
-        "revCount": 43,
+        "rev": "bf95f25e8faaa9465798cb5e0cc10896c132f1ab",
+        "revCount": 48,
         "submodules": true,
         "type": "git",
         "url": "https://github.com/Icy-Thought/emacs.d.git"
@@ -305,11 +305,11 @@
       },
       "locked": {
         "dir": "contrib",
-        "lastModified": 1677739335,
-        "narHash": "sha256-+Nmh4jJWueVy/pxD1KyGcO9JIekUFFs/Az3pe5piDUE=",
+        "lastModified": 1678060331,
+        "narHash": "sha256-JnKiZsG4MlNDNaSy9WvRJF2a6gaeiqtw0BmYNQ4DquQ=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "fb1db80f5ab707e188be3c60539fa38eaf996f24",
+        "rev": "e389b189021cb6b72cfd7583ce6fb5d8d3346d45",
         "type": "github"
       },
       "original": {
@@ -485,11 +485,11 @@
     "nvim-dir": {
       "flake": false,
       "locked": {
-        "lastModified": 1676758409,
-        "narHash": "sha256-9CWw8Vwro0ohTDWN49vvZiyGxJ9A+UGRso1790bFhjs=",
+        "lastModified": 1678106221,
+        "narHash": "sha256-mQF1/2dfdMUgslR/BGZEOsgXzL7ka8LHZZa/4Ws3vBA=",
         "ref": "refs/heads/main",
-        "rev": "d66846eecd0123d461dd3a686dd0adb1b78a2fc3",
-        "revCount": 282,
+        "rev": "19b3936a3e63f95a97ba16e08bed0550c82a5a20",
+        "revCount": 283,
         "submodules": true,
         "type": "git",
         "url": "https://github.com/Icy-Thought/nvim.d.git"
@@ -507,11 +507,11 @@
         "nixpkgs": "nixpkgs_4"
       },
       "locked": {
-        "lastModified": 1677744945,
-        "narHash": "sha256-F15QaI7q22qZ5j+ejFKnZsehNn6lxAmZvTqeEMriQ+s=",
+        "lastModified": 1678090567,
+        "narHash": "sha256-ZSKhaesPn2WHnqfshj6TDHO5ob1o+wgUjiP4oZ11eLc=",
         "owner": "nix-community",
         "repo": "neovim-nightly-overlay",
-        "rev": "dbb1acd49b900866f7e2d6d84fc66b414e90bcbf",
+        "rev": "13bcb7770ffa76e5e35a9dc1c12b146c22f10bdf",
         "type": "github"
       },
       "original": {
