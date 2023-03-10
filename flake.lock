@@ -65,11 +65,11 @@
     "emacs-dir": {
       "flake": false,
       "locked": {
-        "lastModified": 1678144946,
-        "narHash": "sha256-Mi/c9R6v9avxNgr70EUdvm+ovPwUUfMWQXEoaWp8zc0=",
+        "lastModified": 1678450612,
+        "narHash": "sha256-bcBDUKadyGXVzgjmTYM+Xn5NqmwvO6QSswi51DUJ+34=",
         "ref": "refs/heads/main",
-        "rev": "bf95f25e8faaa9465798cb5e0cc10896c132f1ab",
-        "revCount": 48,
+        "rev": "2a113bf4430a8c246ab2b64b1d62140b8041250d",
+        "revCount": 53,
         "submodules": true,
         "type": "git",
         "url": "https://github.com/Icy-Thought/emacs.d.git"
@@ -485,11 +485,11 @@
     "nvim-dir": {
       "flake": false,
       "locked": {
-        "lastModified": 1678106221,
-        "narHash": "sha256-mQF1/2dfdMUgslR/BGZEOsgXzL7ka8LHZZa/4Ws3vBA=",
+        "lastModified": 1678449777,
+        "narHash": "sha256-2UC8EruhD/3cLgYErFg06jl4e+n2fULVglZPNduV6Jg=",
         "ref": "refs/heads/main",
-        "rev": "19b3936a3e63f95a97ba16e08bed0550c82a5a20",
-        "revCount": 283,
+        "rev": "66bdd53229a9a4fa49950160e27b319d212805fc",
+        "revCount": 284,
         "submodules": true,
         "type": "git",
         "url": "https://github.com/Icy-Thought/nvim.d.git"
