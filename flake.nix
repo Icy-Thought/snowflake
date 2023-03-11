@@ -26,6 +26,7 @@
 
     # Toolset ++ Application(s)
     emacs.url = "github:nix-community/emacs-overlay";
+    doomemacs.url = "github:nix-community/nix-doom-emacs/";
     nvim-nightly = {
       url = "github:nix-community/neovim-nightly-overlay";
       # WARN: temporary solution until #164 solved...

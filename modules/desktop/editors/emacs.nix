@@ -19,12 +19,7 @@ in {
           withX = true;
         };
     };
-    doomemacs = rec {
-      enable = mkBoolOpt false;
-      forgeUrl = mkOpt str "https://github.com";
-      repoUrl = mkOpt str "${forgeUrl}/doomemacs/doomemacs";
-      configRepoUrl = mkOpt str "${forgeUrl}/icy-thought/emacs/";
-    };
+    doomemacs.enable = mkBoolOpt false;
     irkalla.enable = mkBoolOpt false;
   };
 
@@ -32,20 +27,7 @@ in {
     {
       nixpkgs.overlays = [ inputs.emacs.overlay ];
 
-      hm.programs.emacs = {
-        enable = true;
-        package = cfg.package;
-        extraPackages = epkgs: with epkgs; [ pdf-tools vterm ];
-      };
-
-      hm.services.emacs = {
-        enable = true;
-        client = {
-          enable = true;
-          arguments = [ "-c" ];
-        };
-        socketActivation.enable = true;
-      };
+      hm.services.emacs.enable = true;
 
       user.packages = attrValues ({
         inherit (pkgs) binutils gnutls zstd;
@@ -108,6 +90,12 @@ in {
     }
 
     (mkIf cfg.irkalla.enable {
+      hm.programs.emacs = {
+        enable = true;
+        package = cfg.package;
+        extraPackages = epkgs: with epkgs; [ pdf-tools vterm ];
+      };
+
       home.configFile.irkalla-conf = {
         target = "emacs";
         source = "${inputs.emacs-dir}/irkalla";
@@ -116,28 +104,20 @@ in {
     })
 
     (mkIf cfg.doomemacs.enable {
+      hm.imports = [ inputs.doomemacs.hmModule ];
+
+      hm.programs.doom-emacs = {
+        enable = true;
+        emacsPackage = cfg.package;
+        doomPrivateDir = "${inputs.emacs-dir}/doom-config";
+      };
+
       env.PATH = [ "$XDG_CONFIG_HOME/emacs/bin" ];
 
       environment.variables = {
         DOOMDIR = "$XDG_CONFIG_HOME/doomemacs";
         DOOMLOCALDIR = "$XDG_DATA_HOME/doomemacs";
       };
-
-      home.configFile.doom-conf = {
-        target = "doomemacs";
-        source = "${inputs.emacs-dir}/doom-config";
-        recursive = true;
-      };
-
-      # TODO: resort to manual solution for now...
-      # home.activation = {
-      #   installDoomEmacs = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      #     if [ ! -d "$XDG_CONFIG_HOME/emacs" ]; then
-      #        git clone --depth=1 --single-branch "${cfg.doomemacs.repoUrl}" "$XDG_CONFIG_HOME/emacs"
-      #        git clone "${cfg.doomemacs.configRepoUrl}" "$XDG_CONFIG_HOME/doomemacs"
-      #     fi
-      #   '';
-      # };
     })
   ];
 }
