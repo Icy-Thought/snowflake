@@ -52,10 +52,10 @@
       };
       toolset = {
         downloader.transmission.enable = true;
-        graphics = {
-          raster.enable = true;
-          vector.enable = true;
-        };
+        # graphics = {
+        #   raster.enable = true;
+        #   vector.enable = true;
+        # };
         player = {
           music.enable = true;
           video.enable = true;
