@@ -3,7 +3,7 @@
 
   modules = {
     shell = {
-      default = "fish";
+      default = "zsh";
       git.enable = true;
       gnupg.enable = true;
     };
