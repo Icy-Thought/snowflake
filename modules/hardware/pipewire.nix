@@ -9,21 +9,7 @@ let
 in {
   options.modules.hardware.pipewire = {
     enable = mkBoolOpt false;
-    lowLatency = {
-      enable = mkBoolOpt false;
-      quantum = mkOption {
-        description = "Minimum quantum to set";
-        type = int;
-        default = 64;
-        example = 32;
-      };
-      rate = mkOption {
-        description = "Rate to set";
-        type = int;
-        default = 48000;
-        example = 96000;
-      };
-    };
+    lowLatency = { enable = mkBoolOpt false; };
   };
 
   config = mkMerge [
@@ -31,6 +17,7 @@ in {
       user.packages = [ pkgs.easyeffects ];
 
       security.rtkit.enable = true;
+
       services.pipewire = {
         enable = true;
         alsa.enable = true;
@@ -42,59 +29,48 @@ in {
 
     (mkIf (cfg.enable && cfg.lowLatency.enable) {
       services.pipewire = {
-        config = let
-          qr = "${toString cfg.lowLatency.quantum}/${
-              toString cfg.lowLatency.rate
-            }";
-        in {
-          pipewire = {
-            "context.properties" = {
-              "default.clock.min-quantum" = cfg.lowLatency.quantum;
-            };
+        config.pipewire = {
+          "context.properties" = {
+            "link.max-buffers" = 16;
+            "log.level" = 2;
+            "default.clock.rate" = 48000;
+            "default.clock.quantum" = 32;
+            "default.clock.min-quantum" = 32;
+            "default.clock.max-quantum" = 32;
+            "core.daemon" = true;
+            "core.name" = "pipewire-0";
           };
-          pipewire-pulse = {
-            "context.properties" = { };
-            "context.modules" = [
-              {
-                name = "libpipewire-module-rtkit";
-                args = {
-                  "nice.level" = -15;
-                  "rt.prio" = 88;
-                  "rt.time.soft" = 200000;
-                  "rt.time.hard" = 200000;
-                };
-                flags = [ "ifexists" "nofail" ];
-              }
-              { name = "libpipewire-module-protocol-native"; }
-              { name = "libpipewire-module-client-node"; }
-              { name = "libpipewire-module-adapter"; }
-              { name = "libpipewire-module-metadata"; }
-              {
-                name = "libpipewire-module-protocol-pulse";
-                args = {
-                  "pulse.min.req" = qr;
-                  "pulse.min.quantum" = qr;
-                  "pulse.min.frag" = qr;
-                  "server.address" = [ "unix:native" ];
-                };
-              }
-            ];
-            "stream.properties" = {
-              "node.latency" = qr;
-              "resample.quality" = 1;
-            };
-          };
+          "context.modules" = [
+            {
+              name = "libpipewire-module-rtkit";
+              args = {
+                "nice.level" = -15;
+                "rt.prio" = 88;
+                "rt.time.soft" = 200000;
+                "rt.time.hard" = 200000;
+              };
+              flags = [ "ifexists" "nofail" ];
+            }
+            { name = "libpipewire-module-protocol-native"; }
+            { name = "libpipewire-module-profiler"; }
+            { name = "libpipewire-module-metadata"; }
+            { name = "libpipewire-module-spa-device-factory"; }
+            { name = "libpipewire-module-spa-node-factory"; }
+            { name = "libpipewire-module-client-node"; }
+            { name = "libpipewire-module-client-device"; }
+            {
+              name = "libpipewire-module-portal";
+              flags = [ "ifexists" "nofail" ];
+            }
+            {
+              name = "libpipewire-module-access";
+              args = { };
+            }
+            { name = "libpipewire-module-adapter"; }
+            { name = "libpipewire-module-link-factory"; }
+            { name = "libpipewire-module-session-manager"; }
+          ];
         };
-        media-session.config.alsa-monitor.rules = [{
-          matches = [{ node.name = "alsa_output.*"; }];
-          actions = {
-            update-props = {
-              "audio.format" = "S32LE";
-              "audio.rate" = cfg.lowLatency.rate * 2;
-              "api.alsa.period-size" = 2;
-            };
-          };
-        }];
       };
     })
   ];
