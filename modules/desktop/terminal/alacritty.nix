@@ -26,7 +26,7 @@ in {
           window = {
             dynamic_title = true;
             dynamic_padding = false;
-            opacity = 0.7;
+            opacity = 0.8;
             decorations = "none";
 
             dimensions = {

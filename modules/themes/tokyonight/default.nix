@@ -9,7 +9,7 @@ in {
   config = mkIf (cfg.active == "tokyonight") (mkMerge [
     {
       modules.themes = {
-        wallpaper = mkDefault ./assets/zaynstewart-anime-girl-night-alone.png;
+        wallpaper = mkDefault ./assets/avatar-H2O-upscayl.png;
 
         gtk = {
           name = "Tokyonight-Dark-BL";
