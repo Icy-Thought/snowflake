@@ -96,10 +96,19 @@ in {
         extraPackages = epkgs: with epkgs; [ pdf-tools vterm ];
       };
 
-      home.configFile.irkalla-conf = {
-        target = "emacs";
-        source = "${inputs.emacs-dir}/irkalla";
-        recursive = true;
+      home.configFile = {
+        irkalla-init = {
+          target = "emacs/init.el";
+          source = "${inputs.emacs-dir}/irkalla/init.el";
+        };
+        irkalla-early-init = {
+          target = "emacs/early-init.el";
+          source = "${inputs.emacs-dir}/irkalla/early-init.el";
+        };
+        irkalla-dasHead = {
+          target = "emacs/dasHead.svg";
+          source = "${inputs.emacs-dir}/irkalla/dasHead.svg";
+        };
       };
     })
 
