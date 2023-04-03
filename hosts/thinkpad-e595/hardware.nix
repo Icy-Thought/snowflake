@@ -63,10 +63,7 @@ in {
 
   # Finally, our beloved hardware module(s):
   modules.hardware = {
-    pipewire = {
-      enable = true;
-      lowLatency.enable = true;
-    };
+    pipewire.enable = true;
     bluetooth.enable = true;
     kmonad.deviceID = "/dev/input/by-path/platform-i8042-serio-0-event-kbd";
     pointer.enable = true;

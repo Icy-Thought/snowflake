@@ -1,77 +1,58 @@
 { config, options, lib, pkgs, ... }:
 
 let
-  inherit (lib) mkIf mkMerge mkOption;
-  inherit (lib.types) int;
+  inherit (lib) mkIf attrValues;
   inherit (lib.my) mkBoolOpt;
 
   cfg = config.modules.hardware.pipewire;
 in {
-  options.modules.hardware.pipewire = {
-    enable = mkBoolOpt false;
-    lowLatency = { enable = mkBoolOpt false; };
-  };
+  options.modules.hardware.pipewire = { enable = mkBoolOpt false; };
 
-  config = mkMerge [
-    (mkIf cfg.enable {
-      user.packages = [ pkgs.easyeffects ];
+  config = mkIf cfg.enable {
+    user.packages = attrValues ({ inherit (pkgs) easyeffects; });
 
-      security.rtkit.enable = true;
+    security.rtkit.enable = true;
 
-      services.pipewire = {
+    services.pipewire = {
+      enable = true;
+      wireplumber.enable = true;
+      alsa = {
         enable = true;
-        alsa.enable = true;
-        alsa.support32Bit = true;
-        pulse.enable = true;
-        #jack.enable = true;
+        support32Bit = true;
       };
-    })
+      pulse.enable = true;
+      #jack.enable = true;
+    };
 
-    (mkIf (cfg.enable && cfg.lowLatency.enable) {
-      services.pipewire = {
-        config.pipewire = {
-          "context.properties" = {
-            "link.max-buffers" = 16;
-            "log.level" = 2;
-            "default.clock.rate" = 48000;
-            "default.clock.quantum" = 32;
-            "default.clock.min-quantum" = 32;
-            "default.clock.max-quantum" = 32;
-            "core.daemon" = true;
-            "core.name" = "pipewire-0";
-          };
-          "context.modules" = [
-            {
-              name = "libpipewire-module-rtkit";
-              args = {
-                "nice.level" = -15;
-                "rt.prio" = 88;
-                "rt.time.soft" = 200000;
-                "rt.time.hard" = 200000;
-              };
-              flags = [ "ifexists" "nofail" ];
-            }
-            { name = "libpipewire-module-protocol-native"; }
-            { name = "libpipewire-module-profiler"; }
-            { name = "libpipewire-module-metadata"; }
-            { name = "libpipewire-module-spa-device-factory"; }
-            { name = "libpipewire-module-spa-node-factory"; }
-            { name = "libpipewire-module-client-node"; }
-            { name = "libpipewire-module-client-device"; }
-            {
-              name = "libpipewire-module-portal";
-              flags = [ "ifexists" "nofail" ];
-            }
-            {
-              name = "libpipewire-module-access";
-              args = { };
-            }
-            { name = "libpipewire-module-adapter"; }
-            { name = "libpipewire-module-link-factory"; }
-            { name = "libpipewire-module-session-manager"; }
-          ];
-        };
+    home.configFile = mkIf config.modules.hardware.bluetooth.enable {
+      wireplumber-bluetooth = {
+        target = "wireplumber/bluetooth.lua.d/51-bluez-config.lua";
+        text = ''
+          bluez_monitor.properties = {
+              ["bluez5.enable-sbc-xq"] = true,
+              ["bluez5.enable-msbc"] = true,
+              ["bluez5.enable-hw-volume"] = true,
+              ["bluez5.headset-roles"] = "[ hsp_hs hsp_ag hfp_hf hfp_ag ]"
+          }
+        '';
       };
-    })
-  ];
+
+      wireplumber-disable-suspension = {
+        target = "wireplumber/main.lua.d/51-disable-suspension.lua";
+        text = ''
+          table.insert(alsa_monitor.rules, {
+              matches = {
+                  { -- Matches all sources.
+                      { "node.name", "matches", "alsa_input.*" },
+                  },
+                  { -- Matches all sinks.
+                      { "node.name", "matches", "alsa_output.*" },
+                  },
+              },
+              apply_properties = { ["session.suspend-timeout-seconds"] = 0 },
+          })
+        '';
+      };
+    };
+  };
 }

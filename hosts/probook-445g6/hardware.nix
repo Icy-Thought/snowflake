@@ -1,6 +1,6 @@
 { config, lib, pkgs, modulesPath, ... }:
 
-let inherit (lib) mkDefault;
+let inherit (lib) mkDefault attrValues;
 in {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
@@ -63,7 +63,7 @@ in {
     };
   };
 
-  # Finally, our beloved hardware module(s):
+  # Finally, call-forward our beloved module(s):
   modules.hardware = {
     pipewire.enable = true;
     bluetooth.enable = true;

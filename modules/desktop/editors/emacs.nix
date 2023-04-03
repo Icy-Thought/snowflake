@@ -14,7 +14,7 @@ in {
       default = if (envProto == "wayland") then
         pkgs.emacsPgtk
       else
-        pkgs.emacsGit.override { # TODO: automate build...
+        pkgs.emacsGit.override { # :FIXME: automate build...
           withGTK3 = true;
           withX = true;
         };
