@@ -91,18 +91,24 @@ in {
         "*.elc"
       ];
 
-      userName = "Icy-Thought";
-      userEmail = "icy-thought@pm.me";
-      signing = {
-        key = "B593E438DDAB3C66";
-        signByDefault = true;
-      };
-
       extraConfig = {
         init.defaultBranch = "main";
         core = {
           editor = "nvim";
           whitespace = "trailing-space,space-before-tab";
+        };
+        commit.gpgSign = true;
+        credential.helper = "${pkgs.gitFull}/bin/git-credential-libsecret";
+
+        user = {
+          name = "Icy-Thought";
+          email = "icy-thought@pm.me";
+          signingKey = "B593E438DDAB3C66";
+        };
+
+        alias = {
+          commit-x =
+            "-c user.name='CircuitLogic' -c user.email='geckut@pm.me' commit";
         };
 
         tag.gpgSign = true;
@@ -112,9 +118,6 @@ in {
           gpgSign = "if-asked";
           autoSquash = true;
         };
-
-        github.user = "Icy-Thought";
-        gitlab.user = "Icy-Thought";
 
         filter = {
           required = true;
@@ -137,8 +140,6 @@ in {
             "^(((;;;+ )|\\(|([ 	]+\\(((cl-|el-patch-)?def(un|var|macro|method|custom)|gb/))).*)$";
           "org".xfuncname = "^(\\*+ +.*)$";
         };
-
-        credential.helper = "${pkgs.gitFull}/bin/git-credential-libsecret";
       };
     };
   };
