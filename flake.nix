@@ -24,15 +24,12 @@
       "github:icy-thought/xmonad-contrib"; # TODO: replace with official after #582 == merged!
     hyprland.url = "github:hyprwm/Hyprland";
 
-    # Toolset ++ Application(s)
+    # Application -> (Cached) Git
     emacs.url = "github:nix-community/emacs-overlay";
     doomemacs.url = "github:nix-community/nix-doom-emacs/";
-    nvim-nightly = {
-      url = "github:nix-community/neovim-nightly-overlay";
-      # WARN: temporary solution until #164 solved...
-      inputs.nixpkgs.url =
-        "github:nixos/nixpkgs?rev=fad51abd42ca17a60fc1d4cb9382e2d79ae31836";
-    };
+    nvim-nightly.url = "github:nix-community/neovim-nightly-overlay";
+
+    # Toolset
     rust.url = "github:oxalica/rust-overlay";
     spicetify-nix.url = "github:the-argus/spicetify-nix";
 

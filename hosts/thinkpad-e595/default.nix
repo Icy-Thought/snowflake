@@ -6,6 +6,7 @@
       default = "zsh";
       git.enable = true;
       gnupg.enable = true;
+      android.enable = true;
     };
 
     networking = {

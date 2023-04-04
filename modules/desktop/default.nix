@@ -72,19 +72,6 @@ in {
 
       # Retain secrets inside Gnome Keyring
       services.gnome.gnome-keyring.enable = true;
-
-      # Functional `pkgs.light` for `/bin/brightctl`
-      programs.light.enable = true;
-
-      # KDE-Connect + Start-up indicator
-      programs.kdeconnect.enable = true;
-
-      systemd.user.services.kdeconnect-indicator = {
-        serviceConfig.ExecStart =
-          "${pkgs.plasma5Packages.kdeconnect-kde}/bin/kdeconnect-indicator";
-        wantedBy = [ "graphical-session.target" ];
-        partOf = [ "graphical-session.target" ];
-      };
     }
 
     (mkIf (cfg.envProto == "x11") {

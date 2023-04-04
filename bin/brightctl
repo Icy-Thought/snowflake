@@ -1,4 +1,5 @@
-#!/usr/bin/env python3
+#!/usr/bin/env cached-nix-shell
+#! nix-shell -i python3 -p light
 
 import argparse
 import subprocess
