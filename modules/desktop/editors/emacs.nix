@@ -9,15 +9,20 @@ let
   envProto = config.modules.desktop.envProto;
 in {
   options.modules.desktop.editors.emacs = {
+    transparency.enable = mkBoolOpt false;
     package = mkOption {
       type = package;
-      default = if (envProto == "wayland") then
-        pkgs.emacsPgtk
-      else
-        pkgs.emacsGit.override { # :FIXME: automate build...
-          withGTK3 = true;
-          withX = true;
-        };
+      default = let
+        inherit (pkgs) emacsGit emacsPgtk;
+        emacsPackage = if (envProto == "wayland") then emacsPgtk else emacsGit;
+        finalPackage = if cfg.transparency.enable then
+          emacsPackage.override {
+            withGTK3 = true;
+            withX = true;
+          }
+        else
+          emacsPackage;
+      in finalPackage;
     };
     doomemacs.enable = mkBoolOpt false;
     irkalla.enable = mkBoolOpt false;

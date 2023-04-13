@@ -8,8 +8,6 @@ let
 in {
   options.modules.desktop.hyprland = { enable = mkBoolOpt false; };
 
-  imports = [ hyprland.nixosModules.default ];
-
   config = mkIf config.modules.desktop.hyprland.enable {
     modules.desktop = {
       envProto = "wayland";
@@ -31,8 +29,6 @@ in {
     });
 
     services.xserver.displayManager = { defaultSession = "hyprland"; };
-
-    programs.hyprland.enable = true;
 
     hm.imports = [ hyprland.homeManagerModules.default ];
 
