@@ -10,7 +10,7 @@ in {
   };
 
   config = mkMerge [
-    (mkIf config.modules.develop.scientific.latex {
+    (mkIf config.modules.develop.scientific.latex.enable {
       user.packages = attrValues ({
         inherit (pkgs) texlab;
         tex = pkgs.texlive.combine { # FIXME: completely replace with typst
@@ -29,7 +29,7 @@ in {
       });
     })
 
-    (mkIf config.modules.develop.scientific.typst {
+    (mkIf config.modules.develop.scientific.typst.enable {
       user.packages = attrValues ({ inherit (pkgs) typst typst-lsp; });
 
       hm.programs.vscode.extensions =

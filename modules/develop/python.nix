@@ -23,9 +23,7 @@ in {
         ipy = "ipython --no-banner";
         ipylab = "ipython --pylab=qt5 --no-banner";
       };
-    })
 
-    (mkIf config.modules.desktop.editors.vscodium.enable {
       hm.programs.vscode.extensions = attrValues ({
         inherit (pkgs.vscode-extensions.ms-python) python;
         inherit (pkgs.vscode-extensions.ms-toolsai) jupyter;

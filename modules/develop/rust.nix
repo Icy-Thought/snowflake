@@ -22,9 +22,7 @@ in {
         rs = "rustc";
         ca = "cargo";
       };
-    })
 
-    (mkIf config.modules.desktop.editors.vscodium.enable {
       hm.programs.vscode.extensions = attrValues ({
         inherit (pkgs.vscode-extensions.rust-lang) rust-analyzer;
       });

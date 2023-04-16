@@ -24,9 +24,7 @@ in {
           :def hoogle \x -> pure $ ":!hoogle search \"" ++ x ++ "\""
         '';
       };
-    })
 
-    (mkIf config.modules.desktop.editors.vscodium.enable {
       hm.programs.vscode.extensions = with pkgs.vscode-extensions; [
         haskell.haskell
         justusadam.language-haskell # syntax-highlighting

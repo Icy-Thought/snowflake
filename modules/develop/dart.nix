@@ -9,9 +9,7 @@ in {
   config = mkMerge [
     (mkIf config.modules.develop.dart.enable {
       user.packages = attrValues ({ inherit (pkgs) dart flutter; });
-    })
 
-    (mkIf config.modules.desktop.editors.vscodium.enable {
       hm.programs.vscode.extensions =
         pkgs.vscode-utils.extensionsFromVscodeMarketplace [
           {

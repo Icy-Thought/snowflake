@@ -12,9 +12,7 @@ in {
         inherit (pkgs) clang bear gdb cmake;
         inherit (pkgs.llvmPackages) libcxx;
       });
-    })
 
-    (mkIf config.modules.desktop.editors.vscodium.enable {
       hm.programs.vscode.extensions =
         attrValues ({ inherit (pkgs.vscode-extensions.ms-vscode) cpptools; });
     })
