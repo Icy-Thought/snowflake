@@ -27,6 +27,10 @@
       haskell.enable = true;
       python.enable = true;
       rust.enable = true;
+      scientific = {
+        latex.enable = true;
+        typst.enable = true;
+      };
     };
 
     themes.active = "tokyonight";

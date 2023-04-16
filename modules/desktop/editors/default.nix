@@ -20,19 +20,9 @@ in {
 
     (mkIf (cfg.default == "nvim" || cfg.default == "emacs") {
       user.packages = attrValues ({
-        inherit (pkgs)
-          imagemagick editorconfig-core-c sqlite deno pandoc texlab typst;
+        inherit (pkgs) imagemagick editorconfig-core-c sqlite deno pandoc;
         aspellPlusDict = pkgs.aspellWithDicts
           (dict: with dict; [ en en-computers en-science ]);
-        tex = pkgs.texlive.combine { # FIXME: completely replace with typst
-          inherit (pkgs.texlive)
-            scheme-basic capt-of dvipng dvisvgm fancyvrb fontspec hyperref
-            latexmk ulem koma-script greek-inputenc trimspaces
-            # Mathematics
-            amsmath cancel mathtools
-            # Graphics
-            parskip pgf pgfplots svg transparent wrapfig xcolor;
-        };
       });
     })
   ];
