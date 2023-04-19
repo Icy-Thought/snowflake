@@ -1,10 +1,11 @@
 { options, config, lib, pkgs, ... }:
 
 let
-  inherit (builtins) toString;
-  inherit (lib) attrValues mkDefault mkIf mkMerge;
+  inherit (builtins) toString readFile;
+  inherit (lib) attrValues concatMapStringsSep mkDefault mkIf mkMerge;
 
   cfg = config.modules.themes;
+  configDir = config.snowflake.configDir;
 in {
   config = mkIf (cfg.active == "tokyonight") (mkMerge [
     {
@@ -141,11 +142,11 @@ in {
       };
     }
 
-    # (mkIf config.modules.desktop.browsers.firefox.enable {
-    #   firefox.userChrome =
-    #     concatMapStringsSep "\n" readFile
-    #     ["${configDir}" /firefox/userChrome.css];
-    # })
+    (mkIf config.modules.desktop.browsers.firefox.enable {
+      modules.desktop.browsers.firefox.userChrome =
+        concatMapStringsSep "\n" readFile
+        [ "${configDir}/firefox/firefox-onebar.css" ];
+    })
 
     (mkIf config.services.xserver.enable {
       fonts.fonts = attrValues ({
