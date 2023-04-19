@@ -98,7 +98,7 @@ in {
       hm.programs.emacs = {
         enable = true;
         package = cfg.package;
-        extraPackages = epkgs: with epkgs; [ pdf-tools vterm ];
+        extraPackages = epkgs: with epkgs; [ jinx pdf-tools vterm ];
       };
 
       home.configFile = {
