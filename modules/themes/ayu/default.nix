@@ -65,21 +65,6 @@ in {
             };
           };
 
-          fish = {
-            fg = "b3b1ad";
-            highlight = "e6b450";
-            base01 = "00827f";
-            base02 = "95e6cb";
-            base03 = "";
-            base04 = "e53983";
-            base05 = "ff3333";
-            base06 = "f29668";
-            base07 = "c2d94c";
-            base08 = "ffb454";
-            base09 = "59c2ff";
-            base10 = "4d5566";
-          };
-
           rofi = {
             bg = {
               main = "hsla(210, 25%, 7%, 1)";

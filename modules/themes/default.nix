@@ -3,7 +3,7 @@
 let
   inherit (builtins) getEnv map;
   inherit (lib) getExe mapAttrsToList mkIf mkMerge mkOption;
-  inherit (lib.strings) concatStringsSep optionalString;
+  inherit (lib.strings) concatStringsSep optionalString removePrefix;
   inherit (lib.types) attrsOf int lines nullOr package path str;
   inherit (lib.my) mkOpt toFilteredImage;
 
@@ -104,20 +104,7 @@ in {
         };
       };
 
-      fish = {
-        fg = mkOpt str "#ffffff";
-        highlight = mkOpt str "#ffffff";
-        base01 = mkOpt str "#ffffff";
-        base02 = mkOpt str "#ffffff";
-        base03 = mkOpt str "#ffffff";
-        base04 = mkOpt str "#ffffff";
-        base05 = mkOpt str "#ffffff";
-        base06 = mkOpt str "#ffffff";
-        base07 = mkOpt str "#ffffff";
-        base08 = mkOpt str "#ffffff";
-        base09 = mkOpt str "#ffffff";
-        base10 = mkOpt str "#ffffff";
-      };
+      fishColor = hexColor: removePrefix "#" hexColor;
 
       rofi = {
         bg = {

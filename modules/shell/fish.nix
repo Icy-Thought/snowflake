@@ -61,13 +61,14 @@ in {
       in map (p: mkPlugin p) [ "done" "autopair-fish" "fzf-fish" ];
     };
 
-    home.configFile = let inherit (config.modules.themes) active;
+    home.configFile = let
+      inherit (config.modules.themes) active;
+      inherit (config.modules.themes.colors.main) normal bright types;
     in (mkIf (active != null) {
       fish-fzf-theme = {
         target = "fish/conf.d/fzf.fish";
-        text = let inherit (config.modules.themes.colors.main) normal types;
-        in ''
-              set -Ux FZF_DEFAULT_OPTS "\
+        text = ''
+          set -Ux FZF_DEFAULT_OPTS " \
           --color=bg:,bg+:${types.bg},spinner:${types.panelbg},hl:${normal.red} \
           --color=fg:${types.border},header:${normal.red},info:${normal.magenta},pointer:${types.border} \
           --color=marker:${normal.magenta},fg+:${types.border},prompt:${types.border},hl+:${normal.red}"
@@ -76,26 +77,23 @@ in {
 
       fish-theme = {
         target = "fish/conf.d/${active}.fish";
-        text = let
-          inherit (config.modules.themes.colors.fish)
-            fg highlight base01 base02 base03 base04 base05 base06 base07 base08
-            base09 base10;
+        text = let inherit (config.modules.themes.colors) fishColor;
         in ''
           # --> General
-          set -l foreground ${fg}
-          set -l highlight  ${highlight}
+          set -l foreground ${fishColor types.fg}
+          set -l highlight  ${fishColor types.highlight}
 
           # --> palette
-          set -l base01     ${base01}
-          set -l base02     ${base02}
-          set -l base03     ${base03}
-          set -l base04     ${base04}
-          set -l base05     ${base05}
-          set -l base06     ${base06}
-          set -l base07     ${base07}
-          set -l base08     ${base08}
-          set -l base09     ${base09}
-          set -l base10     ${base10}
+          set -l base01     ${fishColor normal.blue}
+          set -l base02     ${fishColor types.border}
+          set -l base03     ${fishColor bright.blue}
+          set -l base04     ${fishColor bright.green}
+          set -l base05     ${fishColor bright.red}
+          set -l base06     ${fishColor types.panelbg}
+          set -l base07     ${fishColor normal.yellow}
+          set -l base08     ${fishColor normal.magenta}
+          set -l base09     ${fishColor normal.cyan}
+          set -l base10     ${fishColor bright.black}
 
           # Syntax Highlighting
           set -g fish_color_normal                     $foreground

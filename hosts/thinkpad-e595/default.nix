@@ -44,6 +44,7 @@
       editors = {
         default = "nvim";
         emacs.irkalla.enable = true;
+        helix.enable = true;
         neovim.agasaya.enable = true;
       };
       browsers = {
