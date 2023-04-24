@@ -28,30 +28,29 @@ in {
         wireplumber;
     });
 
-    services.xserver.displayManager = { defaultSession = "hyprland"; };
+    services.greetd.settings.initial_session = {
+      command = "Hyprland";
+      user = "${config.user.name}";
+    };
 
     hm.imports = [ hyprland.homeManagerModules.default ];
 
     hm.wayland.windowManager.hyprland = {
       enable = true;
       extraConfig =
-        readFile "${config.snowflake.configDir}/hyprland/hyprland.conf"; # TODO
+        readFile "${config.snowflake.configDir}/hyprland/hyprland.conf";
     };
 
-    # Setting our system wallpaper:
-    home.configFile.hypr-wallpaper = {
-      target = "hypr/hyprpaper.conf";
-      text = ''
-        preload = ${
-          toPath
-          ../../themes/tokyonight/assets/zaynstewart-anime-girl-night-alone.png
-        }
-        wallpaper = eDP-1,${
-          toPath
-          ../../themes/tokyonight/assets/zaynstewart-anime-girl-night-alone.png
-        }
-        ipc = off
-      '';
-    };
+    # System wallpaper:
+    home.configFile.hypr-wallpaper =
+      let inherit (config.modules.themes) wallpaper;
+      in mkIf (wallpaper != null) {
+        target = "hypr/hyprpaper.conf";
+        text = ''
+          preload = ${toPath wallpaper}
+          wallpaper = eDP-1,${toPath wallpaper}
+          ipc = off
+        '';
+      };
   };
 }

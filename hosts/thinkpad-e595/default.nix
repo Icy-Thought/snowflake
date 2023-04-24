@@ -33,10 +33,10 @@
       };
     };
 
-    themes.active = "tokyonight";
+    themes.active = "rose-pine";
 
     desktop = {
-      xmonad.enable = true;
+      hyprland.enable = true;
       terminal = {
         default = "alacritty";
         alacritty.enable = true;
