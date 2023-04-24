@@ -1,0 +1,19 @@
+@define-color mountain-meadow rgba(26, 188, 156, 1);
+@define-color atomic-tangerine rgba(255, 158, 100, 1);
+@define-color sky-blue-crayola rgba(42, 195, 222, 1);
+@define-color little-boy-blue rgba(122, 162, 247, 1);
+@define-color lavender-blue rgba(192, 202, 245, 1);
+
+@define-color raisin-black rgba(26, 27, 38, 1);
+@define-color cod-gray rgba(11, 11, 10, 0.4);
+@define-color cod-gray-acc rgba(11, 11, 10, 0.6);
+@define-color transparent rgba(0, 0, 0, 0.0);
+
+@define-color bar-background @cod-gray-acc;
+@define-color bar-foreground @lavender-blue;
+@define-color button-background @transparent;
+@define-color hl-active-pad-bg @lavender-blue;
+@define-color hl-active-pad-fg @transparent;
+@define-color menu-background @raisin-black;
+@define-color menu-foreground @lavender-blue;
+@define-color widget-background @cod-gray;

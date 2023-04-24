@@ -7,19 +7,19 @@ let
   cfg = config.modules.themes;
   configDir = config.snowflake.configDir;
 in {
-  config = mkIf (cfg.active == "rosepine") (mkMerge [
+  config = mkIf (cfg.active == "rose-pine") (mkMerge [
     {
       modules.themes = {
-        wallpaper = mkDefault ./assets/avatar-H2O-upscayl.png;
+        wallpaper = mkDefault ./assets/alena-aenami-someday.jpg;
 
         gtk = {
           name = "rose-pine-gtk";
-          package = pkgs.rose-pine-gtk-theme-unstable;
+          package = pkgs.rose-pine-gtk-theme;
         };
 
         iconTheme = {
           name = "rose-pine-icons";
-          package = pkgs.rose-pine-icon-theme-unstable;
+          package = pkgs.rose-pine-icon-theme;
         };
 
         pointer = {
@@ -61,24 +61,24 @@ in {
               fg = "#e0def4";
               bg = "#191724";
               panelbg = "#f9d6d2";
-              border = "##bb7b79";
+              border = "#bb7b79";
               highlight = "#c5b1e5";
             };
           };
 
           rofi = {
             bg = {
-              main = "hsla(235, 18%, 12%, 1)";
-              alt = "hsla(235, 18%, 12%, 0)";
-              bar = "hsla(229, 24%, 18%, 1)";
+              main = "hsla(249, 22%, 12%, 1)";
+              alt = "hsla(247, 23%, 15%, 0)";
+              bar = "hsla(248, 25%, 18%, 1)";
             };
-            fg = "hsla(228, 72%, 85%, 1)";
+            fg = "hsla(245, 52%, 91%, 1)";
             ribbon = {
-              outer = "hsla(188, 68%, 27%, 1)";
-              inner = "hsla(202, 76%, 24%, 1)";
+              outer = "hsla(2, 55%, 83%, 1)";
+              inner = "hsla(197, 49%, 38%, 1)";
             };
-            selected = "hsla(220, 88%, 72%, 1)";
-            urgent = "hsl(349, 89%, 72%, 1)";
+            selected = "hsla(244, 18%, 15%, 1)";
+            urgent = "hsl(343, 76%, 68%, 1)";
             transparent = "hsla(0, 0%, 0%, 0)";
           };
         };
@@ -300,19 +300,6 @@ in {
           "font_size" = "${toString (size)}";
           "ui_font" = "${family} ${weight}";
         };
-    })
-
-    (mkIf (config.modules.desktop.envProto == "x11") {
-      services.xserver.displayManager = {
-        lightdm.greeters.mini.extraConfig =
-          let inherit (cfg.colors.main) normal types;
-          in ''
-            text-color = "${types.bg}"
-            password-background-color = "${normal.black}"
-            window-color = "${types.border}"
-            border-color = "${types.border}"
-          '';
-      };
     })
   ]);
 }
