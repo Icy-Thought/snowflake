@@ -36,8 +36,11 @@ in {
       inherit (pkgs) libnotify playerctl gxmessage xdotool xclip feh;
     });
 
+    services.greetd = {
+      settings.initial_session = { command = "none+xmonad"; };
+    };
+
     services.xserver = {
-      displayManager.defaultSession = "none+xmonad";
       windowManager.session = [{
         name = "xmonad";
         start = ''
