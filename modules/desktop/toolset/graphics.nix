@@ -15,7 +15,7 @@ in {
 
   config = {
     user.packages = attrValues ({ } // optionalAttrs cfg.base.enable {
-      inherit (pkgs) eyedropper font-manager imagemagick;
+      inherit (pkgs) hyprpicker font-manager imagemagick;
     } // optionalAttrs cfg.vector.enable { inherit (pkgs) inkscape rnote; }
       // optionalAttrs cfg.raster.enable {
         inherit (pkgs) gimp;

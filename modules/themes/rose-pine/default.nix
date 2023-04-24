@@ -13,12 +13,12 @@ in {
         wallpaper = mkDefault ./assets/alena-aenami-someday.jpg;
 
         gtk = {
-          name = "rose-pine-gtk";
+          name = "rose-pine";
           package = pkgs.rose-pine-gtk-theme;
         };
 
         iconTheme = {
-          name = "rose-pine-icons";
+          name = "rose-pine";
           package = pkgs.rose-pine-icon-theme;
         };
 
@@ -263,7 +263,7 @@ in {
 
           "element selected" = {
             background-color = mkLiteral "@selected";
-            text-color = mkLiteral "@bg";
+            text-color = mkLiteral "@fg";
             border = mkLiteral "0% 0% 0.3% 0.2%";
             border-radius = mkLiteral "1.5% 1.0% 1.5% 1.5%";
             border-color = mkLiteral "@inner-ribbon";

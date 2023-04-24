@@ -20,6 +20,13 @@ in {
         rofi.enable = true;
       };
     };
+    modules.shell.scripts = {
+      brightness.enable = true;
+      microphone.enable = true;
+      volume.enable = true;
+      screenshot.enable = true;
+    };
+    modules.hardware.kmonad.enable = true;
 
     environment.systemPackages = attrValues ({
       inherit (pkgs)
