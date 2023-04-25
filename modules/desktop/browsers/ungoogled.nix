@@ -1,7 +1,8 @@
 { config, options, lib, pkgs, ... }:
 
 let
-  inherit (lib) mkIf getExe;
+  inherit (builtins) toString;
+  inherit (lib) concatStringsSep mkIf getExe;
   inherit (lib.my) mkBoolOpt;
 in {
   options.modules.desktop.browsers.ungoogled = { enable = mkBoolOpt false; };
@@ -21,7 +22,37 @@ in {
 
     hm.programs.chromium = {
       enable = true;
-      package = pkgs.ungoogled-chromium;
+      package = let
+        ungoogledFlags = toString [
+          "--force-dark-mode"
+          "--disable-search-engine-collection"
+          "--extension-mime-request-handling=always-prompt-for-install"
+          "--fingerprinting-canvas-image-data-noise"
+          "--fingerprinting-canvas-measuretext-noise"
+          "--fingerprinting-client-rects-noise"
+          "--popups-to-tabs"
+          "--show-avatar-button=incognito-and-guest"
+
+          # Performance
+          "--enable-gpu-rasterization"
+          "--enable-oop-rasterization"
+          "--enable-zero-copy"
+          "--ignore-gpu-blocklist"
+
+          # Experimental features
+          "--enable-features=${
+            concatStringsSep "," [
+              "BackForwardCache:enable_same_site/true"
+              "CopyLinkToText"
+              "OverlayScrollbar"
+              "TabHoverCardImages"
+              "VaapiVideoDecoder"
+            ]
+          }"
+        ];
+      in pkgs.ungoogled-chromium.override {
+        commandLineArgs = [ ungoogledFlags ];
+      };
       extensions = [
         { id = "jhnleheckmknfcgijgkadoemagpecfol"; } # Auto-Tab-Discard
         { id = "nngceckbapebfimnlniiiahkandclblb"; } # Bitwarden

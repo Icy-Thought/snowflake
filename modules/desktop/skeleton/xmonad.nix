@@ -19,7 +19,7 @@ in {
         };
         dunst.enable = true;
         rofi.enable = true;
-        taffybar.enable = true;
+        taffybar.withOverlay = true;
       };
     };
     modules.shell.scripts = {
@@ -30,7 +30,10 @@ in {
     };
     modules.hardware.kmonad.enable = true;
 
-    nixpkgs.overlays = [ inputs.xmonad-contrib.overlay ];
+    nixpkgs.overlays = [
+      inputs.xmonad-contrib.overlay
+      (import (config.snowflake.configDir + "/xmonad/overlay.nix"))
+    ];
 
     environment.systemPackages = attrValues ({
       inherit (pkgs) libnotify playerctl gxmessage xdotool xclip feh;

@@ -65,9 +65,6 @@ in {
         fonts = attrValues ({ inherit (pkgs) sarasa-gothic scheherazade-new; });
       };
 
-      # Login Manager: ReGreet!
-      programs.regreet.enable = true;
-
       # Enabling xserver + x-related settings:
       services.xserver.enable = true;
 
@@ -80,14 +77,27 @@ in {
       services.gnome.gnome-keyring.enable = true;
     }
 
+    (mkIf (cfg.envProto == "wayland") {
+      xdg.portal.wlr.enable = true;
+
+      # Login Manager: ReGreet!
+      programs.regreet.enable = true;
+    })
+
     (mkIf (cfg.envProto == "x11") {
+      services.xserver.displayManager.lightdm = {
+        enable = true;
+        greeters.mini = {
+          enable = true;
+          user = config.user.name;
+        };
+      };
+
       hm.xsession = {
         enable = true;
         numlock.enable = true;
         preferStatusNotifierItems = true;
       };
     })
-
-    (mkIf (cfg.envProto == "wayland") { xdg.portal.wlr.enable = true; })
   ];
 }

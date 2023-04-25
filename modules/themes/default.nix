@@ -202,16 +202,6 @@ in {
         emoji = [ emoji ];
       };
 
-      # Theming ReGreet!
-      programs.regreet.settings.GTK =
-        let inherit (cfg) pointer font iconTheme gtk;
-        in {
-          cursor_theme_name = "${pointer.name}";
-          font_name = "${font.mono.family}";
-          icon_theme_name = "${iconTheme.name}";
-          theme_name = "${gtk.name}";
-        };
-
       hm.programs.vscode.extensions =
         let inherit (cfg.vscode.extension) name publisher version hash;
         in pkgs.vscode-utils.extensionsFromVscodeMarketplace [{
@@ -222,7 +212,17 @@ in {
         }];
     }
 
-    # x11 related settings:
+    (mkIf (envProto == "wayland") {
+      programs.regreet.settings.GTK =
+        let inherit (cfg) pointer font iconTheme gtk;
+        in {
+          cursor_theme_name = "${pointer.name}";
+          font_name = "${font.mono.family}";
+          icon_theme_name = "${iconTheme.name}";
+          theme_name = "${gtk.name}";
+        };
+    })
+
     (mkIf (envProto == "x11") (mkMerge [
       {
         # Read xresources files in ~/.config/xtheme/* to allow modular configuration

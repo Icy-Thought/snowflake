@@ -8,20 +8,16 @@
       gnupg.enable = true;
       android.enable = true;
     };
-
     networking = {
       networkManager.enable = true;
       # borsippaNET.enable = true;
     };
-
     services = { ssh.enable = true; };
-
     containers.transmission = {
       enable = false; # TODO: Once fixed -> enable = true;
       username = "alonzo";
       #  password = builtins.readFile config.age.secrets.torBylon.path;
     };
-
     develop = {
       dart.enable = true;
       haskell.enable = true;
@@ -32,11 +28,10 @@
         typst.enable = true;
       };
     };
-
     themes.active = "rose-pine";
 
     desktop = {
-      hyprland.enable = true;
+      xmonad.enable = true;
       terminal = {
         default = "alacritty";
         alacritty.enable = true;
