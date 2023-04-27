@@ -10,23 +10,38 @@ let
 in {
   options.modules.desktop.toolset.social = {
     base.enable = mkBoolOpt false;
-    discord.enable = mkBoolOpt false;
-    element.enable = mkBoolOpt false;
+    discord.enable = mkBoolOpt cfg.base.enable;
+    element = {
+      withDaemon = mkBoolOpt cfg.base.enable;
+      withClient = mkBoolOpt false;
+    };
   };
 
   config = mkMerge [
     (mkIf cfg.base.enable {
-      # Enable modules that users ought to have installed by default:
-      modules.desktop.toolset.social = {
-        discord.enable = true;
-        element.enable = true;
-      };
-
-      # Install packages that have not been configured:
       user.packages = attrValues ({ inherit (pkgs) signal-desktop tdesktop; });
     })
 
-    (mkIf cfg.element.enable {
+    (mkIf cfg.element.withDaemon {
+      hm.services.pantalaimon = {
+        enable = true;
+        settings = {
+          Default = {
+            LogLevel = "Debug";
+            SSL = true;
+          };
+          local-matrix = {
+            Homeserver = "https://matrix.org";
+            ListenAddress = "127.0.0.1";
+            ListenPort = 8008;
+          };
+        };
+      };
+    })
+
+    (mkIf cfg.element.withClient {
+      modules.desktop.toolset.social.element.withDaemon = false;
+
       user.packages = let
         inherit (pkgs) makeWrapper symlinkJoin element-desktop;
         element-desktop' = symlinkJoin {
