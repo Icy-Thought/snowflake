@@ -77,7 +77,7 @@ in {
               outer = "hsla(2, 55%, 83%, 1)";
               inner = "hsla(197, 49%, 38%, 1)";
             };
-            selected = "hsla(244, 18%, 15%, 1)";
+            selected = "hsla(249, 15%, 28%, 1)";
             urgent = "hsl(343, 76%, 68%, 1)";
             transparent = "hsla(0, 0%, 0%, 0)";
           };

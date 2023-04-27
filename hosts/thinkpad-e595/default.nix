@@ -43,7 +43,7 @@
         neovim.agasaya.enable = true;
       };
       browsers = {
-        default = "firefox-devedition";
+        default = "firefox";
         ungoogled.enable = true;
         firefox.enable = true;
       };

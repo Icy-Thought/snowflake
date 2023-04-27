@@ -896,8 +896,8 @@ addKeys conf@XConfig { modMask = modm } =
         -- Specific program spawning
         ++  bindBringAndRaiseMany
                 [ (modalt, xK_g, spawn "chromium", chromiumSelector)
-                , (modalt, xK_f, spawn "firefox-devedition", firefoxSelector)
-                , (modalt, xK_w, spawn "firefox-devedition --profile ~/.mozilla/firefox/z5dgw9v6.dev-edition-private", firefoxSelector)
+                , (modalt, xK_f, spawn "firefox", firefoxSelector)
+                , (modalt, xK_w, spawn "firefox --profile ~/.mozilla/firefox/z5dgw9v6.dev-edition-private", firefoxSelector)
                 ]
 
         -- Window manipulation

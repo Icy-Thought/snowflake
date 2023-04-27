@@ -7,7 +7,7 @@ HOME = os.path.expanduser("~")
 
 # Default applications
 myTerm = "alacritty"
-myBrowser = "firefox-devedition"
+myBrowser = "firefox"
 myPrivateBrowser = (
     myBrowser,
     "--profile",

@@ -1,7 +1,7 @@
 { options, config, lib, pkgs, ... }:
 
 let
-  inherit (lib) optionalAttrs mkIf;
+  inherit (lib) getExe optionalAttrs mkIf;
   inherit (lib.my) mkBoolOpt;
 
   cfg = config.modules.desktop.extensions.dunst;
@@ -30,7 +30,7 @@ in {
           sticky_history = "no";
           history_length = 20;
 
-          browser = "${pkgs.firefox-devedition-bin}/bin/firefox-devedition";
+          browser = "${getExe pkgs.firefox-bin}";
           always_run_script = true;
           ignore_dbusclose = false;
           force_xinerama = false;

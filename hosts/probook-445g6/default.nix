@@ -17,7 +17,7 @@
         neovim.agasaya.enable = true;
       };
       browsers = {
-        default = "firefox-devedition";
+        default = "firefox";
         firefox.enable = true;
       };
       toolset = {
