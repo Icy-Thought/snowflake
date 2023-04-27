@@ -30,7 +30,7 @@ in {
       };
 
       # Required API key for ChatGPT:
-      env.OPENAI_API_KEY = "$(cat /run/agenix/closedAI)";
+      env.OPENAI_API_KEY = "$(cat /run/ragenix/closedAI)";
     }
 
     (mkIf cfg.agasaya.enable {

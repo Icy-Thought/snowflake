@@ -4,5 +4,6 @@ let
   hostKey = if pathExists keyFile then readFile keyFile else "";
 in {
   "closedAI.age".publicKeys = [ hostKey ];
+  "ement.age".publicKeys = [ hostKey ];
   # "torBylon.age".publicKeys = [ hostKey ];
 }

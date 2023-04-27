@@ -3,14 +3,14 @@
 let
   inherit (builtins) filter pathExists;
   inherit (lib) mapAttrs' mkDefault nameValuePair removeSuffix;
-  inherit (inputs) agenix;
+  inherit (inputs) ragenix;
 
   secretsDir = "${config.snowflake.hostDir}/secrets";
   secretsFile = "${secretsDir}/secrets.nix";
 in {
-  imports = [ agenix.nixosModules.default ];
+  imports = [ ragenix.nixosModules.default ];
 
-  environment.systemPackages = [ agenix.packages.x86_64-linux.default ];
+  environment.systemPackages = [ ragenix.packages.x86_64-linux.default ];
 
   age.secrets = if pathExists secretsFile then
     mapAttrs' (n: _:
