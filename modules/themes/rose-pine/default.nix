@@ -10,7 +10,7 @@ in {
   config = mkIf (cfg.active == "rose-pine") (mkMerge [
     {
       modules.themes = {
-        wallpaper = mkDefault ./assets/alena-aenami-someday.jpg;
+        wallpaper = mkDefault ./assets/loaki-solarpunk.jpg;
 
         gtk = {
           name = "rose-pine";

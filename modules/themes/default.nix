@@ -313,8 +313,14 @@ in {
         };
       }
 
-      # Set the wallpaper ourselves so we don't need .background-image and/or
-      # .fehbg polluting $HOME
+      # Change the wallpaper of our lightdm:
+      (mkIf (cfg.loginWallpaper != null) {
+        services.xserver.displayManager = {
+          lightdm.background = cfg.loginWallpaper;
+        };
+      })
+
+      # Auto-set wallpaper to prevent $HOME pollution!
       (mkIf (cfg.wallpaper != null) (let
         wCfg = config.services.xserver.desktopManager.wallpaper;
         command = ''
