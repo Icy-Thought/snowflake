@@ -12,8 +12,8 @@ in {
     base.enable = mkBoolOpt false;
     discord.enable = mkBoolOpt cfg.base.enable;
     element = {
-      withDaemon = mkBoolOpt cfg.base.enable;
-      withClient = mkBoolOpt false;
+      withDaemon = mkBoolOpt false;
+      withClient = mkBoolOpt cfg.base.enable;
     };
   };
 
@@ -40,8 +40,6 @@ in {
     })
 
     (mkIf cfg.element.withClient {
-      modules.desktop.toolset.social.element.withDaemon = false;
-
       user.packages = let
         inherit (pkgs) makeWrapper symlinkJoin element-desktop;
         element-desktop' = symlinkJoin {

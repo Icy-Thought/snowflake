@@ -13,8 +13,9 @@ in {
     package = mkOption {
       type = package;
       default = let
-        inherit (pkgs) emacsGit emacsPgtk;
-        emacsPackage = if (envProto == "wayland") then emacsPgtk else emacsGit;
+        inherit (pkgs) emacsUnstable emacsUnstablePgtk;
+        emacsPackage =
+          if (envProto == "wayland") then emacsUnstablePgtk else emacsUnstable;
         finalPackage = if cfg.transparency.enable then
           emacsPackage.override {
             withGTK3 = true;

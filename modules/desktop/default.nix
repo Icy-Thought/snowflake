@@ -75,6 +75,10 @@ in {
 
       # Retain secrets inside Gnome Keyring
       services.gnome.gnome-keyring.enable = true;
+      security.pam.services.login.enableGnomeKeyring = true;
+
+      # GUI for our gnome-keyring:
+      programs.seahorse.enable = true;
     }
 
     (mkIf (cfg.envProto == "wayland") {

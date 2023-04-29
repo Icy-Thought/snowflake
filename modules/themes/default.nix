@@ -152,12 +152,9 @@ in {
 
       hm.gtk = {
         enable = true;
-        font = let
-          inherit (cfg.font) package;
-          inherit (cfg.font.sans) family size;
+        font = let inherit (cfg.font.sans) family size;
         in {
           name = family;
-          package = package;
           size = size;
         };
 
@@ -195,11 +192,14 @@ in {
         gtk.enable = true;
       };
 
-      fonts.fontconfig.defaultFonts = let inherit (cfg.font) emoji mono sans;
+      fonts.fontconfig = let inherit (cfg.font) package emoji mono sans;
       in {
-        sansSerif = [ sans.family ];
-        monospace = [ mono.family ];
-        emoji = [ emoji ];
+        fonts = package;
+        defaultFonts = {
+          monospace = mono.family;
+          sansSerif = sans.family;
+          emoji = emoji;
+        };
       };
 
       hm.programs.vscode.extensions =

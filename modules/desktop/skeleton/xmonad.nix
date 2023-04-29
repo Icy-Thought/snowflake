@@ -20,6 +20,7 @@ in {
         dunst.enable = true;
         rofi.enable = true;
         taffybar.enable = true;
+        # elkowar.enable = true;
       };
     };
     modules.shell.scripts = {

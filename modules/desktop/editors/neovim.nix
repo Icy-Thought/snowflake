@@ -2,11 +2,13 @@
 
 let
   inherit (lib) attrValues optionalAttrs mkIf mkMerge;
-  inherit (lib.my) mkBoolOpt;
+  inherit (lib.types) package;
+  inherit (lib.my) mkBoolOpt mkOpt;
 
   cfg = config.modules.desktop.editors.neovim;
 in {
   options.modules.desktop.editors.neovim = {
+    package = mkOpt package pkgs.neovim-nightly;
     agasaya.enable = mkBoolOpt false; # lua
     ereshkigal.enable = mkBoolOpt false; # fnl
   };
@@ -23,14 +25,14 @@ in {
 
       hm.programs.neovim = {
         enable = true;
-        package = pkgs.neovim-nightly;
+        package = cfg.package;
         viAlias = true;
         vimAlias = true;
         vimdiffAlias = true;
       };
 
       # Required API key for ChatGPT:
-      env.OPENAI_API_KEY = "$(cat /run/ragenix/closedAI)";
+      env.OPENAI_API_KEY = "$(cat /run/agenix/closedAI)";
     }
 
     (mkIf cfg.agasaya.enable {
