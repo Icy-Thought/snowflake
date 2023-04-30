@@ -2,14 +2,15 @@
 
 let
   inherit (builtins) pathExists readFile;
-  inherit (lib) mkIf mkOption;
-  inherit (lib.types) nullOr path;
-  inherit (lib.my) mkBoolOpt;
+  inherit (lib.modules) mkIf;
 
   cfg = config.modules.hardware.kmonad;
 in {
-  options.modules.hardware.kmonad = {
-    enable = mkBoolOpt false;
+  options.modules.hardware.kmonad = let
+    inherit (lib.options) mkEnableOption mkOption;
+    inherit (lib.types) nullOr path;
+  in {
+    enable = mkEnableOption false;
     deviceID = mkOption {
       type = nullOr path;
       default = null;
@@ -18,7 +19,7 @@ in {
     };
   };
 
-  imports = [ inputs.kmonad.nixosModules.default ];
+  imports = let inherit (inputs) kmonad; in [ kmonad.nixosModules.default ];
 
   config = mkIf cfg.enable {
     # Allow our user to benefit from KMonad:

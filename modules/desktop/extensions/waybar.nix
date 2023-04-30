@@ -3,12 +3,13 @@
 }:
 
 let
-  inherit (lib) mkIf;
-  inherit (lib.my) mkBoolOpt;
+  inherit (lib) mkIf mkEnableOption;
 
   cfg = config.modules.desktop.extensions.waybar;
 in {
-  options.modules.desktop.extensions.waybar = { enable = mkBoolOpt false; };
+  options.modules.desktop.extensions.waybar = {
+    enable = mkEnableOption false;
+  };
 
   config = mkIf cfg.enable {
     # Allow tray-icons to be displayed:

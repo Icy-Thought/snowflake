@@ -1,19 +1,20 @@
 { options, config, lib, pkgs, ... }:
 
 let
-  inherit (lib) attrValues mkIf mkMerge mkOption;
-  inherit (lib.types) nullOr enum;
-  inherit (lib.my) mkBoolOpt;
-
+  inherit (lib.attrsets) attrValues;
+  inherit (lib.modules) mkIf mkMerge;
   cfg = config.modules.shell;
 in {
-  options.modules.shell = {
+  options.modules.shell = let
+    inherit (lib.options) mkOption mkEnableOption;
+    inherit (lib.types) nullOr enum;
+  in {
     default = mkOption {
       type = nullOr (enum [ "fish" "zsh" "xonsh" ]);
       default = null;
       description = "Default system shell";
     };
-    usefulPkgs.enable = mkBoolOpt false;
+    usefulPkgs.enable = mkEnableOption false;
   };
 
   config = mkMerge [

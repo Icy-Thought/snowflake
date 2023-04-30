@@ -1,10 +1,9 @@
 { config, options, lib, pkgs, ... }:
 
-let
-  inherit (lib) mkIf;
-  inherit (lib.my) mkBoolOpt;
+let inherit (lib.modules) mkIf;
 in {
-  options.modules.shell.starship = { enable = mkBoolOpt false; };
+  options.modules.shell.starship = let inherit (lib.options) mkEnableOption;
+  in { enable = mkEnableOption false; };
 
   config = mkIf config.modules.shell.starship.enable {
     hm.programs.starship = {

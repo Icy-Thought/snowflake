@@ -1,16 +1,16 @@
 { config, options, lib, pkgs, ... }:
 
 let
-  inherit (lib) attrValues optionalAttrs;
-  inherit (lib.my) mkBoolOpt;
+  inherit (lib.attrsets) attrValues optionalAttrs;
+  inherit (lib.options) mkEnableOption;
 
   cfg = config.modules.desktop.toolset.graphics;
 in {
   options.modules.desktop.toolset.graphics = {
-    base.enable = mkBoolOpt true;
-    modeling.enable = mkBoolOpt false;
-    raster.enable = mkBoolOpt false;
-    vector.enable = mkBoolOpt false;
+    base.enable = mkEnableOption true;
+    modeling.enable = mkEnableOption false;
+    raster.enable = mkEnableOption false;
+    vector.enable = mkEnableOption false;
   };
 
   config = {

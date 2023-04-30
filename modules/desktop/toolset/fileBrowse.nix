@@ -1,16 +1,18 @@
 { options, config, lib, pkgs, ... }:
 
 let
-  inherit (lib) attrValues optionalAttrs mkIf mkMerge;
-  inherit (lib.my) mkBoolOpt;
+  inherit (lib.attrsets) attrValues optionalAttrs;
+  inherit (lib.modules) mkIf mkMerge;
 
   cfg = config.modules.desktop.toolset.fileBrowse;
 in {
-  options.modules.desktop.toolset.fileBrowse = {
-    dolphin.enable = mkBoolOpt false;
-    nautilus.enable = mkBoolOpt false;
-    thunar.enable = mkBoolOpt false;
-  };
+  options.modules.desktop.toolset.fileBrowse =
+    let inherit (lib.options) mkEnableOption;
+    in {
+      dolphin.enable = mkEnableOption false;
+      nautilus.enable = mkEnableOption false;
+      thunar.enable = mkEnableOption false;
+    };
 
   config = mkMerge [
     {

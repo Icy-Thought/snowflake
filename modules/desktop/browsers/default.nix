@@ -1,12 +1,13 @@
 { options, config, lib, pkgs, ... }:
 
 let
-  inherit (lib) mkIf mkOption;
-  inherit (lib.types) nullOr str;
-
+  inherit (lib.modules) mkIf;
   cfg = config.modules.desktop.browsers;
 in {
-  options.modules.desktop.browsers = {
+  options.modules.desktop.browsers = let
+    inherit (lib.options) mkOption;
+    inherit (lib.types) nullOr str;
+  in {
     default = mkOption {
       type = nullOr str;
       default = null;

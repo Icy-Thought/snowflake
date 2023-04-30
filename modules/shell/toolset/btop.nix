@@ -1,11 +1,11 @@
 { config, options, lib, pkgs, ... }:
 
 let
-  inherit (lib) mkIf;
+  inherit (lib.modules) mkIf;
   inherit (lib.strings) concatStringsSep;
-  inherit (lib.my) mkBoolOpt;
 in {
-  options.modules.shell.btop = { enable = mkBoolOpt false; };
+  options.modules.shell.btop = let inherit (lib.options) mkEnableOption;
+  in { enable = mkEnableOption false; };
 
   config = mkIf config.modules.shell.btop.enable {
     hm.programs.btop = let

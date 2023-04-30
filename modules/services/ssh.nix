@@ -2,10 +2,10 @@
 
 let
   inherit (builtins) filter pathExists;
-  inherit (lib) mkIf;
-  inherit (lib.my) mkBoolOpt;
+  inherit (lib.modules) mkIf;
 in {
-  options.modules.services.ssh = { enable = mkBoolOpt false; };
+  options.modules.services.ssh = let inherit (lib.options) mkEnableOption;
+  in { enable = mkEnableOption false; };
 
   config = mkIf config.modules.services.ssh.enable {
     programs.ssh.startAgent = true;

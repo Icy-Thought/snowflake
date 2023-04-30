@@ -1,12 +1,11 @@
 { config, options, lib, pkgs, inputs, ... }:
 
 let
-  inherit (lib) mkIf;
-  inherit (lib.my) mkBoolOpt;
+  inherit (lib) mkIf mkEnableOption;
 
   vscDir = "${config.snowflake.configDir}/vscodium";
 in {
-  options.modules.desktop.editors.vscodium = { enable = mkBoolOpt false; };
+  options.modules.desktop.editors.vscodium = { enable = mkEnableOption false; };
 
   config = mkIf config.modules.desktop.editors.vscodium.enable {
     hm.programs.vscode = {

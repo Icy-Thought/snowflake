@@ -2,10 +2,13 @@
 
 let
   inherit (builtins) toString;
-  inherit (lib) concatStringsSep mkIf getExe;
-  inherit (lib.my) mkBoolOpt;
+  inherit (lib.meta) getExe;
+  inherit (lib.modules) mkIf;
+  inherit (lib.strings) concatStringsSep;
 in {
-  options.modules.desktop.browsers.ungoogled = { enable = mkBoolOpt false; };
+  options.modules.desktop.browsers.ungoogled =
+    let inherit (lib.options) mkEnableOption;
+    in { enable = mkEnableOption false; };
 
   config = mkIf config.modules.desktop.browsers.ungoogled.enable {
     user.packages = let inherit (pkgs) makeDesktopItem ungoogled-chromium;

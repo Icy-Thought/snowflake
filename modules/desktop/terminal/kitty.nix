@@ -2,10 +2,11 @@
 
 let
   inherit (builtins) toString;
-  inherit (lib) mkIf mkMerge;
-  inherit (lib.my) mkBoolOpt;
+  inherit (lib.modules) mkIf mkMerge;
 in {
-  options.modules.desktop.terminal.kitty = { enable = mkBoolOpt false; };
+  options.modules.desktop.terminal.kitty =
+    let inherit (lib.options) mkEnableOption;
+    in { enable = mkEnableOption false; };
 
   config = mkIf config.modules.desktop.terminal.kitty.enable {
     environment.variables = {

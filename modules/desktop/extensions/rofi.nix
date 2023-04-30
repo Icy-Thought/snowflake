@@ -1,21 +1,21 @@
 { options, config, lib, pkgs, ... }:
 
 let
-  inherit (lib) attrValues mkIf mkOption getExe;
-  inherit (lib.types) package;
-  inherit (lib.my) mkBoolOpt;
+  inherit (lib) attrValues getExe;
+  inherit (lib.modules) mkIf;
 
   cfg = config.modules.desktop.extensions.rofi;
   envProto = config.modules.desktop.envProto;
 in {
-  options.modules.desktop.extensions.rofi = {
-    enable = mkBoolOpt false;
-    package = mkOption {
-      type = package;
-      default =
-        if (envProto == "wayland") then pkgs.rofi-wayland else pkgs.rofi;
+  options.modules.desktop.extensions.rofi =
+    let inherit (lib.options) mkEnableOption mkPackageOption;
+    in {
+      enable = mkEnableOption false;
+      package = mkPackageOption pkgs "rofi" {
+        default =
+          if (envProto == "wayland") then pkgs.rofi-wayland else pkgs.rofi;
+      };
     };
-  };
 
   # TODO: re-create theming -> general + changable banner (drun, run, systemd and power-menu)
 

@@ -1,10 +1,11 @@
 { inputs, config, options, lib, pkgs, ... }:
 
 let
-  inherit (lib) attrValues mkIf mkMerge;
-  inherit (lib.my) mkBoolOpt;
+  inherit (lib.attrsets) attrValues;
+  inherit (lib.modules) mkIf mkMerge;
 in {
-  options.modules.develop.dart = { enable = mkBoolOpt false; };
+  options.modules.develop.dart = let inherit (lib.options) mkEnableOption;
+  in { enable = mkEnableOption false; };
 
   config = mkMerge [
     (mkIf config.modules.develop.dart.enable {

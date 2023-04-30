@@ -1,12 +1,13 @@
 { config, options, lib, pkgs, ... }:
 
-let
-  inherit (lib) mkIf;
-  inherit (lib.types) int;
-  inherit (lib.my) mkBoolOpt mkOpt;
+let inherit (lib.modules) mkIf;
 in {
-  options.modules.shell.gnupg = {
-    enable = mkBoolOpt false;
+  options.modules.shell.gnupg = let
+    inherit (lib.options) mkEnableOption;
+    inherit (lib.types) int;
+    inherit (lib.my) mkOpt;
+  in {
+    enable = mkEnableOption false;
     cacheTTL = mkOpt int 3600; # 1hr
   };
 

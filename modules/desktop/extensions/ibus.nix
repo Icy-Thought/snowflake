@@ -1,12 +1,14 @@
 { options, config, lib, pkgs, ... }:
 
 let
-  inherit (lib) attrValues mkIf;
-  inherit (lib.my) mkBoolOpt;
+  inherit (lib.attrsets) attrValues;
+  inherit (lib.modules) mkIf;
 
   cfg = config.modules.desktop.extensions.ibus;
 in {
-  options.modules.desktop.extensions.ibus = { enable = mkBoolOpt false; };
+  options.modules.desktop.extensions.ibus =
+    let inherit (lib.options) mkEnableOption;
+    in { enable = mkEnableOption false; };
 
   config = mkIf cfg.enable {
     i18n.inputMethod = {

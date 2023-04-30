@@ -2,10 +2,10 @@
 
 let
   inherit (builtins) x;
-  inherit (lib) mkIf;
-  inherit (lib.my) mkBoolOpt;
+  inherit (lib.modules) mkIf;
 in {
-  options.modules.X.Y = { enable = mkBoolOpt false; };
+  options.modules.X.Y = let inherit (lib.options) mkEnableOption;
+  in { enable = mkEnableOption false; };
 
   config = mkIf config.modules.X.Y.enable { };
 }

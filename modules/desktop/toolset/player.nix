@@ -1,15 +1,17 @@
 { inputs, options, config, lib, pkgs, ... }:
 
 let
-  inherit (lib) attrValues mkIf mkMerge;
-  inherit (lib.my) mkBoolOpt;
+  inherit (lib.attrsets) attrValues;
+  inherit (lib.modules) mkIf mkMerge;
 
   cfg = config.modules.desktop.toolset.player;
 in {
-  options.modules.desktop.toolset.player = {
-    music.enable = mkBoolOpt false;
-    video.enable = mkBoolOpt false;
-  };
+  options.modules.desktop.toolset.player =
+    let inherit (lib.options) mkEnableOption;
+    in {
+      music.enable = mkEnableOption false;
+      video.enable = mkEnableOption false;
+    };
 
   config = mkMerge [
     (mkIf cfg.music.enable {

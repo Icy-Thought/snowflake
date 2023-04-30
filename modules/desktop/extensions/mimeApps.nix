@@ -3,12 +3,15 @@
 
 let
   inherit (builtins) listToAttrs;
-  inherit (lib) mkIf mapAttrsToList nameValuePair flatten;
-  inherit (lib.my) mkBoolOpt;
+  inherit (lib.attrsets) mapAttrsToList nameValuePair;
+  inherit (lib.lists) flatten;
+  inherit (lib.modules) mkIf;
 
   cfg = config.modules.desktop.extensions.mimeApps;
 in {
-  options.modules.desktop.extensions.mimeApps = { enable = mkBoolOpt false; };
+  options.modules.desktop.extensions.mimeApps =
+    let inherit (lib.options) mkEnableOption;
+    in { enable = mkEnableOption false; };
 
   config = mkIf cfg.enable {
     home.configFile."mimeapps.list".force = true;

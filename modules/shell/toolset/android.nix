@@ -1,10 +1,11 @@
 { config, options, lib, pkgs, ... }:
 
 let
-  inherit (lib) mkIf attrValues;
-  inherit (lib.my) mkBoolOpt;
+  inherit (lib.attrsets) attrValues;
+  inherit (lib.modules) mkIf;
 in {
-  options.modules.shell.android = { enable = mkBoolOpt false; };
+  options.modules.shell.android = let inherit (lib.options) mkEnableOption;
+  in { enable = mkEnableOption false; };
 
   config = mkIf config.modules.shell.android.enable {
     user.packages = attrValues ({ inherit (pkgs) scrcpy; });

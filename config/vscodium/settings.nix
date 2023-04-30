@@ -1,7 +1,7 @@
 { config, ... }:
 let
-  cfg = config.modules.themes;
   myTerm = config.modules.desktop.terminal.default;
+  inherit (config.modules.themes) editor font;
 in {
   # Introduction
   "__comment" =
@@ -18,21 +18,21 @@ in {
   };
 
   # Colorscheme
-  "workbench.colorTheme" = "${cfg.editor.vscode.dark}";
-  "workbench.preferredDarkColorTheme" = "${cfg.editor.vscode.dark}";
-  "workbench.preferredLightColorTheme" = "${cfg.editor.vscode.light}";
+  "workbench.colorTheme" = "${editor.vscode.dark}";
+  "workbench.preferredDarkColorTheme" = "${editor.vscode.dark}";
+  "workbench.preferredLightColorTheme" = "${editor.vscode.light}";
 
   # Font-related
-  "editor.fontFamily" = "${cfg.font.sans.family}";
-  "editor.fontWeight" = "${cfg.font.sans.weightNum}";
+  "editor.fontFamily" = "${font.mono.family}";
+  "editor.fontWeight" = "${font.mono.weightNum}";
   "editor.fontSize" = 16;
 
-  "debug.console.fontFamily" = "${cfg.font.mono.family}";
-  "debug.console.fontWeight" = "${cfg.font.mono.weightNum}";
+  "debug.console.fontFamily" = "${font.mono.family}";
+  "debug.console.fontWeight" = "${font.mono.weightNum}";
   "debug.console.fontSize" = 16;
 
-  "terminal.integrated.fontFamily" = "${cfg.font.mono.family}";
-  "terminal.integrated.fontWeight" = "${cfg.font.mono.weightNum}";
+  "terminal.integrated.fontFamily" = "${font.mono.family}";
+  "terminal.integrated.fontWeight" = "${font.mono.weightNum}";
   "terminal.integrated.fontSize" = 16;
 
   # Aesthetics

@@ -1,10 +1,9 @@
 { config, options, lib, pkgs, ... }:
 
-let
-  inherit (lib) mkIf mkMerge;
-  inherit (lib.my) mkBoolOpt;
+let inherit (lib.modules) mkIf mkMerge;
 in {
-  options.modules.hardware.pointer = { enable = mkBoolOpt false; };
+  options.modules.hardware.pointer = let inherit (lib.options) mkEnableOption;
+  in { enable = mkEnableOption false; };
 
   config = mkIf config.modules.hardware.pointer.enable (mkMerge [{
     services.xserver.libinput = {

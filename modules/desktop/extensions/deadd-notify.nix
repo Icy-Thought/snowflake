@@ -1,29 +1,31 @@
 { options, config, lib, pkgs, ... }:
 
 let
-  inherit (lib) attrValues literalExpression mkIf mkOption;
-  inherit (lib.my) mkBoolOpt;
+  inherit (lib.attrsets) attrValues;
+  inherit (lib.modules) mkIf;
 
   genYAML = pkgs.formats.yaml { };
   deaddDir = "${config.snowflake.configDir}/deadd-notify";
   cfg = config.modules.desktop.extensions.deadd-notify;
 in {
-  options.modules.desktop.extensions.deadd-notify = {
-    enable = mkBoolOpt false;
-    settings = mkOption {
-      type = genYAML.type;
-      default = { };
-      description = ''
-        Nix-based deadd-notification-center configuration.
-        Please visit the original deadd.conf for determening accepted inputs.
-      '';
-      example = literalExpression ''
-        margin-top: 0
-        margin-right: 0
-        width: 500
-      '';
+  options.modules.desktop.extensions.deadd-notify =
+    let inherit (lib.options) literalExpression mkEnableOption mkOption;
+    in {
+      enable = mkEnableOption false;
+      settings = mkOption {
+        type = genYAML.type;
+        default = { };
+        description = ''
+          Nix-based deadd-notification-center configuration.
+          Please visit the original deadd.conf for determening accepted inputs.
+        '';
+        example = literalExpression ''
+          margin-top: 0
+          margin-right: 0
+          width: 500
+        '';
+      };
     };
-  };
 
   config = mkIf cfg.enable {
     systemd.packages =

@@ -27,11 +27,19 @@ in {
           size = 24;
         };
 
+        fontConfig = {
+          packages = attrValues ({
+            inherit (pkgs) twitter-color-emoji;
+            nerdfonts = pkgs.nerdfonts.override { fonts = [ "VictorMono" ]; };
+          });
+          mono = [ "VictorMono Nerd Font Mono" ];
+          sans = [ "VictorMono Nerd Font" ];
+          emoji = [ "Twitter Color Emoji" ];
+        };
+
         font = {
-          package = pkgs.nerdfonts.override { fonts = [ "VictorMono" ]; };
           sans.family = "VictorMono Nerd Font";
           mono.family = "VictorMono Nerd Font Mono";
-          emoji = "Twitter Color Emoji";
         };
 
         colors = {
@@ -112,11 +120,6 @@ in {
     # })
 
     (mkIf config.services.xserver.enable {
-      fonts.fonts = attrValues ({
-        inherit (pkgs) twitter-color-emoji;
-        font = cfg.font.package;
-      });
-
       hm.programs.rofi = {
         extraConfig = {
           icon-theme = let inherit (cfg.iconTheme) name; in "${name}";

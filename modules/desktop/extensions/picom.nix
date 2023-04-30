@@ -1,16 +1,16 @@
 { options, config, lib, pkgs, ... }:
 
 let
-  inherit (lib) mkIf mkMerge;
-  inherit (lib.my) mkBoolOpt;
+  inherit (lib.modules) mkIf mkMerge;
 
   cfg = config.modules.desktop.extensions.picom;
-  # mkIndividual = ;
 in {
-  options.modules.desktop.extensions.picom = {
-    enable = mkBoolOpt false;
-    animation.enable = mkBoolOpt false;
-  };
+  options.modules.desktop.extensions.picom =
+    let inherit (lib.options) mkEnableOption;
+    in {
+      enable = mkEnableOption false;
+      animation.enable = mkEnableOption false;
+    };
 
   config = mkMerge [
     {

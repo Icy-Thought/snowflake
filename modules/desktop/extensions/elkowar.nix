@@ -1,21 +1,23 @@
 { options, config, lib, pkgs, ... }:
 
 let
-  inherit (lib) attrValues getExe mkIf mkOption makeBinPath;
+  inherit (lib.attrsets) attrValues;
+  inherit (lib.meta) getExe;
+  inherit (lib.modules) mkIf;
+  inherit (lib.strings) makeBinPath;
 
   cfg = config.modules.desktop.extensions.elkowar;
   envProto = config.modules.desktop.envProto;
 in {
-  options.modules.desktop.extensions.elkowar = let
-    inherit (lib.types) package;
-    inherit (lib.my) mkBoolOpt;
-  in {
-    enable = mkBoolOpt false;
-    package = mkOption {
-      type = package;
-      default = if (envProto == "wayland") then pkgs.eww-wayland else pkgs.eww;
+  options.modules.desktop.extensions.elkowar =
+    let inherit (lib.options) mkEnableOption mkPackageOption;
+    in {
+      enable = mkEnableOption false;
+      package = mkPackageOption pkgs "eww" {
+        default =
+          if (envProto == "wayland") then pkgs.eww-wayland else pkgs.eww;
+      };
     };
-  };
 
   config = mkIf cfg.enable {
     # Allow tray-icons to be displayed:

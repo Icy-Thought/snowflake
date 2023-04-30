@@ -1,10 +1,12 @@
 { options, config, lib, pkgs, ... }:
 
 let
-  inherit (lib) attrValues mkIf;
-  inherit (lib.my) mkBoolOpt;
+  inherit (lib.attrsets) attrValues;
+  inherit (lib.modules) mkIf;
 in {
-  options.modules.desktop.virtual.docker = { enable = mkBoolOpt false; };
+  options.modules.desktop.virtual.docker =
+    let inherit (lib.options) mkEnableOption;
+    in { enable = mkEnableOption false; };
 
   config = mkIf config.modules.desktop.virtual.docker.enable {
     user.packages = attrValues ({ inherit (pkgs) docker docker-compose; });

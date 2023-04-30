@@ -1,10 +1,9 @@
 { config, options, lib, pkgs, ... }:
 
-let
-  inherit (lib) mkIf;
-  inherit (lib.my) mkBoolOpt;
+let inherit (lib.modules) mkIf;
 in {
-  options.modules.hardware.razer = { enable = mkBoolOpt false; };
+  options.modules.hardware.razer = let inherit (lib.options) mkEnableOption;
+  in { enable = mkEnableOption false; };
 
   config = mkIf config.modules.hardware.razer.enable {
     hardware.openrazer = {

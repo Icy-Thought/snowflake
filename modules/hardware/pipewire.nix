@@ -1,12 +1,13 @@
 { config, options, lib, pkgs, ... }:
 
 let
-  inherit (lib) mkIf attrValues;
-  inherit (lib.my) mkBoolOpt;
+  inherit (lib.attrsets) attrValues;
+  inherit (lib.modules) mkIf;
 
   cfg = config.modules.hardware.pipewire;
 in {
-  options.modules.hardware.pipewire = { enable = mkBoolOpt false; };
+  options.modules.hardware.pipewire = let inherit (lib.options) mkEnableOption;
+  in { enable = mkEnableOption false; };
 
   config = mkIf cfg.enable {
     user.packages = attrValues ({ inherit (pkgs) easyeffects; });

@@ -2,15 +2,19 @@
 
 let
   inherit (builtins) getEnv map;
-  inherit (lib) getExe mapAttrsToList mkIf mkMerge mkOption;
+  inherit (lib.attrsets) mapAttrsToList;
+  inherit (lib.meta) getExe;
+  inherit (lib.modules) mkIf mkMerge;
   inherit (lib.strings) concatStringsSep optionalString removePrefix;
-  inherit (lib.types) attrsOf int lines nullOr package path str;
-  inherit (lib.my) mkOpt toFilteredImage;
 
   cfg = config.modules.themes;
   envProto = config.modules.desktop.envProto;
 in {
-  options.modules.themes = {
+  options.modules.themes = let
+    inherit (lib.options) mkOption mkPackageOption;
+    inherit (lib.types) attrsOf int lines listOf nullOr path str;
+    inherit (lib.my) mkOpt toFilteredImage;
+  in {
     active = mkOption {
       type = nullOr str;
       default = null;
@@ -32,24 +36,30 @@ in {
 
     gtk = {
       name = mkOpt str "";
-      package = mkOpt (nullOr package) null;
+      package = mkPackageOption pkgs "gtk" { };
     };
 
     iconTheme = {
       name = mkOpt str "";
-      package = mkOpt (nullOr package) null;
+      package = mkPackageOption pkgs "icon" { };
     };
 
     pointer = {
       name = mkOpt str "";
-      package = mkOpt (nullOr package) null;
+      package = mkPackageOption pkgs "pointer" { };
       size = mkOpt int "";
     };
 
     onReload = mkOpt (attrsOf lines) { };
 
+    fontConfig = {
+      packages = mkPackageOption pkgs "fontconf" { };
+      mono = mkOpt (listOf str) [ "" ];
+      sans = mkOpt (listOf str) [ "" ];
+      emoji = mkOpt (listOf str) [ "" ];
+    };
+
     font = {
-      package = mkOpt (nullOr package) null;
       mono = {
         family = mkOpt str "";
         weight = mkOpt str "SemiBold";
@@ -64,7 +74,6 @@ in {
         weightNum = mkOpt str "600";
         size = mkOpt int 10;
       };
-      emoji = mkOpt str "";
     };
 
     colors = {
@@ -157,19 +166,16 @@ in {
           name = family;
           size = size;
         };
-
         theme = let inherit (cfg.gtk) name package;
         in {
           name = name;
           package = package;
         };
-
         iconTheme = let inherit (cfg.iconTheme) name package;
         in {
           name = name;
           package = package;
         };
-
         gtk3.bookmarks = map (dir: "file://${config.user.home}/" + dir) [
           "git/icy-thought/snowflake"
           "git/icy-thought/cs-notes"
@@ -192,12 +198,12 @@ in {
         gtk.enable = true;
       };
 
-      fonts.fontconfig = let inherit (cfg.font) package emoji mono sans;
+      fonts = let inherit (cfg.fontConfig) packages emoji mono sans;
       in {
-        fonts = package;
-        defaultFonts = {
-          monospace = mono.family;
-          sansSerif = sans.family;
+        fonts = [ packages ];
+        fontconfig.defaultFonts = {
+          monospace = mono;
+          sansSerif = sans;
           emoji = emoji;
         };
       };

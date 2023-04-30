@@ -1,16 +1,18 @@
 { options, config, lib, pkgs, ... }:
 
 let
-  inherit (lib) attrValues optionalAttrs mkIf mkMerge;
-  inherit (lib.my) mkBoolOpt;
+  inherit (lib.attrsets) attrValues optionalAttrs;
+  inherit (lib.modules) mkIf mkMerge;
 
   cfg = config.modules.desktop.distraction.lutris;
   wineCfg = config.modules.desktop.virtual.wine;
 in {
-  options.modules.desktop.distraction.lutris = {
-    enable = mkBoolOpt false;
-    league.enable = mkBoolOpt false;
-  };
+  options.modules.desktop.distraction.lutris =
+    let inherit (lib.options) mkEnableOption;
+    in {
+      enable = mkEnableOption false;
+      league.enable = mkEnableOption false;
+    };
 
   config = mkMerge [
     (mkIf cfg.enable {

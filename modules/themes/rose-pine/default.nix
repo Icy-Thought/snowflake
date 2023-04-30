@@ -11,28 +11,33 @@ in {
     {
       modules.themes = {
         wallpaper = mkDefault ./assets/loaki-solarpunk.jpg;
-
         gtk = {
           name = "rose-pine";
           package = pkgs.rose-pine-gtk-theme;
         };
-
         iconTheme = {
           name = "rose-pine";
           package = pkgs.rose-pine-icon-theme;
         };
-
         pointer = {
           name = "Bibata-Modern-Classic";
           package = pkgs.bibata-cursors;
           size = 24;
         };
+        fontConfig = {
+          packages = attrValues ({
+            inherit (pkgs) cascadia-code noto-fonts-emoji sarasa-gothic;
+            nerdfonts =
+              pkgs.nerdfonts.override { fonts = [ "Arimo " "JetBrainsMono" ]; };
+          });
+          mono = [ "JetBrainsMono Nerd Font" "Cascadia Code" "Sarasa Mono SC" ];
+          sans = [ "Arimo Nerd Font" "Sarasa Gothic SC" ];
+          emoji = [ "Noto Color Emoji" ];
+        };
 
         font = {
-          package = pkgs.nerdfonts.override { fonts = [ "VictorMono" ]; };
-          sans.family = "VictorMono Nerd Font";
-          mono.family = "VictorMono Nerd Font Mono";
-          emoji = "Noto Color Emoji";
+          mono.family = "JetBrainsMono Nerd Font";
+          sans.family = "Arimo Nerd Font";
         };
 
         colors = {
@@ -131,11 +136,6 @@ in {
     })
 
     (mkIf config.services.xserver.enable {
-      fonts.fonts = attrValues ({
-        inherit (pkgs) noto-fonts-emoji;
-        font = cfg.font.package;
-      });
-
       hm.programs.rofi = {
         extraConfig = {
           icon-theme = let inherit (cfg.iconTheme) name; in "${name}";

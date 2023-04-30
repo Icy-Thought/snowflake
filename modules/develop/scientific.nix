@@ -1,12 +1,13 @@
 { config, options, lib, pkgs, ... }:
 
 let
-  inherit (lib) attrValues mkIf mkMerge;
-  inherit (lib.my) mkBoolOpt;
+  inherit (lib.attrsets) attrValues;
+  inherit (lib.modules) mkIf mkMerge;
 in {
-  options.modules.develop.scientific = {
-    latex.enable = mkBoolOpt false;
-    typst.enable = mkBoolOpt false;
+  options.modules.develop.scientific = let inherit (lib.options) mkEnableOption;
+  in {
+    latex.enable = mkEnableOption false;
+    typst.enable = mkEnableOption false;
   };
 
   config = mkMerge [

@@ -1,16 +1,18 @@
 { config, options, lib, pkgs, ... }:
 
 let
-  inherit (lib) attrValues optionalAttrs mkIf;
-  inherit (lib.my) mkBoolOpt;
+  inherit (lib.attrsets) attrValues optionalAttrs;
+  inherit (lib.modules) mkIf;
 
   cfg = config.modules.desktop.toolset.recorder;
 in {
-  options.modules.desktop.toolset.recorder = {
-    enable = mkBoolOpt false;
-    audio.enable = mkBoolOpt true;
-    video.enable = mkBoolOpt true;
-  };
+  options.modules.desktop.toolset.recorder =
+    let inherit (lib.options) mkEnableOption;
+    in {
+      enable = mkEnableOption false;
+      audio.enable = mkEnableOption true;
+      video.enable = mkEnableOption true;
+    };
 
   config = mkIf cfg.enable {
     services.pipewire.jack.enable = true;

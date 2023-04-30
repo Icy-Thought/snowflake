@@ -1,33 +1,35 @@
 { config, lib, pkgs, inputs, ... }:
 
 let
-  inherit (lib) attrValues optionalAttrs mkIf mkMerge mkOption;
-  inherit (lib.types) str package;
-  inherit (lib.my) mkBoolOpt mkOpt;
+  inherit (lib.attrsets) attrValues optionalAttrs;
+  inherit (lib.modules) mkIf mkMerge;
 
   cfg = config.modules.desktop.editors.emacs;
   envProto = config.modules.desktop.envProto;
 in {
-  options.modules.desktop.editors.emacs = {
-    transparency.enable = mkBoolOpt false;
-    package = mkOption {
-      type = package;
-      default = let
-        inherit (pkgs) emacsUnstable emacsUnstablePgtk;
-        emacsPackage =
-          if (envProto == "wayland") then emacsUnstablePgtk else emacsUnstable;
-        finalPackage = if cfg.transparency.enable then
-          emacsPackage.override {
-            withGTK3 = true;
-            withX = true;
-          }
-        else
-          emacsPackage;
-      in finalPackage;
+  options.modules.desktop.editors.emacs =
+    let inherit (lib.options) mkEnableOption mkPackageOption;
+    in {
+      transparency.enable = mkEnableOption false;
+      package = mkPackageOption "emacs" {
+        default = let
+          inherit (pkgs) emacsUnstable emacsUnstablePgtk;
+          emacsPackage = if (envProto == "wayland") then
+            emacsUnstablePgtk
+          else
+            emacsUnstable;
+          finalPackage = if cfg.transparency.enable then
+            emacsPackage.override {
+              withGTK3 = true;
+              withX = true;
+            }
+          else
+            emacsPackage;
+        in finalPackage;
+      };
+      doomemacs.enable = mkEnableOption false;
+      irkalla.enable = mkEnableOption false;
     };
-    doomemacs.enable = mkBoolOpt false;
-    irkalla.enable = mkBoolOpt false;
-  };
 
   config = mkMerge [
     {

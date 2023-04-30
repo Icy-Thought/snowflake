@@ -1,10 +1,11 @@
 { config, options, lib, pkgs, ... }:
 
 let
-  inherit (lib) attrValues optionalAttrs mkIf;
-  inherit (lib.my) mkBoolOpt;
+  inherit (lib.attrsets) attrValues optionalAttrs;
+  inherit (lib.modules) mkIf;
 in {
-  options.modules.shell.git = { enable = mkBoolOpt false; };
+  options.modules.shell.git = let inherit (lib.options) mkEnableOption;
+  in { enable = mkEnableOption false; };
 
   config = mkIf config.modules.shell.git.enable {
     user.packages = attrValues ({

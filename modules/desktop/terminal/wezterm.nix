@@ -2,11 +2,12 @@
 
 let
   inherit (builtins) toString;
-  inherit (lib) mkIf mkMerge;
+  inherit (lib.modules) mkIf mkMerge;
   inherit (lib.strings) optionalString;
-  inherit (lib.my) mkBoolOpt;
 in {
-  options.modules.desktop.terminal.wezterm = { enable = mkBoolOpt false; };
+  options.modules.desktop.terminal.wezterm =
+    let inherit (lib.options) mkEnableOption;
+    in { enable = mkEnableOption false; };
 
   config = mkIf config.modules.desktop.terminal.wezterm.enable {
     user.packages = [ pkgs.wezterm ];

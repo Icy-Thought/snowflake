@@ -2,12 +2,14 @@
 
 let
   inherit (builtins) toString;
-  inherit (lib) mkIf mkMerge getExe;
-  inherit (lib.my) mkBoolOpt;
+  inherit (lib.meta) getExe;
+  inherit (lib.modules) mkIf mkMerge;
 
   active = config.modules.themes.active;
 in {
-  options.modules.desktop.terminal.alacritty = { enable = mkBoolOpt false; };
+  options.modules.desktop.terminal.alacritty =
+    let inherit (lib.options) mkEnableOption;
+    in { enable = mkEnableOption false; };
 
   config = mkIf config.modules.desktop.terminal.alacritty.enable {
     # Enabling useful/configured term-tools:
@@ -125,7 +127,7 @@ in {
       alacritty-conf = {
         target = "alacritty/config/${active}.yml";
         text = let
-          inherit (config.modules.themes.font.sans) family weight size;
+          inherit (config.modules.themes.font.mono) family weight size;
           inherit (config.modules.themes.colors.main) bright normal types;
         in ''
           font:

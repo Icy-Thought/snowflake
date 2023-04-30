@@ -1,26 +1,23 @@
 { inputs, options, config, lib, pkgs, ... }:
 
 let
-  inherit (lib) attrValues mkIf mkOption;
+  inherit (lib.attrsets) attrValues;
+  inherit (lib.modules) mkIf;
   inherit (lib.strings) optionalString;
-  inherit (lib.types) enum nullOr path package;
-  inherit (lib.my) mkBoolOpt;
 
   cfg = config.modules.desktop.qtile;
 in {
-  options.modules.desktop.qtile = {
-    enable = mkBoolOpt false;
-    package = mkOption {
-      type = package;
-      default = pkgs.qtile;
-    };
-
+  options.modules.desktop.qtile = let
+    inherit (lib.options) mkOption mkEnableOption mkPackageOption;
+    inherit (lib.types) enum nullOr path;
+  in {
+    enable = mkEnableOption false;
+    package = mkPackageOption pkgs "qtile" pkgs.qtile;
     configFile = mkOption {
       type = nullOr path;
       default = "${config.snowflake.configDir}/qtile/config.py";
       example = "./config.py";
     };
-
     backend = mkOption {
       type = enum [ "x11" "wayland" ];
       default = "x11";

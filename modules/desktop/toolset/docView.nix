@@ -2,16 +2,18 @@
 
 let
   inherit (builtins) toString;
-  inherit (lib) optionalAttrs mkIf mkMerge;
+  inherit (lib.attrsets) optionalAttrs;
+  inherit (lib.modules) mkIf mkMerge;
   inherit (lib.strings) concatStringsSep;
-  inherit (lib.my) mkBoolOpt;
 
   cfg = config.modules.desktop.toolset.docView;
 in {
-  options.modules.desktop.toolset.docView = {
-    zathura.enable = mkBoolOpt false;
-    sioyek.enable = mkBoolOpt false;
-  };
+  options.modules.desktop.toolset.docView =
+    let inherit (lib.options) mkEnableOption;
+    in {
+      zathura.enable = mkEnableOption false;
+      sioyek.enable = mkEnableOption false;
+    };
 
   config = mkMerge [
     (mkIf cfg.zathura.enable {
@@ -27,7 +29,7 @@ in {
           statusbar-home-tilde = true;
           window-title-basename = true;
         } // optionalAttrs (active != null) {
-          font = let inherit (config.modules.themes.font.sans) family size;
+          font = let inherit (config.modules.themes.font.mono) family size;
           in "${family} Bold ${toString (size)}";
           recolor = true;
           recolor-keephue = true;

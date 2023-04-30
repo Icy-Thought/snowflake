@@ -1,12 +1,12 @@
 { options, config, inputs, lib, pkgs, ... }:
 
 let
-  inherit (inputs) hyprland;
   inherit (builtins) readFile toPath;
-  inherit (lib) attrValues mkIf;
-  inherit (lib.my) mkBoolOpt;
+  inherit (lib.attrsets) attrValues;
+  inherit (lib.modules) mkIf;
 in {
-  options.modules.desktop.hyprland = { enable = mkBoolOpt false; };
+  options.modules.desktop.hyprland = let inherit (lib.options) mkEnableOption;
+  in { enable = mkEnableOption false; };
 
   config = mkIf config.modules.desktop.hyprland.enable {
     modules.desktop = {
@@ -40,7 +40,8 @@ in {
       user = "${config.user.name}";
     };
 
-    hm.imports = [ hyprland.homeManagerModules.default ];
+    hm.imports = let inherit (inputs) hyprland;
+    in [ hyprland.homeManagerModules.default ];
 
     hm.wayland.windowManager.hyprland = {
       enable = true;

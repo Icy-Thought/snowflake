@@ -1,11 +1,13 @@
 { options, config, lib, pkgs, ... }:
 
 let
-  inherit (lib) getExe mkIf;
-  inherit (lib.my) mkBoolOpt;
+  inherit (lib.meta) getExe;
+  inherit (lib.modules) mkIf;
   inherit (pkgs) pamixer python3 writeScriptBin;
 in {
-  options.modules.shell.scripts.volume = { enable = mkBoolOpt false; };
+  options.modules.shell.scripts.volume =
+    let inherit (lib.options) mkEnableOption;
+    in { enable = mkEnableOption false; };
 
   config = mkIf config.modules.shell.scripts.volume.enable {
     user.packages = [

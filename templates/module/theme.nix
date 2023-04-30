@@ -2,7 +2,8 @@
 
 let
   inherit (builtins) toString;
-  inherit (lib) attrValues mkDefault mkIf mkMerge;
+  inherit (lib) attrValues mkDefault mkIf;
+  inherit (lib.options) mkMerge;
 
   cfg = config.modules.themes;
 in {

@@ -1,14 +1,13 @@
 { config, options, lib, pkgs, ... }:
 
 let
-  inherit (lib) mkIf mkMerge;
-  inherit (lib.my) mkBoolOpt;
+  inherit (lib.modules) mkIf mkMerge;
 
   cfg = config.modules.desktop.toolset.downloader;
 in {
-  options.modules.desktop.toolset.downloader = {
-    transmission.enable = mkBoolOpt false;
-  };
+  options.modules.desktop.toolset.downloader =
+    let inherit (lib.options) mkEnableOption;
+    in { transmission.enable = mkEnableOption false; };
 
   # TODO <- remote vs gui
   config = mkMerge [

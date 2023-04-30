@@ -1,10 +1,12 @@
 { inputs, config, options, lib, pkgs, ... }:
 
 let
-  inherit (lib) attrValues mkIf mkMerge getExe;
-  inherit (lib.my) mkBoolOpt;
+  inherit (lib.attrsets) attrValues;
+  inherit (lib.modules) mkIf mkMerge;
+  inherit (lib.meta) getExe;
 in {
-  options.modules.develop.rust = { enable = mkBoolOpt false; };
+  options.modules.develop.rust = let inherit (lib.options) mkEnableOption;
+  in { enable = mkEnableOption false; };
 
   config = mkMerge [
     (mkIf config.modules.develop.rust.enable {

@@ -1,10 +1,9 @@
 { config, options, lib, pkgs, ... }:
 
-let
-  inherit (lib) mkIf;
-  inherit (lib.my) mkBoolOpt;
+let inherit (lib.modules) mkIf;
 in {
-  options.modules.develop = { xdg.enable = mkBoolOpt true; };
+  options.modules.develop = let inherit (lib.options) mkEnableOption;
+  in { xdg.enable = mkEnableOption true; };
 
   config = mkIf config.modules.develop.xdg.enable {
     # TODO:

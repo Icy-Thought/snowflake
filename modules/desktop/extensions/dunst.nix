@@ -1,12 +1,15 @@
 { options, config, lib, pkgs, ... }:
 
 let
-  inherit (lib) getExe optionalAttrs mkIf;
-  inherit (lib.my) mkBoolOpt;
+  inherit (lib.attrsets) optionalAttrs;
+  inherit (lib.meta) getExe;
+  inherit (lib.modules) mkIf;
 
   cfg = config.modules.desktop.extensions.dunst;
 in {
-  options.modules.desktop.extensions.dunst = { enable = mkBoolOpt false; };
+  options.modules.desktop.extensions.dunst =
+    let inherit (lib.options) mkEnableOption;
+    in { enable = mkEnableOption false; };
 
   config = mkIf cfg.enable {
     hm.services.dunst = {
@@ -60,7 +63,7 @@ in {
           progress_bar_max_width = 300;
 
           # Aesthetics
-          font = let inherit (config.modules.themes.font.sans) family weight;
+          font = let inherit (config.modules.themes.font.mono) family weight;
           in "${family} ${weight} 11";
           frame_width = 2;
           separator_color = "frame";

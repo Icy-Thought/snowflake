@@ -2,13 +2,14 @@
 
 let
   inherit (builtins) readFile;
-  inherit (lib) mkIf;
+  inherit (lib) mkIf mkEnableOption;
   inherit (lib.strings) optionalString;
-  inherit (lib.my) mkBoolOpt;
 
   cfg = config.modules.desktop.extensions.taffybar;
 in {
-  options.modules.desktop.extensions.taffybar = { enable = mkBoolOpt false; };
+  options.modules.desktop.extensions.taffybar = {
+    enable = mkEnableOption false;
+  };
 
   config = mkIf cfg.enable {
     home.configFile = let

@@ -30,11 +30,19 @@ in {
           size = 24;
         };
 
+        fontConfig = {
+          packages = attrValues ({
+            inherit (pkgs) noto-fonts-emoji;
+            nerdfonts = pkgs.nerdfonts.override { fonts = [ "VictorMono" ]; };
+          });
+          mono = [ "VictorMono Nerd Font Mono" ];
+          sans = [ "VictorMono Nerd Font" ];
+          emoji = [ "Noto Color Emoji" ];
+        };
+
         font = {
-          package = pkgs.nerdfonts.override { fonts = [ "VictorMono" ]; };
           sans.family = "VictorMono Nerd Font";
           mono.family = "VictorMono Nerd Font Mono";
-          emoji = "Noto Color Emoji";
         };
 
         colors = {
@@ -134,11 +142,6 @@ in {
     })
 
     (mkIf config.services.xserver.enable {
-      fonts.fonts = attrValues ({
-        inherit (pkgs) noto-fonts-emoji;
-        font = cfg.font.package;
-      });
-
       hm.programs.rofi = {
         extraConfig = {
           icon-theme = let inherit (cfg.iconTheme) name; in "${name}";

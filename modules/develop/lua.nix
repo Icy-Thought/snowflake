@@ -1,14 +1,14 @@
 { config, options, lib, pkgs, ... }:
 
 let
-  inherit (lib) attrValues optionalAttrs mkIf mkMerge;
-  inherit (lib.my) mkBoolOpt;
-
+  inherit (lib.attrsets) attrValues optionalAttrs;
+  inherit (lib.modules) mkIf mkMerge;
   cfg = config.modules.develop.lua;
 in {
-  options.modules.develop.lua = {
-    enable = mkBoolOpt false;
-    fennel.enable = mkBoolOpt false;
+  options.modules.develop.lua = let inherit (lib.options) mkEnableOption;
+  in {
+    enable = mkEnableOption false;
+    fennel.enable = mkEnableOption false;
   };
 
   config = mkMerge [

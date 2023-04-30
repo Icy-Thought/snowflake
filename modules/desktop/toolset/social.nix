@@ -1,21 +1,23 @@
 { config, options, lib, pkgs, ... }:
 
 let
-  inherit (lib) attrValues mkIf mkMerge optionals;
+  inherit (lib) attrValues optionals;
+  inherit (lib.modules) mkIf mkMerge;
   inherit (lib.strings) concatStringsSep;
-  inherit (lib.my) mkBoolOpt;
 
   cfg = config.modules.desktop.toolset.social;
   envProto = config.modules.desktop.envProto;
 in {
-  options.modules.desktop.toolset.social = {
-    base.enable = mkBoolOpt false;
-    discord.enable = mkBoolOpt cfg.base.enable;
-    element = {
-      withDaemon = mkBoolOpt false;
-      withClient = mkBoolOpt cfg.base.enable;
+  options.modules.desktop.toolset.social =
+    let inherit (lib.options) mkEnableOption;
+    in {
+      base.enable = mkEnableOption false;
+      discord.enable = mkEnableOption cfg.base.enable;
+      element = {
+        withDaemon = mkEnableOption false;
+        withClient = mkEnableOption cfg.base.enable;
+      };
     };
-  };
 
   config = mkMerge [
     (mkIf cfg.base.enable {

@@ -2,15 +2,19 @@
 
 let
   inherit (builtins) toJSON;
-  inherit (lib) getExe mkIf mkMerge mapAttrsToList;
+  inherit (lib.attrsets) mapAttrsToList;
+  inherit (lib.meta) getExe;
+  inherit (lib.modules) mkIf mkMerge;
   inherit (lib.strings) concatStrings;
-  inherit (lib.types) attrsOf oneOf bool int lines str;
-  inherit (lib.my) mkBoolOpt mkOpt mkOpt';
 
   cfg = config.modules.desktop.browsers.firefox;
 in {
-  options.modules.desktop.browsers.firefox = {
-    enable = mkBoolOpt false;
+  options.modules.desktop.browsers.firefox = let
+    inherit (lib.options) mkEnableOption;
+    inherit (lib.types) attrsOf oneOf bool int lines str;
+    inherit (lib.my) mkOpt mkOpt';
+  in {
+    enable = mkEnableOption false;
     profileName = mkOpt str config.user.name;
 
     settings = mkOpt' (attrsOf (oneOf [ bool int str ])) { } ''

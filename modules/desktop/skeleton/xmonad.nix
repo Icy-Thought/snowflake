@@ -1,10 +1,12 @@
 { inputs, options, config, lib, pkgs, ... }:
 
 let
-  inherit (lib) attrValues mkIf getExe;
-  inherit (lib.my) mkBoolOpt;
+  inherit (lib.attrsets) attrValues;
+  inherit (lib.meta) getExe;
+  inherit (lib.modules) mkIf;
 in {
-  options.modules.desktop.xmonad = { enable = mkBoolOpt false; };
+  options.modules.desktop.xmonad = let inherit (lib.options) mkEnableOption;
+  in { enable = mkEnableOption false; };
 
   config = mkIf config.modules.desktop.xmonad.enable {
     modules.desktop = {

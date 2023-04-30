@@ -1,16 +1,19 @@
 { config, options, lib, pkgs, inputs, ... }:
 
 let
-  inherit (lib) attrValues optionalAttrs mkIf mkMerge;
-  inherit (lib.types) package;
-  inherit (lib.my) mkBoolOpt mkOpt;
+  inherit (lib.attrsets) attrValues optionalAttrs;
+  inherit (lib.modules) mkIf mkMerge;
 
   cfg = config.modules.desktop.editors.neovim;
 in {
-  options.modules.desktop.editors.neovim = {
+  options.modules.desktop.editors.neovim = let
+    inherit (lib.options) mkEnableOption;
+    inherit (lib.types) package;
+    inherit (lib.my) mkOpt;
+  in {
     package = mkOpt package pkgs.neovim-nightly;
-    agasaya.enable = mkBoolOpt false; # lua
-    ereshkigal.enable = mkBoolOpt false; # fnl
+    agasaya.enable = mkEnableOption false; # lua
+    ereshkigal.enable = mkEnableOption false; # fnl
   };
 
   config = mkMerge [

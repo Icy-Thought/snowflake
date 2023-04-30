@@ -1,14 +1,14 @@
 { config, options, lib, pkgs, ... }:
 
 let
-  inherit (lib) mkIf mkOption;
-  inherit (lib.types) path str;
-  inherit (lib.my) mkBoolOpt;
-
+  inherit (lib.modules) mkIf;
   cfg = config.modules.containers.transmission;
 in {
-  options.modules.containers.transmission = {
-    enable = mkBoolOpt false;
+  options.modules.containers.transmission = let
+    inherit (lib.options) mkOption mkEnableOption;
+    inherit (lib.types) path str;
+  in {
+    enable = mkEnableOption false;
 
     username = mkOption {
       type = str;

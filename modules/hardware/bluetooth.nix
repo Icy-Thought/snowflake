@@ -1,10 +1,11 @@
 { config, options, lib, pkgs, ... }:
 
 let
-  inherit (lib) attrValues mkIf;
-  inherit (lib.my) mkBoolOpt;
+  inherit (lib.attrsets) attrValues;
+  inherit (lib.modules) mkIf;
 in {
-  options.modules.hardware.bluetooth = { enable = mkBoolOpt false; };
+  options.modules.hardware.bluetooth = let inherit (lib.options) mkEnableOption;
+  in { enable = mkEnableOption false; };
 
   config = mkIf config.modules.hardware.bluetooth.enable {
     user.packages = attrValues ({ inherit (pkgs) blueman galaxy-buds-client; });

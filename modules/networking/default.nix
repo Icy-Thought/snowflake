@@ -1,15 +1,16 @@
 { config, options, lib, pkgs, ... }:
 
 let
-  inherit (lib) getExe mkDefault mkIf mkMerge;
-  inherit (lib.my) mkBoolOpt;
+  inherit (lib) getExe mkDefault;
+  inherit (lib.modules) mkIf mkMerge;
 
   cfg = config.modules.networking;
 in {
-  options.modules.networking = {
-    iwd.enable = mkBoolOpt false;
-    networkd.enable = mkBoolOpt false;
-    networkManager.enable = mkBoolOpt false;
+  options.modules.networking = let inherit (lib.options) mkEnableOption;
+  in {
+    iwd.enable = mkEnableOption false;
+    networkd.enable = mkEnableOption false;
+    networkManager.enable = mkEnableOption false;
   };
 
   config = mkMerge [

@@ -1,13 +1,12 @@
 { options, config, lib, pkgs, ... }:
 
-let
-  inherit (lib) mkIf mkForce;
-  inherit (lib.my) mkBoolOpt;
+let inherit (lib.modules) mkIf mkForce;
 in {
-  options.modules.networking.wireguard.ghostVPN = { enable = mkBoolOpt false; };
+  options.modules.networking.wireguard.ghostVPN =
+    let inherit (lib.options) mkEnableOption;
+    in { enable = mkEnableOption false; };
 
   # TODO: replace ghostVPN with desired module name!
-
   config = mkIf config.modules.networking.wireguard.ghostVPN.enable {
     modules.networking.wireguard.enable = true;
 
