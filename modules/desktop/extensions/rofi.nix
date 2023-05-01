@@ -12,8 +12,7 @@ in {
     in {
       enable = mkEnableOption false;
       package = mkPackageOption pkgs "rofi" {
-        default =
-          if (envProto == "wayland") then pkgs.rofi-wayland else pkgs.rofi;
+        default = if (envProto == "wayland") then "rofi-wayland" else "rofi";
       };
     };
 

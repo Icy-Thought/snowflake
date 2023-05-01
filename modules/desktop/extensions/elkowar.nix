@@ -14,8 +14,7 @@ in {
     in {
       enable = mkEnableOption false;
       package = mkPackageOption pkgs "eww" {
-        default =
-          if (envProto == "wayland") then pkgs.eww-wayland else pkgs.eww;
+        default = if (envProto == "wayland") then "eww-wayland" else "eww";
       };
     };
 

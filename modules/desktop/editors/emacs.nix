@@ -11,22 +11,17 @@ in {
     let inherit (lib.options) mkEnableOption mkPackageOption;
     in {
       transparency.enable = mkEnableOption false;
-      package = mkPackageOption "emacs" {
-        default = let
-          inherit (pkgs) emacsUnstable emacsUnstablePgtk;
-          emacsPackage = if (envProto == "wayland") then
-            emacsUnstablePgtk
-          else
-            emacsUnstable;
-          finalPackage = if cfg.transparency.enable then
-            emacsPackage.override {
-              withGTK3 = true;
-              withX = true;
-            }
-          else
-            emacsPackage;
-        in finalPackage;
-      };
+      package = let
+        inherit (pkgs) emacsUnstable emacsUnstablePgtk;
+        emacsPackage = if (envProto == "wayland") then emacsUnstablePgtk else emacsUnstable;
+        finalEmacsPackage = if cfg.transparency.enable then
+          emacsPackage.override {
+            withGTK3 = true;
+            withX = true;
+          }
+        else
+          emacsPackage;
+      in mkPackageOption finalEmacsPackage;
       doomemacs.enable = mkEnableOption false;
       irkalla.enable = mkEnableOption false;
     };

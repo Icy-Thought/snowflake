@@ -12,7 +12,7 @@ let
 in {
   options.modules.themes = let
     inherit (lib.options) mkOption mkPackageOption;
-    inherit (lib.types) attrsOf int lines listOf nullOr path str;
+    inherit (lib.types) attrsOf int lines listOf nullOr path package str;
     inherit (lib.my) mkOpt toFilteredImage;
   in {
     active = mkOption {
@@ -53,7 +53,7 @@ in {
     onReload = mkOpt (attrsOf lines) { };
 
     fontConfig = {
-      packages = mkPackageOption pkgs "fontconf" { };
+      packages = mkOpt (listOf package) [ ];
       mono = mkOpt (listOf str) [ "" ];
       sans = mkOpt (listOf str) [ "" ];
       emoji = mkOpt (listOf str) [ "" ];
@@ -200,7 +200,7 @@ in {
 
       fonts = let inherit (cfg.fontConfig) packages emoji mono sans;
       in {
-        fonts = [ packages ];
+        fonts = packages;
         fontconfig.defaultFonts = {
           monospace = mono;
           sansSerif = sans;

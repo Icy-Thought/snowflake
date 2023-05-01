@@ -28,7 +28,7 @@ in {
           packages = attrValues ({
             inherit (pkgs) cascadia-code noto-fonts-emoji sarasa-gothic;
             nerdfonts =
-              pkgs.nerdfonts.override { fonts = [ "Arimo " "JetBrainsMono" ]; };
+              pkgs.nerdfonts.override { fonts = [ "Arimo" "JetBrainsMono" ]; };
           });
           mono = [ "JetBrainsMono Nerd Font" "Cascadia Code" "Sarasa Mono SC" ];
           sans = [ "Arimo Nerd Font" "Sarasa Gothic SC" ];
