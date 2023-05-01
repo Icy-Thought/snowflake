@@ -10,10 +10,11 @@ in {
   options.modules.desktop.editors.emacs =
     let inherit (lib.options) mkEnableOption mkPackageOption;
     in {
-      transparency.enable = mkEnableOption false;
+      transparency.enable = mkEnableOption "transparent Emacs frame";
       package = let
         inherit (pkgs) emacsUnstable emacsUnstablePgtk;
-        emacsPackage = if (envProto == "wayland") then emacsUnstablePgtk else emacsUnstable;
+        emacsPackage =
+          if (envProto == "wayland") then emacsUnstablePgtk else emacsUnstable;
         finalEmacsPackage = if cfg.transparency.enable then
           emacsPackage.override {
             withGTK3 = true;
@@ -22,8 +23,8 @@ in {
         else
           emacsPackage;
       in mkPackageOption finalEmacsPackage;
-      doomemacs.enable = mkEnableOption false;
-      irkalla.enable = mkEnableOption false;
+      doomemacs.enable = mkEnableOption "vim-based Emacs framework";
+      irkalla.enable = mkEnableOption "Emacs of the underworld";
     };
 
   config = mkMerge [

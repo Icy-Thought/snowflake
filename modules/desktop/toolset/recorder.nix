@@ -10,8 +10,8 @@ in {
     let inherit (lib.options) mkEnableOption;
     in {
       enable = mkEnableOption false;
-      audio.enable = mkEnableOption true;
-      video.enable = mkEnableOption true;
+      audio.enable = mkEnableOption "audio manipulation" // { default = true; };
+      video.enable = mkEnableOption "video manipulation" // { default = true; };
     };
 
   config = mkIf cfg.enable {

@@ -6,7 +6,7 @@ let
   inherit (lib.meta) getExe;
 in {
   options.modules.develop.node = let inherit (lib.options) mkEnableOption;
-  in { enable = mkEnableOption false; };
+  in { enable = mkEnableOption "JS/TS development"; };
 
   config = mkMerge [
     (mkIf config.modules.develop.node.enable {

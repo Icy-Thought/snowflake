@@ -3,7 +3,7 @@
 let inherit (lib.modules) mkIf;
 in {
   options.modules.shell.starship = let inherit (lib.options) mkEnableOption;
-  in { enable = mkEnableOption false; };
+  in { enable = mkEnableOption "minimal shell ricing"; };
 
   config = mkIf config.modules.shell.starship.enable {
     hm.programs.starship = {

@@ -8,7 +8,7 @@ let
 in {
   options.modules.desktop.extensions.ibus =
     let inherit (lib.options) mkEnableOption;
-    in { enable = mkEnableOption false; };
+    in { enable = mkEnableOption "input-method framework"; };
 
   config = mkIf cfg.enable {
     i18n.inputMethod = {

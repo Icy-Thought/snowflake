@@ -10,7 +10,7 @@ in {
     inherit (lib.options) mkEnableOption mkOption;
     inherit (lib.types) nullOr path;
   in {
-    enable = mkEnableOption false;
+    enable = mkEnableOption "advanced kbd management";
     deviceID = mkOption {
       type = nullOr path;
       default = null;

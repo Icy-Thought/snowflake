@@ -5,7 +5,7 @@ let
   inherit (lib.modules) mkIf;
 in {
   options.modules.shell.android = let inherit (lib.options) mkEnableOption;
-  in { enable = mkEnableOption false; };
+  in { enable = mkEnableOption "android tools"; };
 
   config = mkIf config.modules.shell.android.enable {
     user.packages = attrValues ({ inherit (pkgs) scrcpy; });

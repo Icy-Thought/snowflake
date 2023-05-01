@@ -6,7 +6,7 @@ let
   inherit (lib.meta) getExe;
 in {
   options.modules.develop.rust = let inherit (lib.options) mkEnableOption;
-  in { enable = mkEnableOption false; };
+  in { enable = mkEnableOption "Rust development"; };
 
   config = mkMerge [
     (mkIf config.modules.develop.rust.enable {

@@ -7,7 +7,9 @@ let
 in {
   options.modules.desktop.distraction =
     let inherit (lib.options) mkEnableOption;
-    in { hardware = { amdvlk.enable = mkEnableOption false; }; };
+    in {
+      hardware = { amdvlk.enable = mkEnableOption "AMD open-source driver"; };
+    };
 
   config = mkMerge [
     (mkIf cfg.amdvlk.enable {

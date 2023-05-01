@@ -7,7 +7,7 @@ let
   cfg = config.modules.hardware.pipewire;
 in {
   options.modules.hardware.pipewire = let inherit (lib.options) mkEnableOption;
-  in { enable = mkEnableOption false; };
+  in { enable = mkEnableOption "modern audio support"; };
 
   config = mkIf cfg.enable {
     user.packages = attrValues ({ inherit (pkgs) easyeffects; });

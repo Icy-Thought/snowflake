@@ -9,9 +9,9 @@ in {
   options.modules.desktop.toolset.fileBrowse =
     let inherit (lib.options) mkEnableOption;
     in {
-      dolphin.enable = mkEnableOption false;
-      nautilus.enable = mkEnableOption false;
-      thunar.enable = mkEnableOption false;
+      dolphin.enable = mkEnableOption "KDE Plasma file-manager";
+      nautilus.enable = mkEnableOption "Gnome file-manager";
+      thunar.enable = mkEnableOption "GTK+ file-manager";
     };
 
   config = mkMerge [

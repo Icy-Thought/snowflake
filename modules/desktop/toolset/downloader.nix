@@ -7,7 +7,7 @@ let
 in {
   options.modules.desktop.toolset.downloader =
     let inherit (lib.options) mkEnableOption;
-    in { transmission.enable = mkEnableOption false; };
+    in { transmission.enable = mkEnableOption "BitTorrent client"; };
 
   # TODO <- remote vs gui
   config = mkMerge [

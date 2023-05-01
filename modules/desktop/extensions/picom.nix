@@ -8,8 +8,8 @@ in {
   options.modules.desktop.extensions.picom =
     let inherit (lib.options) mkEnableOption;
     in {
-      enable = mkEnableOption false;
-      animation.enable = mkEnableOption false;
+      enable = mkEnableOption "lightweight X11 compositor";
+      animation.enable = mkEnableOption "animated picom";
     };
 
   config = mkMerge [

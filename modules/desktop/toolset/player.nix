@@ -9,8 +9,8 @@ in {
   options.modules.desktop.toolset.player =
     let inherit (lib.options) mkEnableOption;
     in {
-      music.enable = mkEnableOption false;
-      video.enable = mkEnableOption false;
+      music.enable = mkEnableOption "music player";
+      video.enable = mkEnableOption "video player";
     };
 
   config = mkMerge [

@@ -3,7 +3,7 @@
 let inherit (lib.modules) mkIf mkMerge;
 in {
   options.modules.hardware.pointer = let inherit (lib.options) mkEnableOption;
-  in { enable = mkEnableOption false; };
+  in { enable = mkEnableOption "pointer control"; };
 
   config = mkIf config.modules.hardware.pointer.enable (mkMerge [{
     services.xserver.libinput = {

@@ -10,8 +10,8 @@ in {
     inherit (lib.types) str;
     inherit (lib.my) mkOpt;
   in {
-    enable = mkEnableOption false;
-    hardware.enable = mkEnableOption false;
+    enable = mkEnableOption "game/software store";
+    hardware.enable = mkEnableOption "Steam-based HW support";
     libDir = mkOpt str "$XDG_DATA_HOME/steamlib";
   };
 

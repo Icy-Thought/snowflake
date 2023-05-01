@@ -5,7 +5,7 @@ let
   inherit (lib.strings) concatStringsSep;
 in {
   options.modules.shell.btop = let inherit (lib.options) mkEnableOption;
-  in { enable = mkEnableOption false; };
+  in { enable = mkEnableOption "system-monitor"; };
 
   config = mkIf config.modules.shell.btop.enable {
     hm.programs.btop = let

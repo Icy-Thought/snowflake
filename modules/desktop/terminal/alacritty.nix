@@ -9,7 +9,7 @@ let
 in {
   options.modules.desktop.terminal.alacritty =
     let inherit (lib.options) mkEnableOption;
-    in { enable = mkEnableOption false; };
+    in { enable = mkEnableOption "OpenGL terminal emulator"; };
 
   config = mkIf config.modules.desktop.terminal.alacritty.enable {
     # Enabling useful/configured term-tools:
@@ -147,7 +147,7 @@ in {
               family: "${family}"
               style:  "${weight} Italic"
 
-            size: ${toString (size + 3)}
+            size: ${toString size}
 
             offset:
               x: 0

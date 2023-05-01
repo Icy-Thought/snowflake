@@ -12,7 +12,7 @@ in {
   options.modules.desktop.extensions.elkowar =
     let inherit (lib.options) mkEnableOption mkPackageOption;
     in {
-      enable = mkEnableOption false;
+      enable = mkEnableOption "wacky x11/wayland widgets";
       package = mkPackageOption pkgs "eww" {
         default = if (envProto == "wayland") then "eww-wayland" else "eww";
       };

@@ -4,7 +4,7 @@ let inherit (lib.modules) mkIf;
 in {
   options.modules.desktop.browsers.epiphany =
     let inherit (lib.options) mkEnableOption;
-    in { enable = mkEnableOption false; };
+    in { enable = mkEnableOption "WebKit-based browser"; };
 
   config = mkIf config.modules.desktop.browsers.epiphany.enable {
     user.packages = let

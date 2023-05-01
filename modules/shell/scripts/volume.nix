@@ -7,7 +7,7 @@ let
 in {
   options.modules.shell.scripts.volume =
     let inherit (lib.options) mkEnableOption;
-    in { enable = mkEnableOption false; };
+    in { enable = mkEnableOption "volume control"; };
 
   config = mkIf config.modules.shell.scripts.volume.enable {
     user.packages = [

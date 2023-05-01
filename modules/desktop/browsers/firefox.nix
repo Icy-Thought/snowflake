@@ -14,7 +14,7 @@ in {
     inherit (lib.types) attrsOf oneOf bool int lines str;
     inherit (lib.my) mkOpt mkOpt';
   in {
-    enable = mkEnableOption false;
+    enable = mkEnableOption "Gecko-based libre browser";
     profileName = mkOpt str config.user.name;
 
     settings = mkOpt' (attrsOf (oneOf [ bool int str ])) { } ''

@@ -4,7 +4,7 @@ let inherit (lib.modules) mkIf;
 in {
   options.modules.containers.archlinux =
     let inherit (lib.options) mkEnableOption;
-    in { enable = mkEnableOption false; };
+    in { enable = mkEnableOption "arch-linux container"; };
 
   config = mkIf config.modules.containers.archlinux.enable {
     virtualisation.libvirtd = {

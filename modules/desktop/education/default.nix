@@ -7,8 +7,8 @@ let
 in {
   options.modules.desktop.education = let inherit (lib.options) mkEnableOption;
   in {
-    memory.enable = mkEnableOption false;
-    vidcom.enable = mkEnableOption false;
+    memory.enable = mkEnableOption "SUID tool (sandbox)";
+    vidcom.enable = mkEnableOption "jailed zoom-us";
   };
 
   config = mkMerge [

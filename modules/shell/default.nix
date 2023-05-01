@@ -14,7 +14,7 @@ in {
       default = null;
       description = "Default system shell";
     };
-    usefulPkgs.enable = mkEnableOption false;
+    usefulPkgs.enable = mkEnableOption "useful shell tools";
   };
 
   config = mkMerge [

@@ -7,7 +7,7 @@ in {
     inherit (lib.types) int;
     inherit (lib.my) mkOpt;
   in {
-    enable = mkEnableOption false;
+    enable = mkEnableOption "cryptographic suite";
     cacheTTL = mkOpt int 3600; # 1hr
   };
 

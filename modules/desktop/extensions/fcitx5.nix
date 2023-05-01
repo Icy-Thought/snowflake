@@ -8,7 +8,7 @@ let
 in {
   options.modules.desktop.extensions.fcitx5 =
     let inherit (lib.options) mkEnableOption;
-    in { enable = mkEnableOption false; };
+    in { enable = mkEnableOption "generic input method framework"; };
 
   config = mkIf cfg.enable {
     i18n.inputMethod = {

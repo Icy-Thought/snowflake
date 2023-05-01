@@ -3,7 +3,7 @@
 let inherit (lib.modules) mkIf;
 in {
   options.modules.services.fail2ban = let inherit (lib.options) mkEnableOption;
-  in { enable = mkEnableOption false; };
+  in { enable = mkEnableOption "intrusion prevention"; };
 
   config = mkIf config.modules.services.fail2ban.enable {
     services.fail2ban = {

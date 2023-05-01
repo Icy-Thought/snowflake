@@ -6,7 +6,7 @@ let
 in {
   options.modules.desktop.virtual.wine =
     let inherit (lib.options) mkEnableOption;
-    in { enable = mkEnableOption false; };
+    in { enable = mkEnableOption "compatibility layer -> windows.exe"; };
 
   config = mkIf config.modules.desktop.virtual.wine.enable {
     user.packages = attrValues ({

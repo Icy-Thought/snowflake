@@ -10,8 +10,8 @@ in {
   options.modules.desktop.distraction.lutris =
     let inherit (lib.options) mkEnableOption;
     in {
-      enable = mkEnableOption false;
-      league.enable = mkEnableOption false;
+      enable = mkEnableOption "libre game-manager";
+      league.enable = mkEnableOption "lutris LoL setup";
     };
 
   config = mkMerge [

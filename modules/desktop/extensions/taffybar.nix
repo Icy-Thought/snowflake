@@ -8,7 +8,7 @@ let
   cfg = config.modules.desktop.extensions.taffybar;
 in {
   options.modules.desktop.extensions.taffybar = {
-    enable = mkEnableOption false;
+    enable = mkEnableOption "haskell status-bar library";
   };
 
   config = mkIf cfg.enable {

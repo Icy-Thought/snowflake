@@ -7,8 +7,8 @@ let
 in {
   options.modules.develop.lua = let inherit (lib.options) mkEnableOption;
   in {
-    enable = mkEnableOption false;
-    fennel.enable = mkEnableOption false;
+    enable = mkEnableOption "Lua development";
+    fennel.enable = mkEnableOption "Lisp-based Lua development";
   };
 
   config = mkMerge [

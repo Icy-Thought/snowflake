@@ -3,7 +3,7 @@
 let inherit (lib.modules) mkIf;
 in {
   options.modules.shell.tmux = let inherit (lib.options) mkEnableOption;
-  in { enable = mkEnableOption false; };
+  in { enable = mkEnableOption "terminal multiplexer"; };
 
   config = mkIf config.modules.shell.tmux.enable {
     hm.programs.tmux = {

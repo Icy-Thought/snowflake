@@ -5,7 +5,7 @@ let
   inherit (lib.modules) mkIf;
 in {
   options.modules.shell.git = let inherit (lib.options) mkEnableOption;
-  in { enable = mkEnableOption false; };
+  in { enable = mkEnableOption "version-control system"; };
 
   config = mkIf config.modules.shell.git.enable {
     user.packages = attrValues ({

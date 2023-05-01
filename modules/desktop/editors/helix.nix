@@ -4,7 +4,7 @@ let inherit (lib.modules) mkIf;
 in {
   options.modules.desktop.editors.helix =
     let inherit (lib.options) mkEnableOption;
-    in { enable = mkEnableOption false; };
+    in { enable = mkEnableOption "post-modern text editor"; };
 
   config = mkIf config.modules.desktop.editors.helix.enable {
     hm.programs.helix = {

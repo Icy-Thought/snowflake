@@ -7,10 +7,10 @@ let
   cfg = config.modules.desktop.toolset.graphics;
 in {
   options.modules.desktop.toolset.graphics = {
-    base.enable = mkEnableOption true;
-    modeling.enable = mkEnableOption false;
-    raster.enable = mkEnableOption false;
-    vector.enable = mkEnableOption false;
+    base.enable = mkEnableOption "base packages" // { default = true; };
+    modeling.enable = mkEnableOption "3D modeling";
+    raster.enable = mkEnableOption "rasterized editing";
+    vector.enable = mkEnableOption "vectorized editing";
   };
 
   config = {

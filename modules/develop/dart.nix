@@ -5,7 +5,7 @@ let
   inherit (lib.modules) mkIf mkMerge;
 in {
   options.modules.develop.dart = let inherit (lib.options) mkEnableOption;
-  in { enable = mkEnableOption false; };
+  in { enable = mkEnableOption "Dart development"; };
 
   config = mkMerge [
     (mkIf config.modules.develop.dart.enable {

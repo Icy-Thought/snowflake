@@ -11,7 +11,7 @@ let
 in {
   options.modules.desktop.extensions.mimeApps =
     let inherit (lib.options) mkEnableOption;
-    in { enable = mkEnableOption false; };
+    in { enable = mkEnableOption "default applications"; };
 
   config = mkIf cfg.enable {
     home.configFile."mimeapps.list".force = true;

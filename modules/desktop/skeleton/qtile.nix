@@ -11,7 +11,7 @@ in {
     inherit (lib.options) mkOption mkEnableOption mkPackageOption;
     inherit (lib.types) enum nullOr path;
   in {
-    enable = mkEnableOption false;
+    enable = mkEnableOption "python x11/wayland WM";
     package = mkPackageOption pkgs "qtile" pkgs.qtile;
     configFile = mkOption {
       type = nullOr path;

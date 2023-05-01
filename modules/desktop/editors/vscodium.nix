@@ -5,7 +5,9 @@ let
 
   vscDir = "${config.snowflake.configDir}/vscodium";
 in {
-  options.modules.desktop.editors.vscodium = { enable = mkEnableOption false; };
+  options.modules.desktop.editors.vscodium = {
+    enable = mkEnableOption "telemetry-free vscode";
+  };
 
   config = mkIf config.modules.desktop.editors.vscodium.enable {
     hm.programs.vscode = {

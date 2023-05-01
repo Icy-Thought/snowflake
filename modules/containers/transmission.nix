@@ -8,7 +8,7 @@ in {
     inherit (lib.options) mkOption mkEnableOption;
     inherit (lib.types) path str;
   in {
-    enable = mkEnableOption false;
+    enable = mkEnableOption "BitTorrent client";
 
     username = mkOption {
       type = str;

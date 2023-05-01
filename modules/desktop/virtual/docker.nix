@@ -6,7 +6,7 @@ let
 in {
   options.modules.desktop.virtual.docker =
     let inherit (lib.options) mkEnableOption;
-    in { enable = mkEnableOption false; };
+    in { enable = mkEnableOption "container manipulation"; };
 
   config = mkIf config.modules.desktop.virtual.docker.enable {
     user.packages = attrValues ({ inherit (pkgs) docker docker-compose; });

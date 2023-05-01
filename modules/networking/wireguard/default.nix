@@ -4,7 +4,7 @@ let inherit (lib.modules) mkIf;
 in {
   options.modules.networking.wireguard =
     let inherit (lib.options) mkEnableOption;
-    in { enable = mkEnableOption false; };
+    in { enable = mkEnableOption "security-focused VPN"; };
 
   config = mkIf config.modules.networking.wireguard.enable {
     user.packages = [ pkgs.wireguard-tools ];

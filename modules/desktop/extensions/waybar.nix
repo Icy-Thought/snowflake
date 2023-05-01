@@ -8,7 +8,7 @@ let
   cfg = config.modules.desktop.extensions.waybar;
 in {
   options.modules.desktop.extensions.waybar = {
-    enable = mkEnableOption false;
+    enable = mkEnableOption "status-bar for wayland";
   };
 
   config = mkIf cfg.enable {

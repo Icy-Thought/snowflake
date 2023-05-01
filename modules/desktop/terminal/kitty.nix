@@ -6,7 +6,7 @@ let
 in {
   options.modules.desktop.terminal.kitty =
     let inherit (lib.options) mkEnableOption;
-    in { enable = mkEnableOption false; };
+    in { enable = mkEnableOption "GPU-accelerated terminal emulator"; };
 
   config = mkIf config.modules.desktop.terminal.kitty.enable {
     environment.variables = {
@@ -121,7 +121,7 @@ in {
             italic_font               Victor Mono SemiBold Italic Nerd Font Complete
             bold_font                 Victor Mono Bold Nerd Font Complete
             bold_italic_font          Victor Mono Bold Italic Nerd Font Complete
-            font_size                 ${toString (size)}
+            font_size                 ${toString size}
 
             foreground                ${types.fg}
             background                ${types.bg}

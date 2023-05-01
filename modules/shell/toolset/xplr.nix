@@ -7,8 +7,8 @@ let
 in {
   options.modules.shell.xplr = let inherit (lib.options) mkEnableOption;
   in {
-    enable = mkEnableOption false;
-    fennel.enable = mkEnableOption false;
+    enable = mkEnableOption "TUI file-explorer";
+    fennel.enable = mkEnableOption "lisp-configured xplr";
   };
 
   config = mkIf cfg.enable {

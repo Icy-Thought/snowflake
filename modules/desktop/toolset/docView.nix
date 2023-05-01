@@ -11,8 +11,8 @@ in {
   options.modules.desktop.toolset.docView =
     let inherit (lib.options) mkEnableOption;
     in {
-      zathura.enable = mkEnableOption false;
-      sioyek.enable = mkEnableOption false;
+      zathura.enable = mkEnableOption "plugin-based doc-viewer";
+      sioyek.enable = mkEnableOption "doc-viewer for research";
     };
 
   config = mkMerge [

@@ -6,7 +6,7 @@ let
   inherit (lib.modules) mkIf;
 in {
   options.modules.desktop.xmonad = let inherit (lib.options) mkEnableOption;
-  in { enable = mkEnableOption false; };
+  in { enable = mkEnableOption "haskell (superior) WM"; };
 
   config = mkIf config.modules.desktop.xmonad.enable {
     modules.desktop = {

@@ -4,7 +4,7 @@ let inherit (lib.modules) mkIf mkForce;
 in {
   options.modules.networking.wireguard.ghostVPN =
     let inherit (lib.options) mkEnableOption;
-    in { enable = mkEnableOption false; };
+    in { enable = mkEnableOption "ghostVPN conf. for wireguard"; };
 
   # TODO: replace ghostVPN with desired module name!
   config = mkIf config.modules.networking.wireguard.ghostVPN.enable {

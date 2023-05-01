@@ -5,7 +5,7 @@ let
   inherit (lib.modules) mkIf mkMerge;
 in {
   options.modules.develop.nix = let inherit (lib.options) mkEnableOption;
-  in { enable = mkEnableOption true; };
+  in { enable = mkEnableOption "Nix development" // { default = true; }; };
 
   config = mkMerge [
     (mkIf config.modules.develop.nix.enable {

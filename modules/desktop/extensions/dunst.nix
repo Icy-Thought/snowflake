@@ -9,7 +9,7 @@ let
 in {
   options.modules.desktop.extensions.dunst =
     let inherit (lib.options) mkEnableOption;
-    in { enable = mkEnableOption false; };
+    in { enable = mkEnableOption "lightweight notification daemon"; };
 
   config = mkIf cfg.enable {
     hm.services.dunst = {

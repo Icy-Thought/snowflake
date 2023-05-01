@@ -8,7 +8,7 @@ let
 in {
   options.modules.desktop.browsers.ungoogled =
     let inherit (lib.options) mkEnableOption;
-    in { enable = mkEnableOption false; };
+    in { enable = mkEnableOption "Google-free chromium"; };
 
   config = mkIf config.modules.desktop.browsers.ungoogled.enable {
     user.packages = let inherit (pkgs) makeDesktopItem ungoogled-chromium;

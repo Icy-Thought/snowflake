@@ -128,7 +128,7 @@ icyTheme =
         , inactiveColor       = icyInactive
         , inactiveBorderColor = icyInactive
         , inactiveTextColor   = icyActive
-        , fontName            = "xft:VictorMono Nerd Font:style=SemiBold"
+        , fontName            = "xft:JetBrainsMono Nerd Font:style=SemiBold"
         }
 
 icyActive = "#bb7b79"

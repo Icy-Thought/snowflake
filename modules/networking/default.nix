@@ -8,9 +8,9 @@ let
 in {
   options.modules.networking = let inherit (lib.options) mkEnableOption;
   in {
-    iwd.enable = mkEnableOption false;
-    networkd.enable = mkEnableOption false;
-    networkManager.enable = mkEnableOption false;
+    iwd.enable = mkEnableOption "wpa_supplicant alt.";
+    networkd.enable = mkEnableOption "systemd network manager";
+    networkManager.enable = mkEnableOption "powerful network manager";
   };
 
   config = mkMerge [

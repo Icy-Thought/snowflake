@@ -5,7 +5,7 @@ let
   inherit (lib.modules) mkIf;
 in {
   options.modules.services.ssh = let inherit (lib.options) mkEnableOption;
-  in { enable = mkEnableOption false; };
+  in { enable = mkEnableOption "secure-socket shell"; };
 
   config = mkIf config.modules.services.ssh.enable {
     programs.ssh.startAgent = true;

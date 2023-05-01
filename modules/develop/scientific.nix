@@ -6,8 +6,8 @@ let
 in {
   options.modules.develop.scientific = let inherit (lib.options) mkEnableOption;
   in {
-    latex.enable = mkEnableOption false;
-    typst.enable = mkEnableOption false;
+    latex.enable = mkEnableOption "bloated doc/math lang";
+    typst.enable = mkEnableOption "modern LaTeX alt.";
   };
 
   config = mkMerge [

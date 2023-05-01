@@ -10,7 +10,7 @@ in {
   options.modules.desktop.extensions.rofi =
     let inherit (lib.options) mkEnableOption mkPackageOption;
     in {
-      enable = mkEnableOption false;
+      enable = mkEnableOption "window switcher and app-launcher";
       package = mkPackageOption pkgs "rofi" {
         default = if (envProto == "wayland") then "rofi-wayland" else "rofi";
       };

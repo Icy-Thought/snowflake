@@ -11,7 +11,7 @@ in {
   options.modules.desktop.extensions.deadd-notify =
     let inherit (lib.options) literalExpression mkEnableOption mkOption;
     in {
-      enable = mkEnableOption false;
+      enable = mkEnableOption "x11 notification center";
       settings = mkOption {
         type = genYAML.type;
         default = { };

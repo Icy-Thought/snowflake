@@ -6,7 +6,7 @@ let
   inherit (lib.modules) mkIf;
 in {
   options.modules.desktop.hyprland = let inherit (lib.options) mkEnableOption;
-  in { enable = mkEnableOption false; };
+  in { enable = mkEnableOption "hyped wayland WM"; };
 
   config = mkIf config.modules.desktop.hyprland.enable {
     modules.desktop = {

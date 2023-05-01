@@ -7,7 +7,7 @@ let
 in {
   options.modules.shell.scripts.brightness =
     let inherit (lib.options) mkEnableOption;
-    in { enable = mkEnableOption false; };
+    in { enable = mkEnableOption "brightness control"; };
 
   config = mkIf config.modules.shell.scripts.brightness.enable {
     # WARNING: won't work unless light -> udev..

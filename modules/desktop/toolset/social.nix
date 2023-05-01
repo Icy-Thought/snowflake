@@ -11,11 +11,15 @@ in {
   options.modules.desktop.toolset.social =
     let inherit (lib.options) mkEnableOption;
     in {
-      base.enable = mkEnableOption false;
-      discord.enable = mkEnableOption cfg.base.enable;
+      base.enable = mkEnableOption "cross-platform clients";
+      discord.enable = mkEnableOption "discord client" // {
+        default = cfg.base.enable;
+      };
       element = {
-        withDaemon = mkEnableOption false;
-        withClient = mkEnableOption cfg.base.enable;
+        withDaemon = mkEnableOption "matrix daemon for ement";
+        withClient = mkEnableOption "element client" // {
+          default = cfg.base.enable;
+        };
       };
     };
 

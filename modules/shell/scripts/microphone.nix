@@ -7,7 +7,7 @@ let
 in {
   options.modules.shell.scripts.microphone =
     let inherit (lib.options) mkEnableOption;
-    in { enable = mkEnableOption false; };
+    in { enable = mkEnableOption "microphone control"; };
 
   config = mkIf config.modules.shell.scripts.microphone.enable {
     user.packages = [

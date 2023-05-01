@@ -7,7 +7,7 @@ let
   cfg = config.modules.hardware.xkbLayout;
 in {
   options.modules.hardware.xkbLayout = let inherit (lib.options) mkEnableOption;
-  in { hyperCtrl.enable = mkEnableOption false; };
+  in { hyperCtrl.enable = mkEnableOption "hyper xkb-layout"; };
 
   config = mkMerge [
     (mkIf cfg.hyperCtrl.enable {

@@ -12,8 +12,8 @@ in {
     inherit (lib.my) mkOpt;
   in {
     package = mkOpt package pkgs.neovim-nightly;
-    agasaya.enable = mkEnableOption false; # lua
-    ereshkigal.enable = mkEnableOption false; # fnl
+    agasaya.enable = mkEnableOption "nvim (lua) config";
+    ereshkigal.enable = mkEnableOption "nvim (lisp) config";
   };
 
   config = mkMerge [
