@@ -13,7 +13,7 @@ in {
         wallpaper = mkDefault ./assets/loaki-solarpunk.jpg;
         gtk = {
           name = "rose-pine";
-          package = pkgs.rose-pine-gtk-theme;
+          package = pkgs.my.rose-pine-gtk;
         };
         iconTheme = {
           name = "rose-pine";
@@ -113,18 +113,9 @@ in {
       home.configFile = let
         themeDir = "${cfg.gtk.package}/share/themes/${cfg.gtk.name}/gtk-4.0/";
       in {
-        gtk4Theme-light = {
+        gtk4Theme = {
           target = "gtk-4.0/gtk.css";
           source = "${themeDir}/gtk.css";
-        };
-        gtk4Theme-dark = {
-          target = "gtk-4.0/gtk-dark.css";
-          source = "${themeDir}/gtk-dark.css";
-        };
-        gtk4Theme-assets = {
-          target = "gtk-4.0/assets";
-          source = "${themeDir}/assets";
-          recursive = true;
         };
       };
     }
