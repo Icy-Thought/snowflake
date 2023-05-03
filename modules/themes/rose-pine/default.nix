@@ -123,7 +123,7 @@ in {
     (mkIf config.modules.desktop.browsers.firefox.enable {
       modules.desktop.browsers.firefox.userChrome =
         concatMapStringsSep "\n" readFile
-        [ "${configDir}/firefox/firefox-onebar.css" ];
+        [ "${configDir}/firefox/vertical-tabs.css" ];
     })
 
     (mkIf config.services.xserver.enable {
