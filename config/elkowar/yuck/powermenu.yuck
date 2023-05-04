@@ -1,0 +1,56 @@
+(defwidget powermenu []
+  (box
+    :class "powermenu"
+    :space-evenly false
+    (eventbox
+      :class "powermenuEventbox"
+      :cursor "pointer"
+      :onclick "runhaskell $HOME/.config/eww/lib/UpdatePowermenuState.hs ${power}"
+      (image
+        :class nixClass
+        :image-width 25
+        :image-height 25
+        :path "/home/isaac/.config/eww/images/nix.png"
+      )
+    )
+    (revealer
+      :transition "slideright"
+      :reveal power
+      (box
+        (lock)
+        (reboot)
+        (shutdown)
+      )
+    )
+  )
+)
+
+(defvar power false)
+(defvar nixClass "nixClosed")
+
+(defwidget lock []
+  (eventbox
+    :class "lock"
+    :cursor "pointer"
+    :width 30
+    :onclick "runhaskell $HOME/.config/eww/lib/LockScreen.hs"	""
+  )
+)
+
+(defwidget reboot []
+  (eventbox
+    :class "reboot"
+    :cursor "pointer"
+    :width 30
+    :onclick "reboot"	"ﰇ"
+  )
+)
+
+(defwidget shutdown []
+  (eventbox
+    :class "shutdown"
+    :cursor "pointer"
+    :width 30
+    :onclick "shutdown now"	"襤"
+  )
+)

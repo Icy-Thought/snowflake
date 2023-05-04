@@ -1,0 +1,48 @@
+(defpoll getActiveWS0Text :interval "0.1s" "runhaskell $HOME/.dotfiles/home-manager/modules/eww/config/lib/workspaces/getActiveWorkspaceText.hs 0")
+(defpoll getActiveWS0Class :interval "0.1s" "runhaskell $HOME/.dotfiles/home-manager/modules/eww/config/lib/workspaces/getActiveWorkspaceClass.hs 0")
+(defpoll getActiveWS1Text :interval "0.1s" "runhaskell $HOME/.dotfiles/home-manager/modules/eww/config/lib/workspaces/getActiveWorkspaceText.hs 1")
+(defpoll getActiveWS1Class :interval "0.1s" "runhaskell $HOME/.dotfiles/home-manager/modules/eww/config/lib/workspaces/getActiveWorkspaceClass.hs 1")
+(defpoll getActiveWS2Text :interval "0.1s" "runhaskell $HOME/.dotfiles/home-manager/modules/eww/config/lib/workspaces/getActiveWorkspaceText.hs 2")
+(defpoll getActiveWS2Class :interval "0.1s" "runhaskell $HOME/.dotfiles/home-manager/modules/eww/config/lib/workspaces/getActiveWorkspaceClass.hs 2")
+
+(defpoll getInactiveWS0Text :interval "0.1s" "runhaskell $HOME/.dotfiles/home-manager/modules/eww/config/lib/workspaces/getInactiveWorkspaceText.hs 0")
+; (defpoll getInactiveWS0Class :interval "0.1s" "runhaskell $HOME/.dotfiles/home-manager/modules/eww/config/lib/workspaces/getInactiveWorkspaceClass.hs 0")
+(defpoll getInactiveWS1Text :interval "0.1s" "runhaskell $HOME/.dotfiles/home-manager/modules/eww/config/lib/workspaces/getInactiveWorkspaceText.hs 1")
+; (defpoll getInactiveWS1Class :interval "0.1s" "runhaskell $HOME/.dotfiles/home-manager/modules/eww/config/lib/workspaces/getInactiveWorkspaceClass.hs 1")
+(defpoll getInactiveWS2Text :interval "0.1s" "runhaskell $HOME/.dotfiles/home-manager/modules/eww/config/lib/workspaces/getInactiveWorkspaceText.hs 2")
+; (defpoll getInactiveWS2Class :interval "0.1s" "runhaskell $HOME/.dotfiles/home-manager/modules/eww/config/lib/workspaces/getInactiveWorkspaceClass.hs 2")
+(defpoll getInactiveWS3Text :interval "0.1s" "runhaskell $HOME/.dotfiles/home-manager/modules/eww/config/lib/workspaces/getInactiveWorkspaceText.hs 3")
+; (defpoll getInactiveWS3Class :interval "0.1s" "runhaskell $HOME/.dotfiles/home-manager/modules/eww/config/lib/workspaces/getInactiveWorkspaceClass.hs 3")
+
+(defwidget activeWorkspaces []
+  (box
+    :spacing 4
+    (label :class "${getActiveWS0Class}" :text "${getActiveWS0Text}")
+    (label :class "${getActiveWS1Class}" :text "${getActiveWS1Text}")
+    (label :class "${getActiveWS2Class}" :text "${getActiveWS2Text}")
+  )
+)
+
+(defwidget divider []
+  (label :class "divider" :text "")
+)
+
+(defwidget inactiveWorkspaces []
+  (box
+    :spacing 4
+    (label :class "workspace" :text "${getInactiveWS0Text}")
+    (label :class "workspace" :text "${getInactiveWS1Text}")
+    (label :class "workspace" :text "${getInactiveWS2Text}")
+
+  )
+)
+
+(deflisten aoe "runhaskell $HOME/.config/eww/lib/Screencast.hs")
+
+
+(defwidget testWorkspaces []
+  (box
+    :spacing 4
+    (label :class "workspace" :text "PLZ")
+  )
+)

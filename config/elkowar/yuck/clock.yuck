@@ -1,0 +1,6 @@
+(defpoll date :interval "1s" `date '+%a %d/%m/%y'`)
+(defpoll time :interval "0.1s" `date +%H:%M:%S`)
+
+(defwidget clock []
+  (label :class "clock" :text " ${time}   ${date}")
+)

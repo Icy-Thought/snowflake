@@ -1,1 +1,10 @@
-
+(include "./yuck/bars.yuck")
+(include "./yuck/bat.yuck")
+(include "./yuck/clock.yuck")
+(include "./yuck/cpu.yuck")
+(include "./yuck/mem.yuck")
+(include "./yuck/net.yuck")
+(include "./yuck/powermenu.yuck")
+(include "./yuck/screencast.yuck")
+(include "./yuck/workspace-switcher.yuck")
+(include "./yuck/workspaces.yuck")

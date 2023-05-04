@@ -1,0 +1,54 @@
+.powermenu {
+    background-color: #1e1e2e;
+    border-radius: 10px;
+}
+
+.powermenuEventbox {
+    border-radius: 10px;
+}
+
+.powermenuEventbox:hover {
+    background-color: #313244;
+}
+
+.nixOpen {
+    background-color: #313244;
+    border-radius: 10px 0px 0px 10px;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+.nixClosed {
+    border-radius: 10px;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+.lock {
+    border-radius: 0px;
+    color: #a6e3a1;
+    font-size: 18px;
+}
+
+.lock:hover {
+    background-color: #6c7086;
+}
+
+.reboot {
+    color: #fab387;
+    font-size: 18px;
+}
+
+.reboot:hover {
+    background-color: #6c7086;
+}
+
+.shutdown {
+    border-radius: 0px 10px 10px 0px;
+    color: #f38ba8;
+    font-size: 18px;
+}
+
+.shutdown:hover {
+    background-color: #6c7086;
+}

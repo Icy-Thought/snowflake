@@ -1,0 +1,15 @@
+(defwidget mem []
+  (box
+    :class "graphBox"
+    :orientation "vertical"
+    :tooltip "${EWW_RAM.used_mem_perc}%"
+    :width 50
+    (graph
+      :class "memGraph"
+      :thickness 3
+      :value {EWW_RAM.used_mem_perc}
+      :time-range "30s"
+    )
+    (label :text "mem")
+  )
+)

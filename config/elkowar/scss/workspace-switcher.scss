@@ -1,0 +1,57 @@
+.wsSwitcherBox {
+	background-color: #89b4fa;
+	border-radius: 10px;
+	padding: 3px;
+}
+
+.wsSwitcherInnerBox {
+	background-color: #1e1e2e;
+	border-radius: 10px;
+}
+
+.wsSwitcherText {
+	color: #cdd6f4;
+	font-size: 20px;
+	padding: 20px;
+}
+
+.wsSwitcherInputBox {
+	padding: 0px 80px 0px 80px;
+}
+
+.wsSwitcherInput {
+	background-color: #313244;
+	border-radius: 10px;
+	padding: 10px;
+}
+
+.wsSwitcherInput:focus {
+	outline: none;
+	box-shadow: 0px 0px 0px 0px;
+}
+
+.wsSwitcherWorkspaces {
+	padding: 0px;
+	background-color: red;
+}
+
+.tits {
+	padding: 10px;
+}
+
+.wsSwitcherRow {}
+
+.switcherWS {
+	background-color: #11111b;
+	border-radius: 6px;
+	color: #cdd6f4;
+	padding: 10px;
+	margin: 4px;
+	border-width: 1.5px;
+	border-style: solid;
+	border-color: #89b4fa;
+}
+
+.dummySwitcherWS {
+	color: transparent;
+}

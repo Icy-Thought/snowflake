@@ -1,0 +1,14 @@
+(defwidget bat []
+  (box
+    :class "sundial"
+    (circular-progress
+      :thickness 4
+      :value "${EWW_BATTERY.total_avg}"
+      (label
+        :class "sundialIcon"
+        ; :tooltip "${EWW_BATTERY.total_avg}%"
+        :text "bat"
+      )
+    )
+  )
+)

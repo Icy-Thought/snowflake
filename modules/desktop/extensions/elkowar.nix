@@ -8,6 +8,7 @@ let
 
   cfg = config.modules.desktop.extensions.elkowar;
   envProto = config.modules.desktop.envProto;
+  elkowarDir = "${config.snowflake.configDir}/elkowar";
 in {
   options.modules.desktop.extensions.elkowar =
     let inherit (lib.options) mkEnableOption mkPackageOption;
@@ -25,9 +26,12 @@ in {
     # WARN: Error retrieving accessibility bus address: org.freedesktop.DBus.Error.ServiceUnknown: The name org.a11y.Bus was not provided by any .service files
     services.gnome.at-spi2-core.enable = true;
 
+    # Building Elkowar widgets prior to usage:
+    user.packages = attrValues ({ inherit (pkgs.haskellPackages) ewwLib; });
+
     hm.programs.eww = {
       enable = true;
-      configDir = "${config.snowflake.configDir}/elkowar";
+      configDir = elkowarDir;
       package = cfg.package;
     };
 

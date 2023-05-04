@@ -1,0 +1,93 @@
+(deflisten getInitialSelectedWSs "runhaskell $HOME/.config/eww/lib/workspaces/GetWorkspaces.hs")
+
+(defwindow monitor0WSSwitcher
+  :focusable true
+  :geometry (geometry
+    :anchor "center"
+	:height "200px"
+  )
+  :monitor 0
+  (box
+    :class "wsSwitcherBox"
+	(box
+	  :class "wsSwitcherInnerBox"
+	  :space-evenly false
+	  :orientation "vertical"
+      (label
+	  	:class "wsSwitcherText" 
+		:text "Create/Switch Workspace"
+	  )
+	  (box :class "wsSwitcherInputBox"
+	    (input 
+		  :class "wsSwitcherInput"
+		  :onaccept "runhaskell $HOME/.config/eww/lib/workspaces/ProcessWorkspaceSwitcherInput.hs {}"
+		  :onchange "runhaskell $HOME/.config/eww/lib/workspaces/GetWorkspaces.hs {}"
+		  :timeout "100s"
+	    )
+	  )
+	  (literal :class "tits" :content selectedWSs)
+	)
+  )
+)
+
+(defwindow monitor1WSSwitcher
+  :focusable true
+  :geometry (geometry
+    :anchor "center"
+	:height "200px"
+  )
+  :monitor 1
+  (box
+    :class "wsSwitcherBox"
+	(box
+	  :class "wsSwitcherInnerBox"
+	  :space-evenly false
+	  :orientation "vertical"
+      (label
+	  	:class "wsSwitcherText" 
+		:text "Create/Switch Workspace"
+	  )
+	  (box :class "wsSwitcherInputBox"
+	    (input 
+		  :class "wsSwitcherInput"
+		  :onaccept "runhaskell $HOME/.config/eww/lib/workspaces/ProcessWorkspaceSwitcherInput.hs {}"
+		  :onchange "runhaskell $HOME/.config/eww/lib/workspaces/GetWorkspaces.hs {}"
+		  :timeout "100s"
+	    )
+	  )
+	  (literal :class "tits" :content selectedWSs)
+	)
+  )
+)
+
+(defwindow monitor2WSSwitcher
+  :focusable true
+  :geometry (geometry
+    :anchor "center"
+	:height "200px"
+  )
+  :monitor 2
+  (box
+    :class "wsSwitcherBox"
+	(box
+	  :class "wsSwitcherInnerBox"
+	  :space-evenly false
+	  :orientation "vertical"
+      (label
+	  	:class "wsSwitcherText" 
+		:text "Create/Switch Workspace"
+	  )
+	  (box :class "wsSwitcherInputBox"
+	    (input 
+		  :class "wsSwitcherInput"
+		  :onaccept "runhaskell $HOME/.config/eww/lib/workspaces/ProcessWorkspaceSwitcherInput.hs {}"
+		  :onchange "runhaskell $HOME/.config/eww/lib/workspaces/GetWorkspaces.hs {}"
+		  :timeout "100s"
+	    )
+	  )
+	  (literal :class "tits" :content selectedWSs)
+	)
+  )
+)
+
+(defvar selectedWSs "(label :text \"$\{getInitialSelectedWSs\}\")")
