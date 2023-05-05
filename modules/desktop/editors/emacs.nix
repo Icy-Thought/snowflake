@@ -11,23 +11,25 @@ in {
     let inherit (lib.options) mkEnableOption mkPackageOption;
     in {
       transparency.enable = mkEnableOption "transparent Emacs frame";
-      package = let
-        inherit (pkgs) emacsUnstable emacsUnstablePgtk;
-        emacsPackage =
-          if (envProto == "wayland") then emacsUnstablePgtk else emacsUnstable;
-        finalEmacsPackage = if cfg.transparency.enable then
-          emacsPackage.override {
-            withGTK3 = true;
-            withX = true;
-          }
+      package = mkPackageOption pkgs "emacs" {
+        default = if (envProto == "wayland") then
+          "emacsUnstablePgtk"
         else
-          emacsPackage;
-      in mkPackageOption finalEmacsPackage;
+          "emacsUnstable";
+      };
       doomemacs.enable = mkEnableOption "vim-based Emacs framework";
       irkalla.enable = mkEnableOption "Emacs of the underworld";
     };
 
-  config = mkMerge [
+  config = let
+    finalEmacsPackage = if cfg.transparency.enable then
+      cfg.package.override {
+        withGTK3 = true;
+        withX = true;
+      }
+    else
+      cfg.package;
+  in mkMerge [
     {
       nixpkgs.overlays = [ inputs.emacs.overlay ];
 
@@ -96,7 +98,7 @@ in {
     (mkIf cfg.irkalla.enable {
       hm.programs.emacs = {
         enable = true;
-        package = cfg.package;
+        package = finalEmacsPackage;
         extraPackages = epkgs: with epkgs; [ jinx pdf-tools vterm ];
       };
 
@@ -121,7 +123,7 @@ in {
 
       hm.programs.doom-emacs = {
         enable = true;
-        emacsPackage = cfg.package;
+        emacsPackage = finalEmacsPackage;
         doomPrivateDir = "${inputs.emacs-dir}/doom-config";
       };
 

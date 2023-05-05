@@ -39,6 +39,7 @@
       editors = {
         default = "nvim";
         neovim.agasaya.enable = true;
+        emacs.irkalla.enable = true;
       };
       browsers = {
         default = "firefox";
