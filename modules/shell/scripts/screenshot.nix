@@ -102,13 +102,8 @@ in {
                 maim_cmd = ["maim", "-u", PARAMETER, str(filepath)]
                 subprocess.run(" ".join(maim_cmd), shell=True)
 
-                xclip_cmd = [
-                    "xclip",
-                    "-selection", "clipboard",
-                    "-t", "image/png",
-                    "<", str(filepath),
-                ]
-                subprocess.run(" ".join(xclip_cmd), shell=True)
+                clip_cmd = ["cb", "copy", str(filepath)]
+                subprocess.run(" ".join(clip_cmd), shell=True)
 
                 notify(
                     Path("/tmp") / FILENAME,

@@ -51,8 +51,8 @@ local ocr_output = io.open(scr_img .. ".txt"):read("*all")
 -- Echo the output of Tesseract OCR detection
 io.write(ocr_output)
 
--- Send the OCR output to clipboard using xclip
-os.execute("echo '" .. ocr_output .. "' | xclip -selection clipboard")
+-- Send the OCR output to clipboard using Clipboard
+os.execute("echo '" .. ocr_output .. "' | cb copy")
 
 -- Cleaning up
 os.remove(scr_img)

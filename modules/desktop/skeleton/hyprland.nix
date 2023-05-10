@@ -30,9 +30,8 @@ in {
 
     environment.systemPackages = attrValues ({
       inherit (pkgs)
-      # hyprpicker
-        imv hyprpaper libnotify playerctl wf-recorder wl-clipboard wlr-randr
-        wireplumber;
+        hyprpicker imv hyprpaper libnotify playerctl wf-recorder clipboard-jh
+        wlr-randr wireplumber;
     });
 
     services.greetd.settings.initial_session = {

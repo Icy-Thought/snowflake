@@ -70,7 +70,6 @@ in {
                 { name = "sayanarijit/find.xplr" },
                 { name = "sayanarijit/xargs.xplr" },
                 { name = "sayanarijit/nvim-ctrl.xplr" },
-                { name = "sayanarijit/xclip.xplr" },
                 { name = "sayanarijit/zoxide.xplr" },
             },
         })
