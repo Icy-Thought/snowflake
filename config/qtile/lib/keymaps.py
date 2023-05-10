@@ -75,10 +75,11 @@ qtilectl = [
 ]
 
 rofi_spawns = [
-    EzKey("M-p", lazy.spawn("rofi -show drun")),
     EzKey("M-b", lazy.spawn("rofi -show window")),
+    EzKey("M-p", lazy.spawn("rofi -show power-menu")),
+    EzKey("M-A-p", lazy.spawn("rofi -show drun")),
+    EzKey("M-A-C-p", lazy.spawn("rofi-systemd")),
     EzKey("M-S-p", lazy.spawn("rofi -show run")),
-    EzKey("H-p", lazy.spawn("rofi-systemd")),
 ]
 
 application_spawns = [

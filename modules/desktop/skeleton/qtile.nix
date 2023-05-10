@@ -1,23 +1,16 @@
 { inputs, options, config, lib, pkgs, ... }:
 
 let
-  inherit (lib.attrsets) attrValues;
+  inherit (lib.attrsets) attrValues optionalAttrs;
   inherit (lib.modules) mkIf;
-  inherit (lib.strings) optionalString;
 
   cfg = config.modules.desktop.qtile;
 in {
   options.modules.desktop.qtile = let
-    inherit (lib.options) mkOption mkEnableOption mkPackageOption;
-    inherit (lib.types) enum nullOr path;
+    inherit (lib.options) mkEnableOption mkOption;
+    inherit (lib.types) enum;
   in {
     enable = mkEnableOption "python x11/wayland WM";
-    package = mkPackageOption pkgs "qtile" pkgs.qtile;
-    configFile = mkOption {
-      type = nullOr path;
-      default = "${config.snowflake.configDir}/qtile/config.py";
-      example = "./config.py";
-    };
     backend = mkOption {
       type = enum [ "x11" "wayland" ];
       default = "x11";
@@ -31,7 +24,7 @@ in {
       extensions = {
         fcitx5.enable = true;
         mimeApps.enable = true; # mimeApps -> default launch application
-        picom.enable = true;
+        picom.enable = mkIf (cfg.backend == "x11");
         dunst.enable = true;
         rofi.enable = true;
       };
@@ -44,23 +37,27 @@ in {
     };
     modules.hardware.kmonad.enable = true;
 
+    services.greetd.settings.initial_session = mkIf (cfg.backend == "wayland") {
+      command = "none+qtile";
+      user = "${config.user.name}";
+    };
+
     environment.systemPackages = attrValues ({
-      inherit (pkgs) libnotify playerctl gxmessage xdotool xclip feh;
-      qtilePkg = cfg.package.unwrapped or cfg.package;
-    });
+      inherit (pkgs) libnotify playerctl gxmessage clipboard-jh;
+    } // optionalAttrs (cfg.backend == "x11") { inherit (pkgs) xdotool feh; }
+      // optionalAttrs (cfg.backend == "wayland") {
+        inherit (pkgs) imv hyprpicker wf-recorder;
+      });
 
     services.xserver = {
       displayManager.defaultSession = "none+qtile";
-      windowManager.session = [{
-        name = "qtile";
-        start = ''
-          ${cfg.package}/bin/qtile start -b ${cfg.backend} \
-          ${
-            optionalString (cfg.configFile != null)
-            "--config ${cfg.configFile} "
-          } & waitPID=$!
-        '';
-      }];
+      windowManager.qtile = {
+        enable = true;
+        configFile = "${config.snowflake.configDir}/qtile/config.py";
+        qtile.backend = cfg.backend;
+        # extraPackages =
+        # attrValues ({ inherit (pkgs.python3Packages) qtile-extras; });
+      };
     };
   };
 }

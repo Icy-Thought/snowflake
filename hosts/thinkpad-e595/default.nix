@@ -31,7 +31,10 @@
     themes.active = "rose-pine";
 
     desktop = {
-      xmonad.enable = true;
+      qtile = {
+        enable = true;
+        backend = "wayland";
+      };
       terminal = {
         default = "alacritty";
         alacritty.enable = true;

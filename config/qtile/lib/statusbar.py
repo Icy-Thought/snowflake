@@ -10,7 +10,7 @@ from libqtile.config import Screen
 from libqtile.lazy import lazy
 
 fontinfo = dict(
-    font="VictorMono Nerd Font Semibold",
+    font="JetBrainsMono Nerd Font Semibold",
     fontsize=12,
     padding=3,
 )

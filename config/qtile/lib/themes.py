@@ -26,6 +26,20 @@ decay = [
     "#74bee9",  # Colour 10
 ]
 
+rose_pine = [
+    "#e0def4",  # Colour 0
+    "#191724",  # Colour 1
+    "#26233a",  # Colour 2
+    "#bb7b79",  # Colour 3
+    "#c5b1e5",  # Colour 4
+    "#31748f",  # Colour 5
+    "#f6c177",  # Colour 6
+    "#eb6f92",  # Colour 7
+    "#f9d6d2",  # Colour 8
+    "#9ccfd8",  # Colour 9
+    "#c4a7e7",  # Colour 10
+]
+
 tokyonight = [
     "#c0caf5",  # Colour 0
     "#21262e",  # Colour 1
@@ -40,4 +54,4 @@ tokyonight = [
     "#7aa2f7",  # Colour 10
 ]
 
-palette = tokyonight
+palette = rose_pine
