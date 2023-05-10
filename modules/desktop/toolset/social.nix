@@ -16,9 +16,12 @@ in {
         default = cfg.base.enable;
       };
       element = {
-        withDaemon = mkEnableOption "matrix daemon for ement";
+        withDaemon = mkEnableOption "matrix daemon for ement" // {
+          default = let emacsCfg = config.modules.desktop.editors.emacs;
+          in (emacsCfg.irkalla.enable || emacsCfg.doomemacs.enable);
+        };
         withClient = mkEnableOption "element client" // {
-          default = cfg.base.enable;
+          default = (cfg.base.enable && !cfg.element.withDaemon);
         };
       };
     };
@@ -39,7 +42,7 @@ in {
           local-matrix = {
             Homeserver = "https://matrix.org";
             ListenAddress = "127.0.0.1";
-            ListenPort = 8008;
+            ListenPort = 8009;
           };
         };
       };

@@ -54,7 +54,7 @@ in {
       windowManager.qtile = {
         enable = true;
         configFile = "${config.snowflake.configDir}/qtile/config.py";
-        qtile.backend = cfg.backend;
+        backend = cfg.backend;
         # extraPackages =
         # attrValues ({ inherit (pkgs.python3Packages) qtile-extras; });
       };

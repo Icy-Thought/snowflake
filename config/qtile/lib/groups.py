@@ -102,7 +102,7 @@ groups.append(
             DropDown(
                 "Emacs",
                 "emacsclient -c",
-                match=Match(wm_class="Emacs"),
+                match=Match(wm_class="emacs"),
                 **next_maximum,
             ),
             DropDown("Galaxy Buds Manager", "GalaxyBudsClient", **next_maximum),
@@ -130,9 +130,8 @@ keys.extend(
     [
         EzKey("M-A-b", lazy.group["SPD"].dropdown_toggle("SysMon")),
         EzKey("M-A-e", lazy.group["SPD"].dropdown_toggle("Emacs")),
-        EzKey("M-A-h", lazy.group["SPD"].dropdown_toggle("Telegram")),
-        EzKey("M-A-j", lazy.group["SPD"].dropdown_toggle("Discord")),
-        EzKey("M-A-k", lazy.group["SPD"].dropdown_toggle("Element")),
+        EzKey("M-A-l", lazy.group["SPD"].dropdown_toggle("Telegram")),
+        EzKey("M-A-d", lazy.group["SPD"].dropdown_toggle("Discord")),
         EzKey("M-A-t", lazy.group["SPD"].dropdown_toggle("Transmission")),
         EzKey("M-A-s", lazy.group["SPD"].dropdown_toggle("Spotify")),
         EzKey("M-A-v", lazy.group["SPD"].dropdown_toggle("Volume Control")),
