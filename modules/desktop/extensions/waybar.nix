@@ -3,7 +3,9 @@
 }:
 
 let
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib.meta) getExe;
+  inherit (lib.modules) mkIf;
+  inherit (lib.options) mkEnableOption;
 
   cfg = config.modules.desktop.extensions.waybar;
 in {
@@ -14,6 +16,21 @@ in {
   config = mkIf cfg.enable {
     # Allow tray-icons to be displayed:
     hm.services.status-notifier-watcher.enable = true;
+
+    # Launch waybar upon entering way-env:
+    hm.systemd.user.services.waybar = {
+      Unit = {
+        Description = "A bar for your wayland environment";
+        PartOf = [ "tray.target" ];
+      };
+      Service = {
+        Type = "dbus";
+        BusName = "org.waybar.Bar";
+        ExecStart = "${getExe pkgs.waybar}";
+        Restart = "on-failure";
+      };
+      Install = { WantedBy = [ "tray.target" ]; };
+    };
 
     hm.programs.waybar = {
       enable = true;

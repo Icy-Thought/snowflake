@@ -17,6 +17,7 @@ in {
         mimeApps.enable = true; # mimeApps -> default launch application
         dunst.enable = true;
         waybar.enable = true;
+        elkowar.enable = true;
         rofi.enable = true;
       };
     };
@@ -30,8 +31,7 @@ in {
 
     environment.systemPackages = attrValues ({
       inherit (pkgs)
-        hyprpicker imv hyprpaper libnotify playerctl wf-recorder clipboard-jh
-        wlr-randr wireplumber;
+        hyprpicker imv libnotify playerctl wf-recorder clipboard-jh wlr-randr;
     });
 
     services.greetd.settings.initial_session = {

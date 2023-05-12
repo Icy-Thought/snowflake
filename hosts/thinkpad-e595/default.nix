@@ -31,10 +31,7 @@
     themes.active = "rose-pine";
 
     desktop = {
-      qtile = {
-        enable = true;
-        backend = "wayland";
-      };
+      hyprland.enable = true;
       terminal = {
         default = "alacritty";
         alacritty.enable = true;
