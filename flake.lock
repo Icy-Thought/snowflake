@@ -931,10 +931,10 @@
     },
     "nixpkgs_10": {
       "locked": {
-        "lastModified": 1682879489,
-        "narHash": "sha256-sASwo8gBt7JDnOOstnps90K1wxmVfyhsTPPNTGBPjjg=",
-        "path": "/nix/store/3rfn91lqch3wchpgqamxl8sazbpnxbm9-source",
-        "rev": "da45bf6ec7bbcc5d1e14d3795c025199f28e0de0",
+        "lastModified": 1683408522,
+        "narHash": "sha256-9kcPh6Uxo17a3kK3XCHhcWiV1Yu1kYj22RHiymUhMkU=",
+        "path": "/nix/store/zjpd6dn9kza8zl3l17cwgyifsxbvi3nb-source",
+        "rev": "897876e4c484f1e8f92009fd11b7d988a121a4e7",
         "type": "path"
       },
       "original": {
@@ -958,10 +958,10 @@
     },
     "nixpkgs_12": {
       "locked": {
-        "lastModified": 1682879489,
-        "narHash": "sha256-sASwo8gBt7JDnOOstnps90K1wxmVfyhsTPPNTGBPjjg=",
-        "path": "/nix/store/3rfn91lqch3wchpgqamxl8sazbpnxbm9-source",
-        "rev": "da45bf6ec7bbcc5d1e14d3795c025199f28e0de0",
+        "lastModified": 1683408522,
+        "narHash": "sha256-9kcPh6Uxo17a3kK3XCHhcWiV1Yu1kYj22RHiymUhMkU=",
+        "path": "/nix/store/zjpd6dn9kza8zl3l17cwgyifsxbvi3nb-source",
+        "rev": "897876e4c484f1e8f92009fd11b7d988a121a4e7",
         "type": "path"
       },
       "original": {
@@ -1599,11 +1599,11 @@
         "unstable": "unstable"
       },
       "locked": {
-        "lastModified": 1682949600,
-        "narHash": "sha256-+1AZ3ePZX2hGL9WkZL8MCrGU9pyDB3WVBUouAgWkT7s=",
+        "lastModified": 1684060045,
+        "narHash": "sha256-vnUKHLRysfXH6dNqedqw3fnfTJWtwLEUnV24b+GJ5YU=",
         "owner": "xmonad",
         "repo": "xmonad",
-        "rev": "64fbf6a09dd6c423e96996e3f1e7ad61a6d0e5fb",
+        "rev": "025a78508cdf59d370d0484f0e9b58c2d07efecc",
         "type": "github"
       },
       "original": {
@@ -1620,11 +1620,11 @@
         "xmonad": "xmonad"
       },
       "locked": {
-        "lastModified": 1670397956,
-        "narHash": "sha256-Ok/8+24EUtQJyAkIJpsP5TchkeAYjQUsIHUs0oZgTA4=",
+        "lastModified": 1684086282,
+        "narHash": "sha256-3S4u2KzrRaO1rQ3lHfN+2J7YzknPmR/FzUk31ESsdHg=",
         "owner": "icy-thought",
         "repo": "xmonad-contrib",
-        "rev": "a55f7b2a7c21a791e30d6d409db8422af9e6d6ac",
+        "rev": "aa1adda85a9fc23d76d9ea472a9c468600d531e9",
         "type": "github"
       },
       "original": {

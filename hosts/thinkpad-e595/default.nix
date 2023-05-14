@@ -19,7 +19,6 @@
       #  password = builtins.readFile config.age.secrets.torBylon.path;
     };
     develop = {
-      dart.enable = true;
       haskell.enable = true;
       python.enable = true;
       rust.enable = true;
@@ -31,7 +30,7 @@
     themes.active = "rose-pine";
 
     desktop = {
-      hyprland.enable = true;
+      xmonad.enable = true;
       terminal = {
         default = "alacritty";
         alacritty.enable = true;
