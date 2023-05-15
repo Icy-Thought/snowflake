@@ -102,7 +102,7 @@ main =
 
 myConfig =
     def { modMask            = mod4Mask
-        , terminal           = "alacritty"
+        , terminal           = "wezterm"
         , manageHook         = namedScratchpadManageHook scratchpads
         , layoutHook         = myLayoutHook
         , borderWidth        = 2
@@ -776,7 +776,7 @@ scratchpads =
         nearFullFloat
     , NS
         "System Monitor"
-        "alacritty -t 'System Monitor' -e btop"
+        "wezterm start --always-new-process -- -t 'System Monitor' btop"
         (title =? "System Monitor")
         nearFullFloat
     , NS

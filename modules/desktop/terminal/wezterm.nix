@@ -77,9 +77,9 @@ in {
           text = ''
             local M = {}
 
-            local ${active} = require("theme.${active}")
+            local active_palette = require("theme.${active}")
 
-            M.colors = ${active}
+            M.colors = active_palette
 
             return M
           '';
@@ -95,9 +95,9 @@ in {
 
             local M = {}
 
-            M.font = wez.font_with_fallback({ 
-              { family = "${sans.family}",
-                weight = "${sans.weightAlt}",
+            M.font = wez.font_with_fallback({
+              { family = "${mono.family}",
+                weight = "${mono.weightAlt}",
               },
               "DejaVu Sans",
               "Unicode",
@@ -111,8 +111,8 @@ in {
               inactive_titlebar_bg = "${normal.black}",
 
               font = wez.font({
-                  family = "${sans.family}",
-                  weight = "${sans.weightAlt}",
+                  family = "${mono.family}",
+                  weight = "${mono.weightAlt}",
                   style = "Italic",
               }),
 

@@ -6,7 +6,7 @@ from libqtile.config import EzClick, EzDrag, EzKey
 HOME = os.path.expanduser("~")
 
 # Default applications
-myTerm = "alacritty"
+myTerm = "wezterm"
 myBrowser = "firefox"
 myPrivateBrowser = (
     myBrowser,

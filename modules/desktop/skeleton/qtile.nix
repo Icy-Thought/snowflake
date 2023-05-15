@@ -46,7 +46,7 @@ in {
       inherit (pkgs) libnotify playerctl gxmessage clipboard-jh;
     } // optionalAttrs (cfg.backend == "x11") { inherit (pkgs) xdotool feh; }
       // optionalAttrs (cfg.backend == "wayland") {
-        inherit (pkgs) imv hyprpicker wf-recorder;
+        inherit (pkgs) imv wf-recorder;
       });
 
     services.xserver = {

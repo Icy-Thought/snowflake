@@ -6,33 +6,33 @@ wez.on("update-right-status", function(window, pane)
     window:set_right_status(wez.format({
         -- { Attribute = { Underline = "Single" } },
         { Attribute = { Italic = true } },
-        { Foreground = { Color = "#ff9e64" } },
+        { Foreground = { Color = "#f9d6d2" } },
         { Text = datetime },
     }))
 
     window:set_left_status(wez.format({
-        { Background = { Color = "#1abc9c" } },
-        { Foreground = { Color = "#1a1b26" } },
+        { Background = { Color = "#9ccfd8" } },
+        { Foreground = { Color = "#191724" } },
         { Text = "     " },
     }))
 end)
 
 wez.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
-    local background = "#1a1b26"
-    local foreground = "#7aa2f7"
+    local background = "#191724"
+    local foreground = "#e0def4"
     local symbolic = " ○ "
 
     if tab.is_active then
         background = "#1a1b26"
-        foreground = "#bb9af7"
+        foreground = "#bb7b79"
         symbolic = " 綠 "
     elseif hover then
         background = "#3b3052"
-        foreground = "#1abc9c"
+        foreground = "#9ccfd8"
     end
 
     local edge_background = background
-    local edge_foreground = "#7976ab"
+    local edge_foreground = "#c5b1e5"
     local separator = " | "
 
     -- ensure that the titles fit in the available space,
