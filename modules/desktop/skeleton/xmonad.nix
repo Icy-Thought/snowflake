@@ -36,7 +36,7 @@ in {
     nixpkgs.overlays = [ inputs.xmonad-contrib.overlay ];
 
     environment.systemPackages = attrValues ({
-      inherit (pkgs) libnotify playerctl gxmessage xdotool clipboard-jh feh;
+      inherit (pkgs) libnotify playerctl gxmessage xdotool feh;
     });
 
     services.greetd = {

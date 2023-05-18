@@ -63,7 +63,6 @@ in {
       efi.canTouchEfiVariables = mkDefault true;
       grub = {
         enable = mkDefault true;
-        version = 2;
         device = "nodev";
         efiSupport = mkDefault true;
         useOSProber = mkDefault true;

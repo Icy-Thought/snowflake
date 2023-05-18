@@ -30,7 +30,7 @@ in {
     modules.hardware.kmonad.enable = true;
 
     environment.systemPackages = attrValues ({
-      inherit (pkgs) imv libnotify playerctl wf-recorder clipboard-jh wlr-randr;
+      inherit (pkgs) imv libnotify playerctl wf-recorder wlr-randr;
     });
 
     services.greetd.settings.initial_session = {

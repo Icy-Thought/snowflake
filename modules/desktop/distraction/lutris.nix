@@ -5,7 +5,6 @@ let
   inherit (lib.modules) mkIf mkMerge;
 
   cfg = config.modules.desktop.distraction.lutris;
-  wineCfg = config.modules.desktop.virtual.wine;
 in {
   options.modules.desktop.distraction.lutris =
     let inherit (lib.options) mkEnableOption;
@@ -19,7 +18,7 @@ in {
       user.packages = attrValues ({
         lutris =
           pkgs.lutris.override { extraLibraries = pkgs: [ pkgs.jansson ]; };
-      } // optionalAttrs (wineCfg.enable == false) {
+      } // optionalAttrs (config.modules.virtual.wine.enable == false) {
         inherit (pkgs) winetricks;
         inherit (pkgs.wineWowPackages) fonts stagingFull;
       });

@@ -10,6 +10,7 @@
     };
     networking = {
       networkManager.enable = true;
+      mullvad.enable = true;
       # borsippaNET.enable = true;
     };
     services = { ssh.enable = true; };
