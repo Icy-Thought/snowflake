@@ -1,7 +1,6 @@
 {
   inputs = {
     flake-utils.url = "github:numtide/flake-utils";
-
     xmonad = {
       url = "github:xmonad/xmonad";
       inputs.nixpkgs.follows = "nixpkgs";

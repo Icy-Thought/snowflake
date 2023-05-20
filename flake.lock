@@ -156,11 +156,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1684234701,
-        "narHash": "sha256-UrA8YP81IjGlYaBXyIF+fM9eP1LuOXOnqgMXUaz63rY=",
+        "lastModified": 1684516542,
+        "narHash": "sha256-juSwaz7OxnRvxw2dZT77eDUoPzyK3fY/XKQX1c9MA+4=",
         "owner": "nix-community",
         "repo": "emacs-overlay",
-        "rev": "adefd0c1974731350a6ec6b960178bb9fa970942",
+        "rev": "deeb9232d4545b989cb0ec025db5eacaaa0ed400",
         "type": "github"
       },
       "original": {
@@ -172,11 +172,11 @@
     "emacs-dir": {
       "flake": false,
       "locked": {
-        "lastModified": 1684163327,
-        "narHash": "sha256-W3iwBvECpi9pGaOAldrYa+Y1GtB3msYo21hYibOb9hc=",
+        "lastModified": 1684489966,
+        "narHash": "sha256-ETeb7EQo48sYyguUPJNxK0fg3Aj4SqGbHAdtF4KQV+s=",
         "ref": "refs/heads/main",
-        "rev": "66a59fde7d8d225972b2e052e91bf1a83b9cc15b",
-        "revCount": 104,
+        "rev": "f6d2c19093f73b874c19f31acb113df41b9c1e64",
+        "revCount": 105,
         "submodules": true,
         "type": "git",
         "url": "https://github.com/Icy-Thought/emacs.d.git"

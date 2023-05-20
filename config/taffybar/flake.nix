@@ -9,18 +9,19 @@
       hoverlay = final: prev: hself: hsuper: {
         raybar = prev.haskell.lib.addPkgconfigDepends
           (hself.callCabal2nix "raybar" ./. { }) [
-            final.util-linux.dev
-            final.pcre2
-            final.pcre
+            final.fribidi.dev
+            final.fribidi.out
+            final.hostname
+            final.libdatrie.dev
+            final.libepoxy.dev
             final.libselinux.dev
             final.libsepol.dev
-            final.fribidi.out
-            final.fribidi.dev
             final.libthai.dev
-            final.libdatrie.dev
-            final.xorg.libXdmcp.dev
             final.libxkbcommon.dev
-            final.libepoxy.dev
+            final.pcre
+            final.pcre2
+            final.util-linux.dev
+            final.xorg.libXdmcp.dev
             final.xorg.libXtst.out
           ];
       };
