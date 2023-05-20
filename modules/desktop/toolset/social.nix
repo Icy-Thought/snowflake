@@ -1,6 +1,10 @@
-{ config, options, lib, pkgs, ... }:
-
-let
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}: let
   inherit (lib) attrValues optionals;
   inherit (lib.modules) mkIf mkMerge;
   inherit (lib.strings) concatStringsSep;
@@ -8,27 +12,34 @@ let
   cfg = config.modules.desktop.toolset.social;
   envProto = config.modules.desktop.envProto;
 in {
-  options.modules.desktop.toolset.social =
-    let inherit (lib.options) mkEnableOption;
-    in {
-      base.enable = mkEnableOption "cross-platform clients";
-      discord.enable = mkEnableOption "discord client" // {
+  options.modules.desktop.toolset.social = let
+    inherit (lib.options) mkEnableOption;
+  in {
+    base.enable = mkEnableOption "cross-platform clients";
+    discord.enable =
+      mkEnableOption "discord client"
+      // {
         default = cfg.base.enable;
       };
-      element = {
-        withDaemon = mkEnableOption "matrix daemon for ement" // {
-          default = let emacsCfg = config.modules.desktop.editors.emacs;
+    element = {
+      withDaemon =
+        mkEnableOption "matrix daemon for ement"
+        // {
+          default = let
+            emacsCfg = config.modules.desktop.editors.emacs;
           in (emacsCfg.irkalla.enable || emacsCfg.doomemacs.enable);
         };
-        withClient = mkEnableOption "element client" // {
-          default = (cfg.base.enable && !cfg.element.withDaemon);
+      withClient =
+        mkEnableOption "element client"
+        // {
+          default = cfg.base.enable && !cfg.element.withDaemon;
         };
-      };
     };
+  };
 
   config = mkMerge [
     (mkIf cfg.base.enable {
-      user.packages = attrValues ({ inherit (pkgs) signal-desktop tdesktop; });
+      user.packages = attrValues {inherit (pkgs) signal-desktop tdesktop;};
     })
 
     (mkIf cfg.element.withDaemon {
@@ -53,14 +64,14 @@ in {
         inherit (pkgs) makeWrapper symlinkJoin element-desktop;
         element-desktop' = symlinkJoin {
           name = "element-desktop-in-dataHome";
-          paths = [ element-desktop ];
-          nativeBuildInputs = [ makeWrapper ];
+          paths = [element-desktop];
+          nativeBuildInputs = [makeWrapper];
           postBuild = ''
             wrapProgram "$out/bin/element-desktop" \
               --add-flags '--profile-dir $XDG_DATA_HOME/Element'
           '';
         };
-      in [ element-desktop' ];
+      in [element-desktop'];
     })
 
     (mkIf cfg.discord.enable {
@@ -84,33 +95,36 @@ in {
       };
 
       user.packages = let
-        flags = [
-          "--flag-switches-begin"
-          "--flag-switches-end"
-          "--disable-gpu-memory-buffer-video-frames"
-          "--enable-accelerated-mjpeg-decode"
-          "--enable-accelerated-video"
-          "--enable-gpu-rasterization"
-          "--enable-native-gpu-memory-buffers"
-          "--enable-zero-copy"
-          "--ignore-gpu-blocklist"
-        ] ++ optionals (envProto == "x11") [
-          "--disable-features=UseOzonePlatform"
-          "--enable-features=VaapiVideoDecoder"
-        ] ++ optionals (envProto == "wayland") [
-          "--enable-features=UseOzonePlatform,WebRTCPipeWireCapturer"
-          "--ozone-platform=wayland"
-          "--enable-webrtc-pipewire-capturer"
-        ];
+        flags =
+          [
+            "--flag-switches-begin"
+            "--flag-switches-end"
+            "--disable-gpu-memory-buffer-video-frames"
+            "--enable-accelerated-mjpeg-decode"
+            "--enable-accelerated-video"
+            "--enable-gpu-rasterization"
+            "--enable-native-gpu-memory-buffers"
+            "--enable-zero-copy"
+            "--ignore-gpu-blocklist"
+          ]
+          ++ optionals (envProto == "x11") [
+            "--disable-features=UseOzonePlatform"
+            "--enable-features=VaapiVideoDecoder"
+          ]
+          ++ optionals (envProto == "wayland") [
+            "--enable-features=UseOzonePlatform,WebRTCPipeWireCapturer"
+            "--ozone-platform=wayland"
+            "--enable-webrtc-pipewire-capturer"
+          ];
 
         discord-canary' =
-          (pkgs.discord-canary.override { withOpenASAR = true; }).overrideAttrs
+          (pkgs.discord-canary.override {withOpenASAR = true;}).overrideAttrs
           (old: {
             preInstall = ''
               gappsWrapperArgs+=("--add-flags" "${concatStringsSep " " flags}")
             '';
           });
-      in [ discord-canary' ];
+      in [discord-canary'];
     })
   ];
 }

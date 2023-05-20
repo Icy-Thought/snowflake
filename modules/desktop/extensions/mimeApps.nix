@@ -1,7 +1,10 @@
 # Copyright (c) 2022 felschr. All Rights Reserved.
-{ options, config, lib, ... }:
-
-let
+{
+  options,
+  config,
+  lib,
+  ...
+}: let
   inherit (builtins) listToAttrs;
   inherit (lib.attrsets) mapAttrsToList nameValuePair;
   inherit (lib.lists) flatten;
@@ -9,9 +12,9 @@ let
 
   cfg = config.modules.desktop.extensions.mimeApps;
 in {
-  options.modules.desktop.extensions.mimeApps =
-    let inherit (lib.options) mkEnableOption;
-    in { enable = mkEnableOption "default applications"; };
+  options.modules.desktop.extensions.mimeApps = let
+    inherit (lib.options) mkEnableOption;
+  in {enable = mkEnableOption "default applications";};
 
   config = mkIf cfg.enable {
     home.configFile."mimeapps.list".force = true;
@@ -20,18 +23,18 @@ in {
       enable = true;
       defaultApplications = let
         defaultApps = {
-          audio = [ "mpv.desktop" ];
-          browser = [ "firefox.desktop" ];
+          audio = ["mpv.desktop"];
+          browser = ["firefox.desktop"];
           # calendar = [ "org.gnome.Calendar.desktop" ];
-          compression = [ "org.gnome.Nautilus.desktop" ];
-          directory = [ "org.gnome.Nautilus.desktop" ];
-          image = [ "feh.desktop" ];
-          magnet = [ "transmission-gtk.desktop" ];
-          mail = [ "firefox.desktop" ]; # [ "org.gnome.Geary.desktop" ];
-          pdf = [ "org.pwmt.zathura.desktop" ];
-          text = [ "neovide.desktop" ];
-          telegram = [ "telegramdesktop.desktop" ];
-          video = [ "mpv.desktop" ];
+          compression = ["org.gnome.Nautilus.desktop"];
+          directory = ["org.gnome.Nautilus.desktop"];
+          image = ["feh.desktop"];
+          magnet = ["transmission-gtk.desktop"];
+          mail = ["firefox.desktop"]; # [ "org.gnome.Geary.desktop" ];
+          pdf = ["org.pwmt.zathura.desktop"];
+          text = ["neovide.desktop"];
+          telegram = ["telegramdesktop.desktop"];
+          video = ["mpv.desktop"];
         };
         mimeMap = {
           audio = [
@@ -75,7 +78,7 @@ in {
             "application/x-xz-compressed-tar"
             "application/zip"
           ];
-          directory = [ "inode/directory" ];
+          directory = ["inode/directory"];
           image = [
             "image/bmp"
             "image/gif"
@@ -87,11 +90,11 @@ in {
             "image/vnd.microsoft.icon"
             "image/webp"
           ];
-          magnet = [ "x-scheme-handler/magnet" ];
-          mail = [ "x-scheme-handler/mailto" ];
-          pdf = [ "application/pdf" ];
-          telegram = [ "x-scheme-handler/tg" ];
-          text = [ "text/plain" ];
+          magnet = ["x-scheme-handler/magnet"];
+          mail = ["x-scheme-handler/mailto"];
+          pdf = ["application/pdf"];
+          telegram = ["x-scheme-handler/tg"];
+          text = ["text/plain"];
           video = [
             "video/mp2t"
             "video/mp4"
@@ -103,8 +106,10 @@ in {
             "video/x-msvideo"
           ];
         };
-      in listToAttrs (flatten (mapAttrsToList (key: types:
-        map (type: nameValuePair type (defaultApps."${key}")) types) mimeMap));
+      in
+        listToAttrs (flatten (mapAttrsToList (key: types:
+          map (type: nameValuePair type (defaultApps."${key}")) types)
+        mimeMap));
     };
   };
 }

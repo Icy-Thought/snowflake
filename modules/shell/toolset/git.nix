@@ -1,20 +1,25 @@
-{ config, options, lib, pkgs, ... }:
-
-let
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}: let
   inherit (lib.attrsets) attrValues optionalAttrs;
   inherit (lib.modules) mkIf;
 in {
-  options.modules.shell.git = let inherit (lib.options) mkEnableOption;
-  in { enable = mkEnableOption "version-control system"; };
+  options.modules.shell.git = let
+    inherit (lib.options) mkEnableOption;
+  in {enable = mkEnableOption "version-control system";};
 
   config = mkIf config.modules.shell.git.enable {
     user.packages = attrValues ({
-      inherit (pkgs) act dura gitui;
-      inherit (pkgs.gitAndTools) gh git-open;
-    } // optionalAttrs config.modules.shell.gnupg.enable {
-      inherit (pkgs.gitAndTools) git-crypt;
-
-    });
+        inherit (pkgs) act dura gitui;
+        inherit (pkgs.gitAndTools) gh git-open;
+      }
+      // optionalAttrs config.modules.shell.gnupg.enable {
+        inherit (pkgs.gitAndTools) git-crypt;
+      });
 
     # Prevent x11 askPass prompt on git push:
     programs.ssh.askPassword = "";
@@ -53,7 +58,7 @@ in {
         '';
       };
 
-      attributes = [ "*.lisp diff=lisp" "*.el diff=lisp" "*.org diff=org" ];
+      attributes = ["*.lisp diff=lisp" "*.el diff=lisp" "*.org diff=org"];
 
       ignores = [
         # General:
@@ -108,8 +113,7 @@ in {
         };
 
         alias = {
-          commit-x =
-            "-c user.name='CircuitLogic' -c user.email='geckut@pm.me' commit";
+          commit-x = "-c user.name='CircuitLogic' -c user.email='geckut@pm.me' commit";
         };
 
         tag.gpgSign = true;
@@ -137,8 +141,7 @@ in {
         };
 
         diff = {
-          "lisp".xfuncname =
-            "^(((;;;+ )|\\(|([ 	]+\\(((cl-|el-patch-)?def(un|var|macro|method|custom)|gb/))).*)$";
+          "lisp".xfuncname = "^(((;;;+ )|\\(|([ 	]+\\(((cl-|el-patch-)?def(un|var|macro|method|custom)|gb/))).*)$";
           "org".xfuncname = "^(\\*+ +.*)$";
         };
       };

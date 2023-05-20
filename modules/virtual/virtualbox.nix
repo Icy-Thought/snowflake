@@ -1,9 +1,15 @@
-{ options, config, lib, pkgs, ... }:
-
-let inherit (lib.modules) mkIf;
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
+  inherit (lib.modules) mkIf;
 in {
-  options.modules.virtual.virtualbox = let inherit (lib.options) mkEnableOption;
-  in { enable = mkEnableOption "cross-platform virtualization"; };
+  options.modules.virtual.virtualbox = let
+    inherit (lib.options) mkEnableOption;
+  in {enable = mkEnableOption "cross-platform virtualization";};
 
   config = mkIf config.modules.virtual.virtualbox.enable {
     virtualisation.virtualbox = {
@@ -12,6 +18,6 @@ in {
       # host.enableExtensionPack = true;
     };
 
-    user.extraGroups = [ "vboxusers" ];
+    user.extraGroups = ["vboxusers"];
   };
 }

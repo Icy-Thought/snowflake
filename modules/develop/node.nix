@@ -1,16 +1,21 @@
-{ config, options, lib, pkgs, ... }:
-
-let
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}: let
   inherit (lib.attrsets) attrValues;
   inherit (lib.modules) mkIf mkMerge;
   inherit (lib.meta) getExe;
 in {
-  options.modules.develop.node = let inherit (lib.options) mkEnableOption;
-  in { enable = mkEnableOption "JS/TS development"; };
+  options.modules.develop.node = let
+    inherit (lib.options) mkEnableOption;
+  in {enable = mkEnableOption "JS/TS development";};
 
   config = mkMerge [
     (mkIf config.modules.develop.node.enable {
-      user.packages = attrValues ({ inherit (pkgs) nodejs_latest yarn; });
+      user.packages = attrValues {inherit (pkgs) nodejs_latest yarn;};
 
       # Run locally installed bin-script, e.g. n coffee file.coffee
       environment.shellAliases = {
@@ -18,7 +23,7 @@ in {
         ya = "yarn";
       };
 
-      env.PATH = [ "$(${getExe pkgs.yarn} global bin)" ];
+      env.PATH = ["$(${getExe pkgs.yarn} global bin)"];
     })
 
     (mkIf config.modules.develop.xdg.enable {

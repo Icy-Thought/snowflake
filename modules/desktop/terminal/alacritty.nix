@@ -1,15 +1,19 @@
-{ config, options, lib, pkgs, ... }:
-
-let
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}: let
   inherit (builtins) toString;
   inherit (lib.meta) getExe;
   inherit (lib.modules) mkIf mkMerge;
 
   active = config.modules.themes.active;
 in {
-  options.modules.desktop.terminal.alacritty =
-    let inherit (lib.options) mkEnableOption;
-    in { enable = mkEnableOption "OpenGL terminal emulator"; };
+  options.modules.desktop.terminal.alacritty = let
+    inherit (lib.options) mkEnableOption;
+  in {enable = mkEnableOption "OpenGL terminal emulator";};
 
   config = mkIf config.modules.desktop.terminal.alacritty.enable {
     # Enabling useful/configured term-tools:
@@ -18,7 +22,7 @@ in {
     hm.programs.alacritty = {
       enable = true;
 
-      settings = (mkMerge [
+      settings = mkMerge [
         {
           env = {
             TERM = "xterm-256color";
@@ -60,7 +64,7 @@ in {
 
           shell = {
             program = "${getExe pkgs.fish}";
-            args = [ "-l" "-c" "tmux new || tmux" ];
+            args = ["-l" "-c" "tmux new || tmux"];
           };
 
           cursor = {
@@ -106,10 +110,12 @@ in {
             }
           ];
 
-          mouse_bindings = [{
-            mouse = "Middle";
-            action = "PasteSelection";
-          }];
+          mouse_bindings = [
+            {
+              mouse = "Middle";
+              action = "PasteSelection";
+            }
+          ];
 
           url = {
             launcher = "open";
@@ -118,12 +124,12 @@ in {
         }
 
         (mkIf (active != null) {
-          import = [ "~/.config/alacritty/config/${active}.yml" ];
+          import = ["~/.config/alacritty/config/${active}.yml"];
         })
-      ]);
+      ];
     };
 
-    home.configFile = (mkIf (active != null) {
+    home.configFile = mkIf (active != null) {
       alacritty-conf = {
         target = "alacritty/config/${active}.yml";
         text = let
@@ -191,6 +197,6 @@ in {
               white:      "${bright.white}"
         '';
       };
-    });
+    };
   };
 }

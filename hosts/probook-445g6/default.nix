@@ -1,8 +1,13 @@
-{ pkgs, config, lib, ... }: {
-  imports = [ ./hardware.nix ];
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}: {
+  imports = [./hardware.nix];
 
   modules = {
-    networking = { networkManager.enable = true; };
+    networking = {networkManager.enable = true;};
 
     themes.active = "catppuccin";
 

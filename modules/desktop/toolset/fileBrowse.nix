@@ -1,31 +1,42 @@
-{ options, config, lib, pkgs, ... }:
-
-let
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   inherit (lib.attrsets) attrValues optionalAttrs;
   inherit (lib.modules) mkIf mkMerge;
 
   cfg = config.modules.desktop.toolset.fileBrowse;
 in {
-  options.modules.desktop.toolset.fileBrowse =
-    let inherit (lib.options) mkEnableOption;
-    in {
-      dolphin.enable = mkEnableOption "KDE Plasma file-manager";
-      nautilus.enable = mkEnableOption "Gnome file-manager";
-      thunar.enable = mkEnableOption "GTK+ file-manager";
-    };
+  options.modules.desktop.toolset.fileBrowse = let
+    inherit (lib.options) mkEnableOption;
+  in {
+    dolphin.enable = mkEnableOption "KDE Plasma file-manager";
+    nautilus.enable = mkEnableOption "Gnome file-manager";
+    thunar.enable = mkEnableOption "GTK+ file-manager";
+  };
 
   config = mkMerge [
     {
       services.gvfs.enable = true;
 
-      environment.systemPackages = attrValues ({ }
+      environment.systemPackages = attrValues ({}
         // optionalAttrs (cfg.dolphin.enable) {
           inherit (pkgs) dolphin dolphin-plugins;
-        } // optionalAttrs (cfg.nautilus.enable) {
+        }
+        // optionalAttrs (cfg.nautilus.enable) {
           inherit (pkgs.gnome) nautilus;
-        } // optionalAttrs (cfg.thunar.enable) {
-          inherit (pkgs.xfce)
-            thunar thunar-volman thunar-archive-plugin thunar-media-tags-plugin;
+        }
+        // optionalAttrs (cfg.thunar.enable) {
+          inherit
+            (pkgs.xfce)
+            thunar
+            thunar-volman
+            thunar-archive-plugin
+            thunar-media-tags-plugin
+            ;
         });
     }
 

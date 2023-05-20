@@ -1,137 +1,142 @@
-{ config, options, lib, pkgs, ... }:
-
-let
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}: let
   inherit (builtins) toString;
   inherit (lib.modules) mkIf mkMerge;
   inherit (lib.strings) optionalString;
 in {
-  options.modules.desktop.terminal.wezterm =
-    let inherit (lib.options) mkEnableOption;
-    in { enable = mkEnableOption "GPU-accelerated terminal emulator"; };
+  options.modules.desktop.terminal.wezterm = let
+    inherit (lib.options) mkEnableOption;
+  in {enable = mkEnableOption "GPU-accelerated terminal emulator";};
 
   config = mkIf config.modules.desktop.terminal.wezterm.enable {
-    user.packages = [ pkgs.wezterm ];
+    user.packages = [pkgs.wezterm];
 
     home.configFile = let
       inherit (config.modules.themes) active;
       wezDir = "${config.snowflake.configDir}/wezterm";
-    in mkMerge [
-      {
-        wezterm-utils = {
-          target = "wezterm/utils.lua";
-          source = "${wezDir}/utils/init.lua";
-        };
+    in
+      mkMerge [
+        {
+          wezterm-utils = {
+            target = "wezterm/utils.lua";
+            source = "${wezDir}/utils/init.lua";
+          };
 
-        wezterm-init = {
-          target = "wezterm/wezterm.lua";
-          text = ''
-            require("modules.custom-title")
+          wezterm-init = {
+            target = "wezterm/wezterm.lua";
+            text = ''
+              require("modules.custom-title")
 
-            local config = require("modules.config")
-            local keys = require("modules.keys")
-            local mouse = require("modules.mouse")
-            local hyperlinks = require("modules.hyperlinks")
+              local config = require("modules.config")
+              local keys = require("modules.keys")
+              local mouse = require("modules.mouse")
+              local hyperlinks = require("modules.hyperlinks")
 
-            ${optionalString (active != null) ''
-              require("statusbar.${active}")
+              ${optionalString (active != null) ''
+                require("statusbar.${active}")
 
-              local colorscheme = require("theme.colorscheme")
-              local font = require("theme.font")
-            ''}
+                local colorscheme = require("theme.colorscheme")
+                local font = require("theme.font")
+              ''}
 
-            local merge = require("utils").merge_conf
+              local merge = require("utils").merge_conf
 
-            return merge(config, colorscheme, font, keys, mouse, hyperlinks)
-          '';
-        };
+              return merge(config, colorscheme, font, keys, mouse, hyperlinks)
+            '';
+          };
 
-        wezterm-conf = {
-          target = "wezterm/modules/config.lua";
-          source = "${wezDir}/modules/config.lua";
-        };
+          wezterm-conf = {
+            target = "wezterm/modules/config.lua";
+            source = "${wezDir}/modules/config.lua";
+          };
 
-        wezterm-custom-title = {
-          target = "wezterm/modules/custom-title.lua";
-          source = "${wezDir}/modules/custom-title.lua";
-        };
+          wezterm-custom-title = {
+            target = "wezterm/modules/custom-title.lua";
+            source = "${wezDir}/modules/custom-title.lua";
+          };
 
-        wezterm-keybindings = {
-          target = "wezterm/modules/keys.lua";
-          source = "${wezDir}/modules/keys.lua";
-        };
+          wezterm-keybindings = {
+            target = "wezterm/modules/keys.lua";
+            source = "${wezDir}/modules/keys.lua";
+          };
 
-        wezterm-mouse-bindings = {
-          target = "wezterm/modules/mouse.lua";
-          source = "${wezDir}/modules/mouse.lua";
-        };
+          wezterm-mouse-bindings = {
+            target = "wezterm/modules/mouse.lua";
+            source = "${wezDir}/modules/mouse.lua";
+          };
 
-        wezterm-hyperlinks = {
-          target = "wezterm/modules/hyperlinks.lua";
-          source = "${wezDir}/modules/hyperlinks.lua";
-        };
-      }
+          wezterm-hyperlinks = {
+            target = "wezterm/modules/hyperlinks.lua";
+            source = "${wezDir}/modules/hyperlinks.lua";
+          };
+        }
 
-      (mkIf (active != null) {
-        wezterm-rice = {
-          target = "wezterm/theme/colorscheme.lua";
-          text = ''
-            local M = {}
+        (mkIf (active != null) {
+          wezterm-rice = {
+            target = "wezterm/theme/colorscheme.lua";
+            text = ''
+              local M = {}
 
-            local active_palette = require("theme.${active}")
+              local active_palette = require("theme.${active}")
 
-            M.colors = active_palette
+              M.colors = active_palette
 
-            return M
-          '';
-        };
+              return M
+            '';
+          };
 
-        wezterm-font = {
-          target = "wezterm/theme/font.lua";
-          text = let
-            inherit (config.modules.themes.font) mono sans;
-            inherit (config.modules.themes.colors.main) types normal;
-          in ''
-            local wez = require("wezterm")
+          wezterm-font = {
+            target = "wezterm/theme/font.lua";
+            text = let
+              inherit (config.modules.themes.font) mono sans;
+              inherit (config.modules.themes.colors.main) types normal;
+            in ''
+              local wez = require("wezterm")
 
-            local M = {}
+              local M = {}
 
-            M.font = wez.font_with_fallback({
-              { family = "${mono.family}",
-                weight = "${mono.weightAlt}",
-              },
-              "DejaVu Sans",
-              "Unicode",
-            })
-
-            M.font_size = ${toString mono.size}
-            M.char_select_font_size = ${toString mono.size}
-
-            M.window_frame = {
-              active_titlebar_bg = "${types.bg}",
-              inactive_titlebar_bg = "${normal.black}",
-
-              font = wez.font({
-                  family = "${mono.family}",
+              M.font = wez.font_with_fallback({
+                { family = "${mono.family}",
                   weight = "${mono.weightAlt}",
-                  style = "Italic",
-              }),
+                },
+                "DejaVu Sans",
+                "Unicode",
+              })
 
-              font_size= ${toString mono.size},
-            }
+              M.font_size = ${toString mono.size}
+              M.char_select_font_size = ${toString mono.size}
 
-            return M
-          '';
-        };
+              M.window_frame = {
+                active_titlebar_bg = "${types.bg}",
+                inactive_titlebar_bg = "${normal.black}",
 
-        wezterm-statusbar = {
-          target = "wezterm/statusbar/${active}.lua";
-          source = "${wezDir}/statusbar/${active}.lua";
-        };
+                font = wez.font({
+                    family = "${mono.family}",
+                    weight = "${mono.weightAlt}",
+                    style = "Italic",
+                }),
 
-        wezterm-theme = {
-          target = "wezterm/theme/${active}.lua";
-          text =
-            let inherit (config.modules.themes.colors.main) bright normal types;
+                font_size= ${toString mono.size},
+              }
+
+              return M
+            '';
+          };
+
+          wezterm-statusbar = {
+            target = "wezterm/statusbar/${active}.lua";
+            source = "${wezDir}/statusbar/${active}.lua";
+          };
+
+          wezterm-theme = {
+            target = "wezterm/theme/${active}.lua";
+            text = let
+              inherit (config.modules.themes.colors.main) bright normal types;
             in ''
               return {
                   foreground      = "${types.fg}",
@@ -197,8 +202,8 @@ in {
                   },
               }
             '';
-        };
-      })
-    ];
+          };
+        })
+      ];
   };
 }

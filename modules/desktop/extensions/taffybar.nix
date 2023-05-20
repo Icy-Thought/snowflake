@@ -1,6 +1,11 @@
-{ inputs, options, config, lib, pkgs, ... }:
-
-let
+{
+  inputs,
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   inherit (builtins) readFile;
   inherit (lib) mkIf mkEnableOption;
   inherit (lib.strings) optionalString;
@@ -35,7 +40,7 @@ in {
     gtk.iconCache.enable = true;
 
     services.xserver = {
-      gdk-pixbuf.modulePackages = [ pkgs.librsvg ];
+      gdk-pixbuf.modulePackages = [pkgs.librsvg];
       displayManager.sessionCommands = ''
         # 1st-Step Taffybar workaround
         systemctl --user import-environment GDK_PIXBUF_MODULE_FILE DBUS_SESSION_BUS_ADDRESS PATH

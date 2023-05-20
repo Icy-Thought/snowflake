@@ -1,12 +1,16 @@
-{ config, options, lib, pkgs, ... }:
-
-let
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}: let
   inherit (builtins) toString;
   inherit (lib.modules) mkIf mkMerge;
 in {
-  options.modules.desktop.terminal.kitty =
-    let inherit (lib.options) mkEnableOption;
-    in { enable = mkEnableOption "GPU-accelerated terminal emulator"; };
+  options.modules.desktop.terminal.kitty = let
+    inherit (lib.options) mkEnableOption;
+  in {enable = mkEnableOption "GPU-accelerated terminal emulator";};
 
   config = mkIf config.modules.desktop.terminal.kitty.enable {
     environment.variables = {
@@ -94,13 +98,16 @@ in {
         "ctrl+shift+page_down" = "previous_tab";
       };
 
-      extraConfig = let inherit (config.modules.themes) active;
-      in mkIf (active != null) ''
-        include ~/.config/kitty/config/${active}.conf
-      '';
+      extraConfig = let
+        inherit (config.modules.themes) active;
+      in
+        mkIf (active != null) ''
+          include ~/.config/kitty/config/${active}.conf
+        '';
     };
 
-    home.configFile = let inherit (config.modules.themes) active;
+    home.configFile = let
+      inherit (config.modules.themes) active;
     in (mkMerge [
       {
         tab-bar = {

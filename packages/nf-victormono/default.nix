@@ -1,34 +1,38 @@
-{ stdenv, lib, nerd-font-patcher, victor-mono, }:
+{
+  stdenv,
+  lib,
+  nerd-font-patcher,
+  victor-mono,
+}: let
+  inherit (builtins) parseDrvName;
+in
+  stdenv.mkDerivation {
+    pname = "NF-VictorMono";
 
-let inherit (builtins) parseDrvName;
+    version = (parseDrvName victor-mono.name).version;
 
-in stdenv.mkDerivation {
-  pname = "NF-VictorMono";
+    nativeBuildInputs = [nerd-font-patcher victor-mono];
 
-  version = (parseDrvName victor-mono.name).version;
+    phases = ["installPhase"];
 
-  nativeBuildInputs = [ nerd-font-patcher victor-mono ];
+    preInstall = ''
+      mkdir -p $out/share/fonts/truetype && cd "$_"
+    '';
 
-  phases = [ "installPhase" ];
+    installPhase = ''
+      runHook preInstall
 
-  preInstall = ''
-    mkdir -p $out/share/fonts/truetype && cd "$_"
-  '';
+      find ${victor-mono}/share/fonts/truetype \
+        -name \*.ttf \
+        -exec ${nerd-font-patcher}/bin/nerd-font-patcher --complete --quiet --no-progressbars {} \; \
+        -exec ${nerd-font-patcher}/bin/nerd-font-patcher --complete --use-single-width-glyphs --adjust-line-height --quiet --no-progressbars {} \;
+    '';
 
-  installPhase = ''
-    runHook preInstall
-
-    find ${victor-mono}/share/fonts/truetype \
-      -name \*.ttf \
-      -exec ${nerd-font-patcher}/bin/nerd-font-patcher --complete --quiet --no-progressbars {} \; \
-      -exec ${nerd-font-patcher}/bin/nerd-font-patcher --complete --use-single-width-glyphs --adjust-line-height --quiet --no-progressbars {} \;
-  '';
-
-  meta = with lib; {
-    description = "Free programming font with cursive italics and ligatures";
-    homepage = "https://rubjo.github.io/victor-mono";
-    license = licenses.ofl;
-    # maintainers = with maintainers; [ Icy-Thought ];
-    platforms = platforms.linux;
-  };
-}
+    meta = with lib; {
+      description = "Free programming font with cursive italics and ligatures";
+      homepage = "https://rubjo.github.io/victor-mono";
+      license = licenses.ofl;
+      # maintainers = with maintainers; [ Icy-Thought ];
+      platforms = platforms.linux;
+    };
+  }

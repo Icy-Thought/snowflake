@@ -1,13 +1,19 @@
-{ inputs, options, config, lib, pkgs, ... }:
-
-let
+{
+  inputs,
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   inherit (lib.meta) getExe;
   inherit (lib.modules) mkIf mkMerge;
   inherit (pkgs) writeText xorg;
   cfg = config.modules.hardware.xkbLayout;
 in {
-  options.modules.hardware.xkbLayout = let inherit (lib.options) mkEnableOption;
-  in { hyperCtrl.enable = mkEnableOption "hyper xkb-layout"; };
+  options.modules.hardware.xkbLayout = let
+    inherit (lib.options) mkEnableOption;
+  in {hyperCtrl.enable = mkEnableOption "hyper xkb-layout";};
 
   config = mkMerge [
     (mkIf cfg.hyperCtrl.enable {
@@ -18,7 +24,7 @@ in {
 
         extraLayouts.us-hyperCtrl = {
           description = "US Layout with Right Ctrl = Hyper";
-          languages = [ "eng" ];
+          languages = ["eng"];
           symbolsFile = writeText "us-hyperCtrl" ''
             partial alphanumeric_keys
 
@@ -33,19 +39,18 @@ in {
         };
       };
 
-      home.dataFile.fcitx5-hyprCtrl =
-        (mkIf config.modules.desktop.extensions.fcitx5.enable {
-          target = "fcitx5/inputmethod/keyboard-us-hyprCtrl.conf";
-          text = ''
-            [InputMethod]
-            Name=us-hyperCtrl
-            Icon=input-keyboard
-            LangCode=us-hctrl
-            Addon=keyboard
-            Configurable=True
-            Label=us-hctrl
-          '';
-        });
+      home.dataFile.fcitx5-hyprCtrl = mkIf config.modules.desktop.extensions.fcitx5.enable {
+        target = "fcitx5/inputmethod/keyboard-us-hyprCtrl.conf";
+        text = ''
+          [InputMethod]
+          Name=us-hyperCtrl
+          Icon=input-keyboard
+          LangCode=us-hctrl
+          Addon=keyboard
+          Configurable=True
+          Label=us-hctrl
+        '';
+      };
     })
   ];
 }

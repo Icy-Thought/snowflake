@@ -1,6 +1,10 @@
-{ config, options, lib, pkgs, ... }:
-
-let
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}: let
   inherit (builtins) map;
   inherit (lib) mkIf getExe;
 in {
@@ -58,7 +62,8 @@ in {
           inherit name;
           inherit (pkgs.fishPlugins."${name}") src;
         };
-      in map (p: mkPlugin p) [ "done" "autopair-fish" "fzf-fish" ];
+      in
+        map (p: mkPlugin p) ["done" "autopair-fish" "fzf-fish"];
     };
 
     home.configFile = let
@@ -77,7 +82,8 @@ in {
 
       fish-theme = {
         target = "fish/conf.d/${active}.fish";
-        text = let inherit (config.modules.themes.colors) fishColor;
+        text = let
+          inherit (config.modules.themes.colors) fishColor;
         in ''
           # --> General
           set -l foreground ${fishColor types.fg}

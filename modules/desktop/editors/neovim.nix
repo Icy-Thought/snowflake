@@ -1,6 +1,11 @@
-{ config, options, lib, pkgs, inputs, ... }:
-
-let
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}: let
   inherit (lib.attrsets) attrValues optionalAttrs;
   inherit (lib.modules) mkIf mkMerge;
 
@@ -18,13 +23,14 @@ in {
 
   config = mkMerge [
     {
-      nixpkgs.overlays = [ inputs.nvim-nightly.overlay ];
+      nixpkgs.overlays = [inputs.nvim-nightly.overlay];
 
       user.packages = attrValues ({
-        inherit (pkgs) neovide;
-      } // optionalAttrs (config.modules.develop.cc.enable == false) {
-        inherit (pkgs) gcc; # Treesitter
-      });
+          inherit (pkgs) neovide;
+        }
+        // optionalAttrs (config.modules.develop.cc.enable == false) {
+          inherit (pkgs) gcc; # Treesitter
+        });
 
       hm.programs.neovim = {
         enable = true;

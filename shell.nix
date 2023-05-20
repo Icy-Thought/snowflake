@@ -1,18 +1,21 @@
-{ lib, pkgs ? import <nixpkgs> { } }:
+{
+  lib,
+  pkgs ? import <nixpkgs> {},
+}: let
+  inherit (lib) attrValues getExe;
+in
+  pkgs.mkShell {
+    buildInputs = attrValues {inherit (pkgs) git nix-bash-completions;};
 
-let inherit (lib) attrValues getExe;
-in pkgs.mkShell {
-  buildInputs = attrValues ({ inherit (pkgs) git nix-bash-completions; });
-
-  shellHook = let
-    inherit (pkgs) nixStable writeShellScriptBin;
-    nixBin = writeShellScriptBin "nix" ''
-      ${
-        getExe nixStable
-      } --option experimental-features "nix-command flakes" "$@"
+    shellHook = let
+      inherit (pkgs) nixStable writeShellScriptBin;
+      nixBin = writeShellScriptBin "nix" ''
+        ${
+          getExe nixStable
+        } --option experimental-features "nix-command flakes" "$@"
+      '';
+    in ''
+      export FLAKE="$(pwd)"
+      export PATH="$FLAKE/bin:${nixBin}/bin:$PATH"
     '';
-  in ''
-    export FLAKE="$(pwd)"
-    export PATH="$FLAKE/bin:${nixBin}/bin:$PATH"
-  '';
-}
+  }

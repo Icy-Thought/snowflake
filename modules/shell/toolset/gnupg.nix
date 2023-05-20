@@ -1,6 +1,11 @@
-{ config, options, lib, pkgs, ... }:
-
-let inherit (lib.modules) mkIf;
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}: let
+  inherit (lib.modules) mkIf;
 in {
   options.modules.shell.gnupg = let
     inherit (lib.options) mkEnableOption;
@@ -12,7 +17,7 @@ in {
   };
 
   config = mkIf config.modules.shell.gnupg.enable {
-    environment.variables = { GNUPGHOME = "$XDG_CONFIG_HOME/gnupg"; };
+    environment.variables = {GNUPGHOME = "$XDG_CONFIG_HOME/gnupg";};
 
     programs.gnupg.agent = {
       enable = true;
@@ -20,7 +25,7 @@ in {
       # pinentryFlavor = "gtk2";
     };
 
-    user.packages = [ pkgs.tomb ];
+    user.packages = [pkgs.tomb];
 
     # HACK Without this config file you get "No pinentry program" on 20.03.
     #      programs.gnupg.agent.pinentryFlavor doesn't appear to work, and this

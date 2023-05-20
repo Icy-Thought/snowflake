@@ -1,21 +1,27 @@
-{ config, options, lib, pkgs, ... }:
-
-let inherit (lib.modules) mkIf;
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}: let
+  inherit (lib.modules) mkIf;
 in {
-  options.modules.shell.starship = let inherit (lib.options) mkEnableOption;
-  in { enable = mkEnableOption "minimal shell ricing"; };
+  options.modules.shell.starship = let
+    inherit (lib.options) mkEnableOption;
+  in {enable = mkEnableOption "minimal shell ricing";};
 
   config = mkIf config.modules.shell.starship.enable {
     hm.programs.starship = {
       enable = true;
-      settings = let inherit (config.modules.themes.colors.main) normal types;
+      settings = let
+        inherit (config.modules.themes.colors.main) normal types;
       in {
         scan_timeout = 10;
         add_newline = true;
         line_break.disabled = true;
 
-        format =
-          "[$directory](fg:${normal.blue}) ($git_branch)($git_status )($nix_shell)($character)";
+        format = "[$directory](fg:${normal.blue}) ($git_branch)($git_status )($nix_shell)($character)";
         right_format = "[$cmd_duration](bg:none fg:${normal.magenta})";
 
         cmd_duration = {
@@ -33,14 +39,12 @@ in {
         };
 
         git_branch = {
-          format =
-            "[[](fg:${types.border})( $branch)[](fg:${types.border})]($style) ";
+          format = "[[](fg:${types.border})( $branch)[](fg:${types.border})]($style) ";
           style = "bg:${types.border} fg:${types.bg} bold";
         };
 
         git_status = {
-          format =
-            "[([](fg:${types.panelbg})( 『 $all_status$ahead_behind 』)[](fg:${types.panelbg}))]($style)";
+          format = "[([](fg:${types.panelbg})( 『 $all_status$ahead_behind 』)[](fg:${types.panelbg}))]($style)";
           style = "bg:${types.panelbg} fg:${types.bg} bold";
         };
 
@@ -63,10 +67,12 @@ in {
           full_symbol = "🔋";
           charging_symbol = "⚡️";
           discharging_symbol = "💀";
-          display = [{
-            style = "${normal.red}";
-            threshold = 15;
-          }];
+          display = [
+            {
+              style = "${normal.red}";
+              threshold = 15;
+            }
+          ];
         };
       };
     };

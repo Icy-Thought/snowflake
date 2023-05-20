@@ -1,6 +1,10 @@
-{ options, config, lib, pkgs, ... }:
-
-let
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   inherit (lib.meta) getExe;
   inherit (lib.modules) mkIf mkMerge;
   cfg = config.modules.desktop.distraction.steam;
@@ -20,8 +24,14 @@ in {
       # I avoid programs.steam.enable because it installs another steam binary,
       # which the xdesktop package invokes, instead of my steam shims below.
       user.packages = let
-        inherit (pkgs)
-          makeDesktopItem stdenv steam steam-run-native writeScriptBin;
+        inherit
+          (pkgs)
+          makeDesktopItem
+          stdenv
+          steam
+          steam-run-native
+          writeScriptBin
+          ;
       in [
         # Get steam to keep its garbage out of $HOME
         (writeScriptBin "steam" ''
@@ -42,8 +52,8 @@ in {
           icon = "steam";
           exec = "steam";
           terminal = false;
-          mimeTypes = [ "x-scheme-handler/steam" ];
-          categories = [ "Network" "FileTransfer" "Game" ];
+          mimeTypes = ["x-scheme-handler/steam"];
+          categories = ["Network" "FileTransfer" "Game"];
         })
       ];
 
@@ -55,6 +65,6 @@ in {
       systemd.extraConfig = "DefaultLimitNOFILE=1048576";
     }
 
-    (mkIf cfg.hardware.enable { hardware.steam-hardware.enable = true; })
+    (mkIf cfg.hardware.enable {hardware.steam-hardware.enable = true;})
   ]);
 }

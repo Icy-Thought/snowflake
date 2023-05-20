@@ -1,17 +1,22 @@
-{ config, options, lib, pkgs, ... }:
-
-let
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}: let
   inherit (builtins) toString;
   inherit (lib.meta) getExe;
   inherit (lib.modules) mkIf;
   inherit (lib.strings) concatStringsSep;
 in {
-  options.modules.desktop.browsers.ungoogled =
-    let inherit (lib.options) mkEnableOption;
-    in { enable = mkEnableOption "Google-free chromium"; };
+  options.modules.desktop.browsers.ungoogled = let
+    inherit (lib.options) mkEnableOption;
+  in {enable = mkEnableOption "Google-free chromium";};
 
   config = mkIf config.modules.desktop.browsers.ungoogled.enable {
-    user.packages = let inherit (pkgs) makeDesktopItem ungoogled-chromium;
+    user.packages = let
+      inherit (pkgs) makeDesktopItem ungoogled-chromium;
     in [
       (makeDesktopItem {
         name = "ungoogled-private";
@@ -19,7 +24,7 @@ in {
         genericName = "Launch a Private Ungoogled Chromium Instance";
         icon = "chromium";
         exec = "${getExe ungoogled-chromium} --incognito";
-        categories = [ "Network" ];
+        categories = ["Network"];
       })
     ];
 
@@ -53,30 +58,31 @@ in {
             ]
           }"
         ];
-      in pkgs.ungoogled-chromium.override {
-        commandLineArgs = [ ungoogledFlags ];
-      };
+      in
+        pkgs.ungoogled-chromium.override {
+          commandLineArgs = [ungoogledFlags];
+        };
       extensions = [
-        { id = "jhnleheckmknfcgijgkadoemagpecfol"; } # Auto-Tab-Discard
-        { id = "nngceckbapebfimnlniiiahkandclblb"; } # Bitwarden
-        { id = "dlnejlppicbjfcfcedcflplfjajinajd"; } # Bonjourr (New-Tab Page)
-        { id = "eimadpbcbfnmbkopoojfekhnkhdbieeh"; } # Dark-Reader
-        { id = "ldpochfccmkkmhdbclfhpagapcfdljkj"; } # Decentraleyes
-        { id = "bkdgflcldnnnapblkhphbgpggdiikppg"; } # DuckDuckGo
-        { id = "hlepfoohegkhhmjieoechaddaejaokhf"; } # Refined GitHub
-        { id = "iaiomicjabeggjcfkbimgmglanimpnae"; } # Tab-Session-Manager
-        { id = "cjpalhdlnbpafiamejdnhcphjbkeiagm"; } # Ublock-Origin
-        { id = "dbepggeogbaibhgnhhndojpepiihcmeb"; } # Vimium
-        { id = "jinjaccalgkegednnccohejagnlnfdag"; } # Violentmonkey
+        {id = "jhnleheckmknfcgijgkadoemagpecfol";} # Auto-Tab-Discard
+        {id = "nngceckbapebfimnlniiiahkandclblb";} # Bitwarden
+        {id = "dlnejlppicbjfcfcedcflplfjajinajd";} # Bonjourr (New-Tab Page)
+        {id = "eimadpbcbfnmbkopoojfekhnkhdbieeh";} # Dark-Reader
+        {id = "ldpochfccmkkmhdbclfhpagapcfdljkj";} # Decentraleyes
+        {id = "bkdgflcldnnnapblkhphbgpggdiikppg";} # DuckDuckGo
+        {id = "hlepfoohegkhhmjieoechaddaejaokhf";} # Refined GitHub
+        {id = "iaiomicjabeggjcfkbimgmglanimpnae";} # Tab-Session-Manager
+        {id = "cjpalhdlnbpafiamejdnhcphjbkeiagm";} # Ublock-Origin
+        {id = "dbepggeogbaibhgnhhndojpepiihcmeb";} # Vimium
+        {id = "jinjaccalgkegednnccohejagnlnfdag";} # Violentmonkey
         {
           id = "dcpihecpambacapedldabdbpakmachpb";
-          updateUrl =
-            "https://raw.githubusercontent.com/iamadamdev/bypass-paywalls-chrome/master/src/updates/updates.xml";
+          updateUrl = "https://raw.githubusercontent.com/iamadamdev/bypass-paywalls-chrome/master/src/updates/updates.xml";
         }
-        (mkIf config.modules.desktop.gnome.enable [{
-          id = "gphhapmejobijbbhgpjhcjognlahblep";
-        } # Gnome-Shell-Integration
-          ])
+        (mkIf config.modules.desktop.gnome.enable [
+          {
+            id = "gphhapmejobijbbhgpjhcjognlahblep";
+          } # Gnome-Shell-Integration
+        ])
       ];
     };
   };

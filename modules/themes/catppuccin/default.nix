@@ -1,6 +1,10 @@
-{ options, config, lib, pkgs, ... }:
-
-let
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   inherit (builtins) toString;
   inherit (lib) attrValues mkDefault mkIf mkMerge;
 
@@ -13,7 +17,7 @@ in {
 
         gtk = {
           name = "Catppuccin-Orange-Dark-Compact";
-          package = pkgs.catppuccin-gtk.override { size = "compact"; };
+          package = pkgs.catppuccin-gtk.override {size = "compact";};
         };
 
         iconTheme = {
@@ -28,13 +32,13 @@ in {
         };
 
         fontConfig = {
-          packages = attrValues ({
+          packages = attrValues {
             inherit (pkgs) twitter-color-emoji;
-            nerdfonts = pkgs.nerdfonts.override { fonts = [ "VictorMono" ]; };
-          });
-          mono = [ "VictorMono Nerd Font Mono" ];
-          sans = [ "VictorMono Nerd Font" ];
-          emoji = [ "Twitter Color Emoji" ];
+            nerdfonts = pkgs.nerdfonts.override {fonts = ["VictorMono"];};
+          };
+          mono = ["VictorMono Nerd Font Mono"];
+          sans = ["VictorMono Nerd Font"];
+          emoji = ["Twitter Color Emoji"];
         };
 
         font = {
@@ -123,8 +127,9 @@ in {
       hm.programs.rofi = {
         extraConfig = {
           icon-theme = let inherit (cfg.iconTheme) name; in "${name}";
-          font = let inherit (cfg.font.sans) family weight size;
-          in "${family} ${weight} ${toString (size)}";
+          font = let
+            inherit (cfg.font.sans) family weight size;
+          in "${family} ${weight} ${toString size}";
         };
 
         theme = let
@@ -265,37 +270,37 @@ in {
         };
       };
 
-      hm.programs.sioyek.config =
-        let inherit (cfg.font.mono) family size weight;
-        in {
-          "custom_background_color " = "0.12 0.11 0.18";
-          "custom_text_color " = "0.85 0.88 0.93";
+      hm.programs.sioyek.config = let
+        inherit (cfg.font.mono) family size weight;
+      in {
+        "custom_background_color " = "0.12 0.11 0.18";
+        "custom_text_color " = "0.85 0.88 0.93";
 
-          "text_highlight_color" = "0.85 0.88 0.93";
-          "visual_mark_color" = "0.27 0.28 0.35 1.0";
-          "search_highlight_color" = "0.95 0.55 0.66";
-          "link_highlight_color" = "0.59 0.80 0.98";
-          "synctex_highlight_color" = "0.96 0.88 0.86";
+        "text_highlight_color" = "0.85 0.88 0.93";
+        "visual_mark_color" = "0.27 0.28 0.35 1.0";
+        "search_highlight_color" = "0.95 0.55 0.66";
+        "link_highlight_color" = "0.59 0.80 0.98";
+        "synctex_highlight_color" = "0.96 0.88 0.86";
 
-          "page_separator_width" = "2";
-          "page_separator_color" = "0.95 0.80 0.80";
-          "status_bar_color" = "0.19 0.20 0.27";
+        "page_separator_width" = "2";
+        "page_separator_color" = "0.95 0.80 0.80";
+        "status_bar_color" = "0.19 0.20 0.27";
 
-          "font_size" = "${toString (size)}";
-          "ui_font" = "${family} ${weight}";
-        };
+        "font_size" = "${toString size}";
+        "ui_font" = "${family} ${weight}";
+      };
     })
 
     (mkIf (config.modules.desktop.envProto == "x11") {
       services.xserver.displayManager = {
-        lightdm.greeters.mini.extraConfig =
-          let inherit (cfg.colors.main) normal types;
-          in ''
-            text-color = "${types.bg}"
-            password-background-color = "${normal.black}"
-            window-color = "${types.border}"
-            border-color = "${types.border}"
-          '';
+        lightdm.greeters.mini.extraConfig = let
+          inherit (cfg.colors.main) normal types;
+        in ''
+          text-color = "${types.bg}"
+          password-background-color = "${normal.black}"
+          window-color = "${types.border}"
+          border-color = "${types.border}"
+        '';
       };
     })
   ]);

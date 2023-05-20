@@ -1,11 +1,16 @@
-{ config, options, lib, pkgs, ... }:
-
-let
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}: let
   inherit (lib.attrsets) attrValues optionalAttrs;
   inherit (lib.modules) mkIf mkMerge;
   cfg = config.modules.develop.lua;
 in {
-  options.modules.develop.lua = let inherit (lib.options) mkEnableOption;
+  options.modules.develop.lua = let
+    inherit (lib.options) mkEnableOption;
   in {
     enable = mkEnableOption "Lua development";
     fennel.enable = mkEnableOption "Lisp-based Lua development";
@@ -14,8 +19,9 @@ in {
   config = mkMerge [
     (mkIf cfg.enable {
       user.packages = attrValues ({
-        inherit (pkgs) lua lua-language-server stylua;
-      } // optionalAttrs (cfg.fennel.enable) { inherit (pkgs) fennel fnlfmt; });
+          inherit (pkgs) lua lua-language-server stylua;
+        }
+        // optionalAttrs (cfg.fennel.enable) {inherit (pkgs) fennel fnlfmt;});
 
       home.configFile.stylua-conf = {
         target = "stylua/stylua.toml";
@@ -30,6 +36,6 @@ in {
       };
     })
 
-    (mkIf config.modules.develop.xdg.enable { }) # TODO
+    (mkIf config.modules.develop.xdg.enable {}) # TODO
   ];
 }

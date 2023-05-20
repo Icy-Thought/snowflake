@@ -1,9 +1,15 @@
-{ config, options, lib, pkgs, ... }:
-
-let inherit (lib.modules) mkIf;
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}: let
+  inherit (lib.modules) mkIf;
 in {
-  options.modules.shell.bash = let inherit (lib.options) mkEnableOption;
-  in { enable = mkEnableOption "bash shell" // { default = true; }; };
+  options.modules.shell.bash = let
+    inherit (lib.options) mkEnableOption;
+  in {enable = mkEnableOption "bash shell" // {default = true;};};
 
   config = mkIf config.modules.shell.bash.enable {
     # Enable starship-rs:
@@ -14,7 +20,7 @@ in {
       enable = true;
       historySize = 5000;
       historyFileSize = 5000;
-      historyIgnore = [ "btm" "htop" "macchina" "neofetch" ];
+      historyIgnore = ["btm" "htop" "macchina" "neofetch"];
       shellAliases = {
         ls = "exa -Slhg --icons";
         lsa = "exa -Slhga --icons";

@@ -1,13 +1,17 @@
-{ options, config, lib, pkgs, ... }:
-
-let
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   inherit (lib.meta) getExe;
   inherit (lib.modules) mkIf;
   inherit (pkgs) pamixer python3 writeScriptBin;
 in {
-  options.modules.shell.scripts.microphone =
-    let inherit (lib.options) mkEnableOption;
-    in { enable = mkEnableOption "microphone control"; };
+  options.modules.shell.scripts.microphone = let
+    inherit (lib.options) mkEnableOption;
+  in {enable = mkEnableOption "microphone control";};
 
   config = mkIf config.modules.shell.scripts.microphone.enable {
     user.packages = [
@@ -71,7 +75,7 @@ in {
         micVol_level = get_micVol.stdout.strip()
 
 
-        def notification(): 
+        def notification():
             ICONS = [" ", " "]
             if args.command == "toggle-mute" and get_mute == "false":
                 micvol = "0"

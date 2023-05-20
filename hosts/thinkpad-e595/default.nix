@@ -1,5 +1,10 @@
-{ pkgs, config, lib, ... }: {
-  imports = [ ./hardware.nix ];
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}: {
+  imports = [./hardware.nix];
 
   modules = {
     shell = {
@@ -13,7 +18,7 @@
       mullvad.enable = true;
       # borsippaNET.enable = true;
     };
-    services = { ssh.enable = true; };
+    services = {ssh.enable = true;};
     containers.transmission = {
       enable = false; # TODO: Once fixed -> enable = true;
       username = "alonzo";
@@ -70,9 +75,8 @@
   # KDE-Connect + Start-up indicator
   programs.kdeconnect.enable = true;
   systemd.user.services.kdeconnect-indicator = {
-    serviceConfig.ExecStart =
-      "${pkgs.plasma5Packages.kdeconnect-kde}/bin/kdeconnect-indicator";
-    wantedBy = [ "graphical-session.target" ];
-    partOf = [ "graphical-session.target" ];
+    serviceConfig.ExecStart = "${pkgs.plasma5Packages.kdeconnect-kde}/bin/kdeconnect-indicator";
+    wantedBy = ["graphical-session.target"];
+    partOf = ["graphical-session.target"];
   };
 }

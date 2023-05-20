@@ -1,6 +1,10 @@
-{ config, options, lib, pkgs, ... }:
-
-let
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}: let
   inherit (builtins) toJSON;
   inherit (lib) mapAttrsToList mkIf;
   inherit (lib.strings) concatStrings escapeNixString;
@@ -73,7 +77,8 @@ in {
 
     home.configFile.xonsh-init = {
       target = "xonsh/rc.xsh";
-      text = let abbrevs = import "${config.snowflake.configDir}/shell-abbr";
+      text = let
+        abbrevs = import "${config.snowflake.configDir}/shell-abbr";
       in ''
         # -------===[ Settings ]===------- #
         $AUTO_CD = True
@@ -100,8 +105,9 @@ in {
         aliases[less] = "less -R"
 
         ${concatStrings (mapAttrsToList (k: v: ''
-          abbrevs[${escapeNixString k}] = ${escapeNixString v}
-        '') abbrevs)}
+            abbrevs[${escapeNixString k}] = ${escapeNixString v}
+          '')
+          abbrevs)}
 
 
         # -------===[ Useful Functions ]===------- #

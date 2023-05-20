@@ -1,18 +1,23 @@
-{ config, options, lib, pkgs, ... }:
-
-let
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}: let
   inherit (lib.modules) mkIf;
   inherit (lib.strings) optionalString;
   cfg = config.modules.shell.xplr;
 in {
-  options.modules.shell.xplr = let inherit (lib.options) mkEnableOption;
+  options.modules.shell.xplr = let
+    inherit (lib.options) mkEnableOption;
   in {
     enable = mkEnableOption "TUI file-explorer";
     fennel.enable = mkEnableOption "lisp-configured xplr";
   };
 
   config = mkIf cfg.enable {
-    user.packages = [ pkgs.xplr ];
+    user.packages = [pkgs.xplr];
 
     home.configFile.xplr-init = {
       target = "xplr/init.lua";

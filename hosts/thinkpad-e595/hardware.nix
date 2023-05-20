@@ -1,29 +1,34 @@
-{ config, lib, pkgs, modulesPath, ... }:
-
-let inherit (lib) mkDefault;
+{
+  config,
+  lib,
+  pkgs,
+  modulesPath,
+  ...
+}: let
+  inherit (lib) mkDefault;
 in {
-  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
+  imports = [(modulesPath + "/installer/scan/not-detected.nix")];
 
   fileSystems."/" = {
     device = "/dev/disk/by-label/nixos";
     fsType = "ext4";
-    options = [ "noatime" "x-gvfs-hide" ];
+    options = ["noatime" "x-gvfs-hide"];
   };
 
   fileSystems."/home" = {
     device = "/dev/disk/by-label/home";
     fsType = "ext4";
     neededForBoot = true;
-    options = [ "noatime" "x-gvfs-hide" ];
+    options = ["noatime" "x-gvfs-hide"];
   };
 
   fileSystems."/boot" = {
     device = "/dev/disk/by-label/BOOT";
     fsType = "vfat";
-    options = [ "x-gvfs-hide" ];
+    options = ["x-gvfs-hide"];
   };
 
-  swapDevices = [{ device = "/dev/disk/by-label/swap"; }];
+  swapDevices = [{device = "/dev/disk/by-label/swap";}];
 
   boot = {
     initrd = {
@@ -36,11 +41,11 @@ in {
         "usbhid"
         "xhci_pci"
       ];
-      kernelModules = [ ];
+      kernelModules = [];
     };
-    extraModulePackages = [ config.boot.kernelPackages.acpi_call ];
-    kernelModules = [ "thinkpad_acpi" "acpi_call" "kvm_amd" ];
-    kernelParams = [ "pcie_aspm.policy=performance" ];
+    extraModulePackages = [config.boot.kernelPackages.acpi_call];
+    kernelModules = ["thinkpad_acpi" "acpi_call" "kvm_amd"];
+    kernelParams = ["pcie_aspm.policy=performance"];
     kernel.sysctl = {
       "net.ipv4.icmp_echo_ignore_broadcasts" = 1; # Refuse ICMP echo requests
     };
@@ -74,7 +79,7 @@ in {
   services = {
     upower.enable = true;
     xserver = {
-      videoDrivers = [ "amdgpu" ];
+      videoDrivers = ["amdgpu"];
       deviceSection = ''
         Option "TearFree" "true"
       '';

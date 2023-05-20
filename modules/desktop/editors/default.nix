@@ -1,6 +1,10 @@
-{ config, options, lib, pkgs, ... }:
-
-let
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}: let
   inherit (lib) attrValues mkIf mkMerge mkOption;
   inherit (lib.types) str;
 
@@ -16,14 +20,15 @@ in {
   };
 
   config = mkMerge [
-    (mkIf (cfg.default != null) { env.EDITOR = cfg.default; })
+    (mkIf (cfg.default != null) {env.EDITOR = cfg.default;})
 
     (mkIf (cfg.default == "nvim" || cfg.default == "emacs") {
-      user.packages = attrValues ({
+      user.packages = attrValues {
         inherit (pkgs) imagemagick editorconfig-core-c sqlite deno pandoc;
-        aspellPlusDict = pkgs.aspellWithDicts
-          (dict: with dict; [ en en-computers en-science ]);
-      });
+        aspellPlusDict =
+          pkgs.aspellWithDicts
+          (dict: with dict; [en en-computers en-science]);
+      };
     })
   ];
 }

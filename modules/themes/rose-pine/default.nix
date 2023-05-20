@@ -1,6 +1,10 @@
-{ options, config, lib, pkgs, ... }:
-
-let
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   inherit (builtins) toString readFile;
   inherit (lib) attrValues concatMapStringsSep mkDefault mkIf mkMerge;
 
@@ -25,14 +29,14 @@ in {
           size = 24;
         };
         fontConfig = {
-          packages = attrValues ({
+          packages = attrValues {
             inherit (pkgs) cascadia-code noto-fonts-emoji sarasa-gothic;
             nerdfonts =
-              pkgs.nerdfonts.override { fonts = [ "Arimo" "JetBrainsMono" ]; };
-          });
-          mono = [ "JetBrainsMono Nerd Font" "Cascadia Code" "Sarasa Mono SC" ];
-          sans = [ "Arimo Nerd Font" "Sarasa Gothic SC" ];
-          emoji = [ "Noto Color Emoji" ];
+              pkgs.nerdfonts.override {fonts = ["Arimo" "JetBrainsMono"];};
+          };
+          mono = ["JetBrainsMono Nerd Font" "Cascadia Code" "Sarasa Mono SC"];
+          sans = ["Arimo Nerd Font" "Sarasa Gothic SC"];
+          emoji = ["Noto Color Emoji"];
         };
 
         font = {
@@ -123,15 +127,16 @@ in {
     (mkIf config.modules.desktop.browsers.firefox.enable {
       modules.desktop.browsers.firefox.userChrome =
         concatMapStringsSep "\n" readFile
-        [ "${configDir}/firefox/vertical-tabs.css" ];
+        ["${configDir}/firefox/vertical-tabs.css"];
     })
 
     (mkIf config.services.xserver.enable {
       hm.programs.rofi = {
         extraConfig = {
           icon-theme = let inherit (cfg.iconTheme) name; in "${name}";
-          font = let inherit (cfg.font.sans) family weight size;
-          in "${family} ${weight} ${toString (size)}";
+          font = let
+            inherit (cfg.font.sans) family weight size;
+          in "${family} ${weight} ${toString size}";
         };
 
         theme = let
@@ -272,25 +277,25 @@ in {
         };
       };
 
-      hm.programs.sioyek.config =
-        let inherit (cfg.font.mono) family size weight;
-        in {
-          "custom_background_color " = "0.10 0.11 0.15";
-          "custom_text_color " = "0.75 0.79 0.96";
+      hm.programs.sioyek.config = let
+        inherit (cfg.font.mono) family size weight;
+      in {
+        "custom_background_color " = "0.10 0.11 0.15";
+        "custom_text_color " = "0.75 0.79 0.96";
 
-          "text_highlight_color" = "0.24 0.35 0.63";
-          "visual_mark_color" = "1.00 0.62 0.39 1.0";
-          "search_highlight_color" = "0.97 0.46 0.56";
-          "link_highlight_color" = "0.48 0.64 0.97";
-          "synctex_highlight_color" = "0.62 0.81 0.42";
+        "text_highlight_color" = "0.24 0.35 0.63";
+        "visual_mark_color" = "1.00 0.62 0.39 1.0";
+        "search_highlight_color" = "0.97 0.46 0.56";
+        "link_highlight_color" = "0.48 0.64 0.97";
+        "synctex_highlight_color" = "0.62 0.81 0.42";
 
-          "page_separator_width" = "2";
-          "page_separator_color" = "0.81 0.79 0.76";
-          "status_bar_color" = "0.34 0.37 0.54";
+        "page_separator_width" = "2";
+        "page_separator_color" = "0.81 0.79 0.76";
+        "status_bar_color" = "0.34 0.37 0.54";
 
-          "font_size" = "${toString (size)}";
-          "ui_font" = "${family} ${weight}";
-        };
+        "font_size" = "${toString size}";
+        "ui_font" = "${family} ${weight}";
+      };
     })
   ]);
 }

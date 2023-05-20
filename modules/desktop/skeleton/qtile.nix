@@ -1,6 +1,11 @@
-{ inputs, options, config, lib, pkgs, ... }:
-
-let
+{
+  inputs,
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   inherit (lib.attrsets) attrValues optionalAttrs;
   inherit (lib.modules) mkIf;
 
@@ -12,7 +17,7 @@ in {
   in {
     enable = mkEnableOption "python x11/wayland WM";
     backend = mkOption {
-      type = enum [ "x11" "wayland" ];
+      type = enum ["x11" "wayland"];
       default = "x11";
     };
   };
@@ -20,7 +25,7 @@ in {
   config = mkIf cfg.enable {
     modules.desktop = {
       envProto = cfg.backend;
-      toolset.fileBrowse = { nautilus.enable = true; };
+      toolset.fileBrowse = {nautilus.enable = true;};
       extensions = {
         fcitx5.enable = true;
         mimeApps.enable = true; # mimeApps -> default launch application
@@ -43,8 +48,9 @@ in {
     };
 
     environment.systemPackages = attrValues ({
-      inherit (pkgs) libnotify playerctl gxmessage;
-    } // optionalAttrs (cfg.backend == "x11") { inherit (pkgs) xdotool feh; }
+        inherit (pkgs) libnotify playerctl gxmessage;
+      }
+      // optionalAttrs (cfg.backend == "x11") {inherit (pkgs) xdotool feh;}
       // optionalAttrs (cfg.backend == "wayland") {
         inherit (pkgs) imv wf-recorder;
       });

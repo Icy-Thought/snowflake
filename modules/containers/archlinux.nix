@@ -1,10 +1,15 @@
-{ options, config, lib, pkgs, ... }:
-
-let inherit (lib.modules) mkIf;
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
+  inherit (lib.modules) mkIf;
 in {
-  options.modules.containers.archlinux =
-    let inherit (lib.options) mkEnableOption;
-    in { enable = mkEnableOption "arch-linux container"; };
+  options.modules.containers.archlinux = let
+    inherit (lib.options) mkEnableOption;
+  in {enable = mkEnableOption "arch-linux container";};
 
   config = mkIf config.modules.containers.archlinux.enable {
     virtualisation.libvirtd = {
@@ -16,8 +21,8 @@ in {
 
     systemd.nspawn."archLinux" = {
       enable = true;
-      wantedBy = [ "machines.target" ];
-      requiredBy = [ "machines.target" ];
+      wantedBy = ["machines.target"];
+      requiredBy = ["machines.target"];
 
       execConfig = {
         Timezone = "Bind";
@@ -27,7 +32,7 @@ in {
 
       filesConfig = {
         Volatile = false;
-        BindReadOnly = [ "/home/icy-thought:/mnt/icy-thought" ];
+        BindReadOnly = ["/home/icy-thought:/mnt/icy-thought"];
         Bind = [
           "/home/icy-thought/.container-arch:/home/icy-thought"
           "/run/user/1000/wayland-1"
@@ -48,7 +53,7 @@ in {
 
     # Vulkan support
     systemd.services."systemd-nspawn@".serviceConfig = {
-      DeviceAllow = [ "char-drm rwx" "/dev/dri/renderD128" ];
+      DeviceAllow = ["char-drm rwx" "/dev/dri/renderD128"];
     };
   };
 }

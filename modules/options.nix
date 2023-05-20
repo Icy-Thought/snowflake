@@ -1,22 +1,34 @@
-{ config, options, lib, home-manager, ... }:
-
-let
+{
+  config,
+  options,
+  lib,
+  home-manager,
+  ...
+}: let
   inherit (builtins) elem pathExists toString;
-  inherit (lib)
-    findFirst isList mapAttrs mapAttrsToList mkAliasDefinitions mkOption;
+  inherit
+    (lib)
+    findFirst
+    isList
+    mapAttrs
+    mapAttrsToList
+    mkAliasDefinitions
+    mkOption
+    ;
   inherit (lib.strings) concatMapStringsSep concatStringsSep;
   inherit (lib.types) attrs attrsOf either listOf oneOf path str;
   inherit (lib.my) mkOpt mkOpt';
 in {
   options = {
-    user = mkOpt attrs { };
+    user = mkOpt attrs {};
 
     snowflake = {
       dir = mkOpt path (findFirst pathExists (toString ../.) [
         "${config.user.home}/git/icy-thought/snowflake"
         "/etc/snowflake"
       ]);
-      hostDir = mkOpt path
+      hostDir =
+        mkOpt path
         "${config.snowflake.dir}/hosts/${config.networking.hostName}";
       binDir = mkOpt path "${config.snowflake.dir}/bin";
       configDir = mkOpt path "${config.snowflake.dir}/config";
@@ -25,21 +37,20 @@ in {
     };
 
     home = {
-      file = mkOpt' attrs { } "Files to place directly in $HOME";
-      configFile = mkOpt' attrs { } "Files to place in $XDG_CONFIG_HOME";
-      dataFile = mkOpt' attrs { } "Files to place in $XDG_DATA_HOME";
-      pointerCursor = mkOpt' attrs { } "Cursor to be applied on running system";
-      activation = mkOpt' attrs { } "Script block to run after NixOS rebuild";
+      file = mkOpt' attrs {} "Files to place directly in $HOME";
+      configFile = mkOpt' attrs {} "Files to place in $XDG_CONFIG_HOME";
+      dataFile = mkOpt' attrs {} "Files to place in $XDG_DATA_HOME";
+      pointerCursor = mkOpt' attrs {} "Cursor to be applied on running system";
+      activation = mkOpt' attrs {} "Script block to run after NixOS rebuild";
     };
 
     env = mkOption {
-      type = attrsOf (oneOf [ str path (listOf (either str path)) ]);
+      type = attrsOf (oneOf [str path (listOf (either str path))]);
       apply = mapAttrs (n: v:
-        if isList v then
-          concatMapStringsSep ":" (x: toString x) v
-        else
-          (toString v));
-      default = { };
+        if isList v
+        then concatMapStringsSep ":" (x: toString x) v
+        else (toString v));
+      default = {};
       description = "Provides easy-access to `environment.extraInit`";
     };
   };
@@ -47,11 +58,14 @@ in {
   config = {
     user = let
       user = builtins.getEnv "USER";
-      name = if elem user [ "" "root" ] then "icy-thought" else user;
+      name =
+        if elem user ["" "root"]
+        then "icy-thought"
+        else user;
     in {
       inherit name;
       description = "Primary user account";
-      extraGroups = [ "wheel" "input" "audio" "video" "storage" ];
+      extraGroups = ["wheel" "input" "audio" "video" "storage"];
       isNormalUser = true;
       home = "/home/${name}";
       group = "users";
@@ -78,15 +92,17 @@ in {
 
     users.users.${config.user.name} = mkAliasDefinitions options.user;
 
-    nix.settings = let users = [ "root" config.user.name ];
+    nix.settings = let
+      users = ["root" config.user.name];
     in {
       trusted-users = users;
       allowed-users = users;
     };
 
-    env.PATH = [ "$SNOWFLAKE_BIN" "$XDG_BIN_HOME" "$PATH" ];
+    env.PATH = ["$SNOWFLAKE_BIN" "$XDG_BIN_HOME" "$PATH"];
 
-    environment.extraInit = concatStringsSep "\n"
+    environment.extraInit =
+      concatStringsSep "\n"
       (mapAttrsToList (n: v: ''export ${n}="${v}"'') config.env);
   };
 }

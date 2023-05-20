@@ -1,14 +1,21 @@
-{ config, options, lib, pkgs, ... }:
-
-let inherit (lib.modules) mkIf;
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}: let
+  inherit (lib.modules) mkIf;
 in {
-  options.modules.shell.macchina = let inherit (lib.options) mkEnableOption;
-  in { enable = mkEnableOption "system-information"; };
+  options.modules.shell.macchina = let
+    inherit (lib.options) mkEnableOption;
+  in {enable = mkEnableOption "system-information";};
 
   config = mkIf config.modules.shell.macchina.enable {
-    user.packages = [ pkgs.macchina ];
+    user.packages = [pkgs.macchina];
 
-    home.configFile = let configDir = config.snowflake.configDir;
+    home.configFile = let
+      configDir = config.snowflake.configDir;
     in {
       macchina-init = {
         target = "macchina/macchina.toml";

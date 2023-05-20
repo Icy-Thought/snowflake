@@ -1,6 +1,11 @@
-{ config, options, lib, pkgs, inputs, ... }:
-
-let
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}: let
   inherit (lib) mkIf mkEnableOption;
 
   vscDir = "${config.snowflake.configDir}/vscodium";
@@ -16,7 +21,8 @@ in {
       mutableExtensionsDir = true;
 
       # Config imports
-      extensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace
+      extensions =
+        pkgs.vscode-utils.extensionsFromVscodeMarketplace
         ((import "${vscDir}/custom-extensions.nix").extensions)
         ++ (with pkgs.vscode-extensions; [
           # Editor
@@ -42,8 +48,8 @@ in {
           tamasfe.even-better-toml
           yzhang.markdown-all-in-one
         ]);
-      userSettings = import "${vscDir}/settings.nix" { inherit config; };
-      keybindings = import "${vscDir}/keybindings.nix" { };
+      userSettings = import "${vscDir}/settings.nix" {inherit config;};
+      keybindings = import "${vscDir}/keybindings.nix" {};
     };
   };
 }

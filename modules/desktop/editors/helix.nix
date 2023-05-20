@@ -1,10 +1,15 @@
-{ config, options, lib, pkgs, ... }:
-
-let inherit (lib.modules) mkIf;
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}: let
+  inherit (lib.modules) mkIf;
 in {
-  options.modules.desktop.editors.helix =
-    let inherit (lib.options) mkEnableOption;
-    in { enable = mkEnableOption "post-modern text editor"; };
+  options.modules.desktop.editors.helix = let
+    inherit (lib.options) mkEnableOption;
+  in {enable = mkEnableOption "post-modern text editor";};
 
   config = mkIf config.modules.desktop.editors.helix.enable {
     hm.programs.helix = {
@@ -12,7 +17,7 @@ in {
       package = pkgs.helix;
 
       languages = [
-        { name = "latex"; }
+        {name = "latex";}
         {
           name = "haskell";
           formatter.command = "stylish-haskell";
@@ -22,7 +27,7 @@ in {
           language-server.command = "nil";
           formatter.command = "nixpkgs-fmt";
         }
-        { name = "rust"; }
+        {name = "rust";}
       ];
 
       settings = {
@@ -62,9 +67,9 @@ in {
         };
 
         keys.normal = {
-          space.l = { f = ":format"; };
-          space.w = { f = ":w"; };
-          space.q = { q = ":q"; };
+          space.l = {f = ":format";};
+          space.w = {f = ":w";};
+          space.q = {q = ":q";};
           space.space = "file_picker";
         };
       };

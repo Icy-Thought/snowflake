@@ -1,6 +1,11 @@
-{ inputs, config, options, lib, pkgs, ... }:
-
-let
+{
+  inputs,
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}: let
   inherit (builtins) pathExists readFile;
   inherit (lib.modules) mkIf;
 
@@ -19,26 +24,29 @@ in {
     };
   };
 
-  imports = let inherit (inputs) kmonad; in [ kmonad.nixosModules.default ];
+  imports = let inherit (inputs) kmonad; in [kmonad.nixosModules.default];
 
   config = mkIf cfg.enable {
     # Allow our user to benefit from KMonad:
-    user.extraGroups = [ "uinput" ];
+    user.extraGroups = ["uinput"];
 
-    services.kmonad =
-      let layoutFile = "${config.snowflake.hostDir}/kmonad/layout.kbd";
-      in {
-        enable = true;
-        keyboards.options = {
-          device = cfg.deviceID;
-          defcfg = {
-            enable = true;
-            fallthrough = true; # when keys /= assigned -> defsrc value
-            allowCommands = false;
-            compose.key = null;
-          };
-          config = if pathExists layoutFile then readFile layoutFile else "";
+    services.kmonad = let
+      layoutFile = "${config.snowflake.hostDir}/kmonad/layout.kbd";
+    in {
+      enable = true;
+      keyboards.options = {
+        device = cfg.deviceID;
+        defcfg = {
+          enable = true;
+          fallthrough = true; # when keys /= assigned -> defsrc value
+          allowCommands = false;
+          compose.key = null;
         };
+        config =
+          if pathExists layoutFile
+          then readFile layoutFile
+          else "";
       };
+    };
   };
 }

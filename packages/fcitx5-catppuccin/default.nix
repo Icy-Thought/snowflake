@@ -1,5 +1,8 @@
-{ lib, stdenv, fetchFromGitHub }:
-
+{
+  lib,
+  stdenv,
+  fetchFromGitHub,
+}:
 stdenv.mkDerivation {
   pname = "fcitx5-catppuccin";
   version = "0.0.1";
@@ -21,7 +24,7 @@ stdenv.mkDerivation {
   meta = with lib; {
     description = "Soothing pastel theme for Fcitx5";
     homepage = "https://github.com/catppuccin/fcitx5";
-    license = with licenses; [ mit ];
-    maintainers = [ ];
+    license = with licenses; [mit];
+    maintainers = [];
   };
 }

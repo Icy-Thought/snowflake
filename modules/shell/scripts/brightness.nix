@@ -1,13 +1,17 @@
-{ options, config, lib, pkgs, ... }:
-
-let
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   inherit (lib.meta) getExe;
   inherit (lib.modules) mkIf;
   inherit (pkgs) python3 writeScriptBin;
 in {
-  options.modules.shell.scripts.brightness =
-    let inherit (lib.options) mkEnableOption;
-    in { enable = mkEnableOption "brightness control"; };
+  options.modules.shell.scripts.brightness = let
+    inherit (lib.options) mkEnableOption;
+  in {enable = mkEnableOption "brightness control";};
 
   config = mkIf config.modules.shell.scripts.brightness.enable {
     # WARNING: won't work unless light -> udev..

@@ -1,6 +1,10 @@
-{ options, config, lib, pkgs, ... }:
-
-let
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   inherit (builtins) toJSON;
   inherit (lib.attrsets) mapAttrsToList;
   inherit (lib.meta) getExe;
@@ -17,7 +21,7 @@ in {
     enable = mkEnableOption "Gecko-based libre browser";
     profileName = mkOpt str config.user.name;
 
-    settings = mkOpt' (attrsOf (oneOf [ bool int str ])) { } ''
+    settings = mkOpt' (attrsOf (oneOf [bool int str])) {} ''
       Firefox preferences set in <filename>user.js</filename>
     '';
     extraConfig = mkOpt' lines "" ''
@@ -30,7 +34,8 @@ in {
 
   config = mkIf cfg.enable (mkMerge [
     {
-      user.packages = let inherit (pkgs) firefox-bin makeDesktopItem;
+      user.packages = let
+        inherit (pkgs) firefox-bin makeDesktopItem;
       in [
         firefox-bin
         (makeDesktopItem {
@@ -39,7 +44,7 @@ in {
           genericName = "Launch a Private Firefox Instance";
           icon = "firefox";
           exec = "${getExe firefox-bin} --private-window";
-          categories = [ "Network" "WebBrowser" ];
+          categories = ["Network" "WebBrowser"];
         })
       ];
 
@@ -114,8 +119,7 @@ in {
         # https://github.com/tlswg/tls13-spec/issues/1001
         "security.tls.enable_0rtt_data" = false;
         # Uses Mozilla geolocation service instead of Google if given permission
-        "geo.provider.network.url" =
-          "https://location.services.mozilla.com/v1/geolocate?key=%MOZILLA_API_KEY%";
+        "geo.provider.network.url" = "https://location.services.mozilla.com/v1/geolocate?key=%MOZILLA_API_KEY%";
         "geo.provider.use_gpsd" = false;
         # https://support.mozilla.org/en-US/kb/extension-recommendations
         "browser.newtabpage.activity-stream.asrouter.userprefs.cfr" = false;
@@ -175,7 +179,8 @@ in {
       };
 
       # Use a stable profile name so we can target it in themes
-      home.file = let cfgPath = ".mozilla/firefox";
+      home.file = let
+        cfgPath = ".mozilla/firefox";
       in {
         firefox-profiles = {
           target = "${cfgPath}/profiles.ini";
@@ -192,32 +197,31 @@ in {
           '';
         };
 
-        user-js = mkIf (cfg.settings != { } || cfg.extraConfig != "") {
+        user-js = mkIf (cfg.settings != {} || cfg.extraConfig != "") {
           target = "${cfgPath}/${cfg.profileName}.default/user.js";
           text = ''
             ${concatStrings (mapAttrsToList (name: value: ''
-              user_pref("${name}", ${toJSON value});
-            '') cfg.settings)}
+                user_pref("${name}", ${toJSON value});
+              '')
+              cfg.settings)}
             ${cfg.extraConfig}
           '';
         };
 
         user-chome = mkIf (cfg.userChrome != "") {
-          target =
-            "${cfgPath}/${cfg.profileName}.default/chrome/userChrome.css";
+          target = "${cfgPath}/${cfg.profileName}.default/chrome/userChrome.css";
           text = cfg.userChrome;
         };
 
         user-content = mkIf (cfg.userContent != "") {
-          target =
-            "${cfgPath}/${cfg.profileName}.default/chrome/userContent.css";
+          target = "${cfgPath}/${cfg.profileName}.default/chrome/userContent.css";
           text = cfg.userContent;
         };
       };
     }
 
     (mkIf (config.modules.desktop.envProto == "wayland") {
-      environment.variables = { MOZ_ENABLE_WAYLAND = "1"; };
+      environment.variables = {MOZ_ENABLE_WAYLAND = "1";};
     })
   ]);
 }

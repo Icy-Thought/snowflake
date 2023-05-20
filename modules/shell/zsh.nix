@@ -1,6 +1,10 @@
-{ config, options, pkgs, lib, ... }:
-
-let
+{
+  config,
+  options,
+  pkgs,
+  lib,
+  ...
+}: let
   inherit (builtins) map;
   inherit (lib) mapAttrsToList mkIf;
   inherit (lib.strings) concatStrings escapeNixString optionalString;
@@ -19,7 +23,7 @@ in {
     hm.programs.starship.enableZshIntegration = true;
 
     # Enable completion for sys-packages:
-    environment.pathsToLink = [ "/share/zsh" ];
+    environment.pathsToLink = ["/share/zsh"];
 
     # Enable nixpkgs suggestions:
     programs.zsh.enable = true;
@@ -70,10 +74,11 @@ in {
         KEYTIMEOUT = "1";
         ZSH_AUTOSUGGEST_USE_ASYNC = true;
         ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE = 40;
-        ZSH_AUTOSUGGEST_STRATEGY = [ "history" "completion" ];
+        ZSH_AUTOSUGGEST_STRATEGY = ["history" "completion"];
       };
 
-      initExtra = let inherit (config.modules.themes) active;
+      initExtra = let
+        inherit (config.modules.themes) active;
       in ''
         # -------===[ Uncategorized ]===------- #
         unsetopt BRACE_CCL                      # Brace character class list expansion.
@@ -117,13 +122,14 @@ in {
 
         # -------===[ Aesthetics ]===------- #
         ${optionalString (active != null)
-        (let inherit (config.modules.themes.colors.main) normal types;
-        in ''
-          export FZF_DEFAULT_OPTS=" \
-          --color=bg:,bg+:${types.bg},spinner:${types.panelbg},hl:${normal.red} \
-          --color=fg:${types.border},header:${normal.red},info:${normal.magenta},pointer:${types.border} \
-          --color=marker:${normal.magenta},fg+:${types.border},prompt:${types.border},hl+:${normal.red}"
-        '')}
+          (let
+            inherit (config.modules.themes.colors.main) normal types;
+          in ''
+            export FZF_DEFAULT_OPTS=" \
+            --color=bg:,bg+:${types.bg},spinner:${types.panelbg},hl:${normal.red} \
+            --color=fg:${types.border},header:${normal.red},info:${normal.magenta},pointer:${types.border} \
+            --color=marker:${normal.magenta},fg+:${types.border},prompt:${types.border},hl+:${normal.red}"
+          '')}
 
         export MANPAGER="sh -c 'col -bx | bat -l man -p'"
         export ZSH_HIGHLIGHT_DIRS_BLACKLIST=(/nix/store)
@@ -158,39 +164,47 @@ in {
           inherit name;
           inherit (pkgs."zsh-${name}") src;
         };
-      in [{
-        name = "zsh-abbr";
-        src = pkgs.fetchFromGitHub {
-          owner = "olets";
-          repo = "zsh-abbr";
-          rev = "v4.9.1";
-          hash = "sha256-pVhhViYa5bsFDp66m2sTrnnzfXvcZw6qqQKWRLDXK/Y=";
-        };
-      }] ++ (map (p: mkPlugin p) [
-        "autopair"
-        "nix-shell"
-        "vi-mode"
-        "you-should-use"
-      ]);
+      in
+        [
+          {
+            name = "zsh-abbr";
+            src = pkgs.fetchFromGitHub {
+              owner = "olets";
+              repo = "zsh-abbr";
+              rev = "v4.9.1";
+              hash = "sha256-pVhhViYa5bsFDp66m2sTrnnzfXvcZw6qqQKWRLDXK/Y=";
+            };
+          }
+        ]
+        ++ (map (p: mkPlugin p) [
+          "autopair"
+          "nix-shell"
+          "vi-mode"
+          "you-should-use"
+        ]);
     };
 
     home.configFile = {
       zsh-abbreviations = {
         target = "zsh/abbreviations";
-        text = let abbrevs = import "${config.snowflake.configDir}/shell-abbr";
+        text = let
+          abbrevs = import "${config.snowflake.configDir}/shell-abbr";
         in ''
           ${concatStrings (mapAttrsToList (k: v: ''
-            abbr ${k}=${escapeNixString v}
-          '') abbrevs)}
+              abbr ${k}=${escapeNixString v}
+            '')
+            abbrevs)}
         '';
       };
 
       #  Reference: https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters/main.md
-      zsh-theme = let inherit (config.modules.themes) active;
-      in mkIf (active != null) {
-        target = "zsh/${active}.zsh";
-        text =
-          let inherit (config.modules.themes.colors.main) bright normal types;
+      zsh-theme = let
+        inherit (config.modules.themes) active;
+      in
+        mkIf (active != null) {
+          target = "zsh/${active}.zsh";
+          text = let
+            inherit (config.modules.themes.colors.main) bright normal types;
           in ''
             # -------===[ Comments ]===------- #
             ZSH_HIGHLIGHT_STYLES[comment]='fg=${normal.black}'
@@ -259,7 +273,7 @@ in {
              # -------===[ Plugins ]===------- #
              # ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=${bright.black},bold,underline"
           '';
-      };
+        };
     };
   };
 }
