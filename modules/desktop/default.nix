@@ -60,8 +60,8 @@ in {
           gucharmap
           hyperfine
           kalker
-          qgnomeplatform
-          ; # Qt -> GTK Theme
+          qgnomeplatform # Qt -> GTK Theme
+          ;
 
         kalker-launcher = pkgs.makeDesktopItem {
           name = "Kalker";
