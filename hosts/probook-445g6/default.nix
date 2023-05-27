@@ -19,7 +19,7 @@
       };
       editors = {
         default = "nvim";
-        neovim.agasaya.enable = true;
+        neovim.enable = true;
       };
       browsers = {
         default = "firefox";

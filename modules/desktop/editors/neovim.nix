@@ -12,16 +12,21 @@
   cfg = config.modules.desktop.editors.neovim;
 in {
   options.modules.desktop.editors.neovim = let
-    inherit (lib.options) mkEnableOption;
-    inherit (lib.types) package;
-    inherit (lib.my) mkOpt;
+    inherit (lib.options) mkEnableOption mkOption mkPackageOption;
+    inherit (lib.types) enum nullOr;
   in {
-    package = mkOpt package pkgs.neovim-nightly;
-    agasaya.enable = mkEnableOption "nvim (lua) config";
-    ereshkigal.enable = mkEnableOption "nvim (lisp) config";
+    enable = mkEnableOption "Spread the joy of neovim in our flake";
+    package = mkPackageOption pkgs "neovim" {
+      default = "neovim-nightly";
+    };
+    template = mkOption {
+      type = nullOr (enum ["agasaya" "ereshkigal"]);
+      default = "agasaya";
+      description = "Which Neovim configuration to setup.";
+    };
   };
 
-  config = mkMerge [
+  config = mkIf cfg.enable (mkMerge [
     {
       nixpkgs.overlays = [inputs.nvim-nightly.overlay];
 
@@ -44,7 +49,7 @@ in {
       env.OPENAI_API_KEY = "$(cat /run/agenix/closedAI)";
     }
 
-    (mkIf cfg.agasaya.enable {
+    (mkIf (cfg.template == "agasaya") {
       modules.develop.lua.enable = true;
 
       home.configFile = {
@@ -85,7 +90,7 @@ in {
       };
     })
 
-    (mkIf cfg.ereshkigal.enable {
+    (mkIf (cfg.template == "ereshkigal") {
       modules.develop.lua.fennel.enable = true;
 
       home.configFile = {
@@ -163,5 +168,5 @@ in {
         };
       };
     })
-  ];
+  ]);
 }

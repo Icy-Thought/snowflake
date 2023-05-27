@@ -17,10 +17,7 @@
     };
     editors = {
       default = "nvim";
-      neovim = {
-        enable = true;
-        agasaya.enable = true;
-      };
+      neovim.enable = true;
     };
     browsers = {
       default = "firefox";

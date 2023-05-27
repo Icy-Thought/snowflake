@@ -86,11 +86,8 @@ in {
         extraPortals = [pkgs.xdg-desktop-portal-gtk];
       };
 
-      # Retain secrets inside Gnome Keyring
+      # Unlock Gnome-keyring + Pass-Manager
       services.gnome.gnome-keyring.enable = true;
-      security.pam.services.login.enableGnomeKeyring = true;
-
-      # GUI for our gnome-keyring:
       programs.seahorse.enable = true;
     }
 

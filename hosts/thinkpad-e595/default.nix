@@ -43,8 +43,8 @@
       };
       editors = {
         default = "nvim";
-        neovim.agasaya.enable = true;
-        emacs.irkalla.enable = true;
+        neovim.enable = true;
+        emacs.enable = true;
       };
       browsers = {
         default = "firefox";
@@ -65,7 +65,10 @@
           music.enable = true;
           video.enable = true;
         };
-        social.base.enable = true;
+        social = {
+          base.enable = true;
+          element.withClient.enable = true;
+        };
         # docView.sioyek.enable = true;
         docView.zathura.enable = true;
       };

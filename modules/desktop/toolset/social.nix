@@ -13,7 +13,8 @@
   envProto = config.modules.desktop.envProto;
 in {
   options.modules.desktop.toolset.social = let
-    inherit (lib.options) mkEnableOption;
+    inherit (lib.options) mkEnableOption mkOption;
+    inherit (lib.types) nullOr enum;
   in {
     base.enable = mkEnableOption "cross-platform clients";
     discord.enable =
@@ -22,18 +23,25 @@ in {
         default = cfg.base.enable;
       };
     element = {
-      withDaemon =
-        mkEnableOption "matrix daemon for ement"
-        // {
-          default = let
-            emacsCfg = config.modules.desktop.editors.emacs;
-          in (emacsCfg.irkalla.enable || emacsCfg.doomemacs.enable);
+      withDaemon = {
+        enable =
+          mkEnableOption "matrix daemon for ement"
+          // {
+            default = config.modules.desktop.editors.emacs.enable && !cfg.element.withClient.enable;
+          };
+      };
+      withClient = {
+        enable =
+          mkEnableOption "element client"
+          // {
+            default = cfg.base.enable && !cfg.element.withDaemon.enable;
+          };
+        package = mkOption {
+          type = nullOr (enum ["element" "fractal"]);
+          default = "fractal";
+          description = "What display protocol to use.";
         };
-      withClient =
-        mkEnableOption "element client"
-        // {
-          default = cfg.base.enable && !cfg.element.withDaemon;
-        };
+      };
     };
   };
 
@@ -42,7 +50,7 @@ in {
       user.packages = attrValues {inherit (pkgs) signal-desktop tdesktop;};
     })
 
-    (mkIf cfg.element.withDaemon {
+    (mkIf cfg.element.withDaemon.enable {
       hm.services.pantalaimon = {
         enable = true;
         settings = {
@@ -59,7 +67,7 @@ in {
       };
     })
 
-    (mkIf cfg.element.withClient {
+    (mkIf cfg.element.withClient.enable {
       user.packages = let
         inherit (pkgs) makeWrapper symlinkJoin element-desktop;
         element-desktop' = symlinkJoin {
@@ -71,7 +79,10 @@ in {
               --add-flags '--profile-dir $XDG_DATA_HOME/Element'
           '';
         };
-      in [element-desktop'];
+      in
+        if (cfg.element.withClient.package == "element")
+        then [element-desktop']
+        else [pkgs.fractal-next];
     })
 
     (mkIf cfg.discord.enable {

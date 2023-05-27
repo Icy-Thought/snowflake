@@ -745,9 +745,9 @@ scratchpads =
         (title =? "Easy Effects")
         nearFullFloat
     , NS
-        "Element"
-        "element-desktop"
-        (className =? "Element")
+        "MatrixClient"
+        "fractal"
+        (className =? "fractal")
         nearFullFloat
     , NS
         "GalaxyBudsClient"
@@ -937,7 +937,7 @@ addKeys conf@XConfig { modMask = modm } =
              -- ScratchPad(s)
            , ((modalt, xK_b), doScratchpad "System Monitor")
            , ((modalt, xK_d), doScratchpad "Discord")
-           , ((modalt, xK_k), doScratchpad "Element")
+           , ((modalt, xK_k), doScratchpad "MatrixClient")
            , ((modalt, xK_e), doScratchpad "Emacs")
            , ((modalt, xK_l), doScratchpad "Telegram")
            , ((modalt, xK_m), doScratchpad "ProtonMail")
