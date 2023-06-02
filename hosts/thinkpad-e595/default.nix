@@ -44,7 +44,10 @@
       editors = {
         default = "nvim";
         neovim.enable = true;
-        emacs.enable = true;
+        emacs = {
+          enable = true;
+          transparency.enable = true;
+        };
       };
       browsers = {
         default = "firefox";

@@ -62,6 +62,7 @@ in {
           kalker
           qgnomeplatform # Qt -> GTK Theme
           ;
+        inherit (pkgs.gnome) seahorse; # Gnome-keyring
 
         kalker-launcher = pkgs.makeDesktopItem {
           name = "Kalker";
@@ -78,17 +79,13 @@ in {
         fonts = attrValues {inherit (pkgs) sarasa-gothic scheherazade-new;};
       };
 
-      # Enabling xserver + x-related settings:
       services.xserver.enable = true;
 
       xdg.portal = {
         enable = true;
         extraPortals = [pkgs.xdg-desktop-portal-gtk];
       };
-
-      # Unlock Gnome-keyring + Pass-Manager
       services.gnome.gnome-keyring.enable = true;
-      programs.seahorse.enable = true;
     }
 
     (mkIf (cfg.envProto == "wayland") {
@@ -99,6 +96,9 @@ in {
     })
 
     (mkIf (cfg.envProto == "x11") {
+      # Unlock Gnome-keyring + Pass-Manager
+      security.pam.services.lightdm.enableGnomeKeyring = true;
+
       services.xserver.displayManager.lightdm = {
         enable = true;
         greeters.mini = {

@@ -62,18 +62,20 @@ main = do
         baseConfig       = defaultSimpleTaffyConfig
             { startWidgets  = [myWorkspaces, myLayout]
             , endWidgets    = baseEndWidgets
+            , centerWidgets = [myClock]
             , barPosition   = Top
             , widgetSpacing = 0
             , barPadding    = 0
             , barHeight     = ScreenRatio (1 / 24)
             , cssPaths      = cssFiles
             }
-        selectedConfig = fromMaybe baseConfig
-            $ lookup hostName
-                [ ("thinkpad-e595", baseConfig { endWidgets = laptopEndWidgets })
-                , ("probook-440g3", baseConfig { endWidgets = laptopEndWidgets })
-                ]
-        simpleTaffyConfig = selectedConfig { centerWidgets = [myClock] }
+        selectedConfig =
+          fromMaybe baseConfig $ lookup hostName
+            [ ("thinkpad-e595", baseConfig { endWidgets = laptopEndWidgets })
+            , ("probook-440g3", baseConfig { endWidgets = laptopEndWidgets })
+            ]
+        simpleTaffyConfig = selectedConfig
+          { centerWidgets = [myClock] }
 
     startTaffybar
         $ appendHook (void $ getTrayHost False)

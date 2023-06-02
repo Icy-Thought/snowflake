@@ -22,19 +22,19 @@ in {
         then "emacsPgtk"
         else "emacsGit";
     };
-    translucent = {
-      enable = mkEnableOption "Appropriate translucence Emacs frame";
+    transparency = {
+      enable = mkEnableOption "Appropriate transparency for our Emacs frame";
       package = mkOption {
         type = package;
         default =
-          if cfg.translucent.enable
+          if cfg.transparency.enable
           then
             cfg.package.override {
               withGTK3 = true;
               withX = true;
             }
           else cfg.package;
-        description = "(temporary) non-sense Emacs solution..";
+        description = "(temporary) non-sensical Emacs solution..";
       };
     };
     template = mkOption {
@@ -114,7 +114,7 @@ in {
     (mkIf (cfg.template == "irkalla") {
       hm.programs.emacs = {
         enable = true;
-        package = cfg.translucent.package;
+        package = cfg.transparency.package;
         extraPackages = epkgs: with epkgs; [jinx pdf-tools vterm];
       };
 
@@ -139,7 +139,7 @@ in {
 
       hm.programs.doom-emacs = {
         enable = true;
-        emacsPackage = cfg.translucent.package;
+        emacsPackage = cfg.transparency.package;
         doomPrivateDir = "${inputs.emacs-dir}/doom-config";
       };
 

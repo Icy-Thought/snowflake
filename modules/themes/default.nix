@@ -384,10 +384,18 @@ in {
         };
       }
 
-      # Change the wallpaper of our lightdm:
+      # Apply theme options -> lightdm-mini-greeter
       (mkIf (cfg.loginWallpaper != null) {
-        services.xserver.displayManager = {
-          lightdm.background = cfg.loginWallpaper;
+        services.xserver.displayManager.lightdm = {
+          background = cfg.loginWallpaper;
+          greeters.mini.extraConfig = let
+            inherit (cfg.colors.main) normal types;
+          in ''
+            text-color = "${types.bg}"
+            password-background-color = "${normal.black}"
+            window-color = "${types.border}"
+            border-color = "${types.border}"
+          '';
         };
       })
 

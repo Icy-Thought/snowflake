@@ -17,9 +17,8 @@ in {
     services.openssh = {
       enable = true;
       settings = {
-        kbdInteractiveAuthentication = false;
+        KbdInteractiveAuthentication = false;
         PasswordAuthentication = false;
-        # startWhenNeeded = true;
       };
 
       hostKeys = [
