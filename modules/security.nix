@@ -3,31 +3,15 @@
   lib,
   ...
 }: {
-  ## System security tweaks
-  # sets hidepid=2 on /proc (make process info visible only to owning user)
-  # NOTE Was removed on nixpkgs-unstable because it doesn't do anything
-  # security.hideProcessInformation = true;
-  # Prevent replacing the running kernel w/o reboot
-  security.protectKernelImage = true;
-
   boot = {
-    tmp = {
-      # tmpfs = /tmp is mounted in ram. Doing so makes temp file management speedy
-      # on ssd systems, and volatile! Because it's wiped on reboot.
-      useTmpfs = lib.mkDefault true;
-      # If not using tmpfs, which is naturally purged on reboot, we must clean it
-      # /tmp ourselves. /tmp should be volatile storage!
-      cleanOnBoot = lib.mkDefault (!config.boot.tmp.useTmpfs);
-    };
+    tmp.useTmpfs = lib.mkDefault true;
+    tmp.cleanOnBoot = lib.mkDefault (!config.boot.tmp.useTmpfs);
 
-    # Fix a security hole in place for backwards compatibility. See desc in
-    # nixpkgs/nixos/modules/system/boot/loader/systemd-boot/systemd-boot.nix
+    # Disable kernel-param editing on boot
     loader.systemd-boot.editor = false;
 
     kernel.sysctl = {
-      # The Magic SysRq key is a key combo that allows users connected to the
-      # system console of a Linux kernel to perform some low-level commands.
-      # Disable it, since we don't need it, and is a potential security concern.
+      # Magic SysRq key -> allows performing low-level commands.
       "kernel.sysrq" = 0;
 
       ## TCP hardening
@@ -56,22 +40,24 @@
       "net.ipv4.tcp_rfc1337" = 1;
 
       ## TCP optimization
-      # TCP Fast Open is a TCP extension that reduces network latency by packing
-      # data in the sender’s initial TCP SYN. Setting 3 = enable TCP Fast Open for
-      # both incoming and outgoing connections:
+      # Enable TCP Fast Open for incoming and outgoing connections
       "net.ipv4.tcp_fastopen" = 3;
       # Bufferbloat mitigations + slight improvement in throughput & latency
       "net.ipv4.tcp_congestion_control" = "bbr";
       "net.core.default_qdisc" = "cake";
     };
-
     kernelModules = ["tcp_bbr"];
   };
 
-  # Change me later!
   user.initialPassword = "nixos";
   users.users.root.initialPassword = "nixos";
 
-  # So we don't have to do this later...
-  security.acme.acceptTerms = true;
+  security = {
+    # Prevent replacing the running kernel w/o reboot
+    protectKernelImage = true;
+    # So we don't have to do this later...
+    acme.acceptTerms = true;
+    # Allows unautherized applications -> send unautherization request
+    polkit.enable = true;
+  };
 }

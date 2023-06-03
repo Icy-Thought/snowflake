@@ -96,8 +96,8 @@ in {
     })
 
     (mkIf (cfg.envProto == "x11") {
-      # Unlock Gnome-keyring + Pass-Manager
       security.pam.services.lightdm.enableGnomeKeyring = true;
+      security.pam.services.lightdm-greeters.enableGnomeKeyring = false;
 
       services.xserver.displayManager.lightdm = {
         enable = true;

@@ -12,14 +12,16 @@
   cfg = config.modules.shell;
 in {
   config = mkIf (cfg.default == "zsh") {
-    modules.shell.usefulPkgs.enable = true;
+    modules.shell = {
+      usefulPkgs.enable = true;
+      toolset = {
+        macchina.enable = true;
+        xplr.enable = true;
+        starship.enable = true;
+      };
+    };
 
-    # Custom shell modules:
-    modules.shell.macchina.enable = true;
-    modules.shell.xplr.enable = true;
-
-    # Enable starship-rs:
-    modules.shell.starship.enable = true;
+    # Enable starship-rs ZSH integration
     hm.programs.starship.enableZshIntegration = true;
 
     # Enable completion for sys-packages:

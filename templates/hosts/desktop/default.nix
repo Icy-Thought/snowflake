@@ -36,9 +36,11 @@
   };
 
   modules.shell = {
-    git.enable = true;
     zsh.enable = true;
-    gnupg.enable = true;
+    toolset = {
+      git.enable = true;
+      gnupg.enable = true;
+    };
   };
 
   ## Local config

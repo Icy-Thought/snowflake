@@ -33,8 +33,10 @@
 
     shell = {
       default = "fish";
-      git.enable = true;
-      gnupg.enable = true;
+      toolset = {
+        git.enable = true;
+        gnupg.enable = true;
+      };
     };
   };
 }

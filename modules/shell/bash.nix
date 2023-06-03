@@ -12,8 +12,8 @@ in {
   in {enable = mkEnableOption "bash shell" // {default = true;};};
 
   config = mkIf config.modules.shell.bash.enable {
-    # Enable starship-rs:
-    modules.shell.starship.enable = true;
+    # Enable starship-rs + ZSH integration
+    modules.shell.toolset.starship.enable = true;
     hm.programs.starship.enableBashIntegration = true;
 
     hm.programs.bash = {

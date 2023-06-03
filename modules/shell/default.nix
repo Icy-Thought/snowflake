@@ -27,7 +27,7 @@ in {
     })
 
     (mkIf cfg.usefulPkgs.enable {
-      modules.shell.btop.enable = true;
+      modules.shell.toolset.btop.enable = true;
 
       hm.programs.direnv = {
         enable = true;

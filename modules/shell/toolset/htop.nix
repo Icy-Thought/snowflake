@@ -7,11 +7,11 @@
 }: let
   inherit (lib.modules) mkIf;
 in {
-  options.modules.shell.htop = let
+  options.modules.shell.toolset.htop = let
     inherit (lib.options) mkEnableOption;
   in {enable = mkEnableOption "system monitor";};
 
-  config = mkIf config.modules.shell.htop.enable {
+  config = mkIf config.modules.shell.toolset.htop.enable {
     hm.programs.htop = {
       enable = true;
 

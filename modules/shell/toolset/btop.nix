@@ -8,11 +8,11 @@
   inherit (lib.modules) mkIf;
   inherit (lib.strings) concatStringsSep;
 in {
-  options.modules.shell.btop = let
+  options.modules.shell.toolset.btop = let
     inherit (lib.options) mkEnableOption;
   in {enable = mkEnableOption "system-monitor";};
 
-  config = mkIf config.modules.shell.btop.enable {
+  config = mkIf config.modules.shell.toolset.btop.enable {
     hm.programs.btop = let
       inherit (config.modules.themes) active;
     in {

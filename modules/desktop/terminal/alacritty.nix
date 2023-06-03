@@ -16,8 +16,7 @@ in {
   in {enable = mkEnableOption "OpenGL terminal emulator";};
 
   config = mkIf config.modules.desktop.terminal.alacritty.enable {
-    # Enabling useful/configured term-tools:
-    modules.shell.tmux.enable = true;
+    modules.shell.toolset.tmux.enable = true;
 
     hm.programs.alacritty = {
       enable = true;

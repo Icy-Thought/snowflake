@@ -7,11 +7,11 @@
 }: let
   inherit (lib.modules) mkIf;
 in {
-  options.modules.shell.tmux = let
+  options.modules.shell.toolset.tmux = let
     inherit (lib.options) mkEnableOption;
   in {enable = mkEnableOption "terminal multiplexer";};
 
-  config = mkIf config.modules.shell.tmux.enable {
+  config = mkIf config.modules.shell.toolset.tmux.enable {
     hm.programs.tmux = {
       enable = true;
       secureSocket = true;

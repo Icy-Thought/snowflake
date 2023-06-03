@@ -9,14 +9,16 @@
   inherit (lib) mkIf getExe;
 in {
   config = mkIf (config.modules.shell.default == "fish") {
-    modules.shell.usefulPkgs.enable = true;
+    modules.shell = {
+      usefulPkgs.enable = true;
+      toolset = {
+        macchina.enable = true;
+        xplr.enable = true;
+        starship.enable = true;
+      };
+    };
 
-    # Custom shell modules:
-    modules.shell.macchina.enable = true;
-    modules.shell.xplr.enable = true;
-
-    # Enable starship-rs:
-    modules.shell.starship.enable = true;
+    # Enable starship-rs ZSH integration
     hm.programs.starship.enableFishIntegration = true;
 
     # Enables vendor completion: https://nixos.wiki/wiki/Fish

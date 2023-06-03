@@ -19,8 +19,8 @@ in {
     package = mkPackageOption pkgs "emacs" {
       default =
         if (envProto == "wayland")
-        then "emacsPgtk"
-        else "emacsGit";
+        then "emacs-pgtk"
+        else "emacs-git";
     };
     transparency = {
       enable = mkEnableOption "Appropriate transparency for our Emacs frame";
@@ -73,23 +73,20 @@ in {
            fi
         }
 
-        # Content != screen -> eradicated!
-        if [[ "$INSIDE_EMACS" = 'vterm' ]]; then
-            alias clear='vterm_printf "51;Evterm-clear-scrollback";tput clear'
-        fi
-
         # -------===[ Useful Functions ]===------- #
         emc()      { pgrep emacs && emacsclient -n "$@" || emacs -nw "$@" }
         emc-diff() { emacs -nw --eval "(ediff-files \"$1\" \"$2\")"; }
-        emc-man()  { emacs -nw --eval "(switch-to-buffer (man \"$1\"))"; }
         emc-kill() { emacsclient --eval '(kill-emacs)'; }
+        emc-man()  { emacs -nw --eval "(switch-to-buffer (man \"$1\"))"; }
       '';
 
       hm.programs.fish = {
         # Easier frame creation (fish)
         functions = {
-          eg = "emacs --create-frame $argv & disown";
-          ecg = "emacsclient --create-frame $argv & disown";
+          emc = "pgrep emacs && emacsclient -n $argv || emacs -nw $argv";
+          emc-diff = "emacs -nw --eval \"(ediff-files '$argv[1]' '$argv[2]')\"";
+          emc-kill = "emacsclient --eval '(kill-emacs)'";
+          emc-man = "emacs -nw --eval \"(switch-to-buffer (man '$argv[1]'))\"";
         };
 
         # Allow fish-shell to send information to vterm via properly escaped sequences.
@@ -115,7 +112,10 @@ in {
       hm.programs.emacs = {
         enable = true;
         package = cfg.transparency.package;
-        extraPackages = epkgs: with epkgs; [jinx pdf-tools vterm];
+        extraPackages = epkgs:
+          attrValues {
+            inherit (epkgs.melpaPackages) jinx pdf-tools vterm;
+          };
       };
 
       home.configFile = {

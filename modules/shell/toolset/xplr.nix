@@ -7,9 +7,10 @@
 }: let
   inherit (lib.modules) mkIf;
   inherit (lib.strings) optionalString;
-  cfg = config.modules.shell.xplr;
+
+  cfg = config.modules.shell.toolset.xplr;
 in {
-  options.modules.shell.xplr = let
+  options.modules.shell.toolset.xplr = let
     inherit (lib.options) mkEnableOption;
   in {
     enable = mkEnableOption "TUI file-explorer";

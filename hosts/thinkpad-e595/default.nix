@@ -9,9 +9,11 @@
   modules = {
     shell = {
       default = "zsh";
-      git.enable = true;
-      gnupg.enable = true;
-      android.enable = true;
+      toolset = {
+        git.enable = true;
+        gnupg.enable = true;
+        android.enable = true;
+      };
     };
     networking = {
       networkManager.enable = true;

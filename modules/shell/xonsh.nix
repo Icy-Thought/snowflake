@@ -63,12 +63,14 @@
   ];
 in {
   config = mkIf (config.modules.shell.default == "xonsh") {
-    modules.shell.usefulPkgs.enable = true;
-
-    # Custom shell modules:
-    modules.shell.macchina.enable = true;
-    modules.shell.xplr.enable = true;
-    modules.shell.starship.enable = true;
+    modules.shell = {
+      usefulPkgs.enable = true;
+      toolset = {
+        macchina.enable = true;
+        xplr.enable = true;
+        starship.enable = true;
+      };
+    };
 
     programs.xonsh = {
       enable = true;
