@@ -19,6 +19,11 @@ in {
   };
 
   config = mkMerge [
+    {
+      # General networking settings we want available
+      networking.firewall.enable = true;
+    }
+
     (mkIf cfg.iwd.enable {
       networking.wireless.iwd = {
         enable = true;

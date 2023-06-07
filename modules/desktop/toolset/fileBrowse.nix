@@ -28,6 +28,7 @@ in {
         }
         // optionalAttrs (cfg.nautilus.enable) {
           inherit (pkgs.gnome) nautilus;
+          inherit (pkgs) nautilus-open-any-terminal;
         }
         // optionalAttrs (cfg.thunar.enable) {
           inherit

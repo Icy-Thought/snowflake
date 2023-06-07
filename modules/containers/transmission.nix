@@ -75,7 +75,6 @@ in {
       };
 
       networking.firewall = {
-        enable = true;
         allowedTCPPorts = [9091 51413];
         allowedUDPPorts = [51413];
       };

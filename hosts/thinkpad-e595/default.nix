@@ -18,7 +18,7 @@
     networking = {
       networkManager.enable = true;
       mullvad.enable = true;
-      # borsippaNET.enable = true;
+      # samba.sharing.enable = true;
     };
     services = {ssh.enable = true;};
     containers.transmission = {
