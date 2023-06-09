@@ -20,7 +20,12 @@ in {
   };
 
   config = mkMerge [
-    (mkIf (cfg.default != null) {env.EDITOR = cfg.default;})
+    (mkIf (cfg.default != null) {
+      env = {
+        EDITOR = cfg.default;
+        OPENAI_API_KEY = "$(cat /run/agenix/closedAI)";
+      };
+    })
 
     (mkIf (cfg.default == "nvim" || cfg.default == "emacs") {
       user.packages = attrValues {

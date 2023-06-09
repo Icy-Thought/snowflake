@@ -114,7 +114,7 @@ in {
         package = cfg.transparency.package;
         extraPackages = epkgs:
           attrValues {
-            inherit (epkgs.melpaPackages) jinx pdf-tools vterm;
+            inherit (epkgs) jinx pdf-tools vterm;
           };
       };
 
