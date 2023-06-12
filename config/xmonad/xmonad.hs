@@ -769,6 +769,7 @@ runScratchPadManageHookOnCurrent =
 
 scratchPadIsDisplayed name = join $ withFocusedD False query
   where
+    -- :NOTE| ~[]~ because of ~X [NamedScratchpad]~
     scratchpadInfo = find ((name ==) . NS.name) []
     query = maybe (const $ return False) (runQuery . NS.query) scratchpadInfo
 
