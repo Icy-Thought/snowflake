@@ -84,7 +84,7 @@ groups.append(
         [
             DropDown(
                 "SysMon",
-                "wezterm start --always-new-process -- -t 'System Monitor' btop",
+                "alacritty --class 'system-monitor' -e btop",
                 **next_maximum,
             ),
             DropDown(

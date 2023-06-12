@@ -7,7 +7,6 @@ let
     tmc = "emacsclient -t";
     usbStat = "watch rg -e Dirty: -e Writeback: /proc/meminfo";
     wget = "curl -O";
-    imgcat = "wezterm imgcat";
 
     # Nix
     nb = "nix-build -E 'with import <nixpkgs> {}; callPackage ./. {}'";

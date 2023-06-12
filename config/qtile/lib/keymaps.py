@@ -6,7 +6,7 @@ from libqtile.config import EzClick, EzDrag, EzKey
 HOME = os.path.expanduser("~")
 
 # Default applications
-myTerm = "wezterm"
+myTerm = "alacritty"
 myBrowser = "firefox"
 myPrivateBrowser = (
     myBrowser,
@@ -102,13 +102,13 @@ mediactl = [
     EzKey("M-<Left>", lazy.spawn("playerctl previous")),
 ]
 
-scrcapy = [
-    EzKey("<Print>", lazy.spawn("scrcapy system --workspace")),
-    EzKey("C-<Print>", lazy.spawn("scrcapy clipboard --workspace")),
-    EzKey("A-<Print>", lazy.spawn("scrcapy system --active-window")),
-    EzKey("C-A-<Print>", lazy.spawn("scrcapy clipboard --active-window")),
-    EzKey("S-<Print>", lazy.spawn("scrcapy system --selection")),
-    EzKey("C-S-<Print>", lazy.spawn("scrcapy clipboard --selection")),
+captScr = [
+    EzKey("<Print>", lazy.spawn("captScr system --workspace")),
+    EzKey("C-<Print>", lazy.spawn("captScr clipboard --workspace")),
+    EzKey("A-<Print>", lazy.spawn("captScr system --active-window")),
+    EzKey("C-A-<Print>", lazy.spawn("captScr clipboard --active-window")),
+    EzKey("S-<Print>", lazy.spawn("captScr system --selection")),
+    EzKey("C-S-<Print>", lazy.spawn("captScr clipboard --selection")),
 ]
 
 brightctl = [
@@ -117,7 +117,7 @@ brightctl = [
 ]
 
 quick_launch = [
-    EzKey("<XF86Calculator>", lazy.spawn(myTerm, "start --always-new-process kalker")),
+    EzKey("<XF86Calculator>", lazy.spawn(myTerm, "-e kalker")),
 ]
 
 keys = [
@@ -130,7 +130,7 @@ keys = [
     *application_spawns,
     *audioctl,
     *mediactl,
-    *scrcapy,
+    *captScr,
     *brightctl,
     *quick_launch,
 ]
