@@ -25,7 +25,10 @@ in {
   config = mkIf cfg.enable {
     modules.desktop = {
       envProto = cfg.backend;
-      toolset.fileBrowse = {nautilus.enable = true;};
+      toolset.fileManager = {
+        enable = true;
+        program = "nautilus";
+      };
       extensions = {
         fcitx5.enable = true;
         mimeApps.enable = true; # mimeApps -> default launch application

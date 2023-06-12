@@ -10,17 +10,27 @@
   inherit (lib.modules) mkIf mkMerge;
   inherit (lib.strings) concatStringsSep;
 
-  cfg = config.modules.desktop.toolset.docView;
+  cfg = config.modules.desktop.toolset.docViewer;
 in {
-  options.modules.desktop.toolset.docView = let
-    inherit (lib.options) mkEnableOption;
+  options.modules.desktop.toolset.docViewer = let
+    inherit (lib.options) mkEnableOption mkOption;
+    inherit (lib.types) nullOr enum;
   in {
-    zathura.enable = mkEnableOption "plugin-based doc-viewer";
-    sioyek.enable = mkEnableOption "doc-viewer for research";
+    enable = mkEnableOption "A document-viewer for our desktop";
+    program = mkOption {
+      type = nullOr (enum ["sioyek" "zathura"]);
+      default = "zathura";
+      description = "which document viewer to install";
+    };
   };
 
   config = mkMerge [
-    (mkIf cfg.zathura.enable {
+    {
+      # :NOTE| Notify system about our document viewer
+      modules.desktop.extensions.mimeApps.defApps.docViewer = cfg.program;
+    }
+
+    (mkIf (cfg.program == "zathura") {
       hm.programs.zathura = {
         enable = true;
         options = let
@@ -75,7 +85,7 @@ in {
       };
     })
 
-    (mkIf cfg.sioyek.enable {
+    (mkIf (cfg.program == "sioyek") {
       hm.programs.sioyek = {
         enable = true;
         package = pkgs.sioyek;

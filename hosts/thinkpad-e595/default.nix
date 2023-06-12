@@ -75,7 +75,10 @@
           element.withClient.enable = true;
         };
         # docView.sioyek.enable = true;
-        docView.zathura.enable = true;
+        docViewer = {
+          enable = true;
+          program = "zathura";
+        };
       };
     };
   };

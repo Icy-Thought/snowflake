@@ -8,29 +8,36 @@
   inherit (lib.attrsets) attrValues optionalAttrs;
   inherit (lib.modules) mkIf mkMerge;
 
-  cfg = config.modules.desktop.toolset.fileBrowse;
+  cfg = config.modules.desktop.toolset.fileManager;
 in {
-  options.modules.desktop.toolset.fileBrowse = let
-    inherit (lib.options) mkEnableOption;
+  options.modules.desktop.toolset.fileManager = let
+    inherit (lib.options) mkEnableOption mkOption;
+    inherit (lib.types) nullOr enum;
   in {
-    dolphin.enable = mkEnableOption "KDE Plasma file-manager";
-    nautilus.enable = mkEnableOption "Gnome file-manager";
-    thunar.enable = mkEnableOption "GTK+ file-manager";
+    enable = mkEnableOption "A file-browser for our desktop";
+    program = mkOption {
+      type = nullOr (enum ["dolphin" "nautilus" "thunar"]);
+      default = "nautilus";
+      description = "which file-browser to install";
+    };
   };
 
   config = mkMerge [
     {
+      # :NOTE| Notify system about our file-browser
+      modules.desktop.extensions.mimeApps.defApps.fileBrowser = cfg.program;
+
       services.gvfs.enable = true;
 
       environment.systemPackages = attrValues ({}
-        // optionalAttrs (cfg.dolphin.enable) {
+        // optionalAttrs (cfg.program == "dolphin") {
           inherit (pkgs) dolphin dolphin-plugins;
         }
-        // optionalAttrs (cfg.nautilus.enable) {
+        // optionalAttrs (cfg.program == "nautilus") {
           inherit (pkgs.gnome) nautilus;
           inherit (pkgs) nautilus-open-any-terminal;
         }
-        // optionalAttrs (cfg.thunar.enable) {
+        // optionalAttrs (cfg.program == "thunar") {
           inherit
             (pkgs.xfce)
             thunar
@@ -41,7 +48,7 @@ in {
         });
     }
 
-    (mkIf cfg.thunar.enable {
+    (mkIf (cfg.program == "thunar") {
       services.tumbler.enable = true;
 
       home.configFile = {
@@ -49,11 +56,11 @@ in {
           <?xml version="1.0" encoding="UTF-8"?>
           <actions>
           <action>
-                  <icon>kitty</icon>
-                  <name>Launch Kitty Here</name>
+                  <icon>alacritty</icon>
+                  <name>Launch Alacritty Here</name>
                   <unique-id>1653079815094995-1</unique-id>
-                  <command>kitty --working-directory %f</command>
-                  <description>Example for a custom action</description>
+                  <command>alacritty --working-directory %f</command>
+                  <description>Launch alacritty in current directory</description>
                   <patterns>*</patterns>
                   <startup-notify/>
                   <directories/>

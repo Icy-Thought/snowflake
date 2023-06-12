@@ -12,12 +12,15 @@
 in {
   options.modules.desktop.xmonad = let
     inherit (lib.options) mkEnableOption;
-  in {enable = mkEnableOption "haskell (superior) WM";};
+  in {enable = mkEnableOption "Haskell-based (functional) window manager";};
 
   config = mkIf config.modules.desktop.xmonad.enable {
     modules.desktop = {
       envProto = "x11";
-      toolset.fileBrowse = {nautilus.enable = true;};
+      toolset.fileManager = {
+        enable = true;
+        program = "thunar";
+      };
       extensions = {
         fcitx5.enable = true;
         mimeApps.enable = true; # mimeApps -> default launch application

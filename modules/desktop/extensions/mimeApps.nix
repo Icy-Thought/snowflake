@@ -14,7 +14,20 @@
 in {
   options.modules.desktop.extensions.mimeApps = let
     inherit (lib.options) mkEnableOption;
-  in {enable = mkEnableOption "default applications";};
+    inherit (lib.types) str;
+    inherit (lib.my) mkOpt;
+  in {
+    enable = mkEnableOption "default system applications";
+    defApps = {
+      docViewer = mkOpt str "org.pwmt.zathura.desktop";
+      editor = mkOpt str "emacsclient.desktop";
+      fileBrowser = mkOpt str "org.gnome.Nautilus.desktop";
+      imageViewer = mkOpt str "feh.desktop";
+      mediaPlayer = mkOpt str "mpv.desktop";
+      torrentCli = mkOpt str "transmission-gtk.desktop";
+      webBrowser = mkOpt str "firefox.desktop";
+    };
+  };
 
   config = mkIf cfg.enable {
     home.configFile."mimeapps.list".force = true;
@@ -22,19 +35,20 @@ in {
     hm.xdg.mimeApps = {
       enable = true;
       defaultApplications = let
-        defaultApps = {
-          audio = ["mpv.desktop"];
-          browser = ["firefox.desktop"];
-          # calendar = [ "org.gnome.Calendar.desktop" ];
-          compression = ["org.gnome.Nautilus.desktop"];
-          directory = ["org.gnome.Nautilus.desktop"];
-          image = ["feh.desktop"];
-          magnet = ["transmission-gtk.desktop"];
-          mail = ["firefox.desktop"]; # [ "org.gnome.Geary.desktop" ];
-          pdf = ["org.pwmt.zathura.desktop"];
-          text = ["neovide.desktop"];
+        defaultApps = let
+          inherit (cfg.defApps) docViewer editor fileBrowser imageViewer mediaPlayer torrentCli webBrowser;
+        in {
+          audio = [mediaPlayer];
+          browser = [webBrowser];
+          compression = [fileBrowser];
+          directory = [fileBrowser];
+          image = [imageViewer];
+          magnet = [torrentCli];
+          mail = [editor];
+          pdf = [docViewer];
+          text = [editor];
           telegram = ["telegramdesktop.desktop"];
-          video = ["mpv.desktop"];
+          video = [mediaPlayer];
         };
         mimeMap = {
           audio = [

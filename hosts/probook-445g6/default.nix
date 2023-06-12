@@ -27,7 +27,10 @@
       };
       toolset = {
         player.video.enable = true;
-        docView.zathura.enable = true;
+        docViewer = {
+          enable = true;
+          program = "zathura";
+        };
       };
     };
 

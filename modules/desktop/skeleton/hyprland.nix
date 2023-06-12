@@ -17,7 +17,10 @@ in {
   config = mkIf config.modules.desktop.hyprland.enable {
     modules.desktop = {
       envProto = "wayland";
-      toolset.fileBrowse = {nautilus.enable = true;};
+      toolset.fileManager = {
+        enable = true;
+        program = "nautilus";
+      };
       extensions = {
         fcitx5.enable = true;
         mimeApps.enable = true; # mimeApps -> default launch application

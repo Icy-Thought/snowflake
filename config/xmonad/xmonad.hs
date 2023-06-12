@@ -745,7 +745,7 @@ myScratchpads = do
        , NS "EasyEffects"        "easyeffects"        (title     =? "Easy Effects")     nearFullFloat
        , NS "Emacs"              "emacsclient -c"     (className =? "Emacs")            nearFullFloat
        , NS "Mail"               mailSession          (appName   =? mailInst)           nearFullFloat
-       , NS "MatrixClient"       "fractal"            (className =? "fractal")          nearFullFloat
+       , NS "Matrix"             "fractal"            (className =? "fractal")          nearFullFloat
        , NS "Spotify"            "spotify"            (className =? "Spotify")          nearFullFloat
        , NS "System Monitor"     btopLaunch           (appName   =? sysMonClass)        nearFullFloat
        , NS "Telegram"           "telegram-desktop"   (className =? "TelegramDesktop")  nearFullFloat
@@ -904,7 +904,7 @@ addKeys conf@XConfig { modMask = modm } =
          -- ScratchPad(s)
        , ((modalt, xK_b), doScratchpad "System Monitor")
        , ((modalt, xK_d), doScratchpad "Discord")
-       , ((modalt, xK_k), doScratchpad "MatrixClient")
+       , ((modalt, xK_k), doScratchpad "Matrix")
        , ((modalt, xK_e), doScratchpad "Emacs")
        , ((modalt, xK_l), doScratchpad "Telegram")
        , ((modalt, xK_m), doScratchpad "mailSession")
