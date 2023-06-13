@@ -767,11 +767,12 @@ runScratchPadManageHookOnCurrent =
   join (withFocusedD (Endo id) $ runQuery myScratchPadManageHook)
     >>= windows . appEndo
 
-scratchPadIsDisplayed name = join $ withFocusedD False query
+scratchPadIsDisplayed :: String -> X Bool
+scratchPadIsDisplayed name = join $ withFocusedD False =<< query
   where
     -- :NOTE| ~[]~ because of ~X [NamedScratchpad]~
-    scratchpadInfo = find ((name ==) . NS.name) []
-    query = maybe (const $ return False) (runQuery . NS.query) scratchpadInfo
+    scratchpadInfo = find ((name ==) . NS.name) <$> myScratchpads
+    query = maybe (const $ return False) (runQuery . NS.query) <$> scratchpadInfo
 
 manageIfScratchPadIsDisplayed name =
   scratchPadIsDisplayed name >>= (`when` runScratchPadManageHookOnCurrent)
