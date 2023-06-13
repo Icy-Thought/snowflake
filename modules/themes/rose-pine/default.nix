@@ -14,7 +14,7 @@ in {
   config = mkIf (cfg.active == "rose-pine") (mkMerge [
     {
       modules.themes = {
-        wallpaper = mkDefault ./assets/loaki-solarpunk.jpg;
+        wallpaper = mkDefault ./assets/oceanlife-turtle.jpg;
         gtk = {
           name = "rose-pine";
           package = pkgs.my.rose-pine-gtk;
