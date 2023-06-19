@@ -22,19 +22,19 @@ in {
       // {
         default = cfg.base.enable;
       };
-    element = {
+    matrix = {
       withDaemon = {
         enable =
-          mkEnableOption "matrix daemon for ement"
+          mkEnableOption "matrix daemon for ement.el"
           // {
-            default = config.modules.desktop.editors.emacs.enable && !cfg.element.withClient.enable;
+            default = config.modules.desktop.editors.emacs.enable && !cfg.matrix.withClient.enable;
           };
       };
       withClient = {
         enable =
-          mkEnableOption "element client"
+          mkEnableOption "rust-based matrix client"
           // {
-            default = cfg.base.enable && !cfg.element.withDaemon.enable;
+            default = cfg.base.enable && !cfg.matrix.withDaemon.enable;
           };
         package = mkOption {
           type = nullOr (enum ["element" "fractal"]);
@@ -50,7 +50,7 @@ in {
       user.packages = attrValues {inherit (pkgs) signal-desktop tdesktop;};
     })
 
-    (mkIf cfg.element.withDaemon.enable {
+    (mkIf cfg.matrix.withDaemon.enable {
       hm.services.pantalaimon = {
         enable = true;
         settings = {
@@ -67,7 +67,7 @@ in {
       };
     })
 
-    (mkIf cfg.element.withClient.enable {
+    (mkIf cfg.matrix.withClient.enable {
       user.packages = let
         inherit (pkgs) makeWrapper symlinkJoin element-desktop;
         element-desktop' = symlinkJoin {

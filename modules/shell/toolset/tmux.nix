@@ -71,26 +71,6 @@ in {
         set-option -g visual-activity off
         set-window-option -g monitor-activity off
 
-        # -------===[ Keybindings ]===------- #
-        # Window Control(s):
-        bind-key q kill-session
-        bind-key Q kill-server
-        bind-key c new-window -c '#{pane_current_path}'
-
-        # Buffers:
-        bind-key b list-buffers
-        bind-key p paste-buffer
-        bind-key P choose-buffer
-
-        # Split bindings:
-        bind-key - split-window -v -c '#{pane_current_path}'
-        bind-key / split-window -h -c '#{pane_current_path}'
-
-        # Copy/Paste bindings:
-        bind-key -T copy-mode-vi v send-keys -X begin-selection     -N "Start visual mode for selection"
-        bind-key -T copy-mode-vi y send-keys -X copy-selection      -N "Yank text into buffer"
-        bind-key -T copy-mode-vi r send-keys -X rectangle-toggle    -N "Yank region into buffer"
-
         # -------===[ Status-Bar ]===------- #
         set-option -g status on
         set-option -g status-interval 1
@@ -122,6 +102,28 @@ in {
         # -------===[ Clock & Selection ]===------- #
         set-window-option -g clock-mode-colour "${types.border}"
         set-window-option -g mode-style "fg=${types.bg} bg=${types.highlight} bold"
+
+        # -------===[ Keybindings ]===------- #
+        bind-key c clock-mode
+
+        # Window Control(s):
+        bind-key q kill-session
+        bind-key Q kill-server
+        bind-key t new-window -c '#{pane_current_path}'
+
+        # Buffers:
+        bind-key b list-buffers
+        bind-key p paste-buffer
+        bind-key P choose-buffer
+
+        # Split bindings:
+        bind-key - split-window -v -c '#{pane_current_path}'
+        bind-key / split-window -h -c '#{pane_current_path}'
+
+        # Copy/Paste bindings:
+        bind-key -T copy-mode-vi v send-keys -X begin-selection     -N "Start visual mode for selection"
+        bind-key -T copy-mode-vi y send-keys -X copy-selection      -N "Yank text into buffer"
+        bind-key -T copy-mode-vi r send-keys -X rectangle-toggle    -N "Yank region into buffer"
       '';
     };
   };

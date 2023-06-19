@@ -115,21 +115,41 @@ in {
         extraPackages = epkgs:
           attrValues {
             inherit (epkgs) jinx pdf-tools vterm;
+            treesitter-grammars = epkgs.treesit-grammars.with-grammars (grammars:
+              with grammars; [
+                tree-sitter-bash
+                tree-sitter-elisp
+                tree-sitter-nix
+                tree-sitter-json
+                tree-sitter-fish
+                tree-sitter-latex
+                # tree-sitter-ledger
+                tree-sitter-haskell
+                tree-sitter-markdown-inline
+                tree-sitter-rust
+                tree-sitter-toml
+                tree-sitter-typescript
+                tree-sitter-yaml
+              ]);
           };
       };
 
       home.configFile = {
-        irkalla-init = {
-          target = "emacs/init.el";
-          source = "${inputs.emacs-dir}/irkalla/init.el";
-        };
-        irkalla-early-init = {
-          target = "emacs/early-init.el";
-          source = "${inputs.emacs-dir}/irkalla/early-init.el";
-        };
         irkalla-dasHead = {
           target = "emacs/dasHead.svg";
           source = "${inputs.emacs-dir}/irkalla/dasHead.svg";
+        };
+        irkalla-init = {
+          source = "${inputs.emacs-dir}/irkalla/config.org";
+          target = "emacs/config.org";
+          onChange = let
+            initFiles = "${config.hm.xdg.configHome}/emacs/config.org";
+          in ''
+            ${cfg.transparency.package}/bin/emacs --batch \
+              --eval "(require 'ob-tangle)" \
+              --eval "(setq org-confirm-babel-evaluate nil)" \
+              --eval '(org-babel-tangle-file "${initFiles}")'
+          '';
         };
       };
     })

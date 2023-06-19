@@ -20,7 +20,7 @@ in {
       user.packages = attrValues {
         inherit (pkgs) texlab;
         tex = pkgs.texlive.combine {
-          # FIXME: completely replace with typst
+          # :FIXME| completely replace with typst
           inherit
             (pkgs.texlive)
             scheme-basic
@@ -35,12 +35,12 @@ in {
             koma-script
             greek-inputenc
             trimspaces
-            # Mathematics
+            # :NOTE| Mathematics-related
             
             amsmath
             cancel
             mathtools
-            # Graphics
+            # :NOTE| Graphics-related
             
             parskip
             pgf
