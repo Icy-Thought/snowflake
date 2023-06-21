@@ -741,16 +741,11 @@ myScratchpads = do
     inEditor >-> setFrameName mailInst
              >-> eval (elispFun "notmuch")
 
-  -- | Creating a binding for our ement.el
-  matrixClient <- getInput $
-    inEditor >-> setFrameName matrixInst
-             >-> eval (elispFun "irkalla/ement-auto-connect")
-
   pure [ NS "Discord"            "discordcanary"      (className =? "discord")          nearFullFloat
        , NS "EasyEffects"        "easyeffects"        (title     =? "Easy Effects")     nearFullFloat
        , NS "Emacs"              "emacsclient -c"     (className =? "Emacs")            nearFullFloat
        , NS "Mail"               mailSession          (appName   =? mailInst)           nearFullFloat
-       , NS "Matrix"             matrixClient         (className =? matrixInst)         nearFullFloat
+       , NS "Matrix"             "element-desktop"    (className =? "Element")          nearFullFloat
        , NS "Spotify"            "spotify"            (className =? "Spotify")          nearFullFloat
        , NS "System Monitor"     btopLaunch           (appName   =? sysMonClass)        nearFullFloat
        , NS "Telegram"           "telegram-desktop"   (className =? "TelegramDesktop")  nearFullFloat
@@ -758,7 +753,6 @@ myScratchpads = do
        ]
   where
     mailInst    = "notmuch-scratch"
-    matrixInst  = "matrix-client"
     sysMonClass = "system-monitor"
     nearFullFloat = customFloating $ W.RationalRect 0.02 0.02 0.95 0.95
 

@@ -38,7 +38,7 @@ in {
           };
         package = mkOption {
           type = nullOr (enum ["element" "fractal"]);
-          default = "fractal";
+          default = "element";
           description = "What display protocol to use.";
         };
       };
@@ -60,8 +60,10 @@ in {
           };
           local-matrix = {
             Homeserver = "https://matrix.org";
-            ListenAddress = "127.0.0.1";
+            ListenAddress = "localhost";
             ListenPort = 8009;
+            IgnoreVerification = false;
+            UseKeyring = false;
           };
         };
       };
@@ -80,7 +82,7 @@ in {
           '';
         };
       in
-        if (cfg.element.withClient.package == "element")
+        if (cfg.matrix.withClient.package == "element")
         then [element-desktop']
         else [pkgs.fractal-next];
     })

@@ -72,7 +72,7 @@
         };
         social = {
           base.enable = true;
-          matrix.withDaemon.enable = true;
+          matrix.withClient.enable = true;
         };
         # docView.sioyek.enable = true;
         docViewer = {
