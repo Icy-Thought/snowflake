@@ -135,15 +135,16 @@ in {
       };
 
       home.configFile = {
-        irkalla-dasHead = {
-          target = "emacs/dasHead.svg";
-          source = "${inputs.emacs-dir}/irkalla/dasHead.svg";
+        irkalla-conf = {
+          target = "emacs/";
+          source = "${inputs.emacs-dir}/irkalla/config";
+          recursive = true;
         };
         irkalla-init = {
-          source = "${inputs.emacs-dir}/irkalla/config.org";
-          target = "emacs/config.org";
+          source = "${inputs.emacs-dir}/irkalla/init.org";
+          target = "emacs/init.org";
           onChange = let
-            initFiles = "${config.hm.xdg.configHome}/emacs/config.org";
+            initFiles = "${config.hm.xdg.configHome}/emacs/init.org";
           in ''
             ${cfg.transparency.package}/bin/emacs --batch \
               --eval "(require 'ob-tangle)" \
