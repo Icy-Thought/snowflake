@@ -32,15 +32,15 @@ in {
           packages = attrValues {
             inherit (pkgs) cascadia-code noto-fonts-emoji sarasa-gothic;
             nerdfonts =
-              pkgs.nerdfonts.override {fonts = ["Arimo" "JetBrainsMono"];};
+              pkgs.nerdfonts.override {fonts = ["Arimo" "VictorMono"];};
           };
-          mono = ["JetBrainsMono Nerd Font" "Cascadia Code" "Sarasa Mono SC"];
+          mono = ["VictorMono Nerd Font" "Cascadia Code" "Sarasa Mono SC"];
           sans = ["Arimo Nerd Font" "Sarasa Gothic SC"];
           emoji = ["Noto Color Emoji"];
         };
 
         font = {
-          mono.family = "JetBrainsMono Nerd Font";
+          mono.family = "VictorMono Nerd Font";
           sans.family = "Arimo Nerd Font";
         };
 
@@ -135,8 +135,8 @@ in {
         extraConfig = {
           icon-theme = let inherit (cfg.iconTheme) name; in "${name}";
           font = let
-            inherit (cfg.font.sans) family weight size;
-          in "${family} ${weight} ${toString size}";
+            inherit (cfg.font.mono) family weight size;
+          in "${family} ${weight} ${toString (size - 3)}";
         };
 
         theme = let

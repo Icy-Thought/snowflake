@@ -1,7 +1,7 @@
 .taffy-window * {
     color: @bar-foreground;
-    font-family: "JetBrainsMono Nerd Font";
-    font-size: 12px;
+    font-family: "VictorMono Nerd Font";
+    font-size: 13px;
     font-style: italic; 
     font-weight: 900;
 }

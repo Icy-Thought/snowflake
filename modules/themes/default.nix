@@ -16,7 +16,7 @@
 in {
   options.modules.themes = let
     inherit (lib.options) mkOption mkPackageOption;
-    inherit (lib.types) attrsOf int lines listOf nullOr path package str;
+    inherit (lib.types) attrsOf float int lines listOf nullOr path package str;
     inherit (lib.my) mkOpt toFilteredImage;
   in {
     active = mkOption {
@@ -73,14 +73,14 @@ in {
         weight = mkOpt str "SemiBold";
         weightAlt = mkOpt str "DemiBold";
         weightNum = mkOpt str "600";
-        size = mkOpt int 13;
+        size = mkOpt float 13.5;
       };
       sans = {
         family = mkOpt str "";
         weight = mkOpt str "SemiBold";
         weightAlt = mkOpt str "DemiBold";
         weightNum = mkOpt str "600";
-        size = mkOpt int 10;
+        size = mkOpt float 10.0;
       };
     };
 

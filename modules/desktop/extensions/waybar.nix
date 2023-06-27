@@ -144,7 +144,7 @@ in {
       ];
       style = ''
               * {
-                font-family: "JetBrainsMono Nerd Font";
+                font-family: "VictorMono Nerd Font";
                 font-size: 12pt;
                 font-weight: bold;
                 border-radius: 0px;

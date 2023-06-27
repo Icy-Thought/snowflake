@@ -23,7 +23,7 @@ in {
     };
   };
 
-  # TODO: re-create theming -> general + changable banner (drun, run, systemd and power-menu)
+  # :TODO| re-create theming -> general + changable banner (drun, run, systemd and power-menu)
 
   config = mkIf cfg.enable {
     user.packages = [pkgs.rofi-systemd];
