@@ -135,8 +135,8 @@ in {
         extraConfig = {
           icon-theme = let inherit (cfg.iconTheme) name; in "${name}";
           font = let
-            inherit (cfg.font.mono) family weight size;
-          in "${family} Italic ${weight} ${toString (size - 3)}";
+            inherit (cfg.font) mono sans;
+          in "${mono.family} Italic ${mono.weight} ${toString sans.size}";
         };
 
         theme = let
@@ -278,7 +278,7 @@ in {
       };
 
       hm.programs.sioyek.config = let
-        inherit (cfg.font.mono) family size weight;
+        inherit (cfg.font) mono sans;
       in {
         "custom_background_color " = "0.10 0.11 0.15";
         "custom_text_color " = "0.75 0.79 0.96";
@@ -293,8 +293,8 @@ in {
         "page_separator_color" = "0.81 0.79 0.76";
         "status_bar_color" = "0.34 0.37 0.54";
 
-        "font_size" = "${toString size}";
-        "ui_font" = "${family} ${weight}";
+        "font_size" = "${toString sans.size}";
+        "ui_font" = "${mono.family} ${mono.weight}";
       };
     })
   ]);

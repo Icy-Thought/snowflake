@@ -46,8 +46,8 @@ in {
           }
           // optionalAttrs (active != null) {
             font = let
-              inherit (config.modules.themes.font.mono) family size;
-            in "${family} Bold ${toString size}";
+              inherit (config.modules.themes.font) mono sans;
+            in "${mono.family} Bold ${toString sans.size}";
             recolor = true;
             recolor-keephue = true;
             recolor-reverse-video = true;
