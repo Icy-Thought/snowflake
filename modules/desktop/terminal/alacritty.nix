@@ -140,17 +140,17 @@ in {
               family: "${family}"
               style:  "${weight}"
 
-            bold:
-              family: "${family}"
-              style:  "Bold"
-
             italic:
               family: "${family}"
               style:  "${weight} Italic"
 
+            bold:
+              family: "${family}"
+              style:  "SemiBold"
+
             bold_italics:
               family: "${family}"
-              style:  "${weight} Italic"
+              style:  "SemiBold Italic"
 
             size: ${toString size}
 

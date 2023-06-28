@@ -132,7 +132,7 @@ icyTheme =
       , inactiveColor       = icyInactiveWin
       , inactiveBorderColor = icyInactiveWin
       , inactiveTextColor   = icyActiveWin
-      , fontName            = "xft:VictorMono Nerd Font:style=SemiBold"
+      , fontName            = "xft:VictorMono Nerd Font-13:style=Bold"
       }
 
 restartEventHook e@ClientMessageEvent {ev_message_type = mt} = do

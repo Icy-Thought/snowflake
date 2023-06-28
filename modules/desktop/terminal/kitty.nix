@@ -124,10 +124,12 @@ in {
             inherit (config.modules.themes.colors.main) bright normal types;
             inherit (config.modules.themes.font.mono) size;
           in ''
-            font_family               Victor Mono SemiBold Nerd Font Complete
-            italic_font               Victor Mono SemiBold Italic Nerd Font Complete
-            bold_font                 Victor Mono Bold Nerd Font Complete
-            bold_italic_font          Victor Mono Bold Italic Nerd Font Complete
+            font_family               Victor Mono Bold Nerd Font Complete
+            italic_font               Victor Mono Bold Italic Nerd Font Complete
+
+            bold_font                 Victor Mono SemiBold Nerd Font Complete
+            bold_italic_font          Victor Mono SemiBold Italic Nerd Font Complete
+
             font_size                 ${toString size}
 
             foreground                ${types.fg}

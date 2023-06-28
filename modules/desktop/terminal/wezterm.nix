@@ -93,7 +93,7 @@ in {
           wezterm-font = {
             target = "wezterm/theme/font.lua";
             text = let
-              inherit (config.modules.themes.font) mono sans;
+              inherit (config.modules.themes.font.mono) family size weightAlt;
               inherit (config.modules.themes.colors.main) types normal;
             in ''
               local wez = require("wezterm")
@@ -101,27 +101,27 @@ in {
               local M = {}
 
               M.font = wez.font_with_fallback({
-                { family = "${mono.family}",
-                  weight = "${mono.weightAlt}",
+                { family = "${family}",
+                  weight = "${weightAlt}",
                 },
                 "DejaVu Sans",
                 "Unicode",
               })
 
-              M.font_size = ${toString mono.size}
-              M.char_select_font_size = ${toString mono.size}
+              M.font_size = ${toString size}
+              M.char_select_font_size = ${toString size}
 
               M.window_frame = {
                 active_titlebar_bg = "${types.bg}",
                 inactive_titlebar_bg = "${normal.black}",
 
                 font = wez.font({
-                    family = "${mono.family}",
-                    weight = "${mono.weightAlt}",
+                    family = "${family}",
+                    weight = "${weightAlt}",
                     style = "Italic",
                 }),
 
-                font_size= ${toString mono.size},
+                font_size= ${toString size},
               }
 
               return M

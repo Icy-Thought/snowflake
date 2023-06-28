@@ -2,8 +2,8 @@
     color: @bar-foreground;
     font-family: "VictorMono Nerd Font";
     font-size: 13px;
-    font-style: italic; 
-    font-weight: 900;
+    font-style: italic;
+    font-weight: bold;
 }
 
 .taffy-box {

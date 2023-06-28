@@ -136,7 +136,7 @@ in {
           icon-theme = let inherit (cfg.iconTheme) name; in "${name}";
           font = let
             inherit (cfg.font.mono) family weight size;
-          in "${family} ${weight} ${toString (size - 3)}";
+          in "${family} Italic ${weight} ${toString (size - 3)}";
         };
 
         theme = let

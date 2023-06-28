@@ -70,9 +70,9 @@ in {
     font = {
       mono = {
         family = mkOpt str "";
-        weight = mkOpt str "SemiBold";
-        weightAlt = mkOpt str "DemiBold";
-        weightNum = mkOpt str "600";
+        weight = mkOpt str "Bold";
+        weightAlt = mkOpt str "Bold";
+        weightNum = mkOpt str "700";
         size = mkOpt float 13.0;
       };
       sans = {
