@@ -73,7 +73,7 @@ in {
         weight = mkOpt str "SemiBold";
         weightAlt = mkOpt str "DemiBold";
         weightNum = mkOpt str "600";
-        size = mkOpt float 13.5;
+        size = mkOpt float 13.0;
       };
       sans = {
         family = mkOpt str "";
