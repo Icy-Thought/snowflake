@@ -127,9 +127,7 @@ in {
       modules.desktop.browsers.firefox.userChrome = let
         usrChromeDir = "${config.snowflake.configDir}/firefox/userChrome";
       in
-        concatMapStringsSep "\n" readFile
-        [
-          "${usrChromeDir}/firefox-onebar.css"
+        concatMapStringsSep "\n" readFile [
           "${usrChromeDir}/treestyle-tabs.css"
         ];
     })
