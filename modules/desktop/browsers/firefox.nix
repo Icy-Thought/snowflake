@@ -176,6 +176,10 @@ in {
         "extensions.formautofill.creditCards.available" = false;
         "extensions.formautofill.creditCards.enabled" = false;
         "extensions.formautofill.heuristics.enabled" = false;
+
+        # :WARN| Firefox OneBar
+        "onebar.disable-https-truncate" = true;
+        "onebar.disable-autohide-of-URLbar-icons" = true;
       };
 
       # Use a stable profile name so we can target it in themes

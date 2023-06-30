@@ -9,7 +9,6 @@
   inherit (lib) attrValues concatMapStringsSep mkDefault mkIf mkMerge;
 
   cfg = config.modules.themes;
-  configDir = config.snowflake.configDir;
 in {
   config = mkIf (cfg.active == "tokyonight") (mkMerge [
     {
@@ -139,9 +138,14 @@ in {
     }
 
     (mkIf config.modules.desktop.browsers.firefox.enable {
-      modules.desktop.browsers.firefox.userChrome =
+      modules.desktop.browsers.firefox.userChrome = let
+        usrChromeDir = "${config.snowflake.configDir}/firefox/userChrome";
+      in
         concatMapStringsSep "\n" readFile
-        ["${configDir}/firefox/firefox-onebar.css"];
+        [
+          "${usrChromeDir}/firefox-onebar.css"
+          "${usrChromeDir}/treestyle-tabs.css"
+        ];
     })
 
     (mkIf config.services.xserver.enable {

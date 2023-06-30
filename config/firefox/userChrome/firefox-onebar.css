@@ -1,24 +1,24 @@
-/* 1.3.0
-- Truncated https:// from URL's
-- Added option to hide all URLbar buttons
-- Added option to not center the URLbar on focus
-- Fix being unable to drag tab in single-tab (oops)
-*/
+/* Source: https://codeberg.org/Freeplay/firefox-onebar */
+/* Version: 1.4.0 */
+
+:root {
+    --urlbar-collapsed-width: 200px;
+    --urlbar-open-width: 300px; /* Only when disable-centering-of-URLbar is enabled */
+}
 
 #navigator-toolbox {
     display: flex;
     flex-wrap: wrap;
+    flex-direction: row;
     position: relative !important;
     padding-left: var(--tab-block-margin);
 }
-
 
 /* Hide flexible spaces */
 toolbarspring,
 [id^="wrapper-customizableui-special-spring"] {
     display: none !important;
 }
-
 
 /* Tabs */
 #titlebar {
@@ -55,13 +55,13 @@ toolbarspring,
     transition: background-color .2s;
 }
 
-
 /* Navigation buttons */
 @supports -moz-bool-pref("onebar.hide-navigation-buttons") {
     #back-button, #forward-button {
         display: none !important;
     }
 }
+
 @supports not -moz-bool-pref("onebar.hide-navigation-buttons") {
     #urlbar-container ~ :is(#back-button, #forward-button) {
         display: none !important;
@@ -96,10 +96,6 @@ toolbarspring,
         display: none !important;
     }
 }
-
-
-
-
 
 /* Single Tab, *properties* also copy & pasted into "Small Window Fixes" */
 @supports not -moz-bool-pref("onebar.disable-single-tab") {
@@ -147,14 +143,17 @@ toolbarspring,
     position: static !important;
 }
 #urlbar-container {
-    min-width: 200px !important;
+    min-width: var(--urlbar-collapsed-width) !important;
     z-index: 10;
     transition: background-color .2s, width .2s, min-width .2s;
     position: static !important;
+    width: unset !important;
 }
 #urlbar {
     position: relative !important;
     top: unset !important;
+    align-self: flex-start !important;
+    margin-block: auto !important;
 }
 #urlbar[breakout-extend] {
     position: absolute !important;
@@ -187,7 +186,7 @@ toolbarspring,
     transition: width .2s;
 }
 #urlbar-container:focus-within, #urlbar-container:hover {
-    min-width: 300px !important;
+    min-width: var(--urlbar-open-width) !important;
 }
 #urlbar-input:not(:focus-within) {
     mask: linear-gradient(to right, black calc(100% - 20px), transparent);
@@ -223,7 +222,7 @@ toolbarspring,
 }
 @supports -moz-bool-pref("onebar.disable-autohide-of-URLbar-icons") {
     #urlbar-container {
-        min-width: 300px !important;
+        min-width: var(--urlbar-open-width) !important;
     }
 }
 @supports not -moz-bool-pref("onebar.disable-autohide-of-URLbar-icons") {
@@ -285,10 +284,6 @@ toolbarspring,
     width: 100vw !important;
 }
 
-
-
-
-
 /* Linux fixes, credits: https://github.com/ranmaru22/firefox-vertical-tabs/pull/39 */
 
 @media (-moz-gtk-csd-available) {
@@ -347,8 +342,6 @@ toolbarspring,
                 max-width: calc(100vw - ((2 * var(--toolbarbutton-inner-padding) + 16px) + (var(--toolbarbutton-outer-padding) * 2)) - var(--tab-block-margin)) !important;
             }
         }
-        
-        
     }
 }
 
@@ -378,7 +371,6 @@ toolbarspring,
     [inDOMFullscreen="true"] .titlebar-buttonbox-container {
         transform: translateY(-100px)
     }
-
 }
 
 /* Small window */
@@ -463,5 +455,3 @@ toolbarspring,
         display: none !important;
     }
 }
-
-

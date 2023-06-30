@@ -1,0 +1,177 @@
+/* Source: https://www.reddit.com/r/FirefoxCSS/comments/uldl0q/comment/i7v3hzy */
+/* Tree-style Tabs: https://pastebin.com/raw/12gq6RGV */
+
+/* Increase the size of our favicons to match sidebar width */
+:root {
+  --tab-highlighter: Highlight;
+  --favicon-size: 20px;
+}
+
+/* Show title of unread tabs with red and italic font */
+:root.sidebar tab-item.unread .label-content {
+  color: red !important;
+  font-style: italic !important;
+}
+
+/* Hide border on tab bar, force its state to 'scroll', adjust margin-left for width of scrollbar. */
+#tabbar {
+  border: 0;
+  scrollbar-width: none;
+  overflow: scroll !important;
+  margin-top:  0 !important;
+}
+
+/* Include 'reveal' animation ... stagers by level */
+#tabbar .tab {
+  transition: 0.1s margin-top, 0.2s 0.1s margin-left, 0.2s 0.1s visibility;
+}
+
+/* delay transitions on open */
+#tabbar:not(:hover) .tab {
+  transition-delay: 0s;
+  margin-left: 0;
+}
+
+/* animate twisty reveal */
+#tabbar .tab .twisty {
+  transition: 0.2s margin;
+}
+
+/* general tabs */
+.tab {
+  background-color: transparent;
+}
+.tab,
+.tab.pinned {
+  height: 2.8em;
+}
+
+/* Push tab labels slightly to the right so they're completely hidden in collapsed state, but still look fine while expanded. */
+.tab .label {
+  margin-left: 1em;
+}
+
+/* fix closebox */
+.tab .closebox {
+  margin-left:  0;
+}
+
+.tab .counter {
+  margin-left:  auto;
+  display: inline-block !important;
+}
+
+/* Hide .twisty and adjust margins so favicons have 7px on left. */
+#tabbar:not(:hover) .tab .twisty {
+  visibility: hidden;
+  margin-left: -12px;
+  transition-delay: 0s;
+}
+
+
+/* hide closebox unless needed */
+.tab:not(:hover) .closebox {
+  visibility: hidden;
+}
+
+/* Hide sound playing/muted button. */
+.sound-button {
+  margin-left: 0;
+  display: inline-block;
+  visibility: collapse;
+}
+
+.tab.audible .sound-button {
+  visibility: visible;
+  margin-left: 0.25em;
+}
+
+.tab:not([data-child-ids]) .counter {
+  /* visibility: hidden; */
+}
+
+tab-item:not(.subtree-collapsed) .counter {
+  visibility: hidden;
+} 
+
+/* Hide 'new tab' button. */
+.newtab-button {
+  display: none;
+}
+
+/* active tab */
+.tab.active {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  box-shadow:  inset 3px 0 0 #ffffff99 !important;
+}
+.tab:hover,
+.tab.active:hover {
+  background-color: inherit;
+}
+.tab.active .label {
+  font-weight: bold;
+  color: #f4f4f4 !important;
+}
+.tab .label,
+.tab.active .label {
+  border-bottom:  1px solid transparent;
+}
+.tab:hover .label,
+.tab.active:hover .label {
+  border-bottom:  1px dotted;
+  min-width:  0 !important;
+  flex-shrink:  1 !important;
+  flex-grow:  unset !important;
+}
+
+/* pending / unloaded tabs */
+.tab.discarded {
+  background-color: #1d1d1d;
+}
+.tab.discarded .label {
+  color: #efefefCC !important;
+}
+.tab.discarded:hover .label {
+  color: #efefef !important;
+}
+
+/* Adjust style for tab that has sound playing. */
+.tab.sound-playing .favicon::after,
+.tab.muted .favicon::after {
+  content: '🔊';
+  z-index: var(--favicon-base-z-index);
+  position: absolute;
+  font-size: 0.5em;
+  bottom: -0.35em;
+  right: -0.7em;
+}
+
+/* Adjust style for tab that is muted. */
+.tab.muted .favicon::after {
+  content: '🔇';
+}
+
+/* Pinned tabs: */
+/* Hide all non-active pinned tabs (these are included in top-bar instead) */
+.tab.pinned {
+  position: relative;
+  max-width: none;
+  width: auto;
+  top: 0 !important;
+  left: 0 !important;
+}
+.tab.pinned:not(.active) {
+  display: none;
+}
+.tab.pinned .label {
+  display: block;
+}
+.tab.pinned .sound-button {
+  position: relative;
+  transform: none;
+}
+.tab.pinned .twisty {
+  display: block;
+  min-width: none;
+  width: auto;
+}
