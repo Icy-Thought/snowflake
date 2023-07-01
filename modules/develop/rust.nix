@@ -20,7 +20,7 @@ in {
 
       user.packages = attrValues {
         rust-package = pkgs.rust-bin.stable.latest.default;
-        inherit (pkgs) crate2nix;
+        inherit (pkgs) rust-script;
         inherit (pkgs.unstable) rust-analyzer;
       };
 
