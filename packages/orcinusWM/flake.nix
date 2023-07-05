@@ -1,28 +1,59 @@
 {
+  description = "Build a cargo project without extra checks";
+
   inputs = {
-    cargo2nix.url = "github:cargo2nix/cargo2nix/release-0.11.0";
-    flake-utils.follows = "cargo2nix/flake-utils";
-    nixpkgs.follows = "cargo2nix/nixpkgs";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    crane = {
+      url = "github:ipetkov/crane";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = inputs:
-    with inputs;
-      flake-utils.lib.eachDefaultSystem (
-        system: let
-          pkgs = import nixpkgs {
-            inherit system;
-            overlays = [cargo2nix.overlays.default];
-          };
+  outputs = {
+    self,
+    nixpkgs,
+    crane,
+    flake-utils,
+    ...
+  }:
+    flake-utils.lib.eachDefaultSystem (system: let
+      pkgs = import nixpkgs {
+        inherit system;
+      };
 
-          rustPkgs = pkgs.rustBuilder.makePackageSet {
-            rustChannel = "nightly";
-            packageFun = import ./default.nix;
-          };
-        in rec {
-          packages = {
-            orcinusWM = (rustPkgs.workspace.orcinusWM {}).bin;
-            default = packages.orcinusWM;
-          };
-        }
-      );
+      craneLib = crane.lib.${system};
+      orcinusWM = craneLib.buildPackage {
+        src = craneLib.cleanCargoSource (craneLib.path ./.);
+
+        buildInputs = with pkgs;
+          [binutils]
+          ++ lib.optionals pkgs.stdenv.isDarwin [libiconv];
+        # Additional environment variables can be set directly
+        # MY_CUSTOM_VAR = "some value";
+      };
+    in {
+      checks = {
+        inherit orcinusWM;
+      };
+
+      packages.default = orcinusWM;
+
+      apps.default = flake-utils.lib.mkApp {
+        drv = orcinusWM;
+      };
+
+      devShells.default = pkgs.mkShell {
+        inputsFrom = builtins.attrValues self.checks.${system};
+
+        # Additional dev-shell environment variables can be set directly
+        # MY_CUSTOM_DEVELOPMENT_VAR = "something else";
+
+        # Extra inputs can be added here
+        nativeBuildInputs = with pkgs; [
+          cargo
+          rustc
+        ];
+      };
+    });
 }
