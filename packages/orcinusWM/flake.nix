@@ -17,10 +17,21 @@
           rustPkgs = pkgs.rustBuilder.makePackageSet {
             rustChannel = "nightly";
             packageFun = import ./default.nix;
+            packageOverrides = pkgs:
+              pkgs.rustBuilder.overrides.all
+              ++ [
+                (pkgs.rustBuilder.rustLib.makeOverride {
+                  name = "orcinus-wm";
+                  overrideAttrs = drv: {
+                    propagatedNativeBuildInputs =
+                      drv.propagatedNativeBuildInputs or [] ++ [pkgs.xorg.libxcb];
+                  };
+                })
+              ];
           };
         in rec {
           packages = {
-            orcinusWM = (rustPkgs.workspace.orcinusWM {}).bin;
+            orcinusWM = (rustPkgs.workspace.orcinus-wm {}).bin;
             default = packages.orcinusWM;
           };
         }
