@@ -174,11 +174,11 @@
     "emacs-dir": {
       "flake": false,
       "locked": {
-        "lastModified": 1688514036,
-        "narHash": "sha256-36LecRwEFc0ZwdMJO3g0VfSCVmiJyLOWW9lYu9GkzLI=",
+        "lastModified": 1688622517,
+        "narHash": "sha256-abXa73Nq7kSD+Mvzj+WkT53q4EzVR54WARk2Yrdguys=",
         "ref": "refs/heads/main",
-        "rev": "69d3597e14317ff5cf2303f4630374c08f719408",
-        "revCount": 179,
+        "rev": "5b68774783e15b748f0b830f25812fc95490057a",
+        "revCount": 180,
         "submodules": true,
         "type": "git",
         "url": "https://github.com/Icy-Thought/emacs.d.git"

@@ -733,28 +733,33 @@ swapMinimizeStateAfter action = withFocused $ \originalWindow -> do
 -- :NOTE| Introduction of our namedScratchpads
 myScratchpads :: X [NamedScratchpad]
 myScratchpads = do
+  -- | A system monitor to track the madness in our conf
   btopLaunch <- getInput $
-    inTerm >-> setXClass sysMonClass
+    inTerm >-> setXClass sysMonID
            >-> execute "btop"
+
   -- | E-Mail session managed by Emacs, because why not? :P
   mailSession <- getInput $
-    inEditor >-> setFrameName mailInst
+    inEditor >-> setFrameName mailSessionID
              >-> eval (elispFun "notmuch")
 
-  pure [ NS "Discord"            "discordcanary"      (className =? "discord")          nearFullFloat
-       , NS "EasyEffects"        "easyeffects"        (title     =? "Easy Effects")     nearFullFloat
-       , NS "Emacs"              "emacsclient -c"     (className =? "Emacs")            nearFullFloat
-       , NS "Mail"               mailSession          (appName   =? mailInst)           nearFullFloat
-       , NS "Matrix"             "element-desktop"    (className =? "Element")          nearFullFloat
-       , NS "Spotify"            "spotify"            (className =? "Spotify")          nearFullFloat
-       , NS "System Monitor"     btopLaunch           (appName   =? sysMonClass)        nearFullFloat
-       , NS "Telegram"           "telegram-desktop"   (className =? "TelegramDesktop")  nearFullFloat
-       , NS "Transmission"       "transmission-gtk"   (className =? "Transmission-gtk") nearFullFloat
+  pure [ NS "Discord"            "discordcanary"      (className =? "discord")          floatCenter
+       , NS "EasyEffects"        "easyeffects"        (title     =? "Easy Effects")     floatCenter
+       , NS "Emacs"              "emacsclient -c"     (className =? "Emacs")            floatCenter
+       , NS "Mail"               mailSession          (appName   =? mailSessionID)      floatCenter
+       , NS "Matrix"             "element-desktop"    (className =? "Element")          floatCenter
+       , NS "Spotify"            "spotify"            (className =? "Spotify")          floatCenter
+       , NS "System Monitor"     btopLaunch           (appName   =? sysMonID)           floatCenter
+       , NS "Telegram"           "telegram-desktop"   (className =? "TelegramDesktop")  floatCenter
+       , NS "Transmission"       "transmission-gtk"   (className =? "Transmission-gtk") floatCenter
        ]
   where
-    mailInst    = "notmuch-scratch"
-    sysMonClass = "system-monitor"
-    nearFullFloat = customFloating $ W.RationalRect 0.02 0.02 0.95 0.95
+    mailSessionID = "notmuch-scratch"
+    sysMonID      = "system-monitor"
+
+    -- | Defining our custom floats
+    floatCenter  = customFloating $ W.RationalRect (1/50) (1/50) (19/20) (19/20)
+    floatTopLeft = customFloating $ W.RationalRect (1/6) (1/6) (2/3) (2/3)
 
 myScratchPadManageHook = namedScratchpadManageHook =<< liftX myScratchpads
 
@@ -914,6 +919,11 @@ addKeys conf@XConfig { modMask = modm } =
        , ((modalt, xK_v), doScratchpad "EasyEffects")
 
          -- :NOTE| Program-specific launches
+       , ((hyper, xK_r), do
+             planetEmacs <- getInput $
+               inEditor >-> setFrameName "planetEmacs"
+                        >-> eval (elispFun "emacs-everywhere")
+             spawn planetEmacs)
          -- Rofi(s)
        , ((modm, xK_p),               spawn "rofi -show power-menu")
        , ((modalt, xK_p),             spawn "rofi -show drun")
