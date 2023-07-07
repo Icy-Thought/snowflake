@@ -873,9 +873,9 @@ addKeys conf@XConfig { modMask = modm } =
 
     -- Specific program spawning
     ++  bindBringAndRaiseMany
-            [ (modalt, xK_g, spawn "chromium", chromiumSelector)
-            , (modalt, xK_f, spawn "firefox", firefoxSelector)
-            , (modalt, xK_w, spawn "firefox --profile ~/.mozilla/firefox/z5dgw9v6.dev-edition-private", firefoxSelector)
+            [ (modalt, xK_g, unsafeSpawn "chromium", chromiumSelector)
+            , (modalt, xK_f, unsafeSpawn "firefox", firefoxSelector)
+            , (modalt, xK_w, unsafeSpawn "firefox --profile ~/.mozilla/firefox/z5dgw9v6.dev-edition-private", firefoxSelector)
             ]
 
     -- Window manipulation
@@ -924,46 +924,47 @@ addKeys conf@XConfig { modMask = modm } =
        , ((modalt, xK_v), doScratchpad "EasyEffects")
 
          -- :NOTE| Program-specific launches
-       -- , ((modm .|. shiftMask, xK_x),            spawn "whatever-lock") ;; :WARN| lockscreen when found!
+       -- , ((modm .|. shiftMask, xK_x),            unsafeSpawn "whatever-lock") -- :WARN| lockscreen when found!
        , ((hyper, xK_r), do
              planetEmacs <- getInput $
                inEditor >-> setFrameName "planetEmacs"
                         >-> eval (elispFun "emacs-everywhere")
-             spawn planetEmacs)
+             unsafeSpawn planetEmacs)
 
          -- Rofi(s)
-       , ((modm, xK_p),               spawn "rofi -show power-menu")
-       , ((modalt, xK_p),             spawn "rofi -show drun")
-       , ((modm .|. shiftMask, xK_p), spawn "rofi -show run")
-       , ((hyper, xK_p),              spawn "rofi-systemd")
+       , ((modm, xK_p),               safeSpawn "rofi" ["-show", "power-menu"])
+       , ((modalt, xK_p),             safeSpawn "rofi" ["-show", "drun"])
+       , ((modm .|. shiftMask, xK_p), safeSpawn "rofi" ["-show", "run"])
+       , ((hyper, xK_p),              safeSpawnProg "rofi-systemd")
 
          -- Playerctl
-       , ((modm, xK_Left),  spawn "playerctl previous")
-       , ((modm, xK_Down),  spawn "playerctl play-pause")
-       , ((modm, xK_Right), spawn "playerctl next")
+       , ((modm, xK_Left),  safeSpawn "playerctl" ["previous"])
+       , ((modm, xK_Down),  safeSpawn "playerctl" ["play-pause"])
+       , ((modm, xK_Right), safeSpawn "playerctl" ["next"])
 
          -- Volume control
-       , ((0, xF86XK_AudioRaiseVolume),    spawn "volctl increase")
-       , ((0, xF86XK_AudioLowerVolume),    spawn "volctl decrease")
-       , ((0, xF86XK_AudioMute),           spawn "volctl toggle-mute")
-       -- , ((hyper .|. shiftMask, xK_q),     spawn "volctl --mute-winOther")
-       , ((0, xF86XK_AudioMicMute),        spawn "micvol toggle-mute")
+       , ((0, xF86XK_AudioRaiseVolume),    safeSpawn "volctl" ["increase"])
+       , ((0, xF86XK_AudioLowerVolume),    safeSpawn "volctl" ["decrease"])
+       , ((0, xF86XK_AudioMute),           safeSpawn "volctl" ["toggle-mute"])
+       -- , ((hyper .|. shiftMask, xK_q),     safeSpawn "volctl" ["--mute-winOther"])
+       , ((0, xF86XK_AudioMicMute),        safeSpawn "micvol" ["toggle-mute"])
 
          -- Brightness control
-       , ((0, xF86XK_MonBrightnessUp),   spawn "brightctl increase -l 5")
-       , ((0, xF86XK_MonBrightnessDown), spawn "brightctl decrease -l 5")
+       , ((0, xF86XK_MonBrightnessUp),   safeSpawn "brightctl" ["increase", "-l 5"])
+       , ((0, xF86XK_MonBrightnessDown), safeSpawn "brightctl" ["decrease", "-l 5"])
 
-         -- (Sc) current workspace
-       , ((0, xK_Print),           spawn "captScr system --workspace")
-       , ((controlMask, xK_Print), spawn "captScr clipboard --workspace")
+         -- | Screenshot: Capture the madness at a high resolution
+         -- Current workspace
+       , ((0, xK_Print),                        safeSpawn "captScr" ["system", "--workspace"])
+       , ((controlMask, xK_Print),              safeSpawn "captScr" ["clipboard", "--workspace"])
 
-         -- (Sc) active window
-       , ((mod1Mask, xK_Print),                 spawn "captScr system --active-window")
-       , ((controlMask .|. mod1Mask, xK_Print), spawn "captScr clipboard --active-window")
+         -- Active window
+       , ((mod1Mask, xK_Print),                 safeSpawn "captScr" ["system", "--active-window"])
+       , ((controlMask .|. mod1Mask, xK_Print), safeSpawn "captScr" ["clipboard", "--active-window"])
 
-         -- (Sc) selected area
-       , ((shiftMask, xK_Print),                 spawn "captScr system --selection")
-       , ((controlMask .|. shiftMask, xK_Print), spawn "captScr clipboard --selection")
+         -- Highlighted area
+       , ((shiftMask, xK_Print),                 safeSpawn "captScr" ["system", "--selection"])
+       , ((controlMask .|. shiftMask, xK_Print), safeSpawn "captScr" ["clipboard", "--selection"])
        ]
     ++
     -- Replace moving bindings
