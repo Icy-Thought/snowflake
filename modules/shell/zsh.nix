@@ -34,7 +34,7 @@ in {
       enable = true;
       dotDir = ".config/zsh";
       autocd = true;
-      enableSyntaxHighlighting = true;
+      syntaxHighlighting.enable = true;
 
       history = {
         size = 10000;
