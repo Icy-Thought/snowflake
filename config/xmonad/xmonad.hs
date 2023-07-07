@@ -231,9 +231,9 @@ noSpecialChromiumTitles = helper <$> title
 
 chromiumSelectorBase = isChromiumClass <$> className
 
-chromiumSelector = className =? "chromium-browser" <&&> appName =? "Chromium"
+chromiumSelector = appName =? "chromium-browser" <&&> className =? "Chromium-browser"
 
-firefoxSelector = className =? "firefox-aurora" <&&> appName =? "Navigator"
+firefoxSelector = appName =? "firefox" <&&> className =? "Navigator"
 
 protonMailSelector = chromiumSelectorBase <&&> fmap isProtonMailTitle title
 
@@ -738,6 +738,10 @@ myScratchpads = do
     inTerm >-> setXClass sysMonID
            >-> execute "btop"
 
+  emacsScratch <- getInput $
+    inEditor >-> setFrameName emacsScratchID
+             >-> eval (elispFun "dashboard-refresh-buffer")
+
   -- | E-Mail session managed by Emacs, because why not? :P
   mailSession <- getInput $
     inEditor >-> setFrameName mailSessionID
@@ -745,8 +749,8 @@ myScratchpads = do
 
   pure [ NS "Discord"            "discordcanary"      (className =? "discord")          floatCenter
        , NS "EasyEffects"        "easyeffects"        (title     =? "Easy Effects")     floatCenter
-       , NS "Emacs"              "emacsclient -c"     (className =? "Emacs")            floatCenter
-       , NS "Mail"               mailSession          (appName   =? mailSessionID)      floatCenter
+       , NS "Emacs"              emacsScratch         (title     =? emacsScratchID)     floatCenter
+       , NS "Mail"               mailSession          (title     =? mailSessionID)      floatCenter
        , NS "Matrix"             "element-desktop"    (className =? "Element")          floatCenter
        , NS "Spotify"            "spotify"            (className =? "Spotify")          floatCenter
        , NS "System Monitor"     btopLaunch           (appName   =? sysMonID)           floatCenter
@@ -754,8 +758,9 @@ myScratchpads = do
        , NS "Transmission"       "transmission-gtk"   (className =? "Transmission-gtk") floatCenter
        ]
   where
-    mailSessionID = "notmuch-scratch"
-    sysMonID      = "system-monitor"
+    emacsScratchID = "emacs-scratch"
+    mailSessionID  = "notmuch-scratch"
+    sysMonID       = "system-monitor"
 
     -- | Defining our custom floats
     floatCenter  = customFloating $ W.RationalRect (1/50) (1/50) (19/20) (19/20)
@@ -919,20 +924,18 @@ addKeys conf@XConfig { modMask = modm } =
        , ((modalt, xK_v), doScratchpad "EasyEffects")
 
          -- :NOTE| Program-specific launches
+       -- , ((modm .|. shiftMask, xK_x),            spawn "whatever-lock") ;; :WARN| lockscreen when found!
        , ((hyper, xK_r), do
              planetEmacs <- getInput $
                inEditor >-> setFrameName "planetEmacs"
                         >-> eval (elispFun "emacs-everywhere")
              spawn planetEmacs)
+
          -- Rofi(s)
        , ((modm, xK_p),               spawn "rofi -show power-menu")
        , ((modalt, xK_p),             spawn "rofi -show drun")
        , ((modm .|. shiftMask, xK_p), spawn "rofi -show run")
        , ((hyper, xK_p),              spawn "rofi-systemd")
-
-         -- :NOTE| System-specific
-       -- , ((modm .|. shiftMask, xK_x),            spawn "whatever-lock") <- lockscreen when found!
-       -- , ((hyper, xK_q),                         spawn "rofi -show power") <- rofi power controls
 
          -- Playerctl
        , ((modm, xK_Left),  spawn "playerctl previous")
