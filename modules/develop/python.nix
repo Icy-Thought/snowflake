@@ -15,9 +15,15 @@ in {
   config = mkMerge [
     (mkIf config.modules.develop.python.enable {
       user.packages = attrValues {
-        inherit (pkgs) python3 rye;
-        inherit (pkgs.nodePackages) pyright;
-        inherit (pkgs.python3Packages) black isort ipython;
+        inherit (pkgs) python3 rye ruff;
+        inherit
+          (pkgs.python3Packages)
+          black
+          isort
+          ipython
+          mypy
+          python-lsp-server
+          ;
       };
 
       environment.shellAliases = {
