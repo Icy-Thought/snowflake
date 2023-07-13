@@ -10,17 +10,17 @@
 
   cfg = config.modules.themes;
 in {
-  config = mkIf (cfg.active == "rose-pine") (mkMerge [
+  config = mkIf (cfg.active == "kanagawa") (mkMerge [
     {
       modules.themes = {
         wallpaper = mkDefault ./assets/oceanlife-turtle.jpg;
         gtk = {
-          name = "rose-pine";
-          package = pkgs.my.rose-pine-gtk;
+          name = "Kanagawa-B";
+          package = pkgs.my.kanagawa-gtk.override {themeVariants = ["B"];};
         };
         iconTheme = {
-          name = "rose-pine";
-          package = pkgs.my.rose-pine-gtk;
+          name = "Kanagawa";
+          package = pkgs.my.kanagawa-gtk.override {themeVariants = ["B"];};
         };
         pointer = {
           name = "Bibata-Modern-Classic";
@@ -46,67 +46,67 @@ in {
         colors = {
           main = {
             normal = {
-              black = "#26233a";
-              red = "#eb6f92";
-              green = "#31748f";
-              yellow = "#f6c177";
-              blue = "#9ccfd8";
-              magenta = "#c4a7e7";
-              cyan = "#ebbcba";
-              white = "#e0def4";
+              black = "#090618";
+              red = "#C34043";
+              green = "#76946A";
+              yellow = "#C0A36E";
+              blue = "#7E9CD8";
+              magenta = "#957FB8";
+              cyan = "#6A9589";
+              white = "#C8C093";
             };
             bright = {
-              black = "#6e6a86";
-              red = "#eb6f92";
-              green = "#31748f";
-              yellow = "#f6c177";
-              blue = "#9ccfd8";
-              magenta = "#c4a7e7";
-              cyan = "#ebbcba";
-              white = "#e0def4";
+              black = "#727169";
+              red = "#FF5D62";
+              green = "#98BB6C";
+              yellow = "#E6C384";
+              blue = "#7FB4CA";
+              magenta = "#938AA9";
+              cyan = "#7AA89F";
+              white = "#DCD7BA";
             };
             types = {
-              fg = "#e0def4";
-              bg = "#191724";
-              panelbg = "#f9d6d2";
-              border = "#bb7b79";
-              highlight = "#c5b1e5";
+              fg = "#DCD7BA";
+              bg = "#1F1F28";
+              panelbg = "#72A7BC";
+              border = "#76946A";
+              highlight = "#9CABCA";
             };
           };
 
           rofi = {
             bg = {
-              main = "hsla(249, 22%, 12%, 1)";
-              alt = "hsla(247, 23%, 15%, 0)";
-              bar = "hsla(248, 25%, 18%, 1)";
+              main = "hsla(240, 13%, 14%, 1)";
+              alt = "hsla(240, 13%, 19%, 0)";
+              bar = "hsla(240, 13%, 24%, 1)";
             };
-            fg = "hsla(245, 52%, 91%, 1)";
+            fg = "hsla(51, 33%, 80%, 1)";
             ribbon = {
-              outer = "hsla(2, 55%, 83%, 1)";
-              inner = "hsla(197, 49%, 38%, 1)";
+              outer = "hsla(33, 64%, 62%, 1)";
+              inner = "hsla(103, 17%, 50%, 1)";
             };
-            selected = "hsla(249, 15%, 28%, 1)";
-            urgent = "hsl(343, 76%, 68%, 1)";
+            selected = "hsla(198, 41%, 65%, 1)";
+            urgent = "hsl(359, 52%, 51%, 1)";
             transparent = "hsla(0, 0%, 0%, 0)";
           };
         };
 
         editor = {
           helix = {
-            dark = "rose_pine";
-            light = "rose_pine_dawn";
+            dark = "kanagawa";
+            light = "kanagawa";
           };
           neovim = {
-            dark = "rose-pine";
-            light = "rose-pine-dawn"; # TODO: vim.g.tokyonight_style = "day"
+            dark = "kanagawa";
+            light = "Kanagawa_Light"; # :TODO| Integrate with Neovim
           };
           vscode = {
-            dark = "Rose Pine";
-            light = "Rose Pine Dawn";
+            dark = "Kanagawa";
+            light = "Kanagawa Light";
             extension = {
-              name = "rose-pine";
-              publisher = "mvllow";
-              version = "2.8.0";
+              name = "kanagawa";
+              publisher = "qufiwefefwoyn";
+              version = "1.5.1";
               hash = "";
             };
           };

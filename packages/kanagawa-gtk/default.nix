@@ -9,26 +9,22 @@
   inherit (lib) checkListOfEnum;
   inherit (builtins) toString;
 in
-  checkListOfEnum "$Tokyonight: GTK Theme Variants" [
-    "Dark-B-LB"
-    "Dark-B"
-    "Dark-BL-LB"
-    "Dark-BL"
-    "Storm-B-LB"
-    "Storm-B"
-    "Storm-BL-LB"
-    "Storm-BL"
+  checkListOfEnum "$Kanagawa: GTK Theme Variants" [
+    "B"
+    "B-LB"
+    "BL"
+    "BL-LB"
   ]
   themeVariants
   stdenv.mkDerivation {
-    pname = "tokyonight-gtk-theme";
-    version = "unstable-2022-12-09";
+    pname = "kanagawa-gtk";
+    version = "unstable-2023-07-04";
 
     src = fetchFromGitHub {
       owner = "Fausto-Korpsvart";
-      repo = "Tokyo-Night-GTK-Theme";
-      rev = "d17eec24180b890bc4a9aa64162074b1bfc7258a";
-      hash = "sha256-b35J6NsFkUNM/yxMe7bi0kpyuI/pGLnCywCEDLHLf5A=";
+      repo = "Kanagawa-GKT-Theme";
+      rev = "35936a1e3bbd329339991b29725fc1f67f192c1e";
+      hash = "sha256-BZRmjVas8q6zsYbXFk4bCk5Ec/3liy9PQ8fqFGHAXe0";
     };
 
     nativeBuildInputs = [jdupes];
@@ -36,13 +32,14 @@ in
     propagatedUserEnvPkgs = [gtk-engine-murrine];
 
     installPhase = let
-      gtkTheme = "Tokyonight-${toString themeVariants}";
+      gtkTheme = "Kanagawa-${toString themeVariants}";
     in ''
       runHook preInstall
 
-      mkdir -p $out/share/themes
+      mkdir -p $out/share/{icons,themes}
 
       cp -r $src/themes/${gtkTheme} $out/share/themes
+      cp -r $src/icons/Kanagawa $out/share/icons
 
       # Duplicate files -> hard-links = reduced install-size!
       jdupes -L -r $out/share
@@ -51,8 +48,8 @@ in
     '';
 
     meta = with lib; {
-      description = "A GTK theme based on the Tokyo Night colour palette";
-      homepage = "https://github.com/Fausto-Korpsvart/Tokyo-Night-GTK-Theme";
+      description = "A GTK theme based on the Kanagawa colour palette";
+      homepage = "https://github.com/Fausto-Korpsvart/Kanagawa-GTK-Theme";
       license = licenses.gpl3Only;
       # maintainers = [ Icy-Thought ];
       platforms = platforms.all;

@@ -19,7 +19,7 @@ in {
       envProto = "x11";
       toolset.fileManager = {
         enable = true;
-        program = "thunar";
+        program = "nautilus";
       };
       extensions = {
         fcitx5.enable = true;

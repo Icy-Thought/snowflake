@@ -1,0 +1,19 @@
+@define-color camouflage-green rgba(118, 148, 106, 1);
+@define-color earth-yellow rgba(220, 165, 97, 1);
+@define-color gold-crayola rgba(230, 195, 132, 1);
+@define-color vista-blue rgba(126, 156, 216, 1);
+@define-color bone rgba(220, 215, 186, 1);
+
+@define-color raisin-black rgba(26, 27, 38, 1);
+@define-color cod-gray rgba(11, 11, 10, 0.4);
+@define-color cod-gray-acc rgba(11, 11, 10, 0.6);
+@define-color transparent rgba(0, 0, 0, 0.0);
+
+@define-color bar-background @cod-gray-acc;
+@define-color bar-foreground @bone;
+@define-color button-background @transparent;
+@define-color hl-active-pad-bg @bone;
+@define-color hl-active-pad-fg @transparent;
+@define-color menu-background @raisin-black;
+@define-color menu-foreground @bone;
+@define-color widget-background @cod-gray;

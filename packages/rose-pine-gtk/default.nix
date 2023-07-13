@@ -1,53 +1,65 @@
 {
-  stdenvNoCC,
   lib,
+  stdenv,
   fetchFromGitHub,
-  gnome-themes-extra,
   gtk-engine-murrine,
-  gtk_engines,
-}:
-stdenvNoCC.mkDerivation rec {
-  pname = "rose-pine-gtk-theme";
-  version = "unstable-2022-09-01";
+  jdupes,
+  themeVariant ? [],
+  iconVariant ? [],
+}: let
+  inherit (lib) checkListOfEnum;
+  inherit (builtins) toString;
+in
+  checkListOfEnum "$Rose-Pine: GTK Theme Variants" [
+    "Main-B-LB"
+    "Main-B"
+    "Main-BL-LB"
+    "Main-BL"
+  ]
+  themeVariant
+  checkListOfEnum "$RosePine: GTK Theme Variants" [
+    ""
+    "Moon"
+  ]
+  iconVariant
+  stdenv.mkDerivation {
+    pname = "rose-pine-gtk";
+    version = "unstable-2023-02-20";
 
-  src = fetchFromGitHub {
-    owner = "rose-pine";
-    repo = "gtk";
-    rev = "7a4c40989fd42fd8d4a797f460c79fc4a085c304";
-    sha256 = "0q74wjyrsjyym770i3sqs071bvanwmm727xzv50wk6kzvpyqgi67";
-  };
+    src = fetchFromGitHub {
+      owner = "Fausto-Korpsvart";
+      repo = "Rose-Pine-GKT-Theme";
+      rev = "95aa1f2b2cc30495b1fc5b614dc555b3eef0e27d";
+      hash = "";
+    };
 
-  buildInputs = [
-    gnome-themes-extra # adwaita engine for Gtk2
-    gtk_engines # pixmap engine for Gtk2
-  ];
+    nativeBuildInputs = [jdupes];
 
-  propagatedUserEnvPkgs = [
-    gtk-engine-murrine # murrine engine for Gtk2
-  ];
+    propagatedUserEnvPkgs = [gtk-engine-murrine];
 
-  # avoid the makefile which is only for theme maintainers
-  dontBuild = true;
+    installPhase = let
+      gtkTheme = "RosePine-${toString themeVariant}";
+      iconTheme = "Rose-Pine-${toString iconVariant}";
+    in ''
+      runHook preInstall
 
-  installPhase = ''
-    runHook preInstall
+      mkdir -p $out/share/themes
+      mkdir -p $out/share/icons
 
-    mkdir -p $out/share/themes/rose-pine{,-dawn,-moon}/gtk-4.0
+      cp -r $src/themes/${gtkTheme} $out/share/themes
+      cp -r $src/icons/${iconTheme} $out/share/icons
 
-    variants=("rose-pine" "rose-pine-dawn" "rose-pine-moon")
-    for n in "''${variants[@]}"; do
-      cp -r $src/gtk3/"''${n}"-gtk/* $out/share/themes/"''${n}"
-      cp -r $src/gtk4/"''${n}".css $out/share/themes/"''${n}"/gtk-4.0/gtk.css
-    done
+      # Duplicate files -> hard-links = reduced install-size!
+      jdupes -L -r $out/share
 
-    runHook postInstall
-  '';
+      runHook postInstall
+    '';
 
-  meta = with lib; {
-    description = "Rosé Pine theme for GTK";
-    homepage = "https://github.com/rose-pine/gtk";
-    license = licenses.gpl3Only;
-    platforms = platforms.linux;
-    maintainers = with maintainers; [romildo the-argus];
-  };
-}
+    meta = with lib; {
+      description = "A GTK theme with the Rosé Pine colour palette.";
+      homepage = "https://github.com/Fausto-Korpsvart/Rose-Pine-GTK-Theme";
+      license = licenses.gpl3Only;
+      # maintainers = [ Icy-Thought ];
+      platforms = platforms.all;
+    };
+  }

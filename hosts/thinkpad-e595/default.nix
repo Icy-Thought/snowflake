@@ -35,7 +35,7 @@
         typst.enable = true;
       };
     };
-    themes.active = "rose-pine";
+    themes.active = "kanagawa";
 
     desktop = {
       xmonad.enable = true;

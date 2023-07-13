@@ -120,9 +120,9 @@ myConfig =
       , keys               = customKeys (const []) addKeys
       }
 
-icyActiveWin   = "#bb7b79"
+icyActiveWin   = "#C0A36E"
 
-icyInactiveWin = "#26233a"
+icyInactiveWin = "#2A2A37"
 
 icyTheme =
   def { activeColor         = icyActiveWin
