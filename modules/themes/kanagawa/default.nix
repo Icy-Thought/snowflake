@@ -70,7 +70,7 @@ in {
               bg = "#1F1F28";
               panelbg = "#72A7BC";
               border = "#76946A";
-              highlight = "#9CABCA";
+              highlight = "#957FB8";
             };
           };
 
@@ -85,7 +85,7 @@ in {
               outer = "hsla(33, 64%, 62%, 1)";
               inner = "hsla(103, 17%, 50%, 1)";
             };
-            selected = "hsla(198, 41%, 65%, 1)";
+            selected = "hsla(199, 19%, 49%, 1)";
             urgent = "hsl(359, 52%, 51%, 1)";
             transparent = "hsla(0, 0%, 0%, 0)";
           };

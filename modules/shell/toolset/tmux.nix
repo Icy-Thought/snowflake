@@ -92,10 +92,10 @@ in {
 
         # Windows:
         set-option -g window-status-format "#[fg=${types.fg}] #W/#{window_panes} "
-        set-option -g window-status-current-format "#{?client_prefix,#[fg=${types.bg}]#[bg=${normal.red}] #I:#W #[fg=${normal.red}]#[bg=default],#[fg=${types.bg}]#[bg=${types.border}] #I:#W #[fg=${types.border}]#[bg=default]}"
+        set-option -g window-status-current-format "#{?client_prefix,#[fg=${types.bg}]#[bg=${normal.red}] #I:#W #[fg=${normal.red}]#[bg=default],#[fg=${types.bg}]#[bg=${types.highlight}] #I:#W #[fg=${types.highlight}]#[bg=default]}"
 
         # -------===[ Statusline ]===------- #
-        set-option -g status-left "#[fg=${types.bg}]#[bg=${normal.blue}]#[bold]   #[fg=${normal.blue}]#[bg=default]"
+        set-option -g status-left "#[fg=${types.bg}]#[bg=${normal.cyan}]#[bold]   #[fg=${normal.cyan}]#[bg=default]"
         set-option -g status-bg default
         set-option -g status-right "#[italics]∡ #H | %b %d, %H:%M  #[fg=${types.bg},bg=${types.panelbg},bold,italics] base-#S "
 
