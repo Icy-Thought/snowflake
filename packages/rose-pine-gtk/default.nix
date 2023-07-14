@@ -43,8 +43,7 @@ in
     in ''
       runHook preInstall
 
-      mkdir -p $out/share/themes
-      mkdir -p $out/share/icons
+      mkdir -p $out/share/{icons,themes}
 
       cp -r $src/themes/${gtkTheme} $out/share/themes
       cp -r $src/icons/${iconTheme} $out/share/icons

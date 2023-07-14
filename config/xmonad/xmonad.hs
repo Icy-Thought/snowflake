@@ -976,8 +976,3 @@ addKeys conf@XConfig { modMask = modm } =
   where
     modalt = modm .|. mod1Mask
     hyper  = controlMask .|. modalt
-
--- Local Variables:
--- flycheck-ghc-args: ("-Wno-missing-signatures")
--- haskell-indent-offset: 4
--- End:

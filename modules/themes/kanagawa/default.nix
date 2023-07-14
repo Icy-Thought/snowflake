@@ -15,12 +15,12 @@ in {
       modules.themes = {
         wallpaper = mkDefault ./assets/oceanlife-turtle.jpg;
         gtk = {
-          name = "Kanagawa-B";
-          package = pkgs.my.kanagawa-gtk.override {themeVariants = ["B"];};
+          name = "Kanagawa-BL";
+          package = pkgs.my.kanagawa-gtk.override {themeVariants = ["BL"];};
         };
         iconTheme = {
           name = "Kanagawa";
-          package = pkgs.my.kanagawa-gtk.override {themeVariants = ["B"];};
+          package = pkgs.my.kanagawa-gtk.override {themeVariants = ["BL"];};
         };
         pointer = {
           name = "Bibata-Modern-Classic";

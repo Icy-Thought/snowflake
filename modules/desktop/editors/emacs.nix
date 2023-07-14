@@ -120,14 +120,14 @@ in {
       };
 
       home.configFile = {
-        irkalla-conf = {
+        irkalla-lib = {
           target = "emacs/";
-          source = "${inputs.emacs-dir}/irkalla/config";
+          source = "${inputs.emacs-dir}/irkalla/lib";
           recursive = true;
         };
         irkalla-init = {
-          source = "${inputs.emacs-dir}/irkalla/init.org";
           target = "emacs/init.org";
+          source = "${inputs.emacs-dir}/irkalla/init.org";
           onChange = let
             initFiles = "${config.hm.xdg.configHome}/emacs/init.org";
           in ''
@@ -143,10 +143,10 @@ in {
     (mkIf (cfg.template == "doomemacs") {
       hm.imports = [inputs.doomemacs.hmModule];
 
-      hm.programs.doom-emacs = {
+      hm.programs.doomemacs = {
         enable = true;
         emacsPackage = cfg.transparency.package;
-        doomPrivateDir = "${inputs.emacs-dir}/doom-config";
+        doomPrivateDir = "${inputs.emacs-dir}/doomconfig";
       };
 
       env.PATH = ["$XDG_CONFIG_HOME/emacs/bin"];
