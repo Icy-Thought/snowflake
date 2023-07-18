@@ -45,7 +45,7 @@
       };
       editors = {
         default = "nvim";
-        neovim.enable = true;
+        helix.enable = true;
         emacs = {
           enable = true;
           transparency.enable = true;

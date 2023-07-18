@@ -120,11 +120,6 @@ in {
       };
 
       home.configFile = {
-        irkalla-lib = {
-          target = "emacs/";
-          source = "${inputs.emacs-dir}/irkalla/lib";
-          recursive = true;
-        };
         irkalla-init = {
           target = "emacs/init.org";
           source = "${inputs.emacs-dir}/irkalla/init.org";
@@ -136,6 +131,11 @@ in {
               --eval "(setq org-confirm-babel-evaluate nil)" \
               --eval '(org-babel-tangle-file "${initFiles}")'
           '';
+        };
+        irkalla-lib = {
+          target = "emacs/";
+          source = "${inputs.emacs-dir}/irkalla/lib/";
+          recursive = true;
         };
       };
     })
