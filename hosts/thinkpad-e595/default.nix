@@ -21,11 +21,6 @@
       # samba.sharing.enable = true;
     };
     services = {ssh.enable = true;};
-    containers.transmission = {
-      enable = false; # TODO: Once fixed -> enable = true;
-      username = "alonzo";
-      #  password = builtins.readFile config.age.secrets.torBylon.path;
-    };
     develop = {
       haskell.enable = true;
       python.enable = true;
@@ -45,7 +40,7 @@
       };
       editors = {
         default = "nvim";
-        helix.enable = true;
+        neovim.enable = true;
         emacs = {
           enable = true;
           transparency.enable = true;
@@ -81,6 +76,13 @@
         };
       };
     };
+
+    containers.transmission = {
+      enable = false; # TODO: Once fixed -> enable = true;
+      username = "alonzo";
+      #  password = builtins.readFile config.age.secrets.torBylon.path;
+    };
+    virtual.wine.enable = true;
   };
 
   # KDE-Connect + Start-up indicator

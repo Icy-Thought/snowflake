@@ -188,9 +188,9 @@ in {
           package = package;
         };
         gtk3.bookmarks = map (dir: "file://${config.user.home}/" + dir) [
-          "git/icy-thought/snowflake"
-          "git/icy-thought/cs-notes"
-          "git/icy-thought/notebook"
+          "Workspace/public/snowflake"
+          "Workspace/public/cs-notes"
+          "Workspace/public/notebook"
           "Library/unexplored"
           "Library/unexplored/mathematics"
           "Library/unexplored/programming"

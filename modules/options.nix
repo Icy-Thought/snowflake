@@ -24,7 +24,7 @@ in {
 
     snowflake = {
       dir = mkOpt path (findFirst pathExists (toString ../.) [
-        "${config.user.home}/git/icy-thought/snowflake"
+        "${config.user.home}/Workspace/public/snowflake"
         "/etc/snowflake"
       ]);
       hostDir =

@@ -10,7 +10,9 @@
 in {
   options.modules.virtual.wine = let
     inherit (lib.options) mkEnableOption;
-  in {enable = mkEnableOption "compatibility layer -> windows.exe";};
+  in {
+    enable = mkEnableOption "compatibility layer -> windows.exe";
+  };
 
   config = mkIf config.modules.virtual.wine.enable {
     user.packages = attrValues {

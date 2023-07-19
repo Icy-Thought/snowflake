@@ -133,8 +133,8 @@ in {
           '';
         };
         irkalla-lib = {
-          target = "emacs/";
-          source = "${inputs.emacs-dir}/irkalla/lib/";
+          target = "emacs/lib";
+          source = "${inputs.emacs-dir}/irkalla/lib";
           recursive = true;
         };
       };
