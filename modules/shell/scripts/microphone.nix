@@ -72,8 +72,11 @@ in {
             stdout=subprocess.PIPE,
             universal_newlines=True,
         )
-        micVol_level = get_micVol.stdout.strip()
 
+        if get_micVol.returncode == 0:
+            micVol_level = get_volume.stdout.strip()
+        else:
+            micVol_level = "5"
 
         def notification():
             ICONS = [" ", " "]

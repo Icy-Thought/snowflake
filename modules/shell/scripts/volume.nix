@@ -72,9 +72,14 @@ in {
             stdout=subprocess.PIPE,
             universal_newlines=True,
         )
-        volume_level = get_volume.stdout.strip()
+
+        if get_volume.returncode == 0:
+            volume_level = get_volume.stdout.strip()
+        else:
+            volume_level = "5"
 
         percentage = int(volume_level)
+
         LEVEL = [" ", " ", "墳 ", " "]
 
         if args.command == "toggle-mute" and get_mute == "false":
