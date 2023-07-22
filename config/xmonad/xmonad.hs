@@ -747,11 +747,16 @@ myScratchpads = do
     inEditor >-> setFrameName mailSessionID
              >-> eval (elispFun "notmuch")
 
+  -- | What matrix-client should've been..
+  matrixClient <- getInput $
+    inEditor >-> setFrameName matrixSessionID
+             >-> eval (elispFun "irkalla/ement-auto-connect")
+
   pure [ NS "Discord"            "discordcanary"      (className =? "discord")          floatCenter
        , NS "EasyEffects"        "easyeffects"        (title     =? "Easy Effects")     floatCenter
        , NS "Emacs"              emacsScratch         (title     =? emacsScratchID)     floatCenter
        , NS "Mail"               mailSession          (title     =? mailSessionID)      floatCenter
-       , NS "Matrix"             "element-desktop"    (className =? "Element")          floatCenter
+       , NS "Matrix"             matrixClient         (title     =? matrixSessionID)    floatCenter
        , NS "Spotify"            "spotify"            (className =? "Spotify")          floatCenter
        , NS "System Monitor"     btopLaunch           (appName   =? sysMonID)           floatCenter
        , NS "Telegram"           "telegram-desktop"   (className =? "TelegramDesktop")  floatCenter
@@ -760,6 +765,7 @@ myScratchpads = do
   where
     emacsScratchID = "emacs-scratch"
     mailSessionID  = "notmuch-scratch"
+    matrixSessionID  = "ement-scratch"
     sysMonID       = "system-monitor"
 
     -- | Defining our custom floats

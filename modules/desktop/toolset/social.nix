@@ -62,7 +62,7 @@ in {
             Homeserver = "https://matrix.org";
             ListenAddress = "localhost";
             ListenPort = 8009;
-            IgnoreVerification = false;
+            IgnoreVerification = true;
             UseKeyring = false;
           };
         };

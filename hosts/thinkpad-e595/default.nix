@@ -43,7 +43,7 @@
         neovim.enable = true;
         emacs = {
           enable = true;
-          transparency.enable = true;
+          transparency.enable = false;
         };
       };
       browsers = {
@@ -67,7 +67,7 @@
         };
         social = {
           base.enable = true;
-          matrix.withClient.enable = true;
+          matrix.withDaemon.enable = true;
         };
         # docView.sioyek.enable = true;
         docViewer = {
