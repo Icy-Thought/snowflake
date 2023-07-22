@@ -3,7 +3,6 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "nixpkgs/nixos-23.05";
     nixpkgs-unstable.url = "nixpkgs/nixpkgs-unstable";
     home-manager = {
       url = "github:nix-community/home-manager/master";
@@ -51,7 +50,6 @@
   outputs = inputs @ {
     self,
     nixpkgs,
-    nixpkgs-stable,
     nixpkgs-unstable,
     ...
   }: let
@@ -65,7 +63,6 @@
         overlays = extraOverlays ++ (lib.attrValues self.overlays);
       };
     pkgs = mkPkgs nixpkgs [self.overlays.default];
-    pkgs-stable = mkPkgs nixpkgs-stable [];
     pkgs-unstable = mkPkgs nixpkgs-unstable [];
 
     lib = nixpkgs.lib.extend (final: prev: {
@@ -81,7 +78,6 @@
       (mapModules ./overlays import)
       // {
         default = final: prev: {
-          stable = pkgs-stable;
           unstable = pkgs-unstable;
           my = self.packages.${system};
         };
