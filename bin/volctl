@@ -1,0 +1,133 @@
+#!/usr/bin/env python3
+
+import argparse
+import re
+import subprocess
+import time
+
+parser = argparse.ArgumentParser(
+    prog="Audio Volume Control",
+    description="A simple script to help control the volume levels of the audio transmitted by your hardware device(s)!",
+    epilog="Please, try again.",
+)
+
+subparser = parser.add_subparsers(dest="command")
+
+increase = subparser.add_parser("increase")
+decrease = subparser.add_parser("decrease")
+mute = subparser.add_parser("toggle-mute")
+status = subparser.add_parser("status")
+
+increase.add_argument(
+    "-l",
+    "--level",
+    type=int,
+    default=5,
+    help="Increase audio volume levels by +x%. (default: +%(default)%)",
+)
+
+decrease.add_argument(
+    "-l",
+    "--level",
+    type=int,
+    default=5,
+    help="Decrease audio volume levels by -x%. (default: -%(default)%)",
+)
+
+mute.add_argument(
+    "-t",
+    "--toggle-mute",
+    action="store_true",
+    help="Toggle mute for device audio system. (default: False)",
+)
+
+args = parser.parse_args()
+
+get_volume = subprocess.run(
+    ["wpctl", "get-volume", "@DEFAULT_AUDIO_SINK@"],
+    stdout=subprocess.PIPE,
+    universal_newlines=True,
+)
+parsed_volume = get_volume.stdout.strip()
+
+volume_level = float(re.sub("[^0-9|.]", "", parsed_volume))
+is_muted = bool(re.search(r"\bMUTED\b", parsed_volume))
+
+percentage = int(volume_level * 100)
+LEVEL = [" ", " ", "墳 ", " "]
+
+if args.command == "toggle-mute" and not is_muted:
+    ICON = LEVEL[0]
+elif percentage <= 30:
+    ICON = LEVEL[1]
+elif 30 < percentage <= 70:
+    ICON = LEVEL[2]
+elif percentage > 70:
+    ICON = LEVEL[3]
+else:
+    ICON = ""
+
+
+def notification():
+    if args.command == "toggle-mute" and not is_muted:
+        volume = "0"
+        message = ICON + "Muted Output Audio!"
+    elif args.command == "increase":
+        volume = str(percentage + args.level)
+        message = ICON + "Volume Level: " + volume + "%"
+    elif args.command == "decrease":
+        volume = str(percentage - args.level)
+        message = ICON + "Volume Level: " + volume + "%"
+    else:
+        volume = str(percentage)
+        message = ICON + "Volume Level: " + volume + "%"
+
+    return subprocess.run(
+        [
+            "notify-send",
+            message,
+            "-t",
+            "500",
+            "-h",
+            "string:synchronous:volume",
+            "-h",
+            "int:value:" + volume,
+            "-u",
+            "low",
+        ]
+    )
+
+
+def wireplumber_cli(param: list):
+    subprocess.run(["wpctl"] + param)
+
+
+def control_volume_level():
+    toggle_mute = ["set-mute", "@DEFAULT_AUDIO_SINK@", "toggle"]
+    if args.command == "toggle-mute":
+        command = wireplumber_cli(toggle_mute)
+    elif args.command != "toggle-mute" and is_muted:
+        command = wireplumber_cli(toggle_mute)
+    else:
+        change_volume = ["set-volume", "@DEFAULT_AUDIO_SINK@"]
+        if args.command == "increase":
+            change_volume.append(str(args.level) + "%+")
+        elif args.command == "decrease":
+            change_volume.append(str(args.level) + "%-")
+        command = wireplumber_cli(change_volume)
+    return command, notification()
+
+
+control_volume_level()
+
+
+def volume_status():
+    if args.command == "status":
+        while True:
+            print(ICON + str(percentage) + "%")
+            time.sleep(60)
+    else:
+        return
+
+
+volume_status()

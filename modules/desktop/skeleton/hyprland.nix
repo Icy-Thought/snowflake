@@ -32,8 +32,6 @@ in {
     };
     modules.shell.scripts = {
       brightness.enable = true;
-      microphone.enable = true;
-      volume.enable = true;
       screenshot.enable = true; # TODO
     };
     modules.hardware.kmonad.enable = true;
