@@ -43,7 +43,7 @@
         neovim.enable = true;
         emacs = {
           enable = true;
-          transparency.enable = false;
+          transparency.enable = true;
         };
       };
       browsers = {
