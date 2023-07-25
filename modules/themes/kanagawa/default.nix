@@ -13,7 +13,7 @@ in {
   config = mkIf (cfg.active == "kanagawa") (mkMerge [
     {
       modules.themes = {
-        wallpaper = mkDefault ./assets/oceanlife-turtle.jpg;
+        wallpaper = mkDefault ./assets/ismail-inceoglu-chaos-invoked.jpg;
         gtk = {
           name = "Kanagawa-BL";
           package = pkgs.my.kanagawa-gtk.override {themeVariants = ["BL"];};
