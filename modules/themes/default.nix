@@ -213,7 +213,7 @@ in {
       fonts = let
         inherit (cfg.fontConfig) packages emoji mono sans;
       in {
-        fonts = packages;
+        packages = packages;
         fontconfig.defaultFonts = {
           monospace = mono;
           sansSerif = sans;

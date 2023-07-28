@@ -162,28 +162,25 @@ in {
       };
 
       plugins = let
-        mkPlugin = name: {
-          inherit name;
-          inherit (pkgs."zsh-${name}") src;
+        mkZshPlugin = {
+          plug,
+          file ? "${plug.pname}.plugin.zsh",
+        }: rec {
+          name = plug.pname;
+          src = plug.src;
+          inherit file;
         };
       in
-        [
-          {
-            name = "zsh-abbr";
-            src = pkgs.fetchFromGitHub {
-              owner = "olets";
-              repo = "zsh-abbr";
-              rev = "v4.9.1";
-              hash = "sha256-pVhhViYa5bsFDp66m2sTrnnzfXvcZw6qqQKWRLDXK/Y=";
-            };
-          }
-        ]
-        ++ (map (p: mkPlugin p) [
-          "autopair"
-          "nix-shell"
-          "vi-mode"
-          "you-should-use"
-        ]);
+        with pkgs; [
+          (mkZshPlugin {plug = zsh-abbr;})
+          (mkZshPlugin {plug = zsh-autopair;})
+          (mkZshPlugin {plug = zsh-vi-mode;})
+          (mkZshPlugin {plug = zsh-you-should-use;})
+          (mkZshPlugin {
+            plug = zsh-nix-shell;
+            file = "nix-shell.plugin.zsh";
+          })
+        ];
     };
 
     home.configFile = {

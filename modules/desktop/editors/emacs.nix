@@ -19,8 +19,8 @@ in {
     package = mkPackageOption pkgs "emacs" {
       default =
         if (envProto == "wayland")
-        then "emacs-pgtk"
-        else "emacs-git";
+        then "emacs-unstable-pgtk"
+        else "emacs-unstable";
     };
     transparency = {
       enable = mkEnableOption "Appropriate transparency for our Emacs frame";

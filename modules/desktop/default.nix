@@ -76,7 +76,7 @@ in {
       fonts = {
         fontDir.enable = true;
         enableGhostscriptFonts = true;
-        fonts = attrValues {inherit (pkgs) sarasa-gothic scheherazade-new;};
+        packages = attrValues {inherit (pkgs) sarasa-gothic scheherazade-new;};
       };
 
       services.xserver.enable = true;

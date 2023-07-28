@@ -82,7 +82,7 @@
       username = "alonzo";
       #  password = builtins.readFile config.age.secrets.torBylon.path;
     };
-    virtual.wine.enable = true;
+    # virtual.wine.enable = true;
   };
 
   # KDE-Connect + Start-up indicator
