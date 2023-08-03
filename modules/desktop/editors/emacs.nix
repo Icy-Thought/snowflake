@@ -9,33 +9,22 @@
   inherit (lib.modules) mkIf mkMerge;
 
   cfg = config.modules.desktop.editors.emacs;
-  envProto = config.modules.desktop.envProto;
 in {
   options.modules.desktop.editors.emacs = let
-    inherit (lib.options) mkEnableOption mkOption mkPackageOption;
+    inherit (lib.options) mkEnableOption mkOption;
     inherit (lib.types) enum nullOr package;
   in {
     enable = mkEnableOption "Spread the joy of Emacs in our flake";
-    package = mkPackageOption pkgs "emacs" {
-      default =
+    package = mkOption {
+      type = package;
+      default = let
+        inherit (pkgs) emacs-git emacs-pgtk;
+        envProto = config.modules.desktop.envProto;
+      in
         if (envProto == "wayland")
-        then "emacs-unstable-pgtk"
-        else "emacs-unstable";
-    };
-    transparency = {
-      enable = mkEnableOption "Appropriate transparency for our Emacs frame";
-      package = mkOption {
-        type = package;
-        default =
-          if cfg.transparency.enable
-          then
-            cfg.package.override {
-              withGTK3 = true;
-              withX = true;
-            }
-          else cfg.package;
-        description = "(temporary) non-sensical Emacs solution..";
-      };
+        then emacs-pgtk
+        else emacs-git.override {toolkit = "no";};
+      description = "Emacs package which will be installed in our flake system.";
     };
     template = mkOption {
       type = nullOr (enum ["doomemacs" "irkalla"]);
@@ -74,19 +63,20 @@ in {
         }
 
         # -------===[ Useful Functions ]===------- #
-        emc()      { pgrep emacs && emacsclient -n "$@" || emacs -nw "$@" }
-        emc-diff() { emacs -nw --eval "(ediff-files \"$1\" \"$2\")"; }
-        emc-kill() { emacsclient --eval '(kill-emacs)'; }
-        emc-man()  { emacs -nw --eval "(switch-to-buffer (man \"$1\"))"; }
+        ediff()  { emacsclient -c -a \'\' --eval "(ediff-files \"$1\" \"$2\")"; }
+        edired() { emacsclient -c -a \'\' --eval "(progn (dired \"$1\"))"; }
+        ekill()  { emacsclient -c -a \'\' --eval '(kill-emacs)'; }
+        eman()   { emacsclient -c -a \'\' --eval "(switch-to-buffer (man \"$1\"))"; }
+        magit()  { emacsclient -c -a \'\' --eval '(magit-status)'; }
       '';
 
       hm.programs.fish = {
-        # Easier frame creation (fish)
         functions = {
-          emc = "pgrep emacs && emacsclient -n $argv || emacs -nw $argv";
-          emc-diff = "emacs -nw --eval \"(ediff-files '$argv[1]' '$argv[2]')\"";
-          emc-kill = "emacsclient --eval '(kill-emacs)'";
-          emc-man = "emacs -nw --eval \"(switch-to-buffer (man '$argv[1]'))\"";
+          ediff = "emacsclient -c -a '' --eval \"(ediff-files '$argv[1]' '$argv[2]')\"";
+          edired = "emacsclient -c -a '' --eval \"(progn (dired '$argv[1]'))\"";
+          ekill = "emacsclient -c -a '' --eval '(kill-emacs)'";
+          eman = "emacsclient -c -a '' --eval \"(switch-to-buffer (man '$argv[1]'))\"";
+          magit = " emacsclient -c -a '' --eval '(magit-status)'";
         };
 
         # Allow fish-shell to send information to vterm via properly escaped sequences.
@@ -111,10 +101,10 @@ in {
     (mkIf (cfg.template == "irkalla") {
       hm.programs.emacs = {
         enable = true;
-        package = cfg.transparency.package;
+        package = cfg.package;
         extraPackages = epkgs:
           attrValues {
-            inherit (epkgs.melpaPackages) jinx pdf-tools vterm;
+            inherit (epkgs.melpaPackages) jinx pdf-tools telega vterm;
             treesitter-grammars = epkgs.treesit-grammars.with-all-grammars;
           };
       };
@@ -126,7 +116,7 @@ in {
           onChange = let
             initFiles = "${config.hm.xdg.configHome}/emacs/init.org";
           in ''
-            ${cfg.transparency.package}/bin/emacs --batch \
+            ${cfg.package}/bin/emacs --batch \
               --eval "(require 'ob-tangle)" \
               --eval "(setq org-confirm-babel-evaluate nil)" \
               --eval '(org-babel-tangle-file "${initFiles}")'
@@ -145,7 +135,7 @@ in {
 
       hm.programs.doomemacs = {
         enable = true;
-        emacsPackage = cfg.transparency.package;
+        emacsPackage = cfg.package;
         doomPrivateDir = "${inputs.emacs-dir}/doomconfig";
       };
 

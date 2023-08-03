@@ -3,8 +3,6 @@ let
     ls = "exa -Slhg --icons";
     lsa = "exa -Slhga --icons";
     tree = "exa -SlhgT --icons";
-    emc = "emacsclient -c";
-    tmc = "emacsclient -t";
     wget = "curl -O";
 
     # Nix-related
@@ -24,6 +22,11 @@ let
     # Other
     yta = "youtube-dl -x --audio-format mp3";
     ytv = "youtube-dl --best-quality";
+  };
+
+  emacs = {
+    em = "emacsclient -c -a ''";
+    emt = "emacsclient -t";
   };
 
   git = {
@@ -173,4 +176,4 @@ let
     gcb = "git checkout -b";
   };
 in
-  main // git
+  main // emacs // git
