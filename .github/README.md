@@ -48,11 +48,11 @@
 
 ## XMonad
 
-![XMonad](./assets/themes/rose-pine/xmonad.png)
+![XMonad](./assets/themes/kanagawa/xmonad.png)
 
 ## Neovim
 
-![Neovim](./assets/themes/rose-pine/neovim.png)
+![Neovim](./assets/themes/kanagawa/neovim.png)
 
 # Introduction
 
