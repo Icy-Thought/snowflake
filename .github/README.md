@@ -28,6 +28,7 @@
 
 - [Desktop Preview](#desktop-preview)
   - [XMonad](#xmonad)
+  - [Emacs](#emacs)
   - [Neovim](#neovim)
 - [Introduction](#introduction)
 - [Getting Started](#getting-started)
@@ -49,6 +50,10 @@
 ## XMonad
 
 ![XMonad](./assets/themes/kanagawa/xmonad.png)
+
+## Emacs
+
+![Emacs](./assets/themes/kanagawa/emacs.png)
 
 ## Neovim
 
