@@ -293,89 +293,48 @@ in {
 
     (mkIf (envProto == "x11") (mkMerge [
       {
-        # Read xresources files in ~/.config/xtheme/* to allow modular configuration
-        # of Xresources.
-        modules.themes.onReload.xtheme = ''
-          cat "$XDG_CONFIG_HOME"/xtheme/* | ${getExe pkgs.xorg.xrdb} -load
-        '';
-
-        home.configFile = {
-          xtheme-init = {
-            target = "xtheme.init";
-            text = cfg.onReload.xtheme;
-            executable = true;
-          };
-
-          xtheme-definitions = {
-            target = "xtheme/00-init";
-            text = let
+        hm.xresources = {
+          path = "${config.user.home}/.Xresources";
+          properties = let
+            colorscheme = let
               inherit (cfg.colors.main) bright normal types;
-            in ''
-              #define bg   ${types.bg}
-              #define fg   ${types.fg}
-              #define blk  ${normal.black}
-              #define bblk ${bright.black}
-              #define red  ${normal.red}
-              #define bred ${bright.red}
-              #define grn  ${normal.green}
-              #define bgrn ${bright.green}
-              #define ylw  ${normal.yellow}
-              #define bylw ${bright.yellow}
-              #define blu  ${normal.blue}
-              #define bblu ${bright.blue}
-              #define mag  ${normal.magenta}
-              #define bmag ${bright.magenta}
-              #define cyn  ${normal.cyan}
-              #define bcyn ${bright.cyan}
-              #define wht  ${normal.white}
-              #define bwht ${bright.white}
-            '';
-          };
+            in {
+              "*.foreground" = "${types.fg}";
+              "*.background" = "${types.bg}";
 
-          xtheme-colors = {
-            target = "xtheme/05-colors";
-            text = ''
-              *.foreground: fg
-              *.background: bg
-              *.color0:  blk
-              *.color1:  red
-              *.color2:  grn
-              *.color3:  ylw
-              *.color4:  blu
-              *.color5:  mag
-              *.color6:  cyn
-              *.color7:  wht
-              *.color8:  bblk
-              *.color9:  bred
-              *.color10: bgrn
-              *.color11: bylw
-              *.color12: bblu
-              *.color13: bmag
-              *.color14: bcyn
-              *.color15: bwht
-            '';
-          };
+              "*.color0" = "${normal.black}";
+              "*.color8" = "${bright.black}";
 
-          xtheme-fonts = {
-            target = "xtheme/05-fonts";
-            text = let
+              "*.color1" = "${normal.red}";
+              "*.color9" = "${bright.red}";
+
+              "*.color2" = "${normal.green}";
+              "*.color10" = "${bright.green}";
+
+              "*.color3" = "${normal.yellow}";
+              "*.color11" = "${bright.yellow}";
+
+              "*.color4" = "${normal.blue}";
+              "*.color12" = "${bright.blue}";
+
+              "*.color5" = "${normal.magenta}";
+              "*.color13" = "${bright.magenta}";
+
+              "*.color6" = "${normal.cyan}";
+              "*.color14" = "${bright.cyan}";
+
+              "*.color7" = "${normal.white}";
+              "*.color15" = "${bright.white}";
+            };
+
+            font = let
               inherit (cfg.font.mono) family size weight;
-            in ''
-              *.font: xft:${family}:style=${weight}:pixelsize=${toString size}
-              Emacs.font: ${family}:style=${weight}:pixelsize=${toString size}
-            '';
-          };
-
-          xtheme-cursor = {
-            target = "xtheme/06-cursor";
-            text = let
-              inherit (cfg.pointer) name size;
-            in ''
-              Xcursor.name: left_ptr
-              Xcursor.size: ${toString size}
-              Xcursor.theme: ${name}
-            '';
-          };
+            in {
+              "*.font" = "xft:${family}:style=${weight}:pixelsize=${toString size}";
+              "Emacs.font" = "${family}:style=${weight}:pixelsize=${toString size}";
+            };
+          in
+            colorscheme // font;
         };
 
         home.pointerCursor.x11 = {
@@ -413,8 +372,8 @@ in {
           fi
         '';
       in {
-        services.xserver.displayManager.sessionCommands = command;
         modules.themes.onReload.wallpaper = command;
+        services.xserver.displayManager.sessionCommands = command;
 
         home.dataFile =
           mkIf (cfg.wallpaper != null) {"wallpaper".source = cfg.wallpaper;};
