@@ -296,45 +296,38 @@ in {
         hm.xresources = {
           path = "${config.user.home}/.Xresources";
           properties = let
-            colorscheme = let
-              inherit (cfg.colors.main) bright normal types;
-            in {
-              "*.foreground" = "${types.fg}";
-              "*.background" = "${types.bg}";
+            inherit (cfg.colors.main) bright normal types;
+            inherit (cfg.font.mono) family size weight;
+          in {
+            "*.font" = "xft:${family}:style=${weight}:pixelsize=${toString size}";
 
-              "*.color0" = "${normal.black}";
-              "*.color8" = "${bright.black}";
+            "*.foreground" = "${types.fg}";
+            "*.background" = "${types.bg}";
 
-              "*.color1" = "${normal.red}";
-              "*.color9" = "${bright.red}";
+            "*.color0" = "${normal.black}";
+            "*.color8" = "${bright.black}";
 
-              "*.color2" = "${normal.green}";
-              "*.color10" = "${bright.green}";
+            "*.color1" = "${normal.red}";
+            "*.color9" = "${bright.red}";
 
-              "*.color3" = "${normal.yellow}";
-              "*.color11" = "${bright.yellow}";
+            "*.color2" = "${normal.green}";
+            "*.color10" = "${bright.green}";
 
-              "*.color4" = "${normal.blue}";
-              "*.color12" = "${bright.blue}";
+            "*.color3" = "${normal.yellow}";
+            "*.color11" = "${bright.yellow}";
 
-              "*.color5" = "${normal.magenta}";
-              "*.color13" = "${bright.magenta}";
+            "*.color4" = "${normal.blue}";
+            "*.color12" = "${bright.blue}";
 
-              "*.color6" = "${normal.cyan}";
-              "*.color14" = "${bright.cyan}";
+            "*.color5" = "${normal.magenta}";
+            "*.color13" = "${bright.magenta}";
 
-              "*.color7" = "${normal.white}";
-              "*.color15" = "${bright.white}";
-            };
+            "*.color6" = "${normal.cyan}";
+            "*.color14" = "${bright.cyan}";
 
-            font = let
-              inherit (cfg.font.mono) family size weight;
-            in {
-              "*.font" = "xft:${family}:style=${weight}:pixelsize=${toString size}";
-              "Emacs.font" = "${family}:style=${weight}:pixelsize=${toString size}";
-            };
-          in
-            colorscheme // font;
+            "*.color7" = "${normal.white}";
+            "*.color15" = "${bright.white}";
+          };
         };
 
         home.pointerCursor.x11 = {

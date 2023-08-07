@@ -9,6 +9,7 @@
   inherit (lib.modules) mkIf mkMerge;
 
   cfg = config.modules.desktop.editors.emacs;
+  envProto = config.modules.desktop.envProto;
 in {
   options.modules.desktop.editors.emacs = let
     inherit (lib.options) mkEnableOption mkOption;
@@ -19,7 +20,6 @@ in {
       type = package;
       default = let
         inherit (pkgs) emacs-git emacs-pgtk;
-        envProto = config.modules.desktop.envProto;
       in
         if (envProto == "wayland")
         then emacs-pgtk
@@ -47,6 +47,15 @@ in {
         });
 
       environment.variables = {EMACSDIR = "$XDG_CONFIG_HOME/emacs";};
+
+      hm.xresources.properties = mkIf (envProto == "x11") (let
+        inherit (config.modules.themes.font.mono) family size weight;
+      in {
+        "Emacs.menuBar" = "off";
+        "Emacs.toolBar" = "off";
+        "Emacs.verticalScrollBars" = "off";
+        "Emacs.font" = "${family}:style=${weight}:pixelsize=${toString size}";
+      });
 
       hm.programs.zsh.initExtra = ''
         # -------===[ VTerm Integration ]===------- #
