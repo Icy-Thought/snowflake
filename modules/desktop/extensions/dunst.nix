@@ -6,7 +6,6 @@
   ...
 }: let
   inherit (lib.attrsets) optionalAttrs;
-  inherit (lib.meta) getExe;
   inherit (lib.modules) mkIf;
 
   cfg = config.modules.desktop.extensions.dunst;
@@ -40,7 +39,7 @@ in {
               sticky_history = "no";
               history_length = 20;
 
-              browser = "${getExe pkgs.firefox-bin}";
+              browser = "${pkgs.firefox-bin}/bin/firefox";
               always_run_script = true;
               ignore_dbusclose = false;
               force_xinerama = false;

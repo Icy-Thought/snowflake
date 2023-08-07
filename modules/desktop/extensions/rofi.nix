@@ -5,8 +5,10 @@
   pkgs,
   ...
 }: let
-  inherit (lib) attrValues getExe;
+  inherit (lib.attrsets) attrValues;
+  inherit (lib.meta) getExe;
   inherit (lib.modules) mkIf;
+  inherit (lib.strings) concatStringsSep;
 
   cfg = config.modules.desktop.extensions.rofi;
   envProto = config.modules.desktop.envProto;
@@ -47,9 +49,13 @@ in {
         display-window = " 﩯 Window ";
         display-power-menu = "  Power Menu ";
 
-        modi = "run,drun,filebrowser,emoji,power-menu:${
-          getExe pkgs.rofi-power-menu
-        }";
+        modi = concatStringsSep "," [
+          "run"
+          "drun"
+          "filebrowser"
+          "emoji"
+          "power-menu:${getExe rofi-power-menu}"
+        ];
 
         xoffset = 0;
         yoffset = 0;

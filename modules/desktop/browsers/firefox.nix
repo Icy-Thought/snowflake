@@ -7,7 +7,6 @@
 }: let
   inherit (builtins) toJSON;
   inherit (lib.attrsets) mapAttrsToList;
-  inherit (lib.meta) getExe;
   inherit (lib.modules) mkIf mkMerge;
   inherit (lib.strings) concatStrings;
 
@@ -43,7 +42,7 @@ in {
           desktopName = "Firefox (Private)";
           genericName = "Launch a Private Firefox Instance";
           icon = "firefox";
-          exec = "${getExe firefox-bin} --private-window";
+          exec = "${pkgs.firefox-bin}/bin/firefox --private-window";
           categories = ["Network" "WebBrowser"];
         })
       ];

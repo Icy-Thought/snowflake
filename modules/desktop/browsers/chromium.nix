@@ -6,15 +6,14 @@
   ...
 }: let
   inherit (builtins) toString;
-  inherit (lib.meta) getExe;
   inherit (lib.modules) mkIf;
   inherit (lib.strings) concatStringsSep;
 in {
-  options.modules.desktop.browsers.ungoogled = let
+  options.modules.desktop.browsers.chromium = let
     inherit (lib.options) mkEnableOption;
   in {enable = mkEnableOption "Google-free chromium";};
 
-  config = mkIf config.modules.desktop.browsers.ungoogled.enable {
+  config = mkIf config.modules.desktop.browsers.chromium.enable {
     user.packages = let
       inherit (pkgs) makeDesktopItem ungoogled-chromium;
     in [
@@ -23,7 +22,7 @@ in {
         desktopName = "Ungoogled Web Browser (Private)";
         genericName = "Launch a Private Ungoogled Chromium Instance";
         icon = "chromium";
-        exec = "${getExe ungoogled-chromium} --incognito";
+        exec = "${ungoogled-chromium}/bin/chromium --incognito";
         categories = ["Network"];
       })
     ];

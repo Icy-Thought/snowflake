@@ -19,11 +19,11 @@ in {
     package = mkOption {
       type = package;
       default = let
-        inherit (pkgs) emacs-git emacs-pgtk;
+        inherit (pkgs) emacs-unstable emacs-unstable-pgtk;
       in
         if (envProto == "wayland")
-        then emacs-pgtk
-        else emacs-git.override {toolkit = "no";};
+        then emacs-unstable-pgtk
+        else emacs-unstable.override {toolkit = "no";};
       description = "Emacs package which will be installed in our flake system.";
     };
     template = mkOption {
