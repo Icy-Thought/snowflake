@@ -53,7 +53,7 @@ in {
             inherit (pkgs) bash coreutils mpc_cli util-linux wmctrl;
           };
         in "PATH=/run/wrappers/bin:${makeBinPath dependencies}";
-        ExecStart = "${getExe cfg.package} daemon --no-daemonize";
+        ExecStart = "${cfg.package} daemon --no-daemonize";
         Restart = "on-failure";
       };
       Install.WantedBy = ["graphical-session.target"];

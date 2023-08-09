@@ -32,7 +32,7 @@ in {
         // optionalAttrs cfg.vector.enable {inherit (pkgs) inkscape rnote;}
         // optionalAttrs cfg.raster.enable {
           inherit (pkgs) gimp;
-          inherit (pkgs.gimpPlugins) resynthesizer;
+          # inherit (pkgs.gimpPlugins) resynthesizer;
         }
         // optionalAttrs cfg.modeling.enable {inherit (pkgs) blender;});
   };

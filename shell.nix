@@ -2,7 +2,8 @@
   lib,
   pkgs ? import <nixpkgs> {},
 }: let
-  inherit (lib) attrValues getExe;
+  inherit (lib.attrsets) attrValues;
+  inherit (lib.meta) getExe;
 in
   pkgs.mkShell {
     buildInputs = attrValues {inherit (pkgs) git nix-bash-completions;};

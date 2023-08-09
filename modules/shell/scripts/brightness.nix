@@ -7,7 +7,6 @@
 }: let
   inherit (lib.meta) getExe;
   inherit (lib.modules) mkIf;
-  inherit (pkgs) python3 writeScriptBin;
 in {
   options.modules.shell.scripts.brightness = let
     inherit (lib.options) mkEnableOption;
@@ -17,7 +16,9 @@ in {
     # WARNING: won't work unless light -> udev..
     programs.light.enable = true;
 
-    user.packages = [
+    user.packages = let
+      inherit (pkgs) python3 writeScriptBin;
+    in [
       (writeScriptBin "brightctl" ''
         #!${getExe python3}
 

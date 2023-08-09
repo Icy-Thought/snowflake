@@ -55,7 +55,7 @@
       toolset = {
         downloader.transmission.enable = true;
         graphics = {
-          # raster.enable = true;
+          raster.enable = true;
           vector.enable = true;
         };
         player = {

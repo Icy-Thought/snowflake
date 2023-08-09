@@ -5,8 +5,8 @@
   pkgs,
   ...
 }: let
-  inherit (lib) getExe mkDefault;
-  inherit (lib.modules) mkIf mkMerge;
+  inherit (lib.meta) getExe;
+  inherit (lib.modules) mkDefault mkIf mkMerge;
 
   cfg = config.modules.networking;
 in {
