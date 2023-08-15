@@ -35,7 +35,7 @@ in {
 
         fontConfig = {
           packages = attrValues {
-            inherit (pkgs) noto-fonts-emoji;
+            inherit (pkgs) dancing-script noto-fonts-emoji sarasa-gothic;
             nerdfonts = pkgs.nerdfonts.override {fonts = ["VictorMono"];};
           };
           mono = ["VictorMono Nerd Font Mono"];

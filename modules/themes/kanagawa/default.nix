@@ -29,11 +29,11 @@ in {
         };
         fontConfig = {
           packages = attrValues {
-            inherit (pkgs) cascadia-code noto-fonts-emoji sarasa-gothic;
+            inherit (pkgs) dancing-script noto-fonts-emoji sarasa-gothic;
             nerdfonts =
               pkgs.nerdfonts.override {fonts = ["Arimo" "VictorMono"];};
           };
-          mono = ["VictorMono Nerd Font" "Cascadia Code" "Sarasa Mono SC"];
+          mono = ["VictorMono Nerd Font" "Sarasa Mono SC"];
           sans = ["Arimo Nerd Font" "Sarasa Gothic SC"];
           emoji = ["Noto Color Emoji"];
         };
