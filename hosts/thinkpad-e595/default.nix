@@ -50,7 +50,7 @@
       };
       education = {
         memory.enable = true;
-        vidcom.enable = true;
+        vidcom.enable = false;
       };
       toolset = {
         downloader.transmission.enable = true;
