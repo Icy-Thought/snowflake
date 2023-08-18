@@ -752,21 +752,21 @@ myScratchpads = do
     inEditor >-> setFrameName matrixSessionID
              >-> eval (elispFun "irkalla/ement-auto-connect")
 
-  pure [ NS "Discord"            "discordcanary"      (className =? "discord")          floatCenter
-       , NS "EasyEffects"        "easyeffects"        (title     =? "Easy Effects")     floatCenter
-       , NS "Emacs"              emacsScratch         (title     =? emacsScratchID)     floatCenter
-       , NS "Mail"               mailSession          (title     =? mailSessionID)      floatCenter
-       , NS "Matrix"             matrixClient         (title     =? matrixSessionID)    floatCenter
-       , NS "Spotify"            "spotify"            (className =? "Spotify")          floatCenter
-       , NS "System Monitor"     btopLaunch           (appName   =? sysMonID)           floatCenter
-       , NS "Telegram"           "telegram-desktop"   (className =? "TelegramDesktop")  floatCenter
-       , NS "Transmission"       "transmission-gtk"   (className =? "Transmission-gtk") floatCenter
+  pure [ NS "Discord"        "discordcanary"    (className =? "discord")          floatCenter
+       , NS "EasyEffects"    "easyeffects"      (title     =? "Easy Effects")     floatCenter
+       , NS "Emacs"          emacsScratch       (title     =? emacsScratchID)     floatCenter
+       , NS "Mail"           mailSession        (title     =? mailSessionID)      floatCenter
+       , NS "Matrix"         matrixClient       (title     =? matrixSessionID)    floatCenter
+       , NS "Spotify"        "spotify"          (className =? "Spotify")          floatCenter
+       , NS "System Monitor" btopLaunch         (appName   =? sysMonID)           floatCenter
+       , NS "Telegram"       "telegram-desktop" (className =? "TelegramDesktop")  floatCenter
+       , NS "Transmission"   "transmission-gtk" (className =? "Transmission-gtk") floatCenter
        ]
   where
-    emacsScratchID = "emacs-scratch"
-    mailSessionID  = "notmuch-scratch"
-    matrixSessionID  = "ement-scratch"
-    sysMonID       = "system-monitor"
+    emacsScratchID  = "emacs-scratch"
+    mailSessionID   = "notmuch-scratch"
+    matrixSessionID = "ement-scratch"
+    sysMonID        = "system-monitor"
 
     -- | Defining our custom floats
     floatCenter  = customFloating $ W.RationalRect (1/50) (1/50) (19/20) (19/20)
