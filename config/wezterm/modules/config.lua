@@ -15,6 +15,7 @@ M.window_padding = {
     top = 10,
     bottom = 0,
 }
+M.window_close_confirmation = "NeverPrompt"
 
 M.text_background_opacity = 1.0
 M.warn_about_missing_glyphs = false

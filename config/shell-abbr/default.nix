@@ -4,6 +4,7 @@ let
     lsa = "exa -Slhga --icons";
     tree = "exa -SlhgT --icons";
     wget = "curl -O";
+    imgcat = "wezterm imgcat";
 
     # Nix-related
     nb = "nix-build -E 'with import <nixpkgs> {}; callPackage ./. {}'";

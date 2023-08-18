@@ -56,11 +56,11 @@ in {
           <?xml version="1.0" encoding="UTF-8"?>
           <actions>
           <action>
-                  <icon>alacritty</icon>
-                  <name>Launch Alacritty Here</name>
+                  <icon>wezterm</icon>
+                  <name>Open WezTerm Here</name>
                   <unique-id>1653079815094995-1</unique-id>
-                  <command>alacritty --working-directory %f</command>
-                  <description>Launch alacritty in current directory</description>
+                  <command>wezterm set-working-directory %f</command>
+                  <description>Open WezTerm in working directory</description>
                   <patterns>*</patterns>
                   <startup-notify/>
                   <directories/>

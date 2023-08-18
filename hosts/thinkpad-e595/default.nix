@@ -35,8 +35,8 @@
     desktop = {
       xmonad.enable = true;
       terminal = {
-        default = "alacritty";
-        alacritty.enable = true;
+        default = "wezterm";
+        wezterm.enable = true;
       };
       editors = {
         default = "nvim";
