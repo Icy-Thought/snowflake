@@ -1,7 +1,7 @@
 local wez = require("wezterm")
 
 wez.on("update-right-status", function(window, pane)
-    local datetime = "   " .. wez.strftime("%B %e, %H:%M  ")
+    local datetime = " 󰃰  " .. wez.strftime("%B %e, %H:%M  ")
 
     window:set_right_status(wez.format({
         -- { Attribute = { Underline = "Single" } },
@@ -16,7 +16,7 @@ wez.on("update-right-status", function(window, pane)
         { Text = "    " },
     }) .. wez.format({
         { Background = { Color = "#16161D" } },
-        { Foreground = { Color = "#DCA561" } },
+        { Foreground = { Color = "#76946A" } },
         { Text = "" },
     }))
 end)

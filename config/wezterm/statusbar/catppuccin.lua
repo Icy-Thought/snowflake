@@ -1,7 +1,7 @@
 local wez = require("wezterm")
 
 wez.on("update-right-status", function(window, pane)
-    local datetime = "   " .. wez.strftime("%B %e, %H:%M  ")
+    local datetime = " 󰃰  " .. wez.strftime("%B %e, %H:%M  ")
 
     window:set_right_status(wez.format({
         -- { Attribute = { Underline = "Single" } },
