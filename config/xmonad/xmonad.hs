@@ -735,7 +735,7 @@ myScratchpads :: X [NamedScratchpad]
 myScratchpads = do
   -- | A system monitor to track the madness in our conf
   btopLaunch <- getInput $
-    inTerm >-> setXClass sysMonID
+    inTerm >-> (toInput $ " start --class " <> sysMonID)
            >-> execute "btop"
 
   emacsScratch <- getInput $
