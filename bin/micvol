@@ -54,7 +54,7 @@ micVol_level = float(re.sub("[^0-9|.]", "", parsed_micVol))
 is_muted = bool(re.search(r"\bMUTED\b", parsed_micVol))
 
 percentage = int(micVol_level * 100)
-LEVEL = [" ", " ", "墳 ", " "]
+LEVEL = ["󰖁 ", "󰖀 ", "󰕾 ", " "]
 
 if args.command == "toggle-mute" and not is_muted:
     ICON = LEVEL[0]

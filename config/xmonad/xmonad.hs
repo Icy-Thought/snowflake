@@ -750,7 +750,7 @@ myScratchpads = do
   -- | What matrix-client should've been..
   matrixClient <- getInput $
     inEditor >-> setFrameName matrixSessionID
-             >-> eval (elispFun "irkalla/ement-auto-connect")
+             >-> eval (elispFun "irkalla/connect-to-matrix")
 
   pure [ NS "Discord"        "discordcanary"    (className =? "discord")          floatCenter
        , NS "EasyEffects"    "easyeffects"      (title     =? "Easy Effects")     floatCenter

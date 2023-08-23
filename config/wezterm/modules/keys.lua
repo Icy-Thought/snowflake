@@ -30,8 +30,8 @@ M.keys = {
             SplitVertical = { domain = "CurrentPaneDomain" },
         }),
     },
-    {
-        key = "-",
+    { -- Split pane -> horizontally
+        key = "/",
         mods = "CTRL|SHIFT",
         action = wez.action({
             SplitHorizontal = { domain = "CurrentPaneDomain" },
