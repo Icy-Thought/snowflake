@@ -29,10 +29,8 @@ in {
 
     (mkIf (cfg.default == "nvim" || cfg.default == "emacs") {
       user.packages = attrValues {
-        inherit (pkgs) imagemagick editorconfig-core-c sqlite deno pandoc;
-        aspellPlusDict =
-          pkgs.aspellWithDicts
-          (dict: with dict; [en en-computers en-science]);
+        inherit (pkgs) imagemagick editorconfig-core-c sqlite deno pandoc nuspell;
+        inherit (pkgs.hunspellDicts) en_US sv_SE;
       };
     })
   ];
