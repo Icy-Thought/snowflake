@@ -17,13 +17,14 @@ in {
       user.packages = attrValues {
         inherit
           (pkgs)
+          alejandra
           nil # Nix Expression Language
           manix
           nix-index
           nix-init
           nix-output-monitor
           nix-tree
-          alejandra
+          nix-update
           nixpkgs-review
           ;
       };
