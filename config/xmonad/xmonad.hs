@@ -930,12 +930,8 @@ addKeys conf@XConfig { modMask = modm } =
        , ((modalt, xK_v), doScratchpad "EasyEffects")
 
          -- :NOTE| Program-specific launches
-       -- , ((modm .|. shiftMask, xK_x),            unsafeSpawn "whatever-lock") -- :WARN| lockscreen when found!
-       , ((hyper, xK_r), do
-             planetEmacs <- getInput $
-               inEditor >-> setFrameName "planetEmacs"
-                        >-> eval (elispFun "emacs-everywhere")
-             unsafeSpawn planetEmacs)
+       -- , ((modm .|. shiftMask, xK_x), unsafeSpawn "whatever-lock") -- :WARN| lockscreen when found!
+       , ((hyper, xK_r),              unsafeSpawn "emacsclient --eval '(emacs-everywhere)'")
 
          -- Rofi(s)
        , ((modm, xK_p),               safeSpawn "rofi" ["-show", "power-menu"])
