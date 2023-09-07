@@ -119,22 +119,13 @@ in {
       };
 
       home.configFile = {
-        irkalla-init = {
-          target = "emacs/init.org";
-          source = "${inputs.emacs-dir}/irkalla/init.org";
-          onChange = let
-            initFiles = "${config.hm.xdg.configHome}/emacs/init.org";
-          in ''
-            ${cfg.package}/bin/emacs --batch \
-              --eval "(require 'ob-tangle)" \
-              --eval "(setq org-confirm-babel-evaluate nil)" \
-              --eval '(org-babel-tangle-file "${initFiles}")'
-          '';
+        irkalla-early-init = {
+          target = "emacs/early-init.el";
+          source = "${inputs.emacs-dir}/irkalla/early-init.el";
         };
-        irkalla-lib = {
-          target = "emacs/lib";
-          source = "${inputs.emacs-dir}/irkalla/lib";
-          recursive = true;
+        irkalla-init = {
+          target = "emacs/init.el";
+          source = "${inputs.emacs-dir}/irkalla/init.el";
         };
       };
     })
