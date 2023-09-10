@@ -114,7 +114,7 @@ in {
         extraPackages = epkgs:
           attrValues {
             inherit (epkgs.melpaPackages) jinx pdf-tools telega vterm;
-            treesitter-grammars = epkgs.treesit-grammars.with-all-grammars;
+            inherit (epkgs.treesit-grammars) with-all-grammars;
           };
       };
 
