@@ -13,10 +13,6 @@ in {
   in {enable = mkEnableOption "GPU-accelerated terminal emulator";};
 
   config = mkIf config.modules.desktop.terminal.kitty.enable {
-    environment.variables = {
-      GLFW_IM_MODULE = "ibus"; # Ibus & Fcitx5 solution..
-    };
-
     hm.programs.kitty = {
       enable = true;
       settings = {

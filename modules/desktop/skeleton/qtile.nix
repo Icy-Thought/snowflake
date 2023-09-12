@@ -30,7 +30,10 @@ in {
         program = "nautilus";
       };
       extensions = {
-        ibus.enable = true;
+        input-method = {
+          enable = true;
+          framework = "ibus";
+        };
         mimeApps.enable = true; # mimeApps -> default launch application
         picom.enable = mkIf (cfg.backend == "x11");
         dunst.enable = true;

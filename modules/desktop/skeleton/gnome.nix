@@ -15,7 +15,10 @@ in {
   config = mkIf config.modules.desktop.gnome.enable {
     modules.desktop = {
       envProto = "wayland";
-      extensions.ibus.enable = true;
+      extensions.input-method = {
+        enable = true;
+        framework = "ibus";
+      };
     };
 
     programs.dconf.enable = true;
