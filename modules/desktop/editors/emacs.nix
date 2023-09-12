@@ -37,8 +37,6 @@ in {
     {
       nixpkgs.overlays = [inputs.emacs.overlay];
 
-      hm.services.emacs.enable = true;
-
       user.packages = attrValues ({
           inherit (pkgs) binutils gnutls zstd;
         }
@@ -46,16 +44,10 @@ in {
           inherit (pkgs) pinentry-emacs;
         });
 
-      environment.variables = {EMACSDIR = "$XDG_CONFIG_HOME/emacs";};
-
-      hm.xresources.properties = mkIf (envProto == "x11") (let
-        inherit (config.modules.themes.font.mono) family size weight;
-      in {
-        "Emacs.menuBar" = "off";
-        "Emacs.toolBar" = "off";
-        "Emacs.verticalScrollBars" = "off";
-        "Emacs.font" = "${family}:style=${weight}:pixelsize=${toString size}";
-      });
+      hm.services.emacs = {
+        enable = true;
+        startWithUserSession = true;
+      };
 
       hm.programs.zsh.initExtra = ''
         # -------===[ VTerm Integration ]===------- #
