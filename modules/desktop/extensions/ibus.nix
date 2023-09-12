@@ -17,10 +17,10 @@ in {
   config = mkIf cfg.enable {
     i18n.inputMethod = {
       enabled = "ibus";
-      ibus.engines =
-        attrValues {inherit (pkgs.ibus-engines) libpinyin hangul mozc;};
+      ibus.engines = attrValues {
+        inherit (pkgs.ibus-engines) libpinyin;
+      };
     };
-
     environment.variables = {
       GTK_IM_MODULE = "ibus";
       QT_IM_MODULE = "ibus";

@@ -22,7 +22,7 @@ in {
         program = "nautilus";
       };
       extensions = {
-        fcitx5.enable = true;
+        ibus.enable = true;
         mimeApps.enable = true; # mimeApps -> default launch application
         dunst.enable = true;
         waybar.enable = true;
