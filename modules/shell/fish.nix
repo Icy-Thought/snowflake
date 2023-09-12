@@ -10,10 +10,9 @@
 in {
   config = mkIf (config.modules.shell.default == "fish") {
     modules.shell = {
-      usefulPkgs.enable = true;
+      corePkgs.enable = true;
       toolset = {
         macchina.enable = true;
-        xplr.enable = true;
         starship.enable = true;
       };
     };

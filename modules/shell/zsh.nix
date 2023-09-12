@@ -13,10 +13,9 @@
 in {
   config = mkIf (cfg.default == "zsh") {
     modules.shell = {
-      usefulPkgs.enable = true;
+      corePkgs.enable = true;
       toolset = {
         macchina.enable = true;
-        xplr.enable = true;
         starship.enable = true;
       };
     };

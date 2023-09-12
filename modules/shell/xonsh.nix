@@ -64,10 +64,9 @@
 in {
   config = mkIf (config.modules.shell.default == "xonsh") {
     modules.shell = {
-      usefulPkgs.enable = true;
+      corePkgs.enable = true;
       toolset = {
         macchina.enable = true;
-        xplr.enable = true;
         starship.enable = true;
       };
     };
