@@ -297,10 +297,7 @@ in {
           path = "${config.user.home}/.Xresources";
           properties = let
             inherit (cfg.colors.main) bright normal types;
-            inherit (cfg.font.mono) family size weight;
           in {
-            "*.font" = "xft:${family}:style=${weight}:pixelsize=${toString size}";
-
             "*.foreground" = "${types.fg}";
             "*.background" = "${types.bg}";
 
