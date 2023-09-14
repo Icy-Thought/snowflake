@@ -752,6 +752,11 @@ myScratchpads = do
     inEditor >-> setFrameName matrixSessionID
              >-> eval (elispFun "irkalla/connect-to-matrix")
 
+  -- | What matrix-client should've been..
+  telegramClient <- getInput $
+    inEditor >-> setFrameName telegramSessionID
+             >-> eval (elispFun "telega")
+  
   pure [ NS "Discord"        "discordcanary"    (className =? "discord")          floatCenter
        , NS "EasyEffects"    "easyeffects"      (title     =? "Easy Effects")     floatCenter
        , NS "Emacs"          emacsScratch       (title     =? emacsScratchID)     floatCenter
@@ -759,14 +764,15 @@ myScratchpads = do
        , NS "Matrix"         matrixClient       (title     =? matrixSessionID)    floatCenter
        , NS "Spotify"        "spotify"          (className =? "Spotify")          floatCenter
        , NS "System Monitor" btopLaunch         (appName   =? sysMonID)           floatCenter
-       , NS "Telegram"       "telegram-desktop" (className =? "TelegramDesktop")  floatCenter
+       , NS "Telegram"       telegramClient     (title     =? telegramSessionID)  floatCenter
        , NS "Transmission"   "transmission-gtk" (className =? "Transmission-gtk") floatCenter
        ]
   where
-    emacsScratchID  = "emacs-scratch"
-    mailSessionID   = "notmuch-scratch"
-    matrixSessionID = "ement-scratch"
-    sysMonID        = "system-monitor"
+    emacsScratchID    = "emacs-scratch"
+    mailSessionID     = "notmuch-scratch"
+    matrixSessionID   = "ement-scratch"
+    telegramSessionID = "telega-scratch"
+    sysMonID          = "system-monitor"
 
     -- | Defining our custom floats
     floatCenter  = customFloating $ W.RationalRect (1/50) (1/50) (19/20) (19/20)

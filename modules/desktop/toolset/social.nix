@@ -47,7 +47,7 @@ in {
 
   config = mkMerge [
     (mkIf cfg.base.enable {
-      user.packages = attrValues {inherit (pkgs) signal-desktop tdesktop;};
+      user.packages = attrValues {inherit (pkgs) signal-desktop;};
     })
 
     (mkIf cfg.matrix.withDaemon.enable {

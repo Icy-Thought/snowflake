@@ -47,7 +47,6 @@ in {
           mail = [editor];
           pdf = [docViewer];
           text = [editor];
-          telegram = ["telegramdesktop.desktop"];
           video = [mediaPlayer];
         };
         mimeMap = {
@@ -107,7 +106,6 @@ in {
           magnet = ["x-scheme-handler/magnet"];
           mail = ["x-scheme-handler/mailto"];
           pdf = ["application/pdf"];
-          telegram = ["x-scheme-handler/tg"];
           text = ["text/plain"];
           video = [
             "video/mp2t"

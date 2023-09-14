@@ -1,10 +1,10 @@
-from lib.keymaps import keys
-from lib.themes import palette
-
 # Qtile
 from libqtile import bar, layout, widget
 from libqtile.command import lazy
 from libqtile.config import DropDown, EzClick, EzKey, Group, Match, ScratchPad
+
+from lib.keymaps import keys
+from lib.themes import palette
 
 # Requires CJK-font (using: Sarasa Gothic)
 groups = [
@@ -94,15 +94,15 @@ groups.append(
                 **next_maximum,
             ),
             DropDown(
-                "Element",
-                "element-desktop",
-                match=Match(wm_class="element"),
+                "Matrix",
+                "emacsclient -c -a '' -F 'ement-scratch' --eval '(ement-room-list)'",
+                match=Match(title="ement-scratch"),
                 **next_maximum,
             ),
             DropDown(
                 "Emacs",
-                "emacsclient -c",
-                match=Match(wm_class="emacs"),
+                "emacsclient -c -a '' -F 'emacs-scratch' --eval '(dashboard-refresh-buffer)'",
+                match=Match(title="emacs-scratch"),
                 **next_maximum,
             ),
             DropDown("Galaxy Buds Manager", "GalaxyBudsClient", **next_maximum),
@@ -115,8 +115,8 @@ groups.append(
             DropDown("Spotify", "spotify", **next_maximum),
             DropDown(
                 "Telegram",
-                "telegram-desktop",
-                match=Match(wm_class="TelegramDesktop"),
+                "emacsclient -c -a '' -F 'telega-scratch' --eval '(telega)'",
+                match=Match(title="telega-scratch"),
                 **next_maximum,
             ),
             DropDown("Transmission", "transmission-gtk", **next_maximum),
@@ -130,8 +130,9 @@ keys.extend(
     [
         EzKey("M-A-b", lazy.group["SPD"].dropdown_toggle("SysMon")),
         EzKey("M-A-e", lazy.group["SPD"].dropdown_toggle("Emacs")),
-        EzKey("M-A-l", lazy.group["SPD"].dropdown_toggle("Telegram")),
+        EzKey("M-A-k", lazy.group["SPD"].dropdown_toggle("Matrix")),
         EzKey("M-A-d", lazy.group["SPD"].dropdown_toggle("Discord")),
+        EzKey("M-A-l", lazy.group["SPD"].dropdown_toggle("Telegram")),
         EzKey("M-A-t", lazy.group["SPD"].dropdown_toggle("Transmission")),
         EzKey("M-A-s", lazy.group["SPD"].dropdown_toggle("Spotify")),
         EzKey("M-A-v", lazy.group["SPD"].dropdown_toggle("Volume Control")),
