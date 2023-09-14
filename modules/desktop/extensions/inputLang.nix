@@ -25,7 +25,7 @@ in {
   config = mkIf cfg.enable (mkMerge [
     {
       environment.variables = {
-        GLFW_IM_MODULE = "ibus"; # Same value for both IBus & Fcitx5
+        GLFW_IM_MODULE = "ibus"; # https://github.com/kovidgoyal/kitty/issues/403
         GTK_IM_MODULE = "${cfg.framework}";
         QT_IM_MODULE = "${cfg.framework}";
         SDL_IM_MODULE = "${cfg.framework}";
@@ -51,7 +51,11 @@ in {
       i18n.inputMethod = {
         enabled = "ibus";
         ibus.engines = attrValues {
-          inherit (pkgs.ibus-engines) libpinyin;
+          inherit
+            (pkgs.ibus-engines)
+            libpinyin
+            typing-booster
+            ;
         };
       };
     })

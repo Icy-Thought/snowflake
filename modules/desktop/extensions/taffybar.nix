@@ -51,7 +51,6 @@ in {
     services.gnome.at-spi2-core.enable = true;
 
     hm.services = {
-      # Allow tray-icons to be displayed:
       status-notifier-watcher.enable = true;
       taffybar = {
         enable = true;
