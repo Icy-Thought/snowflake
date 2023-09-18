@@ -60,7 +60,7 @@ in {
   };
 
   system = {
-    stateVersion = "22.11";
+    stateVersion = "23.11";
     configurationRevision = with inputs; mkIf (self ? rev) self.rev;
   };
 
