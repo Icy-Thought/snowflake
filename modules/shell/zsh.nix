@@ -156,7 +156,7 @@ in {
       '';
 
       shellAliases = {
-        exa = "exa --group-directories-first";
+        eza = "eza --group-directories-first";
         less = "less -R";
       };
 

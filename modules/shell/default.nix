@@ -39,7 +39,7 @@ in {
         inherit (pkgs) any-nix-shell fzf pwgen yt-dlp csview ripdrag yazi;
 
         # GNU Alternatives
-        inherit (pkgs) bat exa fd zoxide;
+        inherit (pkgs) bat eza fd zoxide;
         rgFull = pkgs.ripgrep.override {withPCRE2 = true;};
       };
     })

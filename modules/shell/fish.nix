@@ -28,7 +28,7 @@ in {
       # useBabelfish = true;
 
       shellAliases = {
-        exa = "exa --group-directories-first";
+        eza = "eza --group-directories-first";
         less = "less -R";
       };
       shellAbbrs = import "${config.snowflake.configDir}/shell-abbr";

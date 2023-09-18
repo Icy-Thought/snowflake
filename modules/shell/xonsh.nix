@@ -102,7 +102,7 @@ in {
         xontrib load cmd_done direnv fzf-widgets hist_navigator output_search readable-traceback schedule
 
         # -------===[ Aliases & Abbreviations ]===------- #
-        aliases[exa] = "exa --group-directories-first"
+        aliases[eza] = "eza --group-directories-first"
         aliases[less] = "less -R"
 
         ${concatStrings (mapAttrsToList (k: v: ''
