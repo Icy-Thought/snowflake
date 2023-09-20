@@ -68,24 +68,11 @@ else:
     ICON = ""
 
 
-def notification():
-    if args.command == "toggle-mute" and not is_muted:
-        volume = "0"
-        message = ICON + "Muted Microphone!"
-    elif args.command == "increase":
-        volume = str(percentage + args.level)
-        message = ICON + "MicVol Level: " + volume + "%"
-    elif args.command == "decrease":
-        volume = str(percentage - args.level)
-        message = ICON + "MicVol Level: " + volume + "%"
-    else:
-        volume = str(percentage)
-        message = ICON + "MicVol Level: " + volume + "%"
-
+def notify(icon: str, message: str, volume: str):
     return subprocess.run(
         [
             "notify-send",
-            message,
+            icon + message + volume + "%",
             "-t",
             "500",
             "-h",
@@ -98,24 +85,33 @@ def notification():
     )
 
 
+if args.command == "toggle-mute" and not is_muted:
+    notify(ICON, "Muted Microphone: ", "0")
+elif args.command == "increase":
+    notify(ICON, "MicVol Level: ", str(percentage + args.level))
+elif args.command == "decrease":
+    notify(ICON, "MicVol Level: ", str(percentage - args.level))
+else:
+    notify(ICON, "MicVol Level: ", str(percentage))
+
+
 def wireplumber_cli(param: list):
     subprocess.run(["wpctl"] + param)
 
 
 def control_volume_level():
     toggle_mute = ["set-mute", "@DEFAULT_AUDIO_SOURCE@", "toggle"]
-    if args.command == "toggle-mute":
-        command = wireplumber_cli(toggle_mute)
-    elif args.command != "toggle-mute" and is_muted:
+    change_volume = ["set-volume", "@DEFAULT_AUDIO_SOURCE@"]
+
+    if args.command == "toggle-mute" or is_muted:
         command = wireplumber_cli(toggle_mute)
     else:
-        change_volume = ["set-volume", "@DEFAULT_AUDIO_SOURCE@"]
         if args.command == "increase":
             change_volume.append(str(args.level) + "%+")
         elif args.command == "decrease":
             change_volume.append(str(args.level) + "%-")
         command = wireplumber_cli(change_volume)
-    return command, notification()
+    return command, notify()
 
 
 control_volume_level()
