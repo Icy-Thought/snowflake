@@ -58,6 +58,24 @@ in {
             ;
         };
       };
+
+      hm.systemd.user.services.ibus-daemon = {
+        Unit = {
+          Description = "Intelligent Input Bus";
+          Documentation = ["man:ibus-daemon(1)"];
+          PartOf = ["graphical-session.target"];
+        };
+
+        Service = {
+          Environment = ["DISPLAY=:0"];
+          Restart = "on-failure";
+
+          ExecStart = "${pkgs.ibus}/bin/ibus-daemon --replace --xim";
+          ExecReload = "${pkgs.ibus}/bin/ibus restart";
+          ExecStop = "${pkgs.ibus}/bin/ibus exit";
+        };
+        Install.WantedBy = ["graphical-session.target"];
+      };
     })
   ]);
 }
