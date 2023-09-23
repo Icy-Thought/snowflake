@@ -15,15 +15,15 @@ in {
     inherit (lib.options) mkEnableOption mkOption;
     inherit (lib.types) enum nullOr package;
   in {
-    enable = mkEnableOption "Spread the joy of Emacs in our flake";
+    enable = mkEnableOption "Sprinkle a bit of magic to our nix-flake.";
     package = mkOption {
       type = package;
       default = let
-        inherit (pkgs) emacs-git emacs-pgtk;
+        inherit (pkgs) emacs29-gtk3 emacs29-pgtk;
       in
         if (envProto == "wayland")
-        then emacs-pgtk
-        else emacs-git.override {toolkit = "no";};
+        then emacs29-pgtk
+        else emacs29-gtk3;
       description = "Emacs package which will be installed in our flake system.";
     };
     template = mkOption {
@@ -35,14 +35,22 @@ in {
 
   config = mkIf cfg.enable (mkMerge [
     {
-      nixpkgs.overlays = [inputs.emacs.overlay];
-
       user.packages = attrValues ({
           inherit (pkgs) binutils gnutls zstd;
         }
         // optionalAttrs config.programs.gnupg.agent.enable {
           inherit (pkgs) pinentry-emacs;
         });
+
+      hm.programs.emacs = {
+        enable = true;
+        package = cfg.package;
+        extraPackages = epkgs:
+          attrValues {
+            inherit (epkgs.melpaPackages) jinx pdf-tools telega vterm;
+            inherit (epkgs.treesit-grammars) with-all-grammars;
+          };
+      };
 
       hm.services.emacs = {
         enable = true;
@@ -100,16 +108,6 @@ in {
     }
 
     (mkIf (cfg.template == "irkalla") {
-      hm.programs.emacs = {
-        enable = true;
-        package = cfg.package;
-        extraPackages = epkgs:
-          attrValues {
-            inherit (epkgs.melpaPackages) jinx pdf-tools telega vterm;
-            inherit (epkgs.treesit-grammars) with-all-grammars;
-          };
-      };
-
       home.configFile = {
         irkalla-early-init = {
           target = "emacs/early-init.el";
@@ -123,12 +121,11 @@ in {
     })
 
     (mkIf (cfg.template == "doomemacs") {
-      hm.imports = [inputs.doomemacs.hmModule];
-
-      hm.programs.doomemacs = {
-        enable = true;
-        emacsPackage = cfg.package;
-        doomPrivateDir = "${inputs.emacs-dir}/doomconfig";
+      home.configFile.doomemacs-conf = {
+        target = "doomemacs";
+        source = "${inputs.emacs-dir}/doomemacs";
+        recursive = true;
+        onChange = "doom -y sync -u";
       };
 
       env.PATH = ["$XDG_CONFIG_HOME/emacs/bin"];

@@ -23,11 +23,6 @@
     xmonad-contrib.url = "github:icy-thought/xmonad-contrib"; # TODO: replace with official after #582 == merged!
     hyprland.url = "github:hyprwm/Hyprland";
 
-    # Application -> (Cached) Git
-    emacs.url = "github:nix-community/emacs-overlay";
-    doomemacs.url = "github:nix-community/nix-doom-emacs/";
-    nvim-nightly.url = "github:nix-community/neovim-nightly-overlay";
-
     # Toolset
     rust.url = "github:oxalica/rust-overlay";
     spicetify-nix.url = "github:the-argus/spicetify-nix";
