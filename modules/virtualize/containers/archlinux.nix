@@ -7,11 +7,11 @@
 }: let
   inherit (lib.modules) mkIf;
 in {
-  options.modules.containers.archlinux = let
+  options.modules.virtualize.containers.archlinux = let
     inherit (lib.options) mkEnableOption;
   in {enable = mkEnableOption "arch-linux container";};
 
-  config = mkIf config.modules.containers.archlinux.enable {
+  config = mkIf config.modules.virtualize.containers.archlinux.enable {
     virtualisation.libvirtd = {
       enable = true;
       qemuVerbatimConfig = ''

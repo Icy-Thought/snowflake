@@ -8,11 +8,11 @@
   inherit (lib.attrsets) attrValues;
   inherit (lib.modules) mkIf;
 in {
-  options.modules.virtual.podman = let
+  options.modules.virtualize.podman = let
     inherit (lib.options) mkEnableOption;
   in {enable = mkEnableOption "Enable the Podman container engine";};
 
-  config = mkIf config.modules.virtual.podman.enable {
+  config = mkIf config.modules.virtualize.podman.enable {
     virtualisation.podman = {
       enable = true;
       dockerCompat = true; # docker = podman (alias)
