@@ -19,8 +19,17 @@ in {
 
     virtualisation.libvirtd = {
       enable = true;
-      extraOptions = ["--verbose"];
+      # extraOptions = ["--verbose"];
+      qemu.runAsRoot = false;
     };
     user.extraGroups = ["libvirtd"];
+
+    # Fix: Could not detect a default hypervisor. Make sure the appropriate QEMU/KVM virtualization...
+    hm.dconf.settings = {
+      "org/virt-manager/virt-manager/connections" = {
+        autoconnect = ["qemu:///system"];
+        uris = ["qemu:///system"];
+      };
+    };
   };
 }
