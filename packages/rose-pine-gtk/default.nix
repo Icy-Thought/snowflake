@@ -7,8 +7,8 @@
   themeVariant ? [],
   iconVariant ? [],
 }: let
-  inherit (lib) checkListOfEnum;
   inherit (builtins) toString;
+  inherit (lib.trivial) checkListOfEnum;
 in
   checkListOfEnum "$Rose-Pine: GTK Theme Variants" [
     "Main-B-LB"

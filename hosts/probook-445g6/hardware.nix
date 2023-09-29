@@ -5,7 +5,8 @@
   modulesPath,
   ...
 }: let
-  inherit (lib) mkDefault attrValues;
+  inherit (lib.modules) mkDefault;
+  inherit (lib.attrsets) attrValues;
 in {
   imports = [(modulesPath + "/installer/scan/not-detected.nix")];
 

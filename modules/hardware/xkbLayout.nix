@@ -9,6 +9,7 @@
   inherit (lib.meta) getExe;
   inherit (lib.modules) mkIf mkMerge;
   inherit (pkgs) writeText xorg;
+
   cfg = config.modules.hardware.xkbLayout;
 in {
   options.modules.hardware.xkbLayout = let

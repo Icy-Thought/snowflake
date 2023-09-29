@@ -1,5 +1,5 @@
 {lib, ...}: let
-  inherit (lib) any count;
+  inherit (lib.lists) any count;
   inherit (lib.attrsets) filterAttrs listToAttrs mapAttrs' mapAttrsToList;
 in rec {
   # attrsToList

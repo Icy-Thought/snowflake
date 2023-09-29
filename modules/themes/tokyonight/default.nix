@@ -6,7 +6,9 @@
   ...
 }: let
   inherit (builtins) toString readFile;
-  inherit (lib) attrValues concatMapStringsSep mkDefault mkIf mkMerge;
+  inherit (lib.attrsets) attrValues;
+  inherit (lib.attrsets) concatMapStringsSep;
+  inherit (lib.modules) mkDefault mkIf mkMerge;
 
   cfg = config.modules.themes;
 in {

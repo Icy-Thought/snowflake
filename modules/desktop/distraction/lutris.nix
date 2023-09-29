@@ -23,7 +23,7 @@ in {
           lutris =
             pkgs.lutris.override {extraLibraries = pkgs: [pkgs.jansson];};
         }
-        // optionalAttrs (config.modules.virtual.wine.enable == false) {
+        // optionalAttrs (config.modules.virtualize.wine.enable == false) {
           inherit (pkgs) winetricks;
           inherit (pkgs.wineWowPackages) fonts stagingFull;
         });

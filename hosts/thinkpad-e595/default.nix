@@ -74,12 +74,14 @@
       };
     };
 
-    containers.transmission = {
-      enable = false; # TODO: Once fixed -> enable = true;
-      username = "alonzo";
-      #  password = builtins.readFile config.age.secrets.torBylon.path;
+    virtualize = {
+      enable = true;
+      containers.transmission = {
+        enable = false; # TODO: Once fixed -> enable = true;
+        username = "alonzo";
+        #  password = builtins.readFile config.age.secrets.torBylon.path;
+      };
     };
-    virtualize.enable = true;
   };
 
   # KDE-Connect + Start-up indicator

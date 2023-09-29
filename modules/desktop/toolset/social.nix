@@ -5,7 +5,8 @@
   pkgs,
   ...
 }: let
-  inherit (lib) attrValues optionals;
+  inherit (lib.attrsets) attrValues;
+  inherit (lib.lists) optionals;
   inherit (lib.modules) mkIf mkMerge;
   inherit (lib.strings) concatStringsSep;
 

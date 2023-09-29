@@ -5,21 +5,17 @@
   home-manager,
   ...
 }: let
-  inherit (builtins) elem pathExists toString;
-  inherit
-    (lib)
-    findFirst
-    isList
-    mapAttrs
-    mapAttrsToList
-    mkAliasDefinitions
-    mkOption
-    ;
+  inherit (builtins) elem isList pathExists toString;
+  inherit (lib.attrsets) mapAttrs mapAttrsToList;
+  inherit (lib.lists) findFirst;
+  inherit (lib.modules) mkAliasDefinitions;
   inherit (lib.strings) concatMapStringsSep concatStringsSep;
-  inherit (lib.types) attrs attrsOf either listOf oneOf path str;
   inherit (lib.my) mkOpt mkOpt';
 in {
-  options = {
+  options = let
+    inherit (lib.options) mkOption;
+    inherit (lib.types) attrs attrsOf either listOf oneOf path str;
+  in {
     user = mkOpt attrs {};
 
     snowflake = {

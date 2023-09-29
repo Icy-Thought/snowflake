@@ -6,7 +6,8 @@
   ...
 }: let
   inherit (builtins) toJSON;
-  inherit (lib) mapAttrsToList mkIf;
+  inherit (lib.attrsets) mapAttrsToList;
+  inherit (lib.modules) mkIf;
   inherit (lib.strings) concatStrings escapeNixString;
 
   xonsh-direnv = pkgs.fetchFromGitHub {

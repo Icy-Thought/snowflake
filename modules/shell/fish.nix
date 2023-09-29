@@ -6,7 +6,8 @@
   ...
 }: let
   inherit (builtins) map;
-  inherit (lib) mkIf getExe;
+  inherit (lib.meta) getExe;
+  inherit (lib.modules) mkIf;
 in {
   config = mkIf (config.modules.shell.default == "fish") {
     modules.shell = {

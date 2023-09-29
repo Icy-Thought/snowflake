@@ -6,11 +6,11 @@
   ...
 }: let
   inherit (lib.attrsets) attrValues optionalAttrs;
-  inherit (lib.options) mkEnableOption;
-
   cfg = config.modules.desktop.toolset.graphics;
 in {
-  options.modules.desktop.toolset.graphics = {
+  options.modules.desktop.toolset.graphics = let
+    inherit (lib.options) mkEnableOption;
+  in {
     base.enable = mkEnableOption "base packages" // {default = true;};
     modeling.enable = mkEnableOption "3D modeling";
     raster.enable = mkEnableOption "rasterized editing";

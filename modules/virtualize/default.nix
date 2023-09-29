@@ -15,7 +15,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    user.packages = pkgs.virt-manager;
+    user.packages = [pkgs.virt-manager];
 
     virtualisation.libvirtd = {
       enable = true;

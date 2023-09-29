@@ -5,7 +5,7 @@
   config,
   ...
 }: let
-  inherit (lib) attrValues;
+  inherit (lib.attrsets) attrValues;
 in {
   imports = ["${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"];
 

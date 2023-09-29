@@ -5,12 +5,14 @@
   pkgs,
   ...
 }: let
-  inherit (lib) attrValues mkIf mkMerge mkOption;
-  inherit (lib.types) str;
-
+  inherit (lib.attrsets) attrValues;
+  inherit (lib.modules) mkIf mkMerge;
   cfg = config.modules.desktop.editors;
 in {
-  options.modules.desktop.editors = {
+  options.modules.desktop.editors = let
+    inherit (lib.options) mkOption;
+    inherit (lib.types) str;
+  in {
     default = mkOption {
       type = str;
       default = "nvim";

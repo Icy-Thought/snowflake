@@ -7,12 +7,14 @@
   ...
 }: let
   inherit (builtins) readFile;
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib.modules) mkIf;
   inherit (lib.strings) optionalString;
 
   cfg = config.modules.desktop.extensions.taffybar;
 in {
-  options.modules.desktop.extensions.taffybar = {
+  options.modules.desktop.extensions.taffybar = let
+    inherit (lib.options) mkEnableOption;
+  in {
     enable = mkEnableOption "haskell status-bar library";
   };
 

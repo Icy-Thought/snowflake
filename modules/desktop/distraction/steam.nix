@@ -7,6 +7,7 @@
 }: let
   inherit (lib.meta) getExe;
   inherit (lib.modules) mkIf mkMerge;
+
   cfg = config.modules.desktop.distraction.steam;
 in {
   options.modules.desktop.distraction.steam = let

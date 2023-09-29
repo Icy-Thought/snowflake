@@ -6,11 +6,12 @@
   inputs,
   ...
 }: let
-  inherit (lib) mkIf mkEnableOption;
-
+  inherit (lib.modules) mkIf;
   vscDir = "${config.snowflake.configDir}/vscodium";
 in {
-  options.modules.desktop.editors.vscodium = {
+  options.modules.desktop.editors.vscodium = let
+    inherit (lib.options) mkEnableOption;
+  in {
     enable = mkEnableOption "telemetry-free vscode";
   };
 

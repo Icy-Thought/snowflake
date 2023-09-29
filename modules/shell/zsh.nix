@@ -6,7 +6,8 @@
   ...
 }: let
   inherit (builtins) map;
-  inherit (lib) mapAttrsToList mkIf;
+  inherit (lib.attrsets) mapAttrsToList;
+  inherit (lib.modules) mkIf;
   inherit (lib.strings) concatStrings escapeNixString optionalString;
 
   cfg = config.modules.shell;

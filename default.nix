@@ -6,16 +6,8 @@
   ...
 }: let
   inherit (builtins) toString;
-  inherit
-    (lib)
-    attrValues
-    filterAttrs
-    mkDefault
-    mkIf
-    mkAliasOptionModule
-    mapAttrs
-    mapAttrsToList
-    ;
+  inherit (lib.attrsets) attrValues filterAttrs mapAttrs mapAttrsToList;
+  inherit (lib.modules) mkAliasOptionModule mkDefault mkIf;
   inherit (lib.my) mapModulesRec';
 in {
   imports =

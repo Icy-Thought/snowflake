@@ -6,8 +6,8 @@
   jdupes,
   themeVariants ? [],
 }: let
-  inherit (lib) checkListOfEnum;
   inherit (builtins) toString;
+  inherit (lib.trivial) checkListOfEnum;
 in
   checkListOfEnum "$Kanagawa: GTK Theme Variants" [
     "B"

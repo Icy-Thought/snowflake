@@ -6,9 +6,12 @@
   pkgs,
   ...
 }: let
-  inherit (builtins) filter pathExists;
-  inherit (lib) mapAttrs' mkDefault nameValuePair removeSuffix;
   inherit (inputs) ragenix;
+
+  inherit (builtins) filter pathExists;
+  inherit (lib.attrsets) mapAttrs' nameValuePair;
+  inherit (lib.modules) mkDefault;
+  inherit (lib.strings) removeSuffix;
 
   secretsDir = "${config.snowflake.hostDir}/secrets";
   secretsFile = "${secretsDir}/secrets.nix";

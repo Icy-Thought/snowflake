@@ -5,12 +5,13 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkDefault mkIf mkMerge mkOption;
-  inherit (lib.types) str;
-
+  inherit (lib.modules) mkDefault mkIf mkMerge;
   cfg = config.modules.desktop.terminal;
 in {
-  options.modules.desktop.terminal = {
+  options.modules.desktop.terminal = let
+    inherit (lib.options) mkOption;
+    inherit (lib.types) str;
+  in {
     default = mkOption {
       type = str;
       default = "xterm";

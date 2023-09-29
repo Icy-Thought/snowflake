@@ -4,7 +4,9 @@
   pkgs,
   ...
 }: let
-  inherit (lib) makeExtensible attrValues foldr;
+  inherit (lib.attrsets) attrValues;
+  inherit (lib.fixedPoints) makeExtensible;
+  inherit (lib.lists) foldr;
   inherit (modules) mapModules;
 
   modules = import ./modules.nix {

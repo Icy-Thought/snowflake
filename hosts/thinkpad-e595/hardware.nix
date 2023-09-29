@@ -5,7 +5,7 @@
   modulesPath,
   ...
 }: let
-  inherit (lib) mkDefault;
+  inherit (lib.modules) mkDefault;
 in {
   imports = [(modulesPath + "/installer/scan/not-detected.nix")];
 
