@@ -39,7 +39,7 @@
         wezterm.enable = true;
       };
       editors = {
-        default = "nvim";
+        default = "emacsclient";
         neovim.enable = true;
         emacs.enable = true;
       };
