@@ -51,11 +51,7 @@ in {
       i18n.inputMethod = {
         enabled = "ibus";
         ibus.engines = attrValues {
-          inherit
-            (pkgs.ibus-engines)
-            libpinyin
-            typing-booster
-            ;
+          inherit (pkgs.ibus-engines) libpinyin;
         };
       };
 
