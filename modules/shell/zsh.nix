@@ -69,7 +69,6 @@ in {
         zstyle ':completion:*:*:*:*:descriptions'   format '%F{green}-- %d --%f'
         zstyle ':completion:*:*:*:*:corrections'    format '%F{yellow}!- %d (errors: %e) -!%f'
       '';
-
       enableAutosuggestions = true;
 
       localVariables = {
@@ -163,21 +162,21 @@ in {
 
       plugins = let
         mkZshPlugin = {
-          plug,
-          file ? "${plug.pname}.plugin.zsh",
-        }: rec {
-          name = plug.pname;
-          src = plug.src;
+          pkg,
+          file ? "${pkg.pname}.plugin.zsh",
+        }: {
+          name = pkg.pname;
+          src = pkg.src;
           inherit file;
         };
       in
         with pkgs; [
-          (mkZshPlugin {plug = zsh-abbr;})
-          (mkZshPlugin {plug = zsh-autopair;})
-          (mkZshPlugin {plug = zsh-vi-mode;})
-          (mkZshPlugin {plug = zsh-you-should-use;})
+          (mkZshPlugin {pkg = zsh-abbr;})
+          (mkZshPlugin {pkg = zsh-autopair;})
+          (mkZshPlugin {pkg = zsh-vi-mode;})
+          (mkZshPlugin {pkg = zsh-you-should-use;})
           (mkZshPlugin {
-            plug = zsh-nix-shell;
+            pkg = zsh-nix-shell;
             file = "nix-shell.plugin.zsh";
           })
         ];
