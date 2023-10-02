@@ -85,7 +85,8 @@ in {
       fish-theme = {
         target = "fish/conf.d/${active}.fish";
         text = let
-          inherit (config.modules.themes.colors) fishColor;
+          inherit (lib.strings) removePrefix;
+          fishColor = hexColor: removePrefix "#" hexColor;
         in ''
           # --> General
           set -l foreground ${fishColor types.fg}

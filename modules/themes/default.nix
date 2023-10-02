@@ -9,7 +9,7 @@
   inherit (lib.attrsets) attrValues mapAttrsToList;
   inherit (lib.meta) getExe;
   inherit (lib.modules) mkIf mkMerge;
-  inherit (lib.strings) concatStringsSep optionalString removePrefix;
+  inherit (lib.strings) concatStringsSep optionalString;
 
   cfg = config.modules.themes;
   envProto = config.modules.desktop.envProto;
@@ -120,8 +120,6 @@ in {
           highlight = mkOpt str white;
         };
       };
-
-      fishColor = hexColor: removePrefix "#" hexColor;
 
       rofi = {
         bg = {
