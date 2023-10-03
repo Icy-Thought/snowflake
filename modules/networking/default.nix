@@ -71,6 +71,7 @@ in {
       hm.services.network-manager-applet.enable = true;
     })
 
+    # TODO: add network connections + ragenix.
     (mkIf cfg.networkd.enable {
       systemd.network.enable = true;
 
