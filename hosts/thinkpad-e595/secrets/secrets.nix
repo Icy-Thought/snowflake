@@ -8,5 +8,6 @@ let
 in {
   "closedAI.age".publicKeys = [hostKey];
   "ement.age".publicKeys = [hostKey];
+  "tokenGH.age".publicKeys = [hostKey];
   # "torBylon.age".publicKeys = [ hostKey ];
 }

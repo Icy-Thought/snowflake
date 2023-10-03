@@ -35,6 +35,8 @@ in {
       gitignore = "curl -sL https://www.gitignore.io/api/$argv";
     };
 
+    env = {GITHUB_TOKEN = "$(cat /run/agenix/tokenGH)";};
+
     hm.programs.git = {
       enable = true;
       package = pkgs.gitFull;
