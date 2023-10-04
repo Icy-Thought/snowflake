@@ -48,13 +48,15 @@ in {
         extraPackages = epkgs:
           attrValues {
             inherit (epkgs.melpaPackages) jinx pdf-tools telega vterm;
-            inherit (epkgs.treesit-grammars) with-all-grammars;
+            tree-sitter-langs = epkgs.tree-sitter-langs.withPlugins (
+              grammars: builtins.filter lib.isDerivation (lib.attrValues grammars)
+            );
           };
       };
 
       hm.services.emacs = {
         enable = true;
-        startWithUserSession = true;
+        socketActivation.enable = true;
       };
 
       hm.programs.zsh.initExtra = ''
