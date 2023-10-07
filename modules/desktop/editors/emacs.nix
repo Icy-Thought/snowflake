@@ -56,7 +56,7 @@ in {
 
       hm.services.emacs = {
         enable = true;
-        socketActivation.enable = true;
+        startWithUserSession = true;
       };
 
       hm.programs.zsh.initExtra = ''
