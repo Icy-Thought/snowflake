@@ -8,9 +8,9 @@
 
 ;; (def) Our useful aliases!
 (defalias
-    hold-tab-as-hyper (tap-hold-next 200 tab C-M-lalt :timeout-button XX)
-    hold-caps-as-meta-lalt (tap-hold-next 200 caps M-lalt :timeout-button XX))
+    hold-tab-eq-hyper (tap-hold-next 200 tab C-M-lalt :timeout-button XX)
+    hold-caps-eq-meta-lalt (tap-hold-next 200 caps M-lalt :timeout-button XX))
 
 (deflayer primary
-    @hold-tab-as-hyper
-    @hold-caps-as-meta-lalt)
+    @hold-tab-eq-hyper
+    @hold-caps-eq-meta-lalt)
