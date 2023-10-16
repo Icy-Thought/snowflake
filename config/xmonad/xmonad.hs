@@ -334,7 +334,7 @@ isToggleActiveInCurrent t = currentWorkspace >>= isToggleActive t
 followIfNoMagicFocus =
   followOnlyIf $ maybe False not <$> isToggleActiveInCurrent MAGICFOCUS
 
--- FIXME
+-- :FIXME| something, something, something...
 togglesMap =
   fmap M.fromList
     $  sequence
@@ -358,7 +358,7 @@ selectToggle =
 
 runToggle toggle =
   let f = fromMaybe sendMessage $ lookup toggle toggleHandlers
-   in f toggle
+  in f toggle
 
 toggleAll (Toggle toggle) = void $ runMaybeT $ do
   active <- MaybeT $ isToggleActiveInCurrent toggle
