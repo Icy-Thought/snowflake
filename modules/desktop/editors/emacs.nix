@@ -47,7 +47,7 @@ in {
         package = cfg.package;
         extraPackages = epkgs:
           attrValues {
-            inherit (epkgs) jinx pdf-tools telega vterm;
+            inherit (epkgs.melpaPackages) jinx pdf-tools telega vterm;
             inherit (epkgs.treesit-grammars) with-all-grammars;
           };
       };
