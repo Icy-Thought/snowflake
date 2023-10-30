@@ -34,8 +34,8 @@ in {
         spotifyPackage = pkgs.spotify-unwrapped;
         spicetifyPackage = pkgs.spicetify-cli;
 
-        theme = themes.catppuccin-mocha;
-        colorScheme = "flamingo";
+        theme = themes.catppuccin;
+        colorScheme = "mocha";
 
         enabledCustomApps = [apps.new-releases apps.lyrics-plus];
         enabledExtensions = [

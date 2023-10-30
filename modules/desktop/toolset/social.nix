@@ -68,6 +68,7 @@ in {
 
       hm.services.pantalaimon = {
         enable = true;
+        package = pkgs.unstable.pantalaimon;
         settings = {
           Default = {
             LogLevel = "Debug";
