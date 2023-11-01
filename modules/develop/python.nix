@@ -20,14 +20,9 @@ in {
   config = mkMerge [
     (mkIf cfg.enable {
       user.packages = attrValues {
-        inherit (pkgs) rye ruff;
-        inherit
-          (pkgs.python3Packages)
-          black
-          isort
-          mypy
-          python-lsp-server
-          ;
+        inherit (pkgs) rye;
+        inherit (pkgs.nodePackages) pyright;
+        inherit (pkgs.python3Packages) black isort;
       };
 
       hm.programs.vscode.extensions = attrValues {
