@@ -1,8 +1,8 @@
 let
   main = {
-    ls = "eza -Slhg --icons";
-    lsa = "eza -Slhga --icons";
-    tree = "eza -SlhgT --icons";
+    ls = "eza -Slhg";
+    lsa = "eza -Slhga";
+    tree = "eza -SlhgT";
     wget = "curl -O";
     imgcat = "wezterm imgcat";
 
