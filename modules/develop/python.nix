@@ -13,12 +13,12 @@ in {
     inherit (lib.options) mkEnableOption;
   in {
     enable = mkEnableOption "Python development";
-    autoREPL.enable = mkEnableOption "Python REPL framework";
-    initREPL.enable = mkEnableOption "Manual configuration of Python REPL" // {default = cfg.enable;};
+    autoREPL.enable = mkEnableOption "Python REPL framework" // {default = cfg.enable;};
+    initREPL.enable = mkEnableOption "Manual configuration of Python REPL";
   };
 
-  config = mkMerge [
-    (mkIf cfg.enable {
+  config = mkIf cfg.enable (mkMerge [
+    {
       user.packages = attrValues {
         inherit (pkgs) rye;
         inherit (pkgs.nodePackages) pyright;
@@ -34,7 +34,7 @@ in {
         py = "python";
         pip = "rye";
       };
-    })
+    }
 
     (mkIf config.modules.develop.xdg.enable (mkMerge [
       {
@@ -48,16 +48,23 @@ in {
       (mkIf cfg.autoREPL.enable {
         user.packages = attrValues {
           inherit (pkgs) python3;
-          inherit (pkgs.python3Packages) bpython;
-        };
-
-        environment.shellAliases = {
-          bpy = "bpython";
+          inherit (pkgs.python3Packages) ipython;
         };
 
         home.configFile.pythonRC = {
           target = "python/pythonrc";
           text = "";
+        };
+
+        env = {
+          IPYTHONDIR = "$XDG_CONFIG_HOME/ipython";
+          PYTHONSTARTUP = "$XDG_CONFIG_HOME/python/pythonrc";
+          JUPYTER_CONFIG_DIR = "$XDG_CONFIG_HOME/jupyter";
+        };
+
+        environment.shellAliases = {
+          ipy = "ipython --no-banner";
+          ipylab = "ipython --pylab=qt5 --no-banner";
         };
       })
 
@@ -101,5 +108,5 @@ in {
         };
       })
     ]))
-  ];
+  ]);
 }
