@@ -22,8 +22,8 @@ in {
       historyFileSize = 5000;
       historyIgnore = ["btm" "htop" "macchina" "neofetch"];
       shellAliases = {
-        ls = "eza -Slhg --icons";
-        lsa = "eza -Slhga --icons";
+        ls = "lsd -Sl";
+        lsa = "lsd -Sla";
         less = "less -R";
         wup = "systemctl start wg-quick-Akkadian-VPN.service";
         wud = "systemctl stop wg-quick-Akkadian-VPN.service";

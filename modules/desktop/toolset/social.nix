@@ -60,7 +60,7 @@ in {
               owner = "matrix-org";
               repo = old.pname;
               rev = "3968c69aa846889970df1372ba9aa54c1c5e4290";
-              sha256 = "sha256-JdoJB68QtxPhFeZCHd+0ZOlUDbQV3HeBsxW0KbhnDSs=";
+              hash = "sha256-JdoJB68QtxPhFeZCHd+0ZOlUDbQV3HeBsxW0KbhnDSs=";
             };
           });
         })

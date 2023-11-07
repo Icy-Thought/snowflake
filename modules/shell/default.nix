@@ -27,7 +27,10 @@ in {
     })
 
     (mkIf cfg.corePkgs.enable {
-      modules.shell.toolset.btop.enable = true;
+      modules.shell.toolset = {
+        lsd.enable = true;
+        btop.enable = true;
+      };
 
       hm.programs.direnv = {
         enable = true;
@@ -39,7 +42,7 @@ in {
         inherit (pkgs) any-nix-shell fzf pwgen yt-dlp csview ripdrag yazi;
 
         # GNU Alternatives
-        inherit (pkgs) bat eza fd zoxide;
+        inherit (pkgs) bat fd zoxide;
         rgFull = pkgs.ripgrep.override {withPCRE2 = true;};
       };
     })
