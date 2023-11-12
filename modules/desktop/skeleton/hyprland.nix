@@ -24,7 +24,7 @@ in {
       extensions = {
         input-method = {
           enable = true;
-          framework = "fcitx";
+          framework = "ibus";
         };
         mimeApps.enable = true; # mimeApps -> default launch application
         dunst.enable = true;

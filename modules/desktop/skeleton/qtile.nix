@@ -32,7 +32,7 @@ in {
       extensions = {
         input-method = {
           enable = true;
-          framework = "fcitx";
+          framework = "ibus";
         };
         mimeApps.enable = true; # mimeApps -> default launch application
         picom.enable = mkIf (cfg.backend == "x11");
