@@ -1,9 +1,5 @@
-{
-  config,
-  home-manager,
-  ...
-}: {
-  home-manager.users.${config.user.name}.xdg.enable = true;
+{config, ...}: {
+  hm.xdg.enable = true;
 
   environment = {
     sessionVariables = {
