@@ -165,25 +165,22 @@ in {
       # Allow HM to control GTK Theme:
       programs.dconf.enable = true;
 
-      hm.gtk = {
+      hm.gtk = let
+        inherit (cfg.font) sans;
+        inherit (cfg) gtk iconTheme;
+      in {
         enable = true;
-        font = let
-          inherit (cfg.font.sans) family size;
-        in {
-          name = family;
-          size = size;
+        font = {
+          name = sans.family;
+          size = sans.size;
         };
-        theme = let
-          inherit (cfg.gtk) name package;
-        in {
-          name = name;
-          package = package;
+        theme = {
+          name = gtk.name;
+          package = gtk.package;
         };
-        iconTheme = let
-          inherit (cfg.iconTheme) name package;
-        in {
-          name = name;
-          package = package;
+        iconTheme = {
+          name = iconTheme.name;
+          package = iconTheme.package;
         };
         gtk3.bookmarks = map (dir: "file://${config.user.home}/" + dir) [
           "Workspace/public/snowflake"

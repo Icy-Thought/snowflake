@@ -309,18 +309,5 @@ in {
         "ui_font" = "${family} ${weight}";
       };
     })
-
-    (mkIf (config.modules.desktop.envProto == "x11") {
-      services.xserver.displayManager = {
-        lightdm.greeters.mini.extraConfig = let
-          inherit (cfg.colors.main) normal types;
-        in ''
-          text-color = "${types.bg}"
-          password-background-color = "${normal.black}"
-          window-color = "${types.border}"
-          border-color = "${types.border}"
-        '';
-      };
-    })
   ]);
 }

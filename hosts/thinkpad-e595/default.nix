@@ -30,7 +30,7 @@
         typst.enable = true;
       };
     };
-    themes.active = "kanagawa";
+    themes.active = "catppuccin";
 
     desktop = {
       xmonad.enable = true;

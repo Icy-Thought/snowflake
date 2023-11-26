@@ -115,13 +115,11 @@ in {
         };
       };
 
-      home.configFile = let
-        themeDir = "${cfg.gtk.package}/share/themes/${cfg.gtk.name}/gtk-4.0/";
+      home.configFile.gtk4Theme = let
+        inherit (cfg.gtk) name package;
       in {
-        gtk4Theme = {
-          target = "gtk-4.0/gtk.css";
-          source = "${themeDir}/gtk.css";
-        };
+        target = "gtk-4.0/gtk.css";
+        source = "${package}/share/themes/${name}/gtk-4.0/gtk.css";
       };
     }
 

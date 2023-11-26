@@ -5,20 +5,26 @@
   pkgs,
   ...
 }: let
-  inherit (builtins) toString;
+  inherit (builtins) readFile toString;
   inherit (lib.attrsets) attrValues;
   inherit (lib.modules) mkDefault mkIf mkMerge;
+  inherit (lib.strings) concatMapStringsSep;
 
   cfg = config.modules.themes;
 in {
   config = mkIf (cfg.active == "catppuccin") (mkMerge [
     {
       modules.themes = {
-        wallpaper = mkDefault ./assets/nasa-jwst-blueprint.png;
+        wallpaper = mkDefault ./assets/alena-aenami-eternity.jpg;
 
         gtk = {
-          name = "Catppuccin-Orange-Dark-Compact";
-          package = pkgs.catppuccin-gtk.override {size = "compact";};
+          name = "Catppuccin-Mocha-Compact-Flamingo-Dark";
+          package = pkgs.catppuccin-gtk.override {
+            variant = "mocha";
+            accents = ["flamingo"];
+            tweaks = ["rimless"];
+            size = "compact";
+          };
         };
 
         iconTheme = {
@@ -34,17 +40,18 @@ in {
 
         fontConfig = {
           packages = attrValues {
-            inherit (pkgs) twitter-color-emoji;
-            nerdfonts = pkgs.nerdfonts.override {fonts = ["VictorMono"];};
+            inherit (pkgs) dancing-script noto-fonts-emoji sarasa-gothic;
+            nerdfonts =
+              pkgs.nerdfonts.override {fonts = ["Arimo" "VictorMono"];};
           };
-          mono = ["VictorMono Nerd Font Mono"];
-          sans = ["VictorMono Nerd Font"];
-          emoji = ["Twitter Color Emoji"];
+          mono = ["VictorMono Nerd Font" "Sarasa Mono SC"];
+          sans = ["Arimo Nerd Font" "Sarasa Gothic SC"];
+          emoji = ["Noto Color Emoji"];
         };
 
         font = {
-          sans.family = "VictorMono Nerd Font";
-          mono.family = "VictorMono Nerd Font Mono";
+          sans.family = "Arimo Nerd Font";
+          mono.family = "VictorMono Nerd Font";
         };
 
         colors = {
@@ -86,10 +93,10 @@ in {
             };
             fg = "hsla(220, 38%, 89%, 1)";
             ribbon = {
-              outer = "hsla(41, 88%, 83%, 1)";
-              inner = "hsla(23, 87%, 78%, 1)";
+              outer = "hsla(0, 59%, 88%, 1)";
+              inner = "hsla(217, 92%, 76%, 1)";
             };
-            selected = "hsla(9, 56%, 90%, 1)";
+            selected = "hsla(238, 100%, 89%, 1)";
             urgent = "hsla(342, 79%, 75%, 1)";
             transparent = "hsla(0, 0%, 0%, 0)";
           };
@@ -116,13 +123,34 @@ in {
           };
         };
       };
+
+      home.configFile = let
+        inherit (cfg.gtk) name package;
+      in {
+        gtk-assets = {
+          target = "gtk-4.0/assets";
+          source = "${package}/share/themes/${name}/gtk-4.0/assets";
+          recursive = true;
+        };
+        gtk-CSS = {
+          target = "gtk-4.0/gtk.css";
+          source = "${package}/share/themes/${name}/gtk-4.0/gtk.css";
+        };
+        gtk-darkCSS = {
+          target = "gtk-4.0/gtk-dark.css";
+          source = "${package}/share/themes/${name}/gtk-4.0/gtk-dark.css";
+        };
+      };
     }
 
-    # (mkIf config.modules.desktop.browsers.firefox.enable {
-    #   firefox.userChrome =
-    #     concatMapStringsSep "\n" readFile
-    #     ["${configDir}" /firefox/userChrome.css];
-    # })
+    (mkIf config.modules.desktop.browsers.firefox.enable {
+      modules.desktop.browsers.firefox.userChrome = let
+        usrChromeDir = "${config.snowflake.configDir}/firefox/userChrome";
+      in
+        concatMapStringsSep "\n" readFile [
+          "${usrChromeDir}/treestyle-tabs.css"
+        ];
+    })
 
     (mkIf config.services.xserver.enable {
       hm.programs.rofi = {
@@ -272,7 +300,7 @@ in {
       };
 
       hm.programs.sioyek.config = let
-        inherit (cfg.font.mono) family size weight;
+        inherit (cfg.font) mono sans;
       in {
         "custom_background_color " = "0.12 0.11 0.18";
         "custom_text_color " = "0.85 0.88 0.93";
@@ -287,21 +315,8 @@ in {
         "page_separator_color" = "0.95 0.80 0.80";
         "status_bar_color" = "0.19 0.20 0.27";
 
-        "font_size" = "${toString size}";
-        "ui_font" = "${family} ${weight}";
-      };
-    })
-
-    (mkIf (config.modules.desktop.envProto == "x11") {
-      services.xserver.displayManager = {
-        lightdm.greeters.mini.extraConfig = let
-          inherit (cfg.colors.main) normal types;
-        in ''
-          text-color = "${types.bg}"
-          password-background-color = "${normal.black}"
-          window-color = "${types.border}"
-          border-color = "${types.border}"
-        '';
+        "font_size" = "${toString sans.size}";
+        "ui_font" = "${mono.family} ${mono.weight}";
       };
     })
   ]);

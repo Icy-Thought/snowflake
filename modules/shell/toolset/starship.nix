@@ -44,7 +44,7 @@ in {
         };
 
         git_status = {
-          format = "[([](fg:${normal.blue})( 『 $all_status$ahead_behind 』)[](fg:${types.panelbg}))]($style)";
+          format = "[([](fg:${normal.blue})( 『 $all_status$ahead_behind 』)[](fg:${normal.blue}))]($style)";
           style = "bg:${normal.blue} fg:${types.bg} bold";
         };
 
