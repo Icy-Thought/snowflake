@@ -49,15 +49,15 @@
 
 ## XMonad
 
-![XMonad](./assets/themes/kanagawa/xmonad.png)
+![XMonad](./assets/themes/catppuccin/xmonad.png)
 
 ## Emacs
 
-![Emacs](./assets/themes/kanagawa/emacs.png)
+![Emacs](./assets/themes/catppuccin/emacs.png)
 
 ## Neovim
 
-![Neovim](./assets/themes/kanagawa/neovim.png)
+![Neovim](./assets/themes/catppuccin/neovim.png)
 
 # Introduction
 
