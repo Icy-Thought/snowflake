@@ -22,9 +22,11 @@
     # Window Manager(s) + Extensions
     xmonad-contrib.url = "github:icy-thought/xmonad-contrib"; # TODO: replace with official after #582 == merged!
     hyprland.url = "github:hyprwm/Hyprland";
-
-    # Toolset
     rust.url = "github:oxalica/rust-overlay";
+
+    # Application -> (Cached) Git
+    # emacs.url = "github:nix-community/emacs-overlay";
+    # nvim-nightly.url = "github:nix-community/neovim-nightly-overlay";
     spicetify-nix.url = "github:the-argus/spicetify-nix";
 
     # Submodules (temporary) # TODO
