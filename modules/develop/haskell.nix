@@ -28,6 +28,13 @@ in {
           (p: with p; [taffybar xmonad xmonad-contrib]);
       };
 
+      hm.programs.vscode.extensions = with pkgs.vscode-extensions; [
+        haskell.haskell
+        justusadam.language-haskell # syntax-highlighting
+      ];
+    })
+
+    (mkIf config.modules.develop.xdg.enable {
       home.file.ghci-conf = {
         target = ".ghci";
         text = ''
@@ -37,15 +44,6 @@ in {
           :def hoogle \x -> pure $ ":!hoogle search \"" ++ x ++ "\""
         '';
       };
-
-      hm.programs.vscode.extensions = with pkgs.vscode-extensions; [
-        haskell.haskell
-        justusadam.language-haskell # syntax-highlighting
-      ];
-    })
-
-    (mkIf config.modules.develop.xdg.enable {
-      # TODO:
     })
   ];
 }

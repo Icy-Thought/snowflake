@@ -21,8 +21,12 @@ in {
       user.packages = attrValues ({
           inherit (pkgs) lua lua-language-server stylua;
         }
-        // optionalAttrs (cfg.fennel.enable) {inherit (pkgs) fennel fnlfmt;});
+        // optionalAttrs (cfg.fennel.enable) {
+          inherit (pkgs) fennel fnlfmt;
+        });
+    })
 
+    (mkIf config.modules.develop.xdg.enable {
       home.configFile.stylua-conf = {
         target = "stylua/stylua.toml";
         text = ''
@@ -34,8 +38,6 @@ in {
           call_parentheses = "Always"
         '';
       };
-    })
-
-    (mkIf config.modules.develop.xdg.enable {}) # TODO
+    }) # TODO
   ];
 }
