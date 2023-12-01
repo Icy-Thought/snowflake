@@ -20,8 +20,7 @@ in {
 
       user.packages = attrValues {
         rust-package = pkgs.rust-bin.stable.latest.default;
-        inherit (pkgs) rust-script;
-        inherit (pkgs.unstable) rust-analyzer;
+        inherit (pkgs) rust-analyzer rust-script;
       };
 
       env.PATH = ["$(${getExe pkgs.yarn} global bin)"];
