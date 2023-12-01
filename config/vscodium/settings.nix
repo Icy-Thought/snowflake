@@ -22,15 +22,15 @@ in {
 
   # Font-related
   "editor.fontFamily" = "${font.mono.family}";
-  "editor.fontWeight" = "${font.mono.weightNum}";
+  "editor.fontWeight" = "${toString font.mono.weightNum}";
   "editor.fontSize" = 16;
 
   "debug.console.fontFamily" = "${font.mono.family}";
-  "debug.console.fontWeight" = "${font.mono.weightNum}";
+  "debug.console.fontWeight" = "${toString font.mono.weightNum}";
   "debug.console.fontSize" = 16;
 
   "terminal.integrated.fontFamily" = "${font.mono.family}";
-  "terminal.integrated.fontWeight" = "${font.mono.weightNum}";
+  "terminal.integrated.fontWeight" = "${toString font.mono.weightNum}";
   "terminal.integrated.fontSize" = 16;
 
   # Aesthetics
