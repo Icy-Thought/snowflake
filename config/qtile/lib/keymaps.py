@@ -8,11 +8,7 @@ HOME = os.path.expanduser("~")
 # Default applications
 myTerm = "wezterm"
 myBrowser = "firefox"
-myPrivateBrowser = (
-    myBrowser,
-    "--profile",
-    HOME + "/.mozilla/firefox/z5dgw9v6.dev-edition-private",
-)
+myPrivateBrowser = "librewolf"
 
 EzKey.modifier_keys = {
     "M": "mod4",
@@ -86,7 +82,6 @@ application_spawns = [
     EzKey("M-S-<Return>", lazy.spawn(myTerm)),
     EzKey("M-A-f", lazy.spawn(myBrowser)),
     EzKey("M-A-w", lazy.spawn(myPrivateBrowser)),
-    EzKey("M-A-g", lazy.spawn("chromium")),
 ]
 
 audioctl = [

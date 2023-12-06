@@ -238,7 +238,7 @@ firefoxSelector = appName =? "firefox" <&&> className =? "Navigator"
 protonMailSelector = chromiumSelectorBase <&&> fmap isProtonMailTitle title
 
 virtualClasses =
-  [(protonMailSelector, "Proton Mail"), (chromiumSelector, "Chromium")]
+  [(protonMailSelector, "Proton Mail"), (firefoxSelector, "firefox")]
 
 -- Startup hook
 hostNameToAction = M.fromList [("my-hostname", return ())]
@@ -885,9 +885,8 @@ addKeys conf@XConfig { modMask = modm } =
 
     -- Specific program spawning
     ++  bindBringAndRaiseMany
-            [ (modalt, xK_g, unsafeSpawn "chromium", chromiumSelector)
-            , (modalt, xK_f, unsafeSpawn "firefox", firefoxSelector)
-            , (modalt, xK_w, unsafeSpawn "firefox --profile ~/.mozilla/firefox/z5dgw9v6.dev-edition-private", firefoxSelector)
+            [ (modalt, xK_f, unsafeSpawn "firefox", firefoxSelector)
+            , (modalt, xK_w, unsafeSpawn "librewolf", firefoxSelector)
             ]
 
     -- Window manipulation

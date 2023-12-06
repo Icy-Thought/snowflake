@@ -6,7 +6,7 @@
   ...
 }: let
   inherit (builtins) toJSON;
-  inherit (lib.attrsets) mapAttrsToList;
+  inherit (lib.attrsets) attrValues mapAttrsToList;
   inherit (lib.modules) mkIf mkMerge;
   inherit (lib.strings) concatStrings;
 
@@ -18,21 +18,25 @@ in {
     inherit (lib.my) mkOpt mkOpt';
   in {
     enable = mkEnableOption "Gecko-based libre browser";
-    profileName = mkOpt str config.user.name;
+    privacy.enable = mkEnableOption "Privacy Focused Firefox fork";
 
+    profileName = mkOpt str config.user.name;
     settings = mkOpt' (attrsOf (oneOf [bool int str])) {} ''
       Firefox preferences set in <filename>user.js</filename>
     '';
     extraConfig = mkOpt' lines "" ''
       Extra lines to add to <filename>user.js</filename>
     '';
-
     userChrome = mkOpt' lines "" "CSS Styles for Firefox's interface";
     userContent = mkOpt' lines "" "Global CSS Styles for websites";
   };
 
-  config = mkIf cfg.enable (mkMerge [
-    {
+  config = mkMerge [
+    (mkIf (config.modules.desktop.envProto == "wayland") {
+      environment.variables = {MOZ_ENABLE_WAYLAND = "1";};
+    })
+
+    (mkIf cfg.enable {
       user.packages = let
         inherit (pkgs) firefox-bin makeDesktopItem;
       in [
@@ -217,10 +221,12 @@ in {
           text = cfg.userContent;
         };
       };
-    }
-
-    (mkIf (config.modules.desktop.envProto == "wayland") {
-      environment.variables = {MOZ_ENABLE_WAYLAND = "1";};
     })
-  ]);
+
+    (mkIf cfg.privacy.enable {
+      user.packages = attrValues {
+        inherit (pkgs) librewolf;
+      };
+    })
+  ];
 }

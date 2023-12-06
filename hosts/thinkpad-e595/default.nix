@@ -45,8 +45,10 @@
       };
       browsers = {
         default = "firefox";
-        chromium.enable = true;
-        firefox.enable = true;
+        firefox = {
+          enable = true;
+          privacy.enable = true;
+        };
       };
       education = {
         memory.enable = true;
