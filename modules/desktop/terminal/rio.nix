@@ -53,7 +53,7 @@ in {
             family = "${family}";
             size = size;
 
-            extras = [{family = "";}];
+            # extras = [{family = "";}];
 
             regular = {
               family = "${family}";
