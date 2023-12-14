@@ -74,10 +74,7 @@
           program = "zathura";
         };
       };
-      distraction.lutris = {
-        enable = true;
-        league.enable = true;
-      };
+      distraction.steam.enable = true;
     };
 
     virtualize = {
