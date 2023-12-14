@@ -59,10 +59,13 @@ in {
     })
 
     (mkIf config.modules.develop.scientific.typst.enable {
-      user.packages = attrValues {inherit (pkgs) typst typst-lsp;};
+      user.packages = attrValues {
+        inherit (pkgs) typst; # typst-lsp <- broken
+      };
 
-      hm.programs.vscode.extensions =
-        attrValues {inherit (pkgs.vscode-extensions.nvarner) typst-lsp;};
+      hm.programs.vscode.extensions = attrValues {
+        inherit (pkgs.vscode-extensions.nvarner) typst-lsp;
+      };
     })
 
     (mkIf config.modules.develop.xdg.enable {
