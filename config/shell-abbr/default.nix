@@ -1,8 +1,8 @@
 let
   main = {
-    ls = "lsd -Sl";
-    lsa = "lsd -Sla";
-    tree = "lsd -Sl --tree";
+    ls = "lsd -l";
+    lsa = "lsd -la";
+    tree = "lsd -l --tree";
     wget = "curl -O";
     imgcat = "wezterm imgcat";
 
