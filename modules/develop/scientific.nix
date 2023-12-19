@@ -60,7 +60,7 @@ in {
 
     (mkIf config.modules.develop.scientific.typst.enable {
       user.packages = attrValues {
-        inherit (pkgs) typst; # typst-lsp <- broken
+        inherit (pkgs) typst typst-lsp;
       };
 
       hm.programs.vscode.extensions = attrValues {

@@ -114,15 +114,6 @@ in {
           };
         };
       };
-
-      home.configFile = let
-        themeDir = "${cfg.gtk.package}/share/themes/${cfg.gtk.name}/gtk-4.0/";
-      in {
-        gtk4Theme = {
-          target = "gtk-4.0/gtk.css";
-          source = "${themeDir}/gtk.css";
-        };
-      };
     }
 
     (mkIf config.modules.desktop.browsers.firefox.enable {

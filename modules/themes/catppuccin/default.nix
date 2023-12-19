@@ -123,24 +123,6 @@ in {
           };
         };
       };
-
-      home.configFile = let
-        inherit (cfg.gtk) name package;
-      in {
-        gtk-assets = {
-          target = "gtk-4.0/assets";
-          source = "${package}/share/themes/${name}/gtk-4.0/assets";
-          recursive = true;
-        };
-        gtk-CSS = {
-          target = "gtk-4.0/gtk.css";
-          source = "${package}/share/themes/${name}/gtk-4.0/gtk.css";
-        };
-        gtk-darkCSS = {
-          target = "gtk-4.0/gtk-dark.css";
-          source = "${package}/share/themes/${name}/gtk-4.0/gtk-dark.css";
-        };
-      };
     }
 
     (mkIf config.modules.desktop.browsers.firefox.enable {

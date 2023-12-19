@@ -114,13 +114,6 @@ in {
           };
         };
       };
-
-      home.configFile.gtk4Theme = let
-        inherit (cfg.gtk) name package;
-      in {
-        target = "gtk-4.0/gtk.css";
-        source = "${package}/share/themes/${name}/gtk-4.0/gtk.css";
-      };
     }
 
     (mkIf config.modules.desktop.browsers.firefox.enable {
