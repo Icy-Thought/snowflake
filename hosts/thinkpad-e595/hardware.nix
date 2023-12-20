@@ -71,6 +71,7 @@ in {
     pipewire.enable = true;
     bluetooth.enable = true;
     kmonad.deviceID = "/dev/input/by-path/platform-i8042-serio-0-event-kbd";
+    graphics.amd.enable = true;
     pointer.enable = true;
     printer.enable = true;
     razer.enable = true;
@@ -78,15 +79,9 @@ in {
 
   services = {
     upower.enable = true;
-    xserver = {
-      videoDrivers = ["amdgpu"];
-      deviceSection = ''
-        Option "TearFree" "true"
-      '';
-      libinput.touchpad = {
-        accelSpeed = "0.5";
-        accelProfile = "adaptive";
-      };
+    xserver.libinput.touchpad = {
+      accelSpeed = "0.5";
+      accelProfile = "adaptive";
     };
   };
 }
