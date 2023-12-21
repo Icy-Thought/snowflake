@@ -5,67 +5,58 @@
   pkgs,
   ...
 }: let
-  inherit (lib.meta) getExe;
-  inherit (lib.modules) mkIf mkMerge;
+  inherit (lib.modules) mkIf mkForce mkMerge;
 
   cfg = config.modules.desktop.distraction.steam;
+  envProto = config.modules.desktop.envProto;
 in {
   options.modules.desktop.distraction.steam = let
     inherit (lib.options) mkEnableOption;
-    inherit (lib.types) str;
-    inherit (lib.my) mkOpt;
   in {
-    enable = mkEnableOption "game/software store";
-    hardware.enable = mkEnableOption "Steam-based HW support";
-    libDir = mkOpt str "$XDG_DATA_HOME/steamlib";
+    enable = mkEnableOption "Enable steam, the game/software store";
+    hardware.enable = mkEnableOption "Support for steam hardware";
   };
 
   config = mkIf cfg.enable (mkMerge [
     {
-      # I avoid programs.steam.enable because it installs another steam binary,
-      # which the xdesktop package invokes, instead of my steam shims below.
-      user.packages = let
-        inherit
-          (pkgs)
-          makeDesktopItem
-          stdenv
-          steam
-          steam-run-native
-          writeScriptBin
-          ;
-      in [
-        # Get steam to keep its garbage out of $HOME
-        (writeScriptBin "steam" ''
-          #!${stdenv.shell}
-          HOME="${cfg.libDir}" exec ${getExe steam} "$@"
-        '')
+      programs.steam = {
+        enable = true;
+        package = pkgs.steam-small.override {
+          extraEnv = {
+            DXVK_HUD = "compiler";
+            MANGOHUD = true;
+            # RADV_TEX_ANISO = 16;
+          };
+        };
+      };
+      hardware.steam-hardware.enable = mkForce cfg.hardware.enable;
 
-        # for running GOG and humble bundle games
-        (writeScriptBin "steam-run" ''
-          #!${stdenv.shell}
-          HOME="${cfg.libDir}" exec ${getExe steam-run-native} "$@"
-        '')
-
-        # Add rofi desktop icon
-        (makeDesktopItem {
-          name = "steam";
-          desktopName = "Steam";
-          icon = "steam";
-          exec = "steam";
-          terminal = false;
-          mimeTypes = ["x-scheme-handler/steam"];
-          categories = ["Network" "FileTransfer" "Game"];
-        })
-      ];
-
-      system.userActivationScripts.setupSteamDir = ''
-        mkdir -p "${cfg.libDir}"
-      '';
-
-      # better for steam proton games
-      systemd.extraConfig = "DefaultLimitNOFILE=1048576";
+      # https://github.com/FeralInteractive/gamemode
+      programs.gamemode = {
+        enable = true;
+        enableRenice = true;
+        settings = {};
+      };
     }
 
-    (mkIf cfg.hardware.enable {hardware.steam-hardware.enable = true;})
+    (mkIf (envProto == "wayland") {
+      # https://github.com/ValveSoftware/gamescope
+      programs.gamescope = {
+        enable = true;
+        capSysNice = true;
+        env = {
+          DXVK_HDR = "1";
+          ENABLE_GAMESCOPE_WSI = "1";
+          WINE_FULLSCREEN_FSR = "1";
+          WLR_RENDERER = "vulkan";
+        };
+        args = ["--hdr-enabled"];
+      };
+
+      programs.steam.gamescopeSession = {
+        enable = true;
+        args = ["--immediate-flips"];
+      };
+    })
   ]);
 }
