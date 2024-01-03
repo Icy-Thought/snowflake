@@ -26,16 +26,16 @@ in {
           blinking-cursor = false;
           editor = "emacsclient -c";
           padding-x = 10;
-          scroll-multiplier = 3.0;
 
-          performance = "Low";
-          disable-renderer-when-unfocused = true;
+          renderer = {
+            backend = "Automatic";
+            performance = "High";
+            disable-renderer-when-unfocused = true;
+          };
 
-          window = {
-            mode = "Windowed";
-            background-opacity = 0.8;
-            foreground-opacity = 1.0;
-            blur = false;
+          keyboard = {
+            use-kitty-keyboard-protocol = false;
+            disable-ctlseqs-alt = false;
           };
 
           navigation = {
@@ -43,7 +43,18 @@ in {
             clickable = true;
             use-current-path = true;
             color-automation = [];
-            macos-hide-window-buttons = false;
+          };
+
+          scroll = {
+            multiplier = 3.0;
+            divider = 1.0;
+          };
+
+          window = {
+            mode = "Windowed";
+            background-opacity = 0.8;
+            foreground-opacity = 1.0;
+            blur = false;
           };
         }
         (mkIf (active != null) {
