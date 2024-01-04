@@ -92,12 +92,12 @@ in {
 
         # Windows:
         set-option -g window-status-format "#[fg=${types.fg}] #W/#{window_panes} "
-        set-option -g window-status-current-format "#{?client_prefix,#[fg=${types.bg}]#[bg=${normal.red}] #I:#W #[fg=${normal.red}]#[bg=default],#[fg=${types.bg}]#[bg=${types.highlight}] #I:#W #[fg=${types.highlight}]#[bg=default]}"
+        set-option -g window-status-current-format "#{?client_prefix,#[fg=${types.bg}]#[bg=${normal.red}] #I:#W #[fg=${normal.red}]#[bg=default],#[fg=${types.bg}]#[bg=${normal.magenta}] #I:#W #[fg=${normal.magenta}]#[bg=default]}"
 
         # -------===[ Statusline ]===------- #
-        set-option -g status-left "#[fg=${types.bg}]#[bg=${normal.cyan}]#[bold]   #[fg=${normal.cyan}]#[bg=default]"
+        set-option -g status-left "#[fg=${types.bg}]#[bg=${normal.blue}]#[bold]   #[fg=${normal.blue}]#[bg=default]"
         set-option -g status-bg default
-        set-option -g status-right "#[italics]∡ #H | %b %d, %H:%M  #[fg=${types.bg},bg=${types.panelbg},bold,italics] base-#S "
+        set-option -g status-right "#[italics]∡ #H | %b %d, %H:%M  #[fg=${types.bg},bg=${types.highlight},bold,italics] base-#S "
 
         # -------===[ Clock & Selection ]===------- #
         set-window-option -g clock-mode-colour "${types.border}"

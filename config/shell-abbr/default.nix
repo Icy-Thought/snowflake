@@ -4,7 +4,6 @@ let
     lsa = "lsd -la";
     tree = "lsd -l --tree";
     wget = "curl -O";
-    imgcat = "wezterm imgcat";
 
     # Nix-related
     nb = "nix-build -E 'with import <nixpkgs> {}; callPackage ./. {}'";

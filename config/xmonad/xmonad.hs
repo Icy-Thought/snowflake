@@ -102,7 +102,7 @@ main =
 
 myConfig =
   def { modMask            = mod4Mask
-      , terminal           = "wezterm"
+      , terminal           = "alacritty"
       , manageHook         = namedScratchpadManageHook =<< liftX myScratchpads
       , layoutHook         = myLayoutHook
       , borderWidth        = 2
