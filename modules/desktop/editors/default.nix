@@ -25,7 +25,8 @@ in {
     (mkIf (cfg.default != null) {
       env = {
         EDITOR = cfg.default;
-        OPENAI_API_KEY = "$(cat /run/agenix/closedAI)";
+        OPENAI_API_KEY = "$(cat /run/agenix/ClosedAI)";
+        OPENWEATHERMAP_KEY = "$(cat /run/agenix/OpenWeatherMap)";
       };
     })
 

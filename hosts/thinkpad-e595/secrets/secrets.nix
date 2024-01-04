@@ -6,8 +6,9 @@ let
     then readFile keyFile
     else "";
 in {
-  "closedAI.age".publicKeys = [hostKey];
-  "ement.age".publicKeys = [hostKey];
+  "ClosedAI.age".publicKeys = [hostKey];
+  "Ement.age".publicKeys = [hostKey];
   "tokenGH.age".publicKeys = [hostKey];
+  "OpenWeatherMap.age".publicKeys = [hostKey];
   # "torBylon.age".publicKeys = [ hostKey ];
 }
