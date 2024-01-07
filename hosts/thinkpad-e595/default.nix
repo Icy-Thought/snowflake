@@ -17,7 +17,6 @@
     };
     networking = {
       networkManager.enable = true;
-      mullvad.enable = true;
       # samba.sharing.enable = true;
     };
     services = {ssh.enable = true;};
