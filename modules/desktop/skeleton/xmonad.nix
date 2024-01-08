@@ -24,7 +24,7 @@ in {
       extensions = {
         input-method = {
           enable = true;
-          framework = "ibus";
+          framework = "fcitx";
         };
         mimeApps.enable = true; # mimeApps -> default launch application
         picom = {
