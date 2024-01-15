@@ -21,6 +21,7 @@ in {
     hm.programs.alacritty = {
       enable = true;
 
+      # https://alacritty.org/config-alacritty.html
       settings = mkMerge [
         {
           env = {
@@ -51,7 +52,6 @@ in {
           scrolling = {
             history = 5000;
             multiplier = 3;
-            faux_multiplier = 3;
           };
 
           selection = {
@@ -67,11 +67,15 @@ in {
           };
 
           cursor = {
-            style = "Block";
+            style = {
+              shape = "Block";
+              blinking = "Off";
+            };
             unfocused_hollow = true;
+            thickness = 0.15;
           };
 
-          key_bindings = [
+          keyboard.bindings = [
             {
               key = "N";
               mods = "Control|Shift";
@@ -109,92 +113,115 @@ in {
             }
           ];
 
-          mouse_bindings = [
-            {
-              mouse = "Middle";
-              action = "PasteSelection";
-            }
-          ];
-
-          url = {
-            launcher = "open";
-            modifiers = "Shift";
+          mouse = {
+            hide_when_typing = true;
+            bindings = [
+              {
+                mouse = "Middle";
+                action = "PasteSelection";
+              }
+              {
+                mouse = "Right";
+                mods = "Shift";
+                action = "open";
+              }
+            ];
           };
         }
 
         (mkIf (active != null) {
-          import = ["~/.config/alacritty/config/${active}.yml"];
+          import = ["~/.config/alacritty/config/${active}.toml"];
         })
       ];
     };
 
     home.configFile = mkIf (active != null) {
       alacritty-conf = {
-        target = "alacritty/config/${active}.yml";
-        text = let
-          inherit (config.modules.themes.font.mono) family weight size;
+        target = "alacritty/config/${active}.toml";
+        source = let
+          inherit (config.modules.themes.font) mono;
           inherit (config.modules.themes.colors.main) bright normal types;
-        in ''
-          font:
-            normal:
-              family: "${family}"
-              style:  "${weight}"
+          tomlFormat = pkgs.formats.toml {};
+        in
+          tomlFormat.generate "alacritty-theme" {
+            font = {
+              builtin_box_drawing = true;
+              size = mono.size;
 
-            italic:
-              family: "${family}"
-              style:  "${weight} Italic"
+              normal = {
+                family = "${mono.family}";
+                style = "${mono.weight}";
+              };
 
-            bold:
-              family: "${family}"
-              style:  "SemiBold"
+              italic = {
+                family = "${mono.family}";
+                style = "${mono.weight} Italic";
+              };
 
-            bold_italics:
-              family: "${family}"
-              style:  "SemiBold Italic"
+              bold = {
+                family = "${mono.family}";
+                style = "SemiBold";
+              };
 
-            size: ${toString size}
+              bold_italic = {
+                family = "${mono.family}";
+                style = "SemiBold Italic";
+              };
 
-            offset:
-              x: 0
-              y: 0
+              offset = {
+                x = 0;
+                y = 0;
+              };
+              glyph_offset = {
+                x = 0;
+                y = 0;
+              };
+            };
 
-            glyph_offset:
-              x: 0
-              y: 0
+            colors = {
+              primary = {
+                foreground = "${types.fg}";
+                background = "${types.bg}";
+              };
 
-          colors:
-            primary:
-              foreground: "${types.fg}"
-              background: "${types.bg}"
+              cursor = {
+                text = "${types.bg}";
+                cursor = "${normal.yellow}";
+              };
 
-            cursor:
-              text:   "${types.bg}"
-              cursor: "${normal.yellow}"
+              vi_mode_cursor = {
+                text = "${types.bg}";
+                cursor = "${normal.blue}";
+              };
 
-            selection:
-              text:       "${types.bg}"
-              background: "${types.highlight}"
+              selection = {
+                text = "${types.bg}";
+                background = "${types.highlight}";
+              };
 
-            normal:
-              black:      "${normal.black}"
-              red:        "${normal.red}"
-              green:      "${normal.green}"
-              yellow:     "${normal.yellow}"
-              blue:       "${normal.blue}"
-              magenta:    "${normal.magenta}"
-              cyan:       "${normal.cyan}"
-              white:      "${normal.white}"
+              normal = {
+                black = "${normal.black}";
+                red = "${normal.red}";
+                green = "${normal.green}";
+                yellow = "${normal.yellow}";
+                blue = "${normal.blue}";
+                magenta = "${normal.magenta}";
+                cyan = "${normal.cyan}";
+                white = "${normal.white}";
+              };
 
-            bright:
-              black:      "${bright.black}"
-              red:        "${bright.red}"
-              green:      "${bright.green}"
-              yellow:     "${bright.yellow}"
-              blue:       "${bright.blue}"
-              magenta:    "${bright.magenta}"
-              cyan:       "${bright.cyan}"
-              white:      "${bright.white}"
-        '';
+              bright = {
+                black = "${bright.black}";
+                red = "${bright.red}";
+                green = "${bright.green}";
+                yellow = "${bright.yellow}";
+                blue = "${bright.blue}";
+                magenta = "${bright.magenta}";
+                cyan = "${bright.cyan}";
+                white = "${bright.white}";
+              };
+            };
+          };
       };
     };
   };
