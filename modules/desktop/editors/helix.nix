@@ -93,10 +93,13 @@ in {
 
     home.configFile.helix-theme = {
       target = "helix/themes/${activeTheme}-alpha.toml";
-      text = ''
-        inherits = "${activeTheme}"
-        "ui.background" = { }
-      '';
+      source = let
+        tomlFormat = pkgs.formats.toml {};
+      in
+        tomlFormat.generate "helix-theme" {
+          inherits = "${activeTheme}";
+          ui.background = {};
+        };
     };
   });
 }

@@ -19,27 +19,30 @@ in {
     in {
       macchina-init = {
         target = "macchina/macchina.toml";
-        text = ''
-          interface = "wlan0"
-          long_uptime = true
-          long_shell = false
-          long_kernel = false
-          current_shell = true
-          physical_cores = true
+        source = let
+          tomlFormat = pkgs.formats.toml {};
+        in
+          tomlFormat.generate "macchina-conf" {
+            interface = "wlan0";
+            long_uptime = true;
+            long_shell = false;
+            long_kernel = false;
+            current_shell = true;
+            physical_cores = true;
 
-          # theme = "Xi"
-          show = [
-              "Machine",
-              "Kernel",
-              "Distribution",
-              "WindowManager",
-              "Resolution",
-              "Packages",
-              "Terminal",
-              "Shell",
+            # theme = "Xi"
+            show = [
+              "Machine"
+              "Kernel"
+              "Distribution"
+              "WindowManager"
+              "Resolution"
+              "Packages"
+              "Terminal"
+              "Shell"
               "Uptime"
-          ]
-        '';
+            ];
+          };
       };
 
       theme-xi = {

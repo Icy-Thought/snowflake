@@ -29,14 +29,17 @@ in {
     (mkIf config.modules.develop.xdg.enable {
       home.configFile.stylua-conf = {
         target = "stylua/stylua.toml";
-        text = ''
-          column_width = 80
-          line_endings = "Unix"
-          indent_type = "Spaces"
-          indent_width = 4
-          quote_style = "AutoPreferDouble"
-          call_parentheses = "Always"
-        '';
+        source = let
+          tomlFormat = pkgs.formats.toml {};
+        in
+          tomlFormat.generate "stylua-conf" {
+            column_width = 80;
+            line_endings = "Unix";
+            indent_type = "Spaces";
+            indent_width = 4;
+            quote_style = "AutoPreferDouble";
+            call_parentheses = "Always";
+          };
       };
     }) # TODO
   ];
