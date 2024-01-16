@@ -139,7 +139,7 @@ in {
       alacritty-conf = {
         target = "alacritty/config/${active}.toml";
         source = let
-          inherit (config.modules.themes.font) mono;
+          inherit (config.modules.themes.font) mono sans;
           inherit (config.modules.themes.colors.main) bright normal types;
           tomlFormat = pkgs.formats.toml {};
         in
@@ -150,22 +150,22 @@ in {
 
               normal = {
                 family = "${mono.family}";
-                style = "${mono.weight}";
+                style = "${sans.weight}";
               };
 
               italic = {
                 family = "${mono.family}";
-                style = "${mono.weight} Italic";
+                style = "${sans.weight} Italic";
               };
 
               bold = {
                 family = "${mono.family}";
-                style = "SemiBold";
+                style = "${mono.weight}";
               };
 
               bold_italic = {
                 family = "${mono.family}";
-                style = "SemiBold Italic";
+                style = "${mono.weight} Italic";
               };
 
               offset = {
