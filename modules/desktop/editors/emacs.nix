@@ -39,6 +39,7 @@ in {
 
       user.packages = attrValues ({
           inherit (pkgs) binutils gnutls zstd;
+          inherit (pkgs.unstable) emacs-lsp-booster;
         }
         // optionalAttrs config.programs.gnupg.agent.enable {
           inherit (pkgs) pinentry-emacs;

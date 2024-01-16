@@ -98,11 +98,11 @@
     "emacs-dir": {
       "flake": false,
       "locked": {
-        "lastModified": 1704891870,
-        "narHash": "sha256-PPuchBCt804ZeM7YpVhr71Lzu2UXek1GUqzRAq+XlKE=",
+        "lastModified": 1705394827,
+        "narHash": "sha256-vbGlmfuH29og6pPSVGN4G2plWuJ+qS8sYrz6S2H5Uw0=",
         "ref": "refs/heads/main",
-        "rev": "6ed7032ce927d7d74a47ea033e693b412e86d7c1",
-        "revCount": 402,
+        "rev": "d902988131a65d4cfa3a391c4d594ca74e9bdc40",
+        "revCount": 404,
         "submodules": true,
         "type": "git",
         "url": "https://github.com/Icy-Thought/emacs.d.git"
@@ -543,11 +543,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1705242415,
-        "narHash": "sha256-a8DRYrNrzTudvO7XHUPNJD89Wbf1ZZT0VbwCsPnHWaE=",
+        "lastModified": 1705403940,
+        "narHash": "sha256-bl7E3w35Bleiexg01WsN0RuAQEL23HaQeNBC2zjt+9w=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "ea780f3de2d169f982564128804841500e85e373",
+        "rev": "f0326542989e1bdac955ad6269b334a8da4b0c95",
         "type": "github"
       },
       "original": {
