@@ -25,8 +25,8 @@
     rust.url = "github:oxalica/rust-overlay";
 
     # Application -> (Cached) Git
-    emacs.url = "github:nix-community/emacs-overlay";
-    nvim-nightly.url = "github:nix-community/neovim-nightly-overlay";
+    # emacs.url = "github:nix-community/emacs-overlay";
+    # nvim-nightly.url = "github:nix-community/neovim-nightly-overlay";
     spicetify-nix.url = "github:the-argus/spicetify-nix";
 
     # Submodules (temporary) # TODO

@@ -19,11 +19,11 @@ in {
     package = mkOption {
       type = package;
       default = let
-        inherit (pkgs) emacs-git emacs-pgtk;
+        inherit (pkgs) emacs29-gtk3 emacs29-pgtk;
       in
         if (envProto == "wayland")
-        then emacs-pgtk
-        else emacs-git.override {withGTK3 = true;};
+        then emacs29-pgtk
+        else emacs29-gtk3;
       description = "Emacs package which will be installed in our flake system.";
     };
     template = mkOption {
@@ -35,8 +35,6 @@ in {
 
   config = mkIf cfg.enable (mkMerge [
     {
-      nixpkgs.overlays = [inputs.emacs.overlay];
-
       user.packages = attrValues ({
           inherit (pkgs) binutils gnutls zstd;
           inherit (pkgs.unstable) emacs-lsp-booster;
