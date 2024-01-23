@@ -87,10 +87,8 @@
   };
 
   # KDE-Connect + Start-up indicator
-  programs.kdeconnect.enable = true;
-  systemd.user.services.kdeconnect-indicator = {
-    serviceConfig.ExecStart = "${pkgs.plasma5Packages.kdeconnect-kde}/bin/kdeconnect-indicator";
-    wantedBy = ["graphical-session.target"];
-    partOf = ["graphical-session.target"];
+  programs.kdeconnect = {
+    enable = true;
+    package = pkgs.valent;
   };
 }
