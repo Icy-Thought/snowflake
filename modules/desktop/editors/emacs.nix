@@ -42,6 +42,7 @@ in {
         // optionalAttrs config.programs.gnupg.agent.enable {
           inherit (pkgs) pinentry-emacs;
         });
+      environment.wordlist.enable = true; # cape-dict
 
       hm.programs.emacs = {
         enable = true;
