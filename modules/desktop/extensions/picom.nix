@@ -70,23 +70,22 @@ in {
     })
 
     (mkIf cfg.animation.enable {
-      hm.nixpkgs.overlays = [
-        (final: prev: {
-          picom = prev.picom.overrideAttrs (old: {
-            version = "2022-05-30";
-            src = prev.fetchFromGitHub {
-              owner = "dccsillag";
-              repo = "picom";
-              rev = "51b21355696add83f39ccdb8dd82ff5009ba0ae5";
-              sha256 = "crCwRJd859DCIC0pEerpDqdX2j8ZrNAzVaSSB3mTPN8=";
-            };
-          });
-        })
-      ];
-
       hm.services.picom = {
+        package = pkgs.picom.overrideAttrs (old: rec {
+          pname = "compfy";
+          version = "1.7.2";
+          src = pkgs.fetchFromGitHub {
+            owner = "allusive-dev";
+            repo = "compfy";
+            rev = version;
+            hash = "sha256-7hvzwLEG5OpJzsrYa2AaIW8X0CPyOnTLxz+rgWteNYY";
+          };
+          postInstall = "";
+          meta.mainProgram = "compfy";
+        });
+
         backend = "glx";
-        extraArgs = ["--experimental-backends"];
+        extraArgs = [];
 
         settings = {
           animations = true;
@@ -96,7 +95,6 @@ in {
           animation-clamping = false;
           animation-for-open-window = "zoom";
           animation-for-unmap-window = "zoom";
-          animation-for-transient-window = "slide-up";
         };
 
         wintypes = {
