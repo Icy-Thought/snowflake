@@ -88,13 +88,14 @@ in {
         extraArgs = [];
 
         settings = {
+          # https://react-spring-visualizer.com/
           animations = true;
-          animation-window-mass = 1;
-          animation-dampening = 20;
-          animation-stiffness = 250;
           animation-clamping = false;
-          animation-for-open-window = "zoom";
-          animation-for-unmap-window = "zoom";
+          animation-dampening = 18;
+          animation-stiffness = 200;
+          animation-window-mass = 1;
+          animation-for-open-window = "slide-up";
+          animation-for-unmap-window = "slide-down";
         };
 
         wintypes = {
