@@ -21,7 +21,7 @@
 
     # Window Manager(s) + Extensions
     xmonad-contrib.url = "github:icy-thought/xmonad-contrib"; # TODO: replace with official after #582 == merged!
-    hyprland.url = "github:hyprwm/Hyprland";
+    # hyprland.url = "github:hyprwm/Hyprland";
     rust.url = "github:oxalica/rust-overlay";
 
     # Application -> (Cached) Git
