@@ -36,7 +36,7 @@ in {
   config = mkIf cfg.enable (mkMerge [
     {
       user.packages = attrValues ({
-          inherit (pkgs) binutils gnutls zstd;
+          inherit (pkgs) binutils gnutls zstd notmuch;
           inherit (pkgs.unstable) emacs-lsp-booster;
         }
         // optionalAttrs config.programs.gnupg.agent.enable {
