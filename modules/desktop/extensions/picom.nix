@@ -36,14 +36,11 @@ in {
             "! name~=''" # Qtile == empty wm_class..
           ];
 
-          blur = {
-            method = "dual_kawase";
-            strength = 10.0;
-            background = true;
-            background-frame = false;
-            background-fixed = false;
-          };
-          blur-background-exclude = ["window_type != 'dock'"];
+          blur-method = "dual_kawase";
+          blur-strength = 10.0;
+          blur-background = true;
+          blur-whitelist = true;
+          blur-include = ["class_g = 'Taffybar'"];
 
           daemon = false;
           dbus = false;
