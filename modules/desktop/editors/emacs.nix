@@ -38,6 +38,7 @@ in {
       user.packages = attrValues ({
           inherit (pkgs) binutils gnutls zstd notmuch;
           inherit (pkgs.unstable) emacs-lsp-booster;
+          inherit (pkgs.my) my-cookies; # leetcode.el
         }
         // optionalAttrs config.programs.gnupg.agent.enable {
           inherit (pkgs) pinentry-emacs;
