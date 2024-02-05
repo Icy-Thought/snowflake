@@ -9,8 +9,8 @@
     inherit (lib.options) mkEnableOption;
   in {
     enable = mkEnableOption false;
-    audio.enable = mkEnableOption "audio manipulation" // {default = true;};
-    video.enable = mkEnableOption "video manipulation" // {default = true;};
+    audio.enable = mkEnableOption "audio manipulation";
+    video.enable = mkEnableOption "video manipulation";
   };
 
   config = let
@@ -26,10 +26,10 @@
           inherit (pkgs) ffmpeg;
         }
         // optionalAttrs cfg.audio.enable {
-          inherit (pkgs.unstable) audacity-gtk3 helvum;
+          inherit (pkgs.unstable) audacity helvum;
         }
         // optionalAttrs cfg.video.enable {
-          inherit (pkgs.unstable) obs-studio handbrake;
+          inherit (pkgs.unstable) obs-studio;
         });
     };
 }

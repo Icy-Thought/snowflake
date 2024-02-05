@@ -63,6 +63,10 @@
           music.enable = true;
           video.enable = true;
         };
+        recorder = {
+          enable = true;
+          video.enable = true;
+        };
         social = {
           base.enable = true;
           matrix.withDaemon.enable = true;
