@@ -22,7 +22,7 @@ in {
         line_break.disabled = true;
 
         format = "[$directory](fg:${normal.yellow}) ($git_branch)($git_status )($nix_shell)\n($character)";
-        right_format = "[$cmd_duration](bg:none fg:${normal.magenta})";
+        # right_format = "[$cmd_duration](bg:none fg:${normal.magenta})";
 
         cmd_duration = {
           min_time = 1;
