@@ -150,7 +150,7 @@ in {
         }
 
         # -------===[ External Plugins ]===------- #
-        any-nix-shell zsh --info-right | source /dev/stdin
+        any-nix-shell zsh | source /dev/stdin
         eval "$(zoxide init zsh)"
         eval "$(direnv hook zsh)"
       '';

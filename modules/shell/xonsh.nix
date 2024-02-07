@@ -117,7 +117,7 @@ in {
             subprocess.run(['nixos-rebuild', 'switch', '--use-remote-sudo', '--flake', '.' + str(subprocess.run(['hostname'], stdout=subprocess.PIPE).stdout.decode().strip()), '--impure'])
 
         # -------===[ Executing 3rd-Plugins ]===------- #
-        execx($(any-nix-shell --info-right))
+        execx($(any-nix-shell xonsh))
         execx($(zoxide init xonsh), 'exec', __xonsh__.ctx, filename='zoxide')
         execx($(starship init xonsh))
       '';

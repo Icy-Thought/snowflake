@@ -41,9 +41,8 @@ in {
       };
 
       interactiveShellInit = ''
-        ${getExe pkgs.any-nix-shell} fish --info-right | source
+        ${getExe pkgs.any-nix-shell} fish | source
         ${getExe pkgs.zoxide} init fish | source
-        ${getExe pkgs.direnv} hook fish | source
 
         # Vi-Bindings:
         set fish_greeting
