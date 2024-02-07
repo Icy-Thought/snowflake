@@ -61,19 +61,6 @@ in {
       };
 
       hm.programs.zsh.initExtra = ''
-        # -------===[ VTerm Integration ]===------- #
-        function vterm_printf(){
-           if [ -n "$TMUX" ] && ([ "''${TERM%%-*}" = "tmux" ] || [ "''${TERM%%-*}" = "screen" ] ); then
-               # Tell tmux to pass the escape sequences through
-               printf "\ePtmux;\e\e]%s\007\e\\" "$1"
-           elif [ "''${TERM%%-*}" = "screen" ]; then
-               # GNU screen (screen, screen-256color, screen-256color-bce)
-               printf "\eP\e]%s\007\e\\" "$1"
-           else
-               printf "\e]%s\e\\" "$1"
-           fi
-        }
-
         # -------===[ Useful Functions ]===------- #
         ediff()  { emacsclient -c -a \'\' --eval "(ediff-files \"$1\" \"$2\")"; }
         edired() { emacsclient -c -a \'\' --eval "(progn (dired \"$1\"))"; }
@@ -90,21 +77,6 @@ in {
           eman = "emacsclient -c -a '' --eval \"(switch-to-buffer (man '$argv[1]'))\"";
           magit = " emacsclient -c -a '' --eval '(magit-status)'";
         };
-
-        # Allow fish-shell to send information to vterm via properly escaped sequences.
-        interactiveShellInit = ''
-          function vterm_printf;
-              if begin; [  -n "$TMUX" ]  ; and  string match -q -r "screen|tmux" "$TERM"; end
-                  # tell tmux to pass the escape sequences through
-                  printf "\ePtmux;\e\e]%s\007\e\\" "$argv"
-              else if string match -q -- "screen*" "$TERM"
-                  # GNU screen (screen, screen-256color, screen-256color-bce)
-                  printf "\eP\e]%s\007\e\\" "$argv"
-              else
-                  printf "\e]%s\e\\" "$argv"
-              end
-          end
-        '';
       };
 
       programs.xonsh.config = ""; # TODO
