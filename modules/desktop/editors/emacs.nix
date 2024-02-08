@@ -61,6 +61,10 @@ in {
       };
 
       hm.programs.zsh.initExtra = ''
+        # -------===[ EAT Integration ]===------- #
+        [ -n "$EAT_SHELL_INTEGRATION_DIR" ] && \
+          source "$EAT_SHELL_INTEGRATION_DIR/zsh"
+
         # -------===[ Useful Functions ]===------- #
         ediff()  { emacsclient -c -a \'\' --eval "(ediff-files \"$1\" \"$2\")"; }
         edired() { emacsclient -c -a \'\' --eval "(progn (dired \"$1\"))"; }
@@ -77,6 +81,9 @@ in {
           eman = "emacsclient -c -a '' --eval \"(switch-to-buffer (man '$argv[1]'))\"";
           magit = " emacsclient -c -a '' --eval '(magit-status)'";
         };
+
+        interactiveShellInit = ''
+        ''; # EAT lacks fish integration
       };
 
       programs.xonsh.config = ""; # TODO
