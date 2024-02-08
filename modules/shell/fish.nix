@@ -17,8 +17,6 @@ in {
         starship.enable = true;
       };
     };
-
-    # Enable starship-rs ZSH integration
     hm.programs.starship.enableFishIntegration = true;
 
     # Enables vendor completion: https://nixos.wiki/wiki/Fish
@@ -63,23 +61,13 @@ in {
           inherit (pkgs.fishPlugins."${name}") src;
         };
       in
-        map (p: mkPlugin p) ["done" "autopair-fish" "fzf-fish"];
+        map (p: mkPlugin p) ["done" "autopair-fish"];
     };
 
     home.configFile = let
       inherit (config.modules.themes) active;
       inherit (config.modules.themes.colors.main) normal bright types;
     in (mkIf (active != null) {
-      fish-fzf-theme = {
-        target = "fish/conf.d/fzf.fish";
-        text = ''
-          set -Ux FZF_DEFAULT_OPTS " \
-          --color=bg:,bg+:${types.bg},spinner:${types.panelbg},hl:${normal.red} \
-          --color=fg:${types.border},header:${normal.red},info:${normal.magenta},pointer:${types.border} \
-          --color=marker:${normal.magenta},fg+:${types.border},prompt:${types.border},hl+:${normal.red}"
-        '';
-      };
-
       fish-theme = {
         target = "fish/conf.d/${active}.fish";
         text = let

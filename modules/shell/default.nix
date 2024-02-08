@@ -30,6 +30,7 @@ in {
       modules.shell.toolset = {
         lsd.enable = true;
         btop.enable = true;
+        fzf.enable = true;
       };
 
       hm.programs.direnv = {
@@ -39,7 +40,7 @@ in {
       };
 
       user.packages = attrValues {
-        inherit (pkgs) any-nix-shell fzf pwgen yt-dlp csview ripdrag yazi;
+        inherit (pkgs) any-nix-shell pwgen yt-dlp ripdrag yazi;
 
         # GNU Alternatives
         inherit (pkgs) bat fd zoxide;

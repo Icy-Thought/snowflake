@@ -8,7 +8,7 @@
 
   modules = {
     shell = {
-      default = "fish";
+      default = "zsh";
       toolset = {
         git.enable = true;
         gnupg.enable = true;
