@@ -31,6 +31,7 @@ in {
       enable = true;
       dotDir = ".config/zsh";
       autocd = true;
+      defaultKeymap = "viins";
 
       history = {
         size = 10000;
@@ -69,54 +70,54 @@ in {
 
       initExtra = ''
         # -------===[ Uncategorized ]===------- #
-        unsetopt BRACE_CCL                      # Brace character class list expansion.
-        setopt COMBINING_CHARS                  # Zero-length punc chars + Base char.
-        setopt RC_QUOTES                        # Allow single-quotes inside double-quotes.
-        setopt HASH_LIST_ALL                    # Hash cmd-path on cmp || spell-correction.
-        unsetopt CORRECT_ALL                    # Don't correct mis-spellings in args.
-        unsetopt NOMATCH                        # Don't print err on no matches.
-        unsetopt BEEP                           # Don't disturb the silence.
-        setopt IGNORE_EOF                       # Don't exit on End-Of-File.
-        WORDCHARS='_-*?[]~&.;!#$%^(){}<>'       # Special chars == part of a word!
+        unsetopt BRACE_CCL                       # Brace character class list expansion.
+        setopt COMBINING_CHARS                   # Zero-length punc chars + Base char.
+        setopt RC_QUOTES                         # Allow single-quotes inside double-quotes.
+        setopt HASH_LIST_ALL                     # Hash cmd-path on cmp || spell-correction.
+        unsetopt CORRECT_ALL                     # Don't correct mis-spellings in args.
+        unsetopt NOMATCH                         # Don't print err on no matches.
+        unsetopt BEEP                            # Don't disturb the silence.
+        setopt IGNORE_EOF                        # Don't exit on End-Of-File.
+        export WORDCHARS='_-*?[]~&.;!#$%^(){}<>' # Special chars == part of a word!
 
         # -------===[ Historical ]===------- #
-        setopt HIST_BEEP                        # Beep on non-existent history access.
-        setopt HIST_EXPIRE_DUPS_FIRST           # Expire duplicate entries first.
-        setopt HIST_FIND_NO_DUPS                # Don't display previously found entries.
-        setopt HIST_IGNORE_ALL_DUPS             # No duplicate entries!
-        setopt HIST_IGNORE_DUPS                 # Don't record entries twice in a row.
-        setopt HIST_IGNORE_SPACE                # Don't record whitespace entries.
-        setopt HIST_REDUCE_BLANKS               # Remove superfluous blanks before recording entry.
-        setopt HIST_SAVE_NO_DUPS                # Don't write duplicate entires.
-        setopt HIST_VERIFY                      # Don't execute on expansion!
+        setopt HIST_BEEP                         # Beep on non-existent history access.
+        setopt HIST_EXPIRE_DUPS_FIRST            # Expire duplicate entries first.
+        setopt HIST_FIND_NO_DUPS                 # Don't display previously found entries.
+        setopt HIST_IGNORE_ALL_DUPS              # No duplicate entries!
+        setopt HIST_IGNORE_DUPS                  # Don't record entries twice in a row.
+        setopt HIST_IGNORE_SPACE                 # Don't record whitespace entries.
+        setopt HIST_REDUCE_BLANKS                # Remove superfluous blanks before recording entry.
+        setopt HIST_SAVE_NO_DUPS                 # Don't write duplicate entires.
+        setopt HIST_VERIFY                       # Don't execute on expansion!
 
         # -------===[ Terminal Jobs ]===------- #
-        setopt LONG_LIST_JOBS                   # Long format job list.
-        setopt NOTIFY                           # Report process status.
-        unsetopt BG_NICE                        # Don't run all bg-jobs at a lower priority.
-        unsetopt HUP                            # Don't kill jobs on shell exit.
-        unsetopt CHECK_JOBS                     # Don't report on jobs on shell exit.
+        setopt LONG_LIST_JOBS                    # Long format job list.
+        setopt NOTIFY                            # Report process status.
+        unsetopt BG_NICE                         # Don't run all bg-jobs at a lower priority.
+        unsetopt HUP                             # Don't kill jobs on shell exit.
+        unsetopt CHECK_JOBS                      # Don't report on jobs on shell exit.
 
-        # -------===[ Directories ]===------- #
-        setopt AUTO_PUSHD                       # Push old dir -> stack on cd.
-        setopt PUSHD_IGNORE_DUPS                # Don't store duplicates in stack.
-        setopt PUSHD_SILENT                     # Don't print dir stack after pushd || popd.
-        setopt PUSHD_TO_HOME                    # Push `~/.` when no argument is given.
-        setopt CDABLE_VARS                      # Change directory -> path stored in var.
-        setopt MULTIOS                          # Write -> multiple descriptors.
-        setopt EXTENDED_GLOB                    # Use extended globbing syntax.
+        # -------===[ Directories ]=== ------- #
+        setopt AUTO_PUSHD                        # Push old dir -> stack on cd.
+        setopt PUSHD_IGNORE_DUPS                 # Don't store duplicates in stack.
+        setopt PUSHD_SILENT                      # Don't print dir stack after pushd || popd.
+        setopt PUSHD_TO_HOME                     # Push `~/.` when no argument is given.
+        setopt CDABLE_VARS                       # Change directory -> path stored in var.
+        setopt MULTIOS                           # Write -> multiple descriptors.
+        setopt EXTENDED_GLOB                     # Use extended globbing syntax.
         unsetopt GLOB_DOTS
-        unsetopt AUTO_NAME_DIRS                 # Don't add variable-stored paths to ~ list
+        unsetopt AUTO_NAME_DIRS                  # Don't add variable-stored paths to ~ list
 
         # -------===[ Aesthetics ]===------- #
         export MANPAGER="sh -c 'col -bx | bat -l man -p'"
         export ZSH_HIGHLIGHT_DIRS_BLACKLIST=(/nix/store)
 
         # -------===[ KeyBindings ]===------- #
-        bindkey "^[[1;5D" backward-word                 # Ctrl-<L-arrow> -> move back 1 word
-        bindkey "^[[1;5C" forward-word                  # Ctrl-<R-arrow> -> move forward 1 word
-        bindkey '^[[Z' reverse-menu-complete            # Shift-Tab -> reverse menu navigation
-        bindkey '^_' autosuggest-accept                 # C-/ => accept suggestion
+        bindkey "^[[1;5D" backward-word          # Ctrl-<L-arrow> -> move back 1 word
+        bindkey "^[[1;5C" forward-word           # Ctrl-<R-arrow> -> move forward 1 word
+        bindkey "^[[Z" reverse-menu-complete     # Shift-Tab -> reverse menu navigation
+        bindkey "^_" autosuggest-accept          # C-/ => accept suggestion
 
         # -------===[ Useful Functions ]===------- #
         function sysdate {
@@ -148,7 +149,6 @@ in {
         with pkgs; [
           (mkZshPlugin {pkg = zsh-abbr;})
           (mkZshPlugin {pkg = zsh-autopair;})
-          (mkZshPlugin {pkg = zsh-vi-mode;})
           (mkZshPlugin {pkg = zsh-you-should-use;})
           (mkZshPlugin {
             pkg = zsh-nix-shell;
