@@ -71,7 +71,6 @@ in {
     pipewire.enable = true;
     bluetooth.enable = true;
     kmonad.deviceID = "/dev/input/by-path/platform-i8042-serio-0-event-kbd";
-    graphics.amd.enable = true;
     pointer.enable = true;
     printer.enable = true;
     razer.enable = true;
