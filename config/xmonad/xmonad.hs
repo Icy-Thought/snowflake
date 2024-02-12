@@ -759,7 +759,7 @@ myScratchpads = do
   
   pure [ NS "Discord"        "discordcanary"    (className =? "discord")          floatCenter
        , NS "EasyEffects"    "easyeffects"      (title     =? "Easy Effects")     floatCenter
-       , NS "Emacs"          emacsScratch       (title     =? emacsScratchID)     floatCenter
+       , NS "Emacs"          emacsScratch       (title     ^? emacsScratchID)     floatCenter
        , NS "Mail"           mailSession        (title     =? mailSessionID)      floatCenter
        , NS "Matrix"         matrixClient       (title     =? matrixSessionID)    floatCenter
        , NS "Spotify"        "spotify"          (className =? "Spotify")          floatCenter
@@ -768,10 +768,10 @@ myScratchpads = do
        , NS "Transmission"   "transmission-gtk" (className =? "Transmission-gtk") floatCenter
        ]
   where
-    emacsScratchID    = "emacs-scratch"
-    mailSessionID     = "notmuch-scratch"
-    matrixSessionID   = "ement-scratch"
-    telegramSessionID = "telega-scratch"
+    emacsScratchID    = "Emacs-NSP|"
+    mailSessionID     = "Emacs-NSP: NotMuch"
+    matrixSessionID   = "Emacs-NSP: Ement"
+    telegramSessionID = "Emacs-NSP: Telega"
     sysMonID          = "system-monitor"
 
     -- | Defining our custom floats
