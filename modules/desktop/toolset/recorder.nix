@@ -23,7 +23,7 @@
       services.pipewire.jack.enable = true;
 
       user.packages = attrValues ({
-          inherit (pkgs) ffmpeg;
+          inherit (pkgs) ffmpeg-full;
         }
         // optionalAttrs cfg.audio.enable {
           inherit (pkgs.unstable) audacity helvum;
