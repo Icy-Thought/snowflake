@@ -36,7 +36,7 @@ in {
   config = mkIf cfg.enable (mkMerge [
     {
       user.packages = attrValues ({
-          inherit (pkgs) binutils gnutls zstd notmuch;
+          inherit (pkgs) binutils gnutls zstd;
           inherit (pkgs.unstable) emacs-lsp-booster;
           inherit (pkgs.my) my-cookies; # leetcode.el
         }
@@ -50,7 +50,7 @@ in {
         package = cfg.package;
         extraPackages = epkgs:
           attrValues {
-            inherit (epkgs.melpaPackages) jinx pdf-tools telega vterm;
+            inherit (epkgs.melpaPackages) jinx pdf-tools telega;
             inherit (epkgs.treesit-grammars) with-all-grammars;
           };
       };
