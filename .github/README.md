@@ -65,12 +65,9 @@ A hamerspace containing a declarative NixOS environment consisting of many
 hand-crafted configurations, ranging from: Kitty, Alacritty, Doom-Emacs, Zathura
 to many other applications which can be found in the `./home` directory.
 
-> **Warning** This repository, similar to other dotfile/configuration
-> repositories, is subjected to change.
->
-> The reader ought to read through the commit history before blindly cloning,
-> fetching or updating the necessary files required to power up their NixOS
-> environment!
+> [!WARNING]
+> This repository, similar to other dotfile/configuration repositories, is subjected to change.
+> The reader ought to read through the commit history before blindly cloning, fetching or updating the necessary files required to power up their NixOS environment!
 
 In this README I will attempt to explain how to replicate my NixOS setup or
 achieve similar feats. If you find this guide not as useful as it was designed
@@ -85,10 +82,8 @@ will be introduced later in this README._) These projects have been setup in
 such manner that allows its users to carefully tune their system environments to
 their liking!
 
-> One should note that this project is still in its early stages! Henceforth one
-> should familiarize themselves with the
-> [Risks](https://github.com/nix-community/home-manager#words-of-warning) that
-> comes with the usage of such experimental features.
+> [!NOTE]
+> This project is still in its early stages! Henceforth one should familiarize themselves with the [Risks](https://github.com/nix-community/home-manager#words-of-warning) that comes with the usage of such experimental features.
 
 # Getting Started
 
@@ -138,8 +133,8 @@ https://github.com/Icy-Thought/snowflake/blob/f576ca018a7dd97e0f9d887835e2559e1e
 
 ### Remove `wgConnect` Directory
 
-> **Note** Files contained within the `wgConnect` directory are intended for my
-> personal usage.
+> [!NOTE] 
+> Files contained within the `wgConnect` directory are intended for my personal usage.
 
 _**Command**_ :
 
@@ -150,8 +145,8 @@ rm -rf ./modules/networking/wgConnect
 If you choose to retain that directory, make sure to remove the files contained
 within that directory and replace it with your personal WireGuard config files.
 
-> **Warning** Failing to do so will result in `nixos-rebuild` failure because of
-> the encrypted files!
+> [!WARNING]
+> Failing to do so will result in `nixos-rebuild` failure because of the encrypted files!
 
 ### Create Your Hosts Directory
 
@@ -165,8 +160,8 @@ mkdir -p hosts/X
 Now create a `default.nix` file inside that folder and for the sake of speeding
 the process up.
 
-> **Note** I suggest you copy over my `thinkpad-e595/default.nix` to your
-> directory (`X`) and later customize it to your liking.
+> [!NOTE]
+> I suggest you copy over my `thinkpad-e595/default.nix` to your directory (`X`) and later customize it to your liking.
 
 ```sh
 cd hosts && cp thinkpad-e595/default.nix X
@@ -186,8 +181,8 @@ import = [ ./hardware-configuration.nix ];
 
 ### Hide Your FileSystem From Nautilus & Dolphin
 
-> **Note** By default, Nautilus & Dolphin does not hide system partitions from
-> mounted devices category.
+> [!NOTE]
+> By default, Nautilus & Dolphin does not hide system partitions from mounted devices category.
 
 I have chosen to hide those partitions from the mounted devices category of the
 mentioned file managers. I have also added several kernel parameters and other
@@ -211,9 +206,8 @@ fileSystems."/boot" = {
 };
 ```
 
-> Make sure to replace `/dev/disk/by-uuid/xyz` (or `partuuid`) with
-> `/dev/disk/by-label/X`, where `X` follows the label you have choosen to name
-> your partitions with during your partition setup.
+> [!WARNING]
+> Make sure to replace `/dev/disk/by-uuid/xyz` (or `partuuid`) with `/dev/disk/by-label/X`, where `X` follows the label you have choosen to name your partitions with during your partition setup.
 
 ### Installing Nix-Flake System
 
