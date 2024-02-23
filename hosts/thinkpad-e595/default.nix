@@ -23,11 +23,11 @@
     develop = {
       haskell.enable = true;
       python.enable = true;
+      rust.enable = true;
       scientific = {
         latex.enable = true;
         typst.enable = true;
       };
-      zig.enable = true;
     };
     themes.active = "catppuccin";
 
