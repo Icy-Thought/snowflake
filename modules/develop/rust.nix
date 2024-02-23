@@ -23,8 +23,6 @@ in {
         inherit (pkgs) rust-analyzer rust-script;
       };
 
-      env.PATH = ["$(${getExe pkgs.yarn} global bin)"];
-
       environment.shellAliases = {
         rs = "rustc";
         ca = "cargo";
