@@ -16,7 +16,7 @@ in {
     inherit (lib.types) enum nullOr;
   in {
     enable = mkEnableOption "Spread the joy of neovim in our flake";
-    package = mkPackageOption pkgs "neovim-unwrapped" {};
+    package = mkPackageOption pkgs "neovim-nightly" {};
     template = mkOption {
       type = nullOr (enum ["agasaya" "ereshkigal"]);
       default = "agasaya";
@@ -26,6 +26,8 @@ in {
 
   config = mkIf cfg.enable (mkMerge [
     {
+      nixpkgs.overlays = [inputs.nvim-nightly.overlay];
+
       user.packages = attrValues ({
           inherit (pkgs) neovide;
         }
