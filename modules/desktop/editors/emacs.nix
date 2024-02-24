@@ -7,25 +7,13 @@
 }: let
   inherit (lib.attrsets) attrValues optionalAttrs;
   inherit (lib.modules) mkIf mkMerge;
-
   cfg = config.modules.desktop.editors.emacs;
-  envProto = config.modules.desktop.envProto;
 in {
   options.modules.desktop.editors.emacs = let
     inherit (lib.options) mkEnableOption mkOption;
-    inherit (lib.types) enum nullOr package;
+    inherit (lib.types) enum nullOr;
   in {
     enable = mkEnableOption "Sprinkle a bit of magic to our nix-flake.";
-    package = mkOption {
-      type = package;
-      default = let
-        inherit (pkgs) emacs-git emacs-pgtk;
-      in
-        if (envProto == "wayland")
-        then emacs-pgtk
-        else emacs-git.override {withGTK3 = true;};
-      description = "Emacs package which will be installed in our flake system.";
-    };
     template = mkOption {
       type = nullOr (enum ["doomemacs" "irkalla"]);
       default = "irkalla";
@@ -49,12 +37,17 @@ in {
 
       hm.programs.emacs = {
         enable = true;
-        package = cfg.package;
-        extraPackages = epkgs:
-          attrValues {
-            inherit (epkgs.melpaPackages) jinx pdf-tools telega;
-            inherit (epkgs.treesit-grammars) with-all-grammars;
-          };
+        package = let
+          emacsPkg =
+            if (config.modules.desktop.envProto == "wayland")
+            then pkgs.emacs-pgtk
+            else pkgs.emacs-git.override {withGTK3 = true;};
+        in ((pkgs.emacsPackagesFor emacsPkg).emacsWithPackages
+          (epkgs:
+            attrValues {
+              inherit (epkgs.melpaPackages) jinx pdf-tools telega;
+              inherit (epkgs.treesit-grammars) with-all-grammars;
+            }));
       };
 
       hm.services.emacs = {

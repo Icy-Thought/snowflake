@@ -75,11 +75,11 @@
         "nixpkgs-stable": "nixpkgs-stable"
       },
       "locked": {
-        "lastModified": 1708755536,
-        "narHash": "sha256-wtNGi39xz4wGXK5vBieL3mDl2LdkJoWFkjLokA/d4cg=",
+        "lastModified": 1708765434,
+        "narHash": "sha256-RzPUkgU0jdK0b4vtGe3SRLRMnqZwBnlwkA1nskpNogk=",
         "owner": "nix-community",
         "repo": "emacs-overlay",
-        "rev": "0a9f2206463dcf4f54d11d2edd98482e7154489d",
+        "rev": "a793a0854929c608cf219792695fe45321a72782",
         "type": "github"
       },
       "original": {
@@ -606,11 +606,11 @@
     "nvim-dir": {
       "flake": false,
       "locked": {
-        "lastModified": 1708662735,
-        "narHash": "sha256-hmLNwX79Uv5RvyRv1FvERa1toTcm6xqdJrxxezdRgh8=",
+        "lastModified": 1708779519,
+        "narHash": "sha256-OY3GExnPc1Tn8hiQ/zS5P/q1gOVQGxf5YlBepDqXoH4=",
         "ref": "refs/heads/main",
-        "rev": "94995a5b54c9c9a9752ca636d7f4487924dc3db8",
-        "revCount": 314,
+        "rev": "6b0ab1b09c90f6d36dfe98f93d9e8600e72ff314",
+        "revCount": 315,
         "submodules": true,
         "type": "git",
         "url": "https://github.com/Icy-Thought/nvim.d.git"
