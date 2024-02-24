@@ -28,12 +28,11 @@ in {
     {
       nixpkgs.overlays = [inputs.nvim-nightly.overlay];
 
-      user.packages = attrValues ({
-          inherit (pkgs) neovide;
-        }
-        // optionalAttrs (config.modules.develop.cc.enable == false) {
+      user.packages = attrValues (
+        optionalAttrs (config.modules.develop.cc.enable == false) {
           inherit (pkgs) gcc; # Treesitter
-        });
+        }
+      );
 
       hm.programs.neovim = {
         enable = true;
