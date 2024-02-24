@@ -95,7 +95,7 @@ intervention should not be required for a minimal installation.
 
 ## Prepare System Environment for Nix-Flake
 
-Don't forget to append the following lines of code to your `configuration.nix`:
+Don't forget to append the following lines of code to your `/etc/nixos/configuration.nix`:
 
 ```nix
 nix.package = pkgs.nixUnstable;
@@ -106,80 +106,48 @@ nix.extraOptions = ''
 
 # Nix-Flake: Beginning of a Journey
 
-## Clone `Snowflake` and Link Files To Correct Path
-
-`git clone` your desired repository and because this guide is written with my
-personal flake repository in mind:
+## 1. Cloning `Snowflake`
 
 ```sh
-git clone https://github.com/Icy-Thought/Snowflake.git
+git clone --depth 1 https://github.com/Icy-Thought/Snowflake.git
 ```
 
-Backup the contents of your current `/etc/nixos` directory, you'll need your
-auto-generated `hardware-configuration.nix` file to later place it inside its
-specified `hosts/deviceX` (where `deviceX` is the name of your device folder.
+## 2. Creating `hosts/DEVICE-X` Directory
 
-## Replacing Necessary Configuration Entries
+``` sh
+cd snowflake && cp -r templates/hosts/desktop hosts/DEVICE-X
+```
 
-### Snowflake Directory
+where `DEVICE-X` is the name you'd like to give to your host device. This name will later be used when installing/updating your new NixOS setup.
 
-> **Warning** As of now, my snowflake directory is expected to be placed inside
-> `~/git/icy-thought/`. And for your configuration to work properly you are
+## 3. Replace `hardware.nix` with `hardware-configuration.nix`
+
+Suggestion: before replacing `hardware.nix` with your `hardware-configuration.nix`:
+1. view the file and see what you'd like to retain
+2. rename the file (backup)
+3. add your Nix generated hardware configuration `.nix` file
+4. paste your desired configurations in your new file
+
+**OTHERWISE**, proceed by executing the command below.
+
+``` sh
+cp /etc/nixos/hardware-configuration.nix DEVICE-X/hardware.nix
+```
+
+## 4. Replacing Necessary Configuration Entries
+
+### 1. Snowflake Directory
+
+> [!WARNING]
+>  As of now, my snowflake directory is expected to be placed inside
+> `~/Workspace/public/snowflake/`. And for your configuration to work properly you are
 > expected to place the directory in that exact location!
 
 Modify `snowflake.dir` to point to the location where you are keeping the
 snowflake repository:
 https://github.com/Icy-Thought/snowflake/blob/f576ca018a7dd97e0f9d887835e2559e1e5cc02c/modules/options.nix#L26-L29
 
-### Remove `wgConnect` Directory
-
-> [!NOTE] 
-> Files contained within the `wgConnect` directory are intended for my personal usage.
-
-_**Command**_ :
-
-```bash
-rm -rf ./modules/networking/wgConnect
-```
-
-If you choose to retain that directory, make sure to remove the files contained
-within that directory and replace it with your personal WireGuard config files.
-
-> [!WARNING]
-> Failing to do so will result in `nixos-rebuild` failure because of the encrypted files!
-
-### Create Your Hosts Directory
-
-Create a directory inside the `hosts` with the name of the desired hostname for
-that device; let's call this directory `X`.
-
-```sh
-mkdir -p hosts/X
-```
-
-Now create a `default.nix` file inside that folder and for the sake of speeding
-the process up.
-
-> [!NOTE]
-> I suggest you copy over my `thinkpad-e595/default.nix` to your directory (`X`) and later customize it to your liking.
-
-```sh
-cd hosts && cp thinkpad-e595/default.nix X
-```
-
-### Hardware-Configuration.nix
-
-Place your newly generated `hardware-configuration.nix` inside your `hosts/X`
-and make sure to import your `hardware-configuration.nix` in the `default.nix`
-file of your device folder.
-
-_(Example): `ThinkPad-E595` defined as a valid system environment._
-
-```sh
-import = [ ./hardware-configuration.nix ];
-```
-
-### Hide Your FileSystem From Nautilus & Dolphin
+### 2. Hide Your File-system From Nautilus & Dolphin
 
 > [!NOTE]
 > By default, Nautilus & Dolphin does not hide system partitions from mounted devices category.
@@ -207,33 +175,16 @@ fileSystems."/boot" = {
 ```
 
 > [!WARNING]
-> Make sure to replace `/dev/disk/by-uuid/xyz` (or `partuuid`) with `/dev/disk/by-label/X`, where `X` follows the label you have choosen to name your partitions with during your partition setup.
+> Make sure to replace `/dev/disk/by-uuid/xyz` (or `partuuid`) with `/dev/disk/by-label/X`, where `X` follows the label you have chosen to name your partitions with during your partition setup.
 
-### Installing Nix-Flake System
+## 5. Installing Nix-Flake System
 
 After completing your setup, there remains one command to be executed (device =
-folder name of your device placed inside `hosts`, which in this case is `X`:
+directory name of your device placed inside `hosts`, which in this case is `X`:
 
 ```sh
 nixos-rebuild switch --use-remote-sudo --flake .#conf-name --impure";
 reboot
-```
-
-# Doom Emacs
-
-If you have replicated my setup, you need to do nothing but `git clone`
-doom-emacs repository and enable the `emacs` module in your `X/default.nix`:
-
-```nix
-modules.desktop.editors.emacs.enable = true;
-```
-
-To proceed with the installation of doom-emacs on your newly
-installed/configured nix-flake system:
-
-```sh
-git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d
-~/.emacs.d/bin/doom install
 ```
 
 # Congratulations! 🎉
