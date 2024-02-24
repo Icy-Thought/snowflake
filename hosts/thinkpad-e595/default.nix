@@ -15,11 +15,9 @@
         android.enable = true;
       };
     };
-    networking = {
-      networkManager.enable = true;
-      # samba.sharing.enable = true;
-    };
-    services = {ssh.enable = true;};
+    networking.networkManager.enable = true;
+    services.ssh.enable = true;
+
     develop = {
       haskell.enable = true;
       python.enable = true;
@@ -29,8 +27,8 @@
         typst.enable = true;
       };
     };
-    themes.active = "catppuccin";
 
+    themes.active = "catppuccin";
     desktop = {
       xmonad.enable = true;
       terminal = {
@@ -50,7 +48,7 @@
         };
       };
       education = {
-        memory.enable = true;
+        memorization.enable = true;
         vidcom.enable = false;
       };
       toolset = {
@@ -76,15 +74,6 @@
           enable = true;
           program = "zathura";
         };
-      };
-    };
-
-    virtualize = {
-      enable = true;
-      containers.transmission = {
-        enable = false; # TODO: Once fixed -> enable = true;
-        username = "alonzo";
-        #  password = builtins.readFile config.age.secrets.torBylon.path;
       };
     };
   };

@@ -12,12 +12,12 @@ in {
   options.modules.desktop.education = let
     inherit (lib.options) mkEnableOption;
   in {
-    memory.enable = mkEnableOption "SUID tool (sandbox)";
+    memorization.enable = mkEnableOption "SUID tool (sandbox)";
     vidcom.enable = mkEnableOption "jailed zoom-us";
   };
 
   config = mkMerge [
-    (mkIf cfg.memory.enable {
+    (mkIf cfg.memorization.enable {
       # TODO: Configure anki OR replace with other software
       user.packages = [pkgs.anki];
     })
