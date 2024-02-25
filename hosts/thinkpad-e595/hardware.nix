@@ -58,7 +58,7 @@ in {
     # updateMicrocode = mkDefault config.hardware.enableRedistributableFirmware;
   };
 
-  powerManagement.cpuFreqGovernor = mkDefault "schedutil";
+  powerManagement.cpuFreqGovernor = mkDefault "ondemand";
 
   # Manage device power-control:
   services = {
