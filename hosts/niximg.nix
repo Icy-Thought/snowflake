@@ -19,8 +19,9 @@ in {
     extraModulePackages = [config.boot.kernelPackages.broadcom_sta];
   };
 
-  environment.systemPackages =
-    attrValues {inherit (pkgs) zsh git nixStable;};
+  environment.systemPackages = attrValues {
+    inherit (pkgs) zsh git nixStable;
+  };
 }
 # nix-build '<nixpkgs/nixos>' -A config.system.build.isoImage -I nixos-config=./default.nix
 

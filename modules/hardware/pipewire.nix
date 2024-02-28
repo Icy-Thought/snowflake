@@ -15,7 +15,9 @@ in {
   in {enable = mkEnableOption "modern audio support";};
 
   config = mkIf cfg.enable {
-    user.packages = attrValues {inherit (pkgs) easyeffects;};
+    user.packages = attrValues {
+      inherit (pkgs) easyeffects;
+    };
 
     security.rtkit.enable = true;
 

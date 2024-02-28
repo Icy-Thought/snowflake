@@ -88,6 +88,7 @@ in {
   # WARNING: prevent installing pre-defined packages
   environment.defaultPackages = [];
 
-  environment.systemPackages =
-    attrValues {inherit (pkgs) cached-nix-shell gnumake unrar unzip;};
+  environment.systemPackages = attrValues {
+    inherit (pkgs) cached-nix-shell gnumake unrar unzip;
+  };
 }

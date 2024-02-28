@@ -25,14 +25,15 @@ in {
     {
       nixpkgs.overlays = [inputs.emacs.overlay];
 
-      user.packages = attrValues ({
+      user.packages =
+        attrValues {
           inherit (pkgs) binutils gnutls zstd;
           inherit (pkgs.unstable) emacs-lsp-booster;
           inherit (pkgs.my) my-cookies; # leetcode.el
         }
         // optionalAttrs config.programs.gnupg.agent.enable {
           inherit (pkgs) pinentry-emacs;
-        });
+        };
       environment.wordlist.enable = true; # cape-dict
 
       hm.programs.emacs = {

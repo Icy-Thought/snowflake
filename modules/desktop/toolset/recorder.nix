@@ -22,7 +22,8 @@
     mkIf cfg.enable {
       services.pipewire.jack.enable = true;
 
-      user.packages = attrValues ({
+      user.packages =
+        attrValues {
           inherit (pkgs) ffmpeg-full;
         }
         // optionalAttrs cfg.audio.enable {
@@ -30,6 +31,6 @@
         }
         // optionalAttrs cfg.video.enable {
           inherit (pkgs.unstable) obs-studio;
-        });
+        };
     };
 }

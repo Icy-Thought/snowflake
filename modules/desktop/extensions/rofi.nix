@@ -33,7 +33,9 @@ in {
     hm.programs.rofi = {
       enable = true;
       package = cfg.package;
-      plugins = attrValues {inherit (pkgs) rofi-emoji rofi-power-menu;};
+      plugins = attrValues {
+        inherit (pkgs) rofi-emoji rofi-power-menu;
+      };
 
       extraConfig = {
         terminal = "${config.modules.desktop.terminal.default}";

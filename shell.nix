@@ -6,7 +6,9 @@
   inherit (lib.meta) getExe;
 in
   pkgs.mkShell {
-    buildInputs = attrValues {inherit (pkgs) git nix-bash-completions;};
+    buildInputs = attrValues {
+      inherit (pkgs) git nix-bash-completions;
+    };
 
     shellHook = let
       inherit (pkgs) nixStable writeShellScriptBin;

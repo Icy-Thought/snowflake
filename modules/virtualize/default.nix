@@ -18,7 +18,16 @@ in {
 
   config = mkIf cfg.enable {
     user.packages = attrValues {
-      inherit (pkgs) virt-manager virt-viewer win-virtio spice spice-gtk spice-protocol win-spice;
+      inherit
+        (pkgs)
+        virt-manager
+        virt-viewer
+        win-virtio
+        spice
+        spice-gtk
+        spice-protocol
+        win-spice
+        ;
     };
 
     virtualisation = {

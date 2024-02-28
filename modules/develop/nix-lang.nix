@@ -29,8 +29,9 @@ in {
           ;
       };
 
-      hm.programs.vscode.extensions =
-        attrValues {inherit (pkgs.vscode-extensions.jnoortheen) nix-ide;};
+      hm.programs.vscode.extensions = attrValues {
+        inherit (pkgs.vscode-extensions.jnoortheen) nix-ide;
+      };
     })
 
     (mkIf config.modules.develop.xdg.enable {

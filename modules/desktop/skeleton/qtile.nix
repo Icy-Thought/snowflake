@@ -51,13 +51,14 @@ in {
       user = "${config.user.name}";
     };
 
-    environment.systemPackages = attrValues ({
+    environment.systemPackages =
+      attrValues {
         inherit (pkgs) libnotify playerctl gxmessage;
       }
       // optionalAttrs (cfg.backend == "x11") {inherit (pkgs) xdotool feh;}
       // optionalAttrs (cfg.backend == "wayland") {
         inherit (pkgs) imv wf-recorder;
-      });
+      };
 
     services.xserver = {
       displayManager.defaultSession = "none+qtile";
@@ -65,8 +66,9 @@ in {
         enable = true;
         configFile = "${config.snowflake.configDir}/qtile/config.py";
         backend = cfg.backend;
-        # extraPackages =
-        # attrValues ({ inherit (pkgs.python3Packages) qtile-extras; });
+        # extraPackages = attrValues {
+        #   inherit (pkgs.python3Packages) qtile-extras;
+        # };
       };
     };
   };
