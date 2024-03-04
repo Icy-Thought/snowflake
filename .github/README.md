@@ -183,7 +183,7 @@ After completing your setup, there remains one command to be executed (device =
 directory name of your device placed inside `hosts`, which in this case is `X`:
 
 ```sh
-nixos-rebuild switch --use-remote-sudo --flake .#conf-name --impure";
+nixos-rebuild switch --use-remote-sudo --flake .#X --impure";
 reboot
 ```
 
