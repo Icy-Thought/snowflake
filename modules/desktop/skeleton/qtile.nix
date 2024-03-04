@@ -51,14 +51,15 @@ in {
       user = "${config.user.name}";
     };
 
-    environment.systemPackages =
-      attrValues {
+    environment.systemPackages = attrValues ({
         inherit (pkgs) libnotify playerctl gxmessage;
       }
-      // optionalAttrs (cfg.backend == "x11") {inherit (pkgs) xdotool feh;}
+      // optionalAttrs (cfg.backend == "x11") {
+        inherit (pkgs) xdotool feh;
+      }
       // optionalAttrs (cfg.backend == "wayland") {
         inherit (pkgs) imv wf-recorder;
-      };
+      });
 
     services.xserver = {
       displayManager.defaultSession = "none+qtile";

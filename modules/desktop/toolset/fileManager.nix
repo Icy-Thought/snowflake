@@ -29,8 +29,7 @@ in {
 
       services.gvfs.enable = true;
 
-      environment.systemPackages =
-        attrValues {}
+      environment.systemPackages = attrValues ({}
         // optionalAttrs (cfg.program == "dolphin") {
           inherit (pkgs) dolphin dolphin-plugins;
         }
@@ -46,7 +45,7 @@ in {
             thunar-archive-plugin
             thunar-media-tags-plugin
             ;
-        };
+        });
     }
 
     (mkIf (cfg.program == "thunar") {

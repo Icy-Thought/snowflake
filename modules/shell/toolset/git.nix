@@ -13,14 +13,13 @@ in {
   in {enable = mkEnableOption "version-control system";};
 
   config = mkIf config.modules.shell.toolset.git.enable {
-    user.packages =
-      attrValues {
+    user.packages = attrValues ({
         inherit (pkgs) act dura gitui;
         inherit (pkgs.gitAndTools) gh git-open;
       }
       // optionalAttrs config.modules.shell.toolset.gnupg.enable {
         inherit (pkgs.gitAndTools) git-crypt;
-      };
+      });
 
     # Prevent x11 askPass prompt on git push:
     programs.ssh.askPassword = "";

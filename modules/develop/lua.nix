@@ -18,13 +18,12 @@ in {
 
   config = mkMerge [
     (mkIf cfg.enable {
-      user.packages =
-        attrValues {
+      user.packages = attrValues ({
           inherit (pkgs) lua lua-language-server stylua;
         }
         // optionalAttrs (cfg.fennel.enable) {
           inherit (pkgs) fennel fnlfmt;
-        };
+        });
     })
 
     (mkIf config.modules.develop.xdg.enable {

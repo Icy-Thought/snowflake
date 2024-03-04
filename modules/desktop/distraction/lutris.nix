@@ -19,15 +19,15 @@ in {
 
   config = mkMerge [
     (mkIf cfg.enable {
-      user.packages =
-        attrValues {
-          lutris =
-            pkgs.lutris.override {extraLibraries = pkgs: [pkgs.jansson];};
+      user.packages = attrValues ({
+          lutris = pkgs.lutris.override {
+            extraLibraries = pkgs: [pkgs.jansson];
+          };
         }
         // optionalAttrs (config.modules.virtualize.wine.enable == false) {
           inherit (pkgs) winetricks;
           inherit (pkgs.wineWowPackages) fonts stagingFull;
-        };
+        });
     })
 
     (mkIf (cfg.enable && cfg.league.enable) {
