@@ -112,13 +112,13 @@ nix.extraOptions = ''
 git clone --depth 1 https://github.com/Icy-Thought/Snowflake.git
 ```
 
-## 2. Creating `hosts/DEVICE-X` Directory
+## 2. Creating `hosts/deviceX` Directory
 
 ``` sh
-cd snowflake && cp -r templates/hosts/desktop hosts/DEVICE-X
+cd snowflake && cp -r templates/hosts/desktop hosts/deviceX
 ```
 
-where `DEVICE-X` is the name you'd like to give to your host device. This name will later be used when installing/updating your new NixOS setup.
+where `deviceX` is the name you'd like to give to your host device. This name will later be used when installing/updating your new NixOS setup.
 
 ## 3. Replace `hardware.nix` with `hardware-configuration.nix`
 
@@ -131,7 +131,7 @@ Suggestion: before replacing `hardware.nix` with your `hardware-configuration.ni
 **OTHERWISE**, proceed by executing the command below.
 
 ``` sh
-cp /etc/nixos/hardware-configuration.nix DEVICE-X/hardware.nix
+cp /etc/nixos/hardware-configuration.nix deviceX/hardware.nix
 ```
 
 ## 4. Replacing Necessary Configuration Entries
@@ -179,11 +179,18 @@ fileSystems."/boot" = {
 
 ## 5. Installing Nix-Flake System
 
+> [!NOTE]
+> Before rebuilding our NixOS system with our new device configurations, we ought to make our `flake.nix` aware of our new device directory (`deviceX`). Otherwise you'll run into #25!
+
+``` sh
+git add ./hosts/deviceX/*
+```
+
 After completing your setup, there remains one command to be executed (device =
-directory name of your device placed inside `hosts`, which in this case is `X`:
+directory name of your device placed inside `hosts`, which in this case is `deviceX`:
 
 ```sh
-nixos-rebuild switch --use-remote-sudo --flake .#X --impure";
+nixos-rebuild switch --use-remote-sudo --flake .#deviceX --impure";
 reboot
 ```
 
