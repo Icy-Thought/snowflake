@@ -42,15 +42,15 @@
   nix.settings.max-jobs = lib.mkDefault 16;
   powerManagement.cpuFreqGovernor = "performance";
 
-  # WARNING: DISABLE NON-EXISTANT cpu
+  # :WARN| DISABLE NON-EXISTANT cpu
   hardware.cpu.amd.updateMicrocode = true;
   hardware.cpu.intel.updateMicrocode = true;
 
-  # Here we enable our modules found within modules/
+  # Here we enable our custom modules (snowflake/modules)
   modules.hardware = {
     pipewire.enable = true;
     bluetooth.enable = true;
-    razer.enable = true;
     pointer.enable = true;
+    printer.enable = true;
   };
 }

@@ -30,15 +30,24 @@
       };
       browsers = {
         default = "firefox";
-        firefox.enable = true;
+        firefox = {
+          enable = true;
+          privacy.enable = true;
+        };
       };
-      extensions.player = {
-        music.enable = true;
-        video.enable = true;
-      };
-      toolset.docViewer = {
-        enable = true;
-        program = "zathura";
+      toolset = {
+        player = {
+          music.enable = true;
+          video.enable = true;
+        };
+        social = {
+          base.enable = true;
+          matrix.withDaemon.enable = true;
+        };
+        docViewer = {
+          enable = true;
+          program = "zathura";
+        };
       };
     };
   };
