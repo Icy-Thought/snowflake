@@ -29,7 +29,7 @@ in {
     };
 
     services.gnome = {
-      chrome-gnome-shell.enable = true;
+      gnome-browser-connector.enable = true;
       sushi.enable = true;
     };
 
