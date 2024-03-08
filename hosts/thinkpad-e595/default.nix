@@ -52,7 +52,6 @@
         vidcom.enable = false;
       };
       toolset = {
-        downloader.transmission.enable = true;
         graphics = {
           raster.enable = true;
           vector.enable = true;
