@@ -52,7 +52,11 @@ in {
 
       hm.services.emacs = {
         enable = true;
-        startWithUserSession = true;
+        client = {
+          enable = true;
+          arguments = ["--create-frame" "--no-wait"];
+        };
+        socketActivation.enable = true;
       };
 
       hm.programs.zsh.initExtra = ''
