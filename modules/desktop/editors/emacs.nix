@@ -38,16 +38,17 @@ in {
       hm.programs.emacs = {
         enable = true;
         package = let
-          emacsPkg =
+          emacsPackage =
             if (config.modules.desktop.envProto == "wayland")
             then pkgs.emacs-pgtk
             else pkgs.emacs-git.override {withGTK3 = true;};
-        in ((pkgs.emacsPackagesFor emacsPkg).emacsWithPackages
-          (epkgs:
-            attrValues {
-              inherit (epkgs.melpaPackages) jinx pdf-tools telega;
-              inherit (epkgs.treesit-grammars) with-all-grammars;
-            }));
+        in
+          emacsPackage;
+        extraPackages = epkgs:
+          attrValues {
+            inherit (epkgs.melpaPackages) jinx pdf-tools telega;
+            inherit (epkgs.treesit-grammars) with-all-grammars;
+          };
       };
 
       hm.services.emacs = {
