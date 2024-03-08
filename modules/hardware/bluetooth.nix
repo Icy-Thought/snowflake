@@ -18,6 +18,9 @@ in {
     hardware.bluetooth = {
       enable = true;
       disabledPlugins = ["sap"];
+      settings = {
+        General.ControllerMode = "bredr";
+      };
     };
 
     systemd.user.services.mpris-proxy = {
