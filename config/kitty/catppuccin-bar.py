@@ -23,9 +23,9 @@ SYMBOL_FG = CLOCK_FG
 SYMBOL_BG = as_rgb(int("96cdfb", 16))
 
 
-def _draw_icon(screen: Screen, index: int, symbol: str = "") -> int:
+def draw_icon(screen: Screen, index: int, symbol: str = "") -> int:
     if index != 1:
-        return 0
+        return screen.cursor.x
 
     cells = [
         (SYMBOL_FG, SYMBOL_BG, symbol),
@@ -35,15 +35,14 @@ def _draw_icon(screen: Screen, index: int, symbol: str = "") -> int:
 
     for fg, bg, cell in cells:
         restore_fg, restore_bg = screen.cursor.fg, screen.cursor.bg
-        screen.cursor.fg = fg
-        screen.cursor.bg = bg
+        screen.cursor.fg, screen.cursor.bg = fg, bg
         screen.draw(cell)
         screen.cursor.fg, screen.cursor.bg = restore_fg, restore_bg
 
     return screen.cursor.x
 
 
-def _draw_right_status(screen: Screen, is_last: bool) -> int:
+def draw_right_status(screen: Screen, is_last: bool) -> int:
     if not is_last:
         return screen.cursor.x
 
@@ -66,9 +65,9 @@ def _draw_right_status(screen: Screen, is_last: bool) -> int:
         screen.cursor.fg = fg
         screen.cursor.bg = bg
         screen.draw(cell)
+
     screen.cursor.fg = 0
     screen.cursor.bg = 0
-
     screen.cursor.x = max(screen.cursor.x, screen.columns - right_status_length)
     return screen.cursor.x
 
@@ -83,12 +82,9 @@ def draw_tab(
     is_last: bool,
     extra_data: ExtraData,
 ) -> int:
-    _draw_icon(screen, index, symbol=SYMBOL)
+    draw_icon(screen, index, symbol=SYMBOL)
     end = draw_tab_with_powerline(
         draw_data, screen, tab, before, max_title_length, index, is_last, extra_data
     )
-    _draw_right_status(
-        screen,
-        is_last,
-    )
+    draw_right_status(screen, is_last)
     return end

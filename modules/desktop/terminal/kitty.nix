@@ -5,7 +5,8 @@
   pkgs,
   ...
 }: let
-  inherit (builtins) toString;
+  inherit (builtins) concatStringsSep toString;
+  inherit (lib.attrsets) mapAttrsToList;
   inherit (lib.modules) mkIf mkMerge;
 in {
   options.modules.desktop.terminal.kitty = let
@@ -17,19 +18,21 @@ in {
       enable = true;
       settings = {
         term = "xterm-kitty";
+        repaint_delay = 10;
+        update_check_interval = 0;
 
         sync_to_monitor = "yes";
-        update_check_interval = 0;
         allow_remote_control = "no";
         close_on_child_death = "no";
         shell_integration = "no-cursor";
         confirm_os_window_close = -1;
 
         background_opacity = "0.8";
-        repaint_delay = 10;
-        disable_ligatures = "cursor";
-        adjust_line_height = "113%";
         inactive_text_alpha = "1.0";
+        disable_ligatures = "cursor";
+        modify_font = concatStringsSep " " (mapAttrsToList (name: value: "${name} ${value}") {
+          cell_height = "110%";
+        });
 
         enable_audio_bell = "no";
         bell_on_tab = "no";
@@ -59,25 +62,17 @@ in {
         scrollback_lines = 5000;
         wheel_scroll_multiplier = 5;
 
-        initial_window_height = 28;
-        initial_window_width = 96;
-        remember_window_size = "yes";
-        resize_draw_strategy = "static";
-
         window_border_width = 1;
         window_margin_width = 0;
-        window_padding_width = 15;
+        window_padding_width = 10;
         placement_strategy = "top-left";
         draw_minimal_borders = "yes";
 
         tab_bar_style = "custom";
-        tab_separator = ''""'';
-        tab_fade = "0 0 0 0";
-        tab_activity_symbol = "none";
         tab_bar_edge = "top";
         tab_bar_margin_height = "0.0 0.0";
-        active_tab_font_style = "bold-italic";
-        inactive_tab_font_style = "normal";
+        active_tab_font_style = "bold";
+        inactive_tab_font_style = "bold-italic";
         tab_bar_min_tabs = 1;
       };
 
@@ -119,11 +114,11 @@ in {
             inherit (config.modules.themes.colors.main) bright normal types;
             inherit (config.modules.themes.font.mono) size;
           in ''
-            font_family               Victor Mono SemiBold Nerd Font Complete
-            italic_font               Victor Mono SemiBold Italic Nerd Font Complete
+            font_family               VictorMono NF Medium
+            italic_font               VictorMono NF Medium Italic
 
-            bold_font                 Victor Mono Bold Nerd Font Complete
-            bold_italic_font          Victor Mono Bold Italic Nerd Font Complete
+            bold_font                 VictorMono NF SemiBold
+            bold_italic_font          VictorMono NF SemiBold Italic
 
             font_size                 ${toString size}
 
@@ -139,7 +134,7 @@ in {
             inactive_tab_foreground   ${types.fg}
             inactive_tab_background   ${types.bg}
 
-            selection_f  oreground    ${types.bg}
+            selection_foreground      ${types.bg}
             selection_background      ${types.highlight}
 
             color0                    ${normal.black}
