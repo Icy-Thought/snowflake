@@ -25,7 +25,7 @@ in {
         shell_integration = "no-cursor";
         confirm_os_window_close = -1;
 
-        background_opacity = 0.8;
+        background_opacity = "0.8";
         repaint_delay = 10;
         disable_ligatures = "cursor";
         adjust_line_height = "113%";
@@ -33,7 +33,7 @@ in {
 
         enable_audio_bell = "no";
         bell_on_tab = "no";
-        visual_bell_duration = "0.0";
+        visual_bell_duration = 0;
 
         strip_trailing_spaces = "smart";
         copy_on_select = "clipboard";
@@ -42,15 +42,14 @@ in {
 
         default_pointer_shape = "beam";
         cursor_shape = "block";
-        cursor_blink_interval = "0.5";
-        cursor_stop_blinking_after = "15.0";
+        cursor_blink_interval = 0;
 
         input_delay = 3;
         pointer_shape_when_dragging = "beam";
         pointer_shape_when_grabbed = "arrow";
 
         click_interval = "0.5";
-        mouse_hide_wait = "3.0";
+        mouse_hide_wait = 3;
         focus_follows_mouse = "yes";
 
         detect_urls = "yes";
@@ -58,16 +57,16 @@ in {
         url_prefixes = "http https file ftp gemini irc gopher mailto news git";
 
         scrollback_lines = 5000;
-        wheel_scroll_multiplier = "5.0";
+        wheel_scroll_multiplier = 5;
 
         initial_window_height = 28;
         initial_window_width = 96;
         remember_window_size = "yes";
         resize_draw_strategy = "static";
 
-        window_border_width = "1.0";
-        window_margin_width = "0.0";
-        window_padding_width = "15.00";
+        window_border_width = 1;
+        window_margin_width = 0;
+        window_padding_width = 15;
         placement_strategy = "top-left";
         draw_minimal_borders = "yes";
 
@@ -120,11 +119,11 @@ in {
             inherit (config.modules.themes.colors.main) bright normal types;
             inherit (config.modules.themes.font.mono) size;
           in ''
-            font_family               Victor Mono Bold Nerd Font Complete
-            italic_font               Victor Mono Bold Italic Nerd Font Complete
+            font_family               Victor Mono SemiBold Nerd Font Complete
+            italic_font               Victor Mono SemiBold Italic Nerd Font Complete
 
-            bold_font                 Victor Mono SemiBold Nerd Font Complete
-            bold_italic_font          Victor Mono SemiBold Italic Nerd Font Complete
+            bold_font                 Victor Mono Bold Nerd Font Complete
+            bold_italic_font          Victor Mono Bold Italic Nerd Font Complete
 
             font_size                 ${toString size}
 
@@ -135,34 +134,30 @@ in {
             cursor_text_color         ${types.bg}
 
             tab_bar_background        ${types.bg}
-            tab_title_template        "{fmt.fg._7976ab}{fmt.bg.default} ○ {index}:{f'{title[:6]}…{title[-6:]}' if title.rindex(title[-1]) + 1 > 25 else title}{' []' if layout_name == 'stack' else '''} "
-            active_tab_title_template "{fmt.fg._f2cdcd}{fmt.bg.default} 綠{index}:{f'{title[:6]}…{title[-6:]}' if title.rindex(title[-1]) + 1 > 25 else title}{' []' if layout_name == 'stack' else '''} "
+            active_tab_foreground     ${types.bg}
+            active_tab_background     ${normal.magenta}
+            inactive_tab_foreground   ${types.fg}
+            inactive_tab_background   ${types.bg}
 
-            selection_foreground      ${types.bg}
+            selection_f  oreground    ${types.bg}
             selection_background      ${types.highlight}
 
             color0                    ${normal.black}
-            color8                    ${bright.black}
-
             color1                    ${normal.red}
-            color9                    ${bright.red}
-
             color2                    ${normal.green}
-            color10                   ${bright.green}
-
             color3                    ${normal.yellow}
-            color11                   ${bright.yellow}
-
             color4                    ${normal.blue}
-            color12                   ${bright.blue}
-
             color5                    ${normal.magenta}
-            color13                   ${bright.magenta}
-
             color6                    ${normal.cyan}
-            color14                   ${bright.cyan}
-
             color7                    ${normal.white}
+
+            color8                    ${bright.black}
+            color9                    ${bright.red}
+            color10                   ${bright.green}
+            color11                   ${bright.yellow}
+            color12                   ${bright.blue}
+            color13                   ${bright.magenta}
+            color14                   ${bright.cyan}
             color15                   ${bright.white}
           '';
         };
