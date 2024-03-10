@@ -32,8 +32,8 @@
     desktop = {
       xmonad.enable = true;
       terminal = {
-        default = "kitty";
-        kitty.enable = true;
+        default = "wezterm";
+        wezterm.enable = true;
       };
       editors = {
         default = "emacsclient";

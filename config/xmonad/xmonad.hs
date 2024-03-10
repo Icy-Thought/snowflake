@@ -102,7 +102,7 @@ main =
 
 myConfig =
   def { modMask            = mod4Mask
-      , terminal           = "kitty"
+      , terminal           = "wezterm"
       , manageHook         = namedScratchpadManageHook =<< liftX myScratchpads
       , layoutHook         = myLayoutHook
       , borderWidth        = 2
@@ -735,17 +735,13 @@ myScratchpads :: X [NamedScratchpad]
 myScratchpads = do
   -- | A system monitor to track the madness in our conf
   btopLaunch <- getInput $
-    inTerm >-> setXClass sysMonID
+    inTerm >-> toInput "start"
+           >-> setXClass sysMonID
            >-> execute "btop"
 
   emacsScratch <- getInput $
     inEditor >-> setFrameName emacsScratchID
              >-> eval (elispFun "dashboard-refresh-buffer")
-
-  -- | E-Mail session managed by Emacs, because why not? :P
-  mailSession <- getInput $
-    inEditor >-> setFrameName mailSessionID
-             >-> eval (elispFun "notmuch")
 
   -- | What matrix-client should've been..
   matrixClient <- getInput $
@@ -760,7 +756,6 @@ myScratchpads = do
   pure [ NS "Discord"        "discordcanary"    (className =? "discord")          floatCenter
        , NS "EasyEffects"    "easyeffects"      (title     =? "Easy Effects")     floatCenter
        , NS "Emacs"          emacsScratch       (title     ^? emacsScratchID)     floatCenter
-       , NS "Mail"           mailSession        (title     =? mailSessionID)      floatCenter
        , NS "Matrix"         matrixClient       (title     =? matrixSessionID)    floatCenter
        , NS "Spotify"        "spotify"          (className =? "Spotify")          floatCenter
        , NS "System Monitor" btopLaunch         (appName   =? sysMonID)           floatCenter
@@ -769,7 +764,6 @@ myScratchpads = do
        ]
   where
     emacsScratchID    = "Emacs-NSP|"
-    mailSessionID     = "Emacs-NSP: NotMuch"
     matrixSessionID   = "Emacs-NSP: Ement"
     telegramSessionID = "Emacs-NSP: Telega"
     sysMonID          = "system-monitor"
@@ -929,7 +923,6 @@ addKeys conf@XConfig { modMask = modm } =
        , ((modalt, xK_k), doScratchpad "Matrix")
        , ((modalt, xK_e), doScratchpad "Emacs")
        , ((modalt, xK_l), doScratchpad "Telegram")
-       , ((modalt, xK_m), doScratchpad "mailSession")
        , ((modalt, xK_s), doScratchpad "Spotify")
        , ((modalt, xK_t), doScratchpad "Transmission")
        , ((modalt, xK_v), doScratchpad "EasyEffects")
