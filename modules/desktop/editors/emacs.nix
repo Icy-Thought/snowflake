@@ -7,6 +7,7 @@
 }: let
   inherit (lib.attrsets) attrValues optionalAttrs;
   inherit (lib.modules) mkIf mkMerge;
+  inherit (lib.strings) optionalString;
   cfg = config.modules.desktop.editors.emacs;
 in {
   options.modules.desktop.editors.emacs = let
@@ -14,6 +15,11 @@ in {
     inherit (lib.types) enum nullOr;
   in {
     enable = mkEnableOption "Sprinkle a bit of magic to our nix-flake.";
+    terminal = mkOption {
+      type = nullOr (enum ["Eat" "VTerm"]);
+      default = "VTerm";
+      description = "Terminal emulator used within Emacs.";
+    };
     template = mkOption {
       type = nullOr (enum ["doomemacs" "irkalla"]);
       default = "irkalla";
@@ -45,10 +51,13 @@ in {
         in
           emacsPackage;
         extraPackages = epkgs:
-          attrValues {
-            inherit (epkgs.melpaPackages) jinx pdf-tools telega;
-            inherit (epkgs.treesit-grammars) with-all-grammars;
-          };
+          attrValues ({
+              inherit (epkgs.melpaPackages) jinx pdf-tools telega;
+              inherit (epkgs.treesit-grammars) with-all-grammars;
+            }
+            // optionalAttrs (cfg.terminal == "VTerm") {
+              inherit (epkgs.melpaPackages) vterm;
+            });
       };
 
       hm.services.emacs = {
@@ -60,18 +69,34 @@ in {
         socketActivation.enable = true;
       };
 
-      hm.programs.zsh.initExtra = ''
-        # -------===[ EAT Integration ]===------- #
-        [ -n "$EAT_SHELL_INTEGRATION_DIR" ] && \
-          source "$EAT_SHELL_INTEGRATION_DIR/zsh"
-
-        # -------===[ Useful Functions ]===------- #
-        ediff()  { emacsclient -c -a \'\' --eval "(ediff-files \"$1\" \"$2\")"; }
-        edired() { emacsclient -c -a \'\' --eval "(progn (dired \"$1\"))"; }
-        ekill()  { emacsclient -c -a \'\' --eval '(kill-emacs)'; }
-        eman()   { emacsclient -c -a \'\' --eval "(switch-to-buffer (man \"$1\"))"; }
-        magit()  { emacsclient -c -a \'\' --eval '(magit-status)'; }
-      '';
+      hm.programs.zsh.initExtra =
+        ''
+          # -------===[ Useful Functions ]===------- #
+          ediff()  { emacsclient -c -a \'\' --eval "(ediff-files \"$1\" \"$2\")"; }
+          edired() { emacsclient -c -a \'\' --eval "(progn (dired \"$1\"))"; }
+          ekill()  { emacsclient -c -a \'\' --eval '(kill-emacs)'; }
+          eman()   { emacsclient -c -a \'\' --eval "(switch-to-buffer (man \"$1\"))"; }
+          magit()  { emacsclient -c -a \'\' --eval '(magit-status)'; }
+        ''
+        + optionalString (cfg.terminal == "Eat") ''
+          # -------===[ EAT Integration ]===------- #
+          [ -n "$EAT_SHELL_INTEGRATION_DIR" ] && \
+            source "$EAT_SHELL_INTEGRATION_DIR/zsh"
+        ''
+        + optionalString (cfg.terminal == "VTerm") ''
+          # -------===[ VTerm Integration ]===------- #
+          function vterm_printf(){
+             if [ -n "$TMUX" ] && ([ "''${TERM%%-*}" = "tmux" ] || [ "''${TERM%%-*}" = "screen" ] ); then
+                 # Tell tmux to pass the escape sequences through
+                 printf "\ePtmux;\e\e]%s\007\e\\" "$1"
+             elif [ "''${TERM%%-*}" = "screen" ]; then
+                 # GNU screen (screen, screen-256color, screen-256color-bce)
+                 printf "\eP\e]%s\007\e\\" "$1"
+             else
+                 printf "\e]%s\e\\" "$1"
+             fi
+          }
+        '';
 
       hm.programs.fish = {
         functions = {
@@ -82,8 +107,19 @@ in {
           magit = " emacsclient -c -a '' --eval '(magit-status)'";
         };
 
-        interactiveShellInit = ''
-        ''; # EAT lacks fish integration
+        interactiveShellInit = optionalString (cfg.terminal == "VTerm") ''
+          function vterm_printf;
+               if begin; [  -n "$TMUX" ]  ; and  string match -q -r "screen|tmux" "$TERM"; end
+                   # tell tmux to pass the escape sequences through
+                   printf "\ePtmux;\e\e]%s\007\e\\" "$argv"
+               else if string match -q -- "screen*" "$TERM"
+                   # GNU screen (screen, screen-256color, screen-256color-bce)
+                   printf "\eP\e]%s\007\e\\" "$argv"
+               else
+                   printf "\e]%s\e\\" "$argv"
+               end
+           end
+        '';
       };
 
       programs.xonsh.config = ""; # TODO
