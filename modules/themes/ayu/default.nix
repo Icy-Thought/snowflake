@@ -34,17 +34,19 @@ in {
 
         fontConfig = {
           packages = attrValues {
-            inherit (pkgs) twitter-color-emoji;
-            nerdfonts = pkgs.nerdfonts.override {fonts = ["VictorMono"];};
+            inherit (pkgs) noto-fonts-emoji sarasa-gothic;
+            google-fonts = pkgs.google-fonts.override {fonts = ["Raleway"];};
+            nerdfonts =
+              pkgs.nerdfonts.override {fonts = ["CascadiaCode" "VictorMono"];};
           };
-          mono = ["VictorMono Nerd Font Mono"];
-          sans = ["VictorMono Nerd Font"];
-          emoji = ["Twitter Color Emoji"];
+          mono = ["VictorMono Nerd Font" "Sarasa Mono SC"];
+          sans = ["Caskaydia Cove Nerd Font" "Sarasa Gothic SC"];
+          emoji = ["Noto Color Emoji"];
         };
 
         font = {
-          sans.family = "VictorMono Nerd Font";
-          mono.family = "VictorMono Nerd Font Mono";
+          mono.family = "VictorMono Nerd Font";
+          sans.family = "CaskaydiaCove Nerd Font";
         };
 
         colors = {

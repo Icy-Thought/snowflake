@@ -34,11 +34,21 @@ in {
           size = 24;
         };
 
+        fontConfig = {
+          packages = attrValues {
+            inherit (pkgs) noto-fonts-emoji sarasa-gothic;
+            google-fonts = pkgs.google-fonts.override {fonts = ["Raleway"];};
+            nerdfonts =
+              pkgs.nerdfonts.override {fonts = ["CascadiaCode" "VictorMono"];};
+          };
+          mono = ["VictorMono Nerd Font" "Sarasa Mono SC"];
+          sans = ["Caskaydia Cove Nerd Font" "Sarasa Gothic SC"];
+          emoji = ["Noto Color Emoji"];
+        };
+
         font = {
-          package = pkgs.nerdfonts.override {fonts = ["VictorMono"];};
-          sans.family = "VictorMono Nerd Font";
-          mono.family = "VictorMono Nerd Font Mono";
-          emoji = "Noto Color Emoji";
+          mono.family = "VictorMono Nerd Font";
+          sans.family = "CaskaydiaCove Nerd Font";
         };
 
         colors = {
