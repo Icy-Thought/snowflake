@@ -7,14 +7,23 @@
 }: let
   inherit (lib.attrsets) attrValues optionalAttrs;
   inherit (lib.modules) mkIf mkMerge;
+  inherit (lib.meta) getExe;
   inherit (lib.strings) optionalString;
   cfg = config.modules.desktop.editors.emacs;
 in {
   options.modules.desktop.editors.emacs = let
     inherit (lib.options) mkEnableOption mkOption;
-    inherit (lib.types) enum nullOr;
+    inherit (lib.types) enum nullOr package;
   in {
     enable = mkEnableOption "Sprinkle a bit of magic to our nix-flake.";
+    package = mkOption {
+      type = package;
+      default =
+        if (config.modules.desktop.envProto == "wayland")
+        then pkgs.emacs-pgtk
+        else pkgs.emacs-git.override {withGTK3 = true;};
+      description = "Emacs package which will be installed in our flake system.";
+    };
     terminal = mkOption {
       type = nullOr (enum ["Eat" "VTerm"]);
       default = "VTerm";
@@ -43,13 +52,7 @@ in {
 
       hm.programs.emacs = {
         enable = true;
-        package = let
-          emacsPackage =
-            if (config.modules.desktop.envProto == "wayland")
-            then pkgs.emacs-pgtk
-            else pkgs.emacs-git.override {withGTK3 = true;};
-        in
-          emacsPackage;
+        package = cfg.package;
         extraPackages = epkgs:
           attrValues ({
               inherit (epkgs.melpaPackages) jinx pdf-tools telega;
@@ -127,13 +130,17 @@ in {
 
     (mkIf (cfg.template == "irkalla") {
       home.configFile = {
-        irkalla-early-init = {
-          target = "emacs/early-init.el";
-          source = "${inputs.emacs-dir}/irkalla/early-init.el";
-        };
-        irkalla-init = {
-          target = "emacs/init.el";
-          source = "${inputs.emacs-dir}/irkalla/init.el";
+        irkalla-init = let
+          configFile = "${inputs.emacs-dir}/irkalla/config.org";
+        in {
+          target = "emacs/init.org";
+          source = "${configFile}";
+          onChange = ''
+            ${getExe cfg.package} --batch \
+              --eval "(require 'ob-tangle)" \
+              --eval "(setq org-confirm-babel-evaluate nil)" \
+              --eval '(org-babel-tangle-file "${configFile}")'
+          '';
         };
       };
     })
