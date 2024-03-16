@@ -66,7 +66,7 @@ in {
         zstyle ':completion:*:*:*:*:descriptions'   format '%F{green}-- %d --%f'
         zstyle ':completion:*:*:*:*:corrections'    format '%F{yellow}!- %d (errors: %e) -!%f'
       '';
-      enableAutosuggestions = true;
+      autosuggestion.enable = true;
 
       initExtra = ''
         # -------===[ Uncategorized ]===------- #
@@ -163,10 +163,10 @@ in {
         mkIf (active != null) {
           enable = true;
           highlighters = ["main" "brackets" "pattern" "cursor" "regexp" "root" "line"];
-          # patterns = {
-          #   "sudo " = "fg=${types.fg},bold,bg=${normal.red}";
-          #   "rm -rf *" = "fg=${types.fg},bold,bg=${normal.red}";
-          # };
+          patterns = {
+            "sudo " = "fg=${normal.red},bold";
+            "rm -rf *" = "fg=${normal.red},bold";
+          };
           styles = {
             # -------===[ Comments ]===------- #
             comment = "fg=${normal.black}";

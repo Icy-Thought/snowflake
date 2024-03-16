@@ -65,7 +65,6 @@ in {
           kalker
           qgnomeplatform # Qt -> GTK Theme
           ;
-        inherit (pkgs.gnome) seahorse; # Gnome-keyring
 
         kalker-launcher = pkgs.makeDesktopItem {
           name = "Kalker";
@@ -102,8 +101,10 @@ in {
     })
 
     (mkIf (cfg.envProto == "x11") {
-      security.pam.services.lightdm.enableGnomeKeyring = true;
-      security.pam.services.lightdm-greeters.enableGnomeKeyring = false;
+      security.pam.services = {
+        login.enableGnomeKeyring = true;
+        lightdm.enableGnomeKeyring = true;
+      };
 
       services.xserver.displayManager.lightdm = {
         enable = true;

@@ -23,13 +23,11 @@ in {
 
     programs.dconf.enable = true;
 
-    services.xserver = {
-      desktopManager.plasma6 = {
-        enable = true;
-        enableQt5Integration = false;
-      };
-      displayManager.defaultSession = "plasmawayland";
+    services.desktopManager.plasma6 = {
+      enable = true;
+      enableQt5Integration = false;
     };
+    services.xserver.displayManager.defaultSession = "plasmawayland";
 
     environment.plasma6.excludePackages = attrValues {
       inherit (pkgs.kdePackages) konsole oxygen;

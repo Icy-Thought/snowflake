@@ -33,7 +33,7 @@ in {
 
   config = mkMerge [
     (mkIf (config.modules.desktop.envProto == "wayland") {
-      environment.variables = {MOZ_ENABLE_WAYLAND = "1";};
+      environment.variables.MOZ_ENABLE_WAYLAND = "1";
     })
 
     (mkIf cfg.enable {

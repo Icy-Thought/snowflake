@@ -12,8 +12,6 @@ in {
   in {enable = mkEnableOption "secure-socket shell";};
 
   config = mkIf config.modules.services.ssh.enable {
-    programs.ssh.startAgent = true;
-
     services.openssh = {
       enable = true;
       settings = {
