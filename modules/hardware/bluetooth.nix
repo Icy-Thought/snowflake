@@ -13,13 +13,16 @@ in {
   in {enable = mkEnableOption "bluetooth support";};
 
   config = mkIf config.modules.hardware.bluetooth.enable {
-    user.packages = attrValues {inherit (pkgs) blueman galaxy-buds-client;};
+    user.packages = attrValues {inherit (pkgs) galaxy-buds-client;};
+
+    services.blueman.enable = true;
 
     hardware.bluetooth = {
       enable = true;
-      disabledPlugins = ["sap"];
-      settings = {
-        General.ControllerMode = "bredr";
+      powerOnBoot = true;
+      settings.General = {
+        ControllerMode = "bredr";
+        Experimental = true;
       };
     };
 
