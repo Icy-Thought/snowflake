@@ -15,7 +15,7 @@ in {
   config = mkIf (cfg.active == "catppuccin") (mkMerge [
     {
       modules.themes = {
-        wallpaper = mkDefault ./assets/alena-aenami-eternity.jpg;
+        wallpaper = mkDefault ./assets/alena-aenami-new-year.jpg;
 
         gtk = {
           name = "Catppuccin-Mocha-Compact-Flamingo-Dark";
