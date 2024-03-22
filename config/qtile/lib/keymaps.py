@@ -92,9 +92,9 @@ audioctl = [
 ]
 
 mediactl = [
-    EzKey("M-<Down>", lazy.spawn("playerctl play-pause")),
-    EzKey("M-<Right>", lazy.spawn("playerctl next")),
-    EzKey("M-<Left>", lazy.spawn("playerctl previous")),
+    EzKey("M-<Right>", lazy.spawn("playerctl --player playerctld next")),
+    EzKey("M-<Left>", lazy.spawn("playerctl --player playerctld previous")),
+    EzKey("M-<Down>", lazy.spawn("playerctl --player playerctld play-pause")),
 ]
 
 captScr = [

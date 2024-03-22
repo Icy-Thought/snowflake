@@ -752,7 +752,7 @@ myScratchpads = do
   telegramClient <- getInput $
     inEditor >-> setFrameName telegramSessionID
              >-> eval (elispFun "telega")
-  
+
   pure [ NS "Discord"        "discordcanary"    (className =? "discord")          floatCenter
        , NS "EasyEffects"    "easyeffects"      (title     =? "Easy Effects")     floatCenter
        , NS "Emacs"          emacsScratch       (title     ^? emacsScratchID)     floatCenter
@@ -938,9 +938,9 @@ addKeys conf@XConfig { modMask = modm } =
        , ((hyper, xK_p),              safeSpawnProg "rofi-systemd")
 
          -- Playerctl
-       , ((modm, xK_Left),  safeSpawn "playerctl" ["previous"])
-       , ((modm, xK_Down),  safeSpawn "playerctl" ["play-pause"])
-       , ((modm, xK_Right), safeSpawn "playerctl" ["next"])
+       , ((modm, xK_Right), unsafeSpawn "playerctl --player playerctld next")
+       , ((modm, xK_Left),  unsafeSpawn "playerctl --player playerctld previous")
+       , ((modm, xK_Down),  unsafeSpawn "playerctl --player playerctld play-pause")
 
          -- Volume control
        , ((0, xF86XK_AudioRaiseVolume),    safeSpawn "volctl" ["increase"])
