@@ -43,11 +43,17 @@ in {
       settings = {
         theme = editor.helix.dark + "-alpha";
         editor = {
-          lsp.display-inlay-hints = true;
-
           true-color = true;
           color-modes = true;
+          idle-timeout = 1;
           line-number = "relative";
+          mouse = true;
+          scrolloff = 5;
+          bufferline = "always";
+
+          auto-completion = true;
+          auto-format = true;
+          lsp.display-inlay-hints = true;
 
           cursorline = true;
           cursor-shape = {
@@ -56,25 +62,31 @@ in {
             select = "underline";
           };
 
-          whitespace = {
-            render = {
-              space = "none";
-              tab = "all";
-              newline = "none";
-            };
-            characters = {
-              space = "·";
-              nbsp = "⍽";
-              tab = "⇥";
-              newline = "⏎";
-              tabpad = "·";
-            };
-          };
-
           indent-guides = {
             character = "▏";
             rainbow = "normal";
             render = true;
+          };
+          gutters = ["diagnostics" "line-numbers" "spacer" "diff"];
+
+          statusline = {
+            separator = "";
+            left = ["mode" "selections" "spinner" "file-name" "total-line-numbers"];
+            center = [];
+            right = ["diagnostics" "file-encoding" "file-line-ending" "file-type" "position-percentage" "position"];
+            mode = {
+              normal = "NORMAL";
+              insert = "INSERT";
+              select = "SELECT";
+            };
+          };
+
+          whitespace.characters = {
+            space = "·";
+            nbsp = "⍽";
+            tab = "⇥";
+            newline = "⏎";
+            tabpad = "·";
           };
         };
 
