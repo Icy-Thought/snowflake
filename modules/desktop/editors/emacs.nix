@@ -131,7 +131,7 @@ in {
     (mkIf (cfg.template == "irkalla") {
       home.configFile = {
         irkalla-init = let
-          configFile = "${inputs.emacs-dir}/irkalla/config.org";
+          configFile = "${inputs.emacs-dir}/config.org";
         in {
           target = "emacs/init.org";
           source = "${configFile}";
@@ -148,7 +148,7 @@ in {
     (mkIf (cfg.template == "doomemacs") {
       home.configFile.doomemacs-conf = {
         target = "doomemacs";
-        source = "${inputs.emacs-dir}/doomemacs";
+        source = "${inputs.emacs-dir}";
         recursive = true;
         onChange = "doom -y sync -u";
       };

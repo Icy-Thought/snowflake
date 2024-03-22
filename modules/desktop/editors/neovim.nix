@@ -49,7 +49,7 @@ in {
       home.configFile = {
         agasaya-config = {
           target = "nvim";
-          source = "${inputs.nvim-dir}/agasaya";
+          source = "${inputs.nvim-dir}";
           recursive = true;
         };
 
@@ -89,7 +89,7 @@ in {
 
       home.configFile = {
         ereshkigal-config = {
-          source = "${inputs.nvim-dir}/ereshkigal";
+          source = "${inputs.nvim-dir}";
           target = "nvim";
           recursive = true;
         };
