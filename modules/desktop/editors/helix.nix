@@ -79,13 +79,15 @@ in {
         };
 
         keys.normal = {
-          space.l = {f = ":format";};
-          space.o = {
-            w = ":set whitespace.render all";
-            W = ":set whitespace.render none";
+          space.w = {
+            a = ":set whitespace.render all";
+            n = ":set whitespace.render none";
           };
-          space.w = {f = ":w";};
-          space.q = {q = ":q";};
+          space.f = {
+            f = ":format";
+            s = ":w";
+            q = ":bc";
+          };
           space.space = "file_picker";
         };
       };
@@ -93,13 +95,10 @@ in {
 
     home.configFile.helix-theme = {
       target = "helix/themes/${activeTheme}-alpha.toml";
-      source = let
-        tomlFormat = pkgs.formats.toml {};
-      in
-        tomlFormat.generate "helix-theme" {
-          inherits = "${activeTheme}";
-          ui.background = {};
-        };
+      text = ''
+        inherits = "${activeTheme}"
+        "ui.background" = {}
+      '';
     };
   });
 }

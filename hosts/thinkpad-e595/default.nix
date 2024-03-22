@@ -37,8 +37,9 @@
       };
       editors = {
         default = "emacsclient";
-        neovim.enable = true;
         emacs.enable = true;
+        helix.enable = true;
+        neovim.enable = true;
       };
       browsers = {
         default = "firefox";
