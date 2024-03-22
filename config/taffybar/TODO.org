@@ -1,0 +1,12 @@
+1. Recreate the clock widget into a dashboard.
+   Couple of widgets that could reside within the dashboard:
+   a. calendar
+   b. MPRIS
+   c. notifications?
+
+2. Battery widget changes:
+   a. Add an expanding power-menu to the battery widget.
+   b. State dependent background color for battery widget.
+   c. Better icon?
+
+3. Nix widget that spawns launcher (rofi/wofi/etc) on click

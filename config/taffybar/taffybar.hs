@@ -57,7 +57,7 @@ main = do
     cssFiles <- mapM (getUserConfigFile "taffybar") relativeFiles
 
     let
-        baseEndWidgets   = [myTray, myNet, myMem, myCPU, myMpris]
+        baseEndWidgets   = [myTray, myNet, myMem, myCPU]
         laptopEndWidgets = myBattery ++ baseEndWidgets
         baseConfig       = defaultSimpleTaffyConfig
             { startWidgets  = [myWorkspaces, myLayout]
@@ -203,7 +203,6 @@ myLabelSetter workspace = return
         "9" -> "九"
         n   -> n
 
-
 myClock =
     deocrateWithSetClassAndBoxes "clock"
         $ textClockNewWith defaultClockConfig
@@ -217,14 +216,6 @@ myTray =
             { trayRightClickAction = PopupMenu
             , trayLeftClickAction  = Activate
             }
-
-myMpris =
-    mpris2NewWithConfig MPRIS2Config
-        { mprisWidgetWrapper = deocrateWithSetClassAndBoxes "mpris" . return
-        , updatePlayerWidget = simplePlayerWidget
-            defaultPlayerConfig
-                { setNowPlayingLabel = playingText 10 10 }
-        }
 
 myBattery =
     [ deocrateWithSetClassAndBoxes "battery" $ makeCombinedWidget
