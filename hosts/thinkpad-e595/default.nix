@@ -81,6 +81,6 @@
   # KDE-Connect + Start-up indicator
   programs.kdeconnect = {
     enable = true;
-    package = pkgs.valent;
+    # package = pkgs.valent;
   };
 }
