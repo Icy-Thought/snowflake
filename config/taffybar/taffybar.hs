@@ -60,7 +60,7 @@ main = do
         baseEndWidgets   = [myTray, myNet, myMem, myCPU]
         laptopEndWidgets = myBattery ++ baseEndWidgets
         baseConfig       = defaultSimpleTaffyConfig
-            { startWidgets  = [myWorkspaces, myLayout]
+            { startWidgets  = [myLauncher, myWorkspaces, myLayout]
             , endWidgets    = baseEndWidgets
             , centerWidgets = [myClock]
             , barPosition   = Top
@@ -174,6 +174,9 @@ myLayout = deocrateWithSetClassAndBoxes "layout"
 
 myWindows = deocrateWithSetClassAndBoxes "windows"
     $ windowsNew defaultWindowsConfig
+
+myLauncher = deocrateWithSetClassAndBoxes "launcher"
+    $ simpleCommandButtonNew "\62227  NixOS" "rofi -no-lazy-grab -show drun -modi drun"
 
 myWorkspaces = flip widgetSetClassGI "workspaces" =<< workspacesNew
     defaultWorkspacesConfig

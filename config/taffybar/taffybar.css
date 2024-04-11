@@ -1,3 +1,5 @@
+/* ======[ Top-Level Styling ]====== */
+
 .taffy-window * {
     color: @bar-foreground;
     font-family: "VictorMono Nerd Font";
@@ -8,14 +10,14 @@
 
 .taffy-box {
     background-color: @bar-background;
-    padding: 3px;
+    border-radius: 10px;
 }
 
-.contents { 
+.contents {
     background-color: @widget-background;
-    border-radius: 9px;
     margin: 0px 3px 0px 3px;
-    padding: 8px;
+    padding: 6px;
+    border-radius: 8px;
 }
 
 .active .contents {
@@ -23,14 +25,84 @@
 }
 
 .workspace-label {
-    color: @bar-foreground;
+    color: @widget-foreground;
     padding: 7px;
 }
 
 .active .workspace-label {
-    color: @bar-foreground;
+    color: @widget-foreground;
 }
 
 .no-visible-children * {
     background-color: @button-background;
+}
+
+/* ======[ Additional Styling ]====== */
+
+.inner-pad {
+    padding-bottom: 5px;
+    padding-top: 5px;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+.visible .contents {
+    background-color: @bar-background;
+}
+
+.window-icon-container {
+    transition: opacity .5s, box-shadow .5s;
+    opacity: 1;
+}
+
+.auto-size-image, .sni-tray {
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.window-icon-container.active {
+    box-shadow: inset 0 -3px @bar-foreground;
+}
+
+.window-icon-container.urgent {
+    box-shadow: inset 0 -3px @urgent-window-color;
+}
+
+.window-icon-container.inactive .window-icon {
+    padding: 0px;
+}
+
+.window-icon-container.minimized .window-icon {
+    opacity: .3;
+}
+
+.window-icon {
+    opacity: 1;
+    transition: opacity .5s;
+}
+
+button {
+    background-color: @button-background;
+    border-width: 0px;
+    border-radius: 0px;
+}
+
+button:checked, button:hover .Contents:hover {
+    box-shadow: inset 0 -3px @hl-active-pad-bg;
+}
+
+.taffy-window menuitem *,  menuitem * {
+    color: @menu-font-color;
+}
+
+.taffy-window menuitem, menuitem {
+    background-color: @menu-background;
+}
+
+.taffy-window menuitem:hover, menuitem:hover {
+    background-color: @hl-active-pad-bg;
+}
+
+.taffy-window menuitem:hover > label, menuitem:hover > label {
+    color: @bar-background;
 }

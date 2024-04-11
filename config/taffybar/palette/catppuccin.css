@@ -1,5 +1,6 @@
 @define-color patina-green rgba(171, 233, 179, 1);
-@define-color fog rgba(223, 224, 255, 1);
+@define-color thistle rgba(245, 194, 231, 1);
+@define-color cornflowerblue rgba(180, 190, 254, 1);
 
 @define-color raisin-black rgba(26, 27, 38, 1);
 @define-color cod-gray rgba(11, 11, 10, 0.4);
@@ -7,10 +8,11 @@
 @define-color transparent rgba(0, 0, 0, 0.0);
 
 @define-color bar-background @cod-gray-acc;
-@define-color bar-foreground @fog;
+@define-color bar-foreground @cornflowerblue;
 @define-color button-background @transparent;
 @define-color hl-active-pad-bg @patina-green;
 @define-color hl-active-pad-fg @transparent;
 @define-color menu-background @raisin-black;
-@define-color menu-foreground @fog;
+@define-color menu-foreground @cornflowerblue;
+@define-color widget-foreground @thistle;
 @define-color widget-background @cod-gray;

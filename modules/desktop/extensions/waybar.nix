@@ -50,7 +50,7 @@ in {
           modules-center = ["clock"];
           modules-right = ["memory" "cpu" "network" "battery" "custom/powermenu" "tray"];
           "custom/launcher" = {
-            "format" = " ";
+            "format" = "  NixOS";
             "on-click" = "rofi -no-lazy-grab -show drun -modi drun";
             "tooltip" = false;
           };
