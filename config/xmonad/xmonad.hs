@@ -932,9 +932,9 @@ addKeys conf@XConfig { modMask = modm } =
        , ((hyper, xK_r),              unsafeSpawn "emacsclient --eval '(emacs-everywhere)'")
 
          -- Rofi(s)
-       , ((modm, xK_p),               safeSpawn "rofi" ["-show", "power-menu"])
-       , ((modalt, xK_p),             safeSpawn "rofi" ["-show", "drun"])
-       , ((modm .|. shiftMask, xK_p), safeSpawn "rofi" ["-show", "run"])
+       , ((modm, xK_p),               safeSpawn "rofi" ["-no-lazy-grab", "-show", "power-menu"])
+       , ((modalt, xK_p),             safeSpawn "rofi" ["-no-lazy-grab", "-show", "drun"])
+       , ((modm .|. shiftMask, xK_p), safeSpawn "rofi" ["-no-lazy-grab", "-show", "run"])
        , ((hyper, xK_p),              safeSpawnProg "rofi-systemd")
 
          -- Playerctl
