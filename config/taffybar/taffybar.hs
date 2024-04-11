@@ -222,5 +222,5 @@ myTray =
 
 myBattery =
     [ deocrateWithSetClassAndBoxes "battery" $ makeCombinedWidget
-        [batteryIconNew, textBatteryNew "$percentage$%"]
+        [textBatteryNew "$percentage$% ", batteryIconNew]
     ]
