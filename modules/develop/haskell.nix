@@ -18,10 +18,10 @@ in {
         inherit
           (pkgs.haskellPackages)
           cabal-install
+          fourmolu
           haskell-language-server
           hasktags
           hpack
-          stylish-haskell
           ;
         ghc-with-hoogle =
           pkgs.haskellPackages.ghcWithHoogle
