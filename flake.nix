@@ -78,6 +78,14 @@
           unstable = pkgs-unstable;
           my = self.packages.${system};
         };
+
+        nvfetcher = final: prev: {
+          sources =
+            builtins.mapAttrs (_: p: p.src)
+            ((import ./packages/_sources/generated.nix) {
+              inherit (final) fetchurl fetchgit fetchFromGitHub dockerTools;
+            });
+        };
       };
 
     packages."${system}" = mapModules ./packages (p: pkgs.callPackage p {});

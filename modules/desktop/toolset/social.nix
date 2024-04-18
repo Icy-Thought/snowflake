@@ -54,23 +54,9 @@ in {
     })
 
     (mkIf cfg.matrix.withDaemon.enable {
-      hm.nixpkgs.overlays = [
-        (final: prev: {
-          pantalaimon = prev.pantalaimon.overrideAttrs (old: {
-            version = "0.10.5-dev";
-            src = final.fetchFromGitHub {
-              owner = "matrix-org";
-              repo = old.pname;
-              rev = "3968c69aa846889970df1372ba9aa54c1c5e4290";
-              hash = "sha256-JdoJB68QtxPhFeZCHd+0ZOlUDbQV3HeBsxW0KbhnDSs=";
-            };
-          });
-        })
-      ];
-
       hm.services.pantalaimon = {
         enable = true;
-        package = pkgs.unstable.pantalaimon;
+        package = pkgs.sources.pantalaimon;
         settings = {
           Default = {
             LogLevel = "Debug";

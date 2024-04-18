@@ -59,6 +59,7 @@ in {
       user.packages = attrValues {
         inherit
           (pkgs)
+          nvfetcher
           clipboard-jh
           gucharmap
           hyperfine

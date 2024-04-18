@@ -1,0 +1,222 @@
+{
+    "nx-dark-reader": {
+        "cargoLocks": null,
+        "date": "2023-06-20",
+        "extract": null,
+        "name": "nx-dark-reader",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "aartaka",
+            "repo": "nx-dark-reader",
+            "rev": "57dc1a9482a81d7c15b00c4b9d647bf1b129d8e4",
+            "sha256": "sha256-CKJGCk7ATd0naFhill5rrvay6V2JE4Bstu4tFpaAjB0=",
+            "type": "github"
+        },
+        "version": "57dc1a9482a81d7c15b00c4b9d647bf1b129d8e4"
+    },
+    "nx-kaomoji": {
+        "cargoLocks": null,
+        "date": "2023-07-03",
+        "extract": null,
+        "name": "nx-kaomoji",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "aartaka",
+            "repo": "nx-kaomoji",
+            "rev": "21a3b3df38c1f467f5728fc8c7edcd6a49130ce9",
+            "sha256": "sha256-FF0u39OJJjN0EZ0sCDHQiBgZJHeacVqUpx8CYhJgleQ=",
+            "type": "github"
+        },
+        "version": "21a3b3df38c1f467f5728fc8c7edcd6a49130ce9"
+    },
+    "nx-search-engines": {
+        "cargoLocks": null,
+        "date": "2023-06-07",
+        "extract": null,
+        "name": "nx-search-engines",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "aartaka",
+            "repo": "nx-search-engines",
+            "rev": "f81f47df82f8e322f0a8919d05fc513297095a0b",
+            "sha256": "sha256-Q+6B3lDzlhfHnS306yLh5LpxdIXESdH/Y2D3GJodbXs=",
+            "type": "github"
+        },
+        "version": "f81f47df82f8e322f0a8919d05fc513297095a0b"
+    },
+    "pantalaimon": {
+        "cargoLocks": null,
+        "date": "2023-05-25",
+        "extract": null,
+        "name": "pantalaimon",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "matrix-org",
+            "repo": "pantalaimon",
+            "rev": "3968c69aa846889970df1372ba9aa54c1c5e4290",
+            "sha256": "sha256-JdoJB68QtxPhFeZCHd+0ZOlUDbQV3HeBsxW0KbhnDSs=",
+            "type": "github"
+        },
+        "version": "3968c69aa846889970df1372ba9aa54c1c5e4290"
+    },
+    "xonsh-cmd-durations": {
+        "cargoLocks": null,
+        "date": "2024-04-06",
+        "extract": null,
+        "name": "xonsh-cmd-durations",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "jnoortheen",
+            "repo": "xontrib-cmd-durations",
+            "rev": "c6e07e810ae9e2f833b32191067a26c1be1720ca",
+            "sha256": "sha256-GouPATQFAbslm1IfOnkGnMme9h5kHLotLbmaOu9h9HA=",
+            "type": "github"
+        },
+        "version": "c6e07e810ae9e2f833b32191067a26c1be1720ca"
+    },
+    "xonsh-direnv": {
+        "cargoLocks": null,
+        "date": "2022-06-19",
+        "extract": null,
+        "name": "xonsh-direnv",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "74th",
+            "repo": "xonsh-direnv",
+            "rev": "3bea5847b9459c5799c64966ec85e624d0be69b9",
+            "sha256": "sha256-h56Gx/MMCW4L6nGwLAhBkiR7bX+qfFk80LEsJMiDtjQ=",
+            "type": "github"
+        },
+        "version": "3bea5847b9459c5799c64966ec85e624d0be69b9"
+    },
+    "xonsh-fzf-widgets": {
+        "cargoLocks": null,
+        "date": "2020-10-16",
+        "extract": null,
+        "name": "xonsh-fzf-widgets",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "laloch",
+            "repo": "xontrib-fzf-widgets",
+            "rev": "8af47d1d684a14eb776485ef6f5c30c8e6807f60",
+            "sha256": "sha256-lz0oiQSLCIQbnoQUi+NJwX82SbUvXJ+3dEsSbOb20q4=",
+            "type": "github"
+        },
+        "version": "8af47d1d684a14eb776485ef6f5c30c8e6807f60"
+    },
+    "xonsh-hist-navigator": {
+        "cargoLocks": null,
+        "date": "2023-03-16",
+        "extract": null,
+        "name": "xonsh-hist-navigator",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "jnoortheen",
+            "repo": "xontrib-hist-navigator",
+            "rev": "90504cc163d1f1f36f90fbf2f0190b03b89b798e",
+            "sha256": "sha256-yosOwmNBNGAW3Ut4z6GKxumWw80VEPWoOvVmKae/fvA=",
+            "type": "github"
+        },
+        "version": "90504cc163d1f1f36f90fbf2f0190b03b89b798e"
+    },
+    "xontrib-output-search": {
+        "cargoLocks": null,
+        "date": "2024-03-06",
+        "extract": null,
+        "name": "xontrib-output-search",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "anki-code",
+            "repo": "xontrib-output-search",
+            "rev": "5f4cefe1b15b45041179ac5a92abe988f6d8a6d7",
+            "sha256": "sha256-oG7VopEYKCZpJ7N2caoJ3XYeFhObzRqksOkhcaHwQn8=",
+            "type": "github"
+        },
+        "version": "5f4cefe1b15b45041179ac5a92abe988f6d8a6d7"
+    },
+    "xontrib-readable-traceback": {
+        "cargoLocks": null,
+        "date": "2022-09-07",
+        "extract": null,
+        "name": "xontrib-readable-traceback",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "vaaaaanquish",
+            "repo": "xontrib-readable-traceback",
+            "rev": "d87ddfae258cc928abdff364fac5a108d49f2308",
+            "sha256": "sha256-ek+GTWGUpm2b6lBw/7n4W46W2R0Gy6JxqWoLuQilCXQ=",
+            "type": "github"
+        },
+        "version": "d87ddfae258cc928abdff364fac5a108d49f2308"
+    },
+    "xontrib-schedule": {
+        "cargoLocks": null,
+        "date": "2021-07-21",
+        "extract": null,
+        "name": "xontrib-schedule",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "AstraLuma",
+            "repo": "xontrib-schedule",
+            "rev": "02c4d4f237451fce39b45545d69ab9ea67565b45",
+            "sha256": "sha256-Ahog47+Sq9xv03s0kPRm2wEOT989qI3GMaAzlnz/wS4=",
+            "type": "github"
+        },
+        "version": "02c4d4f237451fce39b45545d69ab9ea67565b45"
+    }
+}
