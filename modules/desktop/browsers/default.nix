@@ -16,7 +16,7 @@ in {
       type = nullOr str;
       default = null;
       description = "Default system browser";
-      example = "brave";
+      example = "firefox";
     };
   };
 
