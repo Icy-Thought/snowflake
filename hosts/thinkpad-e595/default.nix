@@ -43,7 +43,6 @@
       };
       browsers = {
         default = "firefox";
-        nyxt.enable = true;
         firefox = {
           enable = true;
           privacy.enable = true;

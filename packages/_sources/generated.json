@@ -19,26 +19,6 @@
         },
         "version": "57dc1a9482a81d7c15b00c4b9d647bf1b129d8e4"
     },
-    "nx-kaomoji": {
-        "cargoLocks": null,
-        "date": "2023-07-03",
-        "extract": null,
-        "name": "nx-kaomoji",
-        "passthru": null,
-        "pinned": false,
-        "src": {
-            "deepClone": false,
-            "fetchSubmodules": false,
-            "leaveDotGit": false,
-            "name": null,
-            "owner": "aartaka",
-            "repo": "nx-kaomoji",
-            "rev": "21a3b3df38c1f467f5728fc8c7edcd6a49130ce9",
-            "sha256": "sha256-FF0u39OJJjN0EZ0sCDHQiBgZJHeacVqUpx8CYhJgleQ=",
-            "type": "github"
-        },
-        "version": "21a3b3df38c1f467f5728fc8c7edcd6a49130ce9"
-    },
     "nx-search-engines": {
         "cargoLocks": null,
         "date": "2023-06-07",

@@ -13,18 +13,6 @@
     };
     date = "2023-06-20";
   };
-  nx-kaomoji = {
-    pname = "nx-kaomoji";
-    version = "21a3b3df38c1f467f5728fc8c7edcd6a49130ce9";
-    src = fetchFromGitHub {
-      owner = "aartaka";
-      repo = "nx-kaomoji";
-      rev = "21a3b3df38c1f467f5728fc8c7edcd6a49130ce9";
-      fetchSubmodules = false;
-      sha256 = "sha256-FF0u39OJJjN0EZ0sCDHQiBgZJHeacVqUpx8CYhJgleQ=";
-    };
-    date = "2023-07-03";
-  };
   nx-search-engines = {
     pname = "nx-search-engines";
     version = "f81f47df82f8e322f0a8919d05fc513297095a0b";

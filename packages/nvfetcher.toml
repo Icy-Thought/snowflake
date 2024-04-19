@@ -39,7 +39,3 @@ fetch.github = "aartaka/nx-dark-reader"
 [nx-search-engines]
 src.git = "https://github.com/aartaka/nx-search-engines.git"
 fetch.github = "aartaka/nx-search-engines"
-
-[nx-kaomoji]
-src.git = "https://github.com/aartaka/nx-kaomoji.git"
-fetch.github = "aartaka/nx-kaomoji"
