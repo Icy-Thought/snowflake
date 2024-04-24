@@ -34,12 +34,9 @@ in {
       libvirtd = {
         enable = true;
         # extraOptions = ["--verbose"];
-        qemu = {
-          runAsRoot = false;
-          ovmf = {
-            enable = true;
-            packages = [pkgs.OVMFFull.fd];
-          };
+        qemu.ovmf = {
+          enable = true;
+          packages = [pkgs.OVMFFull.fd];
         };
       };
       spiceUSBRedirection.enable = true;

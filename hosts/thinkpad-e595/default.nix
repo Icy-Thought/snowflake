@@ -16,7 +16,11 @@
       };
     };
     networking.networkManager.enable = true;
-    services.ssh.enable = true;
+
+    services = {
+      ssh.enable = true;
+      rustdesk.enable = true;
+    };
 
     develop = {
       haskell.enable = true;
@@ -38,7 +42,6 @@
       editors = {
         default = "emacsclient";
         emacs.enable = true;
-        helix.enable = true;
         neovim.enable = true;
       };
       browsers = {
@@ -47,6 +50,7 @@
           enable = true;
           privacy.enable = true;
         };
+        nyxt.enable = true;
       };
       education = {
         memorization.enable = true;
@@ -76,6 +80,7 @@
         };
       };
     };
+    virtualize.enable = true;
   };
 
   # KDE-Connect + Start-up indicator
