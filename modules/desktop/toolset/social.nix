@@ -54,9 +54,16 @@ in {
     })
 
     (mkIf cfg.matrix.withDaemon.enable {
+      hm.nixpkgs.overlays = [
+        (final: prev: {
+          pantalaimon = prev.pantalaimon.overrideAttrs (old: {
+            inherit (pkgs.sources) pantalaimon;
+          });
+        })
+      ];
+
       hm.services.pantalaimon = {
         enable = true;
-        package = pkgs.sources.pantalaimon;
         settings = {
           Default = {
             LogLevel = "Debug";
