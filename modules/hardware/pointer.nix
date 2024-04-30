@@ -13,7 +13,7 @@ in {
 
   config = mkIf config.modules.hardware.pointer.enable (mkMerge [
     {
-      services.xserver.libinput = {
+      services.libinput = {
         enable = true;
         mouse = {
           middleEmulation = false;

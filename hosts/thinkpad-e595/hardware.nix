@@ -78,7 +78,7 @@ in {
 
   services = {
     upower.enable = true;
-    xserver.libinput.touchpad = {
+    libinput.touchpad = {
       accelSpeed = "0.5";
       accelProfile = "adaptive";
     };
