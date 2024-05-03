@@ -98,7 +98,7 @@
 
     nixosConfigurations = mapHosts ./hosts {};
 
-    devShells."${system}".default = import ./shell.nix {inherit pkgs;};
+    devShells."${system}".default = import ./shell.nix {inherit lib pkgs;};
 
     templates.full =
       {

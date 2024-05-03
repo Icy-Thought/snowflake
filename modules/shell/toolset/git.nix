@@ -5,6 +5,7 @@
   pkgs,
   ...
 }: let
+  inherit (builtins) readFile;
   inherit (lib.attrsets) attrValues optionalAttrs;
   inherit (lib.modules) mkIf;
 in {
@@ -105,26 +106,28 @@ in {
           editor = "nvim";
           whitespace = "trailing-space,space-before-tab";
         };
-        commit.gpgSign = true;
         credential.helper = "${pkgs.gitFull}/bin/git-credential-libsecret";
 
         user = {
           name = "Icy-Thought";
           email = "icy-thought@pm.me";
-          signingKey = "B593E438DDAB3C66";
+          signingKey = readFile "${config.user.home}/.ssh/id_ed25519.pub";
         };
 
         alias = {
           commit-x = "-c user.name='CircuitLogic' -c user.email='geckut@pm.me' commit";
         };
 
+        gpg.format = "ssh";
+        commit.gpgSign = true;
         tag.gpgSign = true;
-        pull.rebase = true;
+
         push = {
           default = "current";
           gpgSign = "if-asked";
           autoSquash = true;
         };
+        pull.rebase = true;
 
         filter = {
           required = true;
