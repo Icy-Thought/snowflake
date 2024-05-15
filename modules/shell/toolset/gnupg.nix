@@ -12,11 +12,8 @@
 in {
   options.modules.shell.toolset.gnupg = let
     inherit (lib.options) mkEnableOption;
-    inherit (lib.types) int;
-    inherit (lib.my) mkOpt;
   in {
     enable = mkEnableOption "cryptographic suite";
-    cacheTTL = mkOpt int 86400; # 24 hours
   };
 
   config = mkIf config.modules.shell.toolset.gnupg.enable {
@@ -27,11 +24,13 @@ in {
       enableSSHSupport = true;
       pinentryPackage = pkgs.pinentry-gnome3;
 
-      settings = {
-        default-cache-ttl = cfg.cacheTTL;
-        default-cache-ttl-ssh = cfg.cacheTTL;
-        max-cache-ttl = cfg.cacheTTL;
-        max-cache-ttl-ssh = cfg.cacheTTL;
+      settings = let
+        cacheTTL = 86400;
+      in {
+        default-cache-ttl = cacheTTL;
+        default-cache-ttl-ssh = cacheTTL;
+        max-cache-ttl = cacheTTL;
+        max-cache-ttl-ssh = cacheTTL;
       };
     };
   };
