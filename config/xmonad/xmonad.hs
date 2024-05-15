@@ -239,12 +239,12 @@ chromiumSelectorBase = isChromiumClass <$> className
 
 chromiumSelector = appName =? "chromium-browser" <&&> className =? "Chromium-browser"
 
-firefoxSelector = appName =? "firefox" <&&> className =? "Navigator"
+firefoxSelector = appName =? "firefox-nightly" <&&> className =? "Navigator"
 
 protonMailSelector = chromiumSelectorBase <&&> fmap isProtonMailTitle title
 
 virtualClasses =
-    [(protonMailSelector, "Proton Mail"), (firefoxSelector, "firefox")]
+    [(protonMailSelector, "Proton Mail"), (firefoxSelector, "firefox-nightly")]
 
 -- Startup hook
 hostNameToAction = M.fromList [("my-hostname", return ())]
@@ -896,7 +896,7 @@ addKeys conf@XConfig{modMask = modm} =
 
         -- Specific program spawning
         ++ bindBringAndRaiseMany
-            [ (modalt, xK_f, unsafeSpawn "firefox", firefoxSelector)
+            [ (modalt, xK_f, unsafeSpawn "firefox-nightly", firefoxSelector)
             , (modalt, xK_w, unsafeSpawn "librewolf", firefoxSelector)
             ]
         -- Window manipulation

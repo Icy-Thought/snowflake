@@ -126,7 +126,7 @@ groups.append(
 )
 
 keys.extend(
-    # WARN: Used keys (M-A): f = firefox, w = firefox-priv , g = librewolf (secure FF fork)
+    # WARN: Used keys (M-A): f = firefox-nightly, w = firefox-priv , g = librewolf (secure FF fork)
     [
         EzKey("M-A-b", lazy.group["SPD"].dropdown_toggle("SysMon")),
         EzKey("M-A-e", lazy.group["SPD"].dropdown_toggle("Emacs")),

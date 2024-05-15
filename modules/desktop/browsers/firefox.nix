@@ -1,4 +1,5 @@
 {
+  inputs,
   options,
   config,
   lib,
@@ -38,15 +39,16 @@ in {
 
     (mkIf cfg.enable {
       user.packages = let
-        inherit (pkgs) firefox-bin makeDesktopItem;
+        inherit (pkgs) makeDesktopItem;
+        inherit (inputs.firefox.packages.${pkgs.system}) firefox-nightly-bin;
       in [
-        firefox-bin
+        firefox-nightly-bin
         (makeDesktopItem {
-          name = "firefox-private";
-          desktopName = "Firefox (Private)";
-          genericName = "Launch a Private Firefox Instance";
-          icon = "firefox";
-          exec = "${pkgs.firefox-bin}/bin/firefox --private-window";
+          name = "firefox-nightly-private";
+          desktopName = "Firefox Nightly (Private)";
+          genericName = "Launch a private Firefox Nightly instance";
+          icon = "firefox-nightly";
+          exec = "${pkgs.firefox-bin}/bin/firefox-nightly --private-window";
           categories = ["Network" "WebBrowser"];
         })
       ];

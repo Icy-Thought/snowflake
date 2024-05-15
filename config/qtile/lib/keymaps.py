@@ -7,7 +7,7 @@ HOME = os.path.expanduser("~")
 
 # Default applications
 myTerm = "alacritty"
-myBrowser = "firefox"
+myBrowser = "firefox-nightly"
 myPrivateBrowser = "librewolf"
 
 EzKey.modifier_keys = {

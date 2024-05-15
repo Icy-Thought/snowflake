@@ -25,7 +25,7 @@ in {
       imageViewer = mkOpt str "feh.desktop";
       mediaPlayer = mkOpt str "mpv.desktop";
       torrentCli = mkOpt str "transmission-gtk.desktop";
-      webBrowser = mkOpt str "firefox.desktop";
+      webBrowser = mkOpt str "firefox-nightly.desktop";
     };
   };
 
