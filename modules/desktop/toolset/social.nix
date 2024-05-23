@@ -56,8 +56,9 @@ in {
     (mkIf cfg.matrix.withDaemon.enable {
       hm.nixpkgs.overlays = [
         (final: prev: {
-          pantalaimon = prev.pantalaimon.overrideAttrs (old: {
-            inherit (pkgs.sources) pantalaimon;
+          pantalaimon = prev.pantalaimon.overrideAttrs (_: {
+            version = "10.5-unstable";
+            src = pkgs.sources.pantalaimon;
           });
         })
       ];
