@@ -27,27 +27,40 @@
   };
   pantalaimon = {
     pname = "pantalaimon";
-    version = "3968c69aa846889970df1372ba9aa54c1c5e4290";
-    src = fetchFromGitHub {
-      owner = "matrix-org";
-      repo = "pantalaimon";
-      rev = "3968c69aa846889970df1372ba9aa54c1c5e4290";
+    version = "9f791362415d78274047d902cf8f07abad519649";
+    src = fetchgit {
+      url = "https://gitlab.com/greenbeast/pantalaimon.git";
+      rev = "9f791362415d78274047d902cf8f07abad519649";
       fetchSubmodules = false;
-      sha256 = "sha256-JdoJB68QtxPhFeZCHd+0ZOlUDbQV3HeBsxW0KbhnDSs=";
+      deepClone = false;
+      leaveDotGit = false;
+      sha256 = "sha256-dQjcb3RmT2vVqQy3ljlDdACe8tYU/LwGU5XfzD2TFgs=";
     };
-    date = "2023-05-25";
+    date = "2024-05-18";
+  };
+  picom = {
+    pname = "picom";
+    version = "9a83982d7ef575b47df71bdc895d7a264f33c392";
+    src = fetchFromGitHub {
+      owner = "yshui";
+      repo = "picom";
+      rev = "9a83982d7ef575b47df71bdc895d7a264f33c392";
+      fetchSubmodules = false;
+      sha256 = "sha256-Tgt8paQPwl8IXpD5OV7LacIiZP6OsEc7z5dSsZUl0XE=";
+    };
+    date = "2024-05-21";
   };
   xonsh-cmd-durations = {
     pname = "xonsh-cmd-durations";
-    version = "c6e07e810ae9e2f833b32191067a26c1be1720ca";
+    version = "c4101bb94ca54507e0af588963ea46424c10e090";
     src = fetchFromGitHub {
       owner = "jnoortheen";
       repo = "xontrib-cmd-durations";
-      rev = "c6e07e810ae9e2f833b32191067a26c1be1720ca";
+      rev = "c4101bb94ca54507e0af588963ea46424c10e090";
       fetchSubmodules = false;
-      sha256 = "sha256-GouPATQFAbslm1IfOnkGnMme9h5kHLotLbmaOu9h9HA=";
+      sha256 = "sha256-qFIjXBLyNqGnrslMvhqKpTvJDT79yWdHkDvS6JebVUk=";
     };
-    date = "2024-04-06";
+    date = "2024-05-17";
   };
   xonsh-direnv = {
     pname = "xonsh-direnv";

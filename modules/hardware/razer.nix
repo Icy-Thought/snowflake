@@ -16,7 +16,11 @@ in {
       enable = true;
       devicesOffOnScreensaver = false;
       syncEffectsEnabled = true;
-      mouseBatteryNotifier = true;
+      batteryNotifier = {
+        enable = true;
+        percentage = 30;
+        frequency = 600;
+      };
     };
 
     user.extraGroups = ["plugdev" "openrazer"];

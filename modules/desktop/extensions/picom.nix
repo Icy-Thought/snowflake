@@ -6,7 +6,6 @@
   ...
 }: let
   inherit (lib.modules) mkIf mkMerge;
-
   cfg = config.modules.desktop.extensions.picom;
 in {
   options.modules.desktop.extensions.picom = let
@@ -36,11 +35,10 @@ in {
             "! name~=''" # Qtile == empty wm_class..
           ];
 
-          blur-method = "dual_kawase";
-          blur-strength = 10.0;
           blur-background = true;
-          blur-whitelist = true;
-          blur-include = ["class_g = 'Taffybar'"];
+          blur-strength = 10.0;
+          blur-method = "dual_kawase";
+          blur-backround-exclude = ["window_type != 'dock'"];
 
           daemon = false;
           dbus = false;
@@ -68,17 +66,9 @@ in {
 
     (mkIf cfg.animation.enable {
       hm.services.picom = {
-        package = pkgs.picom.overrideAttrs (old: rec {
-          pname = "compfy";
-          version = "1.7.2";
-          src = pkgs.fetchFromGitHub {
-            owner = "allusive-dev";
-            repo = "compfy";
-            rev = version;
-            hash = "sha256-7hvzwLEG5OpJzsrYa2AaIW8X0CPyOnTLxz+rgWteNYY";
-          };
-          postInstall = "";
-          meta.mainProgram = "compfy";
+        package = pkgs.picom.overrideAttrs (_: {
+          version = "11.2-unstable";
+          src = pkgs.sources.picom;
         });
 
         backend = "glx";
@@ -93,11 +83,11 @@ in {
           animation-window-mass = 1;
           animation-for-open-window = "slide-up";
           animation-for-unmap-window = "slide-down";
-        };
 
-        wintypes = {
-          dock = {animation = "slide-down";};
-          toolbar = {animation = "slide-down";};
+          wintypes = {
+            dock = {animation = "slide-down";};
+            toolbar = {animation = "slide-down";};
+          };
         };
       };
     })
