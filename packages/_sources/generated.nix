@@ -40,15 +40,15 @@
   };
   picom = {
     pname = "picom";
-    version = "9a83982d7ef575b47df71bdc895d7a264f33c392";
+    version = "c3883b8064734d58ff669300da443cefeb86895f";
     src = fetchFromGitHub {
       owner = "yshui";
       repo = "picom";
-      rev = "9a83982d7ef575b47df71bdc895d7a264f33c392";
+      rev = "c3883b8064734d58ff669300da443cefeb86895f";
       fetchSubmodules = false;
-      sha256 = "sha256-Tgt8paQPwl8IXpD5OV7LacIiZP6OsEc7z5dSsZUl0XE=";
+      sha256 = "sha256-X1pHr9XQ6ePXPsqRFzV5Epfy8LGg1uQelcVPVKnPBbA=";
     };
-    date = "2024-05-21";
+    date = "2024-05-28";
   };
   xonsh-cmd-durations = {
     pname = "xonsh-cmd-durations";

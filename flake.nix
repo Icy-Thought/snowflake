@@ -26,7 +26,6 @@
 
     # Application -> (Cached) Git
     emacs.url = "github:nix-community/emacs-overlay";
-    nvim-nightly.url = "github:nix-community/neovim-nightly-overlay";
     spicetify-nix.url = "github:the-argus/spicetify-nix";
     firefox.url = "github:nix-community/flake-firefox-nightly";
 
