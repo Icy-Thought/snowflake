@@ -70,12 +70,13 @@
           enable = true;
           video.enable = true;
         };
-        social = {
+        communication = {
           base.enable = true;
+          notmuch.enable = true;
           matrix.withDaemon.enable = true;
         };
         # docView.sioyek.enable = true;
-        docViewer = {
+        readers = {
           enable = true;
           program = "zathura";
         };

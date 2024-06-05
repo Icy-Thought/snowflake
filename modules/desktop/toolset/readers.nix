@@ -10,9 +10,9 @@
   inherit (lib.modules) mkIf mkMerge;
   inherit (lib.strings) concatStringsSep;
 
-  cfg = config.modules.desktop.toolset.docViewer;
+  cfg = config.modules.desktop.toolset.readers;
 in {
-  options.modules.desktop.toolset.docViewer = let
+  options.modules.desktop.toolset.readers = let
     inherit (lib.options) mkEnableOption mkOption;
     inherit (lib.types) nullOr enum;
   in {
@@ -27,7 +27,7 @@ in {
   config = mkMerge [
     {
       # :NOTE| Notify system about our document viewer
-      modules.desktop.extensions.mimeApps.defApps.docViewer = cfg.program;
+      modules.desktop.extensions.mimeApps.defApps.readers = cfg.program;
     }
 
     (mkIf (cfg.program == "zathura") {

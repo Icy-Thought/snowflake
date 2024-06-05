@@ -27,7 +27,7 @@
       };
       toolset = {
         player.video.enable = true;
-        docViewer = {
+        readers = {
           enable = true;
           program = "zathura";
         };

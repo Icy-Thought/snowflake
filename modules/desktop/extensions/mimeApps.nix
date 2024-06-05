@@ -19,7 +19,7 @@ in {
   in {
     enable = mkEnableOption "default system applications";
     defApps = {
-      docViewer = mkOpt str "org.pwmt.zathura.desktop";
+      docReader = mkOpt str "org.pwmt.zathura.desktop";
       editor = mkOpt str "emacsclient.desktop";
       fileBrowser = mkOpt str "org.gnome.Nautilus.desktop";
       imageViewer = mkOpt str "feh.desktop";
@@ -36,7 +36,7 @@ in {
       enable = true;
       defaultApplications = let
         defaultApps = let
-          inherit (cfg.defApps) docViewer editor fileBrowser imageViewer mediaPlayer torrentCli webBrowser;
+          inherit (cfg.defApps) docReader editor fileBrowser imageViewer mediaPlayer torrentCli webBrowser;
         in {
           audio = [mediaPlayer];
           browser = [webBrowser];
@@ -45,7 +45,7 @@ in {
           image = [imageViewer];
           magnet = [torrentCli];
           mail = [editor];
-          pdf = [docViewer];
+          pdf = [docReader];
           text = [editor];
           video = [mediaPlayer];
         };
