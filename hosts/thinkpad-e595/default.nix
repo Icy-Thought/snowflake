@@ -75,7 +75,6 @@
           notmuch.enable = true;
           matrix.withDaemon.enable = true;
         };
-        # docView.sioyek.enable = true;
         readers = {
           enable = true;
           program = "zathura";

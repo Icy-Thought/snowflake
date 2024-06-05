@@ -25,7 +25,7 @@ in {
   config = mkMerge [
     {
       # :NOTE| Notify system about our file-browser
-      modules.desktop.extensions.mimeApps.defApps.fileBrowser = cfg.program;
+      modules.desktop.extensions.mimeApps.applications.fileManager = cfg.program;
 
       services.gvfs.enable = true;
 

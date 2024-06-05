@@ -55,46 +55,48 @@ in {
     })
 
     (mkIf cfg.notmuch.enable {
-      hm.accounts.email.accounts.${config.user.name} = let
-        mailAddr = "IcyThought@disroot.org";
-      in {
+      hm.accounts.email = {
         maildirBasePath = "$XDG_DATA_HOME/mail";
-        flavor = "plain";
 
-        realName = "${config.user.name}";
-        userName = "${mailAddr}";
-        address = "${mailAddr}";
-        primary = true;
+        accounts.${config.user.name} = let
+          mailAddr = "IcyThought@disroot.org";
+        in {
+          realName = "${config.user.name}";
+          userName = "${mailAddr}";
+          address = "${mailAddr}";
+          primary = true;
 
-        imap = {
-          host = "disroot.org";
-          port = 993;
-        };
-        smtp = {
-          host = "disroot.org";
-          port = 465;
-        };
+          flavor = "plain";
+          imap = {
+            host = "disroot.org";
+            port = 993;
+          };
+          smtp = {
+            host = "disroot.org";
+            port = 465;
+          };
 
-        offlineimap.enable = true;
-        msmtp.enable = true;
-        notmuch.enable = true;
+          offlineimap.enable = true;
+          msmtp.enable = true;
+          notmuch.enable = true;
 
-        gpg = {
-          key = "2E690B8644FE29D8237F6C42B593E438DDAB3C66";
-          encryptByDefault = false;
-          signByDefault = true;
-        };
+          gpg = {
+            key = "2E690B8644FE29D8237F6C42B593E438DDAB3C66";
+            encryptByDefault = false;
+            signByDefault = true;
+          };
 
-        signature = {
-          command = pkgs.writeScript "SignGen" "Generate the signature for ${config.user.name}.";
-          delimiter = ''
-            ~*~*~*~*~*~*~*~*~*~*~*~
-          '';
-          showSignature = "append";
-          text = ''
-            Kind Regards,
-            Icy-Thought!
-          '';
+          signature = {
+            command = pkgs.writeScript "SignGen" "Generate the signature for ${config.user.name}.";
+            delimiter = ''
+              ~*~*~*~*~*~*~*~*~*~*~*~
+            '';
+            showSignature = "append";
+            text = ''
+              Kind Regards,
+              Icy-Thought!
+            '';
+          };
         };
       };
 

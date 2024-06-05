@@ -27,28 +27,28 @@
   };
   pantalaimon = {
     pname = "pantalaimon";
-    version = "9f791362415d78274047d902cf8f07abad519649";
+    version = "0ae174364f5746f1c4495b2db75cf4d8b1f613d0";
     src = fetchgit {
       url = "https://gitlab.com/greenbeast/pantalaimon.git";
-      rev = "9f791362415d78274047d902cf8f07abad519649";
+      rev = "0ae174364f5746f1c4495b2db75cf4d8b1f613d0";
       fetchSubmodules = false;
       deepClone = false;
       leaveDotGit = false;
-      sha256 = "sha256-dQjcb3RmT2vVqQy3ljlDdACe8tYU/LwGU5XfzD2TFgs=";
+      sha256 = "sha256-haXi2eKygE7wbbp+Dxu03T0whY6bzpDcVF/W97vKmlg=";
     };
-    date = "2024-05-18";
+    date = "2024-06-04";
   };
   picom = {
     pname = "picom";
-    version = "c3883b8064734d58ff669300da443cefeb86895f";
+    version = "c2cb4df94ae851de71d16051903ca6247d926c6b";
     src = fetchFromGitHub {
       owner = "yshui";
       repo = "picom";
-      rev = "c3883b8064734d58ff669300da443cefeb86895f";
+      rev = "c2cb4df94ae851de71d16051903ca6247d926c6b";
       fetchSubmodules = false;
-      sha256 = "sha256-X1pHr9XQ6ePXPsqRFzV5Epfy8LGg1uQelcVPVKnPBbA=";
+      sha256 = "sha256-Sj6WevYD8XLMMuTfNiOuAkaSvHLmSQ+vdj+cmEsfxgU=";
     };
-    date = "2024-05-28";
+    date = "2024-06-04";
   };
   xonsh-cmd-durations = {
     pname = "xonsh-cmd-durations";

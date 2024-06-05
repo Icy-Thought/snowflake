@@ -27,7 +27,7 @@ in {
   config = mkMerge [
     {
       # :NOTE| Notify system about our document viewer
-      modules.desktop.extensions.mimeApps.defApps.readers = cfg.program;
+      modules.desktop.extensions.mimeApps.applications.docReader = cfg.program;
     }
 
     (mkIf (cfg.program == "zathura") {

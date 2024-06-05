@@ -41,7 +41,7 @@
     },
     "pantalaimon": {
         "cargoLocks": null,
-        "date": "2024-05-18",
+        "date": "2024-06-04",
         "extract": null,
         "name": "pantalaimon",
         "passthru": null,
@@ -51,16 +51,16 @@
             "fetchSubmodules": false,
             "leaveDotGit": false,
             "name": null,
-            "rev": "9f791362415d78274047d902cf8f07abad519649",
-            "sha256": "sha256-dQjcb3RmT2vVqQy3ljlDdACe8tYU/LwGU5XfzD2TFgs=",
+            "rev": "0ae174364f5746f1c4495b2db75cf4d8b1f613d0",
+            "sha256": "sha256-haXi2eKygE7wbbp+Dxu03T0whY6bzpDcVF/W97vKmlg=",
             "type": "git",
             "url": "https://gitlab.com/greenbeast/pantalaimon.git"
         },
-        "version": "9f791362415d78274047d902cf8f07abad519649"
+        "version": "0ae174364f5746f1c4495b2db75cf4d8b1f613d0"
     },
     "picom": {
         "cargoLocks": null,
-        "date": "2024-05-28",
+        "date": "2024-06-04",
         "extract": null,
         "name": "picom",
         "passthru": null,
@@ -72,11 +72,11 @@
             "name": null,
             "owner": "yshui",
             "repo": "picom",
-            "rev": "c3883b8064734d58ff669300da443cefeb86895f",
-            "sha256": "sha256-X1pHr9XQ6ePXPsqRFzV5Epfy8LGg1uQelcVPVKnPBbA=",
+            "rev": "c2cb4df94ae851de71d16051903ca6247d926c6b",
+            "sha256": "sha256-Sj6WevYD8XLMMuTfNiOuAkaSvHLmSQ+vdj+cmEsfxgU=",
             "type": "github"
         },
-        "version": "c3883b8064734d58ff669300da443cefeb86895f"
+        "version": "c2cb4df94ae851de71d16051903ca6247d926c6b"
     },
     "xonsh-cmd-durations": {
         "cargoLocks": null,

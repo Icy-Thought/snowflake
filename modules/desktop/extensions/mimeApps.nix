@@ -18,14 +18,14 @@ in {
     inherit (lib.my) mkOpt;
   in {
     enable = mkEnableOption "default system applications";
-    defApps = {
-      docReader = mkOpt str "org.pwmt.zathura.desktop";
+    applications = {
+      docReader = mkOpt str "sioyek.desktop";
       editor = mkOpt str "emacsclient.desktop";
-      fileBrowser = mkOpt str "org.gnome.Nautilus.desktop";
+      fileManager = mkOpt str "org.gnome.Nautilus.desktop";
       imageViewer = mkOpt str "feh.desktop";
       mediaPlayer = mkOpt str "mpv.desktop";
       torrentCli = mkOpt str "transmission-gtk.desktop";
-      webBrowser = mkOpt str "firefox-nightly.desktop";
+      browser = mkOpt str "firefox-nightly.desktop";
     };
   };
 
@@ -36,12 +36,21 @@ in {
       enable = true;
       defaultApplications = let
         defaultApps = let
-          inherit (cfg.defApps) docReader editor fileBrowser imageViewer mediaPlayer torrentCli webBrowser;
+          inherit
+            (cfg.applications)
+            docReader
+            editor
+            fileManager
+            imageViewer
+            mediaPlayer
+            torrentCli
+            browser
+            ;
         in {
           audio = [mediaPlayer];
-          browser = [webBrowser];
-          compression = [fileBrowser];
-          directory = [fileBrowser];
+          browser = [browser];
+          compression = [fileManager];
+          directory = [fileManager];
           image = [imageViewer];
           magnet = [torrentCli];
           mail = [editor];
