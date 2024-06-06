@@ -40,15 +40,27 @@
   };
   picom = {
     pname = "picom";
-    version = "c2cb4df94ae851de71d16051903ca6247d926c6b";
+    version = "4dc78789daa4e06571039852fbe9226695e3055c";
     src = fetchFromGitHub {
       owner = "yshui";
       repo = "picom";
-      rev = "c2cb4df94ae851de71d16051903ca6247d926c6b";
+      rev = "4dc78789daa4e06571039852fbe9226695e3055c";
       fetchSubmodules = false;
-      sha256 = "sha256-Sj6WevYD8XLMMuTfNiOuAkaSvHLmSQ+vdj+cmEsfxgU=";
+      sha256 = "sha256-4urK8VgXeOdN5QIEKALQJANVVR0nVSwUef+1UYkPSkY=";
     };
-    date = "2024-06-04";
+    date = "2024-06-05";
+  };
+  telega = {
+    pname = "telega";
+    version = "58b4963b292ceb723d665df100b519eb5a99c676";
+    src = fetchFromGitHub {
+      owner = "zevlg";
+      repo = "telega.el";
+      rev = "58b4963b292ceb723d665df100b519eb5a99c676";
+      fetchSubmodules = false;
+      sha256 = "sha256-Pi+4bJx4xNMpLAoQOOUoFOCpd6+3Atv29jpDCepqfuA=";
+    };
+    date = "2024-05-27";
   };
   xonsh-cmd-durations = {
     pname = "xonsh-cmd-durations";

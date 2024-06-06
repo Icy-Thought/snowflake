@@ -6,6 +6,10 @@ fetch.github = "yshui/picom"
 src.git = "https://gitlab.com/greenbeast/pantalaimon.git"
 fetch.git = "https://gitlab.com/greenbeast/pantalaimon.git"
 
+[telega]
+src.git = "https://github.com/zevlg/telega.el"
+fetch.github = "zevlg/telega.el"
+
 # :NOTE| Xonsh-related
 [xonsh-direnv]
 src.git = "https://github.com/74th/xonsh-direnv.git"
