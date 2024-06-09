@@ -94,18 +94,6 @@ in {
             encryptByDefault = false;
             signByDefault = true;
           };
-
-          signature = {
-            command = pkgs.writeScript "SignGen" "Generate the signature for ${config.user.name}.";
-            delimiter = ''
-              ~*~*~*~*~*~*~*~*~*~*~*~
-            '';
-            showSignature = "append";
-            text = ''
-              Kind Regards,
-              Icy-Thought!
-            '';
-          };
         };
       };
 
