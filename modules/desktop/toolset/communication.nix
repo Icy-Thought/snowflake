@@ -64,6 +64,7 @@ in {
           realName = "${config.user.name}";
           userName = "${mailAddr}";
           address = "${mailAddr}";
+          passwordCommand = "cat /run/agenix/mailingQST";
           primary = true;
 
           flavor = "plain";
@@ -76,8 +77,16 @@ in {
             port = 465;
           };
 
-          offlineimap.enable = true;
-          msmtp.enable = true;
+          offlineimap = {
+            enable = true;
+            extraConfig.account = {
+              autorefresh = 5;
+            };
+          };
+          msmtp = {
+            enable = true;
+            extraConfig = {auth = "login";};
+          };
           notmuch.enable = true;
 
           gpg = {
@@ -101,18 +110,8 @@ in {
       };
 
       hm.programs = {
-        # :NOTE| Fetching E-Mail's -> IMAP
-        offlineimap = {
-          enable = true;
-          extraConfig.general = {
-            autorefresh = "5";
-          };
-        };
-
-        # :NOTE| Sending E-Mail's -> SMTP
+        offlineimap.enable = true;
         msmtp.enable = true;
-
-        # :NOTE| Indexing / Tagging E-Mail's -> NotMuch
         notmuch = {
           enable = true;
           extraConfig = {};

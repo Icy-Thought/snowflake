@@ -10,5 +10,6 @@ in {
   "Ement.age".publicKeys = [hostKey];
   "tokenGH.age".publicKeys = [hostKey];
   "OpenWeatherMap.age".publicKeys = [hostKey];
+  "mailingQST.age".publicKeys = [hostKey];
   # "torBylon.age".publicKeys = [ hostKey ];
 }
