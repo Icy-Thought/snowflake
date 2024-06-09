@@ -56,7 +56,7 @@ in {
 
     (mkIf cfg.notmuch.enable {
       hm.accounts.email = {
-        maildirBasePath = "$XDG_DATA_HOME/mail";
+        maildirBasePath = "${config.hm.xdg.dataHome}/mail";
 
         accounts.${config.user.name} = let
           mailAddr = "IcyThought@disroot.org";
