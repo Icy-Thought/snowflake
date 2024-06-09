@@ -755,34 +755,42 @@ myScratchpads = do
                 >-> setFrameName emacsScratchID
                 >-> eval (elispFun "dashboard-refresh-buffer")
 
-    -- \| What matrix-client should've been..
-    matrixClient <-
+    notmuchSP <-
         getInput $
             inEditor
-                >-> setFrameName matrixSessionID
+                >-> setFrameName notmuchID
+                >-> eval (elispFun "notmuch-hello")
+
+    -- \| What matrix-client should've been..
+    matrixSP <-
+        getInput $
+            inEditor
+                >-> setFrameName matrixID
                 >-> eval (elispFun "irkalla/connect-to-matrix")
 
     -- \| What matrix-client should've been..
-    telegramClient <-
+    telegramSP <-
         getInput $
             inEditor
-                >-> setFrameName telegramSessionID
+                >-> setFrameName telegramID
                 >-> eval (elispFun "telega")
 
     pure
         [ NS "Discord" "discordcanary" (className =? "discord") floatCenter
         , NS "EasyEffects" "easyeffects" (title =? "Easy Effects") floatCenter
         , NS "Emacs" emacsScratch (title ^? emacsScratchID) floatCenter
-        , NS "Matrix" matrixClient (title =? matrixSessionID) floatCenter
+        , NS "Matrix" matrixSP (title =? matrixID) floatCenter
+        , NS "NotMuch" notmuchSP (title =? notmuchID) floatCenter
         , NS "Spotify" "spotify" (className =? "Spotify") floatCenter
         , NS "System Monitor" btopLaunch (appName =? sysMonID) floatCenter
-        , NS "Telegram" telegramClient (title =? telegramSessionID) floatCenter
+        , NS "Telegram" telegramSP (title =? telegramID) floatCenter
         , NS "Transmission" "transmission-gtk" (className =? "Transmission-gtk") floatCenter
         ]
   where
     emacsScratchID = "Emacs-NSP|"
-    matrixSessionID = "Emacs-NSP: Ement"
-    telegramSessionID = "Emacs-NSP: Telega"
+    matrixID = "Emacs-NSP: Ement"
+    notmuchID = "Emacs-NSP: NotMuch"
+    telegramID = "Emacs-NSP: Telega"
     sysMonID = "system-monitor"
 
     -- \| Defining our custom floats
@@ -932,8 +940,9 @@ addKeys conf@XConfig{modMask = modm} =
            , -- ScratchPad(s)
              ((modalt, xK_b), doScratchpad "System Monitor")
            , ((modalt, xK_d), doScratchpad "Discord")
-           , ((modalt, xK_k), doScratchpad "Matrix")
            , ((modalt, xK_e), doScratchpad "Emacs")
+           , ((modalt, xK_k), doScratchpad "Matrix")
+           , ((modalt, xK_m), doScratchpad "NotMuch")
            , ((modalt, xK_l), doScratchpad "Telegram")
            , ((modalt, xK_s), doScratchpad "Spotify")
            , ((modalt, xK_t), doScratchpad "Transmission")
