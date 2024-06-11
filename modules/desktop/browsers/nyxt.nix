@@ -119,6 +119,10 @@ in {
         source = "${nyxtConfDir}/bindings.lisp";
         target = "nyxt/bindings.lisp";
       };
+      nyxt-search-engines = {
+        source = "${nyxtConfDir}/search-engines.lisp";
+        target = "nyxt/search-engines.lisp";
+      };
     };
   };
 }

@@ -17,8 +17,7 @@ in {
     {
       user.packages = attrValues {
         rich-env = pkgs.python3.withPackages (pyPkgs: with pyPkgs; [rich]);
-        inherit (pkgs) rye; # pylyzer
-        inherit (pkgs.nodePackages) pyright;
+        inherit (pkgs) rye pyright; # pylyzer
         inherit (pkgs.python3Packages) ipython black isort;
       };
 

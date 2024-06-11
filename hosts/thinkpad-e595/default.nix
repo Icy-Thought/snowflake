@@ -26,9 +26,8 @@
       lisp.guile.enable = true;
       haskell.enable = true;
       python.enable = true;
-      rust.enable = true;
       scientific = {
-        latex.enable = true;
+        # latex.enable = true;
         typst.enable = true;
       };
     };
@@ -51,7 +50,7 @@
           enable = true;
           privacy.enable = true;
         };
-        nyxt.enable = true;
+        # nyxt.enable = true;
       };
       education = {
         memorization.enable = true;
