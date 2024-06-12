@@ -131,7 +131,7 @@ in {
         usrChromeDir = "${config.snowflake.configDir}/firefox/userChrome";
       in
         concatMapStringsSep "\n" readFile [
-          # "${usrChromeDir}/treestyle-tabs.css"
+          "${usrChromeDir}/sidebery.css"
         ];
     })
 
