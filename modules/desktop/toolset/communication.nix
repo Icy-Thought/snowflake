@@ -77,12 +77,7 @@ in {
             port = 465;
           };
 
-          offlineimap = {
-            enable = true;
-            extraConfig.account = {
-              autorefresh = 5;
-            };
-          };
+          offlineimap.enable = true;
           msmtp = {
             enable = true;
             extraConfig = {auth = "login";};
@@ -95,6 +90,13 @@ in {
             signByDefault = true;
           };
         };
+      };
+
+      services.offlineimap = {
+        enable = true;
+        install = true;
+        onCalendar = "*:0/3";
+        timeoutStartSec = "120sec";
       };
 
       hm.programs = {
