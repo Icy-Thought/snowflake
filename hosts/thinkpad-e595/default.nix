@@ -79,8 +79,8 @@
           program = "zathura";
         };
       };
+      distraction.steam.enable = true;
     };
-    virtualize.enable = true;
   };
 
   # KDE-Connect + Start-up indicator

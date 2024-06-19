@@ -36,12 +36,12 @@ in {
             greek-inputenc
             trimspaces
             # :NOTE| Mathematics-related
-            
+
             amsmath
             cancel
             mathtools
             # :NOTE| Graphics-related
-            
+
             parskip
             pgf
             pgfplots
@@ -60,7 +60,7 @@ in {
 
     (mkIf config.modules.develop.scientific.typst.enable {
       user.packages = attrValues {
-        inherit (pkgs) typst typst-lsp typstfmt;
+        inherit (pkgs) typst typst-lsp typstyle;
       };
 
       hm.programs.vscode.extensions = attrValues {
