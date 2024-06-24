@@ -25,6 +25,8 @@
     develop = {
       lisp.guile.enable = true;
       haskell.enable = true;
+      rust.enable = true;
+      kotlin.enable = true;
       python.enable = true;
       scientific = {
         # latex.enable = true;
@@ -79,6 +81,7 @@
           program = "zathura";
         };
       };
+      distraction.steam.enable = true;
     };
   };
 

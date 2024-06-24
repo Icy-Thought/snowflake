@@ -16,7 +16,7 @@ in {
   config = mkMerge [
     (mkIf config.modules.develop.kotlin.enable {
       user.packages = attrValues {
-        inherit (pkgs) kotlin-native kotlin-language-server ktlint;
+        inherit (pkgs) kotlin kotlin-language-server ktlint;
       };
 
       hm.programs.vscode.extensions = attrValues {
