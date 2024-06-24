@@ -114,10 +114,6 @@ in {
           signingKey = readFile "${config.user.home}/.ssh/id_ed25519.pub";
         };
 
-        alias = {
-          commit-x = "-c user.name='CircuitLogic' -c user.email='geckut@pm.me' commit";
-        };
-
         gpg.format = "ssh";
         commit.gpgSign = true;
         tag.gpgSign = true;

@@ -79,7 +79,6 @@
           program = "zathura";
         };
       };
-      distraction.steam.enable = true;
     };
   };
 

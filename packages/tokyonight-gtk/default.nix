@@ -4,22 +4,15 @@
   fetchFromGitHub,
   gtk-engine-murrine,
   jdupes,
-  themeVariants ? [],
+  variant ? "Dark-BL",
 }: let
   inherit (builtins) toString;
   inherit (lib.trivial) checkListOfEnum;
+  validVariants = ["Dark-B-LB" "Dark-B" "Dark-BL-LB" "Dark-BL" "Storm-B-LB" "Storm-B" "Storm-BL-LB" "Storm-BL"];
+
+  pname = "tokyonight-gtk-theme";
 in
-  checkListOfEnum "$Tokyonight: GTK Theme Variants" [
-    "Dark-B-LB"
-    "Dark-B"
-    "Dark-BL-LB"
-    "Dark-BL"
-    "Storm-B-LB"
-    "Storm-B"
-    "Storm-BL-LB"
-    "Storm-BL"
-  ]
-  themeVariants
+  checkListOfEnum "${pname}: GTK Theme Variants" validVariants [variant]
   stdenv.mkDerivation {
     pname = "tokyonight-gtk-theme";
     version = "unstable-2022-12-09";
@@ -36,7 +29,7 @@ in
     propagatedUserEnvPkgs = [gtk-engine-murrine];
 
     installPhase = let
-      gtkTheme = "Tokyonight-${toString themeVariants}";
+      gtkTheme = "Tokyonight-${toString variant}";
     in ''
       runHook preInstall
 

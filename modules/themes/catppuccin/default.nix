@@ -18,20 +18,13 @@ in {
         wallpaper = mkDefault ./assets/alena-aenami-new-year.jpg;
 
         gtk = {
-          name = "Catppuccin-Mocha-Compact-Flamingo-Dark";
-          package = pkgs.catppuccin-gtk.override {
-            variant = "mocha";
-            accents = ["flamingo"];
-            tweaks = ["rimless"];
-            size = "compact";
-          };
+          name = "Catppuccin-Pink-Dark";
+          package = pkgs.my.catppuccin-gtk;
         };
-
         iconTheme = {
           name = "WhiteSur-dark";
           package = pkgs.whitesur-icon-theme;
         };
-
         pointer = {
           name = "Bibata-Modern-Classic";
           package = pkgs.bibata-cursors;

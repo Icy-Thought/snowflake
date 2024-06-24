@@ -7,26 +7,26 @@
 }: let
   inherit (builtins) toString readFile;
   inherit (lib.attrsets) attrValues;
-  inherit (lib.attrsets) concatMapStringsSep;
   inherit (lib.modules) mkDefault mkIf mkMerge;
+  inherit (lib.strings) concatMapStringsSep;
 
   cfg = config.modules.themes;
 in {
   config = mkIf (cfg.active == "tokyonight") (mkMerge [
     {
       modules.themes = {
-        wallpaper = mkDefault ./assets/avatar-H2O-upscayl.png;
+        wallpaper = mkDefault ./assets/zaynstewart-anime-girl-night-alone.png;
 
         gtk = {
           name = "Tokyonight-Dark-BL";
-          package =
-            pkgs.my.tokyonight-gtk.override {themeVariants = ["Dark-BL"];};
+          package = pkgs.my.tokyonight-gtk;
         };
 
         iconTheme = {
           name = "Fluent-orange-dark";
-          package =
-            pkgs.fluent-icon-theme.override {colorVariants = ["orange"];};
+          package = pkgs.fluent-icon-theme.override {
+            colorVariants = ["orange"];
+          };
         };
 
         pointer = {

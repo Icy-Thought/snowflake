@@ -43,11 +43,7 @@ in {
         }
       ];
 
-      env = {
-        GTK_DATA_PREFIX = ["${config.system.path}"];
-        QT_QPA_PLATFORMTHEME = "gnome";
-        QT_STYLE_OVERRIDE = "Adwaita";
-      };
+      env.GTK_DATA_PREFIX = ["${config.system.path}"];
 
       system.userActivationScripts.cleanupHome = ''
         pushd "${config.user.home}"
@@ -64,7 +60,6 @@ in {
           gucharmap
           hyperfine
           kalker
-          qgnomeplatform # Qt -> GTK Theme
           ;
 
         kalker-launcher = pkgs.makeDesktopItem {
@@ -76,6 +71,14 @@ in {
         };
       };
 
+      services.xserver.enable = true;
+      xdg.portal = {
+        enable = true;
+        extraPortals = [pkgs.xdg-desktop-portal-gtk];
+        config.common.default = "*";
+      };
+      services.gnome.gnome-keyring.enable = true;
+
       fonts = {
         fontDir.enable = true;
         enableGhostscriptFonts = true;
@@ -84,14 +87,11 @@ in {
         };
       };
 
-      services.xserver.enable = true;
-
-      xdg.portal = {
+      hm.qt = {
         enable = true;
-        extraPortals = [pkgs.xdg-desktop-portal-gtk];
-        config.common.default = "*";
+        platformTheme.name = "adwaita";
+        style.name = "adwaita-dark";
       };
-      services.gnome.gnome-keyring.enable = true;
     }
 
     (mkIf (cfg.envProto == "wayland") {
