@@ -10,18 +10,20 @@
 
 .taffy-box {
     background-color: @bar-background;
-    border-radius: 10px;
+    border-radius: 4px;
 }
 
 .contents {
     background-color: @widget-background;
     margin: 0px 3px 0px 3px;
-    padding: 6px;
+    padding: 3px;
     border-radius: 8px;
 }
 
 .active .contents {
     background-color: @bar-foreground;
+    padding-left: 6px;
+    padding-right: 6px;
 }
 
 .workspace-label {
@@ -56,8 +58,8 @@
 }
 
 .auto-size-image, .sni-tray {
-    padding-top: 3px;
-    padding-bottom: 3px;
+    padding-top: 4px;
+    padding-bottom: 4px;
 }
 
 .window-icon-container.active {
