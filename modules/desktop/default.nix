@@ -13,36 +13,37 @@
   cfg = config.modules.desktop;
 in {
   options.modules.desktop = let
-    inherit (lib.options) mkOption;
-    inherit (lib.types) nullOr enum;
+    inherit (lib.types) either str;
+    inherit (lib.my) mkOpt;
   in {
-    envProto = mkOption {
-      type = nullOr (enum ["x11" "wayland"]);
-      description = "What display protocol to use.";
-      default = null;
-    };
+    type = mkOpt (either str null) null;
   };
 
   config = mkMerge [
     {
-      assertions = [
+      assertions = let
+        isEnabled = _: v: v.enable or false;
+        hasDesktopEnabled = cfg:
+          (anyAttrs isEnabled cfg)
+          || !(anyAttrs (_: v: isAttrs v && anyAttrs isEnabled v) cfg);
+      in [
         {
-          assertion = (countAttrs (n: v: n == "enable" && value) cfg) < 2;
-          message = "Prevent DE/WM > 1 from being enabled.";
+          assertion =
+            (countAttrs (_: v: v.enable or false) cfg) < 2;
+          message = "Can't have more than one desktop environment enabled at a time";
         }
         {
-          assertion = let
-            srv = config.services;
-          in
-            srv.xserver.enable
-            || srv.sway.enable
-            || !(anyAttrs
-              (n: v: isAttrs v && anyAttrs (n: v: isAttrs v && v.enable))
-              cfg);
-          message = "Prevent desktop applications from enabling without a DE/WM.";
+          assertion = hasDesktopEnabled cfg;
+          message = "Can't enable a desktop sub-module without a desktop environment";
+        }
+        {
+          assertion = !(hasDesktopEnabled cfg) || cfg.type != null;
+          message = "Downstream desktop module did not set modules.desktop.type!";
         }
       ];
+    }
 
+    (mkIf (cfg.type != null) {
       env.GTK_DATA_PREFIX = ["${config.system.path}"];
 
       system.userActivationScripts.cleanupHome = ''
@@ -92,16 +93,16 @@ in {
         platformTheme.name = "adwaita";
         style.name = "adwaita-dark";
       };
-    }
+    })
 
-    (mkIf (cfg.envProto == "wayland") {
+    (mkIf (cfg.type == "wayland") {
       xdg.portal.wlr.enable = true;
 
       # Login Manager: ReGreet!
       programs.regreet.enable = true;
     })
 
-    (mkIf (cfg.envProto == "x11") {
+    (mkIf (cfg.type == "x11") {
       security.pam.services = {
         login.enableGnomeKeyring = true;
         lightdm.enableGnomeKeyring = true;

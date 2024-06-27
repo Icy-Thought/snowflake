@@ -16,7 +16,7 @@ in {
 
   config = mkIf config.modules.desktop.hyprland.enable {
     modules.desktop = {
-      envProto = "wayland";
+      type = "wayland";
       toolset.fileManager = {
         enable = true;
         program = "nautilus";

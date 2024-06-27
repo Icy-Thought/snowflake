@@ -12,7 +12,7 @@
   inherit (lib.strings) concatStringsSep optionalString;
 
   cfg = config.modules.themes;
-  envProto = config.modules.desktop.envProto;
+  desktop = config.modules.desktop;
 in {
   options.modules.themes = let
     inherit (lib.options) mkOption mkPackageOption;
@@ -229,7 +229,7 @@ in {
         ];
     }
 
-    (mkIf (envProto == "wayland") (mkMerge [
+    (mkIf (desktop.type == "wayland") (mkMerge [
       {
         programs.regreet.settings.GTK = let
           inherit (cfg) pointer font iconTheme gtk;
@@ -286,7 +286,7 @@ in {
       })
     ]))
 
-    (mkIf (envProto == "x11") (mkMerge [
+    (mkIf (desktop.type == "x11") (mkMerge [
       {
         hm.xresources = {
           path = "${config.user.home}/.Xresources";

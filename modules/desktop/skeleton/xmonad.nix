@@ -16,7 +16,7 @@ in {
 
   config = mkIf config.modules.desktop.xmonad.enable {
     modules.desktop = {
-      envProto = "x11";
+      type = "x11";
       toolset.fileManager = {
         enable = true;
         program = "nautilus";

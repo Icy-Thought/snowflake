@@ -19,13 +19,13 @@ in {
 
   config = {
     user.packages = let
-      envProto = config.modules.desktop.envProto;
+      desktop = config.modules.desktop;
     in
       attrValues ({}
         // optionalAttrs cfg.base.enable {
           inherit (pkgs) font-manager imagemagick upscayl;
           colorPicker =
-            if (envProto == "wayland")
+            if (desktop.type == "wayland")
             then pkgs.hyprpicker
             else pkgs.xcolor;
         }

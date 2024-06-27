@@ -30,7 +30,7 @@ in {
       };
     }
 
-    # (mkIf (config.modules.desktop.envProto == "x11") {
+    # (mkIf (config.modules.desktop.type == "x11") {
     #   services.xserver.imwheel = {
     #     enable = true;
     #     extraOptions = [ "--buttons=45" ];

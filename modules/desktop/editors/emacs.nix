@@ -19,7 +19,7 @@ in {
     package = mkOption {
       type = package;
       default =
-        if (config.modules.desktop.envProto == "wayland")
+        if (config.modules.desktop.type == "wayland")
         then pkgs.emacs-pgtk
         else pkgs.emacs-git.override {withGTK3 = true;};
       description = "Emacs package which will be installed in our flake system.";

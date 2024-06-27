@@ -27,7 +27,7 @@ in {
       env.TERMINAL = cfg.default;
     }
 
-    (mkIf (config.modules.desktop.envProto == "x11") {
+    (mkIf (config.modules.desktop.type == "x11") {
       services.xserver.excludePackages =
         mkIf (cfg.default != "xterm") [pkgs.xterm];
     })

@@ -8,7 +8,7 @@
   inherit (lib.modules) mkIf mkForce mkMerge;
 
   cfg = config.modules.desktop.distraction.steam;
-  envProto = config.modules.desktop.envProto;
+  desktop = config.modules.desktop;
 in {
   options.modules.desktop.distraction.steam = let
     inherit (lib.options) mkEnableOption;
@@ -39,7 +39,7 @@ in {
       };
     }
 
-    (mkIf (envProto == "wayland") {
+    (mkIf (desktop.type == "wayland") {
       # https://github.com/ValveSoftware/gamescope
       programs.gamescope = {
         enable = true;

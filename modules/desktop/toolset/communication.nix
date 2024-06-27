@@ -11,7 +11,7 @@
   inherit (lib.strings) concatStringsSep;
 
   cfg = config.modules.desktop.toolset.communication;
-  envProto = config.modules.desktop.envProto;
+  desktop = config.modules.desktop;
 in {
   options.modules.desktop.toolset.communication = let
     inherit (lib.options) mkEnableOption mkOption;
@@ -193,11 +193,11 @@ in {
             "--enable-zero-copy"
             "--ignore-gpu-blocklist"
           ]
-          ++ optionals (envProto == "x11") [
+          ++ optionals (desktop.type == "x11") [
             "--disable-features=UseOzonePlatform"
             "--enable-features=VaapiVideoDecoder"
           ]
-          ++ optionals (envProto == "wayland") [
+          ++ optionals (desktop.type == "wayland") [
             "--enable-features=UseOzonePlatform,WebRTCPipeWireCapturer"
             "--ozone-platform=wayland"
             "--enable-webrtc-pipewire-capturer"

@@ -24,7 +24,7 @@ in {
 
   config = mkIf cfg.enable {
     modules.desktop = {
-      envProto = cfg.backend;
+      type = cfg.backend;
       toolset.fileManager = {
         enable = true;
         program = "nautilus";

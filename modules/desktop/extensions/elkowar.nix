@@ -11,7 +11,7 @@
   inherit (lib.strings) makeBinPath;
 
   cfg = config.modules.desktop.extensions.elkowar;
-  envProto = config.modules.desktop.envProto;
+  desktop = config.modules.desktop;
   elkowarDir = "${config.snowflake.configDir}/elkowar";
 in {
   options.modules.desktop.extensions.elkowar = let
@@ -20,7 +20,7 @@ in {
     enable = mkEnableOption "wacky x11/wayland widgets";
     package = mkPackageOption pkgs "eww" {
       default =
-        if (envProto == "wayland")
+        if (desktop.type == "wayland")
         then "eww-wayland"
         else "eww";
     };

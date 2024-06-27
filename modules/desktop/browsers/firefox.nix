@@ -33,7 +33,7 @@ in {
   };
 
   config = mkMerge [
-    (mkIf (config.modules.desktop.envProto == "wayland") {
+    (mkIf (config.modules.desktop.type == "wayland") {
       environment.variables.MOZ_ENABLE_WAYLAND = "1";
     })
 
@@ -58,6 +58,10 @@ in {
       env.XDG_DESKTOP_DIR = "$HOME/";
 
       modules.desktop.browsers.firefox.settings = {
+        # TAB cycle URL's, not buttons..
+        "browser.toolbars.keyboard_navigation" = false;
+        # Disable annoying translation pop-up!
+        "browser.translations.automaticallyPopup" = false;
         # Enables dark-themed flash before page-load:
         "ui.systemUsesDarkTheme" = "1";
         # Developer tools -> uses dark theme

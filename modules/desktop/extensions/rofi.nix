@@ -11,7 +11,7 @@
   inherit (lib.strings) concatStringsSep;
 
   cfg = config.modules.desktop.extensions.rofi;
-  envProto = config.modules.desktop.envProto;
+  desktop = config.modules.desktop;
 in {
   options.modules.desktop.extensions.rofi = let
     inherit (lib.options) mkEnableOption mkPackageOption;
@@ -19,7 +19,7 @@ in {
     enable = mkEnableOption "window switcher and app-launcher";
     package = mkPackageOption pkgs "rofi" {
       default =
-        if (envProto == "wayland")
+        if (desktop.type == "wayland")
         then "rofi-wayland"
         else "rofi";
     };

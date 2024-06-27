@@ -14,7 +14,7 @@ in {
 
   config = mkIf config.modules.desktop.plasma.enable {
     modules.desktop = {
-      envProto = "wayland";
+      type = "wayland";
       extensions.input-method = {
         enable = true;
         framework = "fcitx5";
