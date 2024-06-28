@@ -5,11 +5,11 @@
   gtk-engine-murrine,
   jdupes,
   sassc,
-  accent ? ["pink"],
+  accent ? ["default"],
   shade ? "dark",
   size ? "standard",
 }: let
-  validAccents = ["purple" "pink" "red" "orange" "yellow" "green" "teal" "grey"];
+  validAccents = ["default" "purple" "pink" "red" "orange" "yellow" "green" "teal" "grey"];
   validShades = ["light" "dark"];
   validSizes = ["standard" "compact"];
 
