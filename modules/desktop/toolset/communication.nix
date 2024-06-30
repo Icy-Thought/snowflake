@@ -92,25 +92,18 @@ in {
         };
       };
 
-      services.offlineimap = {
-        enable = true;
-        install = true;
-        onCalendar = "*:0/3";
-        timeoutStartSec = "120sec";
-      };
-
       hm.programs = {
         offlineimap.enable = true;
         msmtp.enable = true;
         notmuch = {
           enable = true;
-          extraConfig = {};
-          hooks.postNew = ''
-            notmuch tag +nixos -- tag:new and from:nixos1@discoursemail.com
-          '';
-          new.tags = ["unread" "inbox"];
-          search.excludeTags = ["deleted" "spam"];
+          hooks = {
+            preNew = "${lib.getExe pkgs.offlineimap} -o;";
+            postNew = "${lib.getExe pkgs.afew} --tag --new";
+          };
+          new.tags = ["new"];
         };
+        afew.enable = true; # NotMuch initial tagging
       };
     })
 
