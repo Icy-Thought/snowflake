@@ -18,7 +18,7 @@ in {
         wallpaper = mkDefault ./assets/alena-aenami-new-year.jpg;
 
         gtk = {
-          name = "Catppuccin-Pink-Dark";
+          name = "Catppuccin-Dark";
           package = pkgs.my.catppuccin-gtk;
         };
         iconTheme = {
