@@ -12,6 +12,7 @@
 
   cfg = config.modules.desktop.toolset.communication;
   desktop = config.modules.desktop;
+  mailDir = "${config.hm.xdg.dataHome}/mail";
 in {
   options.modules.desktop.toolset.communication = let
     inherit (lib.options) mkEnableOption mkOption;
@@ -56,7 +57,7 @@ in {
 
     (mkIf cfg.notmuch.enable {
       hm.accounts.email = {
-        maildirBasePath = "${config.hm.xdg.dataHome}/mail";
+        maildirBasePath = mailDir;
 
         accounts.${config.user.name} = let
           mailAddr = "IcyThought@disroot.org";
@@ -103,7 +104,9 @@ in {
           };
           new.tags = ["new"];
         };
-        afew = {
+        afew = let
+          relMailDir = lib.strings.removePrefix "${config.user.home}/" mailDir;
+        in {
           enable = true; # NotMuch initial tagging
           extraConfig = ''
             [SpamFilter]
@@ -118,27 +121,27 @@ in {
 
             [Filter.0]
             message = Tagging Personal Emails
-            query = 'folder:.mail/'
+            query = 'folder:${relMailDir}/'
             tags = +personal
 
             [FolderNameFilter.0]
-            folder_explicit_list = .mail/Inbox .mail/Archive .mail/Drafts .mail/Sent .mail/Trash
-            folder_transforms = .mail/Inbox:personal .mail/Archive:personal .mail/Drafts:personal .mail/Sent:personal .mail/Trash:personal
+            folder_explicit_list = ${relMailDir}/Inbox ${relMailDir}/Archive ${relMailDir}/Drafts ${relMailDir}/Sent ${relMailDir}/Trash
+            folder_transforms = ${relMailDir}/Inbox:personal ${relMailDir}/Archive:personal ${relMailDir}/Drafts:personal ${relMailDir}/Sent:personal ${relMailDir}/Trash:personal
             folder_lowercases = true
 
             [FolderNameFilter.1]
-            folder_explicit_list = .mail/Archive
-            folder_transforms = .mail/Archive:archive
+            folder_explicit_list = ${relMailDir}/Archive
+            folder_transforms = ${relMailDir}/Archive:archive
             folder_lowercases = true
 
             [FolderNameFilter.2]
-            folder_explicit_list = .mail/Sent
-            folder_transforms = .mail/Sent:sent
+            folder_explicit_list = ${relMailDir}/Sent
+            folder_transforms = ${relMailDir}/Sent:sent
             folder_lowercases = true
 
             [FolderNameFilter.3]
-            folder_explicit_list = .mail/Trash
-            folder_transforms = .mail/Trash:deleted
+            folder_explicit_list = ${relMailDir}/Trash
+            folder_transforms = ${relMailDir}/Trash:deleted
             folder_lowercases = true
 
             [Filter.1]
@@ -147,10 +150,10 @@ in {
             tags = -inbox
 
             [MailMover]
-            folders = .mail/Inbox
+            folders = ${relMailDir}/Inbox
             rename = True
             max_age = 7
-            .mail/Inbox = 'tag:deleted':.mail/Trash 'tag:archive':.mail/Archive
+            ${relMailDir}/Inbox = 'tag:deleted':${relMailDir}/Trash 'tag:archive':${relMailDir}/Archive
           '';
         };
       };
