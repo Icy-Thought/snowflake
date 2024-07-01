@@ -22,7 +22,7 @@ in
 
   stdenv.mkDerivation {
     pname = "${pname}";
-    version = "unstable-2024-06-28";
+    version = "0-unstable-2024-06-27";
 
     src = fetchFromGitHub {
       owner = "Fausto-Korpsvart";
@@ -64,7 +64,7 @@ in
       description = "A GTK theme based on the Tokyo Night colour palette";
       homepage = "https://github.com/Fausto-Korpsvart/Tokyonight-GTK-Theme";
       license = licenses.gpl3Only;
-      # maintainers = [ Icy-Thought ];
+      # maintainers = with maintainers; [ Icy-Thought ];
       platforms = platforms.all;
     };
   }

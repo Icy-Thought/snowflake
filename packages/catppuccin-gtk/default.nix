@@ -22,13 +22,13 @@ in
 
   stdenv.mkDerivation {
     pname = "${pname}";
-    version = "unstable-2024-06-20";
+    version = "0-unstable-2024-06-27";
 
     src = fetchFromGitHub {
       owner = "Fausto-Korpsvart";
       repo = "Catppuccin-GTK-Theme";
-      rev = "320ff909ac7dacaf14193b6b3dcfa3254ab19f66";
-      hash = "sha256-Deov6eLNL2pf9MNqe0p5ZHwtpD6+FJDoDA4hMstaGtc=";
+      rev = "0bd2869e7f0fdb36c720a4fb873d4fed361b0606";
+      hash = "sha256-oFVsYrJ27hYGY+x9+Z4SxVCp3w6PiLYTZaxmGhnpVHQ=";
     };
 
     nativeBuildInputs = [jdupes sassc];
@@ -61,10 +61,10 @@ in
     '';
 
     meta = with lib; {
-      description = "A GTK theme with the Rosé Pine colour palette.";
+      description = "GTK Theme with Catppuccin colour scheme";
       homepage = "https://github.com/Fausto-Korpsvart/Catppuccin-GTK-Theme";
       license = licenses.gpl3Only;
-      # maintainers = [ Icy-Thought ];
+      # maintainers = with maintainers; [ Icy-Thought ];
       platforms = platforms.all;
     };
   }
