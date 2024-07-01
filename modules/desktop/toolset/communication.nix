@@ -103,7 +103,56 @@ in {
           };
           new.tags = ["new"];
         };
-        afew.enable = true; # NotMuch initial tagging
+        afew = {
+          enable = true; # NotMuch initial tagging
+          extraConfig = ''
+            [SpamFilter]
+            [KillThreadsFilter]
+            [ListMailsFilter]
+            [DMARCReportInspectionFilter]
+            [InboxFilter]
+
+            [SentMailsFilter]
+            [ArchiveSentMailsFilter]
+            sent_tag = sent
+
+            [Filter.0]
+            message = Tagging Personal Emails
+            query = 'folder:.mail/'
+            tags = +personal
+
+            [FolderNameFilter.0]
+            folder_explicit_list = .mail/Inbox .mail/Archive .mail/Drafts .mail/Sent .mail/Trash
+            folder_transforms = .mail/Inbox:personal .mail/Archive:personal .mail/Drafts:personal .mail/Sent:personal .mail/Trash:personal
+            folder_lowercases = true
+
+            [FolderNameFilter.1]
+            folder_explicit_list = .mail/Archive
+            folder_transforms = .mail/Archive:archive
+            folder_lowercases = true
+
+            [FolderNameFilter.2]
+            folder_explicit_list = .mail/Sent
+            folder_transforms = .mail/Sent:sent
+            folder_lowercases = true
+
+            [FolderNameFilter.3]
+            folder_explicit_list = .mail/Trash
+            folder_transforms = .mail/Trash:deleted
+            folder_lowercases = true
+
+            [Filter.1]
+            message = Untagged 'inbox' from 'archive'
+            query = 'tag:archive AND tag:inbox'
+            tags = -inbox
+
+            [MailMover]
+            folders = .mail/Inbox
+            rename = True
+            max_age = 7
+            .mail/Inbox = 'tag:deleted':.mail/Trash 'tag:archive':.mail/Archive
+          '';
+        };
       };
     })
 
