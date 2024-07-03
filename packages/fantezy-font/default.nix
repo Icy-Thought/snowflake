@@ -21,7 +21,7 @@ stdenv.mkDerivation {
     description = "An Arabic font for cursive style admirers!";
     homepage = "";
     license = licenses.ofl;
-    # maintainers = with maintainers; [ Icy-Thought ];
+    # maintainers = with maintainers; [ icy-thought ];
     platforms = platforms.all;
   };
 }

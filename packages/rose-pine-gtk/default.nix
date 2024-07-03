@@ -58,7 +58,7 @@ in
       description = "A GTK theme with the Rosé Pine colour palette.";
       homepage = "https://github.com/Fausto-Korpsvart/Rose-Pine-GTK-Theme";
       license = licenses.gpl3Only;
-      # maintainers = [ Icy-Thought ];
+      # maintainers = [ icy-thought ];
       platforms = platforms.all;
     };
   }

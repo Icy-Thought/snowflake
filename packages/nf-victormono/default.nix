@@ -32,7 +32,7 @@ in
       description = "Free programming font with cursive italics and ligatures";
       homepage = "https://rubjo.github.io/victor-mono";
       license = licenses.ofl;
-      # maintainers = with maintainers; [ Icy-Thought ];
+      # maintainers = with maintainers; [ icy-thought ];
       platforms = platforms.linux;
     };
   }

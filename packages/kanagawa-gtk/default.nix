@@ -51,7 +51,7 @@ in
       description = "A GTK theme based on the Kanagawa colour palette";
       homepage = "https://github.com/Fausto-Korpsvart/Kanagawa-GTK-Theme";
       license = licenses.gpl3Only;
-      # maintainers = [ Icy-Thought ];
+      # maintainers = [ icy-thought ];
       platforms = platforms.all;
     };
   }

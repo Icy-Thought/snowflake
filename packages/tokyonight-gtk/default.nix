@@ -64,7 +64,7 @@ in
       description = "A GTK theme based on the Tokyo Night colour palette";
       homepage = "https://github.com/Fausto-Korpsvart/Tokyonight-GTK-Theme";
       license = licenses.gpl3Only;
-      # maintainers = with maintainers; [ Icy-Thought ];
+      # maintainers = with maintainers; [ icy-thought ];
       platforms = platforms.all;
     };
   }

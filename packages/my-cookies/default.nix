@@ -21,6 +21,6 @@ python3Packages.buildPythonApplication rec {
     homepage = "https://github.com/kaiwk/my_cookies";
     license = licenses.mit;
     platforms = platforms.all;
-    # maintainers = [ Icy-Thought ];
+    # maintainers = [ icy-thought ];
   };
 }
