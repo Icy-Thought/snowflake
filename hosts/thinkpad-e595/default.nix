@@ -23,15 +23,9 @@
     };
 
     develop = {
-      lisp.guile.enable = true;
-      haskell.enable = true;
-      rust.enable = true;
-      kotlin.enable = true;
       python.enable = true;
-      scientific = {
-        # latex.enable = true;
-        typst.enable = true;
-      };
+      rust.enable = true;
+      scientific.typst.enable = true;
     };
 
     themes.active = "catppuccin";
