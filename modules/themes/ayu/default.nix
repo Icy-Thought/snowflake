@@ -35,7 +35,7 @@ in {
         fontConfig = {
           packages = attrValues {
             inherit (pkgs) noto-fonts-emoji sarasa-gothic;
-            google-fonts = pkgs.google-fonts.override {fonts = ["Bitter"];};
+            google-fonts = pkgs.google-fonts.override {fonts = ["Cardo"];};
             nerdfonts =
               pkgs.nerdfonts.override {fonts = ["CascadiaCode" "VictorMono"];};
           };
