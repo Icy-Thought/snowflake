@@ -963,8 +963,7 @@ addKeys conf@XConfig{modMask = modm} =
              ((0, xF86XK_AudioRaiseVolume), safeSpawn "volctl" ["increase"])
            , ((0, xF86XK_AudioLowerVolume), safeSpawn "volctl" ["decrease"])
            , ((0, xF86XK_AudioMute), safeSpawn "volctl" ["toggle-mute"])
-           , -- , ((hyper .|. shiftMask, xK_q),     safeSpawn "volctl" ["--mute-winOther"])
-             ((0, xF86XK_AudioMicMute), safeSpawn "micvol" ["toggle-mute"])
+           , ((shiftMask, xF86XK_AudioMute), safeSpawn "volctl" ["toggle-window-mute"])
            , -- Brightness control
              ((0, xF86XK_MonBrightnessUp), safeSpawn "brightctl" ["increase", "-l 5"])
            , ((0, xF86XK_MonBrightnessDown), safeSpawn "brightctl" ["decrease", "-l 5"])
