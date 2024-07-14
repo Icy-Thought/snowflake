@@ -25,6 +25,7 @@
     develop = {
       python.enable = true;
       rust.enable = true;
+      haskell.enable = true;
       scientific.typst.enable = true;
     };
 

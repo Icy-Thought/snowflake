@@ -4,28 +4,48 @@ import argparse
 import re
 import subprocess
 import time
+import os
 
 
 class VolumeControl:
     ICONS = ["󰖁 ", "󰖀 ", "󰕾 ", " "]
+    STATUS_FILE = "/tmp/volctl-window-status.txt"
 
     def __init__(self):
-        self.is_window_muted = None  # :FIXME| REPLACE WITH PROPPER SOLUTION...
-        self.is_muted, self.percentage = self.get_current_volume_status()
-        self.symbol = self.get_icon(self.percentage)
+        self.volume_status_cache = self.get_volume_status_all()
+        self.symbol = self.get_icon(self.volume_status_cache["volume"])
+        if not os.path.exists(self.STATUS_FILE):
+            with open(self.STATUS_FILE, "w") as window_volStat:
+                window_volStat.write("False")
 
-    def get_current_volume_status(self):
+    def get_volume_status_all(self):
         get_volume = subprocess.run(
             ["wpctl", "get-volume", "@DEFAULT_AUDIO_SINK@"],
             stdout=subprocess.PIPE,
             universal_newlines=True,
         )
         parsed_volume = get_volume.stdout.strip()
-        is_muted = bool(re.search(r"\bMUTED\b", parsed_volume))
         volume_level = float(re.sub("[^0-9.]", "", parsed_volume))
-        percentage = int(volume_level * 100)
+        is_muted = bool(re.search(r"\bMUTED\b", parsed_volume))
+        window_muted = self.read_window_mute_status()
+        return {
+            "volume": int(volume_level * 100),
+            "mute": is_muted,
+            "window-mute": window_muted,
+        }
 
-        return is_muted, percentage
+    def read_window_mute_status(self):
+        with open(self.STATUS_FILE, "r") as window_volStat:
+            return window_volStat.read().strip() == "True"
+
+    def write_window_mute_status(self, status):
+        with open(self.STATUS_FILE, "w") as window_volStat:
+            window_volStat.write(str(status))
+
+    def get_volume_status(self, status):
+        if status in self.volume_status_cache:
+            return self.volume_status_cache[status]
+        return None
 
     def get_icon(self, percentage):
         if percentage <= 30:
@@ -69,34 +89,37 @@ class VolumeControl:
 
         if args.command == "toggle-mute":
             self.wireplumber_cli(mute_cmd)
-            self.is_muted, self.percentage = self.get_current_volume_status()
         elif args.command == "toggle-window-mute":
             self.wireplumber_cli(mute_window_cmd)
-            self.is_window_muted = not self.is_window_muted
-            print(self.is_window_muted)
+            current_window_mute_status = not self.get_volume_status("window-mute")
+            self.write_window_mute_status(current_window_mute_status)
+            self.volume_status_cache["window-mute"] = current_window_mute_status
         elif args.command == "increase":
             volume_cmd.append(str(args.level) + "%+")
             self.wireplumber_cli(volume_cmd)
-            self.is_muted, self.percentage = self.get_current_volume_status()
         elif args.command == "decrease":
             volume_cmd.append(str(args.level) + "%-")
             self.wireplumber_cli(volume_cmd)
-            self.is_muted, self.percentage = self.get_current_volume_status()
 
-        self.symbol = self.get_icon(self.percentage)
+        self.volume_status_cache = self.get_volume_status_all()
+        self.symbol = self.get_icon(self.volume_status_cache["volume"])
 
         # Create notification after adjusting the volume/mute status
-        if args.command == "toggle-mute" and self.is_muted:
+        if args.command == "toggle-mute" and self.get_volume_status("mute"):
             self.notify(self.ICONS[0], "Muted Volume: ", "0")
-        elif args.command == "toggle-window-mute" and self.is_window_muted:
+        elif args.command == "toggle-window-mute" and self.get_volume_status(
+            "window-mute"
+        ):
             self.notify(self.ICONS[0], "Muted Window: ", "0")
         else:
-            self.notify(self.symbol, "Volume Level: ", str(self.percentage))
+            self.notify(
+                self.symbol, "Volume Level: ", str(self.get_volume_status("volume"))
+            )
 
     def volume_status(self, args):
         if args.command == "status":
             while True:
-                print(self.symbol + str(self.percentage) + "%")
+                print(self.symbol + str(self.get_volume_status("volume")) + "%")
                 time.sleep(60)
         else:
             return
