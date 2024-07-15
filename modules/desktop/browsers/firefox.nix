@@ -48,7 +48,7 @@ in {
           desktopName = "Firefox Nightly (Private)";
           genericName = "Launch a private Firefox Nightly instance";
           icon = "firefox-nightly";
-          exec = "${pkgs.firefox-bin}/bin/firefox-nightly --private-window";
+          exec = "${lib.getExe firefox-nightly-bin} --private-window";
           categories = ["Network" "WebBrowser"];
         })
       ];
