@@ -64,7 +64,7 @@ in {
         map (p: mkPlugin p) ["done" "autopair-fish"];
     };
 
-    home.configFile = let
+    create.configFile = let
       inherit (config.modules.themes) active;
       inherit (config.modules.themes.colors.main) normal bright types;
     in (mkIf (active != null) {

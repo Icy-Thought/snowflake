@@ -34,9 +34,9 @@ in {
     })
 
     (mkIf config.modules.develop.xdg.enable {
-      env = {
+      home.sessionVariables = {
         CARGO_HOME = "$XDG_DATA_HOME/cargo";
-        PATH = ["$CARGO_HOME/bin"];
+        PATH = "$CARGO_HOME/bin";
       };
     })
   ];

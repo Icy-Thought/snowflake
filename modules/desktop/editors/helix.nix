@@ -105,7 +105,7 @@ in {
       };
     };
 
-    home.configFile.helix-theme = {
+    create.configFile.helix-theme = {
       target = "helix/themes/${activeTheme}-alpha.toml";
       text = ''
         inherits = "${activeTheme}"

@@ -20,5 +20,7 @@ in {
     };
   };
 
-  config = mkIf (cfg.default != null) {env.BROWSER = cfg.default;};
+  config = mkIf (cfg.default != null) {
+    home.sessionVariables.BROWSER = cfg.default;
+  };
 }

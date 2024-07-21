@@ -36,14 +36,14 @@ in {
     }
 
     (mkIf config.modules.develop.xdg.enable {
-      env = {
+      home.sessionVariables = {
         PYTHONSTARTUP = "$XDG_CONFIG_HOME/python/pythonrc.py";
         PYTHON_HISTORY_FILE = "$XDG_CONFIG_HOME/python/history";
         JUPYTER_CONFIG_DIR = "$XDG_CONFIG_HOME/jupyter";
         IPYTHONDIR = "$XDG_CONFIG_HOME/ipython";
       };
 
-      home.configFile.pythonRC = {
+      create.configFile.pythonRC = {
         target = "python/pythonrc.py";
         text = ''
           def configure_rich_repl():

@@ -37,7 +37,7 @@ in {
       package = pkgs.xonsh;
     };
 
-    home.configFile.xonsh-init = {
+    create.configFile.xonsh-init = {
       target = "xonsh/rc.xsh";
       text = let
         abbrevs = import "${config.snowflake.configDir}/shell-abbr";

@@ -25,7 +25,7 @@ in {
     })
 
     (mkIf config.modules.develop.xdg.enable {
-      # env = {
+      # home.sessionVariables = {
       #   ZIG_GLOBAL_CACHE_DIR = "$TMPDIR/zig-cache";
       # };
     })

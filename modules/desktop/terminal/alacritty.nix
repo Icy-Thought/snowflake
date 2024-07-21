@@ -135,7 +135,7 @@ in {
       ];
     };
 
-    home.configFile = mkIf (active != null) {
+    create.configFile = mkIf (active != null) {
       alacritty-conf = {
         target = "alacritty/config/${active}.toml";
         source = let

@@ -281,7 +281,7 @@ in {
           };
         };
 
-        home.dataFile =
+        create.dataFile =
           mkIf (cfg.wallpaper != null) {"wallpaper".source = cfg.wallpaper;};
       })
     ]))
@@ -360,7 +360,7 @@ in {
         modules.themes.onReload.wallpaper = command;
         services.xserver.displayManager.sessionCommands = command;
 
-        home.dataFile =
+        create.dataFile =
           mkIf (cfg.wallpaper != null) {"wallpaper".source = cfg.wallpaper;};
       }))
 

@@ -16,7 +16,7 @@ in {
   config = mkIf config.modules.desktop.terminal.wezterm.enable {
     user.packages = [pkgs.wezterm];
 
-    home.configFile = let
+    create.configFile = let
       inherit (config.modules.themes) active;
       wezDir = "${config.snowflake.configDir}/wezterm";
     in

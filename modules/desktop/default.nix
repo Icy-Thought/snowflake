@@ -44,7 +44,7 @@ in {
     }
 
     (mkIf (cfg.type != null) {
-      env.GTK_DATA_PREFIX = ["${config.system.path}"];
+      home.sessionVariables.GTK_DATA_PREFIX = "${config.system.path}";
 
       system.userActivationScripts.cleanupHome = ''
         pushd "${config.user.home}"

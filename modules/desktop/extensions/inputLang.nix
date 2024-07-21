@@ -24,7 +24,7 @@ in {
 
   config = mkIf cfg.enable (mkMerge [
     {
-      environment.variables = {
+      home.sessionVariables = {
         GLFW_IM_MODULE = "ibus"; # https://github.com/kovidgoyal/kitty/issues/403
         GTK_IM_MODULE = "${cfg.framework}";
         QT_IM_MODULE = "${cfg.framework}";

@@ -35,7 +35,7 @@ in {
     systemd.packages =
       attrValues {inherit (pkgs) deadd-notification-center;};
 
-    home.configFile = {
+    create.configFile = {
       deadd-notify-conf = {
         target = "deadd/deadd.conf";
         source = genYAML.generate "deadd.conf" cfg.settings;

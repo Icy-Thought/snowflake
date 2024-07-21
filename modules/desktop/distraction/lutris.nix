@@ -32,10 +32,8 @@ in {
 
     (mkIf (cfg.enable && cfg.league.enable) {
       boot.kernel.sysctl."abi.vsyscall32" = 0; # anti-cheat...
-
       networking.firewall.allowedTCPPorts = [443];
-
-      environment.sessionVariables = {QT_X11_NO_MITSHM = "1";};
+      environment.variables.QT_X11_NO_MITSHM = "1";
 
       user.packages = attrValues {
         inherit (pkgs) openssl vulkan-tools dxvk;

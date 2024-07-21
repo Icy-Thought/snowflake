@@ -30,7 +30,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home.configFile."mimeapps.list".force = true;
+    create.configFile."mimeapps.list".force = true;
 
     hm.xdg.mimeApps = {
       enable = true;

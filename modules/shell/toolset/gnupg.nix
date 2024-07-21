@@ -17,7 +17,7 @@ in {
   };
 
   config = mkIf config.modules.shell.toolset.gnupg.enable {
-    environment.variables.GNUPGHOME = "$XDG_CONFIG_HOME/gnupg";
+    home.sessionVariables.GNUPGHOME = "$XDG_CONFIG_HOME/gnupg";
 
     programs.gnupg.agent = {
       enable = true;

@@ -23,7 +23,7 @@ in {
 
   config = mkMerge [
     (mkIf (cfg.default != null) {
-      env = {
+      home.sessionVariables = {
         EDITOR = cfg.default;
         OPENAI_API_KEY = "$(cat /run/agenix/ClosedAI)";
         OPENWEATHERMAP_KEY = "$(cat /run/agenix/OpenWeatherMap)";

@@ -31,7 +31,7 @@ in {
       pulse.enable = true;
     };
 
-    home.configFile = mkIf config.modules.hardware.bluetooth.enable {
+    create.configFile = mkIf config.modules.hardware.bluetooth.enable {
       wireplumber-bluetooth = {
         target = "wireplumber/bluetooth.lua.d/51-bluez-config.lua";
         text = ''

@@ -59,7 +59,7 @@ in {
     };
 
     # System wallpaper:
-    home.configFile.hypr-wallpaper = let
+    create.configFile.hypr-wallpaper = let
       inherit (config.modules.themes) wallpaper;
     in
       mkIf (wallpaper != null) {

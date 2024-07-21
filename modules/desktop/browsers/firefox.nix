@@ -53,10 +53,6 @@ in {
         })
       ];
 
-      # Prevent auto-creation of ~/Desktop. The trailing slash is necessary.
-      # See: https://bugzilla.mozilla.org/show_bug.cgi?id=1082717
-      env.XDG_DESKTOP_DIR = "$HOME/";
-
       modules.desktop.browsers.firefox.settings = {
         # TAB cycle URL's, not buttons..
         "browser.toolbars.keyboard_navigation" = false;

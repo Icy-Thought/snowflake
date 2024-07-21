@@ -27,7 +27,7 @@ in {
     })
 
     (mkIf config.modules.develop.xdg.enable {
-      home.configFile.stylua-conf = {
+      create.configFile.stylua-conf = {
         target = "stylua/stylua.toml";
         source = let
           tomlFormat = pkgs.formats.toml {};

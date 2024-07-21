@@ -232,7 +232,7 @@ in {
         };
     };
 
-    home.configFile.zsh-abbreviations = {
+    create.configFile.zsh-abbreviations = {
       target = "zsh/abbreviations";
       text = let
         abbrevs = import "${config.snowflake.configDir}/shell-abbr";

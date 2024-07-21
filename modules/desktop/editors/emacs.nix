@@ -134,7 +134,7 @@ in {
     }
 
     (mkIf (cfg.template == "irkalla") {
-      home.configFile = {
+      create.configFile = {
         irkalla-init = let
           configFile = "${inputs.emacs-dir}/config.org";
         in {
@@ -151,18 +151,18 @@ in {
     })
 
     (mkIf (cfg.template == "doomemacs") {
-      home.configFile.doomemacs-conf = {
-        target = "doomemacs";
-        source = "${inputs.emacs-dir}";
-        recursive = true;
-        onChange = "doom -y sync -u";
-      };
-
-      env.PATH = ["$XDG_CONFIG_HOME/emacs/bin"];
-
-      environment.variables = {
-        DOOMDIR = "$XDG_CONFIG_HOME/doomemacs";
-        DOOMLOCALDIR = "$XDG_DATA_HOME/doomemacs";
+      home = {
+        sessionPath = ["$XDG_CONFIG_HOME/emacs/bin"];
+        variables = {
+          DOOMDIR = "$XDG_CONFIG_HOME/doomemacs";
+          DOOMLOCALDIR = "$XDG_DATA_HOME/doomemacs";
+        };
+        configFile.doomemacs-conf = {
+          target = "doomemacs";
+          source = "${inputs.emacs-dir}";
+          recursive = true;
+          onChange = "doom -y sync -u";
+        };
       };
     })
   ]);

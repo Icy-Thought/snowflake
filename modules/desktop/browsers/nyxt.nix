@@ -23,13 +23,13 @@ in {
       inherit (pkgs) nyxt;
     };
 
-    home.dataFile = mergeAttrsList (map
+    create.dataFile = mergeAttrsList (map
       (extension: {
         "nyxt/extensions/${extension}".source = pkgs.sources.${extension};
       })
       plugins);
 
-    home.configFile = let
+    create.configFile = let
       nyxtConfDir = "${config.snowflake.configDir}/nyxt";
     in {
       nyxt-conf = {

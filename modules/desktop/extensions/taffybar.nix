@@ -19,7 +19,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home.configFile = let
+    create.configFile = let
       active = config.modules.themes.active;
       taffyDir = "${config.snowflake.configDir}/taffybar";
     in {

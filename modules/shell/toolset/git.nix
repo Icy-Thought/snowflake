@@ -35,8 +35,7 @@ in {
     hm.programs.fish.functions = {
       gitignore = "curl -sL https://www.gitignore.io/api/$argv";
     };
-
-    env = {GITHUB_TOKEN = "$(cat /run/agenix/tokenGH)";};
+    home.sessionVariables.GITHUB_TOKEN = "$(cat /run/agenix/tokenGH)";
 
     hm.programs.git = {
       enable = true;

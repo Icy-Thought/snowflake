@@ -50,7 +50,7 @@ in {
     (mkIf (cfg.program == "thunar") {
       services.tumbler.enable = true;
 
-      home.configFile = {
+      create.configFile = {
         "Thunar/uca.xml".text = ''
           <?xml version="1.0" encoding="UTF-8"?>
           <actions>

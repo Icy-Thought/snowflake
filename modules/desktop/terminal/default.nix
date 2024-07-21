@@ -22,9 +22,8 @@ in {
 
   config = mkMerge [
     {
-      services.xserver.desktopManager.xterm.enable =
-        mkDefault (cfg.default == "xterm");
-      env.TERMINAL = cfg.default;
+      home.sessionVariables.TERMINAL = cfg.default;
+      services.xserver.desktopManager.xterm.enable = mkDefault (cfg.default == "xterm");
     }
 
     (mkIf (config.modules.desktop.type == "x11") {

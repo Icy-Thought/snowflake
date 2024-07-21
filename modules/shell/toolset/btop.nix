@@ -93,7 +93,7 @@ in {
       };
     };
 
-    home.configFile.btop-theme = let
+    create.configFile.btop-theme = let
       inherit (config.modules.themes) active;
     in
       mkIf (active != null) {

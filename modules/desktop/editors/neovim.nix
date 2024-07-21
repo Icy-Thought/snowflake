@@ -41,7 +41,7 @@ in {
     (mkIf (cfg.template == "agasaya") {
       modules.develop.lua.enable = true;
 
-      home.configFile = {
+      create.configFile = {
         agasaya-config = {
           target = "nvim";
           source = "${inputs.nvim-dir}";
@@ -82,7 +82,7 @@ in {
     (mkIf (cfg.template == "ereshkigal") {
       modules.develop.lua.fennel.enable = true;
 
-      home.configFile = {
+      create.configFile = {
         ereshkigal-config = {
           source = "${inputs.nvim-dir}";
           target = "nvim";

@@ -14,7 +14,7 @@ in {
   config = mkIf config.modules.shell.toolset.macchina.enable {
     user.packages = [pkgs.macchina];
 
-    home.configFile = let
+    create.configFile = let
       configDir = config.snowflake.configDir;
     in {
       macchina-init = {

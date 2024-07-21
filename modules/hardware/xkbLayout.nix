@@ -40,7 +40,7 @@ in {
         };
       };
 
-      home.dataFile.fcitx5-hyprCtrl = mkIf config.modules.desktop.extensions.fcitx5.enable {
+      create.dataFile.fcitx5-hyprCtrl = mkIf config.modules.desktop.extensions.fcitx5.enable {
         target = "fcitx5/inputmethod/keyboard-us-hyprCtrl.conf";
         text = ''
           [InputMethod]

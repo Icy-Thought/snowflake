@@ -206,7 +206,7 @@ in {
     })
 
     (mkIf cfg.discord.enable {
-      home.configFile.openSAR-settings = {
+      create.configFile.openSAR-settings = {
         target = "discordcanary/settings.json";
         text = builtins.toJSON {
           openasar = {
