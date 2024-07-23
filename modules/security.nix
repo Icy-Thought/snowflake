@@ -57,7 +57,7 @@
     protectKernelImage = true;
     # So we don't have to do this later...
     acme.acceptTerms = true;
-    # Allows unautherized applications -> send unautherization request
+    # Allows unauthorized applications -> send unauthorization request
     polkit.enable = true;
   };
 }
