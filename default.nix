@@ -88,10 +88,10 @@ in {
 
   i18n.defaultLocale = mkDefault "en_US.UTF-8";
 
-  # WARNING: prevent installing pre-defined packages
-  environment.defaultPackages = [];
-
-  environment.systemPackages = attrValues {
-    inherit (pkgs) cached-nix-shell gnumake unrar unzip;
+  environment = {
+    defaultPackages = lib.mkForce [];
+    systemPackages = attrValues {
+      inherit (pkgs) cached-nix-shell gnumake unrar unzip;
+    };
   };
 }
