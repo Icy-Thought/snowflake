@@ -140,6 +140,8 @@ in {
         "browser.sessionstore.interval" = "1800000";
         # Disables battery API
         "dom.battery.enabled" = false;
+        # Disable cross-site ad-view tracking
+        "dom.private-attribution.submission.enabled" = false;
         # Disables "beacon" asynchronous HTTP transfers (used for analytics)
         "beacon.enabled" = false;
         # Disables pinging URIs specified in HTML <a> ping= attributes
