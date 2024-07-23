@@ -31,6 +31,7 @@ in {
         lsd.enable = true;
         btop.enable = true;
         fzf.enable = true;
+        gnupg.enable = true;
       };
 
       hm.programs.direnv = {

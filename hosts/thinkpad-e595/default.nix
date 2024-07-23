@@ -11,7 +11,6 @@
       default = "zsh";
       toolset = {
         git.enable = true;
-        gnupg.enable = true;
         android.enable = true;
       };
     };
