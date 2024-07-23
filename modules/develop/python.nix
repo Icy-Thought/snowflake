@@ -16,9 +16,13 @@ in {
   config = mkIf cfg.enable (mkMerge [
     {
       user.packages = attrValues {
-        rich-env = pkgs.python3.withPackages (pyPkgs: with pyPkgs; [rich]);
+        pyWithEnv = pkgs.python3.withPackages (pykgs:
+          with pykgs; [
+            ipython
+            black
+            isort
+          ]);
         inherit (pkgs) rye pyright; # pylyzer
-        inherit (pkgs.python3Packages) ipython black isort;
       };
 
       hm.programs.vscode.extensions = attrValues {
@@ -29,7 +33,6 @@ in {
       environment.shellAliases = {
         py = "python";
         pip = "rye";
-        ipython = "PYTHONSTARTUP='' ipython";
         ipy = "ipython --no-banner";
         ipylab = "ipython --pylab=qt5 --no-banner";
       };
@@ -37,44 +40,9 @@ in {
 
     (mkIf config.modules.develop.xdg.enable {
       home.sessionVariables = {
-        PYTHONSTARTUP = "$XDG_CONFIG_HOME/python/pythonrc.py";
         PYTHON_HISTORY_FILE = "$XDG_CONFIG_HOME/python/history";
         JUPYTER_CONFIG_DIR = "$XDG_CONFIG_HOME/jupyter";
         IPYTHONDIR = "$XDG_CONFIG_HOME/ipython";
-      };
-
-      create.configFile.pythonRC = {
-        target = "python/pythonrc.py";
-        text = ''
-          def configure_rich_repl():
-              try:
-                  from rich import print, pretty, traceback
-                  from rich.logging import RichHandler
-              except ImportError:
-                 print("Module 'rich' not available.")
-
-              pretty.install(); traceback.install()
-
-              from logging import getLogger
-              getLogger().addHandler(RichHandler())
-
-              print("Rich REPL integration == successful!")
-
-
-          def configure_comp_repl():
-              try:
-                  import readline
-              except ImportError:
-                 print("Module readline not available.")
-              else:
-                 import rlcompleter
-                 readline.parse_and_bind("tab: complete")
-
-
-          if __name__ == "__main__":
-              configure_comp_repl()
-              configure_rich_repl()
-        '';
       };
     })
   ]);
