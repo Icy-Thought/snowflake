@@ -23,30 +23,27 @@ in {
       hm.imports = [inputs.spicetify-nix.homeManagerModules.default];
 
       hm.programs.spicetify = let
-        inherit
-          (inputs.spicetify-nix.packages.${pkgs.system}.default)
-          apps
-          extensions
-          themes
-          ;
+        spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.system};
       in {
         enable = true;
-        spotifyPackage = pkgs.spotify-unwrapped;
-        spicetifyPackage = pkgs.spicetify-cli;
-
-        theme = themes.catppuccin;
+        theme = spicePkgs.themes.catppuccin;
         colorScheme = "mocha";
 
-        enabledCustomApps = [apps.new-releases apps.lyrics-plus];
-        enabledExtensions = [
-          extensions.adblock
-          extensions.fullAppDisplay
-          extensions.hidePodcasts
-          extensions.keyboardShortcut
-          extensions.playNext
-          extensions.showQueueDuration
-          extensions.shuffle
-        ];
+        enabledCustomApps = attrValues {
+          inherit (spicePkgs.apps) newReleases lyricsPlus;
+        };
+        enabledExtensions = attrValues {
+          inherit
+            (spicePkgs.extensions)
+            adblock
+            fullAppDisplay
+            hidePodcasts
+            keyboardShortcut
+            playNext
+            showQueueDuration
+            shuffle
+            ;
+        };
       };
     })
 

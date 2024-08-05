@@ -20,13 +20,21 @@
     };
 
     # Window Manager(s) + Extensions
+    xmonad = {
+      url = "github:xmonad/xmonad";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     xmonad-contrib.url = "github:icy-thought/xmonad-contrib"; # TODO: replace with official after #582 == merged!
     # hyprland.url = "github:hyprwm/Hyprland";
     rust.url = "github:oxalica/rust-overlay";
 
     # Application -> (Cached) Git
     emacs.url = "github:nix-community/emacs-overlay";
-    spicetify-nix.url = "github:the-argus/spicetify-nix";
+    picom = {
+      url = "github:yshui/picom";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    spicetify-nix.url = "github:Gerg-L/spicetify-nix";
     firefox.url = "github:nix-community/flake-firefox-nightly";
 
     # Submodules (temporary) # TODO

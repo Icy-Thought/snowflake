@@ -35,7 +35,7 @@ in {
 
     (mkIf (cfg.framework == "fcitx") {
       i18n.inputMethod = {
-        enabled = "fcitx5";
+        type = "fcitx5";
         fcitx5.addons = attrValues {
           inherit
             (pkgs)
@@ -49,7 +49,7 @@ in {
 
     (mkIf (cfg.framework == "ibus") {
       i18n.inputMethod = {
-        enabled = "ibus";
+        type = "ibus";
         ibus.engines = attrValues {
           inherit (pkgs.ibus-engines) libpinyin;
         };

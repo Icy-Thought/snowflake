@@ -38,29 +38,17 @@
     };
     date = "2024-06-04";
   };
-  picom = {
-    pname = "picom";
-    version = "4dc78789daa4e06571039852fbe9226695e3055c";
-    src = fetchFromGitHub {
-      owner = "yshui";
-      repo = "picom";
-      rev = "4dc78789daa4e06571039852fbe9226695e3055c";
-      fetchSubmodules = false;
-      sha256 = "sha256-4urK8VgXeOdN5QIEKALQJANVVR0nVSwUef+1UYkPSkY=";
-    };
-    date = "2024-06-05";
-  };
   telega = {
     pname = "telega";
-    version = "58b4963b292ceb723d665df100b519eb5a99c676";
+    version = "657f3d479bb6740c7737a5360d3cf6f66d9cb012";
     src = fetchFromGitHub {
       owner = "zevlg";
       repo = "telega.el";
-      rev = "58b4963b292ceb723d665df100b519eb5a99c676";
+      rev = "657f3d479bb6740c7737a5360d3cf6f66d9cb012";
       fetchSubmodules = false;
-      sha256 = "sha256-Pi+4bJx4xNMpLAoQOOUoFOCpd6+3Atv29jpDCepqfuA=";
+      sha256 = "sha256-nDiGNFsgQ6WglL8/w7a9jT+WLNvnk2ugmLxX4qMIius=";
     };
-    date = "2024-05-27";
+    date = "2024-06-16";
   };
   xonsh-cmd-durations = {
     pname = "xonsh-cmd-durations";
@@ -76,15 +64,15 @@
   };
   xonsh-direnv = {
     pname = "xonsh-direnv";
-    version = "3bea5847b9459c5799c64966ec85e624d0be69b9";
+    version = "f96ecc0670b8744cc5ff8a0a900efe5de1dacb7e";
     src = fetchFromGitHub {
       owner = "74th";
       repo = "xonsh-direnv";
-      rev = "3bea5847b9459c5799c64966ec85e624d0be69b9";
+      rev = "f96ecc0670b8744cc5ff8a0a900efe5de1dacb7e";
       fetchSubmodules = false;
-      sha256 = "sha256-h56Gx/MMCW4L6nGwLAhBkiR7bX+qfFk80LEsJMiDtjQ=";
+      sha256 = "sha256-97c2cuqG0EitDdCM40r2IFOlRMHlKC4cLemJrPcxsZo=";
     };
-    date = "2022-06-19";
+    date = "2024-07-20";
   };
   xonsh-fzf-widgets = {
     pname = "xonsh-fzf-widgets";

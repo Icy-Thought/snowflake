@@ -1,4 +1,5 @@
 {
+inputs,
   options,
   config,
   lib,
@@ -24,10 +25,7 @@ in {
 
       serviceConfig = let
         configDir = "${config.snowflake.configDir}";
-        package = pkgs.picom.overrideAttrs (_: {
-          version = "11.2-unstable";
-          src = pkgs.sources.picom;
-        });
+        package = inputs.picom.packages.${pkgs.system}.default;
       in {
         ExecStart = "${getExe package} --config ${configDir}/picom/picom.conf";
         RestartSec = 3;

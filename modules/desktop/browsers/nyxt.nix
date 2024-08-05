@@ -23,11 +23,9 @@ in {
       inherit (pkgs) nyxt;
     };
 
-    create.dataFile = mergeAttrsList (map
-      (extension: {
+    create.dataFile = mergeAttrsList (map (extension: {
         "nyxt/extensions/${extension}".source = pkgs.sources.${extension};
-      })
-      plugins);
+      }) plugins);
 
     create.configFile = let
       nyxtConfDir = "${config.snowflake.configDir}/nyxt";

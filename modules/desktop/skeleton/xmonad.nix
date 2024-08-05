@@ -43,7 +43,10 @@ in {
     };
     modules.hardware.kmonad.enable = true;
 
-    nixpkgs.overlays = [inputs.xmonad-contrib.overlay];
+    nixpkgs.overlays = [
+      inputs.xmonad.overlay
+      inputs.xmonad-contrib.overlay
+    ];
 
     environment.systemPackages = attrValues {
       inherit (pkgs) libnotify playerctl gxmessage xdotool feh;

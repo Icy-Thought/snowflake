@@ -48,7 +48,10 @@ in {
     # Necessary for nixos-rebuild build-vm to work.
     home-manager.useUserPackages = true;
 
-    home.stateVersion = config.system.stateVersion;
+    home = {
+      stateVersion = config.system.stateVersion;
+      sessionPath = ["$SNOWFLAKE_BIN" "$XDG_BIN_HOME" "$PATH"];
+    };
 
     users.users.${config.user.name} = mkAliasDefinitions options.user;
 
@@ -58,7 +61,5 @@ in {
       trusted-users = users;
       allowed-users = users;
     };
-
-    home.sessionPath = ["$SNOWFLAKE_BIN" "$XDG_BIN_HOME" "$PATH"];
   };
 }

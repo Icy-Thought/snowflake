@@ -1,7 +1,3 @@
-[picom]
-src.git = "https://github.com/yshui/picom.git"
-fetch.github = "yshui/picom"
-
 [pantalaimon]
 src.git = "https://gitlab.com/greenbeast/pantalaimon.git"
 fetch.git = "https://gitlab.com/greenbeast/pantalaimon.git"
