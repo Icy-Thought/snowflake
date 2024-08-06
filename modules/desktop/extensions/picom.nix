@@ -27,7 +27,7 @@ in {
         configDir = "${config.snowflake.configDir}";
         package = inputs.picom.packages.${pkgs.system}.default;
       in {
-        ExecStart = "${getExe package} --config ${configDir}/picom/picom.conf";
+        ExecStart = "${getExe package} --config ${configDir}/picom.conf";
         RestartSec = 3;
         Restart = "always";
       };

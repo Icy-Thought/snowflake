@@ -14,10 +14,7 @@ in {
   config = mkIf (cfg.default == "zsh") {
     modules.shell = {
       corePkgs.enable = true;
-      toolset = {
-        macchina.enable = true;
-        starship.enable = true;
-      };
+      toolset.starship.enable = true;
     };
 
     hm.programs.starship.enableZshIntegration = true;
@@ -235,7 +232,7 @@ in {
     create.configFile.zsh-abbreviations = {
       target = "zsh/abbreviations";
       text = let
-        abbrevs = import "${config.snowflake.configDir}/shell-abbr";
+        abbrevs = import "${config.snowflake.configDir}/shell-abbr.nix";
       in ''
         ${concatStrings (mapAttrsToList (k: v: ''
             abbr ${k}=${escapeNixString v}

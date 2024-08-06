@@ -26,10 +26,7 @@ in {
   config = mkIf (config.modules.shell.default == "xonsh") {
     modules.shell = {
       corePkgs.enable = true;
-      toolset = {
-        macchina.enable = true;
-        starship.enable = true;
-      };
+      toolset.starship.enable = true;
     };
 
     programs.xonsh = {
@@ -40,7 +37,7 @@ in {
     create.configFile.xonsh-init = {
       target = "xonsh/rc.xsh";
       text = let
-        abbrevs = import "${config.snowflake.configDir}/shell-abbr";
+        abbrevs = import "${config.snowflake.configDir}/shell-abbr.nix";
       in ''
         # -------===[ Settings ]===------- #
         $AUTO_CD = True

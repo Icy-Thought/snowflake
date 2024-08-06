@@ -12,10 +12,7 @@ in {
   config = mkIf (config.modules.shell.default == "fish") {
     modules.shell = {
       corePkgs.enable = true;
-      toolset = {
-        macchina.enable = true;
-        starship.enable = true;
-      };
+      toolset.starship.enable = true;
     };
     hm.programs.starship.enableFishIntegration = true;
 
@@ -29,7 +26,7 @@ in {
       shellAliases = {
         less = "less -R";
       };
-      shellAbbrs = import "${config.snowflake.configDir}/shell-abbr";
+      shellAbbrs = import "${config.snowflake.configDir}/shell-abbr.nix";
 
       functions = {
         fish_title = "echo $argv[1]";

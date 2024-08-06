@@ -20,7 +20,7 @@ in {
       enable = true;
       historySize = 5000;
       historyFileSize = 5000;
-      historyIgnore = ["btm" "htop" "macchina" "neofetch"];
+      historyIgnore = ["btm" "htop" "neofetch"];
       shellAliases = {
         ls = "lsd -Sl";
         lsa = "lsd -Sla";

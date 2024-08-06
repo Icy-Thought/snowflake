@@ -7,9 +7,7 @@
 }: let
   inherit (lib.attrsets) attrValues;
   inherit (lib.modules) mkIf;
-
   genYAML = pkgs.formats.yaml {};
-  deaddDir = "${config.snowflake.configDir}/deadd-notify";
   cfg = config.modules.desktop.extensions.deadd-notify;
 in {
   options.modules.desktop.extensions.deadd-notify = let
@@ -42,7 +40,7 @@ in {
       };
       deadd-notify-css = {
         target = "deadd/deadd.css";
-        source = "${deaddDir}/deadd.css";
+        source = "${config.snowflake.configDir}/deadd-notify.css";
       };
     };
 
