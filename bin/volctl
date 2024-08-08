@@ -33,6 +33,9 @@ class VolumeControl:
         }
 
     def window_mute_status(self, action, *args):
+        if not os.path.exists(self.STATUS_FILE):
+            open(self.STATUS_FILE, 'w').close()
+
         with open(self.STATUS_FILE, "r+" if action == "read" else "w+") as f:
             if action == "read":
                 return f.read().strip() == "True"
