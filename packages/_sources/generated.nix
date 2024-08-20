@@ -40,15 +40,15 @@
   };
   telega = {
     pname = "telega";
-    version = "657f3d479bb6740c7737a5360d3cf6f66d9cb012";
+    version = "d86d943beca37b9270060e9acca65e8fe3f322f3";
     src = fetchFromGitHub {
       owner = "zevlg";
       repo = "telega.el";
-      rev = "657f3d479bb6740c7737a5360d3cf6f66d9cb012";
+      rev = "d86d943beca37b9270060e9acca65e8fe3f322f3";
       fetchSubmodules = false;
-      sha256 = "sha256-nDiGNFsgQ6WglL8/w7a9jT+WLNvnk2ugmLxX4qMIius=";
+      sha256 = "sha256-dgdjIMu1lnrHtd+5MTfqIrpW51UAa7UlITq8Ey/ajUs=";
     };
-    date = "2024-06-16";
+    date = "2024-08-18";
   };
   xonsh-cmd-durations = {
     pname = "xonsh-cmd-durations";

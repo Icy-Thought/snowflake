@@ -160,14 +160,17 @@ in {
     })
 
     (mkIf cfg.matrix.withDaemon.enable {
-      hm.nixpkgs.overlays = [
-        (final: prev: {
-          pantalaimon = prev.pantalaimon.overrideAttrs (_: {
-            version = "10.5-unstable";
-            src = pkgs.sources.pantalaimon;
-          });
-        })
-      ];
+      hm.nixpkgs = {
+        config.permittedInsecurePackages = ["olm-3.2.16"]; # :WARN| TEMPORARY SOLUTION!!!
+        overlays = [
+          (final: prev: {
+            pantalaimon = prev.pantalaimon.overrideAttrs (_: {
+              version = "10.5-unstable";
+              src = pkgs.sources.pantalaimon;
+            });
+          })
+        ];
+      };
 
       hm.services.pantalaimon = {
         enable = true;
