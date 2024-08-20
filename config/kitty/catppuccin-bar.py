@@ -37,7 +37,7 @@ def draw_icon(screen: Screen, index: int, symbol: str = "") -> int:
         restore_fg, restore_bg = screen.cursor.fg, screen.cursor.bg
         screen.cursor.fg, screen.cursor.bg = fg, bg
         screen.draw(cell)
-        screen.cursor.fg, screen.cursor.bg = restore_fg, restore_bg
+        screen.cursor.fg, screen.cursor.bg = SYMBOL_BG, restore_bg
 
     return screen.cursor.x
 
