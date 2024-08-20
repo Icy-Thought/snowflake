@@ -15,25 +15,20 @@
       };
     };
     networking.networkManager.enable = true;
-
-    services = {
-      ssh.enable = true;
-      rustdesk.enable = true;
-    };
+    services.ssh.enable = true;
 
     develop = {
       python.enable = true;
       rust.enable = true;
       haskell.enable = true;
-      scientific.typst.enable = true;
     };
 
     themes.active = "catppuccin";
     desktop = {
       xmonad.enable = true;
       terminal = {
-        default = "wezterm";
-        wezterm.enable = true;
+        default = "kitty";
+        kitty.enable = true;
       };
       editors = {
         default = "emacsclient";

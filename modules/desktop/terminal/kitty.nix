@@ -25,7 +25,7 @@ in {
         allow_remote_control = "no";
         close_on_child_death = "no";
         shell_integration = "no-cursor";
-        confirm_os_window_close = -1;
+        confirm_os_window_close = 0;
 
         background_opacity = "0.8";
         inactive_text_alpha = "1.0";
@@ -62,17 +62,17 @@ in {
         scrollback_lines = 5000;
         wheel_scroll_multiplier = 5;
 
+        draw_minimal_borders = "yes";
+        placement_strategy = "top-left";
         window_border_width = 1;
         window_margin_width = 0;
         window_padding_width = 10;
-        placement_strategy = "top-left";
-        draw_minimal_borders = "yes";
 
+        active_tab_font_style = "normal";
+        inactive_tab_font_style = "normal";
         tab_bar_style = "custom";
         tab_bar_edge = "top";
         tab_bar_margin_height = "0.0 0.0";
-        active_tab_font_style = "bold";
-        inactive_tab_font_style = "bold-italic";
         tab_bar_min_tabs = 1;
       };
 
@@ -114,11 +114,11 @@ in {
             inherit (config.modules.themes.colors.main) bright normal types;
             inherit (config.modules.themes.font.mono) size;
           in ''
-            font_family               VictorMono NF Medium
-            italic_font               VictorMono NF Medium Italic
+            font_family               VictorMono NF SemiBold
+            italic_font               VictorMono NF SemiBold Italic
 
-            bold_font                 VictorMono NF SemiBold
-            bold_italic_font          VictorMono NF SemiBold Italic
+            bold_font                 VictorMono NF Bold
+            bold_italic_font          VictorMono NF Bold Italic
 
             font_size                 ${toString size}
 

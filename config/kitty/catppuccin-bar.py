@@ -30,7 +30,7 @@ def draw_icon(screen: Screen, index: int, symbol: str = "") -> int:
     cells = [
         (SYMBOL_FG, SYMBOL_BG, symbol),
         (SYMBOL_BG, SYMBOL_FG, ""),
-        (screen.cursor.fg, screen.cursor.bg, " "),
+        (SYMBOL_FG, screen.cursor.bg, " "),
     ]
 
     for fg, bg, cell in cells:
@@ -48,7 +48,7 @@ def draw_right_status(screen: Screen, is_last: bool) -> int:
 
     cells = [
         (CLOCK_BG, screen.cursor.bg, ""),
-        (CLOCK_FG, CLOCK_BG, datetime.datetime.now().strftime(" %H:%M ")),
+        (CLOCK_FG, CLOCK_BG, datetime.datetime.now().strftime("  %H:%M ")),
         (DATE_BG, CLOCK_BG, ""),
         (DATE_FG, DATE_BG, datetime.datetime.now().strftime("  %Y/%m/%d ")),
     ]

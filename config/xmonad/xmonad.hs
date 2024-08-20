@@ -105,7 +105,7 @@ main =
 myConfig =
     def
         { modMask = mod4Mask
-        , terminal = "wezterm"
+        , terminal = "kitty"
         , manageHook = namedScratchpadManageHook =<< liftX myScratchpads
         , layoutHook = myLayoutHook
         , borderWidth = 2
@@ -745,7 +745,6 @@ myScratchpads = do
     btopLaunch <-
         getInput $
             inTerm
-                >-> toInput "start"
                 >-> setXClass sysMonID
                 >-> execute "btop"
 
