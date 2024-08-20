@@ -108,12 +108,18 @@ in {
         lightdm.enableGnomeKeyring = true;
       };
 
-      services.xserver.displayManager.lightdm = {
-        enable = true;
-        greeters.mini = {
+      services.xserver.displayManager = {
+        lightdm = {
           enable = true;
-          user = config.user.name;
+          greeters.mini = {
+            enable = true;
+            user = config.user.name;
+          };
         };
+        sessionCommands = ''
+          ${lib.getExe pkgs.xorg.xset} -dpms
+          ${lib.getExe pkgs.xorg.xset} s off
+        '';
       };
 
       hm.xsession = {
