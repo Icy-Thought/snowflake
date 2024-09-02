@@ -234,7 +234,7 @@ in {
         programs.regreet.settings.GTK = let
           inherit (cfg) pointer font iconTheme gtk;
         in {
-          cursor_theme_name = "${pointer.name}";
+          cursor_theme_name = lib.mkDefault "${pointer.name}";
           font_name = "${font.mono.family}";
           icon_theme_name = "${iconTheme.name}";
           theme_name = "${gtk.name}";

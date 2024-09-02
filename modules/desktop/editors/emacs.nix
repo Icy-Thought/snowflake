@@ -57,7 +57,6 @@ in {
           attrValues ({
               inherit (epkgs.melpaPackages) jinx pdf-tools;
               inherit (epkgs.treesit-grammars) with-all-grammars;
-
               telega = epkgs.melpaPackages.telega.overrideAttrs (_: {
                 version = "0.8.290";
                 src = pkgs.sources.telega;
