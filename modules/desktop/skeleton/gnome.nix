@@ -16,13 +16,10 @@ in {
       };
     };
 
+    services.xserver.desktopManager.gnome.enable = true;
+    services.greetd.settings.initial_session.command = "gnome-session";
+
     programs.dconf.enable = true;
-
-    services.xserver.desktopManager.gnome = {
-      enable = true;
-      # debug = true;
-    };
-
     services.gnome = {
       gnome-browser-connector.enable = true;
       sushi.enable = true;

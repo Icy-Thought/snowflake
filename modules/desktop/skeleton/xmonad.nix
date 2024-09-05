@@ -44,16 +44,20 @@ in {
       inherit (pkgs.xorg) xwininfo;
     };
 
-    services.xserver.displayManager = {
-      session = [{
-        manage = "window";
-        name = "xmonad";
-        start = ''
-          systemd-cat -t xmonad -- ${getExe pkgs.haskellPackages.birostrisWM} &
-          waitPID=$!
-        '';
-      }];
-      defaultSession = "none+xmonad";
+    services.xserver.displayManager.session = [{
+      manage = "window";
+      name = "xmonad";
+      start = ''
+        systemd-cat -t xmonad -- startx ${getExe pkgs.haskellPackages.birostrisWM} &
+        waitPID=$!
+      '';
+    }];
+    services.greetd.settings.initial_session.command = "none+xmonad";
+
+    environment.sessionVariables = {
+      XMONAD_CONFIG_DIR = "${config.snowflake.configDir}/xmonad";
+      XMONAD_CACHE_DIR = "$XDG_CACHE_HOME/xmonad";
+      XMONAD_DATA_DIR = "$XDG_DATA_HOME/xmonad";
     };
   };
 }

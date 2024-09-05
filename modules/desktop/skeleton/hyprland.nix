@@ -1,4 +1,4 @@
-{ options, config, inputs, lib, pkgs, ... }:
+{ inputs, options, config, lib, pkgs, ... }:
 
 let
   inherit (builtins) readFile toPath;
@@ -37,19 +37,14 @@ in {
       inherit (pkgs) imv libnotify playerctl wf-recorder wlr-randr;
     };
 
-    services.greetd.settings.initial_session = {
-      command = "Hyprland";
-      user = "${config.user.name}";
-    };
-
-    hm.imports = let inherit (inputs) hyprland;
-    in [ hyprland.homeManagerModules.default ];
+    hm.imports = [ inputs.hyprland.homeManagerModules.default ];
 
     hm.wayland.windowManager.hyprland = {
       enable = true;
       extraConfig =
         readFile "${config.snowflake.configDir}/hyprland/hyprland.conf";
     };
+    services.greetd.settings.initial_session.command = "Hyprland";
 
     # System wallpaper:
     create.configFile.hypr-wallpaper =

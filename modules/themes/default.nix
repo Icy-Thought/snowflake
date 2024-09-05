@@ -206,6 +206,31 @@ in {
         };
       };
 
+      programs.regreet = let inherit (cfg) pointer font iconTheme gtk;
+      in {
+        theme = {
+          name = "${gtk.name}";
+          package = "${gtk.package}";
+        };
+        iconTheme = {
+          name = "${iconTheme.name}";
+          package = "${iconTheme.package}";
+        };
+        cursorTheme = {
+          name = "${pointer.name}";
+          package = "${pointer.package}";
+        };
+        font = {
+          name = "${font.mono.family}";
+          size = font.mono.size;
+        };
+
+        settings.background = mkIf (cfg.loginWallpaper != null) {
+          path = cfg.loginWallpaper;
+          fit = "Cover";
+        };
+      };
+
       hm.programs.vscode.extensions =
         let inherit (cfg.vscode.extension) name publisher version hash;
         in pkgs.vscode-utils.extensionsFromVscodeMarketplace [{
@@ -217,17 +242,6 @@ in {
     }
 
     (mkIf (desktop.type == "wayland") (mkMerge [
-      {
-        programs.regreet.settings.GTK =
-          let inherit (cfg) pointer font iconTheme gtk;
-          in {
-            cursor_theme_name = lib.mkDefault "${pointer.name}";
-            font_name = "${font.mono.family}";
-            icon_theme_name = "${iconTheme.name}";
-            theme_name = "${gtk.name}";
-          };
-      }
-
       (mkIf (cfg.wallpaper != null) {
         user.packages = attrValues { inherit (pkgs) swww; };
 
@@ -314,23 +328,6 @@ in {
         };
       }
 
-      # Apply theme options -> lightdm-mini-greeter
-      (mkIf (cfg.loginWallpaper != null) {
-        services.xserver.displayManager.lightdm = {
-          greeters.mini.extraConfig =
-            let inherit (cfg.colors.main) normal types;
-            in ''
-              background-image = "${cfg.loginWallpaper}"
-              background-image-size = "100% 100%"
-
-              text-color = "${types.bg}"
-              password-background-color = "${normal.black}"
-              window-color = "${types.border}"
-              border-color = "${types.border}"
-            '';
-        };
-      })
-
       # Auto-set wallpaper to prevent $HOME pollution!
       (mkIf (cfg.wallpaper != null) (let
         wCfg = config.services.xserver.desktopManager.wallpaper;
@@ -349,13 +346,6 @@ in {
         create.dataFile =
           mkIf (cfg.wallpaper != null) { "wallpaper".source = cfg.wallpaper; };
       }))
-
-      (mkIf (cfg.loginWallpaper != null) {
-        programs.regreet.settings.background = {
-          path = cfg.loginWallpaper;
-          fit = "Fill";
-        };
-      })
 
       (mkIf (cfg.onReload != { }) (let
         reloadTheme = let inherit (pkgs) stdenv writeScriptBin;

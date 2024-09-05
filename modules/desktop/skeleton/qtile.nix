@@ -41,11 +41,6 @@ in {
     };
     modules.hardware.kmonad.enable = true;
 
-    services.greetd.settings.initial_session = mkIf (cfg.backend == "wayland") {
-      command = "none+qtile";
-      user = "${config.user.name}";
-    };
-
     environment.systemPackages = attrValues ({
       inherit (pkgs) libnotify playerctl gxmessage;
     } // optionalAttrs (cfg.backend == "x11") { inherit (pkgs) xdotool feh; }
@@ -53,16 +48,14 @@ in {
         inherit (pkgs) imv wf-recorder;
       });
 
-    services.xserver = {
-      displayManager.defaultSession = "none+qtile";
-      windowManager.qtile = {
-        enable = true;
-        configFile = "${config.snowflake.configDir}/qtile/config.py";
-        backend = cfg.backend;
-        # extraPackages = attrValues {
-        #   inherit (pkgs.python3Packages) qtile-extras;
-        # };
-      };
+    services.xserver.windowManager.qtile = {
+      enable = true;
+      configFile = "${config.snowflake.configDir}/qtile/config.py";
+      backend = cfg.backend;
+      # extraPackages = attrValues {
+      #   inherit (pkgs.python3Packages) qtile-extras;
+      # };
     };
+    services.greetd.settings.initial_session.command = "none+qtile";
   };
 }
