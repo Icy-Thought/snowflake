@@ -1,5 +1,6 @@
 { lib, stdenv, fetchFromGitHub, gtk-engine-murrine, jdupes, sassc
 , accent ? [ "default" ], shade ? "dark", size ? "standard", tweaks ? [ ], }:
+
 let
   validAccents = [
     "default"

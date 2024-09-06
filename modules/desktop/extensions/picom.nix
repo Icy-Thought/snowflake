@@ -1,4 +1,5 @@
 { inputs, options, config, lib, pkgs, ... }:
+
 let
   inherit (lib.modules) mkIf;
   inherit (lib.meta) getExe;

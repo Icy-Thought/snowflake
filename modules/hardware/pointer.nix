@@ -1,4 +1,5 @@
 { config, options, lib, pkgs, ... }:
+
 let inherit (lib.modules) mkIf mkMerge;
 in {
   options.modules.hardware.pointer = let inherit (lib.options) mkEnableOption;

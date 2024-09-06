@@ -1,4 +1,5 @@
 { options, config, lib, pkgs, ... }:
+
 let
   inherit (lib.modules) mkDefault mkIf mkMerge;
   cfg = config.modules.desktop.terminal;

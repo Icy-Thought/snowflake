@@ -1,4 +1,5 @@
 # Copyright (c) 2022 felschr. All Rights Reserved.
+
 { options, config, lib, ... }:
 let
   inherit (builtins) listToAttrs;

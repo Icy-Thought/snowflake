@@ -1,4 +1,5 @@
 { pkgs, config, lib, ... }: {
+
   imports = [ ./hardware.nix ];
 
   modules = {

@@ -1,4 +1,5 @@
 { inputs, options, config, lib, pkgs, ... }:
+
 let
   inherit (builtins) toJSON;
   inherit (lib.attrsets) attrValues mapAttrsToList;

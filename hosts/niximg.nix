@@ -1,4 +1,5 @@
 { modulesPath, lib, pkgs, config, ... }:
+
 let inherit (lib.attrsets) attrValues;
 in {
   imports = [ "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix" ];
@@ -16,4 +17,3 @@ in {
   environment.systemPackages = attrValues { inherit (pkgs) zsh git nixStable; };
 }
 # nix-build '<nixpkgs/nixos>' -A config.system.build.isoImage -I nixos-config=./default.nix
-

@@ -1,4 +1,5 @@
 { config, options, lib, pkgs, inputs, ... }:
+
 let
   inherit (lib.modules) mkIf;
   vscDir = "${config.snowflake.configDir}/vscodium";

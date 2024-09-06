@@ -1,4 +1,5 @@
 { lib, rustPlatform, fetchFromGitHub, pkg-config, alsa-lib, xorg, }:
+
 rustPlatform.buildRustPackage rec {
   pname = "rustyvibes";
   version = "1.0.9";

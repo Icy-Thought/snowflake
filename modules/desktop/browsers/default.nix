@@ -1,4 +1,5 @@
 { options, config, lib, pkgs, ... }:
+
 let
   inherit (lib.modules) mkIf;
   cfg = config.modules.desktop.browsers;

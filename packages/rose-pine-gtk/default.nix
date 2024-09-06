@@ -1,5 +1,6 @@
 { lib, stdenv, fetchFromGitHub, gtk-engine-murrine, jdupes, themeVariant ? [ ]
 , iconVariant ? [ ], }:
+
 let
   inherit (builtins) toString;
   inherit (lib.trivial) checkListOfEnum;

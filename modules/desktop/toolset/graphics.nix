@@ -1,4 +1,5 @@
 { config, options, lib, pkgs, ... }:
+
 let
   inherit (lib.attrsets) attrValues optionalAttrs;
   cfg = config.modules.desktop.toolset.graphics;

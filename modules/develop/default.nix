@@ -1,4 +1,5 @@
 { config, options, lib, pkgs, ... }:
+
 let inherit (lib.modules) mkIf;
 in {
   options.modules.develop = let inherit (lib.options) mkEnableOption;

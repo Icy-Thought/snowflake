@@ -1,4 +1,5 @@
 { inputs, lib, pkgs, self, ... }:
+
 let
   inherit (inputs.nixpkgs.lib) nixosSystem;
   inherit (builtins) baseNameOf elem;

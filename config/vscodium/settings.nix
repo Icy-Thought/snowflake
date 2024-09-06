@@ -1,4 +1,5 @@
 { config, ... }:
+
 let
   myTerm = config.modules.desktop.terminal.default;
   inherit (config.modules.themes) editor font;

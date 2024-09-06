@@ -1,5 +1,6 @@
 { lib, stdenv, fetchFromGitHub, gtk-engine-murrine, jdupes, sassc
 , accent ? [ "default" ], shade ? "dark", size ? "standard", }:
+
 let
   validAccents =
     [ "default" "purple" "pink" "red" "orange" "yellow" "green" "teal" "grey" ];
