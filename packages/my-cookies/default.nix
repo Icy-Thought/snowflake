@@ -1,8 +1,4 @@
-{
-  lib,
-  python3Packages,
-  fetchFromGitHub,
-}:
+{ lib, python3Packages, fetchFromGitHub, }:
 python3Packages.buildPythonApplication rec {
   pname = "my_cookies";
   version = "0.1.3";
@@ -14,7 +10,7 @@ python3Packages.buildPythonApplication rec {
     hash = "sha256-9UXOrf9N1UZKY4LiclhTe5N6tHzM10j/n9MiaR1aGZE=";
   };
 
-  propagatedBuildInputs = with python3Packages; [browser-cookie3];
+  propagatedBuildInputs = with python3Packages; [ browser-cookie3 ];
 
   meta = with lib; {
     description = "Retrieve LeetCode cookies from Chrome with local keyring.";

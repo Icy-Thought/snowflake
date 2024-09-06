@@ -8,7 +8,8 @@ let
     # Nix-related
     nb = "nix-build -E 'with import <nixpkgs> {}; callPackage ./. {}'";
     np = "nix-shell -p";
-    nls = "nix-store --query --requisites /run/current-system | cut -d- -f2- | sort | uniq";
+    nls =
+      "nix-store --query --requisites /run/current-system | cut -d- -f2- | sort | uniq";
     flup = "nix flake update";
     nfl = "nix flake lock --update-input";
     d2nix = "dconf dump / | dconf2nix > dconf.nix";
@@ -106,7 +107,8 @@ let
     glgga = "git log --graph --decorate --agll";
     glo = "git log --oneline --decorate --color";
     glog = "git log --oneline --decorate --color --graph";
-    gloo = "git log --pretty=format:'%C(yellow)%h %Cred%ad %Cblue%an%Cgreen%d %Creset%s' --date=short";
+    gloo =
+      "git log --pretty=format:'%C(yellow)%h %Cred%ad %Cblue%an%Cgreen%d %Creset%s' --date=short";
 
     # (Git) push / merge
     gm = "git merge";
@@ -176,5 +178,4 @@ let
     gco = "git checkout";
     gcb = "git checkout -b";
   };
-in
-  main // emacs // git
+in main // emacs // git

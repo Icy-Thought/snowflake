@@ -1,10 +1,5 @@
-{
-  options,
-  config,
-  lib,
-  pkgs,
-  ...
-}: let
+{ options, config, lib, pkgs, ... }:
+let
   inherit (lib.attrsets) attrValues;
   inherit (lib.modules) mkIf mkMerge;
   cfg = config.modules.shell;
@@ -14,7 +9,7 @@ in {
     inherit (lib.types) nullOr enum;
   in {
     default = mkOption {
-      type = nullOr (enum ["fish" "zsh" "xonsh"]);
+      type = nullOr (enum [ "fish" "zsh" "xonsh" ]);
       default = null;
       description = "Default system shell";
     };
@@ -37,7 +32,7 @@ in {
       hm.programs.direnv = {
         enable = true;
         nix-direnv.enable = true;
-        config.whitelist.prefix = ["/home"];
+        config.whitelist.prefix = [ "/home" ];
       };
 
       user.packages = attrValues {
@@ -45,7 +40,7 @@ in {
 
         # GNU Alternatives
         inherit (pkgs) bat fd zoxide;
-        rgFull = pkgs.ripgrep.override {withPCRE2 = true;};
+        rgFull = pkgs.ripgrep.override { withPCRE2 = true; };
       };
     })
   ];

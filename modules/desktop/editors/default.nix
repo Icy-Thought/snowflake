@@ -1,10 +1,5 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
-}: let
+{ config, options, lib, pkgs, ... }:
+let
   inherit (lib.attrsets) attrValues;
   inherit (lib.modules) mkIf mkMerge;
   cfg = config.modules.desktop.editors;
@@ -14,7 +9,7 @@ in {
     inherit (lib.types) nullOr enum;
   in {
     default = mkOption {
-      type = nullOr (enum ["helix" "nvim" "emacsclient"]);
+      type = nullOr (enum [ "helix" "nvim" "emacsclient" ]);
       default = "nvim";
       description = "Default editor for text manipulation";
       example = "emacsclient";
@@ -32,7 +27,8 @@ in {
 
     (mkIf (cfg.default == "nvim" || cfg.default == "emacsclient") {
       user.packages = attrValues {
-        inherit (pkgs) imagemagick editorconfig-core-c sqlite deno pandoc nuspell;
+        inherit (pkgs)
+          imagemagick editorconfig-core-c sqlite deno pandoc nuspell;
         inherit (pkgs.hunspellDicts) en_US sv_SE;
       };
     })

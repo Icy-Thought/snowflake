@@ -1,10 +1,5 @@
-{
-  options,
-  config,
-  lib,
-  pkgs,
-  ...
-}: let
+{ options, config, lib, pkgs, ... }:
+let
   inherit (lib.meta) getExe;
   inherit (lib.modules) mkIf;
   inherit (lib.options) mkEnableOption;
@@ -23,7 +18,7 @@ in {
     hm.systemd.user.services.waybar = {
       Unit = {
         Description = "A bar for your wayland environment";
-        PartOf = ["tray.target"];
+        PartOf = [ "tray.target" ];
       };
       Service = {
         Type = "dbus";
@@ -31,117 +26,117 @@ in {
         ExecStart = "${getExe pkgs.waybar}";
         Restart = "on-failure";
       };
-      Install = {WantedBy = ["tray.target"];};
+      Install = { WantedBy = [ "tray.target" ]; };
     };
 
     hm.programs.waybar = {
       enable = true;
-      settings = [
-        {
-          "layer" = "top";
-          "position" = "top";
-          modules-left = [
-            "custom/launcher"
-            "wlr/workspaces"
-            "temperature"
-            "idle_inhibitor"
-            "mpd"
-          ];
-          modules-center = ["clock"];
-          modules-right = ["memory" "cpu" "network" "battery" "custom/powermenu" "tray"];
-          "custom/launcher" = {
-            "format" = "  NixOS";
-            "on-click" = "rofi -no-lazy-grab -show drun -modi drun";
-            "tooltip" = false;
-          };
+      settings = [{
+        "layer" = "top";
+        "position" = "top";
+        modules-left = [
+          "custom/launcher"
+          "wlr/workspaces"
+          "temperature"
+          "idle_inhibitor"
+          "mpd"
+        ];
+        modules-center = [ "clock" ];
+        modules-right =
+          [ "memory" "cpu" "network" "battery" "custom/powermenu" "tray" ];
+        "custom/launcher" = {
+          "format" = "  NixOS";
+          "on-click" = "rofi -no-lazy-grab -show drun -modi drun";
+          "tooltip" = false;
+        };
 
-          "wlr/workspaces" = {
-            "format" = "{icon}";
-            "on-click" = "activate";
-            "on-scroll-up" = "hyprctl dispatch workspace e+1";
-            "on-scroll-down" = "hyprctl dispatch workspace e-1";
+        "wlr/workspaces" = {
+          "format" = "{icon}";
+          "on-click" = "activate";
+          "on-scroll-up" = "hyprctl dispatch workspace e+1";
+          "on-scroll-down" = "hyprctl dispatch workspace e-1";
+        };
+        "idle_inhibitor" = {
+          "format" = "{icon}";
+          "format-icons" = {
+            "activated" = "";
+            "deactivated" = "";
           };
-          "idle_inhibitor" = {
-            "format" = "{icon}";
-            "format-icons" = {
-              "activated" = "";
-              "deactivated" = "";
-            };
-            "tooltip" = false;
+          "tooltip" = false;
+        };
+        "battery" = {
+          "interval" = 10;
+          "states" = {
+            "warning" = 20;
+            "critical" = 10;
           };
-          "battery" = {
-            "interval" = 10;
-            "states" = {
-              "warning" = 20;
-              "critical" = 10;
-            };
-            "format" = "{icon} {capacity}%";
-            "format-icons" = ["" "" "" "" "" "" "" "" ""];
-            "format-full" = "{icon} {capacity}%";
-            "format-charging" = " {capacity}%";
-            "tooltip" = false;
-          };
-          "clock" = {
-            "on-click" = "wallpaper_random";
-            "on-click-right" = "killall dynamic_wallpaper || dynamic_wallpaper &";
-            "interval" = 1;
-            "format" = "{:%I:%M %p  %A %b %d}";
-            "tooltip" = true;
-            # "tooltip-format"= "{=%A; %d %B %Y}\n<tt>{calendar}</tt>"
-            "tooltip-format" = ''
-              上午：高数
-              下午：Ps
-              晚上：Golang
-              <tt>{calendar}</tt>'';
-          };
-          "memory" = {
-            "interval" = 1;
-            "format" = "﬙ {percentage}%";
-            "states" = {"warning" = 85;};
-          };
-          "cpu" = {
-            "interval" = 1;
-            "format" = " {usage}%";
-          };
-          "mpd" = {
-            "max-length" = 25;
-            "format" = "<span foreground='#bb9af7'></span> {title}";
-            "format-paused" = " {title}";
-            "format-stopped" = "<span foreground='#bb9af7'></span>";
-            "format-disconnected" = "";
-            "on-click" = "mpc --quiet toggle";
-            "on-click-right" = "mpc ls | mpc add";
-            "on-click-middle" = "kitty --class='ncmpcpp' --hold sh -c 'ncmpcpp'";
-            "on-scroll-up" = "mpc --quiet prev";
-            "on-scroll-down" = "mpc --quiet next";
-            "smooth-scrolling-threshold" = 5;
-            "tooltip-format" = "{title} - {artist} ({elapsedTime:%M:%S}/{totalTime:%H:%M:%S})";
-          };
-          "network" = {
-            "interval" = 1;
-            "format-wifi" = "說 {essid}";
-            "format-ethernet" = "  {ifname} ({ipaddr})";
-            "format-linked" = "說 {essid} (No IP)";
-            "format-disconnected" = "說 Disconnected";
-            "tooltip" = false;
-          };
-          "temperature" = {
-            # "hwmon-path"= "${env:HWMON_PATH}";
-            #"critical-threshold"= 80;
-            "tooltip" = false;
-            "format" = " {temperatureC}°C";
-          };
-          "custom/powermenu" = {
-            "format" = "";
-            "on-click" = ""; # TODO
-            "tooltip" = false;
-          };
-          "tray" = {
-            "icon-size" = 15;
-            "spacing" = 5;
-          };
-        }
-      ];
+          "format" = "{icon} {capacity}%";
+          "format-icons" = [ "" "" "" "" "" "" "" "" "" ];
+          "format-full" = "{icon} {capacity}%";
+          "format-charging" = " {capacity}%";
+          "tooltip" = false;
+        };
+        "clock" = {
+          "on-click" = "wallpaper_random";
+          "on-click-right" = "killall dynamic_wallpaper || dynamic_wallpaper &";
+          "interval" = 1;
+          "format" = "{:%I:%M %p  %A %b %d}";
+          "tooltip" = true;
+          # "tooltip-format"= "{=%A; %d %B %Y}\n<tt>{calendar}</tt>"
+          "tooltip-format" = ''
+            上午：高数
+            下午：Ps
+            晚上：Golang
+            <tt>{calendar}</tt>'';
+        };
+        "memory" = {
+          "interval" = 1;
+          "format" = "﬙ {percentage}%";
+          "states" = { "warning" = 85; };
+        };
+        "cpu" = {
+          "interval" = 1;
+          "format" = " {usage}%";
+        };
+        "mpd" = {
+          "max-length" = 25;
+          "format" = "<span foreground='#bb9af7'></span> {title}";
+          "format-paused" = " {title}";
+          "format-stopped" = "<span foreground='#bb9af7'></span>";
+          "format-disconnected" = "";
+          "on-click" = "mpc --quiet toggle";
+          "on-click-right" = "mpc ls | mpc add";
+          "on-click-middle" = "kitty --class='ncmpcpp' --hold sh -c 'ncmpcpp'";
+          "on-scroll-up" = "mpc --quiet prev";
+          "on-scroll-down" = "mpc --quiet next";
+          "smooth-scrolling-threshold" = 5;
+          "tooltip-format" =
+            "{title} - {artist} ({elapsedTime:%M:%S}/{totalTime:%H:%M:%S})";
+        };
+        "network" = {
+          "interval" = 1;
+          "format-wifi" = "說 {essid}";
+          "format-ethernet" = "  {ifname} ({ipaddr})";
+          "format-linked" = "說 {essid} (No IP)";
+          "format-disconnected" = "說 Disconnected";
+          "tooltip" = false;
+        };
+        "temperature" = {
+          # "hwmon-path"= "${env:HWMON_PATH}";
+          #"critical-threshold"= 80;
+          "tooltip" = false;
+          "format" = " {temperatureC}°C";
+        };
+        "custom/powermenu" = {
+          "format" = "";
+          "on-click" = ""; # TODO
+          "tooltip" = false;
+        };
+        "tray" = {
+          "icon-size" = 15;
+          "spacing" = 5;
+        };
+      }];
       style = ''
               * {
                 font-family: "VictorMono Nerd Font";

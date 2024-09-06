@@ -1,20 +1,13 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
-}: let
+{ config, options, lib, pkgs, ... }:
+let
   inherit (lib.modules) mkIf;
   inherit (lib.strings) concatStringsSep;
 in {
-  options.modules.shell.toolset.btop = let
-    inherit (lib.options) mkEnableOption;
-  in {enable = mkEnableOption "system-monitor";};
+  options.modules.shell.toolset.btop = let inherit (lib.options) mkEnableOption;
+  in { enable = mkEnableOption "system-monitor"; };
 
   config = mkIf config.modules.shell.toolset.btop.enable {
-    hm.programs.btop = let
-      inherit (config.modules.themes) active;
+    hm.programs.btop = let inherit (config.modules.themes) active;
     in {
       enable = true;
       settings = {
@@ -93,57 +86,54 @@ in {
       };
     };
 
-    create.configFile.btop-theme = let
-      inherit (config.modules.themes) active;
-    in
-      mkIf (active != null) {
-        target = "btop/themes/${active}.theme";
-        text = let
-          inherit (config.modules.themes.colors.main) bright types;
-        in ''
-          theme[main_bg]="${types.bg}"
-          theme[main_fg]="${types.fg}"
-          theme[title]="${types.fg}"
-          theme[hi_fg]="${types.highlight}"
-          theme[selected_bg]="${types.border}"
-          theme[selected_fg]="${types.bg}"
-          theme[inactive_fg]="${bright.black}"
-          theme[graph_text]="${bright.yellow}"
-          theme[meter_bg]="${bright.black}"
-          theme[proc_misc]="${bright.yellow}"
-          theme[cpu_box]="${bright.cyan}"
-          theme[mem_box]="${bright.green}"
-          theme[net_box]="${bright.magenta}"
-          theme[proc_box]="${bright.yellow}"
-          theme[div_line]="${bright.black}"
-          theme[temp_start]="${bright.yellow}"
-          theme[temp_mid]="${types.panelbg}"
-          theme[temp_end]="${bright.red}"
-          theme[cpu_start]="${bright.cyan}"
-          theme[cpu_mid]="${types.border}"
-          theme[cpu_end]="${bright.green}"
-          theme[free_start]="${bright.green}"
-          theme[free_mid]="${bright.green}"
-          theme[free_end]="${bright.green}"
-          theme[cached_start]="${bright.yellow}"
-          theme[cached_mid]="${bright.yellow}"
-          theme[cached_end]="${bright.magenta}"
-          theme[available_start]="${bright.yellow}"
-          theme[available_mid]="${bright.yellow}"
-          theme[available_end]="${bright.yellow}"
-          theme[used_start]="${types.panelbg}"
-          theme[used_mid]="${types.panelbg}"
-          theme[used_end]="${bright.red}"
-          theme[download_start]="${bright.blue}"
-          theme[download_mid]="${bright.blue}"
-          theme[download_end]="${bright.magenta}"
-          theme[upload_start]="${bright.blue}"
-          theme[upload_mid]="${bright.blue}"
-          theme[upload_end]="${bright.magenta}"
-          theme[process_start]="${bright.cyan}"
-          theme[process_mid]="${types.border}"
-          theme[process_end]="${bright.green}"
-        '';
-      };
+    create.configFile.btop-theme = let inherit (config.modules.themes) active;
+    in mkIf (active != null) {
+      target = "btop/themes/${active}.theme";
+      text = let inherit (config.modules.themes.colors.main) bright types;
+      in ''
+        theme[main_bg]="${types.bg}"
+        theme[main_fg]="${types.fg}"
+        theme[title]="${types.fg}"
+        theme[hi_fg]="${types.highlight}"
+        theme[selected_bg]="${types.border}"
+        theme[selected_fg]="${types.bg}"
+        theme[inactive_fg]="${bright.black}"
+        theme[graph_text]="${bright.yellow}"
+        theme[meter_bg]="${bright.black}"
+        theme[proc_misc]="${bright.yellow}"
+        theme[cpu_box]="${bright.cyan}"
+        theme[mem_box]="${bright.green}"
+        theme[net_box]="${bright.magenta}"
+        theme[proc_box]="${bright.yellow}"
+        theme[div_line]="${bright.black}"
+        theme[temp_start]="${bright.yellow}"
+        theme[temp_mid]="${types.panelbg}"
+        theme[temp_end]="${bright.red}"
+        theme[cpu_start]="${bright.cyan}"
+        theme[cpu_mid]="${types.border}"
+        theme[cpu_end]="${bright.green}"
+        theme[free_start]="${bright.green}"
+        theme[free_mid]="${bright.green}"
+        theme[free_end]="${bright.green}"
+        theme[cached_start]="${bright.yellow}"
+        theme[cached_mid]="${bright.yellow}"
+        theme[cached_end]="${bright.magenta}"
+        theme[available_start]="${bright.yellow}"
+        theme[available_mid]="${bright.yellow}"
+        theme[available_end]="${bright.yellow}"
+        theme[used_start]="${types.panelbg}"
+        theme[used_mid]="${types.panelbg}"
+        theme[used_end]="${bright.red}"
+        theme[download_start]="${bright.blue}"
+        theme[download_mid]="${bright.blue}"
+        theme[download_end]="${bright.magenta}"
+        theme[upload_start]="${bright.blue}"
+        theme[upload_mid]="${bright.blue}"
+        theme[upload_end]="${bright.magenta}"
+        theme[process_start]="${bright.cyan}"
+        theme[process_mid]="${types.border}"
+        theme[process_end]="${bright.green}"
+      '';
+    };
   };
 }

@@ -1,10 +1,5 @@
-{
-  options,
-  config,
-  lib,
-  pkgs,
-  ...
-}: let
+{ options, config, lib, pkgs, ... }:
+let
   inherit (lib.attrsets) attrValues;
   inherit (lib.meta) getExe;
   inherit (lib.modules) mkIf;
@@ -14,17 +9,14 @@
   desktop = config.modules.desktop;
   elkowarDir = "${config.snowflake.configDir}/elkowar";
 in {
-  options.modules.desktop.extensions.elkowar = let
-    inherit (lib.options) mkEnableOption mkPackageOption;
-  in {
-    enable = mkEnableOption "wacky x11/wayland widgets";
-    package = mkPackageOption pkgs "eww" {
-      default =
-        if (desktop.type == "wayland")
-        then "eww-wayland"
-        else "eww";
+  options.modules.desktop.extensions.elkowar =
+    let inherit (lib.options) mkEnableOption mkPackageOption;
+    in {
+      enable = mkEnableOption "wacky x11/wayland widgets";
+      package = mkPackageOption pkgs "eww" {
+        default = if (desktop.type == "wayland") then "eww-wayland" else "eww";
+      };
     };
-  };
 
   config = mkIf cfg.enable {
     # Allow tray-icons to be displayed:
@@ -34,7 +26,7 @@ in {
     services.gnome.at-spi2-core.enable = true;
 
     # Building Elkowar widgets prior to usage:
-    user.packages = attrValues {inherit (pkgs.haskellPackages) ewwLib;};
+    user.packages = attrValues { inherit (pkgs.haskellPackages) ewwLib; };
 
     hm.programs.eww = {
       enable = true;
@@ -45,7 +37,7 @@ in {
     hm.systemd.user.services.eww = {
       Unit = {
         Description = "Elkowars wacky widgets => daemon.";
-        PartOf = ["graphical-session.target"];
+        PartOf = [ "graphical-session.target" ];
       };
       Service = {
         Environment = let
@@ -56,7 +48,7 @@ in {
         ExecStart = "${cfg.package} daemon --no-daemonize";
         Restart = "on-failure";
       };
-      Install.WantedBy = ["graphical-session.target"];
+      Install.WantedBy = [ "graphical-session.target" ];
     };
   };
 }

@@ -1,23 +1,16 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
-}: let
+{ config, options, lib, pkgs, ... }:
+let
   inherit (lib.meta) getExe;
   inherit (lib.modules) mkIf;
 in {
-  options.modules.desktop.editors.helix = let
-    inherit (lib.options) mkEnableOption;
-  in {enable = mkEnableOption "post-modern text editor";};
+  options.modules.desktop.editors.helix =
+    let inherit (lib.options) mkEnableOption;
+    in { enable = mkEnableOption "post-modern text editor"; };
 
   config = mkIf config.modules.desktop.editors.helix.enable (let
     inherit (config.modules.themes) editor active;
     activeTheme =
-      if (active != null)
-      then "${editor.helix.dark}"
-      else "github-dark";
+      if (active != null) then "${editor.helix.dark}" else "github-dark";
   in {
     hm.programs.helix = {
       enable = true;
@@ -25,17 +18,17 @@ in {
 
       languages = {
         language = [
-          {name = "latex";}
+          { name = "latex"; }
           {
             name = "haskell";
             formatter.command = "stylish-haskell";
           }
-          {name = "rust";}
+          { name = "rust"; }
         ];
         language-server = {
           nil = {
             command = getExe pkgs.nil;
-            config.nil.formatting.command = ["${getExe pkgs.alejandra}" "-q"];
+            config.nil.formatting.command = [ "${getExe pkgs.alejandra}" "-q" ];
           };
         };
       };
@@ -67,13 +60,26 @@ in {
             rainbow = "normal";
             render = true;
           };
-          gutters = ["diagnostics" "line-numbers" "spacer" "diff"];
+          gutters = [ "diagnostics" "line-numbers" "spacer" "diff" ];
 
           statusline = {
             separator = "";
-            left = ["mode" "selections" "spinner" "file-name" "total-line-numbers"];
-            center = [];
-            right = ["diagnostics" "file-encoding" "file-line-ending" "file-type" "position-percentage" "position"];
+            left = [
+              "mode"
+              "selections"
+              "spinner"
+              "file-name"
+              "total-line-numbers"
+            ];
+            center = [ ];
+            right = [
+              "diagnostics"
+              "file-encoding"
+              "file-line-ending"
+              "file-type"
+              "position-percentage"
+              "position"
+            ];
             mode = {
               normal = "NORMAL";
               insert = "INSERT";

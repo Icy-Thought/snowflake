@@ -24,7 +24,8 @@
       url = "github:xmonad/xmonad";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    xmonad-contrib.url = "github:icy-thought/xmonad-contrib"; # TODO: replace with official after #582 == merged!
+    xmonad-contrib.url =
+      "github:icy-thought/xmonad-contrib"; # TODO: replace with official after #582 == merged!
     # hyprland.url = "github:hyprwm/Hyprland";
     rust.url = "github:oxalica/rust-overlay";
 
@@ -52,75 +53,64 @@
     };
   };
 
-  outputs = inputs @ {
-    self,
-    nixpkgs,
-    nixpkgs-unstable,
-    ...
-  }: let
-    inherit (lib.my) mapModules mapModulesRec mapHosts;
-    system = "x86_64-linux";
+  outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, ... }:
+    let
+      inherit (lib.my) mapModules mapModulesRec mapHosts;
+      system = "x86_64-linux";
 
-    mkPkgs = pkgs: extraOverlays:
-      import pkgs {
-        inherit system;
-        config.allowUnfree = true;
-        overlays = extraOverlays ++ (lib.attrValues self.overlays);
-      };
-    pkgs = mkPkgs nixpkgs [self.overlays.default];
-    pkgs-unstable = mkPkgs nixpkgs-unstable [];
+      mkPkgs = pkgs: extraOverlays:
+        import pkgs {
+          inherit system;
+          config.allowUnfree = true;
+          overlays = extraOverlays ++ (lib.attrValues self.overlays);
+        };
+      pkgs = mkPkgs nixpkgs [ self.overlays.default ];
+      pkgs-unstable = mkPkgs nixpkgs-unstable [ ];
 
-    lib = nixpkgs.lib.extend (final: prev: {
-      my = import ./lib {
-        inherit pkgs inputs;
-        lib = final;
-      };
-    });
-  in {
-    lib = lib.my;
+      lib = nixpkgs.lib.extend (final: prev: {
+        my = import ./lib {
+          inherit pkgs inputs;
+          lib = final;
+        };
+      });
+    in {
+      lib = lib.my;
 
-    overlays =
-      (mapModules ./overlays import)
-      // {
+      overlays = (mapModules ./overlays import) // {
         default = final: prev: {
           unstable = pkgs-unstable;
           my = self.packages.${system};
         };
 
         nvfetcher = final: prev: {
-          sources =
-            builtins.mapAttrs (_: p: p.src)
+          sources = builtins.mapAttrs (_: p: p.src)
             ((import ./packages/_sources/generated.nix) {
               inherit (final) fetchurl fetchgit fetchFromGitHub dockerTools;
             });
         };
       };
 
-    packages."${system}" = mapModules ./packages (p: pkgs.callPackage p {});
+      packages."${system}" = mapModules ./packages (p: pkgs.callPackage p { });
 
-    nixosModules =
-      {
+      nixosModules = {
         snowflake = import ./.;
-      }
-      // mapModulesRec ./modules import;
+      } // mapModulesRec ./modules import;
 
-    nixosConfigurations = mapHosts ./hosts {};
+      nixosConfigurations = mapHosts ./hosts { };
 
-    devShells."${system}".default = import ./shell.nix {inherit lib pkgs;};
+      devShells."${system}".default = import ./shell.nix { inherit lib pkgs; };
 
-    templates.full =
-      {
+      templates.full = {
         path = ./.;
         description = "λ well-tailored and configureable NixOS system!";
-      }
-      // import ./templates;
+      } // import ./templates;
 
-    templates.default = self.templates.full;
+      templates.default = self.templates.full;
 
-    # TODO: deployment + template tool.
-    # apps."${system}" = {
-    #   type = "app";
-    #   program = ./bin/hagel;
-    # };
-  };
+      # TODO: deployment + template tool.
+      # apps."${system}" = {
+      #   type = "app";
+      #   program = ./bin/hagel;
+      # };
+    };
 }

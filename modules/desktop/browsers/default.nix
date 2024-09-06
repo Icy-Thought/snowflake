@@ -1,10 +1,5 @@
-{
-  options,
-  config,
-  lib,
-  pkgs,
-  ...
-}: let
+{ options, config, lib, pkgs, ... }:
+let
   inherit (lib.modules) mkIf;
   cfg = config.modules.desktop.browsers;
 in {
@@ -20,7 +15,6 @@ in {
     };
   };
 
-  config = mkIf (cfg.default != null) {
-    home.sessionVariables.BROWSER = cfg.default;
-  };
+  config =
+    mkIf (cfg.default != null) { home.sessionVariables.BROWSER = cfg.default; };
 }

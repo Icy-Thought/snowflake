@@ -1,17 +1,12 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
-}: let
+{ config, options, lib, pkgs, ... }:
+let
   inherit (builtins) concatStringsSep toString;
   inherit (lib.attrsets) mapAttrsToList;
   inherit (lib.modules) mkIf mkMerge;
 in {
-  options.modules.desktop.terminal.kitty = let
-    inherit (lib.options) mkEnableOption;
-  in {enable = mkEnableOption "GPU-accelerated terminal emulator";};
+  options.modules.desktop.terminal.kitty =
+    let inherit (lib.options) mkEnableOption;
+    in { enable = mkEnableOption "GPU-accelerated terminal emulator"; };
 
   config = mkIf config.modules.desktop.terminal.kitty.enable {
     hm.programs.kitty = {
@@ -30,9 +25,10 @@ in {
         background_opacity = "0.8";
         inactive_text_alpha = "1.0";
         disable_ligatures = "cursor";
-        modify_font = concatStringsSep " " (mapAttrsToList (name: value: "${name} ${value}") {
-          cell_height = "110%";
-        });
+        modify_font = concatStringsSep " "
+          (mapAttrsToList (name: value: "${name} ${value}") {
+            cell_height = "110%";
+          });
 
         enable_audio_bell = "no";
         bell_on_tab = "no";
@@ -88,16 +84,13 @@ in {
         "ctrl+shift+page_down" = "previous_tab";
       };
 
-      extraConfig = let
-        inherit (config.modules.themes) active;
-      in
-        mkIf (active != null) ''
-          include ~/.config/kitty/config/${active}.conf
-        '';
+      extraConfig = let inherit (config.modules.themes) active;
+      in mkIf (active != null) ''
+        include ~/.config/kitty/config/${active}.conf
+      '';
     };
 
-    create.configFile = let
-      inherit (config.modules.themes) active;
+    create.configFile = let inherit (config.modules.themes) active;
     in (mkMerge [
       {
         tab-bar = {

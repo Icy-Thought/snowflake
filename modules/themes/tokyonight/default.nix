@@ -1,10 +1,5 @@
-{
-  options,
-  config,
-  lib,
-  pkgs,
-  ...
-}: let
+{ options, config, lib, pkgs, ... }:
+let
   inherit (builtins) toString readFile;
   inherit (lib.attrsets) attrValues;
   inherit (lib.modules) mkDefault mkIf mkMerge;
@@ -24,9 +19,8 @@ in {
 
         iconTheme = {
           name = "Fluent-orange-dark";
-          package = pkgs.fluent-icon-theme.override {
-            colorVariants = ["orange"];
-          };
+          package =
+            pkgs.fluent-icon-theme.override { colorVariants = [ "orange" ]; };
         };
 
         pointer = {
@@ -37,13 +31,14 @@ in {
         fontConfig = {
           packages = attrValues {
             inherit (pkgs) noto-fonts-emoji sarasa-gothic;
-            google-fonts = pkgs.google-fonts.override {fonts = ["Cardo"];};
-            nerdfonts =
-              pkgs.nerdfonts.override {fonts = ["CascadiaCode" "VictorMono"];};
+            google-fonts = pkgs.google-fonts.override { fonts = [ "Cardo" ]; };
+            nerdfonts = pkgs.nerdfonts.override {
+              fonts = [ "CascadiaCode" "VictorMono" ];
+            };
           };
-          mono = ["VictorMono Nerd Font" "Sarasa Mono SC"];
-          sans = ["Caskaydia Cove Nerd Font" "Sarasa Gothic SC"];
-          emoji = ["Noto Color Emoji"];
+          mono = [ "VictorMono Nerd Font" "Sarasa Mono SC" ];
+          sans = [ "Caskaydia Cove Nerd Font" "Sarasa Gothic SC" ];
+          emoji = [ "Noto Color Emoji" ];
         };
 
         font = {
@@ -102,7 +97,8 @@ in {
         editor = {
           helix = {
             dark = "tokyonight";
-            light = "tokyonight_storm"; # FIXME: no `tokyonight_day` as of 2022-09-01
+            light =
+              "tokyonight_storm"; # FIXME: no `tokyonight_day` as of 2022-09-01
           };
           neovim = {
             dark = "tokyonight";
@@ -123,20 +119,16 @@ in {
     }
 
     (mkIf config.modules.desktop.browsers.firefox.enable {
-      modules.desktop.browsers.firefox.userChrome = let
-        usrChromeDir = "${config.snowflake.configDir}/firefox/userChrome";
-      in
-        concatMapStringsSep "\n" readFile [
-          "${usrChromeDir}/sidebery.css"
-        ];
+      modules.desktop.browsers.firefox.userChrome =
+        let usrChromeDir = "${config.snowflake.configDir}/firefox/userChrome";
+        in concatMapStringsSep "\n" readFile [ "${usrChromeDir}/sidebery.css" ];
     })
 
     (mkIf config.services.xserver.enable {
       hm.programs.rofi = {
         extraConfig = {
           icon-theme = let inherit (cfg.iconTheme) name; in "${name}";
-          font = let
-            inherit (cfg.font.sans) family weight size;
+          font = let inherit (cfg.font.sans) family weight size;
           in "${family} ${weight} ${toString size}";
         };
 
@@ -278,25 +270,25 @@ in {
         };
       };
 
-      hm.programs.sioyek.config = let
-        inherit (cfg.font.mono) family size weight;
-      in {
-        "custom_background_color " = "0.10 0.11 0.15";
-        "custom_text_color " = "0.75 0.79 0.96";
+      hm.programs.sioyek.config =
+        let inherit (cfg.font.mono) family size weight;
+        in {
+          "custom_background_color " = "0.10 0.11 0.15";
+          "custom_text_color " = "0.75 0.79 0.96";
 
-        "text_highlight_color" = "0.24 0.35 0.63";
-        "visual_mark_color" = "1.00 0.62 0.39 1.0";
-        "search_highlight_color" = "0.97 0.46 0.56";
-        "link_highlight_color" = "0.48 0.64 0.97";
-        "synctex_highlight_color" = "0.62 0.81 0.42";
+          "text_highlight_color" = "0.24 0.35 0.63";
+          "visual_mark_color" = "1.00 0.62 0.39 1.0";
+          "search_highlight_color" = "0.97 0.46 0.56";
+          "link_highlight_color" = "0.48 0.64 0.97";
+          "synctex_highlight_color" = "0.62 0.81 0.42";
 
-        "page_separator_width" = "2";
-        "page_separator_color" = "0.81 0.79 0.76";
-        "status_bar_color" = "0.34 0.37 0.54";
+          "page_separator_width" = "2";
+          "page_separator_color" = "0.81 0.79 0.76";
+          "status_bar_color" = "0.34 0.37 0.54";
 
-        "font_size" = "${toString size}";
-        "ui_font" = "${family} ${weight}";
-      };
+          "font_size" = "${toString size}";
+          "ui_font" = "${family} ${weight}";
+        };
     })
   ]);
 }

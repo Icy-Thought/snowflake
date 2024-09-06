@@ -1,10 +1,5 @@
-{
-  options,
-  config,
-  lib,
-  pkgs,
-  ...
-}: let
+{ options, config, lib, pkgs, ... }:
+let
   inherit (builtins) readFile toString;
   inherit (lib.attrsets) attrValues;
   inherit (lib.modules) mkDefault mkIf mkMerge;
@@ -31,13 +26,14 @@ in {
         fontConfig = {
           packages = attrValues {
             inherit (pkgs) noto-fonts-emoji sarasa-gothic;
-            google-fonts = pkgs.google-fonts.override {fonts = ["Cardo"];};
-            nerdfonts =
-              pkgs.nerdfonts.override {fonts = ["CascadiaCode" "VictorMono"];};
+            google-fonts = pkgs.google-fonts.override { fonts = [ "Cardo" ]; };
+            nerdfonts = pkgs.nerdfonts.override {
+              fonts = [ "CascadiaCode" "VictorMono" ];
+            };
           };
-          mono = ["VictorMono Nerd Font" "Sarasa Mono SC"];
-          sans = ["Caskaydia Cove Nerd Font" "Sarasa Gothic SC"];
-          emoji = ["Noto Color Emoji"];
+          mono = [ "VictorMono Nerd Font" "Sarasa Mono SC" ];
+          sans = [ "Caskaydia Cove Nerd Font" "Sarasa Gothic SC" ];
+          emoji = [ "Noto Color Emoji" ];
         };
 
         font = {
@@ -117,20 +113,16 @@ in {
     }
 
     (mkIf config.modules.desktop.browsers.firefox.enable {
-      modules.desktop.browsers.firefox.userChrome = let
-        usrChromeDir = "${config.snowflake.configDir}/firefox/userChrome";
-      in
-        concatMapStringsSep "\n" readFile [
-          "${usrChromeDir}/sidebery.css"
-        ];
+      modules.desktop.browsers.firefox.userChrome =
+        let usrChromeDir = "${config.snowflake.configDir}/firefox/userChrome";
+        in concatMapStringsSep "\n" readFile [ "${usrChromeDir}/sidebery.css" ];
     })
 
     (mkIf config.services.xserver.enable {
       hm.programs.rofi = {
         extraConfig = {
           icon-theme = let inherit (cfg.iconTheme) name; in "${name}";
-          font = let
-            inherit (cfg.font) mono sans;
+          font = let inherit (cfg.font) mono sans;
           in "${mono.family} Italic ${mono.weight} ${toString sans.size}";
         };
 
@@ -272,8 +264,7 @@ in {
         };
       };
 
-      hm.programs.sioyek.config = let
-        inherit (cfg.font) mono sans;
+      hm.programs.sioyek.config = let inherit (cfg.font) mono sans;
       in {
         "custom_background_color " = "0.10 0.11 0.15";
         "custom_text_color " = "0.75 0.79 0.96";

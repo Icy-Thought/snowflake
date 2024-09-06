@@ -1,10 +1,5 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
-}: let
+{ config, options, lib, pkgs, ... }:
+let
   inherit (builtins) isAttrs;
   inherit (lib.attrsets) attrValues;
   inherit (lib.modules) mkIf mkMerge;
@@ -15,9 +10,7 @@ in {
   options.modules.desktop = let
     inherit (lib.types) either str;
     inherit (lib.my) mkOpt;
-  in {
-    type = mkOpt (either str null) null;
-  };
+  in { type = mkOpt (either str null) null; };
 
   config = mkMerge [
     {
@@ -28,17 +21,19 @@ in {
           || !(anyAttrs (_: v: isAttrs v && anyAttrs isEnabled v) cfg);
       in [
         {
-          assertion =
-            (countAttrs (_: v: v.enable or false) cfg) < 2;
-          message = "Can't have more than one desktop environment enabled at a time";
+          assertion = (countAttrs (_: v: v.enable or false) cfg) < 2;
+          message =
+            "Can't have more than one desktop environment enabled at a time";
         }
         {
           assertion = hasDesktopEnabled cfg;
-          message = "Can't enable a desktop sub-module without a desktop environment";
+          message =
+            "Can't enable a desktop sub-module without a desktop environment";
         }
         {
           assertion = !(hasDesktopEnabled cfg) || cfg.type != null;
-          message = "Downstream desktop module did not set modules.desktop.type!";
+          message =
+            "Downstream desktop module did not set modules.desktop.type!";
         }
       ];
     }
@@ -54,28 +49,21 @@ in {
       '';
 
       user.packages = attrValues {
-        inherit
-          (pkgs)
-          nvfetcher
-          clipboard-jh
-          gucharmap
-          hyperfine
-          kalker
-          ;
+        inherit (pkgs) nvfetcher clipboard-jh gucharmap hyperfine kalker;
 
         kalker-launcher = pkgs.makeDesktopItem {
           name = "Kalker";
           desktopName = "Kalker";
           icon = "calc";
           exec = "${config.modules.desktop.terminal.default} start kalker";
-          categories = ["Education" "Science" "Math"];
+          categories = [ "Education" "Science" "Math" ];
         };
       };
 
       services.xserver.enable = true;
       xdg.portal = {
         enable = true;
-        extraPortals = [pkgs.xdg-desktop-portal-gtk];
+        extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
         config.common.default = "*";
       };
       services.gnome.gnome-keyring.enable = true;
@@ -83,9 +71,8 @@ in {
       fonts = {
         fontDir.enable = true;
         enableGhostscriptFonts = true;
-        packages = attrValues {
-          inherit (pkgs) sarasa-gothic scheherazade-new;
-        };
+        packages =
+          attrValues { inherit (pkgs) sarasa-gothic scheherazade-new; };
       };
 
       hm.qt = {

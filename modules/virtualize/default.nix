@@ -1,33 +1,18 @@
-{
-  options,
-  config,
-  lib,
-  pkgs,
-  ...
-}: let
+{ options, config, lib, pkgs, ... }:
+let
   inherit (lib.attrsets) attrValues;
   inherit (lib.modules) mkIf;
 
   cfg = config.modules.virtualize;
 in {
-  options.modules.virtualize = let
-    inherit (lib.options) mkEnableOption;
-  in {
-    enable = mkEnableOption "Spawn virtual envionrments where required.";
-  };
+  options.modules.virtualize = let inherit (lib.options) mkEnableOption;
+  in { enable = mkEnableOption "Spawn virtual envionrments where required."; };
 
   config = mkIf cfg.enable {
     user.packages = attrValues {
-      inherit
-        (pkgs)
-        virt-manager
-        virt-viewer
-        win-virtio
-        spice
-        spice-gtk
-        spice-protocol
-        win-spice
-        ;
+      inherit (pkgs)
+        virt-manager virt-viewer win-virtio spice spice-gtk spice-protocol
+        win-spice;
     };
 
     virtualisation = {
@@ -36,20 +21,20 @@ in {
         # extraOptions = ["--verbose"];
         qemu.ovmf = {
           enable = true;
-          packages = [pkgs.OVMFFull.fd];
+          packages = [ pkgs.OVMFFull.fd ];
         };
       };
       spiceUSBRedirection.enable = true;
     };
-    user.extraGroups = ["libvirtd"];
+    user.extraGroups = [ "libvirtd" ];
 
     services.spice-vdagentd.enable = true;
 
     # Fix: Could not detect a default hypervisor. Make sure the appropriate QEMU/KVM virtualization...
     hm.dconf.settings = {
       "org/virt-manager/virt-manager/connections" = {
-        autoconnect = ["qemu:///system"];
-        uris = ["qemu:///system"];
+        autoconnect = [ "qemu:///system" ];
+        uris = [ "qemu:///system" ];
       };
     };
   };

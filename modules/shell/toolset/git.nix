@@ -1,26 +1,19 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
-}: let
+{ config, options, lib, pkgs, ... }:
+let
   inherit (builtins) readFile;
   inherit (lib.attrsets) attrValues optionalAttrs;
   inherit (lib.modules) mkIf;
 in {
-  options.modules.shell.toolset.git = let
-    inherit (lib.options) mkEnableOption;
-  in {enable = mkEnableOption "version-control system";};
+  options.modules.shell.toolset.git = let inherit (lib.options) mkEnableOption;
+  in { enable = mkEnableOption "version-control system"; };
 
   config = mkIf config.modules.shell.toolset.git.enable {
     user.packages = attrValues ({
-        inherit (pkgs) act dura lazygit;
-        inherit (pkgs.gitAndTools) gh git-open;
-      }
-      // optionalAttrs config.modules.shell.toolset.gnupg.enable {
-        inherit (pkgs.gitAndTools) git-crypt;
-      });
+      inherit (pkgs) act dura lazygit;
+      inherit (pkgs.gitAndTools) gh git-open;
+    } // optionalAttrs config.modules.shell.toolset.gnupg.enable {
+      inherit (pkgs.gitAndTools) git-crypt;
+    });
 
     # Prevent x11 askPass prompt on git push:
     programs.ssh.askPassword = "";
@@ -60,7 +53,7 @@ in {
         '';
       };
 
-      attributes = ["*.lisp diff=lisp" "*.el diff=lisp" "*.org diff=org"];
+      attributes = [ "*.lisp diff=lisp" "*.el diff=lisp" "*.org diff=org" ];
 
       ignores = [
         # General:
@@ -141,7 +134,8 @@ in {
         };
 
         diff = {
-          "lisp".xfuncname = "^(((;;;+ )|\\(|([ 	]+\\(((cl-|el-patch-)?def(un|var|macro|method|custom)|gb/))).*)$";
+          "lisp".xfuncname =
+            "^(((;;;+ )|\\(|([ 	]+\\(((cl-|el-patch-)?def(un|var|macro|method|custom)|gb/))).*)$";
           "org".xfuncname = "^(\\*+ +.*)$";
         };
       };

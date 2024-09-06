@@ -1,10 +1,6 @@
 # Copyright (c) 2022 felschr. All Rights Reserved.
-{
-  options,
-  config,
-  lib,
-  ...
-}: let
+{ options, config, lib, ... }:
+let
   inherit (builtins) listToAttrs;
   inherit (lib.attrsets) mapAttrsToList nameValuePair;
   inherit (lib.lists) flatten;
@@ -36,27 +32,20 @@ in {
       enable = true;
       defaultApplications = let
         defaultApps = let
-          inherit
-            (cfg.applications)
-            docReader
-            editor
-            fileManager
-            imageViewer
-            mediaPlayer
-            torrentCli
-            browser
-            ;
+          inherit (cfg.applications)
+            docReader editor fileManager imageViewer mediaPlayer torrentCli
+            browser;
         in {
-          audio = [mediaPlayer];
-          browser = [browser];
-          compression = [fileManager];
-          directory = [fileManager];
-          image = [imageViewer];
-          magnet = [torrentCli];
-          mail = [editor];
-          pdf = [docReader];
-          text = [editor];
-          video = [mediaPlayer];
+          audio = [ mediaPlayer ];
+          browser = [ browser ];
+          compression = [ fileManager ];
+          directory = [ fileManager ];
+          image = [ imageViewer ];
+          magnet = [ torrentCli ];
+          mail = [ editor ];
+          pdf = [ docReader ];
+          text = [ editor ];
+          video = [ mediaPlayer ];
         };
         mimeMap = {
           audio = [
@@ -100,7 +89,7 @@ in {
             "application/x-xz-compressed-tar"
             "application/zip"
           ];
-          directory = ["inode/directory"];
+          directory = [ "inode/directory" ];
           image = [
             "image/bmp"
             "image/gif"
@@ -112,10 +101,10 @@ in {
             "image/vnd.microsoft.icon"
             "image/webp"
           ];
-          magnet = ["x-scheme-handler/magnet"];
-          mail = ["x-scheme-handler/mailto"];
-          pdf = ["application/pdf"];
-          text = ["text/plain"];
+          magnet = [ "x-scheme-handler/magnet" ];
+          mail = [ "x-scheme-handler/mailto" ];
+          pdf = [ "application/pdf" ];
+          text = [ "text/plain" ];
           video = [
             "video/mp2t"
             "video/mp4"
@@ -127,10 +116,8 @@ in {
             "video/x-msvideo"
           ];
         };
-      in
-        listToAttrs (flatten (mapAttrsToList (key: types:
-          map (type: nameValuePair type (defaultApps."${key}")) types)
-        mimeMap));
+      in listToAttrs (flatten (mapAttrsToList (key: types:
+        map (type: nameValuePair type (defaultApps."${key}")) types) mimeMap));
     };
   };
 }

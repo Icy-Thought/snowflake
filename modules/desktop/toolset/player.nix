@@ -1,50 +1,36 @@
-{
-  inputs,
-  options,
-  config,
-  lib,
-  pkgs,
-  ...
-}: let
+{ inputs, options, config, lib, pkgs, ... }:
+let
   inherit (lib.attrsets) attrValues;
   inherit (lib.modules) mkIf mkMerge;
 
   cfg = config.modules.desktop.toolset.player;
 in {
-  options.modules.desktop.toolset.player = let
-    inherit (lib.options) mkEnableOption;
-  in {
-    music.enable = mkEnableOption "music player";
-    video.enable = mkEnableOption "video player";
-  };
+  options.modules.desktop.toolset.player =
+    let inherit (lib.options) mkEnableOption;
+    in {
+      music.enable = mkEnableOption "music player";
+      video.enable = mkEnableOption "video player";
+    };
 
   config = mkMerge [
     (mkIf cfg.music.enable {
-      hm.imports = [inputs.spicetify-nix.homeManagerModules.default];
+      hm.imports = [ inputs.spicetify-nix.homeManagerModules.default ];
 
-      hm.programs.spicetify = let
-        spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.system};
-      in {
-        enable = true;
-        theme = spicePkgs.themes.catppuccin;
-        colorScheme = "mocha";
+      hm.programs.spicetify =
+        let spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.system};
+        in {
+          enable = true;
+          theme = spicePkgs.themes.catppuccin;
+          colorScheme = "mocha";
 
-        enabledCustomApps = attrValues {
-          inherit (spicePkgs.apps) newReleases lyricsPlus;
+          enabledCustomApps =
+            attrValues { inherit (spicePkgs.apps) newReleases lyricsPlus; };
+          enabledExtensions = attrValues {
+            inherit (spicePkgs.extensions)
+              adblock fullAppDisplay hidePodcasts keyboardShortcut playNext
+              showQueueDuration shuffle;
+          };
         };
-        enabledExtensions = attrValues {
-          inherit
-            (spicePkgs.extensions)
-            adblock
-            fullAppDisplay
-            hidePodcasts
-            keyboardShortcut
-            playNext
-            showQueueDuration
-            shuffle
-            ;
-        };
-      };
     })
 
     (mkIf cfg.video.enable {
@@ -66,7 +52,7 @@ in {
         };
       };
 
-      user.packages = [pkgs.mpvc];
+      user.packages = [ pkgs.mpvc ];
     })
   ];
 }

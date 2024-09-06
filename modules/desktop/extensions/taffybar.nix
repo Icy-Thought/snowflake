@@ -1,22 +1,14 @@
-{
-  inputs,
-  options,
-  config,
-  lib,
-  pkgs,
-  ...
-}: let
+{ inputs, options, config, lib, pkgs, ... }:
+let
   inherit (builtins) readFile;
   inherit (lib.modules) mkIf;
   inherit (lib.strings) optionalString;
 
   cfg = config.modules.desktop.extensions.taffybar;
 in {
-  options.modules.desktop.extensions.taffybar = let
-    inherit (lib.options) mkEnableOption;
-  in {
-    enable = mkEnableOption "haskell status-bar library";
-  };
+  options.modules.desktop.extensions.taffybar =
+    let inherit (lib.options) mkEnableOption;
+    in { enable = mkEnableOption "haskell status-bar library"; };
 
   config = mkIf cfg.enable {
     create.configFile = let
@@ -41,7 +33,7 @@ in {
     # 2-step workaround (https://github.com/taffybar/taffybar/issues/403)
     gtk.iconCache.enable = true;
 
-    programs.gdk-pixbuf.modulePackages = [pkgs.librsvg];
+    programs.gdk-pixbuf.modulePackages = [ pkgs.librsvg ];
     services.xserver.displayManager.sessionCommands = ''
       # 1st-Step Taffybar workaround
       systemctl --user import-environment GDK_PIXBUF_MODULE_FILE DBUS_SESSION_BUS_ADDRESS PATH

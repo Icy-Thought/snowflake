@@ -1,10 +1,5 @@
-{
-  options,
-  config,
-  lib,
-  pkgs,
-  ...
-}: let
+{ options, config, lib, pkgs, ... }:
+let
   inherit (builtins) toString;
   inherit (lib.attrsets) optionalAttrs;
   inherit (lib.modules) mkIf mkMerge;
@@ -18,7 +13,7 @@ in {
   in {
     enable = mkEnableOption "A document-viewer for our desktop";
     program = mkOption {
-      type = nullOr (enum ["sioyek" "zathura"]);
+      type = nullOr (enum [ "sioyek" "zathura" ]);
       default = "zathura";
       description = "which document viewer to install";
     };
@@ -36,52 +31,49 @@ in {
         options = let
           inherit (config.modules.themes) active;
           inherit (config.modules.themes.colors.main) normal types;
-        in
-          {
-            adjust-open = "width";
-            first-page-column = "1:1";
-            selection-clipboard = "clipboard";
-            statusbar-home-tilde = true;
-            window-title-basename = true;
-          }
-          // optionalAttrs (active != null) {
-            font = let
-              inherit (config.modules.themes.font) mono sans;
-            in "${mono.family} Bold ${toString sans.size}";
-            recolor = true;
-            recolor-keephue = true;
-            recolor-reverse-video = true;
+        in {
+          adjust-open = "width";
+          first-page-column = "1:1";
+          selection-clipboard = "clipboard";
+          statusbar-home-tilde = true;
+          window-title-basename = true;
+        } // optionalAttrs (active != null) {
+          font = let inherit (config.modules.themes.font) mono sans;
+          in "${mono.family} Bold ${toString sans.size}";
+          recolor = true;
+          recolor-keephue = true;
+          recolor-reverse-video = true;
 
-            default-fg = "${types.fg}";
-            default-bg = "${types.bg}";
+          default-fg = "${types.fg}";
+          default-bg = "${types.bg}";
 
-            statusbar-fg = "${types.bg}";
-            statusbar-bg = "${types.highlight}";
+          statusbar-fg = "${types.bg}";
+          statusbar-bg = "${types.highlight}";
 
-            inputbar-fg = "${normal.yellow}";
-            inputbar-bg = "${types.bg}";
+          inputbar-fg = "${normal.yellow}";
+          inputbar-bg = "${types.bg}";
 
-            notification-fg = "${normal.white}";
-            notification-bg = "${normal.black}";
+          notification-fg = "${normal.white}";
+          notification-bg = "${normal.black}";
 
-            notification-error-fg = "${normal.white}";
-            notification-error-bg = "${normal.black}";
+          notification-error-fg = "${normal.white}";
+          notification-error-bg = "${normal.black}";
 
-            notification-warning-fg = "${normal.red}";
-            notification-warning-bg = "${normal.black}";
+          notification-warning-fg = "${normal.red}";
+          notification-warning-bg = "${normal.black}";
 
-            highlight-active-color = "${types.fg}";
-            highlight-color = "${types.panelbg}";
+          highlight-active-color = "${types.fg}";
+          highlight-color = "${types.panelbg}";
 
-            completion-fg = "${normal.yellow}";
-            completion-bg = "${types.bg}";
+          completion-fg = "${normal.yellow}";
+          completion-bg = "${types.bg}";
 
-            completion-highlight-fg = "${types.bg}";
-            completion-highlight-bg = "${normal.yellow}";
+          completion-highlight-fg = "${types.bg}";
+          completion-highlight-bg = "${normal.yellow}";
 
-            recolor-lightcolor = "${types.bg}";
-            recolor-darkcolor = "${normal.white}";
-          };
+          recolor-lightcolor = "${types.bg}";
+          recolor-darkcolor = "${normal.white}";
+        };
       };
     })
 
@@ -93,7 +85,7 @@ in {
           "check_for_updates_on_startup" = "0";
           "default_dark_mode" = "1";
           "startup_commands" =
-            concatStringsSep ";" ["toggle_custom_color" "toggle_statusbar"];
+            concatStringsSep ";" [ "toggle_custom_color" "toggle_statusbar" ];
 
           "should_launch_new_instance" = "1";
           "sort_bookmarks_by_location" = "1";

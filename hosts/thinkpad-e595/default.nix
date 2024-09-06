@@ -1,10 +1,5 @@
-{
-  pkgs,
-  config,
-  lib,
-  ...
-}: {
-  imports = [./hardware.nix];
+{ pkgs, config, lib, ... }: {
+  imports = [ ./hardware.nix ];
 
   modules = {
     shell = {

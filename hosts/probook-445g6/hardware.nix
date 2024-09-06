@@ -1,37 +1,33 @@
-{
-  config,
-  lib,
-  pkgs,
-  modulesPath,
-  ...
-}: let
+{ config, lib, pkgs, modulesPath, ... }:
+let
   inherit (lib.modules) mkDefault;
   inherit (lib.attrsets) attrValues;
 in {
-  imports = [(modulesPath + "/installer/scan/not-detected.nix")];
+  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
   fileSystems."/" = {
     device = "/dev/disk/by-label/nixos";
     fsType = "ext4";
-    options = ["noatime" "x-gvfs-hide"];
+    options = [ "noatime" "x-gvfs-hide" ];
   };
 
   fileSystems."/boot" = {
     device = "/dev/disk/by-label/BOOT";
     fsType = "vfat";
-    options = ["x-gvfs-hide"];
+    options = [ "x-gvfs-hide" ];
   };
 
-  swapDevices = [{device = "/dev/disk/by-label/swap";}];
+  swapDevices = [{ device = "/dev/disk/by-label/swap"; }];
 
   boot = {
     initrd = {
-      availableKernelModules = ["xhci_pci" "ahci" "usb_storage" "sd_mod" "rtsx_pci_sdmmc"];
-      kernelModules = [];
+      availableKernelModules =
+        [ "xhci_pci" "ahci" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
+      kernelModules = [ ];
     };
-    extraModulePackages = [];
-    kernelModules = ["kvm-amd"];
-    kernelParams = [];
+    extraModulePackages = [ ];
+    kernelModules = [ "kvm-amd" ];
+    kernelParams = [ ];
     kernel.sysctl = {
       "net.ipv4.icmp_echo_ignore_broadcasts" = 1; # Refuse ICMP echo requests
     };
@@ -77,6 +73,6 @@ in {
 
   services = {
     upower.enable = true;
-    xserver.videoDrivers = ["modesetting"];
+    xserver.videoDrivers = [ "modesetting" ];
   };
 }

@@ -1,21 +1,16 @@
-{
-  options,
-  config,
-  lib,
-  pkgs,
-  ...
-}: let
+{ options, config, lib, pkgs, ... }:
+let
   inherit (lib.modules) mkIf mkForce mkMerge;
 
   cfg = config.modules.desktop.distraction.steam;
   desktop = config.modules.desktop;
 in {
-  options.modules.desktop.distraction.steam = let
-    inherit (lib.options) mkEnableOption;
-  in {
-    enable = mkEnableOption "Enable steam, the game/software store";
-    hardware.enable = mkEnableOption "Support for steam hardware";
-  };
+  options.modules.desktop.distraction.steam =
+    let inherit (lib.options) mkEnableOption;
+    in {
+      enable = mkEnableOption "Enable steam, the game/software store";
+      hardware.enable = mkEnableOption "Support for steam hardware";
+    };
 
   config = mkIf cfg.enable (mkMerge [
     {
@@ -35,7 +30,7 @@ in {
       programs.gamemode = {
         enable = true;
         enableRenice = true;
-        settings = {};
+        settings = { };
       };
     }
 
@@ -50,12 +45,12 @@ in {
           WINE_FULLSCREEN_FSR = "1";
           WLR_RENDERER = "vulkan";
         };
-        args = ["--hdr-enabled"];
+        args = [ "--hdr-enabled" ];
       };
 
       programs.steam.gamescopeSession = {
         enable = true;
-        args = ["--immediate-flips"];
+        args = [ "--immediate-flips" ];
       };
     })
   ]);

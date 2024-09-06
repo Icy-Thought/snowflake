@@ -1,24 +1,17 @@
-{
-  inputs,
-  config,
-  lib,
-  pkgs,
-  ...
-}: let
+{ inputs, config, lib, pkgs, ... }:
+let
   inherit (builtins) toString;
   inherit (lib.attrsets) attrValues filterAttrs mapAttrs mapAttrsToList;
   inherit (lib.modules) mkAliasOptionModule mkDefault mkIf;
   inherit (lib.my) mapModulesRec';
 in {
-  imports =
-    [
-      inputs.home-manager.nixosModules.home-manager
-      (mkAliasOptionModule ["hm"] ["home-manager" "users" config.user.name])
-      (mkAliasOptionModule ["home"] ["hm" "home"])
-      (mkAliasOptionModule ["create" "configFile"] ["hm" "xdg" "configFile"])
-      (mkAliasOptionModule ["create" "dataFile"] ["hm" "xdg" "dataFile"])
-    ]
-    ++ (mapModulesRec' (toString ./modules) import);
+  imports = [
+    inputs.home-manager.nixosModules.home-manager
+    (mkAliasOptionModule [ "hm" ] [ "home-manager" "users" config.user.name ])
+    (mkAliasOptionModule [ "home" ] [ "hm" "home" ])
+    (mkAliasOptionModule [ "create" "configFile" ] [ "hm" "xdg" "configFile" ])
+    (mkAliasOptionModule [ "create" "dataFile" ] [ "hm" "xdg" "dataFile" ])
+  ] ++ (mapModulesRec' (toString ./modules) import);
 
   # Common config for all nixos machines;
   environment.variables = {
@@ -30,23 +23,22 @@ in {
   nix = let
     filteredInputs = filterAttrs (n: _: n != "self") inputs;
     nixPathInputs = mapAttrsToList (n: v: "${n}=${v}") filteredInputs;
-    registryInputs = mapAttrs (_: v: {flake = v;}) filteredInputs;
+    registryInputs = mapAttrs (_: v: { flake = v; }) filteredInputs;
   in {
     package = pkgs.nixVersions.stable;
     extraOptions = "experimental-features = nix-command flakes";
 
-    nixPath =
-      nixPathInputs
-      ++ [
-        "nixpkgs-overlays=${config.snowflake.dir}/overlays"
-        "snowflake=${config.snowflake.dir}"
-      ];
+    nixPath = nixPathInputs ++ [
+      "nixpkgs-overlays=${config.snowflake.dir}/overlays"
+      "snowflake=${config.snowflake.dir}"
+    ];
 
-    registry = registryInputs // {snowflake.flake = inputs.self;};
+    registry = registryInputs // { snowflake.flake = inputs.self; };
 
     settings = {
       auto-optimise-store = true;
-      substituters = ["https://nix-community.cachix.org" "https://hyprland.cachix.org"];
+      substituters =
+        [ "https://nix-community.cachix.org" "https://hyprland.cachix.org" ];
       trusted-public-keys = [
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
         "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
@@ -66,7 +58,7 @@ in {
 
   boot = {
     kernelPackages = mkDefault pkgs.linuxPackages_latest;
-    kernelParams = ["pcie_aspm.policy=performance"];
+    kernelParams = [ "pcie_aspm.policy=performance" ];
     loader = {
       efi.efiSysMountPoint = "/boot";
       efi.canTouchEfiVariables = mkDefault true;
@@ -89,9 +81,8 @@ in {
   i18n.defaultLocale = mkDefault "en_US.UTF-8";
 
   environment = {
-    defaultPackages = lib.mkForce [];
-    systemPackages = attrValues {
-      inherit (pkgs) cached-nix-shell gnumake unrar unzip;
-    };
+    defaultPackages = lib.mkForce [ ];
+    systemPackages =
+      attrValues { inherit (pkgs) cached-nix-shell gnumake unrar unzip; };
   };
 }

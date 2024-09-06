@@ -1,22 +1,15 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
-}: let
-  inherit (lib.modules) mkIf;
+{ config, options, lib, pkgs, ... }:
+let inherit (lib.modules) mkIf;
 in {
-  options.modules.shell.toolset.lsd = let
-    inherit (lib.options) mkEnableOption;
-  in {enable = mkEnableOption "Next-gen ls command";};
+  options.modules.shell.toolset.lsd = let inherit (lib.options) mkEnableOption;
+  in { enable = mkEnableOption "Next-gen ls command"; };
 
   config = mkIf config.modules.shell.toolset.btop.enable {
     hm.programs.lsd = {
       enable = true;
       enableAliases = false;
       settings = {
-        blocks = ["permission" "size" "user" "group" "date" "name"];
+        blocks = [ "permission" "size" "user" "group" "date" "name" ];
         date = "relative";
         # ignore-globs = [".git" ".hg"];
         header = true;
@@ -26,8 +19,7 @@ in {
         };
       };
 
-      colors = let
-        inherit (config.modules.themes) active;
+      colors = let inherit (config.modules.themes) active;
       in (mkIf (active != null) {
         user = "cyan";
         group = "yellow";

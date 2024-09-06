@@ -1,10 +1,5 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
-}: let
+{ config, options, lib, pkgs, ... }:
+let
   inherit (lib.attrsets) attrValues;
   inherit (lib.lists) optionals;
   inherit (lib.modules) mkIf mkMerge;
@@ -20,27 +15,22 @@ in {
   in {
     base.enable = mkEnableOption "cross-platform clients";
     notmuch.enable = mkEnableOption "NotMuch of an e-mail client";
-    discord.enable =
-      mkEnableOption "discord client"
-      // {
-        default = cfg.base.enable;
-      };
+    discord.enable = mkEnableOption "discord client" // {
+      default = cfg.base.enable;
+    };
     matrix = {
       withDaemon = {
-        enable =
-          mkEnableOption "matrix daemon for ement.el"
-          // {
-            default = config.modules.desktop.editors.emacs.enable && !cfg.matrix.withClient.enable;
-          };
+        enable = mkEnableOption "matrix daemon for ement.el" // {
+          default = config.modules.desktop.editors.emacs.enable
+            && !cfg.matrix.withClient.enable;
+        };
       };
       withClient = {
-        enable =
-          mkEnableOption "rust-based matrix client"
-          // {
-            default = cfg.base.enable && !cfg.matrix.withDaemon.enable;
-          };
+        enable = mkEnableOption "rust-based matrix client" // {
+          default = cfg.base.enable && !cfg.matrix.withDaemon.enable;
+        };
         package = mkOption {
-          type = nullOr (enum ["element" "fractal"]);
+          type = nullOr (enum [ "element" "fractal" ]);
           default = "element";
           description = "What display protocol to use.";
         };
@@ -50,17 +40,14 @@ in {
 
   config = mkMerge [
     (mkIf cfg.base.enable {
-      user.packages = attrValues {
-        inherit (pkgs) signal-desktop;
-      };
+      user.packages = attrValues { inherit (pkgs) signal-desktop; };
     })
 
     (mkIf cfg.notmuch.enable {
       hm.accounts.email = {
         maildirBasePath = mailDir;
 
-        accounts.${config.user.name} = let
-          mailAddr = "IcyThought@disroot.org";
+        accounts.${config.user.name} = let mailAddr = "IcyThought@disroot.org";
         in {
           realName = "${config.user.name}";
           userName = "${mailAddr}";
@@ -81,7 +68,7 @@ in {
           offlineimap.enable = true;
           msmtp = {
             enable = true;
-            extraConfig = {auth = "login";};
+            extraConfig = { auth = "login"; };
           };
           notmuch.enable = true;
 
@@ -102,7 +89,7 @@ in {
             preNew = "${lib.getExe pkgs.offlineimap} -o;";
             postNew = "${lib.getExe pkgs.afew} --tag --new";
           };
-          new.tags = ["new"];
+          new.tags = [ "new" ];
         };
         afew = let
           relMailDir = lib.strings.removePrefix "${config.user.home}/" mailDir;
@@ -161,7 +148,8 @@ in {
 
     (mkIf cfg.matrix.withDaemon.enable {
       hm.nixpkgs = {
-        config.permittedInsecurePackages = ["olm-3.2.16"]; # :WARN| TEMPORARY SOLUTION!!!
+        config.permittedInsecurePackages =
+          [ "olm-3.2.16" ]; # :WARN| TEMPORARY SOLUTION!!!
         overlays = [
           (final: prev: {
             pantalaimon = prev.pantalaimon.overrideAttrs (_: {
@@ -195,17 +183,17 @@ in {
         inherit (pkgs) makeWrapper symlinkJoin element-desktop;
         element-desktop' = symlinkJoin {
           name = "element-desktop-in-dataHome";
-          paths = [element-desktop];
-          nativeBuildInputs = [makeWrapper];
+          paths = [ element-desktop ];
+          nativeBuildInputs = [ makeWrapper ];
           postBuild = ''
             wrapProgram "$out/bin/element-desktop" \
               --add-flags '--profile-dir $XDG_DATA_HOME/Element'
           '';
         };
-      in
-        if (cfg.matrix.withClient.package == "element")
-        then [element-desktop']
-        else [pkgs.fractal-next];
+      in if (cfg.matrix.withClient.package == "element") then
+        [ element-desktop' ]
+      else
+        [ pkgs.fractal-next ];
     })
 
     (mkIf cfg.discord.enable {
@@ -229,36 +217,33 @@ in {
       };
 
       user.packages = let
-        flags =
-          [
-            "--flag-switches-begin"
-            "--flag-switches-end"
-            "--disable-gpu-memory-buffer-video-frames"
-            "--enable-accelerated-mjpeg-decode"
-            "--enable-accelerated-video"
-            "--enable-gpu-rasterization"
-            "--enable-native-gpu-memory-buffers"
-            "--enable-zero-copy"
-            "--ignore-gpu-blocklist"
-          ]
-          ++ optionals (desktop.type == "x11") [
-            "--disable-features=UseOzonePlatform"
-            "--enable-features=VaapiVideoDecoder"
-          ]
-          ++ optionals (desktop.type == "wayland") [
-            "--enable-features=UseOzonePlatform,WebRTCPipeWireCapturer"
-            "--ozone-platform=wayland"
-            "--enable-webrtc-pipewire-capturer"
-          ];
+        flags = [
+          "--flag-switches-begin"
+          "--flag-switches-end"
+          "--disable-gpu-memory-buffer-video-frames"
+          "--enable-accelerated-mjpeg-decode"
+          "--enable-accelerated-video"
+          "--enable-gpu-rasterization"
+          "--enable-native-gpu-memory-buffers"
+          "--enable-zero-copy"
+          "--ignore-gpu-blocklist"
+        ] ++ optionals (desktop.type == "x11") [
+          "--disable-features=UseOzonePlatform"
+          "--enable-features=VaapiVideoDecoder"
+        ] ++ optionals (desktop.type == "wayland") [
+          "--enable-features=UseOzonePlatform,WebRTCPipeWireCapturer"
+          "--ozone-platform=wayland"
+          "--enable-webrtc-pipewire-capturer"
+        ];
 
         discord-canary' =
-          (pkgs.discord-canary.override {withOpenASAR = true;}).overrideAttrs
+          (pkgs.discord-canary.override { withOpenASAR = true; }).overrideAttrs
           (old: {
             preInstall = ''
               gappsWrapperArgs+=("--add-flags" "${concatStringsSep " " flags}")
             '';
           });
-      in [discord-canary'];
+      in [ discord-canary' ];
     })
   ];
 }

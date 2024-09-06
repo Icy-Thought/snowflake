@@ -1,7 +1,4 @@
-{
-  lib,
-  stdenv,
-}:
+{ lib, stdenv, }:
 stdenv.mkDerivation {
   pname = "fantezy-font";
   version = "0.0.1";

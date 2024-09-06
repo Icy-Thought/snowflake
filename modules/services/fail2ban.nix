@@ -1,20 +1,13 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
-}: let
-  inherit (lib.modules) mkIf;
+{ config, options, lib, pkgs, ... }:
+let inherit (lib.modules) mkIf;
 in {
-  options.modules.services.fail2ban = let
-    inherit (lib.options) mkEnableOption;
-  in {enable = mkEnableOption "intrusion prevention";};
+  options.modules.services.fail2ban = let inherit (lib.options) mkEnableOption;
+  in { enable = mkEnableOption "intrusion prevention"; };
 
   config = mkIf config.modules.services.fail2ban.enable {
     services.fail2ban = {
       enable = true;
-      ignoreIP = ["127.0.0.1/16" "192.168.1.0/24"];
+      ignoreIP = [ "127.0.0.1/16" "192.168.1.0/24" ];
       banaction-allports = "iptables-allports";
 
       bantime-increment = {

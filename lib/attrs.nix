@@ -1,10 +1,11 @@
-{lib, ...}: let
+{ lib, ... }:
+let
   inherit (lib.lists) any count;
   inherit (lib.attrsets) filterAttrs listToAttrs mapAttrs' mapAttrsToList;
 in rec {
   # attrsToList
   attrsToList = attrs:
-    mapAttrsToList (name: value: {inherit name value;}) attrs;
+    mapAttrsToList (name: value: { inherit name value; }) attrs;
 
   # mapFilterAttrs ::
   #   (name -> value -> bool)

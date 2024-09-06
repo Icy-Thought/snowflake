@@ -1,10 +1,5 @@
-{
-  options,
-  config,
-  lib,
-  pkgs,
-  ...
-}: let
+{ options, config, lib, pkgs, ... }:
+let
   inherit (lib.attrsets) attrValues;
   inherit (lib.modules) mkIf mkMerge;
 
@@ -16,7 +11,7 @@ in {
   in {
     enable = mkEnableOption "Enable CJK input method";
     framework = mkOption {
-      type = nullOr (enum ["fcitx" "ibus"]);
+      type = nullOr (enum [ "fcitx" "ibus" ]);
       default = null;
       description = "Choose the desired language-method framework";
     };
@@ -25,7 +20,8 @@ in {
   config = mkIf cfg.enable (mkMerge [
     {
       home.sessionVariables = {
-        GLFW_IM_MODULE = "ibus"; # https://github.com/kovidgoyal/kitty/issues/403
+        GLFW_IM_MODULE =
+          "ibus"; # https://github.com/kovidgoyal/kitty/issues/403
         GTK_IM_MODULE = "${cfg.framework}";
         QT_IM_MODULE = "${cfg.framework}";
         SDL_IM_MODULE = "${cfg.framework}";
@@ -37,11 +33,7 @@ in {
       i18n.inputMethod = {
         type = "fcitx5";
         fcitx5.addons = attrValues {
-          inherit
-            (pkgs)
-            fcitx5-configtool
-            fcitx5-chinese-addons
-            ;
+          inherit (pkgs) fcitx5-configtool fcitx5-chinese-addons;
           inherit (pkgs.my) fcitx5-catppuccin;
         };
       };
@@ -50,27 +42,25 @@ in {
     (mkIf (cfg.framework == "ibus") {
       i18n.inputMethod = {
         type = "ibus";
-        ibus.engines = attrValues {
-          inherit (pkgs.ibus-engines) libpinyin;
-        };
+        ibus.engines = attrValues { inherit (pkgs.ibus-engines) libpinyin; };
       };
 
       hm.systemd.user.services.ibus-daemon = {
         Unit = {
           Description = "Intelligent Input Bus";
-          Documentation = ["man:ibus-daemon(1)"];
-          PartOf = ["graphical-session.target"];
+          Documentation = [ "man:ibus-daemon(1)" ];
+          PartOf = [ "graphical-session.target" ];
         };
 
         Service = {
-          Environment = ["DISPLAY=:0"];
+          Environment = [ "DISPLAY=:0" ];
           Restart = "on-failure";
 
           ExecStart = "${pkgs.ibus}/bin/ibus-daemon --replace --xim";
           ExecReload = "${pkgs.ibus}/bin/ibus restart";
           ExecStop = "${pkgs.ibus}/bin/ibus exit";
         };
-        Install.WantedBy = ["graphical-session.target"];
+        Install.WantedBy = [ "graphical-session.target" ];
       };
     })
   ]);

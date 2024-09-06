@@ -1,11 +1,5 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  inputs,
-  ...
-}: let
+{ config, options, lib, pkgs, inputs, ... }:
+let
   inherit (lib.attrsets) attrValues optionalAttrs;
   inherit (lib.modules) mkIf mkMerge;
 
@@ -17,7 +11,7 @@ in {
   in {
     enable = mkEnableOption "Spread the joy of neovim in our flake";
     template = mkOption {
-      type = nullOr (enum ["agasaya" "ereshkigal"]);
+      type = nullOr (enum [ "agasaya" "ereshkigal" ]);
       default = "agasaya";
       description = "Which Neovim configuration to setup.";
     };
@@ -25,11 +19,10 @@ in {
 
   config = mkIf cfg.enable (mkMerge [
     {
-      user.packages = attrValues (
-        optionalAttrs (config.modules.develop.cc.enable == false) {
+      user.packages = attrValues
+        (optionalAttrs (config.modules.develop.cc.enable == false) {
           inherit (pkgs) gcc; # Treesitter
-        }
-      );
+        });
 
       programs.neovim = {
         enable = true;

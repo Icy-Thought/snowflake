@@ -1,27 +1,17 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
-}: let
+{ config, options, lib, pkgs, ... }:
+let
   inherit (lib.attrsets) attrValues;
   inherit (lib.modules) mkIf mkMerge;
   cfg = config.modules.develop.python;
 in {
-  options.modules.develop.python = let
-    inherit (lib.options) mkEnableOption;
-  in {enable = mkEnableOption "Python development";};
+  options.modules.develop.python = let inherit (lib.options) mkEnableOption;
+  in { enable = mkEnableOption "Python development"; };
 
   config = mkIf cfg.enable (mkMerge [
     {
       user.packages = attrValues {
-        pyWithEnv = pkgs.python3.withPackages (pykgs:
-          with pykgs; [
-            ipython
-            black
-            isort
-          ]);
+        pyWithEnv = pkgs.python3.withPackages
+          (pykgs: with pykgs; [ ipython black isort ]);
         inherit (pkgs) rye pyright; # pylyzer
       };
 

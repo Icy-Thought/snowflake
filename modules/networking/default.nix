@@ -1,17 +1,11 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
-}: let
+{ config, options, lib, pkgs, ... }:
+let
   inherit (lib.meta) getExe;
   inherit (lib.modules) mkDefault mkIf mkMerge;
 
   cfg = config.modules.networking;
 in {
-  options.modules.networking = let
-    inherit (lib.options) mkEnableOption;
+  options.modules.networking = let inherit (lib.options) mkEnableOption;
   in {
     iwd.enable = mkEnableOption "wpa_supplicant alt.";
     networkd.enable = mkEnableOption "systemd network manager";
@@ -49,13 +43,13 @@ in {
       };
 
       # A GUI for easier network management:
-      user.packages = [pkgs.iwgtk];
+      user.packages = [ pkgs.iwgtk ];
 
       # Launch indicator as a daemon on login:
       systemd.user.services.iwgtk = {
         serviceConfig.ExecStart = "${getExe pkgs.iwgtk} -i";
-        wantedBy = ["graphical-session.target"];
-        partOf = ["graphical-session.target"];
+        wantedBy = [ "graphical-session.target" ];
+        partOf = [ "graphical-session.target" ];
       };
     })
 

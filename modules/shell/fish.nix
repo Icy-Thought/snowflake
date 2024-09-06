@@ -1,10 +1,5 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
-}: let
+{ config, options, lib, pkgs, ... }:
+let
   inherit (builtins) map;
   inherit (lib.meta) getExe;
   inherit (lib.modules) mkIf;
@@ -23,9 +18,7 @@ in {
       enable = true;
       # useBabelfish = true;
 
-      shellAliases = {
-        less = "less -R";
-      };
+      shellAliases = { less = "less -R"; };
       shellAbbrs = import "${config.snowflake.configDir}/shell-abbr.nix";
 
       functions = {
@@ -57,8 +50,7 @@ in {
           inherit name;
           inherit (pkgs.fishPlugins."${name}") src;
         };
-      in
-        map (p: mkPlugin p) ["done" "autopair-fish"];
+      in map (p: mkPlugin p) [ "done" "autopair-fish" ];
     };
 
     create.configFile = let

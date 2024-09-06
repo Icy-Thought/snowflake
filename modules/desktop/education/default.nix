@@ -1,16 +1,10 @@
-{
-  options,
-  config,
-  lib,
-  pkgs,
-  ...
-}: let
+{ options, config, lib, pkgs, ... }:
+let
   inherit (lib.meta) getExe;
   inherit (lib.modules) mkIf mkMerge;
   cfg = config.modules.desktop.education;
 in {
-  options.modules.desktop.education = let
-    inherit (lib.options) mkEnableOption;
+  options.modules.desktop.education = let inherit (lib.options) mkEnableOption;
   in {
     memorization.enable = mkEnableOption "SUID tool (sandbox)";
     vidcom.enable = mkEnableOption "jailed zoom-us";
@@ -19,7 +13,7 @@ in {
   config = mkMerge [
     (mkIf cfg.memorization.enable {
       # TODO: Configure anki OR replace with other software
-      user.packages = [pkgs.anki];
+      user.packages = [ pkgs.anki ];
     })
 
     (mkIf cfg.vidcom.enable {
@@ -38,7 +32,7 @@ in {
           icon = "Zoom";
           exec = "/run/current-system/sw/bin/zoom";
           genericName = "Video Conference";
-          categories = ["Network" "VideoConference"];
+          categories = [ "Network" "VideoConference" ];
         })
       ];
     })

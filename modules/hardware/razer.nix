@@ -1,15 +1,8 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
-}: let
-  inherit (lib.modules) mkIf;
+{ config, options, lib, pkgs, ... }:
+let inherit (lib.modules) mkIf;
 in {
-  options.modules.hardware.razer = let
-    inherit (lib.options) mkEnableOption;
-  in {enable = mkEnableOption "razer-device manager";};
+  options.modules.hardware.razer = let inherit (lib.options) mkEnableOption;
+  in { enable = mkEnableOption "razer-device manager"; };
 
   config = mkIf config.modules.hardware.razer.enable {
     hardware.openrazer = {
@@ -23,9 +16,9 @@ in {
       };
     };
 
-    user.extraGroups = ["plugdev" "openrazer"];
+    user.extraGroups = [ "plugdev" "openrazer" ];
 
     # GUI for managing your openrazer devices
-    user.packages = [pkgs.polychromatic];
+    user.packages = [ pkgs.polychromatic ];
   };
 }

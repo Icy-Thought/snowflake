@@ -1,19 +1,14 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
-}: let
+{ config, options, lib, pkgs, ... }:
+let
   inherit (builtins) toString;
   inherit (lib.meta) getExe;
   inherit (lib.modules) mkIf mkMerge;
 
   active = config.modules.themes.active;
 in {
-  options.modules.desktop.terminal.alacritty = let
-    inherit (lib.options) mkEnableOption;
-  in {enable = mkEnableOption "OpenGL terminal emulator";};
+  options.modules.desktop.terminal.alacritty =
+    let inherit (lib.options) mkEnableOption;
+    in { enable = mkEnableOption "OpenGL terminal emulator"; };
 
   config = mkIf config.modules.desktop.terminal.alacritty.enable {
     modules.shell.toolset.tmux.enable = true;
@@ -63,7 +58,7 @@ in {
 
           shell = {
             program = "${getExe pkgs.fish}";
-            args = ["-l" "-c" "tmux new || tmux"];
+            args = [ "-l" "-c" "tmux new || tmux" ];
           };
 
           cursor = {
@@ -130,7 +125,7 @@ in {
         }
 
         (mkIf (active != null) {
-          import = ["~/.config/alacritty/config/${active}.toml"];
+          import = [ "~/.config/alacritty/config/${active}.toml" ];
         })
       ];
     };
@@ -141,87 +136,86 @@ in {
         source = let
           inherit (config.modules.themes.font) mono sans;
           inherit (config.modules.themes.colors.main) bright normal types;
-          tomlFormat = pkgs.formats.toml {};
-        in
-          tomlFormat.generate "alacritty-theme" {
-            font = {
-              builtin_box_drawing = true;
-              size = mono.size;
+          tomlFormat = pkgs.formats.toml { };
+        in tomlFormat.generate "alacritty-theme" {
+          font = {
+            builtin_box_drawing = true;
+            size = mono.size;
 
-              normal = {
-                family = "${mono.family}";
-                style = "${sans.weight}";
-              };
-
-              italic = {
-                family = "${mono.family}";
-                style = "${sans.weight} Italic";
-              };
-
-              bold = {
-                family = "${mono.family}";
-                style = "${mono.weight}";
-              };
-
-              bold_italic = {
-                family = "${mono.family}";
-                style = "${mono.weight} Italic";
-              };
-
-              offset = {
-                x = 0;
-                y = 0;
-              };
-              glyph_offset = {
-                x = 0;
-                y = 0;
-              };
+            normal = {
+              family = "${mono.family}";
+              style = "${sans.weight}";
             };
 
-            colors = {
-              primary = {
-                foreground = "${types.fg}";
-                background = "${types.bg}";
-              };
+            italic = {
+              family = "${mono.family}";
+              style = "${sans.weight} Italic";
+            };
 
-              cursor = {
-                text = "${types.bg}";
-                cursor = "${normal.yellow}";
-              };
+            bold = {
+              family = "${mono.family}";
+              style = "${mono.weight}";
+            };
 
-              vi_mode_cursor = {
-                text = "${types.bg}";
-                cursor = "${normal.blue}";
-              };
+            bold_italic = {
+              family = "${mono.family}";
+              style = "${mono.weight} Italic";
+            };
 
-              selection = {
-                text = "${types.bg}";
-                background = "${types.highlight}";
-              };
-
-              normal = {
-                black = "${normal.black}";
-                red = "${normal.red}";
-                green = "${normal.green}";
-                yellow = "${normal.yellow}";
-                blue = "${normal.blue}";
-                magenta = "${normal.magenta}";
-                cyan = "${normal.cyan}";
-                white = "${normal.white}";
-              };
-
-              bright = {
-                black = "${bright.black}";
-                red = "${bright.red}";
-                green = "${bright.green}";
-                yellow = "${bright.yellow}";
-                blue = "${bright.blue}";
-                magenta = "${bright.magenta}";
-                cyan = "${bright.cyan}";
-                white = "${bright.white}";
-              };
+            offset = {
+              x = 0;
+              y = 0;
+            };
+            glyph_offset = {
+              x = 0;
+              y = 0;
             };
           };
+
+          colors = {
+            primary = {
+              foreground = "${types.fg}";
+              background = "${types.bg}";
+            };
+
+            cursor = {
+              text = "${types.bg}";
+              cursor = "${normal.yellow}";
+            };
+
+            vi_mode_cursor = {
+              text = "${types.bg}";
+              cursor = "${normal.blue}";
+            };
+
+            selection = {
+              text = "${types.bg}";
+              background = "${types.highlight}";
+            };
+
+            normal = {
+              black = "${normal.black}";
+              red = "${normal.red}";
+              green = "${normal.green}";
+              yellow = "${normal.yellow}";
+              blue = "${normal.blue}";
+              magenta = "${normal.magenta}";
+              cyan = "${normal.cyan}";
+              white = "${normal.white}";
+            };
+
+            bright = {
+              black = "${bright.black}";
+              red = "${bright.red}";
+              green = "${bright.green}";
+              yellow = "${bright.yellow}";
+              blue = "${bright.blue}";
+              magenta = "${bright.magenta}";
+              cyan = "${bright.cyan}";
+              white = "${bright.white}";
+            };
+          };
+        };
       };
     };
   };

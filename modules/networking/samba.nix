@@ -1,24 +1,20 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
-}: let
+{ config, options, lib, pkgs, ... }:
+let
   inherit (builtins) getEnv;
   inherit (lib.modules) mkIf mkMerge;
 in {
-  options.modules.networking.samba = let
-    inherit (lib.options) mkEnableOption;
+  options.modules.networking.samba = let inherit (lib.options) mkEnableOption;
   in {
-    sharing.enable = mkEnableOption "Samba: enable NixOS -> external file-transfer";
-    receiving.enable = mkEnableOption "Samba: enable external -> NixOS file-transfer";
+    sharing.enable =
+      mkEnableOption "Samba: enable NixOS -> external file-transfer";
+    receiving.enable =
+      mkEnableOption "Samba: enable external -> NixOS file-transfer";
   };
 
   config = mkMerge [
     (mkIf config.modules.networking.samba.sharing.enable {
       users = {
-        groups.samba-guest = {};
+        groups.samba-guest = { };
         users.samba-guest = {
           isSystemUser = true;
           description = "Residence of our Samba guest users";
@@ -28,15 +24,16 @@ in {
           shell = pkgs.shadow;
         };
       };
-      user.extraGroups = ["samba-guest"];
+      user.extraGroups = [ "samba-guest" ];
 
       networking.firewall = {
         allowPing = true;
-        allowedTCPPorts = [5357]; # wsdd
-        allowedUDPPorts = [3702]; # wsdd
+        allowedTCPPorts = [ 5357 ]; # wsdd
+        allowedUDPPorts = [ 3702 ]; # wsdd
       };
 
-      services.samba-wsdd.enable = true; # make shares visible for windows 10 clients
+      services.samba-wsdd.enable =
+        true; # make shares visible for windows 10 clients
 
       services.samba = {
         enable = true;

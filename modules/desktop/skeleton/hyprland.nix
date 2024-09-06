@@ -1,18 +1,11 @@
-{
-  options,
-  config,
-  inputs,
-  lib,
-  pkgs,
-  ...
-}: let
+{ options, config, inputs, lib, pkgs, ... }:
+let
   inherit (builtins) readFile toPath;
   inherit (lib.attrsets) attrValues;
   inherit (lib.modules) mkIf;
 in {
-  options.modules.desktop.hyprland = let
-    inherit (lib.options) mkEnableOption;
-  in {enable = mkEnableOption "hyped wayland WM";};
+  options.modules.desktop.hyprland = let inherit (lib.options) mkEnableOption;
+  in { enable = mkEnableOption "hyped wayland WM"; };
 
   config = mkIf config.modules.desktop.hyprland.enable {
     modules.desktop = {
@@ -48,9 +41,8 @@ in {
       user = "${config.user.name}";
     };
 
-    hm.imports = let
-      inherit (inputs) hyprland;
-    in [hyprland.homeManagerModules.default];
+    hm.imports = let inherit (inputs) hyprland;
+    in [ hyprland.homeManagerModules.default ];
 
     hm.wayland.windowManager.hyprland = {
       enable = true;
@@ -59,10 +51,9 @@ in {
     };
 
     # System wallpaper:
-    create.configFile.hypr-wallpaper = let
-      inherit (config.modules.themes) wallpaper;
-    in
-      mkIf (wallpaper != null) {
+    create.configFile.hypr-wallpaper =
+      let inherit (config.modules.themes) wallpaper;
+      in mkIf (wallpaper != null) {
         target = "hypr/hyprpaper.conf";
         text = ''
           preload = ${toPath wallpaper}

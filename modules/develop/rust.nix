@@ -1,22 +1,15 @@
-{
-  inputs,
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
-}: let
+{ inputs, config, options, lib, pkgs, ... }:
+let
   inherit (lib.attrsets) attrValues;
   inherit (lib.modules) mkIf mkMerge;
   inherit (lib.meta) getExe;
 in {
-  options.modules.develop.rust = let
-    inherit (lib.options) mkEnableOption;
-  in {enable = mkEnableOption "Rust development";};
+  options.modules.develop.rust = let inherit (lib.options) mkEnableOption;
+  in { enable = mkEnableOption "Rust development"; };
 
   config = mkMerge [
     (mkIf config.modules.develop.rust.enable {
-      nixpkgs.overlays = [inputs.rust.overlays.default];
+      nixpkgs.overlays = [ inputs.rust.overlays.default ];
 
       user.packages = attrValues {
         rust-package = pkgs.rust-bin.stable.latest.default;
@@ -36,7 +29,7 @@ in {
     (mkIf config.modules.develop.xdg.enable {
       home = {
         sessionVariables.CARGO_HOME = "$XDG_DATA_HOME/cargo";
-        sessionPath = ["$CARGO_HOME/bin"];
+        sessionPath = [ "$CARGO_HOME/bin" ];
       };
     })
   ];

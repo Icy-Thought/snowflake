@@ -1,8 +1,4 @@
-{
-  config,
-  lib,
-  ...
-}: {
+{ config, lib, ... }: {
   boot = {
     tmp.useTmpfs = lib.mkDefault true;
     tmp.cleanOnBoot = lib.mkDefault (!config.boot.tmp.useTmpfs);
@@ -46,7 +42,7 @@
       "net.ipv4.tcp_congestion_control" = "bbr";
       "net.core.default_qdisc" = "cake";
     };
-    kernelModules = ["tcp_bbr"];
+    kernelModules = [ "tcp_bbr" ];
   };
 
   user.initialPassword = "nixos";

@@ -1,23 +1,15 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
-}: let
+{ config, options, lib, pkgs, ... }:
+let
   inherit (lib.attrsets) attrValues;
   inherit (lib.modules) mkIf;
 
   cfg = config.modules.hardware.pipewire;
 in {
-  options.modules.hardware.pipewire = let
-    inherit (lib.options) mkEnableOption;
-  in {enable = mkEnableOption "modern audio support";};
+  options.modules.hardware.pipewire = let inherit (lib.options) mkEnableOption;
+  in { enable = mkEnableOption "modern audio support"; };
 
   config = mkIf cfg.enable {
-    user.packages = attrValues {
-      inherit (pkgs) easyeffects;
-    };
+    user.packages = attrValues { inherit (pkgs) easyeffects; };
 
     security.rtkit.enable = true;
 
@@ -35,12 +27,10 @@ in {
             "bluez5.enable-sbc-xq" = true;
             "bluez5.enable-msbc" = true;
             "bluez5.enable-hw-volume" = true;
-            "bluez5.roles" = ["hsp_hs" "hsp_ag" "hfp_hf" "hfp_ag"];
+            "bluez5.roles" = [ "hsp_hs" "hsp_ag" "hfp_hf" "hfp_ag" ];
           };
 
-          "wireplumber.profiles" = {
-            main."monitor.libcamera" = "disabled";
-          };
+          "wireplumber.profiles" = { main."monitor.libcamera" = "disabled"; };
         };
       };
     };

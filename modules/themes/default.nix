@@ -1,10 +1,5 @@
-{
-  options,
-  config,
-  lib,
-  pkgs,
-  ...
-}: let
+{ options, config, lib, pkgs, ... }:
+let
   inherit (builtins) getEnv map;
   inherit (lib.attrsets) attrValues mapAttrsToList;
   inherit (lib.meta) getExe;
@@ -22,12 +17,9 @@ in {
     active = mkOption {
       type = nullOr str;
       default = null;
-      apply = v: let
-        theme = getEnv "THEME";
-      in
-        if theme != ""
-        then theme
-        else v;
+      apply = v:
+        let theme = getEnv "THEME";
+        in if theme != "" then theme else v;
       description = ''
         Name of the theme which ought to be applied.
         Can be overridden by the `THEME` environment variable.
@@ -36,35 +28,34 @@ in {
 
     wallpaper = mkOpt (nullOr path) null;
 
-    loginWallpaper = mkOpt (nullOr path) (
-      if cfg.wallpaper != null
-      then toFilteredImage cfg.wallpaper "-gaussian-blur 0x2 -modulate 70 -level 5%"
-      else null
-    );
+    loginWallpaper = mkOpt (nullOr path) (if cfg.wallpaper != null then
+      toFilteredImage cfg.wallpaper "-gaussian-blur 0x2 -modulate 70 -level 5%"
+    else
+      null);
 
     gtk = {
       name = mkOpt str "";
-      package = mkPackageOption pkgs "gtk" {};
+      package = mkPackageOption pkgs "gtk" { };
     };
 
     iconTheme = {
       name = mkOpt str "";
-      package = mkPackageOption pkgs "icon" {};
+      package = mkPackageOption pkgs "icon" { };
     };
 
     pointer = {
       name = mkOpt str "";
-      package = mkPackageOption pkgs "pointer" {};
+      package = mkPackageOption pkgs "pointer" { };
       size = mkOpt int 24;
     };
 
-    onReload = mkOpt (attrsOf lines) {};
+    onReload = mkOpt (attrsOf lines) { };
 
     fontConfig = {
-      packages = mkOpt (listOf package) [];
-      mono = mkOpt (listOf str) [""];
-      sans = mkOpt (listOf str) [""];
-      emoji = mkOpt (listOf str) [""];
+      packages = mkOpt (listOf package) [ ];
+      mono = mkOpt (listOf str) [ "" ];
+      sans = mkOpt (listOf str) [ "" ];
+      emoji = mkOpt (listOf str) [ "" ];
     };
 
     font = {
@@ -196,8 +187,7 @@ in {
         };
       };
 
-      home.pointerCursor = let
-        inherit (cfg.pointer) name package size;
+      home.pointerCursor = let inherit (cfg.pointer) name package size;
       in {
         name = name;
         package = package;
@@ -205,8 +195,7 @@ in {
         gtk.enable = true;
       };
 
-      fonts = let
-        inherit (cfg.fontConfig) packages emoji mono sans;
+      fonts = let inherit (cfg.fontConfig) packages emoji mono sans;
       in {
         packages = packages;
         fontconfig.defaultFonts = {
@@ -216,42 +205,39 @@ in {
         };
       };
 
-      hm.programs.vscode.extensions = let
-        inherit (cfg.vscode.extension) name publisher version hash;
-      in
-        pkgs.vscode-utils.extensionsFromVscodeMarketplace [
-          {
-            name = "${name}";
-            publisher = "${publisher}";
-            version = "${version}";
-            hash = "${hash}";
-          }
-        ];
+      hm.programs.vscode.extensions =
+        let inherit (cfg.vscode.extension) name publisher version hash;
+        in pkgs.vscode-utils.extensionsFromVscodeMarketplace [{
+          name = "${name}";
+          publisher = "${publisher}";
+          version = "${version}";
+          hash = "${hash}";
+        }];
     }
 
     (mkIf (desktop.type == "wayland") (mkMerge [
       {
-        programs.regreet.settings.GTK = let
-          inherit (cfg) pointer font iconTheme gtk;
-        in {
-          cursor_theme_name = lib.mkDefault "${pointer.name}";
-          font_name = "${font.mono.family}";
-          icon_theme_name = "${iconTheme.name}";
-          theme_name = "${gtk.name}";
-        };
+        programs.regreet.settings.GTK =
+          let inherit (cfg) pointer font iconTheme gtk;
+          in {
+            cursor_theme_name = lib.mkDefault "${pointer.name}";
+            font_name = "${font.mono.family}";
+            icon_theme_name = "${iconTheme.name}";
+            theme_name = "${gtk.name}";
+          };
       }
 
       (mkIf (cfg.wallpaper != null) {
-        user.packages = attrValues {inherit (pkgs) swww;};
+        user.packages = attrValues { inherit (pkgs) swww; };
 
         hm.systemd.user.services = {
           swww = {
             Unit = {
               Description = "Wallpaper daemon for wayland";
-              After = ["graphical-session.target"];
-              PartOf = ["graphical-session.target"];
+              After = [ "graphical-session.target" ];
+              PartOf = [ "graphical-session.target" ];
             };
-            Install.WantedBy = ["graphical-session.target"];
+            Install.WantedBy = [ "graphical-session.target" ];
             Service = {
               Type = "simple";
               ExecStart = "${pkgs.swww}/bin/swww-daemon";
@@ -262,8 +248,8 @@ in {
           swww-wallpaper = {
             Unit = {
               Description = "Default swww wallpaper";
-              After = ["swww.service"];
-              PartOf = ["swww.service"];
+              After = [ "swww.service" ];
+              PartOf = [ "swww.service" ];
             };
             Service = {
               Type = "oneshot";
@@ -277,12 +263,12 @@ in {
               '';
               Restart = "on-failure";
             };
-            Install.WantedBy = ["swww.service"];
+            Install.WantedBy = [ "swww.service" ];
           };
         };
 
         create.dataFile =
-          mkIf (cfg.wallpaper != null) {"wallpaper".source = cfg.wallpaper;};
+          mkIf (cfg.wallpaper != null) { "wallpaper".source = cfg.wallpaper; };
       })
     ]))
 
@@ -290,8 +276,7 @@ in {
       {
         hm.xresources = {
           path = "${config.user.home}/.Xresources";
-          properties = let
-            inherit (cfg.colors.main) bright normal types;
+          properties = let inherit (cfg.colors.main) bright normal types;
           in {
             "*.foreground" = "${types.fg}";
             "*.background" = "${types.bg}";
@@ -331,17 +316,17 @@ in {
       # Apply theme options -> lightdm-mini-greeter
       (mkIf (cfg.loginWallpaper != null) {
         services.xserver.displayManager.lightdm = {
-          greeters.mini.extraConfig = let
-            inherit (cfg.colors.main) normal types;
-          in ''
-            background-image = "${cfg.loginWallpaper}"
-            background-image-size = "100% 100%"
+          greeters.mini.extraConfig =
+            let inherit (cfg.colors.main) normal types;
+            in ''
+              background-image = "${cfg.loginWallpaper}"
+              background-image-size = "100% 100%"
 
-            text-color = "${types.bg}"
-            password-background-color = "${normal.black}"
-            window-color = "${types.border}"
-            border-color = "${types.border}"
-          '';
+              text-color = "${types.bg}"
+              password-background-color = "${normal.black}"
+              window-color = "${types.border}"
+              border-color = "${types.border}"
+            '';
         };
       })
 
@@ -361,7 +346,7 @@ in {
         services.xserver.displayManager.sessionCommands = command;
 
         create.dataFile =
-          mkIf (cfg.wallpaper != null) {"wallpaper".source = cfg.wallpaper;};
+          mkIf (cfg.wallpaper != null) { "wallpaper".source = cfg.wallpaper; };
       }))
 
       (mkIf (cfg.loginWallpaper != null) {
@@ -371,20 +356,18 @@ in {
         };
       })
 
-      (mkIf (cfg.onReload != {}) (let
-        reloadTheme = let
-          inherit (pkgs) stdenv writeScriptBin;
+      (mkIf (cfg.onReload != { }) (let
+        reloadTheme = let inherit (pkgs) stdenv writeScriptBin;
         in (writeScriptBin "reloadTheme" ''
           #!${stdenv.shell}
           echo "Reloading current theme: ${cfg.active}"
           ${concatStringsSep "\n" (mapAttrsToList (name: script: ''
-              echo "[${name}]"
-              ${script}
-            '')
-            cfg.onReload)}
+            echo "[${name}]"
+            ${script}
+          '') cfg.onReload)}
         '');
       in {
-        user.packages = [reloadTheme];
+        user.packages = [ reloadTheme ];
         system.userActivationScripts.reloadTheme = ''
           [ -z "$NORELOAD" ] && ${reloadTheme}/bin/reloadTheme
         '';

@@ -1,10 +1,5 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
-}: let
+{ config, options, lib, pkgs, ... }:
+let
   inherit (lib.modules) mkIf;
   cfg = config.modules.virtualize.containers.transmission;
 in {
@@ -37,8 +32,8 @@ in {
 
   config = mkIf cfg.enable {
     user = {
-      packages = [pkgs.transmission-remote-gtk];
-      extraGroups = ["transmission"];
+      packages = [ pkgs.transmission-remote-gtk ];
+      extraGroups = [ "transmission" ];
     };
 
     containers.transmission = {
@@ -70,13 +65,13 @@ in {
       # (?) web-app status unknown due to failed login attempt.
 
       systemd.services.transmission = {
-        bindsTo = [""];
-        after = [""];
+        bindsTo = [ "" ];
+        after = [ "" ];
       };
 
       networking.firewall = {
-        allowedTCPPorts = [9091 51413];
-        allowedUDPPorts = [51413];
+        allowedTCPPorts = [ 9091 51413 ];
+        allowedUDPPorts = [ 51413 ];
       };
 
       services.transmission = {
