@@ -111,7 +111,7 @@ def control_volume_level():
         elif args.command == "decrease":
             change_volume.append(str(args.level) + "%-")
         command = wireplumber_cli(change_volume)
-    return command, notify()
+    return command, notify
 
 
 control_volume_level()
