@@ -91,10 +91,7 @@ in {
     })
 
     (mkIf (cfg.type == "x11") {
-      security.pam.services = {
-        login.enableGnomeKeyring = true;
-        lightdm.enableGnomeKeyring = true;
-      };
+      security.pam.services.login.enableGnomeKeyring = true;
 
       services.xserver.displayManager = {
         lightdm = {
