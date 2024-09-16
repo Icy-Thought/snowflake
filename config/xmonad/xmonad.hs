@@ -958,11 +958,12 @@ addKeys conf@XConfig{modMask = modm} =
              ((modm, xK_Right), unsafeSpawn "playerctl --player playerctld next")
            , ((modm, xK_Left), unsafeSpawn "playerctl --player playerctld previous")
            , ((modm, xK_Down), unsafeSpawn "playerctl --player playerctld play-pause")
-           , -- Volume control
+           , -- Volume/Microphone control
              ((0, xF86XK_AudioRaiseVolume), safeSpawn "volctl" ["increase"])
            , ((0, xF86XK_AudioLowerVolume), safeSpawn "volctl" ["decrease"])
            , ((0, xF86XK_AudioMute), safeSpawn "volctl" ["toggle-mute"])
            , ((shiftMask, xF86XK_AudioMute), safeSpawn "volctl" ["toggle-window-mute"])
+           , ((0, xF86XK_AudioMicMute), safeSpawn "micvol" ["toggle-mute"])
            , -- Brightness control
              ((0, xF86XK_MonBrightnessUp), safeSpawn "brightctl" ["increase", "-l 5"])
            , ((0, xF86XK_MonBrightnessDown), safeSpawn "brightctl" ["decrease", "-l 5"])
