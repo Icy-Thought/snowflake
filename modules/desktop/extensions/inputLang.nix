@@ -32,6 +32,7 @@ in {
 
     (mkIf (cfg.framework == "fcitx") {
       i18n.inputMethod = {
+        enable = true;
         type = "fcitx5";
         fcitx5.addons = attrValues {
           inherit (pkgs) fcitx5-configtool fcitx5-chinese-addons;
@@ -42,6 +43,7 @@ in {
 
     (mkIf (cfg.framework == "ibus") {
       i18n.inputMethod = {
+        enable = true;
         type = "ibus";
         ibus.engines = attrValues { inherit (pkgs.ibus-engines) libpinyin; };
       };
