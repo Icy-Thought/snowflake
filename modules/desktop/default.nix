@@ -8,11 +8,19 @@ let
   inherit (lib.my) anyAttrs countAttrs;
 
   cfg = config.modules.desktop;
+  sessionHome = "${config.services.displayManager.sessionData.desktops}/share";
 in {
   options.modules.desktop = let
-    inherit (lib.types) either str;
+    inherit (lib.options) mkOption;
+    inherit (lib.types) either enum str;
     inherit (lib.my) mkOpt;
-  in { type = mkOpt (either str null) null; };
+  in {
+    type = mkOpt (either str null) null;
+    greetd.frontend = mkOption {
+      type = enum [ "tuigreet" "regreet" ];
+      default = "tuigreet";
+    };
+  };
 
   config = mkMerge [
     {
@@ -40,60 +48,86 @@ in {
       ];
     }
 
-    (mkIf (cfg.type != null) {
-      home.sessionVariables.GTK_DATA_PREFIX = "${config.system.path}";
+    (mkIf (cfg.type != null) (mkMerge [
+      {
+        home.sessionVariables.GTK_DATA_PREFIX = "${config.system.path}";
 
-      system.userActivationScripts.cleanupHome = ''
-        pushd "${config.user.home}"
-        rm -rf .compose-cache .nv .pki .dbus .fehbg
-        [ -s .xsession-errors ] || rm -f .xsession-errors*
-        popd
-      '';
+        system.userActivationScripts.cleanupHome = ''
+          pushd "${config.user.home}"
+          rm -rf .compose-cache .nv .pki .dbus .fehbg
+          [ -s .xsession-errors ] || rm -f .xsession-errors*
+          popd
+        '';
 
-      user.packages = attrValues {
-        inherit (pkgs) nvfetcher clipboard-jh gucharmap hyperfine kalker;
+        user.packages = attrValues {
+          inherit (pkgs) nvfetcher clipboard-jh gucharmap hyperfine kalker;
 
-        kalker-launcher = pkgs.makeDesktopItem {
-          name = "Kalker";
-          desktopName = "Kalker";
-          icon = "calc";
-          exec = "${config.modules.desktop.terminal.default} start kalker";
-          categories = [ "Education" "Science" "Math" ];
+          kalker-launcher = pkgs.makeDesktopItem {
+            name = "Kalker";
+            desktopName = "Kalker";
+            icon = "calc";
+            exec = "${config.modules.desktop.terminal.default} start kalker";
+            categories = [ "Education" "Science" "Math" ];
+          };
         };
-      };
 
-      services.xserver.enable = true;
-      programs.regreet = {
-        enable = true;
-        settings.env.SESSION_DIRS = concatStringsSep ":" [
-          "${config.services.displayManager.sessionData.desktops}/share/xsessions"
-          "${config.services.displayManager.sessionData.desktops}/share/wayland-sessions"
-        ];
-      };
-      services.greetd.settings.initial_session.user = "greeter";
+        services.xserver.enable = true;
 
-      xdg.portal = {
-        enable = true;
-        extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-        config.common.default = "*";
-      };
+        services.greetd.settings = let user = "greeter";
+        in {
+          initial_session.user = user;
+          default_session.user = user;
+        };
+        security.pam.services = {
+          login.enableGnomeKeyring = true;
+          greetd.enableGnomeKeyring = true;
+        };
 
-      services.gnome.gnome-keyring.enable = true;
-      security.pam.services.login.enableGnomeKeyring = true;
+        xdg.portal = {
+          enable = true;
+          extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+          config.common.default = "*";
+        };
 
-      fonts = {
-        fontDir.enable = true;
-        enableGhostscriptFonts = true;
-        packages =
-          attrValues { inherit (pkgs) sarasa-gothic scheherazade-new; };
-      };
+        fonts = {
+          fontDir.enable = true;
+          enableGhostscriptFonts = true;
+          packages =
+            attrValues { inherit (pkgs) sarasa-gothic scheherazade-new; };
+        };
 
-      hm.qt = {
-        enable = true;
-        platformTheme.name = "adwaita";
-        style.name = "adwaita-dark";
-      };
-    })
+        hm.qt = {
+          enable = true;
+          platformTheme.name = "adwaita";
+          style.name = "adwaita-dark";
+        };
+      }
+
+      (mkIf (cfg.greetd.frontend == "tuigreet") {
+        services.greetd = {
+          enable = true;
+          settings.default_session.command = builtins.concatStringsSep " " [
+            "${getExe pkgs.greetd.tuigreet}"
+            "--asterisks"
+            "--remember"
+            "--sessions ${sessionHome}/wayland-sessions"
+            "--xsessions ${sessionHome}/xsessions"
+            "--xsession-wrapper 'startx $HOME/.xsession > 2>&1'"
+          ];
+        };
+      })
+
+      (mkIf (cfg.greetd.frontend == "regreet") {
+        # :WARN| Does not launch x11 no matter what I do...
+        programs.regreet = {
+          enable = true;
+          settings.env.SESSION_DIRS = concatStringsSep ":" [
+            "${sessionHome}/xsessions"
+            "${sessionHome}/wayland-sessions"
+          ];
+        };
+      })
+    ]))
 
     (mkIf (cfg.type == "wayland") { xdg.portal.wlr.enable = true; })
 

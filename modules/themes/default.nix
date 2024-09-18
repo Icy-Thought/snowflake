@@ -28,7 +28,6 @@ in {
     };
 
     wallpaper = mkOpt (nullOr path) null;
-
     loginWallpaper = mkOpt (nullOr path) (if cfg.wallpaper != null then
       toFilteredImage cfg.wallpaper "-gaussian-blur 0x2 -modulate 70 -level 5%"
     else
@@ -38,12 +37,10 @@ in {
       name = mkOpt str "";
       package = mkPackageOption pkgs "gtk" { };
     };
-
     iconTheme = {
       name = mkOpt str "";
       package = mkPackageOption pkgs "icon" { };
     };
-
     pointer = {
       name = mkOpt str "";
       package = mkPackageOption pkgs "pointer" { };
@@ -206,6 +203,17 @@ in {
         };
       };
 
+      hm.programs.vscode.extensions =
+        let inherit (cfg.vscode.extension) name publisher version hash;
+        in pkgs.vscode-utils.extensionsFromVscodeMarketplace [{
+          name = "${name}";
+          publisher = "${publisher}";
+          version = "${version}";
+          hash = "${hash}";
+        }];
+    }
+
+    (mkIf (desktop.greetd.frontend == "regreet") {
       programs.regreet = let inherit (cfg) pointer font iconTheme gtk;
       in {
         theme = {
@@ -230,62 +238,7 @@ in {
           fit = "Cover";
         };
       };
-
-      hm.programs.vscode.extensions =
-        let inherit (cfg.vscode.extension) name publisher version hash;
-        in pkgs.vscode-utils.extensionsFromVscodeMarketplace [{
-          name = "${name}";
-          publisher = "${publisher}";
-          version = "${version}";
-          hash = "${hash}";
-        }];
-    }
-
-    (mkIf (desktop.type == "wayland") (mkMerge [
-      (mkIf (cfg.wallpaper != null) {
-        user.packages = attrValues { inherit (pkgs) swww; };
-
-        hm.systemd.user.services = {
-          swww = {
-            Unit = {
-              Description = "Wallpaper daemon for wayland";
-              After = [ "graphical-session.target" ];
-              PartOf = [ "graphical-session.target" ];
-            };
-            Install.WantedBy = [ "graphical-session.target" ];
-            Service = {
-              Type = "simple";
-              ExecStart = "${pkgs.swww}/bin/swww-daemon";
-              ExecStop = "${getExe pkgs.swww} kill";
-              Restart = "on-failure";
-            };
-          };
-          swww-wallpaper = {
-            Unit = {
-              Description = "Default swww wallpaper";
-              After = [ "swww.service" ];
-              PartOf = [ "swww.service" ];
-            };
-            Service = {
-              Type = "oneshot";
-              ExecStart = ''
-                if [ -e "$XDG_DATA_HOME/wallpaper" ]; then
-                   ${getExe pkgs.swww} \
-                       img $XDG_DATA_HOME/wallpaper \
-                       --transition-type random \
-                       --transition-fps 60
-                fi
-              '';
-              Restart = "on-failure";
-            };
-            Install.WantedBy = [ "swww.service" ];
-          };
-        };
-
-        create.dataFile =
-          mkIf (cfg.wallpaper != null) { "wallpaper".source = cfg.wallpaper; };
-      })
-    ]))
+    })
 
     (mkIf (desktop.type == "x11") (mkMerge [
       {
@@ -328,7 +281,6 @@ in {
         };
       }
 
-      # Auto-set wallpaper to prevent $HOME pollution!
       (mkIf (cfg.wallpaper != null) (let
         wCfg = config.services.xserver.desktopManager.wallpaper;
         command = ''

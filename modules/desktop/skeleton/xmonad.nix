@@ -48,7 +48,7 @@ in {
       manage = "window";
       name = "xmonad";
       start = ''
-        systemd-cat -t xmonad -- startx ${getExe pkgs.haskellPackages.birostrisWM} &
+        systemd-cat -t xmonad -- ${getExe pkgs.haskellPackages.birostrisWM} &
         waitPID=$!
       '';
     }];
