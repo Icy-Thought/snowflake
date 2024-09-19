@@ -53,16 +53,14 @@ in {
         inherit (pkgs) imv wf-recorder;
       });
 
-    services.xserver = {
-      displayManager.defaultSession = "none+qtile";
-      windowManager.qtile = {
-        enable = true;
-        configFile = "${config.snowflake.configDir}/qtile/config.py";
-        backend = cfg.backend;
-        # extraPackages = attrValues {
-        #   inherit (pkgs.python3Packages) qtile-extras;
-        # };
-      };
+    services.xserver.windowManager.qtile = {
+      enable = true;
+      configFile = "${config.snowflake.configDir}/qtile/config.py";
+      backend = cfg.backend;
+      # extraPackages = attrValues {
+      #   inherit (pkgs.python3Packages) qtile-extras;
+      # };
     };
+    services.displayManager.defaultSession = "none+qtile";
   };
 }

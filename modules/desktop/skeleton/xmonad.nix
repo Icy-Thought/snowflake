@@ -44,16 +44,14 @@ in {
       inherit (pkgs.xorg) xwininfo;
     };
 
-    services.xserver.displayManager = {
-      session = [{
-        manage = "window";
-        name = "xmonad";
-        start = ''
-          systemd-cat -t xmonad -- ${getExe pkgs.haskellPackages.birostrisWM} &
-          waitPID=$!
-        '';
-      }];
-      defaultSession = "none+xmonad";
-    };
+    services.xserver.displayManager.session = [{
+      manage = "window";
+      name = "xmonad";
+      start = ''
+        systemd-cat -t xmonad -- ${getExe pkgs.haskellPackages.birostrisWM} &
+        waitPID=$!
+      '';
+    }];
+    services.displayManager.defaultSession = "none+xmonad";
   };
 }
