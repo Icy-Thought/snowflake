@@ -61,7 +61,7 @@ floating_layout = layout.Floating(
         Match(wm_class="maketag"),  # gitk
         Match(title="branchdialog"),  # gitk
         Match(wm_class="pinentry"),  # GPG key password entry
-        Match(title="Picture-in-Picture"),  # FireFox
+        Match(title="Picture-in-Picture"),  # Zen Browser
         Match(wm_class="ssh-askpass"),  # ssh-askpass
         Match(wm_class="leagueclientux.exe"),
     ],
@@ -126,7 +126,7 @@ groups.append(
 )
 
 keys.extend(
-    # WARN: Used keys (M-A): f = firefox-nightly, w = firefox-priv , g = librewolf (secure FF fork)
+    # :WARN| Used keys (M-A): f = Zen Browser, w = Zen Browser Private
     [
         EzKey("M-A-b", lazy.group["SPD"].dropdown_toggle("SysMon")),
         EzKey("M-A-e", lazy.group["SPD"].dropdown_toggle("Emacs")),

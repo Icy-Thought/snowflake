@@ -36,7 +36,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
-    firefox.url = "github:nix-community/flake-firefox-nightly";
+    zen-browser.url = "github:MarceColl/zen-browser-flake";
 
     # Submodules (temporary) # TODO
     emacs-dir = {

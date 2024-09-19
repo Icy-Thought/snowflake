@@ -7,8 +7,7 @@ HOME = os.path.expanduser("~")
 
 # Default applications
 myTerm = "alacritty"
-myBrowser = "firefox-nightly"
-myPrivateBrowser = "librewolf"
+myBrowser = "zen"
 
 EzKey.modifier_keys = {
     "M": "mod4",
@@ -81,7 +80,7 @@ rofi_spawns = [
 application_spawns = [
     EzKey("M-S-<Return>", lazy.spawn(myTerm)),
     EzKey("M-A-f", lazy.spawn(myBrowser)),
-    EzKey("M-A-w", lazy.spawn(myPrivateBrowser)),
+    EzKey("M-A-w", lazy.spawn(myBrowser + "--private-window")),
 ]
 
 audioctl = [

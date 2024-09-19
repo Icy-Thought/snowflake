@@ -32,11 +32,8 @@
         neovim.enable = true;
       };
       browsers = {
-        default = "firefox";
-        firefox = {
-          enable = true;
-          privacy.enable = true;
-        };
+        default = "zen";
+        zen.enable = true;
         # nyxt.enable = true;
       };
       education = {

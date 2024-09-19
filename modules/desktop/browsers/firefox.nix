@@ -14,8 +14,6 @@ in {
     inherit (lib.my) mkOpt mkOpt';
   in {
     enable = mkEnableOption "Gecko-based libre browser";
-    privacy.enable = mkEnableOption "Privacy Focused Firefox fork";
-
     profileName = mkOpt str config.user.name;
     settings = mkOpt' (attrsOf (oneOf [ bool int str ])) { } ''
       Firefox preferences set in <filename>user.js</filename>
@@ -33,17 +31,15 @@ in {
     })
 
     (mkIf cfg.enable {
-      user.packages = let
-        inherit (pkgs) makeDesktopItem;
-        inherit (inputs.firefox.packages.${pkgs.system}) firefox-nightly-bin;
+      user.packages = let inherit (pkgs) makeDesktopItem firefox-beta-bin;
       in [
-        firefox-nightly-bin
+        firefox-beta-bin
         (makeDesktopItem {
-          name = "firefox-nightly-private";
-          desktopName = "Firefox Nightly (Private)";
-          genericName = "Launch a private Firefox Nightly instance";
-          icon = "firefox-nightly";
-          exec = "${lib.getExe firefox-nightly-bin} --private-window";
+          name = "firefox-beta-private";
+          desktopName = "Firefox Beta (Private)";
+          genericName = "Launch a private Firefox Beta instance";
+          icon = "firefox-beta";
+          exec = "${lib.getExe firefox-beta-bin} --private-window";
           categories = [ "Network" "WebBrowser" ];
         })
       ];
@@ -221,10 +217,6 @@ in {
           text = cfg.userContent;
         };
       };
-    })
-
-    (mkIf cfg.privacy.enable {
-      user.packages = attrValues { inherit (pkgs) librewolf; };
     })
   ];
 }
