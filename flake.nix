@@ -30,7 +30,7 @@
     rust.url = "github:oxalica/rust-overlay";
 
     # Application -> (Cached) Git
-    emacs.url = "github:nix-community/emacs-overlay";
+    # emacs.url = "github:nix-community/emacs-overlay";
     picom = {
       url = "github:yshui/picom";
       inputs.nixpkgs.follows = "nixpkgs";

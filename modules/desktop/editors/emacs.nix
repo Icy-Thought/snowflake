@@ -11,15 +11,14 @@ in {
     inherit (lib.options) mkEnableOption mkOption;
     inherit (lib.types) enum nullOr package;
   in {
-    enable = mkEnableOption "Sprinkle a bit of magic to our nix-flake.";
+    enable = mkEnableOption "Sprinkle a bit of magic to the nix-flake.";
     package = mkOption {
       type = package;
       default = if (config.modules.desktop.type == "wayland") then
-        pkgs.emacs-pgtk
+        pkgs.emacs30-pgtk
       else
-        pkgs.emacs-git.override { withGTK3 = true; };
-      description =
-        "Emacs package which will be installed in our flake system.";
+        pkgs.emacs30-gtk3;
+      description = "Emacs version which will be installed.";
     };
     terminal = mkOption {
       type = nullOr (enum [ "Eat" "VTerm" ]);
@@ -35,7 +34,7 @@ in {
 
   config = mkIf cfg.enable (mkMerge [
     {
-      nixpkgs.overlays = [ inputs.emacs.overlay ];
+      # nixpkgs.overlays = [ inputs.emacs.overlay ];
 
       user.packages = attrValues ({
         inherit (pkgs) binutils gnutls zstd;
