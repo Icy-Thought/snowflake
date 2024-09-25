@@ -21,7 +21,7 @@
 
     themes.active = "catppuccin";
     desktop = {
-      xmonad.enable = true;
+      hyprland.enable = true;
       terminal = {
         default = "kitty";
         kitty.enable = true;

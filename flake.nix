@@ -26,11 +26,9 @@
     };
     xmonad-contrib.url =
       "github:icy-thought/xmonad-contrib"; # TODO: replace with official after #582 == merged!
-    # hyprland.url = "github:hyprwm/Hyprland";
     rust.url = "github:oxalica/rust-overlay";
 
     # Application -> (Cached) Git
-    # emacs.url = "github:nix-community/emacs-overlay";
     picom = {
       url = "github:yshui/picom";
       inputs.nixpkgs.follows = "nixpkgs";

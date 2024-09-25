@@ -1,7 +1,6 @@
-{ options, config, inputs, lib, pkgs, ... }:
+{ inputs, options, config, lib, pkgs, ... }:
 
 let
-  inherit (builtins) readFile toPath;
   inherit (lib.attrsets) attrValues;
   inherit (lib.modules) mkIf;
 in {
@@ -23,7 +22,6 @@ in {
         mimeApps.enable = true; # mimeApps -> default launch application
         dunst.enable = true;
         waybar.enable = true;
-        elkowar.enable = true;
         rofi.enable = true;
       };
     };
@@ -37,30 +35,22 @@ in {
       inherit (pkgs) imv libnotify playerctl wf-recorder wlr-randr;
     };
 
-    services.greetd.settings.initial_session = {
-      command = "Hyprland";
-      user = "${config.user.name}";
-    };
-
-    hm.imports = let inherit (inputs) hyprland;
-    in [ hyprland.homeManagerModules.default ];
-
+    programs.hyprland.enable = true;
     hm.wayland.windowManager.hyprland = {
       enable = true;
-      extraConfig =
-        readFile "${config.snowflake.configDir}/hyprland/hyprland.conf";
+      xwayland.enable = true;
+      # plugins = [];
+      settings.source = let hyprDir = "${config.snowflake.configDir}/hyprland";
+      in [
+        "${hyprDir}/constants.conf"
+        "${hyprDir}/main.conf"
+        "${hyprDir}/decorations.conf"
+        "${hyprDir}/rules.conf"
+        "${hyprDir}/bindings.conf"
+      ];
     };
+    services.greetd.settings.initial_session.command = "Hyprland";
 
-    # System wallpaper:
-    create.configFile.hypr-wallpaper =
-      let inherit (config.modules.themes) wallpaper;
-      in mkIf (wallpaper != null) {
-        target = "hypr/hyprpaper.conf";
-        text = ''
-          preload = ${toPath wallpaper}
-          wallpaper = eDP-1,${toPath wallpaper}
-          ipc = off
-        '';
-      };
+    # hypridle? hyprlock?
   };
 }

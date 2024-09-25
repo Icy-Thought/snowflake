@@ -18,12 +18,11 @@ in {
 
     programs.dconf.enable = true;
 
-    services.xserver.desktopManager.gnome = {
-      enable = true;
-      # debug = true;
-    };
+    services.xserver.desktopManager.gnome.enable = true;
+    services.greetd.settings.initial_session.command = "gnome-session";
 
     services.gnome = {
+      gnome-keyring.enable = true;
       gnome-browser-connector.enable = true;
       sushi.enable = true;
     };

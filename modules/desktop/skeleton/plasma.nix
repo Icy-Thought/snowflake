@@ -22,7 +22,7 @@ in {
       enable = true;
       enableQt5Integration = false;
     };
-    services.displayManager.defaultSession = "plasmawayland";
+    services.greetd.settings.initial_session.command = "plasmawayland";
 
     environment.plasma6.excludePackages =
       attrValues { inherit (pkgs.kdePackages) konsole oxygen; };

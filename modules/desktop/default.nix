@@ -1,10 +1,9 @@
 { config, options, lib, pkgs, ... }:
 
 let
-  inherit (builtins) isAttrs;
   inherit (lib.attrsets) attrValues;
   inherit (lib.modules) mkIf mkMerge;
-  inherit (lib.my) anyAttrs countAttrs value;
+  inherit (lib.my) anyAttrs countAttrs;
 
   cfg = config.modules.desktop;
 in {
@@ -19,7 +18,7 @@ in {
         isEnabled = _: v: v.enable or false;
         hasDesktopEnabled = cfg:
           (anyAttrs isEnabled cfg)
-          || !(anyAttrs (_: v: isAttrs v && anyAttrs isEnabled v) cfg);
+          || !(anyAttrs (_: v: builtins.isAttrs v && anyAttrs isEnabled v) cfg);
       in [
         {
           assertion = (countAttrs (_: v: v.enable or false) cfg) < 2;
@@ -67,7 +66,7 @@ in {
         extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
         config.common.default = "*";
       };
-      services.gnome.gnome-keyring.enable = true;
+      security.pam.services.login.enableGnomeKeyring = true;
 
       fonts = {
         fontDir.enable = true;
@@ -86,13 +85,17 @@ in {
     (mkIf (cfg.type == "wayland") {
       xdg.portal.wlr.enable = true;
 
-      # Login Manager: ReGreet!
-      programs.regreet.enable = true;
+      programs.regreet = {
+        enable = true;
+        settings.env.SESSION_DIRS = builtins.concatStringsSep ":" [
+          "${config.services.displayManager.sessionData.desktops}/share/xsessions"
+          "${config.services.displayManager.sessionData.desktops}/share/wayland-sessions"
+        ];
+      };
+      services.greetd.settings.initial_session.user = "greeter";
     })
 
     (mkIf (cfg.type == "x11") {
-      security.pam.services.login.enableGnomeKeyring = true;
-
       services.xserver.displayManager = {
         lightdm = {
           enable = true;

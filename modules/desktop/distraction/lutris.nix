@@ -30,7 +30,7 @@ in {
       environment.variables.QT_X11_NO_MITSHM = "1";
 
       user.packages = attrValues {
-        inherit (pkgs) openssl vulkan-tools dxvk;
+        inherit (pkgs) vulkan-tools dxvk;
         inherit (pkgs.gnome) zenity;
       };
     })

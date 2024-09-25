@@ -1,9 +1,0 @@
-(deflisten screencast "runhaskell $HOME/.config/eww/lib/Screencast.hs")
-; (deflisten screencast "runhaskell $HOME/.dotfiles/home-manager/modules/eww/config/lib/Screencast.hs")
-
-(defwidget rec []
-  (box
-    :class "outer-rec"
-    (label :class "${screencast}" :text "󰑋")
-  )
-)

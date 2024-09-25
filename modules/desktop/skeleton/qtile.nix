@@ -2,7 +2,7 @@
 
 let
   inherit (lib.attrsets) attrValues optionalAttrs;
-  inherit (lib.modules) mkIf;
+  inherit (lib.modules) mkIf mkMerge;
 
   cfg = config.modules.desktop.qtile;
 in {
@@ -17,50 +17,54 @@ in {
     };
   };
 
-  config = mkIf cfg.enable {
-    modules.desktop = {
-      type = cfg.backend;
-      toolset.fileManager = {
-        enable = true;
-        program = "nautilus";
-      };
-      extensions = {
-        input-method = {
+  config = mkMerge [
+    (mkIf cfg.enable {
+      modules.desktop = {
+        type = cfg.backend;
+        toolset.fileManager = {
           enable = true;
-          framework = "fcitx";
+          program = "nautilus";
         };
-        mimeApps.enable = true; # mimeApps -> default launch application
-        picom.enable = mkIf (cfg.backend == "x11");
-        dunst.enable = true;
-        rofi.enable = true;
+        extensions = {
+          input-method = {
+            enable = true;
+            framework = "fcitx";
+          };
+          mimeApps.enable = true; # mimeApps -> default launch application
+          picom.enable = mkIf (cfg.backend == "x11");
+          dunst.enable = true;
+          rofi.enable = true;
+        };
       };
-    };
-    modules.shell.scripts = {
-      brightness.enable = true;
-      screenshot.enable = true;
-    };
-    modules.hardware.kmonad.enable = true;
+      modules.shell.scripts = {
+        brightness.enable = true;
+        screenshot.enable = true;
+      };
+      modules.hardware.kmonad.enable = true;
 
-    services.greetd.settings.initial_session = mkIf (cfg.backend == "wayland") {
-      command = "none+qtile";
-      user = "${config.user.name}";
-    };
+      environment.systemPackages = attrValues ({
+        inherit (pkgs) libnotify playerctl gxmessage;
+      } // optionalAttrs (cfg.backend == "x11") { inherit (pkgs) xdotool feh; }
+        // optionalAttrs (cfg.backend == "wayland") {
+          inherit (pkgs) imv wf-recorder;
+        });
 
-    environment.systemPackages = attrValues ({
-      inherit (pkgs) libnotify playerctl gxmessage;
-    } // optionalAttrs (cfg.backend == "x11") { inherit (pkgs) xdotool feh; }
-      // optionalAttrs (cfg.backend == "wayland") {
-        inherit (pkgs) imv wf-recorder;
-      });
+      services.xserver.windowManager.qtile = {
+        enable = true;
+        configFile = "${config.snowflake.configDir}/qtile/config.py";
+        backend = cfg.backend;
+        # extraPackages = attrValues {
+        #   inherit (pkgs.python3Packages) qtile-extras;
+        # };
+      };
+    })
 
-    services.xserver.windowManager.qtile = {
-      enable = true;
-      configFile = "${config.snowflake.configDir}/qtile/config.py";
-      backend = cfg.backend;
-      # extraPackages = attrValues {
-      #   inherit (pkgs.python3Packages) qtile-extras;
-      # };
-    };
-    services.displayManager.defaultSession = "none+qtile";
-  };
+    (mkIf (cfg.backend == "wayland") {
+      services.greetd.settings.initial_session.command = "none+qtile";
+    })
+
+    (mkIf (cfg.backend == "x11") {
+      services.displayManager.defaultSession = "none+qtile";
+    })
+  ];
 }
