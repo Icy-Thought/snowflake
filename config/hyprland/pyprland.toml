@@ -1,22 +1,14 @@
 [pyprland]
 plugins = [
-    "layout_center",
     "scratchpads",
     "fetch_client_menu",
 ]
-
-[layout_center]
-margin = 60
-offset = [0, 30]
-next = "movefocus h"
-prev = "movefocus l"
-next2 = "movefocus j"
-prev2 = "movefocus k"
 
 # [fetch_client_menu]
 
 [scratchpads.System-Monitor]
 lazy = true
+hide_delay = 0.0
 animation = "fromTop"
 command = "kitty --class system-monitor -e btop"
 class = "system-monitor"
@@ -26,6 +18,7 @@ margin = 25
 
 [scratchpads.Emacs-NSP]
 lazy = true
+hide_delay = 0.0
 animation = "fromTop"
 command = "emacsclient -c -a '' -F '(quote (name . \"Emacs-NSP|\"))' --eval '(dashboard-refresh-buffer)'"
 title = "Emacs-NSP|"
@@ -36,6 +29,7 @@ margin = 25
 
 [scratchpads.Emacs-Matrix]
 lazy = true
+hide_delay = 0.0
 animation = "fromTop"
 command = "emacsclient -c -a '' -F '(quote (name . \"Emacs-NSP: Matrix\"))' --eval '(ement-room-list)'"
 title = "Emacs-NSP: Matrix"
@@ -46,6 +40,7 @@ margin = 25
 
 [scratchpads.Emacs-Telega]
 lazy = true
+hide_delay = 0.0
 animation = "fromTop"
 command = "emacsclient -c -a '' -F '(quote (name . \"Emacs-NSP: Telega\"))' --eval '(telega)'"
 title = "Emacs-NSP: Telega"
@@ -56,6 +51,7 @@ margin = 25
 
 [scratchpads.Emacs-Mail]
 lazy = true
+hide_delay = 0.0
 animation = "fromTop"
 command = "emacsclient -c -a '' -F '(quote (name . \"Emacs-NSP: Mail\"))' --eval '(notmuch-hello)'"
 title = "Emacs-NSP|"
@@ -66,6 +62,7 @@ margin = 25
 
 [scratchpads.EasyEffects]
 lazy = true
+hide_delay = 0.0
 animation = "fromTop"
 command = "easyeffects"
 title = "Easy Effects"
@@ -75,6 +72,7 @@ margin = 25
 
 [scratchpads.Spotify]
 lazy = true
+hide_delay = 0.0
 animation = "fromTop"
 command = "spotify"
 class = "Spotify"
@@ -84,6 +82,7 @@ margin = 25
 
 [scratchpads.Discord]
 lazy = true
+hide_delay = 0.0
 animation = "fromTop"
 command = "discordcanary"
 class = "discord"
