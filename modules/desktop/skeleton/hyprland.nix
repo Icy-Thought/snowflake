@@ -40,18 +40,33 @@ in {
     hm.wayland.windowManager.hyprland = {
       enable = true;
       xwayland.enable = true;
-      settings = {
-        source = [
-          "${hyprDir}/constants.conf"
-          "${hyprDir}/main.conf"
-          "${hyprDir}/decorations.conf"
-          "${hyprDir}/rules.conf"
-          "${hyprDir}/bindings.conf"
-        ];
-        exec-once = [ "pypr" ];
-      };
+      settings.source = [
+        "${hyprDir}/constants.conf"
+        "${hyprDir}/main.conf"
+        "${hyprDir}/decorations.conf"
+        "${hyprDir}/rules.conf"
+        "${hyprDir}/bindings.conf"
+      ];
     };
     services.greetd.settings.initial_session.command = "Hyprland";
+
+    hm.systemd.user.services.pyprland = {
+      Unit = {
+        Description = "An extension package for Hyprland.";
+        PartOf = [ "hyprland-session.target" ];
+        After = [ "hyprland-session.target" ];
+        ConditionEnvironment = "WAYLAND_DISPLAY";
+      };
+      Service = {
+        Type = "simple";
+        ExecStart = "${lib.getExe pkgs.pyprland}";
+        ExecStop = "${
+            lib.getExe pkgs.bash
+          } -c 'rm $XDG_RUNTIME_DIR/hypr/*/.pyprland.sock'";
+        Restart = "always";
+      };
+      Install.WantedBy = [ "hyprland-session.target" ];
+    };
 
     create.configFile.pyprland-conf = {
       target = "hypr/pyprland.toml";
