@@ -4,8 +4,6 @@ plugins = [
     "fetch_client_menu",
 ]
 
-# [fetch_client_menu]
-
 [scratchpads.System-Monitor]
 lazy = true
 hide_delay = 0.0
