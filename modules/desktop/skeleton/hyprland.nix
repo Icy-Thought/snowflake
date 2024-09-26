@@ -3,6 +3,7 @@
 let
   inherit (lib.attrsets) attrValues;
   inherit (lib.modules) mkIf;
+  hyprDir = "${config.snowflake.configDir}/hyprland";
 in {
   options.modules.desktop.hyprland = let inherit (lib.options) mkEnableOption;
   in { enable = mkEnableOption "hyped wayland WM"; };
@@ -32,25 +33,30 @@ in {
     modules.hardware.kmonad.enable = true;
 
     environment.systemPackages = attrValues {
-      inherit (pkgs) imv libnotify playerctl wf-recorder wlr-randr;
+      inherit (pkgs) pyprland imv libnotify playerctl wf-recorder wlr-randr;
     };
 
     programs.hyprland.enable = true;
     hm.wayland.windowManager.hyprland = {
       enable = true;
       xwayland.enable = true;
-      # plugins = [];
-      settings.source = let hyprDir = "${config.snowflake.configDir}/hyprland";
-      in [
-        "${hyprDir}/constants.conf"
-        "${hyprDir}/main.conf"
-        "${hyprDir}/decorations.conf"
-        "${hyprDir}/rules.conf"
-        "${hyprDir}/bindings.conf"
-      ];
+      settings = {
+        source = [
+          "${hyprDir}/constants.conf"
+          "${hyprDir}/main.conf"
+          "${hyprDir}/decorations.conf"
+          "${hyprDir}/rules.conf"
+          "${hyprDir}/bindings.conf"
+        ];
+        exec-once = [ "pypr" ];
+      };
     };
     services.greetd.settings.initial_session.command = "Hyprland";
 
+    create.configFile.pyprland-conf = {
+      target = "hypr/pyprland.toml";
+      source = "${hyprDir}/pyprland.toml";
+    };
     # hypridle? hyprlock?
   };
 }

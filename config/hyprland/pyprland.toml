@@ -1,0 +1,92 @@
+[pyprland]
+plugins = [
+    "layout_center",
+    "scratchpads",
+    "fetch_client_menu",
+]
+
+[layout_center]
+margin = 60
+offset = [0, 30]
+next = "movefocus h"
+prev = "movefocus l"
+next2 = "movefocus j"
+prev2 = "movefocus k"
+
+# [fetch_client_menu]
+
+[scratchpads.System-Monitor]
+lazy = true
+animation = "fromTop"
+command = "kitty --class system-monitor -e btop"
+class = "system-monitor"
+size = "95% 95%"
+max_size = "1920px 100%"
+margin = 25
+
+[scratchpads.Emacs-NSP]
+lazy = true
+animation = "fromTop"
+command = "emacsclient -c -a '' -F '(quote (name . \"Emacs-NSP|\"))' --eval '(dashboard-refresh-buffer)'"
+title = "Emacs-NSP|"
+match_by = "title"
+size = "95% 95%"
+max_size = "1920px 100%"
+margin = 25
+
+[scratchpads.Emacs-Matrix]
+lazy = true
+animation = "fromTop"
+command = "emacsclient -c -a '' -F '(quote (name . \"Emacs-NSP: Matrix\"))' --eval '(ement-room-list)'"
+title = "Emacs-NSP: Matrix"
+match_by = "title"
+size = "95% 95%"
+max_size = "1920px 100%"
+margin = 25
+
+[scratchpads.Emacs-Telega]
+lazy = true
+animation = "fromTop"
+command = "emacsclient -c -a '' -F '(quote (name . \"Emacs-NSP: Telega\"))' --eval '(telega)'"
+title = "Emacs-NSP: Telega"
+match_by = "title"
+size = "95% 95%"
+max_size = "1920px 100%"
+margin = 25
+
+[scratchpads.Emacs-Mail]
+lazy = true
+animation = "fromTop"
+command = "emacsclient -c -a '' -F '(quote (name . \"Emacs-NSP: Mail\"))' --eval '(notmuch-hello)'"
+title = "Emacs-NSP|"
+match_by = "title"
+size = "95% 95%"
+max_size = "1920px 100%"
+margin = 25
+
+[scratchpads.EasyEffects]
+lazy = true
+animation = "fromTop"
+command = "easyeffects"
+title = "Easy Effects"
+size = "95% 95%"
+max_size = "1920px 100%"
+margin = 25
+
+[scratchpads.Spotify]
+lazy = true
+animation = "fromTop"
+command = "spotify"
+class = "Spotify"
+size = "95% 95%"
+max_size = "1920px 100%"
+margin = 25
+
+[scratchpads.Discord]
+lazy = true
+animation = "fromTop"
+command = "discordcanary"
+class = "discord"
+size = "95% 95%"
+max_size = "1920px 100%"
+margin = 25

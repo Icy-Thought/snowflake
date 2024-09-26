@@ -1,8 +1,6 @@
 { options, config, lib, pkgs, ... }:
 
 let
-  inherit (lib.attrsets) attrValues;
-  inherit (lib.meta) getExe;
   inherit (lib.modules) mkIf;
   inherit (lib.strings) concatStringsSep;
 
@@ -27,7 +25,7 @@ in {
     hm.programs.rofi = {
       enable = true;
       package = cfg.package;
-      plugins = attrValues { inherit (pkgs) rofi-emoji rofi-power-menu; };
+      plugins = [ pkgs.rofi-power-menu ];
 
       extraConfig = {
         terminal = "${config.modules.desktop.terminal.default}";
@@ -37,9 +35,7 @@ in {
         sort = true;
 
         drun-display-format = "{icon} {name}";
-
         display-drun = "   Run ";
-        display-emoji = "   Emoji ";
         display-window = " 﩯 Window ";
         display-power-menu = "  Power Menu ";
 
@@ -47,8 +43,7 @@ in {
           "run"
           "drun"
           "filebrowser"
-          "emoji"
-          "power-menu:${getExe pkgs.rofi-power-menu}"
+          "power-menu:${lib.getExe pkgs.rofi-power-menu}"
         ];
 
         xoffset = 0;
