@@ -1,0 +1,120 @@
+{
+    "mainBar": {
+        "layer": "bottom",
+        "position": "top",
+        "spacing": 0,
+        "height": 25,
+        "modules-left": [
+            "custom/logo",
+            "hyprland/workspaces"
+        ],
+        "modules-center": [
+            "clock"
+        ],
+        "modules-right": [
+            "tray",
+            "memory",
+            "network",
+            "wireplumber",
+            "battery",
+            "custom/power"
+        ],
+        "wlr/taskbar": {
+            "format": "{icon}",
+            "on-click": "activate",
+            "on-click-right": "fullscreen",
+            "icon-theme": "WhiteSur",
+            "icon-size": 25,
+            "tooltip-format": "{title}"
+        },
+        "hyprland/workspaces": {
+            "on-click": "activate",
+            "on-scroll-up": "hyprctl dispatch workspace e+1",
+            "on-scroll-down": "hyprctl dispatch workspace e-1",
+            "format": "{icon}",
+            "format-icons": {
+                "1": "1",
+                "2": "2",
+                "3": "3",
+                "4": "4",
+                "5": "5",
+                "6": "6",
+                "7": "7",
+                "8": "8",
+                "9": "9",
+                "default": "",
+                "active": "󱓻",
+                "urgent": "󱓻"
+            },
+            "persistent_workspaces": {
+                "1": [],
+                "2": [],
+                "3": [],
+                "4": [],
+                "5": []
+            }
+        },
+        "memory": {
+            "interval": 5,
+            "format": "󰍛 {}%",
+            "max-length": 10
+        },
+        "tray": {
+            "spacing": 10
+        },
+        "clock": {
+            "tooltip-format": "{calendar}",
+            "format-alt": "  {:%a, %d %b %Y}",
+            "format": "  {:%I:%M %p}"
+        },
+        "network": {
+            "format-wifi": "{icon}  {essid}",
+            "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
+            "format-ethernet": "󰀂",
+            "format-alt": "󱛇",
+            "format-disconnected": "󰖪",
+            "tooltip-format-wifi": "{icon} {essid}\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+            "tooltip-format-ethernet": "󰀂  {ifname}\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+            "tooltip-format-disconnected": "Disconnected",
+            "interval": 5,
+            "nospacing": 1
+        },
+        "wireplumber": {
+            "format": "{icon}",
+            "format-bluetooth": "󰂰",
+            "nospacing": 1,
+            "tooltip-format": "Volume : {volume}%",
+            "format-muted": "󰝟",
+            "format-icons": {
+                "headphone": "",
+                "default": ["󰖀", "󰕾", ""]
+            },
+            "on-click": "volctl toggle-mute",
+            "scroll-step": 1
+        },
+        "custom/logo": {
+            "format": "  ",
+            "tooltip": false,
+            "on-click": "rofi -show drun &"
+        },
+        "battery": {
+            "format": "{capacity}% {icon}",
+            "format-icons": {
+                "charging": ["󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"],
+                "default": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+            },
+            "format-full": "Charged ",
+            "interval": 5,
+            "states": {
+                "warning": 20,
+                "critical": 10
+            },
+            "tooltip": false
+        },
+        "custom/power": {
+            "format": "󰤆",
+            "tooltip": false,
+            "on-click": "rofi -show power-menu"
+        }
+    }
+}

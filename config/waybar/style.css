@@ -1,0 +1,142 @@
+@define-color black rgba(0, 0, 0, 1);
+@define-color black2 rgba(19, 24, 34, 1);
+@define-color lightsteelblue rgba(205, 214, 244, 1);
+@define-color palevioletred rgba(243, 139, 168, 1);
+@define-color darkseagreen rgba(166, 227, 161, 1);
+@define-color mistyrose rgba(242, 205, 205, 1);
+@define-color cornflowerblue rgb(137, 180, 250);
+
+@define-color bar-background rgba(19, 16, 32, 0.7);
+@define-color widget-background rgba(36, 39, 58, 1);
+@define-color text rgba(243, 246, 251, 1);
+
+* {
+    border: none;
+    border-radius: 0;
+    min-height: 0;
+    font-family: VictorMono Nerd Font;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+window#waybar {
+    background-color: @bar-background;
+    transition-property: background-color;
+    transition-duration: 0.5s;
+}
+
+window#waybar.hidden {
+    opacity: 0.5;
+}
+
+#workspaces {
+    background-color: transparent;
+}
+
+#workspaces button {
+    all: initial;
+    min-width: 0;
+    box-shadow: inset 0 -3px transparent;
+    padding: 6px 18px;
+    margin: 6px 3px;
+    border-radius: 4px;
+    background-color: @widget-background;
+    color: @text;
+}
+
+#workspaces button.active {
+    color: @black2;
+    background-color: @lightsteelblue;
+}
+
+#workspaces button:hover {
+    box-shadow: inherit;
+    text-shadow: inherit;
+    color: @widget-background;
+    background-color: @lightsteelblue;
+}
+
+#workspaces button.urgent {
+    background-color: @palevioletred;
+}
+
+#memory,
+#custom-power,
+#battery,
+#backlight,
+#wireplumber,
+#network,
+#clock,
+#tray {
+    border-radius: 4px;
+    margin: 6px 3px;
+    padding: 6px 12px;
+    background-color: @widget-background;
+    color: @black;
+}
+
+#memory {
+    color: @text;
+}
+
+#custom-power {
+    margin-right: 6px;
+}
+
+#custom-logo {
+    padding-right: 7px;
+    padding-left: 7px;
+    margin-left: 5px;
+    font-size: 15px;
+    border-radius: 8px 0px 0px 8px;
+    color: @text;
+}
+
+#battery {
+    background-color: @lightsteelblue;
+}
+
+#battery.warning,
+#battery.critical,
+#battery.urgent {
+    background-color: @palevioletred;
+    color: @black;
+}
+
+#battery.charging {
+    background-color: @darkseagreen;
+    color: @black;
+}
+
+#wireplumber {
+    background-color: @widget-background;
+    color: @text;
+}
+
+#network {
+    background-color: @widget-background;
+    color: @text;
+    padding-right: 17px;
+}
+
+#clock {
+    font-family: VictorMono Nerd Font;
+    font-weight: bold;
+    background-color: @cornflowerblue;
+    color: @black;
+}
+
+#custom-power {
+    background-color: @mistyrose;
+}
+
+tooltip {
+    border-radius: 8px;
+    padding: 15px;
+    background-color: @black2;
+}
+
+tooltip label {
+    padding: 5px;
+    background-color: @black2;
+}
