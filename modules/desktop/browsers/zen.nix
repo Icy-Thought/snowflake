@@ -23,9 +23,5 @@ in {
           categories = [ "Network" "WebBrowser" ];
         })
       ];
-
-    environment.variables = mkIf (config.modules.desktop.type == "wayland") {
-      MOZ_ENABLE_WAYLAND = "1";
-    };
   };
 }

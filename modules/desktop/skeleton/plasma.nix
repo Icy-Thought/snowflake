@@ -16,8 +16,6 @@ in {
       };
     };
 
-    programs.dconf.enable = true;
-
     services.desktopManager.plasma6 = {
       enable = true;
       enableQt5Integration = false;
@@ -26,5 +24,12 @@ in {
 
     environment.plasma6.excludePackages =
       attrValues { inherit (pkgs.kdePackages) konsole oxygen; };
+  };
+  programs.dconf.enable = true;
+
+  environment.sessionVariables = mkIf (config.desktop.type == "wayland") {
+    ELECTRON_OZONE_PLATFORM_HINT = "auto";
+    NIXOS_OZONE_WL = "1";
+    MOZ_ENABLE_WAYLAND = "1";
   };
 }

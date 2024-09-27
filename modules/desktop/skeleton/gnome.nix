@@ -16,8 +16,6 @@ in {
       };
     };
 
-    programs.dconf.enable = true;
-
     services.xserver.desktopManager.gnome.enable = true;
     services.greetd.settings.initial_session.command = "gnome-session";
 
@@ -27,6 +25,7 @@ in {
       sushi.enable = true;
     };
 
+    programs.dconf.enable = true;
     services.udev = {
       packages = [ pkgs.gnome.gnome-settings-daemon ];
       extraRules = ''
@@ -43,6 +42,12 @@ in {
         appindicator aylurs-widgets blur-my-shell dash-to-dock gsconnect
         just-perfection openweather # pop-shell
         removable-drive-menu rounded-window-corners space-bar user-themes;
+    };
+
+    environment.sessionVariables = {
+      ELECTRON_OZONE_PLATFORM_HINT = "auto";
+      NIXOS_OZONE_WL = "1";
+      MOZ_ENABLE_WAYLAND = "1";
     };
 
     # Enable chrome-gnome-shell in FireFox nightly (mozilla-overlay):

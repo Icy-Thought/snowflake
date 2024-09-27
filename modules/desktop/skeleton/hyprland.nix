@@ -36,6 +36,12 @@ in {
       inherit (pkgs) pyprland imv libnotify playerctl wf-recorder wlr-randr;
     };
 
+    environment.sessionVariables = {
+      ELECTRON_OZONE_PLATFORM_HINT = "auto";
+      NIXOS_OZONE_WL = "1";
+      MOZ_ENABLE_WAYLAND = "1";
+    };
+
     programs.hyprland.enable = true;
     hm.wayland.windowManager.hyprland = {
       enable = true;

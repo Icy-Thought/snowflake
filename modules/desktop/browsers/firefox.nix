@@ -39,10 +39,6 @@ in {
       })
     ];
 
-    environment.variables = mkIf (config.modules.desktop.type == "wayland") {
-      MOZ_ENABLE_WAYLAND = "1";
-    };
-
     modules.desktop.browsers.firefox.settings = {
       # TAB cycle URL's, not buttons..
       "browser.toolbars.keyboard_navigation" = false;

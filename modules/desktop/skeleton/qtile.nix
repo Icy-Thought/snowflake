@@ -3,7 +3,6 @@
 let
   inherit (lib.attrsets) attrValues optionalAttrs;
   inherit (lib.modules) mkIf mkMerge;
-
   cfg = config.modules.desktop.qtile;
 in {
   options.modules.desktop.qtile = let
@@ -61,6 +60,12 @@ in {
 
     (mkIf (cfg.backend == "wayland") {
       services.greetd.settings.initial_session.command = "none+qtile";
+
+      environment.sessionVariables = {
+        ELECTRON_OZONE_PLATFORM_HINT = "auto";
+        NIXOS_OZONE_WL = "1";
+        MOZ_ENABLE_WAYLAND = "1";
+      };
     })
 
     (mkIf (cfg.backend == "x11") {
