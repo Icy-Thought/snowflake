@@ -33,7 +33,8 @@ in {
     modules.hardware.kmonad.enable = true;
 
     environment.systemPackages = attrValues {
-      inherit (pkgs) pyprland imv libnotify playerctl wf-recorder wlr-randr;
+      inherit (pkgs) imv libnotify playerctl wf-recorder wlr-randr;
+      inherit (inputs.pyprland.packages."x86_64-linux") pyprland;
     };
 
     environment.sessionVariables = {

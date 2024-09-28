@@ -25,16 +25,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     xmonad-contrib.url =
-      "github:icy-thought/xmonad-contrib"; # TODO: replace with official after #582 == merged!
-    rust.url = "github:oxalica/rust-overlay";
+      "github:icy-thought/xmonad-contrib"; # :TODO| replace with official after #582 == merged!
+    pyprland.url = "github:hyprland-community/pyprland";
 
     # Application -> (Cached) Git
-    picom = {
-      url = "github:yshui/picom";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
     zen-browser.url = "github:MarceColl/zen-browser-flake";
+    rust.url = "github:oxalica/rust-overlay";
 
     # Submodules (temporary) # TODO
     emacs-dir = {
