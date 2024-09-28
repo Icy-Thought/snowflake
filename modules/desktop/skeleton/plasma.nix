@@ -7,8 +7,8 @@ in {
   options.modules.desktop.plasma = let inherit (lib.options) mkEnableOption;
   in { enable = mkEnableOption "modern desktop environment"; };
 
-  config = mkMerge [
-    (mkIf config.modules.desktop.plasma.enable {
+  config = mkIf config.modules.desktop.plasma.enable (mkMerge [
+    {
       modules.desktop = {
         type = "wayland";
         extensions.input-method = {
@@ -26,7 +26,7 @@ in {
       environment.plasma6.excludePackages =
         attrValues { inherit (pkgs.kdePackages) konsole oxygen; };
       programs.dconf.enable = true;
-    })
+    }
 
     (mkIf (config.modules.desktop.type == "wayland") {
       environment.sessionVariables = {
@@ -35,5 +35,5 @@ in {
         MOZ_ENABLE_WAYLAND = "1";
       };
     })
-  ];
+  ]);
 }

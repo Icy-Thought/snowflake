@@ -16,8 +16,8 @@ in {
     };
   };
 
-  config = mkMerge [
-    (mkIf cfg.enable {
+  config = mkIf cfg.enable (mkMerge [
+    {
       modules.desktop = {
         type = cfg.backend;
         toolset.fileManager = {
@@ -56,7 +56,7 @@ in {
         #   inherit (pkgs.python3Packages) qtile-extras;
         # };
       };
-    })
+    }
 
     (mkIf (cfg.backend == "wayland") {
       services.greetd.settings.initial_session.command = "none+qtile";
@@ -71,5 +71,5 @@ in {
     (mkIf (cfg.backend == "x11") {
       services.displayManager.defaultSession = "none+qtile";
     })
-  ];
+  ]);
 }
