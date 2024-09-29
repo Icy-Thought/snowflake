@@ -38,22 +38,28 @@ in {
       hm.programs.mpv = {
         enable = true;
         scripts = attrValues {
-          inherit (pkgs.mpvScripts) autoload mpris sponsorblock thumbnail;
+          inherit (pkgs.mpvScripts) autoload mpris sponsorblock thumbfast uosc;
         };
         config = {
+          osc = "no";
           profile = "gpu-hq";
           force-window = true;
+          save-position-on-quit = "yes";
           ytdl-format = "bestvideo+bestaudio";
-          cache-default = 4000000;
-          osc = "no"; # Thumbnail
+          watch-later-dir = "$XDG_CACHE_DIR/watch_later";
+
+          sub-font = "Trebuchet MS";
+          sub-font-size = 35;
+          sub-border-size = 3;
+          sub-shadow-offset = 2;
+          sub-shadow-color = "0.0/0.0/0.0";
         };
+        scriptOpts = { autoload.same_type = true; };
         bindings = {
           WHEEL_UP = "seek 10";
           WHEEL_DOWN = "seek -10";
         };
       };
-
-      user.packages = [ pkgs.mpvc ];
     })
   ];
 }
