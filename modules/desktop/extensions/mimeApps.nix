@@ -1,5 +1,3 @@
-# Copyright (c) 2022 felschr. All Rights Reserved.
-
 { options, config, lib, ... }:
 let
   inherit (builtins) listToAttrs;
@@ -16,7 +14,7 @@ in {
   in {
     enable = mkEnableOption "default system applications";
     applications = {
-      docReader = mkOpt str "sioyek.desktop";
+      docReader = mkOpt str "org.pwmt.zathura.desktop";
       editor = mkOpt str "emacsclient.desktop";
       fileManager = mkOpt str "org.gnome.Nautilus.desktop";
       imageViewer = mkOpt str "feh.desktop";
@@ -27,12 +25,10 @@ in {
   };
 
   config = mkIf cfg.enable {
-    create.configFile."mimeapps.list".force = true;
-
-    hm.xdg.mimeApps = {
+    xdg.mime = {
       enable = true;
       defaultApplications = let
-        defaultApps = let
+        applications = let
           inherit (cfg.applications)
             docReader editor fileManager imageViewer mediaPlayer torrentCli
             browser;
@@ -49,76 +45,75 @@ in {
           video = [ mediaPlayer ];
         };
         mimeMap = {
-          audio = [
-            "audio/aac"
-            "audio/mpeg"
-            "audio/ogg"
-            "audio/opus"
-            "audio/wav"
-            "audio/webm"
-            "audio/x-matroska"
+          audio = builtins.map (x: "audio/" + x) [
+            "aac"
+            "mpeg"
+            "ogg"
+            "opus"
+            "wav"
+            "webm"
+            "x-matroska"
           ];
-          browser = [
-            "text/html"
-            "x-scheme-handler/about"
-            "x-scheme-handler/http"
-            "x-scheme-handler/https"
-            "x-scheme-handler/unknown"
+          browser = builtins.map (x: "x-scheme-handler/" + x) [
+            "about"
+            "http"
+            "https"
+            "unknown"
           ];
           # calendar = [ "text/calendar" "x-scheme-handler/webcal" ];
-          compression = [
-            "application/bzip2"
-            "application/gzip"
-            "application/vnd.rar"
-            "application/x-7z-compressed"
-            "application/x-7z-compressed-tar"
-            "application/x-bzip"
-            "application/x-bzip-compressed-tar"
-            "application/x-compress"
-            "application/x-compressed-tar"
-            "application/x-cpio"
-            "application/x-gzip"
-            "application/x-lha"
-            "application/x-lzip"
-            "application/x-lzip-compressed-tar"
-            "application/x-lzma"
-            "application/x-lzma-compressed-tar"
-            "application/x-tar"
-            "application/x-tarz"
-            "application/x-xar"
-            "application/x-xz"
-            "application/x-xz-compressed-tar"
-            "application/zip"
+          compression = builtins.map (x: "application/" + x) [
+            "bzip2"
+            "gzip"
+            "vnd.rar"
+            "x-7z-compressed"
+            "x-7z-compressed-tar"
+            "x-bzip"
+            "x-bzip-compressed-tar"
+            "x-compress"
+            "x-compressed-tar"
+            "x-cpio"
+            "x-gzip"
+            "x-lha"
+            "x-lzip"
+            "x-lzip-compressed-tar"
+            "x-lzma"
+            "x-lzma-compressed-tar"
+            "x-tar"
+            "x-tarz"
+            "x-xar"
+            "x-xz"
+            "x-xz-compressed-tar"
+            "zip"
           ];
           directory = [ "inode/directory" ];
-          image = [
-            "image/bmp"
-            "image/gif"
-            "image/jpeg"
-            "image/jpg"
-            "image/png"
-            "image/svg+xml"
-            "image/tiff"
-            "image/vnd.microsoft.icon"
-            "image/webp"
+          image = builtins.map (x: "image/" + x) [
+            "bmp"
+            "gif"
+            "jpeg"
+            "jpg"
+            "png"
+            "svg+xml"
+            "tiff"
+            "vnd.microsoft.icon"
+            "webp"
           ];
           magnet = [ "x-scheme-handler/magnet" ];
           mail = [ "x-scheme-handler/mailto" ];
           pdf = [ "application/pdf" ];
           text = [ "text/plain" ];
-          video = [
-            "video/mp2t"
-            "video/mp4"
-            "video/mpeg"
-            "video/ogg"
-            "video/webm"
-            "video/x-flv"
-            "video/x-matroska"
-            "video/x-msvideo"
+          video = builtins.map (x: "video/" + x) [
+            "mp2t"
+            "mp4"
+            "mpeg"
+            "ogg"
+            "webm"
+            "x-flv"
+            "x-matroska"
+            "x-msvideo"
           ];
         };
       in listToAttrs (flatten (mapAttrsToList (key: types:
-        map (type: nameValuePair type (defaultApps."${key}")) types) mimeMap));
+        map (type: nameValuePair type (applications."${key}")) types) mimeMap));
     };
   };
 }

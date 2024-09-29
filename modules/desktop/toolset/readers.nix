@@ -21,11 +21,6 @@ in {
   };
 
   config = mkMerge [
-    {
-      # :NOTE| Notify system about our document viewer
-      modules.desktop.extensions.mimeApps.applications.docReader = cfg.program;
-    }
-
     (mkIf (cfg.program == "zathura") {
       hm.programs.zathura = {
         enable = true;
@@ -79,6 +74,9 @@ in {
     })
 
     (mkIf (cfg.program == "sioyek") {
+      modules.desktop.extensions.mimeApps.applications.docReader =
+        "${cfg.program}.desktop";
+
       hm.programs.sioyek = {
         enable = true;
         package = pkgs.sioyek;
