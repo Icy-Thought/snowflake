@@ -2,7 +2,6 @@
 
 let
   inherit (lib.modules) mkIf;
-  inherit (lib.meta) getExe;
   cfg = config.modules.desktop.extensions.picom;
 in {
   options.modules.desktop.extensions.picom =
@@ -18,11 +17,10 @@ in {
       wantedBy = [ "graphical-session.target" ];
       partOf = [ "graphical-session.target" ];
 
-      serviceConfig = let
-        configDir = "${config.snowflake.configDir}";
-        package = inputs.picom.packages.${pkgs.system}.default;
-      in {
-        ExecStart = "${getExe package} --config ${configDir}/picom.conf";
+      serviceConfig = {
+        ExecStart = "${
+            lib.getExe pkgs.picom
+          } --config ${config.snowflake.configDir}/picom.conf";
         RestartSec = 3;
         Restart = "always";
       };
