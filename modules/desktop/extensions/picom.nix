@@ -19,7 +19,7 @@ in {
 
       serviceConfig = {
         ExecStart = "${
-            lib.getExe pkgs.picom
+            lib.getExe pkgs.unstable.picom
           } --config ${config.snowflake.configDir}/picom.conf";
         RestartSec = 3;
         Restart = "always";
