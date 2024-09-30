@@ -4,54 +4,55 @@ plugins = [
     "fetch_client_menu",
 ]
 
-[template.scratchpads]
+[scratchpads.template]
 lazy = true
 size = "95% 95%"
 margin = 25
+animation = "fromLeft"
 hide_delay = 0.0
 
 [scratchpads.System-Monitor]
-inherit = "template.scratchpads"
+use = "template"
 command = "kitty --class system-monitor -e btop"
 class = "system-monitor"
 
 [scratchpads.Emacs-NSP]
-inherit = "template.scratchpads"
+use = "template"
 command = "emacsclient -c -a '' -F '(quote (name . \"Emacs-NSP|\"))' --eval '(dashboard-refresh-buffer)'"
 title = "Emacs-NSP|"
 match_by = "title"
 
 [scratchpads.Emacs-Matrix]
-inherit = "template.scratchpads"
+use = "template"
 command = "emacsclient -c -a '' -F '(quote (name . \"Emacs-NSP: Matrix\"))' --eval '(irkalla/connect-to-matrix)'"
 title = "Emacs-NSP: Matrix"
 match_by = "title"
 
 [scratchpads.Emacs-Telega]
-inherit = "template.scratchpads"
+use = "template"
 command = "emacsclient -c -a '' -F '(quote (name . \"Emacs-NSP: Telega\"))' --eval '(telega)'"
 title = "Emacs-NSP: Telega"
 match_by = "title"
 
 [scratchpads.Emacs-Mail]
-inherit = "template.scratchpads"
+use = "template"
 command = "emacsclient -c -a '' -F '(quote (name . \"Emacs-NSP: Mail\"))' --eval '(notmuch-hello)'"
 title = "Emacs-NSP|"
 match_by = "title"
 
 [scratchpads.EasyEffects]
-inherit = "template.scratchpads"
+use = "template"
 command = "easyeffects"
 title = "Easy Effects"
 
 [scratchpads.Spotify]
-inherit = "template.scratchpads"
+use = "template"
 command = "spotify"
 title = "re:.*Spotify.*"
 match_by = "title"
 
 [scratchpads.Discord]
-inherit = "template.scratchpads"
+use = "template"
 command = "discordcanary"
 title = "re:.*Discord.*"
 match_by = "title"

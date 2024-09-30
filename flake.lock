@@ -559,11 +559,11 @@
         "systems": "systems_3"
       },
       "locked": {
-        "lastModified": 1727478253,
-        "narHash": "sha256-xlMJfatEUbLFcE+V9KdMNEMCbnVnGz9OyjdsnmhmNQw=",
+        "lastModified": 1727644855,
+        "narHash": "sha256-Ubz04WB4qikdOeXZu2P15QbUA6TMjZqFmYg3JvJaDLw=",
         "owner": "hyprland-community",
         "repo": "pyprland",
-        "rev": "8399e0c710c1e58bd50c9a7d0130229e5c9e0ff4",
+        "rev": "b443341736f586d5b842326f79c42ed3f3bb15dd",
         "type": "github"
       },
       "original": {

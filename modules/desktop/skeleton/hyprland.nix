@@ -4,6 +4,7 @@ let
   inherit (lib.attrsets) attrValues;
   inherit (lib.modules) mkIf;
   hyprDir = "${config.snowflake.configDir}/hyprland";
+  pyprland = inputs.pyprland.packages."x86_64-linux".pyprland;
 in {
   options.modules.desktop.hyprland = let inherit (lib.options) mkEnableOption;
   in { enable = mkEnableOption "hyped wayland WM"; };
@@ -34,8 +35,7 @@ in {
 
     environment.systemPackages = attrValues {
       inherit (pkgs) imv libnotify playerctl wf-recorder wlr-randr;
-      inherit (inputs.pyprland.packages."x86_64-linux") pyprland;
-    };
+    } ++ [ pyprland ];
 
     environment.sessionVariables = {
       ELECTRON_OZONE_PLATFORM_HINT = "auto";
@@ -66,7 +66,7 @@ in {
       };
       Service = {
         Type = "simple";
-        ExecStart = "${lib.getExe pkgs.pyprland}";
+        ExecStart = "${pyprland}/bin/pypr";
         ExecStop = "${
             lib.getExe pkgs.bash
           } -c 'rm $XDG_RUNTIME_DIR/hypr/*/.pyprland.sock'";
