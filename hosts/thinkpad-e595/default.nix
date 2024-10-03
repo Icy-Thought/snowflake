@@ -23,8 +23,8 @@
     desktop = {
       xmonad.enable = true;
       terminal = {
-        default = "kitty";
-        kitty.enable = true;
+        default = "alacritty";
+        alacritty.enable = true;
       };
       editors = {
         default = "emacsclient";

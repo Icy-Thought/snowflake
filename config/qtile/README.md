@@ -23,7 +23,7 @@ implementation or an outdated `README.md`.
 
 | Keybinding                                      | Action                                                       |
 | ----------------------------------------------- | ------------------------------------------------------------ |
-| <kbd>M</kbd> + <kbd>S</kbd> + <kbd>Return</kbd> | Launch terminal. (Kitty)                                     |
+| <kbd>M</kbd> + <kbd>S</kbd> + <kbd>Return</kbd> | Launch terminal. (Alacritty)                                 |
 | <kbd>M</kbd> + <kbd>A</kbd> + <kbd>f</kbd>      | Launch Firefox Browser.                                      |
 | <kbd>M</kbd> + <kbd>A</kbd> + <kbd>h</kbd>      | Launch Bottom.                                               |
 | <kbd>M</kbd> + <kbd>A</kbd> + <kbd>s</kbd>      | Launch Spotify.                                              |

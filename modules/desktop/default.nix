@@ -55,7 +55,11 @@ in {
           name = "Kalker";
           desktopName = "Kalker";
           icon = "calc";
-          exec = "${config.modules.desktop.terminal.default} start kalker";
+          exec = let term = config.modules.desktop.terminal.default;
+          in if term == "wezterm" then
+            "${term} startx kalker"
+          else
+            "${term} --class calculator -e kalker";
           categories = [ "Education" "Science" "Math" ];
         };
       };

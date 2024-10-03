@@ -105,7 +105,7 @@ main =
 myConfig =
     def
         { modMask = mod4Mask
-        , terminal = "kitty"
+        , terminal = "alacritty"
         , manageHook = namedScratchpadManageHook =<< liftX myScratchpads
         , layoutHook = myLayoutHook
         , borderWidth = 2

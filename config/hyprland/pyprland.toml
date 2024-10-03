@@ -13,7 +13,7 @@ hide_delay = 0.0
 
 [scratchpads.System-Monitor]
 use = "template"
-command = "kitty --class system-monitor -e btop"
+command = "alacritty --class system-monitor -e btop"
 class = "system-monitor"
 
 [scratchpads.Emacs-NSP]

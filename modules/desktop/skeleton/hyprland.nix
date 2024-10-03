@@ -50,9 +50,9 @@ in {
       settings.source = [
         "${hyprDir}/constants.conf"
         "${hyprDir}/main.conf"
-        "${hyprDir}/decorations.conf"
+        "${hyprDir}/interface.conf"
         "${hyprDir}/rules.conf"
-        "${hyprDir}/bindings.conf"
+        "${hyprDir}/keymaps.conf"
       ];
     };
     services.greetd.settings.initial_session.command = "Hyprland";
