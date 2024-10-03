@@ -63,6 +63,7 @@
           program = "zathura";
         };
       };
+      distractions.steam.enable = true;
     };
   };
 

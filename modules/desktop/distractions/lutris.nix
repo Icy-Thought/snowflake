@@ -4,9 +4,9 @@ let
   inherit (lib.attrsets) attrValues optionalAttrs;
   inherit (lib.modules) mkIf mkMerge;
 
-  cfg = config.modules.desktop.distraction.lutris;
+  cfg = config.modules.desktop.distractions.lutris;
 in {
-  options.modules.desktop.distraction.lutris =
+  options.modules.desktop.distractions.lutris =
     let inherit (lib.options) mkEnableOption;
     in {
       enable = mkEnableOption "libre game-manager";

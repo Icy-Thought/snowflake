@@ -3,10 +3,10 @@
 let
   inherit (lib.modules) mkIf mkForce mkMerge;
 
-  cfg = config.modules.desktop.distraction.steam;
+  cfg = config.modules.desktop.distractions.steam;
   desktop = config.modules.desktop;
 in {
-  options.modules.desktop.distraction.steam =
+  options.modules.desktop.distractions.steam =
     let inherit (lib.options) mkEnableOption;
     in {
       enable = mkEnableOption "Enable steam, the game/software store";
