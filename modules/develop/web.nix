@@ -11,9 +11,9 @@ in {
   config = mkIf config.modules.develop.web.enable (mkMerge [
     {
       user.packages = attrValues {
-        inherit (pkgs) nodePkg yarn;
-        inherit (pkgs.nodePackages) typescript typescript-language-server;
-      };
+        inherit (pkgs) biome;
+        inherit (pkgs.nodePackages) yarn typescript;
+      } ++ [ nodePkg ];
 
       environment.shellAliases = {
         n = ''PATH="$(${nodePkg}/bin/npm bin):$PATH"'';

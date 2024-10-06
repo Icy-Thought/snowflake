@@ -17,6 +17,7 @@
       python.enable = true;
       rust.enable = true;
       haskell.enable = true;
+      web.enable = true;
     };
 
     themes.active = "catppuccin";
