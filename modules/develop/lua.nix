@@ -11,12 +11,12 @@ in {
     fennel.enable = mkEnableOption "Lisp-based Lua development";
   };
 
-  config = mkMerge [
-    (mkIf cfg.enable {
+  config = mkIf cfg.enable (mkMerge [
+    {
       user.packages = attrValues ({
         inherit (pkgs) lua lua-language-server stylua;
       } // optionalAttrs (cfg.fennel.enable) { inherit (pkgs) fennel fnlfmt; });
-    })
+    }
 
     (mkIf config.modules.develop.xdg.enable {
       create.configFile.stylua-conf = {
@@ -31,6 +31,6 @@ in {
           call_parentheses = "Always";
         };
       };
-    }) # TODO
-  ];
+    })
+  ]);
 }

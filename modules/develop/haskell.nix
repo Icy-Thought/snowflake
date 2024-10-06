@@ -7,8 +7,8 @@ in {
   options.modules.develop.haskell = let inherit (lib.options) mkEnableOption;
   in { enable = mkEnableOption "Haskell development"; };
 
-  config = mkMerge [
-    (mkIf config.modules.develop.haskell.enable {
+  config = mkIf config.modules.develop.haskell.enable (mkMerge [
+    {
       user.packages = attrValues {
         inherit (pkgs.haskellPackages)
           cabal-install fourmolu haskell-language-server hasktags hpack;
@@ -20,7 +20,7 @@ in {
         haskell.haskell
         justusadam.language-haskell # syntax-highlighting
       ];
-    })
+    }
 
     (mkIf config.modules.develop.xdg.enable {
       home.file.ghci-conf = {
@@ -33,5 +33,5 @@ in {
         '';
       };
     })
-  ];
+  ]);
 }

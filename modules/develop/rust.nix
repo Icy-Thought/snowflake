@@ -8,8 +8,8 @@ in {
   options.modules.develop.rust = let inherit (lib.options) mkEnableOption;
   in { enable = mkEnableOption "Rust development"; };
 
-  config = mkMerge [
-    (mkIf config.modules.develop.rust.enable {
+  config = mkIf config.modules.develop.rust.enable (mkMerge [
+    {
       nixpkgs.overlays = [ inputs.rust.overlays.default ];
 
       user.packages = attrValues {
@@ -25,7 +25,7 @@ in {
       hm.programs.vscode.extensions = attrValues {
         inherit (pkgs.vscode-extensions.rust-lang) rust-analyzer;
       };
-    })
+    }
 
     (mkIf config.modules.develop.xdg.enable {
       home = {
@@ -33,5 +33,5 @@ in {
         sessionPath = [ "$CARGO_HOME/bin" ];
       };
     })
-  ];
+  ]);
 }
