@@ -3,7 +3,6 @@
 let
   inherit (lib.attrsets) attrValues optionalAttrs;
   inherit (lib.modules) mkIf mkMerge;
-  inherit (lib.meta) getExe;
   inherit (lib.strings) optionalString;
   cfg = config.modules.desktop.editors.emacs;
 in {
@@ -132,10 +131,8 @@ in {
           target = "emacs/init.org";
           source = "${configFile}";
           onChange = ''
-            ${getExe cfg.package} --batch \
-              --eval "(require 'ob-tangle)" \
-              --eval "(setq org-confirm-babel-evaluate nil)" \
-              --eval '(org-babel-tangle-file "${configFile}")'
+            ${lib.getExe cfg.package} -Q --batch \
+            -l ob-tangle "${configFile}" -f org-babel-tangle'
           '';
         };
       };
