@@ -12,7 +12,7 @@ in {
     {
       user.packages = attrValues {
         inherit (pkgs) biome;
-        inherit (pkgs.nodePackages) yarn typescript;
+        inherit (pkgs.nodePackages) yarn typescript typescript-language-server;
       } ++ [ nodePkg ];
 
       environment.shellAliases = {
