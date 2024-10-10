@@ -115,7 +115,7 @@ in {
 
         # -------===[ Useful Functions ]===------- #
         function sysdate {
-            nixos-rebuild switch --use-remote-sudo --flake .#"$(hostname)" --impure
+            nixos-rebuild switch --use-remote-sudo --flake .#"$(hostname)" --impure $@
         }
 
         # -------===[ External Plugins ]===------- #
