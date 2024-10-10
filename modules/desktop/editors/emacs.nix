@@ -130,7 +130,7 @@ in {
           source = "${configFile}";
           onChange = ''
             ${lib.getExe cfg.package} -Q --batch \
-            -l ob-tangle "${configFile}" -f org-babel-tangle'
+            -l ob-tangle "${configFile}" -f org-babel-tangle
           '';
         };
       };
