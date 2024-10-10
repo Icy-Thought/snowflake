@@ -22,13 +22,12 @@ in {
     hm.programs.zsh.initExtra = ''
       # -------===[ Helpful Git Fn's ]===------- #
       gitignore() {
-        curl -s -o .gitignore https://gitignore.io/api/$1
-      }
+        curl -sLw "\n" https://www.toptal.com/developers/gitignore/api/$@ -o .gitignore
+      ;}
     '';
 
-    hm.programs.fish.functions = {
-      gitignore = "curl -sL https://www.gitignore.io/api/$argv";
-    };
+    hm.programs.fish.functions.gitignore =
+      "curl -sL https://www.toptal.com/developers/gitignore/api/$argv -o .gitignore";
     home.sessionVariables.GITHUB_TOKEN = "$(cat /run/agenix/tokenGH)";
 
     hm.programs.git = {
