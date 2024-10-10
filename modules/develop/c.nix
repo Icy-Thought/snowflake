@@ -1,17 +1,16 @@
-{ config, options, lib, pkgs, ... }:
+{ options, config, lib, pkgs, ... }:
 
 let
   inherit (lib.attrsets) attrValues;
   inherit (lib.modules) mkIf mkMerge;
 in {
-  options.modules.develop.cc = let inherit (lib.options) mkEnableOption;
-  in { enable = mkEnableOption "C/C++ development"; };
+  options.modules.develop.c = let inherit (lib.options) mkEnableOption;
+  in { enable = mkEnableOption "C development"; };
 
-  config = mkIf config.modules.develop.cc.enable (mkMerge [
+  config = mkIf config.modules.develop.c.enable (mkMerge [
     {
       user.packages = attrValues {
-        inherit (pkgs) clang bear gdb cmake;
-        inherit (pkgs.llvmPackages) libcxx;
+        inherit (pkgs) gcc cmake ccls clang-tools;
       };
 
       hm.programs.vscode.extensions =

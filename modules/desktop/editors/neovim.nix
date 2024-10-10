@@ -21,7 +21,7 @@ in {
   config = mkIf cfg.enable (mkMerge [
     {
       user.packages = attrValues
-        (optionalAttrs (config.modules.develop.cc.enable == false) {
+        (optionalAttrs (config.modules.develop.c.enable == false) {
           inherit (pkgs) gcc; # Treesitter
         });
 
