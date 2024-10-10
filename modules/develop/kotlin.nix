@@ -1,4 +1,4 @@
-{ inputs, config, options, lib, pkgs, ... }:
+{ inputs, options, config, lib, pkgs, ... }:
 
 let
   inherit (lib.attrsets) attrValues;

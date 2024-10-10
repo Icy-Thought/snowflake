@@ -1,4 +1,4 @@
-{ config, options, lib, pkgs, ... }: {
+{ options, config, lib, pkgs, ... }: {
 
   options.modules.desktop.toolset.recorder =
     let inherit (lib.options) mkEnableOption;

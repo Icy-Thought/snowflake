@@ -1,4 +1,4 @@
-{ config, options, pkgs, lib, ... }:
+{ options, config, pkgs, lib, ... }:
 
 let
   inherit (lib.attrsets) mapAttrsToList;

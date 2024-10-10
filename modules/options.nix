@@ -1,4 +1,4 @@
-{ config, options, lib, home-manager, ... }:
+{ options, config, lib, home-manager, ... }:
 
 let
   inherit (lib.modules) mkAliasDefinitions;

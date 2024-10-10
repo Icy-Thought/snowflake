@@ -1,4 +1,4 @@
-{ config, options, lib, pkgs, ... }:
+{ options, config, lib, pkgs, ... }:
 
 let
   inherit (builtins) readFile;
@@ -136,7 +136,7 @@ in {
 
         diff = {
           "lisp".xfuncname =
-            "^(((;;;+ )|\\(|([ 	]+\\(((cl-|el-patch-)?def(un|var|macro|method|custom)|gb/))).*)$";
+            "^(((;;;+ )|\\(|([  ]+\\(((cl-|el-patch-)?def(un|var|macro|method|custom)|gb/))).*)$";
           "org".xfuncname = "^(\\*+ +.*)$";
         };
       };

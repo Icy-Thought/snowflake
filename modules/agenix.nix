@@ -1,4 +1,4 @@
-{ options, config, inputs, lib, pkgs, ... }:
+{ inputs, options, config, lib, pkgs, ... }:
 
 let
   inherit (inputs) ragenix;
