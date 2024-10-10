@@ -10,7 +10,7 @@ in {
     inherit (lib.types) nullOr enum;
   in {
     default = mkOption {
-      type = nullOr (enum [ "fish" "zsh" "xonsh" ]);
+      type = nullOr (enum [ "fish" "zsh" ]);
       default = null;
       description = "Default system shell";
     };

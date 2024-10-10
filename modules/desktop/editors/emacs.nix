@@ -120,8 +120,6 @@ in {
            end
         '';
       };
-
-      programs.xonsh.config = ""; # TODO
     }
 
     (mkIf (cfg.template == "irkalla") {
