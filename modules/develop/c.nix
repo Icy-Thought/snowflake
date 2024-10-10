@@ -5,13 +5,12 @@ let
   inherit (lib.modules) mkIf mkMerge;
 in {
   options.modules.develop.c = let inherit (lib.options) mkEnableOption;
-  in { enable = mkEnableOption "C development"; };
+  in { enable = mkEnableOption "C/C++ development"; };
 
   config = mkIf config.modules.develop.c.enable (mkMerge [
     {
-      user.packages = attrValues {
-        inherit (pkgs) gcc cmake ccls clang-tools;
-      };
+      user.packages =
+        attrValues { inherit (pkgs) clang cmake ccls clang-tools; };
 
       hm.programs.vscode.extensions =
         attrValues { inherit (pkgs.vscode-extensions.ms-vscode) cpptools; };

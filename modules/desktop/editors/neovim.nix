@@ -20,11 +20,6 @@ in {
 
   config = mkIf cfg.enable (mkMerge [
     {
-      user.packages = attrValues
-        (optionalAttrs (config.modules.develop.c.enable == false) {
-          inherit (pkgs) gcc; # Treesitter
-        });
-
       programs.neovim = {
         enable = true;
         viAlias = true;
