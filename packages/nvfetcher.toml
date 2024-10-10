@@ -1,39 +1,10 @@
 [pantalaimon]
-src.git = "https://gitlab.com/greenbeast/pantalaimon.git"
-fetch.git = "https://gitlab.com/greenbeast/pantalaimon.git"
+src.git = "https://github.com/matrix-org/pantalaimon.git"
+fetch.github = "matrix-org/pantalaimon"
 
 [telega]
-src.git = "https://github.com/zevlg/telega.el"
+src.git = "https://github.com/zevlg/telega.el.git"
 fetch.github = "zevlg/telega.el"
-
-# :NOTE| Xonsh-related
-[xonsh-direnv]
-src.git = "https://github.com/74th/xonsh-direnv.git"
-fetch.github = "74th/xonsh-direnv"
-
-[xonsh-cmd-durations]
-src.git = "https://github.com/jnoortheen/xontrib-cmd-durations.git"
-fetch.github = "jnoortheen/xontrib-cmd-durations"
-
-[xonsh-fzf-widgets]
-src.git = "https://github.com/laloch/xontrib-fzf-widgets.git"
-fetch.github = "laloch/xontrib-fzf-widgets"
-
-[xonsh-hist-navigator]
-src.git = "https://github.com/jnoortheen/xontrib-hist-navigator.git"
-fetch.github = "jnoortheen/xontrib-hist-navigator"
-
-[xontrib-output-search]
-src.git = "https://github.com/anki-code/xontrib-output-search.git"
-fetch.github = "anki-code/xontrib-output-search"
-
-[xontrib-readable-traceback]
-src.git = "https://github.com/vaaaaanquish/xontrib-readable-traceback.git"
-fetch.github = "vaaaaanquish/xontrib-readable-traceback"
-
-[xontrib-schedule]
-src.git = "https://github.com/AstraLuma/xontrib-schedule.git"
-fetch.github = "AstraLuma/xontrib-schedule"
 
 # :NOTE| Nyxt-related
 [nx-dark-reader]

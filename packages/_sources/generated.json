@@ -41,7 +41,7 @@
     },
     "pantalaimon": {
         "cargoLocks": null,
-        "date": "2024-06-04",
+        "date": "2024-10-07",
         "extract": null,
         "name": "pantalaimon",
         "passthru": null,
@@ -51,16 +51,17 @@
             "fetchSubmodules": false,
             "leaveDotGit": false,
             "name": null,
-            "rev": "0ae174364f5746f1c4495b2db75cf4d8b1f613d0",
-            "sha256": "sha256-haXi2eKygE7wbbp+Dxu03T0whY6bzpDcVF/W97vKmlg=",
-            "type": "git",
-            "url": "https://gitlab.com/greenbeast/pantalaimon.git"
+            "owner": "matrix-org",
+            "repo": "pantalaimon",
+            "rev": "33909aa2514dc5e9108e149c08a617f5149e52d4",
+            "sha256": "sha256-ck0cTSGgN0qBY1uyDqU+1CpPPntMAVhSpfGzrBlA61c=",
+            "type": "github"
         },
-        "version": "0ae174364f5746f1c4495b2db75cf4d8b1f613d0"
+        "version": "33909aa2514dc5e9108e149c08a617f5149e52d4"
     },
     "telega": {
         "cargoLocks": null,
-        "date": "2024-08-18",
+        "date": "2024-09-11",
         "extract": null,
         "name": "telega",
         "passthru": null,
@@ -72,150 +73,10 @@
             "name": null,
             "owner": "zevlg",
             "repo": "telega.el",
-            "rev": "d86d943beca37b9270060e9acca65e8fe3f322f3",
-            "sha256": "sha256-dgdjIMu1lnrHtd+5MTfqIrpW51UAa7UlITq8Ey/ajUs=",
+            "rev": "aa891d2a5a6cba18ab79b42d396795f7b61f2e9f",
+            "sha256": "sha256-V4oqnCTFYynz5h3rlWzx2MfHhEBox4am0zLvRYRWKhM=",
             "type": "github"
         },
-        "version": "d86d943beca37b9270060e9acca65e8fe3f322f3"
-    },
-    "xonsh-cmd-durations": {
-        "cargoLocks": null,
-        "date": "2024-05-17",
-        "extract": null,
-        "name": "xonsh-cmd-durations",
-        "passthru": null,
-        "pinned": false,
-        "src": {
-            "deepClone": false,
-            "fetchSubmodules": false,
-            "leaveDotGit": false,
-            "name": null,
-            "owner": "jnoortheen",
-            "repo": "xontrib-cmd-durations",
-            "rev": "c4101bb94ca54507e0af588963ea46424c10e090",
-            "sha256": "sha256-qFIjXBLyNqGnrslMvhqKpTvJDT79yWdHkDvS6JebVUk=",
-            "type": "github"
-        },
-        "version": "c4101bb94ca54507e0af588963ea46424c10e090"
-    },
-    "xonsh-direnv": {
-        "cargoLocks": null,
-        "date": "2024-07-20",
-        "extract": null,
-        "name": "xonsh-direnv",
-        "passthru": null,
-        "pinned": false,
-        "src": {
-            "deepClone": false,
-            "fetchSubmodules": false,
-            "leaveDotGit": false,
-            "name": null,
-            "owner": "74th",
-            "repo": "xonsh-direnv",
-            "rev": "f96ecc0670b8744cc5ff8a0a900efe5de1dacb7e",
-            "sha256": "sha256-97c2cuqG0EitDdCM40r2IFOlRMHlKC4cLemJrPcxsZo=",
-            "type": "github"
-        },
-        "version": "f96ecc0670b8744cc5ff8a0a900efe5de1dacb7e"
-    },
-    "xonsh-fzf-widgets": {
-        "cargoLocks": null,
-        "date": "2020-10-16",
-        "extract": null,
-        "name": "xonsh-fzf-widgets",
-        "passthru": null,
-        "pinned": false,
-        "src": {
-            "deepClone": false,
-            "fetchSubmodules": false,
-            "leaveDotGit": false,
-            "name": null,
-            "owner": "laloch",
-            "repo": "xontrib-fzf-widgets",
-            "rev": "8af47d1d684a14eb776485ef6f5c30c8e6807f60",
-            "sha256": "sha256-lz0oiQSLCIQbnoQUi+NJwX82SbUvXJ+3dEsSbOb20q4=",
-            "type": "github"
-        },
-        "version": "8af47d1d684a14eb776485ef6f5c30c8e6807f60"
-    },
-    "xonsh-hist-navigator": {
-        "cargoLocks": null,
-        "date": "2023-03-16",
-        "extract": null,
-        "name": "xonsh-hist-navigator",
-        "passthru": null,
-        "pinned": false,
-        "src": {
-            "deepClone": false,
-            "fetchSubmodules": false,
-            "leaveDotGit": false,
-            "name": null,
-            "owner": "jnoortheen",
-            "repo": "xontrib-hist-navigator",
-            "rev": "90504cc163d1f1f36f90fbf2f0190b03b89b798e",
-            "sha256": "sha256-yosOwmNBNGAW3Ut4z6GKxumWw80VEPWoOvVmKae/fvA=",
-            "type": "github"
-        },
-        "version": "90504cc163d1f1f36f90fbf2f0190b03b89b798e"
-    },
-    "xontrib-output-search": {
-        "cargoLocks": null,
-        "date": "2024-03-06",
-        "extract": null,
-        "name": "xontrib-output-search",
-        "passthru": null,
-        "pinned": false,
-        "src": {
-            "deepClone": false,
-            "fetchSubmodules": false,
-            "leaveDotGit": false,
-            "name": null,
-            "owner": "anki-code",
-            "repo": "xontrib-output-search",
-            "rev": "5f4cefe1b15b45041179ac5a92abe988f6d8a6d7",
-            "sha256": "sha256-oG7VopEYKCZpJ7N2caoJ3XYeFhObzRqksOkhcaHwQn8=",
-            "type": "github"
-        },
-        "version": "5f4cefe1b15b45041179ac5a92abe988f6d8a6d7"
-    },
-    "xontrib-readable-traceback": {
-        "cargoLocks": null,
-        "date": "2022-09-07",
-        "extract": null,
-        "name": "xontrib-readable-traceback",
-        "passthru": null,
-        "pinned": false,
-        "src": {
-            "deepClone": false,
-            "fetchSubmodules": false,
-            "leaveDotGit": false,
-            "name": null,
-            "owner": "vaaaaanquish",
-            "repo": "xontrib-readable-traceback",
-            "rev": "d87ddfae258cc928abdff364fac5a108d49f2308",
-            "sha256": "sha256-ek+GTWGUpm2b6lBw/7n4W46W2R0Gy6JxqWoLuQilCXQ=",
-            "type": "github"
-        },
-        "version": "d87ddfae258cc928abdff364fac5a108d49f2308"
-    },
-    "xontrib-schedule": {
-        "cargoLocks": null,
-        "date": "2021-07-21",
-        "extract": null,
-        "name": "xontrib-schedule",
-        "passthru": null,
-        "pinned": false,
-        "src": {
-            "deepClone": false,
-            "fetchSubmodules": false,
-            "leaveDotGit": false,
-            "name": null,
-            "owner": "AstraLuma",
-            "repo": "xontrib-schedule",
-            "rev": "02c4d4f237451fce39b45545d69ab9ea67565b45",
-            "sha256": "sha256-Ahog47+Sq9xv03s0kPRm2wEOT989qI3GMaAzlnz/wS4=",
-            "type": "github"
-        },
-        "version": "02c4d4f237451fce39b45545d69ab9ea67565b45"
+        "version": "aa891d2a5a6cba18ab79b42d396795f7b61f2e9f"
     }
 }
