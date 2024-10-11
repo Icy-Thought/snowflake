@@ -1,4 +1,4 @@
-{ modulesPath, lib, pkgs, config, ... }:
+{ config, lib, pkgs, modulesPath, ... }:
 
 let inherit (lib.attrsets) attrValues;
 in {

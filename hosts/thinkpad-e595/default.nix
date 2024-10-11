@@ -1,4 +1,4 @@
-{ pkgs, config, lib, ... }: {
+{ config, lib, pkgs, ... }: {
 
   imports = [ ./hardware.nix ];
 
@@ -14,7 +14,7 @@
     services.ssh.enable = true;
 
     develop = {
-      c.enable = true;
+      cc.enable = true;
       python.enable = true;
       rust.enable = true;
       haskell.enable = true;
