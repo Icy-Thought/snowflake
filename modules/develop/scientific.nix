@@ -34,10 +34,11 @@ in {
     })
 
     (mkIf config.modules.develop.scientific.typst.enable {
-      user.packages = attrValues { inherit (pkgs) typst typst-lsp typstyle; };
+      user.packages = attrValues { inherit (pkgs) typst tinymist typstyle; };
 
-      hm.programs.vscode.extensions =
-        attrValues { inherit (pkgs.vscode-extensions.nvarner) typst-lsp; };
+      hm.programs.vscode.extensions = attrValues {
+        inherit (pkgs.vscode-extensions.myriad-dreamin) tinymist;
+      };
     })
 
     (mkIf config.modules.develop.xdg.enable {
