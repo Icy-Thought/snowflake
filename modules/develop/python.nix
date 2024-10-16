@@ -11,9 +11,8 @@ in {
   config = mkIf cfg.enable (mkMerge [
     {
       user.packages = attrValues {
-        pyWithEnv = pkgs.python3.withPackages
-          (pykgs: with pykgs; [ ipython black isort ]);
-        inherit (pkgs) rye pyright; # pylyzer
+        pyWithEnv = pkgs.python3.withPackages (pykgs: with pykgs; [ ipython ]);
+        inherit (pkgs) uv pyright ruff; # pylyzer
       };
 
       hm.programs.vscode.extensions = attrValues {
@@ -31,9 +30,17 @@ in {
 
     (mkIf config.modules.develop.xdg.enable {
       home.sessionVariables = {
+        PYTHONPYCACHEPREFIX = "$XDG_CACHE_HOME/python";
+        PYTHONSTARTUP = "$XDG_CONFIG_HOME/python/pythonrc";
+        PYTHONUSERBASE = "$XDG_DATA_HOME/python";
         PYTHON_HISTORY_FILE = "$XDG_CONFIG_HOME/python/history";
-        JUPYTER_CONFIG_DIR = "$XDG_CONFIG_HOME/jupyter";
+
+        # :NOTE| Tool related variables
         IPYTHONDIR = "$XDG_CONFIG_HOME/ipython";
+        JUPYTER_CONFIG_DIR = "$XDG_CONFIG_HOME/jupyter";
+        PIP_CONFIG_FILE = "$XDG_CONFIG_HOME/pip/pip.conf";
+        PIP_LOG_FILE = "$XDG_STATE_HOME/pip/log";
+        WORKON_HOME = "$XDG_DATA_HOME/virtualenvs";
       };
     })
   ]);
