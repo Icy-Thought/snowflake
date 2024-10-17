@@ -27,7 +27,7 @@ in {
     (mkIf (config.modules.desktop.type == "x11") {
       services.unclutter-xfixes = {
         enable = true;
-        extraOptions = [ "exclude-root" "ignore-scrolling" "fork" ];
+        extraOptions = [ "exclude-root" "ignore-scrolling" ];
         threshold = 1;
         timeout = 1;
       };
