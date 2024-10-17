@@ -125,7 +125,7 @@ myConfig =
         , keys = customKeys (const []) addKeys
         }
 
-icyActiveWin = "#F38BA8"
+icyActiveWin = "#938056"
 
 icyInactiveWin = "#181825"
 

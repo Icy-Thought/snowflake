@@ -1,4 +1,4 @@
-{ lib, stdenv, fetchFromGitHub, gtk-engine-murrine, jdupes, sassc
+{ lib, stdenv, fetchFromGitHub, gtk-engine-murrine, sassc
 , accent ? [ "default" ], shade ? "dark", size ? "standard", tweaks ? [ ], }:
 
 let
@@ -24,6 +24,7 @@ in lib.checkListOfEnum "${pname} Valid theme accent(s)" validAccents accent
 lib.checkListOfEnum "${pname} Valid shades" validShades (single shade)
 lib.checkListOfEnum "${pname} Valid sizes" validSizes (single size)
 lib.checkListOfEnum "${pname} Valid tweaks" validTweaks tweaks
+
 stdenv.mkDerivation {
   pname = "${pname}";
   version = "0-unstable-2024-06-27";
@@ -35,7 +36,7 @@ stdenv.mkDerivation {
     hash = "sha256-oFVsYrJ27hYGY+x9+Z4SxVCp3w6PiLYTZaxmGhnpVHQ=";
   };
 
-  nativeBuildInputs = [ jdupes sassc ];
+  nativeBuildInputs = [ sassc ];
 
   propagatedUserEnvPkgs = [ gtk-engine-murrine ];
 
@@ -59,8 +60,6 @@ stdenv.mkDerivation {
       ${lib.optionalString (size != null) ("--size " + size)} \
       ${toString (map (x: "--tweaks " + x) tweaks)} \
       --dest $out/share/themes
-
-    jdupes --quiet --link-soft --recurse $out/share
 
     runHook postInstall
   '';

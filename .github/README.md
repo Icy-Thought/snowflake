@@ -49,15 +49,15 @@
 
 ## XMonad
 
-![XMonad](./assets/themes/catppuccin/xmonad.png)
+![XMonad](./assets/themes/kanagawa/xmonad.png)
 
 ## Emacs
 
-![Emacs](./assets/themes/catppuccin/emacs.png)
+![Emacs](./assets/themes/kanagawa/emacs.png)
 
 ## Neovim
 
-![Neovim](./assets/themes/catppuccin/neovim.png)
+![Neovim](./assets/themes/kanagawa/neovim.png)
 
 # Introduction
 
@@ -147,9 +147,9 @@ Modify `snowflake.dir` to point to the location where you are keeping the
 snowflake repository:
 https://github.com/Icy-Thought/snowflake/blob/f576ca018a7dd97e0f9d887835e2559e1e5cc02c/modules/options.nix#L26-L29
 
-## 2. Remove Redundant CPU Setting 
+## 2. Remove Redundant CPU Setting
 
-For the sake of making things quicker (not the wisest choice), I have added both Intel and AMD CPU settings in the `hardware.nix` template. Therefore you ought to remove the one not being used. 
+For the sake of making things quicker (not the wisest choice), I have added both Intel and AMD CPU settings in the `hardware.nix` template. Therefore you ought to remove the one not being used.
 
 There might be other configurations that you need to add to your `hardware.nix` file, therefore it is the wisest choice to always look (grep `hardware.`) in the [NixOS Manual](https://nixos.org/manual/nixos/unstable/).
 

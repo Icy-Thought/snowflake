@@ -21,7 +21,7 @@
       scientific.typst.enable = true;
     };
 
-    themes.active = "catppuccin";
+    themes.active = "kanagawa";
     desktop = {
       xmonad.enable = true;
       terminal = {

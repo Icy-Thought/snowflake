@@ -1,4 +1,4 @@
-{ lib, stdenv, fetchFromGitHub, gtk-engine-murrine, jdupes, sassc
+{ lib, stdenv, fetchFromGitHub, gtk-engine-murrine, sassc
 , accent ? [ "default" ], shade ? "dark", size ? "standard", }:
 
 let
@@ -24,7 +24,7 @@ stdenv.mkDerivation {
     hash = "sha256-oKqLb66N4swHfhjUZJIGryE0D9MkuLdKFQa6j3TFmOg=";
   };
 
-  nativeBuildInputs = [ jdupes sassc ];
+  nativeBuildInputs = [ sassc ];
 
   propagatedUserEnvPkgs = [ gtk-engine-murrine ];
 
@@ -47,8 +47,6 @@ stdenv.mkDerivation {
       ${lib.optionalString (shade != null) ("--color " + shade)} \
       ${lib.optionalString (size != null) ("--size " + size)} \
       --dest $out/share/themes
-
-    jdupes --quiet --link-soft --recurse $out/share
 
     runHook postInstall
   '';

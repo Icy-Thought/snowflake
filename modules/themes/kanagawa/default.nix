@@ -11,14 +11,14 @@ in {
   config = mkIf (cfg.active == "kanagawa") (mkMerge [
     {
       modules.themes = {
-        wallpaper = mkDefault ./assets/morganprost-spacestation01.jpg;
+        wallpaper = mkDefault ./assets/ismail-inceoglu-chaos-invoked.jpg;
         gtk = {
           name = "Kanagawa-BL";
-          package = pkgs.my.kanagawa-gtk.override { themeVariants = [ "BL" ]; };
+          package = pkgs.my.kanagawa-gtk;
         };
         iconTheme = {
           name = "Kanagawa";
-          package = pkgs.my.kanagawa-gtk.override { themeVariants = [ "BL" ]; };
+          package = pkgs.my.kanagawa-gtk;
         };
         pointer = {
           name = "Bibata-Modern-Classic";
