@@ -109,8 +109,8 @@ myConfig =
         , manageHook = namedScratchpadManageHook =<< liftX myScratchpads
         , layoutHook = myLayoutHook
         , borderWidth = 2
-        , normalBorderColor = icyInactiveWin
-        , focusedBorderColor = icyActiveWin
+        , normalBorderColor = inactiveBorder
+        , focusedBorderColor = kanaBorder
         , logHook =
             updatePointer (0.5, 0.5) (0, 0)
                 <> workspaceHistoryHook
@@ -125,19 +125,22 @@ myConfig =
         , keys = customKeys (const []) addKeys
         }
 
-icyActiveWin = "#938056"
-
-icyInactiveWin = "#181825"
+ayuBorder = "#F29718"
+catBorder = "#F38BA8"
+kanaBorder = "#938056"
+roseBorder = "#BB7B79"
+tokyoBorder = "#1ABC9C"
+inactiveBorder = "#181825"
 
 icyTheme =
     def
-        { activeColor = icyActiveWin
-        , activeBorderColor = icyActiveWin
-        , activeTextColor = icyInactiveWin
+        { activeColor = kanaBorder
+        , activeBorderColor = kanaBorder
+        , activeTextColor = inactiveBorder
         , decoHeight = 20
-        , inactiveColor = icyInactiveWin
-        , inactiveBorderColor = icyInactiveWin
-        , inactiveTextColor = icyActiveWin
+        , inactiveColor = inactiveBorder
+        , inactiveBorderColor = inactiveBorder
+        , inactiveTextColor = kanaBorder
         , fontName = "xft:VictorMono Nerd Font:size=13:style=Bold"
         }
 
