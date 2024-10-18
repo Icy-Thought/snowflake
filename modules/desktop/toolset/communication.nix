@@ -207,7 +207,7 @@ in {
             noTyping = false;
             cmdPreset = "balanced";
             css = ''
-              @import url("https://catppuccin.github.io/discord/dist/catppuccin-mocha.theme.css");
+              @import url("https://refact0r.github.io/midnight-discord/midnight.css");
             '';
           };
           SKIP_HOST_UPDATE = true;
