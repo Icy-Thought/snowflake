@@ -38,13 +38,13 @@ in {
             };
           };
           mono = [ "VictorMono Nerd Font" "Sarasa Mono SC" ];
-          sans = [ "Caskaydia Cove Nerd Font" "Sarasa Gothic SC" ];
+          sans = [ "Sarasa Gothic SC" ];
           emoji = [ "Noto Color Emoji" ];
         };
 
         font = {
           mono.family = "VictorMono Nerd Font";
-          sans.family = "CaskaydiaCove Nerd Font";
+          sans.family = "Sarasa Gothic SC";
         };
 
         colors = {
