@@ -21,9 +21,7 @@ in {
         let spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.system};
         in {
           enable = true;
-          theme = spicePkgs.themes.catppuccin;
-          colorScheme = "mocha";
-
+          theme = spicePkgs.themes.lucid;
           enabledCustomApps =
             attrValues { inherit (spicePkgs.apps) newReleases lyricsPlus; };
           enabledExtensions = attrValues {
