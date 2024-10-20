@@ -44,7 +44,7 @@ in {
           force-window = true;
           save-position-on-quit = "yes";
           ytdl-format = "bestvideo+bestaudio";
-          watch-later-dir = "$XDG_CACHE_DIR/watch_later";
+          watch-later-dir = "${config.hm.xdg.dataHome}/watch_later";
 
           sub-font = "Trebuchet MS";
           sub-font-size = 35;
@@ -52,7 +52,7 @@ in {
           sub-shadow-offset = 2;
           sub-shadow-color = "0.0/0.0/0.0";
         };
-        scriptOpts = { autoload.same_type = true; };
+        scriptOpts.autoload.same_type = true;
         bindings = {
           WHEEL_UP = "seek 10";
           WHEEL_DOWN = "seek -10";
