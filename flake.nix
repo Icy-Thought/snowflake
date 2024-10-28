@@ -10,10 +10,7 @@
     };
 
     # System application(s)
-    ragenix = {
-      url = "github:yaxitech/ragenix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    ragenix.url = "github:yaxitech/ragenix";
     kmonad = {
       url = "github:kmonad/kmonad?dir=nix";
       inputs.nixpkgs.follows = "nixpkgs";

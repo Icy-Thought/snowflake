@@ -19,9 +19,9 @@ in {
     };
   };
 
-  imports = let inherit (inputs) kmonad; in [ kmonad.nixosModules.default ];
-
   config = mkIf cfg.enable {
+    nixpkgs.overlays = [ inputs.kmonad.overlays.default ];
+
     # Allow our user to benefit from KMonad:
     user.extraGroups = [ "uinput" ];
 
