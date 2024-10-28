@@ -10,8 +10,7 @@ let
     np = "nix-shell -p";
     nls =
       "nix-store --query --requisites /run/current-system | cut -d- -f2- | sort | uniq";
-    flup = "nix flake update";
-    nfl = "nix flake lock --update-input";
+    nfu = "nix flake update";
     d2nix = "dconf dump / | dconf2nix > dconf.nix";
 
     # Sys-Management
