@@ -22,7 +22,8 @@ in {
 
       environment.shellAliases = {
         py = "python";
-        pip = "rye";
+        pip = "uv pip";
+        venv = "uv venv";
         ipy = "ipython --no-banner";
         ipylab = "ipython --pylab=qt5 --no-banner";
       };
