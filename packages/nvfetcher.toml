@@ -1,5 +1,6 @@
 [pantalaimon]
 src.git = "https://github.com/matrix-org/pantalaimon.git"
+src.branch = "fix-dbus"
 fetch.github = "matrix-org/pantalaimon"
 
 [telega]

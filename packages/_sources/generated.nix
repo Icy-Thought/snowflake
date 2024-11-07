@@ -27,15 +27,15 @@
   };
   pantalaimon = {
     pname = "pantalaimon";
-    version = "33909aa2514dc5e9108e149c08a617f5149e52d4";
+    version = "78129e40d1c89fc4fd41c84baa2a33b139e2b392";
     src = fetchFromGitHub {
       owner = "matrix-org";
       repo = "pantalaimon";
-      rev = "33909aa2514dc5e9108e149c08a617f5149e52d4";
+      rev = "78129e40d1c89fc4fd41c84baa2a33b139e2b392";
       fetchSubmodules = false;
-      sha256 = "sha256-ck0cTSGgN0qBY1uyDqU+1CpPPntMAVhSpfGzrBlA61c=";
+      sha256 = "sha256-9Gt/91J8hiRBVC79GKRBo1qP0CXMJFCkFy7cqEm4AhM=";
     };
-    date = "2024-10-07";
+    date = "2024-10-29";
   };
   telega = {
     pname = "telega";

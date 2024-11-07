@@ -41,7 +41,7 @@
     },
     "pantalaimon": {
         "cargoLocks": null,
-        "date": "2024-10-07",
+        "date": "2024-10-29",
         "extract": null,
         "name": "pantalaimon",
         "passthru": null,
@@ -53,11 +53,11 @@
             "name": null,
             "owner": "matrix-org",
             "repo": "pantalaimon",
-            "rev": "33909aa2514dc5e9108e149c08a617f5149e52d4",
-            "sha256": "sha256-ck0cTSGgN0qBY1uyDqU+1CpPPntMAVhSpfGzrBlA61c=",
+            "rev": "78129e40d1c89fc4fd41c84baa2a33b139e2b392",
+            "sha256": "sha256-9Gt/91J8hiRBVC79GKRBo1qP0CXMJFCkFy7cqEm4AhM=",
             "type": "github"
         },
-        "version": "33909aa2514dc5e9108e149c08a617f5149e52d4"
+        "version": "78129e40d1c89fc4fd41c84baa2a33b139e2b392"
     },
     "telega": {
         "cargoLocks": null,
