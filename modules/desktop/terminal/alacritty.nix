@@ -20,6 +20,8 @@ in {
       # https://alacritty.org/config-alacritty.html
       settings = mkMerge [
         {
+          general.live_config_reload = true;
+
           env = {
             TERM = "xterm-256color";
             WINIT_X11_SCALE_FACTOR = "1.0";
@@ -55,9 +57,7 @@ in {
             save_to_clipboard = false;
           };
 
-          live_config_reload = true;
-
-          shell = {
+          terminal.shell = {
             program = "${getExe pkgs.fish}";
             args = [ "-l" "-c" "tmux new || tmux" ];
           };
@@ -126,7 +126,7 @@ in {
         }
 
         (mkIf (active != null) {
-          import = [ "~/.config/alacritty/config/${active}.toml" ];
+          general.import = [ "~/.config/alacritty/config/${active}.toml" ];
         })
       ];
     };
