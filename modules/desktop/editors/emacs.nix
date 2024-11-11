@@ -48,16 +48,17 @@ in {
         enable = true;
         package = cfg.package;
         extraPackages = epkgs:
-          attrValues ({
-            inherit (epkgs.melpaPackages) jinx pdf-tools;
-            inherit (epkgs.treesit-grammars) with-all-grammars;
-            telega = epkgs.melpaPackages.telega.overrideAttrs (_: {
+          [
+            epkgs.mu4e
+            epkgs.melpaPackages.jinx
+            epkgs.melpaPackages.pdf-tools
+            epkgs.treesit-grammars.with-all-grammars
+            (epkgs.melpaPackages.telega.overrideAttrs (_: {
               version = "0.8.290";
               src = pkgs.sources.telega;
-            });
-          } // optionalAttrs (cfg.terminal == "VTerm") {
-            inherit (epkgs.melpaPackages) vterm;
-          });
+            }))
+          ] ++ optionalAttrs (cfg.terminal == "VTerm")
+          [ epkgs.melpaPackages.vterm ];
       };
 
       hm.services.emacs = {

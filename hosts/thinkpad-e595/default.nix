@@ -57,8 +57,8 @@
         };
         communication = {
           base.enable = true;
-          notmuch.enable = true;
           matrix.withDaemon.enable = true;
+          mu4e.enable = true;
         };
         readers = {
           enable = true;

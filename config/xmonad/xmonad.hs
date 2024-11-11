@@ -759,11 +759,11 @@ myScratchpads = do
                 >-> setFrameName emacsScratchID
                 >-> eval (elispFun "dashboard-refresh-buffer")
 
-    notmuchSP <-
+    emacsMailSP <-
         getInput $
             inEditor
-                >-> setFrameName notmuchID
-                >-> eval (elispFun "notmuch-hello")
+                >-> setFrameName emacsMailID
+                >-> eval (elispFun "mu4e")
 
     -- \| What matrix-client should've been..
     matrixSP <-
@@ -784,7 +784,7 @@ myScratchpads = do
         , NS "EasyEffects" "easyeffects" (title =? "Easy Effects") floatCenter
         , NS "Emacs" emacsScratch (title ^? emacsScratchID) floatCenter
         , NS "Matrix" matrixSP (title =? matrixID) floatCenter
-        , NS "NotMuch" notmuchSP (title =? notmuchID) floatCenter
+        , NS "Mail" emacsMailSP (title =? emacsMailID) floatCenter
         , NS "Spotify" "spotify" (className =? "Spotify") floatCenter
         , NS "System Monitor" btopLaunch (appName =? sysMonID) floatCenter
         , NS "Telegram" telegramSP (title =? telegramID) floatCenter
@@ -793,7 +793,7 @@ myScratchpads = do
   where
     emacsScratchID = "Emacs-NSP|"
     matrixID = "Emacs-NSP: Ement"
-    notmuchID = "Emacs-NSP: NotMuch"
+    emacsMailID = "Emacs-NSP: E-Mail"
     telegramID = "Emacs-NSP: Telega"
     sysMonID = "system-monitor"
 
@@ -946,7 +946,7 @@ addKeys conf@XConfig{modMask = modm} =
            , ((modalt, xK_d), doScratchpad "Discord")
            , ((modalt, xK_e), doScratchpad "Emacs")
            , ((modalt, xK_k), doScratchpad "Matrix")
-           , ((modalt, xK_m), doScratchpad "NotMuch")
+           , ((modalt, xK_m), doScratchpad "Mail")
            , ((modalt, xK_l), doScratchpad "Telegram")
            , ((modalt, xK_s), doScratchpad "Spotify")
            , ((modalt, xK_t), doScratchpad "Transmission")

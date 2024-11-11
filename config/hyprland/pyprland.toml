@@ -36,7 +36,7 @@ match_by = "title"
 
 [scratchpads.Emacs-Mail]
 use = "template"
-command = "emacsclient -c -a '' -F '(quote (name . \"Emacs-NSP: Mail\"))' --eval '(notmuch-hello)'"
+command = "emacsclient -c -a '' -F '(quote (name . \"Emacs-NSP: E-Mail\"))' --eval '(mu4e)'"
 title = "Emacs-NSP|"
 match_by = "title"
 

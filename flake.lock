@@ -65,11 +65,11 @@
     "emacs-dir": {
       "flake": false,
       "locked": {
-        "lastModified": 1730998308,
-        "narHash": "sha256-DE07R8AeUPFKLw4VxrihSqUT10uCwSfnrHbUJkVi6AE=",
+        "lastModified": 1731300557,
+        "narHash": "sha256-8jBIndpKU2ZCM9KcOXIc5JPRaK3h4UV5y/w2nanyksc=",
         "ref": "refs/heads/main",
-        "rev": "64f1801062ba22f1698d4ff1df1d9edeafe28628",
-        "revCount": 649,
+        "rev": "8fdf2bc5bdc21636d0498703be04c0d514ec0458",
+        "revCount": 657,
         "submodules": true,
         "type": "git",
         "url": "https://github.com/Icy-Thought/emacs.d.git"
@@ -391,11 +391,11 @@
     },
     "nixpkgs_11": {
       "locked": {
-        "lastModified": 1730200266,
-        "narHash": "sha256-l253w0XMT8nWHGXuXqyiIC/bMvh1VRszGXgdpQlfhvU=",
+        "lastModified": 1731139594,
+        "narHash": "sha256-IigrKK3vYRpUu+HEjPL/phrfh7Ox881er1UEsZvw9Q4=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "807e9154dcb16384b1b765ebe9cd2bba2ac287fd",
+        "rev": "76612b17c0ce71689921ca12d9ffdc9c23ce40b2",
         "type": "github"
       },
       "original": {
@@ -928,11 +928,11 @@
         "nixpkgs": "nixpkgs_11"
       },
       "locked": {
-        "lastModified": 1730647781,
-        "narHash": "sha256-+UK/IVvDa1CkZTksIMkn4f2/K7+F35Joh55BHN00shg=",
+        "lastModified": 1731288014,
+        "narHash": "sha256-RcQdww+XgGUWTWKINDJ68A6DB/UiRaoc/IUWwa+0ZeI=",
         "owner": "0xc000022070",
         "repo": "zen-browser-flake",
-        "rev": "23f1d349d5f8c5f23818d1776c0266729d3948c4",
+        "rev": "4e9e06a66f9c225eb02d1a37b55bb0af8db3ad5e",
         "type": "github"
       },
       "original": {

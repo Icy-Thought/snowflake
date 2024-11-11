@@ -15,7 +15,7 @@ in {
     inherit (lib.types) nullOr enum;
   in {
     base.enable = mkEnableOption "cross-platform clients";
-    notmuch.enable = mkEnableOption "NotMuch of an e-mail client";
+    mu4e.enable = mkEnableOption "a full-featured e-mail client";
     discord.enable = mkEnableOption "discord client" // {
       default = cfg.base.enable;
     };
@@ -44,10 +44,9 @@ in {
       user.packages = attrValues { inherit (pkgs) signal-desktop; };
     })
 
-    (mkIf cfg.notmuch.enable {
+    (mkIf cfg.mu4e.enable {
       hm.accounts.email = {
         maildirBasePath = mailDir;
-
         accounts.${config.user.name} = let mailAddr = "IcyThought@disroot.org";
         in {
           realName = "${config.user.name}";
@@ -65,85 +64,29 @@ in {
             host = "disroot.org";
             port = 465;
           };
-
-          offlineimap.enable = true;
-          msmtp = {
-            enable = true;
-            extraConfig = { auth = "login"; };
-          };
-          notmuch.enable = true;
-
           gpg = {
             key = "2E690B8644FE29D8237F6C42B593E438DDAB3C66";
             encryptByDefault = false;
             signByDefault = true;
           };
+          mbsync = {
+            enable = true;
+            create = "both";
+            expunge = "both";
+            patterns = [ "*" ];
+          };
+          msmtp = {
+            enable = true;
+            extraConfig.auth = "login";
+          };
+          mu.enable = true;
         };
       };
 
       hm.programs = {
-        offlineimap.enable = true;
+        mbsync.enable = true;
         msmtp.enable = true;
-        notmuch = {
-          enable = true;
-          hooks = {
-            preNew = "${lib.getExe pkgs.offlineimap} -o;";
-            postNew = "${lib.getExe pkgs.afew} --tag --new";
-          };
-          new.tags = [ "new" ];
-        };
-        afew = let
-          relMailDir = lib.strings.removePrefix "${config.user.home}/" mailDir;
-        in {
-          enable = true; # NotMuch initial tagging
-          extraConfig = ''
-            [SpamFilter]
-            [KillThreadsFilter]
-            [ListMailsFilter]
-            [DMARCReportInspectionFilter]
-            [InboxFilter]
-
-            [SentMailsFilter]
-            [ArchiveSentMailsFilter]
-            sent_tag = sent
-
-            [Filter.0]
-            message = Tagging Personal Emails
-            query = 'folder:${relMailDir}/'
-            tags = +personal
-
-            [FolderNameFilter.0]
-            folder_explicit_list = ${relMailDir}/Inbox ${relMailDir}/Archive ${relMailDir}/Drafts ${relMailDir}/Sent ${relMailDir}/Trash
-            folder_transforms = ${relMailDir}/Inbox:personal ${relMailDir}/Archive:personal ${relMailDir}/Drafts:personal ${relMailDir}/Sent:personal ${relMailDir}/Trash:personal
-            folder_lowercases = true
-
-            [FolderNameFilter.1]
-            folder_explicit_list = ${relMailDir}/Archive
-            folder_transforms = ${relMailDir}/Archive:archive
-            folder_lowercases = true
-
-            [FolderNameFilter.2]
-            folder_explicit_list = ${relMailDir}/Sent
-            folder_transforms = ${relMailDir}/Sent:sent
-            folder_lowercases = true
-
-            [FolderNameFilter.3]
-            folder_explicit_list = ${relMailDir}/Trash
-            folder_transforms = ${relMailDir}/Trash:deleted
-            folder_lowercases = true
-
-            [Filter.1]
-            message = Untagged 'inbox' from 'archive'
-            query = 'tag:archive AND tag:inbox'
-            tags = -inbox
-
-            [MailMover]
-            folders = ${relMailDir}/Inbox
-            rename = True
-            max_age = 7
-            ${relMailDir}/Inbox = 'tag:deleted':${relMailDir}/Trash 'tag:archive':${relMailDir}/Archive
-          '';
-        };
+        mu.enable = true;
       };
     })
 
