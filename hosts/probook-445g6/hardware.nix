@@ -34,11 +34,9 @@ in {
     };
   };
 
+  hardware.cpu.intel.updateMicrocode = true;
+  powerManagement.cpuFreqGovernor = mkDefault "schedutil";
   nix.settings.max-jobs = mkDefault 4;
-
-  hardware.cpu.amd = {
-    updateMicrocode = mkDefault config.hardware.enableRedistributableFirmware;
-  };
 
   # Manage device power-control:
   services = {
