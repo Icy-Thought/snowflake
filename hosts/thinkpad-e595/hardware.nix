@@ -47,14 +47,11 @@ in {
   };
 
   hardware.cpu.amd.updateMicrocode = true;
-  powerManagement.cpuFreqGovernor = mkDefault "schedutil";
+  powerManagement.cpuFreqGovernor = mkDefault "performance";
   nix.settings.max-jobs = mkDefault 4;
 
   # Manage device power-control:
-  services = {
-    power-profiles-daemon.enable = true;
-    thermald.enable = true;
-  };
+  services.power-profiles-daemon.enable = true;
 
   # Finally, our beloved hardware module(s):
   modules.hardware = {

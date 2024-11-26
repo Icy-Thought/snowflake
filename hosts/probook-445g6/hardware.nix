@@ -35,32 +35,13 @@ in {
   };
 
   hardware.cpu.intel.updateMicrocode = true;
-  powerManagement.cpuFreqGovernor = mkDefault "schedutil";
+  powerManagement.cpuFreqGovernor = mkDefault "performance";
   nix.settings.max-jobs = mkDefault 4;
 
   # Manage device power-control:
   services = {
-    power-profiles-daemon.enable = false;
-    thermald.enable = false;
-    tlp = {
-      enable = true;
-      settings = {
-        START_CHARGE_THRESH_BAT0 = 75;
-        STOP_CHARGE_THRESH_BAT0 = 80;
-        RESTORE_THRESHOLDS_ON_BAT = 1;
-
-        CPU_BOOST_ON_AC = 1;
-        CPU_BOOST_ON_BAT = 0;
-        CPU_SCALING_GOVERNOR_ON_AC = "performance";
-        CPU_SCALING_GOVERNOR_ON_BAT = "schedutil";
-
-        PCIE_ASPM_ON_AC = "performance";
-        PCIE_ASPM_ON_BAT = "powersave";
-
-        # Prevents bluez from hanging:
-        USB_EXCLUDE_BTUSB = 1;
-      };
-    };
+    power-profiles-daemon.enable = true;
+    thermald.enable = true;
   };
 
   # Finally, call-forward our beloved module(s):
