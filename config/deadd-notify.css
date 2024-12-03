@@ -1,9 +1,0 @@
-.deadd-noti-center {
-    font-family: VictorMono Nerd Font;
-}
-
-/* Special BG for a specific APP */
-.notificationInCenter.Spotify {
-    background: linear-gradient(130deg, rgba(0, 0, 0, 0.1), rgba(0, 255, 0, 0.3));
-    border-radius: 5px;
-}
