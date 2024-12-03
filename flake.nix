@@ -27,7 +27,7 @@
 
     # Application -> (Cached) Git
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
-    zen-browser.url = "github:ch4og/zen-browser-flake";
+    zen-browser.url = "github:0xc000022070/zen-browser-flake";
     rust.url = "github:oxalica/rust-overlay";
 
     # Submodules (temporary) # TODO

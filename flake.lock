@@ -928,15 +928,15 @@
         "nixpkgs": "nixpkgs_11"
       },
       "locked": {
-        "lastModified": 1732835488,
-        "narHash": "sha256-r1nomBVEMO4I0y3pMfqLletQxKak5xfpk9DhlO1AsuI=",
-        "owner": "ch4og",
+        "lastModified": 1732933979,
+        "narHash": "sha256-Z7X++lKZMNBu67BJl2LP23e7RBadp2C/RuRrygLehaE=",
+        "owner": "0xc000022070",
         "repo": "zen-browser-flake",
-        "rev": "d8fbf602685f5cf2a6475eaf20595a6dc6628891",
+        "rev": "5a765451af1db68acceae07b98e5c768f238210c",
         "type": "github"
       },
       "original": {
-        "owner": "ch4og",
+        "owner": "0xc000022070",
         "repo": "zen-browser-flake",
         "type": "github"
       }
