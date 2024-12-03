@@ -26,7 +26,6 @@
     pyprland.url = "github:hyprland-community/pyprland";
 
     # Application -> (Cached) Git
-    spicetify-nix.url = "github:Gerg-L/spicetify-nix";
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
     rust.url = "github:oxalica/rust-overlay";
 

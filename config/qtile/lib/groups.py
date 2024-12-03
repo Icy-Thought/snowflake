@@ -1,10 +1,9 @@
 # Qtile
+from lib.keymaps import keys
+from lib.themes import palette
 from libqtile import bar, layout, widget
 from libqtile.command import lazy
 from libqtile.config import DropDown, EzClick, EzKey, Group, Match, ScratchPad
-
-from lib.keymaps import keys
-from lib.themes import palette
 
 # Requires CJK-font (using: Sarasa Gothic)
 groups = [
@@ -112,7 +111,12 @@ groups.append(
                 match=Match(wm_class="neovide"),
                 **next_maximum,
             ),
-            DropDown("Spotify", "spotify", **next_maximum),
+            DropDown(
+                "Music",
+                "youtube-music",
+                **next_maximum,
+                match=Match(wm_class="YouTube Music"),
+            ),
             DropDown(
                 "Telegram",
                 "emacsclient -c -a '' -F 'telega-scratch' --eval '(telega)'",
@@ -120,7 +124,7 @@ groups.append(
                 **next_maximum,
             ),
             DropDown("Transmission", "transmission-gtk", **next_maximum),
-            DropDown("Volume Control", "eassyeffects", **next_maximum),
+            DropDown("SoundCTL", "eassyeffects", **next_maximum),
         ],
     )
 )
@@ -134,7 +138,7 @@ keys.extend(
         EzKey("M-A-d", lazy.group["SPD"].dropdown_toggle("Discord")),
         EzKey("M-A-l", lazy.group["SPD"].dropdown_toggle("Telegram")),
         EzKey("M-A-t", lazy.group["SPD"].dropdown_toggle("Transmission")),
-        EzKey("M-A-s", lazy.group["SPD"].dropdown_toggle("Spotify")),
-        EzKey("M-A-v", lazy.group["SPD"].dropdown_toggle("Volume Control")),
+        EzKey("M-A-s", lazy.group["SPD"].dropdown_toggle("Music")),
+        EzKey("M-A-v", lazy.group["SPD"].dropdown_toggle("SoundCTL")),
     ]
 )

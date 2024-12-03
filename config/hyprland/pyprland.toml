@@ -40,16 +40,15 @@ command = "emacsclient -c -a '' -F '(quote (name . \"Emacs-NSP: E-Mail\"))' --ev
 title = "Emacs-NSP|"
 match_by = "title"
 
-[scratchpads.EasyEffects]
+[scratchpads.SoundCTL]
 use = "template"
 command = "easyeffects"
 title = "Easy Effects"
 
-[scratchpads.Spotify]
+[scratchpads.Music]
 use = "template"
-command = "spotify"
-title = "re:.*Spotify.*"
-match_by = "title"
+command = "youtube-music"
+class = "YouTube Music"
 
 [scratchpads.Discord]
 use = "template"

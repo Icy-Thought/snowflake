@@ -781,11 +781,11 @@ myScratchpads = do
 
     pure
         [ NS "Discord" "discordcanary" (className =? "discord") floatCenter
-        , NS "EasyEffects" "easyeffects" (title =? "Easy Effects") floatCenter
         , NS "Emacs" emacsScratch (title ^? emacsScratchID) floatCenter
         , NS "Matrix" matrixSP (title =? matrixID) floatCenter
         , NS "Mail" emacsMailSP (title =? emacsMailID) floatCenter
-        , NS "Spotify" "spotify" (className =? "Spotify") floatCenter
+        , NS "Music" "youtube-music" (className =? "YouTube Music") floatCenter
+        , NS "SoundCTL" "easyeffects" (title =? "Easy Effects") floatCenter
         , NS "System Monitor" btopLaunch (appName =? sysMonID) floatCenter
         , NS "Telegram" telegramSP (title =? telegramID) floatCenter
         , NS "Transmission" "transmission-gtk" (className =? "Transmission-gtk") floatCenter
@@ -948,9 +948,9 @@ addKeys conf@XConfig{modMask = modm} =
            , ((modalt, xK_k), doScratchpad "Matrix")
            , ((modalt, xK_m), doScratchpad "Mail")
            , ((modalt, xK_l), doScratchpad "Telegram")
-           , ((modalt, xK_s), doScratchpad "Spotify")
+           , ((modalt, xK_s), doScratchpad "Music")
            , ((modalt, xK_t), doScratchpad "Transmission")
-           , ((modalt, xK_v), doScratchpad "EasyEffects")
+           , ((modalt, xK_v), doScratchpad "SoundCTL")
            , -- :NOTE| Program-specific launches
              -- , ((modm .|. shiftMask, xK_x), unsafeSpawn "whatever-lock") -- :WARN| lockscreen when found!
              ((hyper, xK_r), unsafeSpawn "emacsclient --eval '(emacs-everywhere)'")

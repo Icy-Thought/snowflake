@@ -14,23 +14,7 @@ in {
     };
 
   config = mkMerge [
-    (mkIf cfg.music.enable {
-      hm.imports = [ inputs.spicetify-nix.homeManagerModules.default ];
-
-      hm.programs.spicetify =
-        let spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.system};
-        in {
-          enable = true;
-          theme = spicePkgs.themes.lucid;
-          enabledCustomApps =
-            attrValues { inherit (spicePkgs.apps) newReleases lyricsPlus; };
-          enabledExtensions = attrValues {
-            inherit (spicePkgs.extensions)
-              adblock fullAppDisplay hidePodcasts keyboardShortcut playNext
-              showQueueDuration shuffle;
-          };
-        };
-    })
+    (mkIf cfg.music.enable { user.packages = [ pkgs.youtube-music ]; })
 
     (mkIf cfg.video.enable {
       hm.programs.mpv = {
