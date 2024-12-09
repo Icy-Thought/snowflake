@@ -26,6 +26,7 @@
     pyprland.url = "github:hyprland-community/pyprland";
 
     # Application -> (Cached) Git
+    emacs.url = "github:nix-community/emacs-overlay";
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
     rust.url = "github:oxalica/rust-overlay";
 

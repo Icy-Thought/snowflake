@@ -757,7 +757,6 @@ myScratchpads = do
         getInput $
             inEditor
                 >-> setFrameName emacsScratchID
-                >-> eval (elispFun "dashboard-refresh-buffer")
 
     emacsMailSP <-
         getInput $
