@@ -21,10 +21,6 @@ in {
         rs = "rustc";
         ca = "cargo";
       };
-
-      hm.programs.vscode.extensions = attrValues {
-        inherit (pkgs.vscode-extensions.rust-lang) rust-analyzer;
-      };
     }
 
     (mkIf config.modules.develop.xdg.enable {

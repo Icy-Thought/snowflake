@@ -27,18 +27,10 @@ in {
             parskip pgf pgfplots svg transparent wrapfig xcolor;
         };
       };
-
-      hm.programs.vscode.extensions = attrValues {
-        inherit (pkgs.vscode-extensions.james-yu) latex-workshop;
-      };
     })
 
     (mkIf config.modules.develop.scientific.typst.enable {
       user.packages = attrValues { inherit (pkgs) typst tinymist typstyle; };
-
-      hm.programs.vscode.extensions = attrValues {
-        inherit (pkgs.vscode-extensions.myriad-dreamin) tinymist;
-      };
     })
 
     (mkIf config.modules.develop.xdg.enable {

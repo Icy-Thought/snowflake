@@ -97,16 +97,6 @@ in {
             dark = "kanagawa";
             light = "Kanagawa_Light"; # :TODO| Integrate with Neovim
           };
-          vscode = {
-            dark = "Kanagawa";
-            light = "Kanagawa Light";
-            extension = {
-              name = "kanagawa";
-              publisher = "qufiwefefwoyn";
-              version = "1.5.1";
-              hash = "";
-            };
-          };
         };
       };
     }

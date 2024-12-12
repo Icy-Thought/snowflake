@@ -8,12 +8,7 @@ in {
   in { enable = mkEnableOption "Zig development"; };
 
   config = mkIf config.modules.develop.zig.enable (mkMerge [
-    {
-      user.packages = attrValues { inherit (pkgs) zig zls; };
-
-      hm.programs.vscode.extensions =
-        attrValues { inherit (pkgs.vscode-extensions.ziglang) vscode-zig; };
-    }
+    { user.packages = attrValues { inherit (pkgs) zig zls; }; }
 
     (mkIf config.modules.develop.xdg.enable {
       # home.sessionVariables = {

@@ -15,11 +15,6 @@ in {
         ghc-with-hoogle = pkgs.haskellPackages.ghcWithHoogle
           (p: with p; [ taffybar xmonad xmonad-contrib ]);
       };
-
-      hm.programs.vscode.extensions = with pkgs.vscode-extensions; [
-        haskell.haskell
-        justusadam.language-haskell # syntax-highlighting
-      ];
     }
 
     (mkIf config.modules.develop.xdg.enable {

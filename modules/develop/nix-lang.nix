@@ -15,9 +15,6 @@ in {
           manix nix-index nix-init nix-output-monitor nix-tree nix-update
           nixpkgs-review;
       };
-
-      hm.programs.vscode.extensions =
-        attrValues { inherit (pkgs.vscode-extensions.jnoortheen) nix-ide; };
     }
 
     (mkIf config.modules.develop.xdg.enable {

@@ -97,16 +97,6 @@ in {
             dark = "rose-pine";
             light = "rose-pine-dawn"; # TODO: vim.g.tokyonight_style = "day"
           };
-          vscode = {
-            dark = "Rose Pine";
-            light = "Rose Pine Dawn";
-            extension = {
-              name = "rose-pine";
-              publisher = "mvllow";
-              version = "2.8.0";
-              hash = "";
-            };
-          };
         };
       };
     }

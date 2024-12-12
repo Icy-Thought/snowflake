@@ -100,16 +100,6 @@ in {
             dark = "ayu-dark";
             light = "ayu-light";
           };
-          vscode = {
-            dark = "Ayu Dark";
-            light = "Ayu Light";
-            extension = {
-              name = "ayu";
-              publisher = "teabyii";
-              version = "1.0.5";
-              hash = "sha256-+ifqgwlikr+qjblmqlzf44xnbn7br5a119v9wanzou4=";
-            };
-          };
         };
       };
     }

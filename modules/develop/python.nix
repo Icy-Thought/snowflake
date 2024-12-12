@@ -15,11 +15,6 @@ in {
         inherit (pkgs) uv pyright ruff; # pylyzer
       };
 
-      hm.programs.vscode.extensions = attrValues {
-        inherit (pkgs.vscode-extensions.ms-python) python;
-        inherit (pkgs.vscode-extensions.ms-toolsai) jupyter;
-      };
-
       environment.shellAliases = {
         py = "python";
         pip = "uv pip";

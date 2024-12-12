@@ -104,16 +104,6 @@ in {
             dark = "";
             light = "";
           };
-          vscode = {
-            dark = "";
-            light = "";
-            extension = {
-              name = "";
-              publisher = "";
-              version = "";
-              hash = "";
-            };
-          };
         };
       };
     }

@@ -103,16 +103,6 @@ in {
             dark = "tokyonight";
             light = "tokyonight"; # TODO: vim.g.tokyonight_style = "day"
           };
-          vscode = {
-            dark = "Tokyo Night";
-            light = "Tokyo Light";
-            extension = {
-              name = "tokyo-night";
-              publisher = "enkia";
-              version = "0.9.4";
-              hash = "sha256-pKokB6446SR6LsTHyJtQ+FEA07A0W9UAI+byqtGeMGw=";
-            };
-          };
         };
       };
     }
