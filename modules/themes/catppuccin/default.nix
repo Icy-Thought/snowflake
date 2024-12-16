@@ -29,8 +29,8 @@ in {
         fontConfig = {
           packages = attrValues {
             inherit (pkgs) noto-fonts-emoji sarasa-gothic;
+            inherit (pkgs.nerd-fonts) victor-mono;
             google-fonts = pkgs.google-fonts.override { fonts = [ "Cardo" ]; };
-            nerdfonts = pkgs.nerdfonts.override { fonts = [ "VictorMono" ]; };
           };
           mono = [ "VictorMono Nerd Font" "Sarasa Mono SC" ];
           sans = [ "Sarasa Gothic SC" ];
