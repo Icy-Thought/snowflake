@@ -2,9 +2,9 @@
 
 let
   inherit (lib.modules) mkIf;
-  cfg = config.modules.virtualize.containers.transmission;
+  cfg = config.modules.virtualisation.containers.transmission;
 in {
-  options.modules.virtualize.containers.transmission = let
+  options.modules.virtualisation.containers.transmission = let
     inherit (lib.options) mkOption mkEnableOption;
     inherit (lib.types) path str;
   in {

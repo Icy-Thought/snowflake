@@ -39,7 +39,7 @@ in {
       kernelModules = [ ];
     };
     extraModulePackages = [ config.boot.kernelPackages.acpi_call ];
-    kernelModules = [ "thinkpad_acpi" "acpi_call" "kvm_amd" ];
+    kernelModules = [ "thinkpad_acpi" "acpi_call" ];
     kernelParams = [ "pcie_aspm.policy=performance" ];
     kernel.sysctl = {
       "net.ipv4.icmp_echo_ignore_broadcasts" = 1; # Refuse ICMP echo requests
