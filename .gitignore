@@ -1,3 +1,5 @@
 result
-dist-newstyle
+result-bin
+dist-newstyle/
+target/
 __pycache__
