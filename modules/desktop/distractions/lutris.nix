@@ -18,7 +18,7 @@ in {
       user.packages = attrValues ({
         lutris =
           pkgs.lutris.override { extraLibraries = pkgs: [ pkgs.jansson ]; };
-      } // optionalAttrs (config.modules.virtualize.wine.enable == false) {
+      } // optionalAttrs (config.modules.virtualisation.wine.enable == false) {
         inherit (pkgs) winetricks;
         inherit (pkgs.wineWowPackages) fonts stagingFull;
       });
