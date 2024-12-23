@@ -4,13 +4,13 @@
 
 ;; (def) US-layout
 (defsrc
-    tab caps)
+    caps tab)
 
 ;; (def) Our useful aliases!
 (defalias
-    hold-tab-eq-hyper (tap-hold-next 200 tab C-M-lalt :timeout-button XX)
-    hold-caps-eq-meta-lalt (tap-hold-next 200 caps M-lalt :timeout-button XX))
+    tap-or-hold-caps-lock (tap-hold-next-release 100 esc M-lalt)
+    tap-hold-tab (tap-hold-next-release 100 tab C-M-lalt))
 
 (deflayer primary
-    @hold-tab-eq-hyper
-    @hold-caps-eq-meta-lalt)
+    @tap-or-hold-caps-lock
+    @tap-hold-tab)
