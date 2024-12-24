@@ -10,7 +10,7 @@ in {
   config = mkIf config.modules.develop.c.enable (mkMerge [
     {
       user.packages =
-        attrValues { inherit (pkgs) gcc gnumake gdb ninja clang-tools; };
+        attrValues { inherit (pkgs) gcc gnumake gdb ninja ccls astyle; };
     }
 
     (mkIf config.modules.develop.xdg.enable {
