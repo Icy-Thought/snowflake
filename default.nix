@@ -82,6 +82,6 @@ in {
   environment = {
     defaultPackages = lib.mkForce [ ];
     systemPackages =
-      attrValues { inherit (pkgs) cached-nix-shell gnumake unrar unzip; };
+      attrValues { inherit (pkgs) cached-nix-shell unrar unzip; };
   };
 }
