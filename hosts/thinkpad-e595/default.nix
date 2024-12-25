@@ -14,7 +14,7 @@
     services.ssh.enable = true;
 
     develop = {
-      c.enable = true;
+      cc.enable = true;
       python.enable = true;
       rust.enable = true;
       scientific.typst.enable = true;
