@@ -11,7 +11,7 @@ in {
   config = mkIf config.modules.desktop.browsers.zen.enable {
 
     user.packages =
-      let zen-browser = inputs.zen-browser.packages."${pkgs.system}";
+      let zen-browser = inputs.zen-browser.packages."${pkgs.system}".default;
       in [
         zen-browser
         (pkgs.makeDesktopItem {
