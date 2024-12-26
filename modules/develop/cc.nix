@@ -9,9 +9,8 @@ in {
 
   config = mkIf config.modules.develop.cc.enable (mkMerge [
     {
-      user.packages = attrValues {
-        inherit (pkgs) clang clang-tools gdb gnumake cmake meson ninja;
-      };
+      user.packages =
+        attrValues { inherit (pkgs) clang clang-tools gdb gnumake xmake; };
     }
 
     (mkIf config.modules.develop.xdg.enable {
