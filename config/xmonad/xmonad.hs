@@ -779,7 +779,7 @@ myScratchpads = do
                 >-> eval (elispFun "telega")
 
     pure
-        [ NS "Discord" "discordcanary" (className =? "discord") floatCenter
+        [ NS "Discord" "vesktop" (className =? "vesktop") floatCenter
         , NS "Emacs" emacsScratch (title ^? emacsScratchID) floatCenter
         , NS "Matrix" matrixSP (title =? matrixID) floatCenter
         , NS "Mail" emacsMailSP (title =? emacsMailID) floatCenter

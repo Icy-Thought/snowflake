@@ -52,6 +52,6 @@ class = "YouTube Music"
 
 [scratchpads.Discord]
 use = "template"
-command = "discordcanary"
+command = "vesktop"
 title = "re:.*Discord.*"
 match_by = "title"

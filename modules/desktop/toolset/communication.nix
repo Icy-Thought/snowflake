@@ -132,54 +132,6 @@ in {
         [ pkgs.fractal-next ];
     })
 
-    (mkIf cfg.discord.enable {
-      create.configFile.openSAR-settings = {
-        target = "discordcanary/settings.json";
-        text = builtins.toJSON {
-          openasar = {
-            setup = true;
-            quickstart = true;
-            noTyping = false;
-            cmdPreset = "balanced";
-            css = ''
-              @import url("https://refact0r.github.io/midnight-discord/midnight.css");
-            '';
-          };
-          SKIP_HOST_UPDATE = true;
-          IS_MAXIMIZED = true;
-          IS_MINIMIZED = false;
-          trayBalloonShown = true;
-        };
-      };
-
-      user.packages = let
-        flags = [
-          "--flag-switches-begin"
-          "--flag-switches-end"
-          "--disable-gpu-memory-buffer-video-frames"
-          "--enable-accelerated-mjpeg-decode"
-          "--enable-accelerated-video"
-          "--enable-gpu-rasterization"
-          "--enable-native-gpu-memory-buffers"
-          "--enable-zero-copy"
-          "--ignore-gpu-blocklist"
-        ] ++ optionals (desktop.type == "x11") [
-          "--disable-features=UseOzonePlatform"
-          "--enable-features=VaapiVideoDecoder"
-        ] ++ optionals (desktop.type == "wayland") [
-          "--enable-features=UseOzonePlatform,WebRTCPipeWireCapturer"
-          "--ozone-platform=wayland"
-          "--enable-webrtc-pipewire-capturer"
-        ];
-
-        discord-canary' =
-          (pkgs.discord-canary.override { withOpenASAR = true; }).overrideAttrs
-          (old: {
-            preInstall = ''
-              gappsWrapperArgs+=("--add-flags" "${concatStringsSep " " flags}")
-            '';
-          });
-      in [ discord-canary' ];
-    })
+    (mkIf cfg.discord.enable { user.packages = [ pkgs.vesktop ]; })
   ];
 }

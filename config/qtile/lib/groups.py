@@ -88,8 +88,8 @@ groups.append(
             ),
             DropDown(
                 "Discord",
-                "discord",
-                match=Match(wm_class="discord"),
+                "vesktop",
+                match=Match(wm_class="vesktop"),
                 **next_maximum,
             ),
             DropDown(
