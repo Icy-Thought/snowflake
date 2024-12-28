@@ -20,7 +20,6 @@ let
     bat0 = "upower -i /org/freedesktop/UPower/devices/battery_BAT0";
 
     # Other
-    lzg = "lazygit";
     yta = "youtube-dl -x --audio-format mp3";
     ytv = "youtube-dl --best-quality";
   };
