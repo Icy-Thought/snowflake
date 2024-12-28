@@ -14,9 +14,9 @@ in {
     package = mkOption {
       type = package;
       default = if (config.modules.desktop.type == "wayland") then
-        pkgs.emacs-pgtk
+        pkgs.emacs30-pgtk
       else
-        pkgs.emacs-git.override { withGTK3 = true; };
+        pkgs.emacs30-gtk3;
       description = "Emacs version which will be installed.";
     };
     terminal = mkOption {
@@ -33,8 +33,6 @@ in {
 
   config = mkIf cfg.enable (mkMerge [
     {
-      nixpkgs.overlays = [ inputs.emacs.overlay ];
-
       user.packages = attrValues ({
         inherit (pkgs) binutils gnutls zstd;
         inherit (pkgs.unstable) emacs-lsp-booster;
