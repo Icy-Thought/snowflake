@@ -1,18 +1,11 @@
 { options, config, lib, pkgs, ... }:
 
-let
-  inherit (lib.meta) getExe;
-  inherit (lib.modules) mkIf;
-in {
-  options.modules.desktop.editors.helix =
-    let inherit (lib.options) mkEnableOption;
-    in { enable = mkEnableOption "post-modern text editor"; };
+with lib; {
+  options.modules.desktop.editors.helix = {
+    enable = mkEnableOption "post-modern text editor";
+  };
 
-  config = mkIf config.modules.desktop.editors.helix.enable (let
-    inherit (config.modules.themes) editor active;
-    activeTheme =
-      if (active != null) then "${editor.helix.dark}" else "github-dark";
-  in {
+  config = mkIf config.modules.desktop.editors.helix.enable {
     hm.programs.helix = {
       enable = true;
       package = pkgs.helix;
@@ -112,12 +105,14 @@ in {
       };
     };
 
-    create.configFile.helix-theme = {
-      target = "helix/themes/${activeTheme}-alpha.toml";
-      text = ''
-        inherits = "${activeTheme}"
-        "ui.background" = {}
-      '';
-    };
-  });
+    create.configFile.helix-theme =
+      let activeTheme = "${config.modules.themes.editor.helix.dark}";
+      in mkIf (config.modules.themes.active != null) {
+        target = "helix/themes/${activeTheme}-alpha.toml";
+        text = ''
+          inherits = "${activeTheme}"
+          "ui.background" = {}
+        '';
+      };
+  };
 }

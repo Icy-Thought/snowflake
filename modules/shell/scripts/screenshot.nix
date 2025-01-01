@@ -1,16 +1,12 @@
 { options, config, lib, pkgs, ... }:
 
-let
-  inherit (lib.meta) getExe;
-  inherit (lib.modules) mkIf;
-in {
-  options.modules.shell.scripts.screenshot =
-    let inherit (lib.options) mkEnableOption;
-    in { enable = mkEnableOption "screenshot tool"; };
+with lib; {
+  options.modules.shell.scripts.screenshot = {
+    enable = mkEnableOption "screenshot tool";
+  };
 
   config = mkIf config.modules.shell.scripts.screenshot.enable {
-    user.packages = let inherit (pkgs) maim slop python3 writeScriptBin;
-    in [
+    user.packages = with pkgs; [
       maim
       slop
 

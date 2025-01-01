@@ -1,15 +1,8 @@
 { inputs, options, config, lib, pkgs, ... }:
 
-let
-  inherit (lib.attrsets) attrValues optionalAttrs;
-  inherit (lib.modules) mkIf mkMerge;
-
-  cfg = config.modules.desktop.editors.neovim;
-in {
-  options.modules.desktop.editors.neovim = let
-    inherit (lib.options) mkEnableOption mkOption;
-    inherit (lib.types) enum nullOr;
-  in {
+let cfg = config.modules.desktop.editors.neovim;
+in with lib; {
+  options.modules.desktop.editors.neovim = with types; {
     enable = mkEnableOption "Spread the joy of neovim in our flake";
     template = mkOption {
       type = nullOr (enum [ "agasaya" "ereshkigal" ]);

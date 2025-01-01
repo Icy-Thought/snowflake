@@ -1,19 +1,19 @@
 { options, config, lib, pkgs, ... }:
 
-let
-  inherit (lib.attrsets) attrValues;
-  inherit (lib.modules) mkIf mkMerge;
-  cfg = config.modules.develop.python;
-in {
-  options.modules.develop.python = let inherit (lib.options) mkEnableOption;
-  in { enable = mkEnableOption "Python development"; };
+let cfg = config.modules.develop.python;
+in with lib; {
+  options.modules.develop.python = {
+    enable = mkEnableOption "Python development";
+  };
 
   config = mkIf cfg.enable (mkMerge [
     {
-      user.packages = attrValues {
-        pyWithEnv = pkgs.python3.withPackages (pykgs: with pykgs; [ ipython ]);
-        inherit (pkgs) uv pyright ruff; # pylyzer
-      };
+      user.packages = with pkgs; [
+        uv
+        pyright # pylyzer
+        ruff
+        (python3.withPackages (pykgs: with pykgs; [ ipython ]))
+      ];
 
       environment.shellAliases = {
         py = "python";

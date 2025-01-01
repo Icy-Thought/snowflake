@@ -1,15 +1,8 @@
 { options, config, lib, pkgs, ... }:
 
-let
-  inherit (lib.attrsets) attrValues optionalAttrs;
-  inherit (lib.modules) mkIf mkMerge;
-
-  cfg = config.modules.desktop.toolset.fileManager;
-in {
-  options.modules.desktop.toolset.fileManager = let
-    inherit (lib.options) mkEnableOption mkOption;
-    inherit (lib.types) nullOr enum;
-  in {
+let cfg = config.modules.desktop.toolset.fileManager;
+in with lib; {
+  options.modules.desktop.toolset.fileManager = with types; {
     enable = mkEnableOption "A file-browser for our desktop";
     program = mkOption {
       type = nullOr (enum [ "dolphin" "nautilus" "thunar" ]);
@@ -26,15 +19,18 @@ in {
 
       services.gvfs.enable = true;
 
-      environment.systemPackages = attrValues ({ }
-        // optionalAttrs (cfg.program == "dolphin") {
-          inherit (pkgs) dolphin dolphin-plugins;
-        } // optionalAttrs (cfg.program == "nautilus") {
-          inherit (pkgs) nautilus nautilus-open-any-terminal;
-        } // optionalAttrs (cfg.program == "thunar") {
-          inherit (pkgs.xfce)
-            thunar thunar-volman thunar-archive-plugin thunar-media-tags-plugin;
-        });
+      user.packages = with pkgs;
+        [ ] ++ optionals (cfg.program == "dolphin") [ dolphin dolphin-plugins ]
+        ++ optionals (cfg.program == "nautilus") [
+          nautilus
+          nautilus-open-any-terminal
+        ] ++ (with xfce;
+          optionals (cfg.program == "thunar") [
+            thunar
+            thunar-volman
+            thunar-archive-plugin
+            thunar-media-tags-plugin
+          ]);
     }
 
     (mkIf (cfg.program == "thunar") {

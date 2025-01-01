@@ -1,25 +1,15 @@
 { options, config, lib, pkgs, ... }:
 
 let
-  inherit (builtins) getEnv map;
-  inherit (lib.attrsets) attrValues mapAttrsToList;
-  inherit (lib.meta) getExe;
-  inherit (lib.modules) mkIf mkMerge;
-  inherit (lib.strings) concatStringsSep optionalString;
-
   cfg = config.modules.themes;
   desktop = config.modules.desktop;
-in {
-  options.modules.themes = let
-    inherit (lib.options) mkOption mkPackageOption;
-    inherit (lib.types) attrsOf int lines listOf nullOr path package str;
-    inherit (lib.my) mkOpt toFilteredImage;
-  in {
+in with lib; {
+  options.modules.themes = with types; {
     active = mkOption {
       type = nullOr str;
       default = null;
       apply = v:
-        let theme = getEnv "THEME";
+        let theme = builtins.getEnv "THEME";
         in if theme != "" then theme else v;
       description = ''
         Name of the theme which ought to be applied.
@@ -27,117 +17,115 @@ in {
       '';
     };
 
-    wallpaper = mkOpt (nullOr path) null;
+    wallpaper = my.mkOpt (nullOr path) null;
 
-    loginWallpaper = mkOpt (nullOr path) (if cfg.wallpaper != null then
-      toFilteredImage cfg.wallpaper "-gaussian-blur 0x2 -modulate 70 -level 5%"
+    loginWallpaper = my.mkOpt (nullOr path) (if cfg.wallpaper != null then
+      my.toFilteredImage cfg.wallpaper
+      "-gaussian-blur 0x2 -modulate 70 -level 5%"
     else
       null);
 
     gtk = {
-      name = mkOpt str "";
+      name = my.mkOpt str "";
       package = mkPackageOption pkgs "gtk" { };
     };
 
     iconTheme = {
-      name = mkOpt str "";
+      name = my.mkOpt str "";
       package = mkPackageOption pkgs "icon" { };
     };
 
     pointer = {
-      name = mkOpt str "";
+      name = my.mkOpt str "";
       package = mkPackageOption pkgs "pointer" { };
-      size = mkOpt int 24;
+      size = my.mkOpt int 24;
     };
 
-    onReload = mkOpt (attrsOf lines) { };
+    onReload = my.mkOpt (attrsOf lines) { };
 
     fontConfig = {
-      packages = mkOpt (listOf package) [ ];
-      mono = mkOpt (listOf str) [ "" ];
-      sans = mkOpt (listOf str) [ "" ];
-      emoji = mkOpt (listOf str) [ "" ];
+      packages = my.mkOpt (listOf package) [ ];
+      mono = my.mkOpt (listOf str) [ "" ];
+      sans = my.mkOpt (listOf str) [ "" ];
+      emoji = my.mkOpt (listOf str) [ "" ];
     };
 
     font = {
       mono = {
-        family = mkOpt str "";
-        weight = mkOpt str "Bold";
-        weightAlt = mkOpt str "Bold";
-        weightNum = mkOpt int 700;
-        size = mkOpt int 13;
+        family = my.mkOpt str "";
+        weight = my.mkOpt str "Bold";
+        weightAlt = my.mkOpt str "Bold";
+        weightNum = my.mkOpt int 700;
+        size = my.mkOpt int 13;
       };
       sans = {
-        family = mkOpt str "";
-        weight = mkOpt str "SemiBold";
-        weightAlt = mkOpt str "DemiBold";
-        weightNum = mkOpt int 600;
-        size = mkOpt int 10;
+        family = my.mkOpt str "";
+        weight = my.mkOpt str "SemiBold";
+        weightAlt = my.mkOpt str "DemiBold";
+        weightNum = my.mkOpt int 600;
+        size = my.mkOpt int 10;
       };
     };
 
     colors = {
       main = {
         normal = {
-          black = mkOpt str "#000000"; # 0
-          red = mkOpt str "#FF0000"; # 1
-          green = mkOpt str "#00FF00"; # 2
-          yellow = mkOpt str "#FFFF00"; # 3
-          blue = mkOpt str "#0000FF"; # 4
-          magenta = mkOpt str "#FF00FF"; # 5
-          cyan = mkOpt str "#00FFFF"; # 6
-          white = mkOpt str "#BBBBBB"; # 7
+          black = my.mkOpt str "#000000"; # 0
+          red = my.mkOpt str "#FF0000"; # 1
+          green = my.mkOpt str "#00FF00"; # 2
+          yellow = my.mkOpt str "#FFFF00"; # 3
+          blue = my.mkOpt str "#0000FF"; # 4
+          magenta = my.mkOpt str "#FF00FF"; # 5
+          cyan = my.mkOpt str "#00FFFF"; # 6
+          white = my.mkOpt str "#BBBBBB"; # 7
         };
         bright = {
-          black = mkOpt str "#888888"; # 8
-          red = mkOpt str "#FF8800"; # 9
-          green = mkOpt str "#00FF80"; # 10
-          yellow = mkOpt str "#FF8800"; # 11
-          blue = mkOpt str "#0088FF"; # 12
-          magenta = mkOpt str "#FF88FF"; # 13
-          cyan = mkOpt str "#88FFFF"; # 14
-          white = mkOpt str "#FFFFFF"; # 15
+          black = my.mkOpt str "#888888"; # 8
+          red = my.mkOpt str "#FF8800"; # 9
+          green = my.mkOpt str "#00FF80"; # 10
+          yellow = my.mkOpt str "#FF8800"; # 11
+          blue = my.mkOpt str "#0088FF"; # 12
+          magenta = my.mkOpt str "#FF88FF"; # 13
+          cyan = my.mkOpt str "#88FFFF"; # 14
+          white = my.mkOpt str "#FFFFFF"; # 15
         };
-        types = let
-          inherit (cfg.colors.main.normal) black red white yellow;
-          inherit (cfg.colors.main.types) bg fg;
-        in {
-          bg = mkOpt str black;
-          fg = mkOpt str white;
-          panelbg = mkOpt str bg;
-          panelfg = mkOpt str fg;
-          border = mkOpt str bg;
-          error = mkOpt str red;
-          warning = mkOpt str yellow;
-          highlight = mkOpt str white;
+        types = with cfg.colors.main; {
+          bg = my.mkOpt str normal.black;
+          fg = my.mkOpt str normal.white;
+          panelbg = my.mkOpt str types.bg;
+          panelfg = my.mkOpt str types.fg;
+          border = my.mkOpt str types.bg;
+          error = my.mkOpt str normal.red;
+          warning = my.mkOpt str normal.yellow;
+          highlight = my.mkOpt str normal.white;
         };
       };
 
       rofi = {
         bg = {
-          main = mkOpt str "#FFFFFF";
-          alt = mkOpt str "#FFFFFF";
-          bar = mkOpt str "#FFFFFF";
+          main = my.mkOpt str "#FFFFFF";
+          alt = my.mkOpt str "#FFFFFF";
+          bar = my.mkOpt str "#FFFFFF";
         };
-        fg = mkOpt str "#FFFFFF";
+        fg = my.mkOpt str "#FFFFFF";
         ribbon = {
-          outer = mkOpt str "#FFFFFF";
-          inner = mkOpt str "#FFFFFF";
+          outer = my.mkOpt str "#FFFFFF";
+          inner = my.mkOpt str "#FFFFFF";
         };
-        selected = mkOpt str "#FFFFFF";
-        urgent = mkOpt str "#FFFFFF";
-        transparent = mkOpt str "#FFFFFF";
+        selected = my.mkOpt str "#FFFFFF";
+        urgent = my.mkOpt str "#FFFFFF";
+        transparent = my.mkOpt str "#FFFFFF";
       };
     };
 
     editor = {
       helix = {
-        light = mkOpt str "";
-        dark = mkOpt str "";
+        light = my.mkOpt str "";
+        dark = my.mkOpt str "";
       };
       neovim = {
-        light = mkOpt str "";
-        dark = mkOpt str "";
+        light = my.mkOpt str "";
+        dark = my.mkOpt str "";
       };
     };
   };
@@ -147,47 +135,43 @@ in {
       # Allow HM to control GTK Theme:
       programs.dconf.enable = true;
 
-      hm.gtk = let
-        inherit (cfg.font) sans;
-        inherit (cfg) gtk iconTheme;
-      in {
+      hm.gtk = {
         enable = true;
-        font = {
-          name = sans.family;
-          size = sans.size;
+        font = with cfg.font.sans; {
+          name = family;
+          size = size;
         };
-        theme = {
-          name = gtk.name;
-          package = gtk.package;
+        theme = with cfg.gtk; {
+          name = name;
+          package = package;
         };
-        iconTheme = {
-          name = iconTheme.name;
-          package = iconTheme.package;
+        iconTheme = with cfg.iconTheme; {
+          name = name;
+          package = package;
         };
-        gtk3.bookmarks = map (dir: "file://${config.user.home}/" + dir) [
-          "Workspace/public/snowflake"
-          "Workspace/public/cs-notes"
-          "Workspace/public/notebook"
-          "Library/unexplored"
-          "Library/unexplored/mathematics"
-          "Library/unexplored/programming"
-        ];
+        gtk3.bookmarks =
+          builtins.map (dir: "file://${config.user.home}/" + dir) [
+            "Workspace/public/snowflake"
+            "Workspace/public/cs-notes"
+            "Workspace/public/notebook"
+            "Library/unexplored"
+            "Library/unexplored/mathematics"
+            "Library/unexplored/programming"
+          ];
         gtk4.extraConfig = {
           gtk-cursor-blink = false;
           gtk-recent-files-limit = 20;
         };
       };
 
-      home.pointerCursor = let inherit (cfg.pointer) name package size;
-      in {
+      home.pointerCursor = with cfg.pointer; {
         name = name;
         package = package;
         size = size;
         gtk.enable = true;
       };
 
-      fonts = let inherit (cfg.fontConfig) packages emoji mono sans;
-      in {
+      fonts = with cfg.fontConfig; {
         packages = packages;
         fontconfig.defaultFonts = {
           monospace = mono;
@@ -202,21 +186,20 @@ in {
 
     (mkIf (desktop.type == "wayland") (mkMerge [
       {
-        programs.regreet = let inherit (cfg) pointer font iconTheme gtk;
-        in {
-          theme = {
+        programs.regreet = {
+          theme = with cfg.gtk; {
             name = "${gtk.name}";
             package = "${gtk.package}";
           };
-          iconTheme = {
+          iconTheme = with cfg.iconTheme; {
             name = "${iconTheme.name}";
             package = "${iconTheme.package}";
           };
-          cursorTheme = {
+          cursorTheme = with cfg.pointer; {
             name = "${pointer.name}";
             package = "${pointer.package}";
           };
-          font = {
+          font = with cfg.font; {
             name = "${font.mono.family}";
             size = font.mono.size;
           };
@@ -246,8 +229,7 @@ in {
       {
         hm.xresources = {
           path = "${config.user.home}/.Xresources";
-          properties = let inherit (cfg.colors.main) bright normal types;
-          in {
+          properties = with cfg.colors.main; {
             "*.foreground" = "${types.fg}";
             "*.background" = "${types.bg}";
 
@@ -286,17 +268,15 @@ in {
       # Apply theme options -> lightdm-mini-greeter
       (mkIf (cfg.loginWallpaper != null) {
         services.xserver.displayManager.lightdm = {
-          greeters.mini.extraConfig =
-            let inherit (cfg.colors.main) normal types;
-            in ''
-              background-image = "${cfg.loginWallpaper}"
-              background-image-size = "100% 100%"
+          greeters.mini.extraConfig = with cfg.colors.main; ''
+            background-image = "${cfg.loginWallpaper}"
+            background-image-size = "100% 100%"
 
-              text-color = "${types.bg}"
-              password-background-color = "${normal.black}"
-              window-color = "${types.border}"
-              border-color = "${types.border}"
-            '';
+            text-color = "${types.bg}"
+            password-background-color = "${normal.black}"
+            window-color = "${types.border}"
+            border-color = "${types.border}"
+          '';
         };
       })
 
@@ -317,9 +297,8 @@ in {
       }))
 
       (mkIf (cfg.onReload != { }) (let
-        reloadTheme = let inherit (pkgs) stdenv writeScriptBin;
-        in (writeScriptBin "reloadTheme" ''
-          #!${stdenv.shell}
+        reloadTheme = (pkgs.writeScriptBin "reloadTheme" ''
+          #!${pkgs.stdenv.shell}
           echo "Reloading current theme: ${cfg.active}"
           ${concatStringsSep "\n" (mapAttrsToList (name: script: ''
             echo "[${name}]"

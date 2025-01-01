@@ -1,26 +1,17 @@
 { options, config, lib, ... }:
-let
-  inherit (builtins) listToAttrs;
-  inherit (lib.attrsets) mapAttrsToList nameValuePair;
-  inherit (lib.lists) flatten;
-  inherit (lib.modules) mkIf;
 
-  cfg = config.modules.desktop.extensions.mimeApps;
-in {
-  options.modules.desktop.extensions.mimeApps = let
-    inherit (lib.options) mkEnableOption;
-    inherit (lib.types) str;
-    inherit (lib.my) mkOpt;
-  in {
+let cfg = config.modules.desktop.extensions.mimeApps;
+in with lib; {
+  options.modules.desktop.extensions.mimeApps = with types; {
     enable = mkEnableOption "default system applications";
     applications = {
-      docReader = mkOpt str "org.pwmt.zathura.desktop";
-      editor = mkOpt str "emacsclient.desktop";
-      fileManager = mkOpt str "org.gnome.Nautilus.desktop";
-      imageViewer = mkOpt str "feh.desktop";
-      mediaPlayer = mkOpt str "mpv.desktop";
-      torrentCli = mkOpt str "transmission-gtk.desktop";
-      browser = mkOpt str "zen.desktop";
+      docReader = my.mkOpt str "org.pwmt.zathura.desktop";
+      editor = my.mkOpt str "emacsclient.desktop";
+      fileManager = my.mkOpt str "org.gnome.Nautilus.desktop";
+      imageViewer = my.mkOpt str "feh.desktop";
+      mediaPlayer = my.mkOpt str "mpv.desktop";
+      torrentCli = my.mkOpt str "transmission-gtk.desktop";
+      browser = my.mkOpt str "zen.desktop";
     };
   };
 
@@ -28,11 +19,7 @@ in {
     xdg.mime = {
       enable = true;
       defaultApplications = let
-        applications = let
-          inherit (cfg.applications)
-            docReader editor fileManager imageViewer mediaPlayer torrentCli
-            browser;
-        in {
+        applications = with cfg.applications; {
           audio = [ mediaPlayer ];
           browser = [ browser ];
           compression = [ fileManager ];
@@ -112,7 +99,7 @@ in {
             "x-msvideo"
           ];
         };
-      in listToAttrs (flatten (mapAttrsToList (key: types:
+      in builtins.listToAttrs (flatten (mapAttrsToList (key: types:
         map (type: nameValuePair type (applications."${key}")) types) mimeMap));
     };
   };

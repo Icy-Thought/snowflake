@@ -1,19 +1,17 @@
 { options, config, lib, pkgs, ... }:
 
-let
-  inherit (lib.attrsets) attrValues;
-  inherit (lib.modules) mkIf mkMerge;
-  cfg = config.modules.develop.lisp;
-in {
-  options.modules.develop.lisp = let inherit (lib.options) mkEnableOption;
-  in { guile.enable = mkEnableOption "Lisp-based language"; };
+with lib; {
+  options.modules.develop.lisp = {
+    guile.enable = mkEnableOption "Lisp-based language";
+  };
 
   config = mkMerge [
-    (mkIf cfg.guile.enable {
-      user.packages = attrValues {
-        inherit (pkgs) guile;
-        # guile-colorized ?
-      };
+    (mkIf config.modules.develop.lisp.guile.enable {
+      user.packages = with pkgs;
+        [
+          guile
+          # guile-colorized ?
+        ];
 
       # home.file.guile-conf = {
       #   target = "guile";

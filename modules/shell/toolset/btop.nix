@@ -1,15 +1,13 @@
 { options, config, lib, pkgs, ... }:
 
-let
-  inherit (lib.modules) mkIf;
-  inherit (lib.strings) concatStringsSep;
-in {
-  options.modules.shell.toolset.btop = let inherit (lib.options) mkEnableOption;
-  in { enable = mkEnableOption "system-monitor"; };
+let activeTheme = config.modules.themes;
+in with lib; {
+  options.modules.shell.toolset.btop = {
+    enable = mkEnableOption "system-monitor";
+  };
 
   config = mkIf config.modules.shell.toolset.btop.enable {
-    hm.programs.btop = let inherit (config.modules.themes) active;
-    in {
+    hm.programs.btop = {
       enable = true;
       settings = {
         force_tty = false;
@@ -22,7 +20,7 @@ in {
         background_update = true;
         disks_filter = "exclude=/boot";
 
-        color_theme = "${active}";
+        color_theme = "${activeTheme}";
         rounded_corners = true;
         theme_background = false;
         truecolor = true;
@@ -87,11 +85,9 @@ in {
       };
     };
 
-    create.configFile.btop-theme = let inherit (config.modules.themes) active;
-    in mkIf (active != null) {
-      target = "btop/themes/${active}.theme";
-      text = let inherit (config.modules.themes.colors.main) bright types;
-      in ''
+    create.configFile.btop-theme = mkIf (activeTheme != null) {
+      target = "btop/themes/${activeTheme}.theme";
+      text = with config.modules.themes.colors.main; ''
         theme[main_bg]="${types.bg}"
         theme[main_fg]="${types.fg}"
         theme[title]="${types.fg}"

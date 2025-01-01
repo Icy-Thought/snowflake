@@ -1,13 +1,10 @@
 { options, config, lib, pkgs, ... }:
 
-let
-  inherit (builtins) concatStringsSep toString;
-  inherit (lib.attrsets) mapAttrsToList;
-  inherit (lib.modules) mkIf mkMerge;
-in {
-  options.modules.desktop.terminal.kitty =
-    let inherit (lib.options) mkEnableOption;
-    in { enable = mkEnableOption "GPU-accelerated terminal emulator"; };
+let activeTheme = config.modules.themes.active;
+in with lib; {
+  options.modules.desktop.terminal.kitty = {
+    enable = mkEnableOption "GPU-accelerated terminal emulator";
+  };
 
   config = mkIf config.modules.desktop.terminal.kitty.enable {
     hm.programs.kitty = {
@@ -26,7 +23,7 @@ in {
         background_opacity = "0.8";
         inactive_text_alpha = "1.0";
         disable_ligatures = "cursor";
-        modify_font = concatStringsSep " "
+        modify_font = builtins.concatStringsSep " "
           (mapAttrsToList (name: value: "${name} ${value}") {
             cell_height = "110%";
           });
@@ -85,72 +82,67 @@ in {
         "ctrl+shift+page_down" = "previous_tab";
       };
 
-      extraConfig = let inherit (config.modules.themes) active;
-      in mkIf (active != null) ''
-        include ~/.config/kitty/config/${active}.conf
+      extraConfig = mkIf (activeTheme != null) ''
+        include ~/.config/kitty/config/${activeTheme}.conf
       '';
     };
 
-    create.configFile = let inherit (config.modules.themes) active;
-    in (mkMerge [
+    create.configFile = mkMerge [
       {
         tab-bar = {
           target = "kitty/tab_bar.py";
-          source = "${config.snowflake.configDir}/kitty/${active}-bar.py";
+          source = "${config.snowflake.configDir}/kitty/${activeTheme}-bar.py";
         };
       }
 
-      (mkIf (active != null) {
+      (mkIf (activeTheme != null) {
         # TODO: Find ONE general nix-automation entry for VictorMono
         kitty-theme = {
-          target = "kitty/config/${active}.conf";
-          text = let
-            inherit (config.modules.themes.colors.main) bright normal types;
-            inherit (config.modules.themes.font.mono) size;
-          in ''
+          target = "kitty/config/${activeTheme}.conf";
+          text = with config.modules.themes; ''
             font_family               VictorMono NF SemiBold
             italic_font               VictorMono NF SemiBold Italic
 
             bold_font                 VictorMono NF Bold
             bold_italic_font          VictorMono NF Bold Italic
 
-            font_size                 ${toString size}
+            font_size                 ${builtins.toString font.mono.size}
 
-            foreground                ${types.fg}
-            background                ${types.bg}
+            foreground                ${colors.main.types.fg}
+            background                ${colors.main.types.bg}
 
-            cursor                    ${normal.yellow}
-            cursor_text_color         ${types.bg}
+            cursor                    ${colors.main.normal.yellow}
+            cursor_text_color         ${colors.main.types.bg}
 
-            tab_bar_background        ${types.bg}
-            active_tab_foreground     ${types.bg}
-            active_tab_background     ${normal.magenta}
-            inactive_tab_foreground   ${types.fg}
-            inactive_tab_background   ${types.bg}
+            tab_bar_background        ${colors.main.types.bg}
+            active_tab_foreground     ${colors.main.types.bg}
+            active_tab_background     ${colors.main.normal.magenta}
+            inactive_tab_foreground   ${colors.main.types.fg}
+            inactive_tab_background   ${colors.main.types.bg}
 
-            selection_foreground      ${types.bg}
-            selection_background      ${types.highlight}
+            selection_foreground      ${colors.main.types.bg}
+            selection_background      ${colors.main.types.highlight}
 
-            color0                    ${normal.black}
-            color1                    ${normal.red}
-            color2                    ${normal.green}
-            color3                    ${normal.yellow}
-            color4                    ${normal.blue}
-            color5                    ${normal.magenta}
-            color6                    ${normal.cyan}
-            color7                    ${normal.white}
+            color0                    ${colors.main.normal.black}
+            color1                    ${colors.main.normal.red}
+            color2                    ${colors.main.normal.green}
+            color3                    ${colors.main.normal.yellow}
+            color4                    ${colors.main.normal.blue}
+            color5                    ${colors.main.normal.magenta}
+            color6                    ${colors.main.normal.cyan}
+            color7                    ${colors.main.normal.white}
 
-            color8                    ${bright.black}
-            color9                    ${bright.red}
-            color10                   ${bright.green}
-            color11                   ${bright.yellow}
-            color12                   ${bright.blue}
-            color13                   ${bright.magenta}
-            color14                   ${bright.cyan}
-            color15                   ${bright.white}
+            color8                    ${colors.main.bright.black}
+            color9                    ${colors.main.bright.red}
+            color10                   ${colors.main.bright.green}
+            color11                   ${colors.main.bright.yellow}
+            color12                   ${colors.main.bright.blue}
+            color13                   ${colors.main.bright.magenta}
+            color14                   ${colors.main.bright.cyan}
+            color15                   ${colors.main.bright.white}
           '';
         };
       })
-    ]);
+    ];
   };
 }

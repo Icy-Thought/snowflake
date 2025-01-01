@@ -1,12 +1,7 @@
 { options, config, lib, pkgs, ... }:
 
-let
-  inherit (builtins) toString;
-  inherit (lib.attrsets) attrValues;
-  inherit (lib.modules) mkDefault mkIf mkMerge;
-
-  cfg = config.modules.themes;
-in {
+let cfg = config.modules.themes;
+in with lib; {
   config = mkIf (cfg.active == "ayu") (mkMerge [
     {
       modules.themes = {
@@ -28,11 +23,12 @@ in {
         };
 
         fontConfig = {
-          packages = attrValues {
-            inherit (pkgs) noto-fonts-emoji sarasa-gothic;
-            inherit (pkgs.nerd-fonts) victor-mono;
-            google-fonts = pkgs.google-fonts.override { fonts = [ "Cardo" ]; };
-          };
+          packages = with pkgs; [
+            nerd-fonts.victor-mono
+            (google-fonts.override { fonts = [ "Cardo" ]; })
+            sarasa-gothic
+            noto-fonts-emoji
+          ];
           mono = [ "VictorMono Nerd Font" "Sarasa Mono SC" ];
           sans = [ "Sarasa Gothic SC" ];
           emoji = [ "Noto Color Emoji" ];
@@ -113,15 +109,13 @@ in {
     (mkIf config.services.xserver.enable {
       hm.programs.rofi = {
         extraConfig = {
-          icon-theme = let inherit (cfg.iconTheme) name; in "${name}";
-          font = let inherit (cfg.font.sans) family weight size;
-          in "${family} ${weight} ${toString size}";
+          icon-theme = "${cfg.iconTheme.name}";
+          font = with cfg.font.sans;
+            "${family} ${weight} ${builtins.toString size}";
         };
 
-        theme = let
-          inherit (config.hm.lib.formats.rasi) mkLiteral;
-          inherit (cfg.colors.rofi) bg fg ribbon selected transparent urgent;
-        in {
+        theme = let inherit (config.hm.lib.formats.rasi) mkLiteral;
+        in with cfg.colors.rofi; {
           "*" = {
             fg = mkLiteral "${fg}";
             bg = mkLiteral "${bg.main}";
@@ -256,25 +250,23 @@ in {
         };
       };
 
-      hm.programs.sioyek.config =
-        let inherit (cfg.font.mono) family size weight;
-        in {
-          "custom_background_color " = "";
-          "custom_text_color " = "";
+      hm.programs.sioyek.config = with cfg.font.mono; {
+        "custom_background_color " = "";
+        "custom_text_color " = "";
 
-          "text_highlight_color" = "";
-          "visual_mark_color" = "";
-          "search_highlight_color" = "";
-          "link_highlight_color" = "";
-          "synctex_highlight_color" = "";
+        "text_highlight_color" = "";
+        "visual_mark_color" = "";
+        "search_highlight_color" = "";
+        "link_highlight_color" = "";
+        "synctex_highlight_color" = "";
 
-          "page_separator_width" = "2";
-          "page_separator_color" = "";
-          "status_bar_color" = "";
+        "page_separator_width" = "2";
+        "page_separator_color" = "";
+        "status_bar_color" = "";
 
-          "font_size" = "${toString size}";
-          "ui_font" = "${family} ${weight}";
-        };
+        "font_size" = "${builtins.toString size}";
+        "ui_font" = "${family} ${weight}";
+      };
     })
   ]);
 }

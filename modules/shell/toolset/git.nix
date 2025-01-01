@@ -1,20 +1,15 @@
 { options, config, lib, pkgs, ... }:
 
-let
-  inherit (builtins) readFile;
-  inherit (lib.attrsets) attrValues optionalAttrs;
-  inherit (lib.modules) mkIf;
-in {
-  options.modules.shell.toolset.git = let inherit (lib.options) mkEnableOption;
-  in { enable = mkEnableOption "version-control system"; };
+with lib; {
+  options.modules.shell.toolset.git = {
+    enable = mkEnableOption "version-control system";
+  };
 
   config = mkIf config.modules.shell.toolset.git.enable {
-    user.packages = attrValues ({
-      inherit (pkgs) act dura gitui;
-      inherit (pkgs.gitAndTools) gh git-open;
-    } // optionalAttrs config.modules.shell.toolset.gnupg.enable {
-      inherit (pkgs.gitAndTools) git-crypt;
-    });
+    user.packages = with pkgs;
+      [ act dura gitui gitAndTools.gh gitAndTools.git-open ]
+      ++ optionals config.modules.shell.toolset.gnupg.enable
+      [ gitAndTools.git-crypt ];
 
     # Prevent x11 askPass prompt on git push:
     programs.ssh.askPassword = "";
@@ -103,7 +98,8 @@ in {
         user = {
           name = "Icy-Thought";
           email = "icy-thought@pm.me";
-          signingKey = readFile "${config.user.home}/.ssh/id_ed25519.pub";
+          signingKey =
+            builtins.readFile "${config.user.home}/.ssh/id_ed25519.pub";
         };
 
         gpg.format = "ssh";

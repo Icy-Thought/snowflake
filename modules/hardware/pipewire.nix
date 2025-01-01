@@ -1,16 +1,13 @@
 { options, config, lib, pkgs, ... }:
 
-let
-  inherit (lib.attrsets) attrValues;
-  inherit (lib.modules) mkIf;
-
-  cfg = config.modules.hardware.pipewire;
-in {
-  options.modules.hardware.pipewire = let inherit (lib.options) mkEnableOption;
-  in { enable = mkEnableOption "modern audio support"; };
+let cfg = config.modules.hardware.pipewire;
+in with lib; {
+  options.modules.hardware.pipewire = {
+    enable = mkEnableOption "modern audio support";
+  };
 
   config = mkIf cfg.enable {
-    user.packages = attrValues { inherit (pkgs) easyeffects; };
+    user.packages = [ pkgs.easyeffects ];
 
     security.rtkit.enable = true;
 

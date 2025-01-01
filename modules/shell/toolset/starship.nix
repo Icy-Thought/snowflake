@@ -1,16 +1,14 @@
 { options, config, lib, pkgs, ... }:
 
-let inherit (lib.modules) mkIf;
-in {
-  options.modules.shell.toolset.starship =
-    let inherit (lib.options) mkEnableOption;
-    in { enable = mkEnableOption "minimal shell ricing"; };
+with lib; {
+  options.modules.shell.toolset.starship = {
+    enable = mkEnableOption "minimal shell ricing";
+  };
 
   config = mkIf config.modules.shell.toolset.starship.enable {
     hm.programs.starship = {
       enable = true;
-      settings = let inherit (config.modules.themes.colors.main) normal types;
-      in {
+      settings = with config.modules.themes.colors.main; {
         scan_timeout = 10;
         add_newline = true;
         line_break.disabled = true;

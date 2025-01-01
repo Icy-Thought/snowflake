@@ -1,17 +1,12 @@
 { inputs, options, config, lib, pkgs, ... }:
 
-let
-  inherit (lib.modules) mkIf;
-  cfg = config.modules.desktop.extensions.picom;
-in {
-  options.modules.desktop.extensions.picom =
-    let inherit (lib.options) mkEnableOption;
-    in {
-      enable = mkEnableOption "lightweight X11 compositor";
-      animation.enable = mkEnableOption "animated picom";
-    };
+with lib; {
+  options.modules.desktop.extensions.picom = {
+    enable = mkEnableOption "lightweight X11 compositor";
+    animation.enable = mkEnableOption "animated picom";
+  };
 
-  config = mkIf cfg.enable {
+  config = mkIf config.modules.desktop.extensions.picom.enable {
     systemd.user.services.picom = {
       description = "Picom composite manager";
       wantedBy = [ "graphical-session.target" ];
@@ -19,7 +14,7 @@ in {
 
       serviceConfig = {
         ExecStart = "${
-            lib.getExe pkgs.unstable.picom
+            getExe pkgs.unstable.picom
           } --config ${config.snowflake.configDir}/picom.conf";
         RestartSec = 3;
         Restart = "always";

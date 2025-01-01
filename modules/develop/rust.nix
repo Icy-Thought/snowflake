@@ -1,21 +1,19 @@
 { inputs, options, config, lib, pkgs, ... }:
 
-let
-  inherit (lib.attrsets) attrValues;
-  inherit (lib.modules) mkIf mkMerge;
-  inherit (lib.meta) getExe;
-in {
-  options.modules.develop.rust = let inherit (lib.options) mkEnableOption;
-  in { enable = mkEnableOption "Rust development"; };
+with lib; {
+  options.modules.develop.rust = {
+    enable = mkEnableOption "Rust development";
+  };
 
   config = mkIf config.modules.develop.rust.enable (mkMerge [
     {
       nixpkgs.overlays = [ inputs.rust.overlays.default ];
 
-      user.packages = attrValues {
-        rust-package = pkgs.rust-bin.stable.latest.default;
-        inherit (pkgs) rust-analyzer rust-script;
-      };
+      user.packages = with pkgs; [
+        rust-bin.stable.latest.default
+        rust-analyzer
+        rust-script
+      ];
 
       environment.shellAliases = {
         rs = "rustc";

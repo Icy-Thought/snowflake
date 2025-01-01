@@ -1,17 +1,13 @@
 { options, config, lib, pkgs, ... }:
 
 let
-  inherit (lib.modules) mkIf mkForce mkMerge;
-
   cfg = config.modules.desktop.distractions.steam;
   desktop = config.modules.desktop;
-in {
-  options.modules.desktop.distractions.steam =
-    let inherit (lib.options) mkEnableOption;
-    in {
-      enable = mkEnableOption "Enable steam, the game/software store";
-      hardware.enable = mkEnableOption "Support for steam hardware";
-    };
+in with lib; {
+  options.modules.desktop.distractions.steam = {
+    enable = mkEnableOption "Enable steam, the game/software store";
+    hardware.enable = mkEnableOption "Support for steam hardware";
+  };
 
   config = mkIf cfg.enable (mkMerge [
     {

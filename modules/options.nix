@@ -1,25 +1,21 @@
 { options, config, lib, home-manager, ... }:
 
-let
-  inherit (lib.modules) mkAliasDefinitions;
-  inherit (lib.my) mkOpt mkOpt';
-in {
-  options = let inherit (lib.types) attrs path;
-  in {
-    user = mkOpt attrs { };
+with lib; {
+  options = with types; {
+    user = my.mkOpt attrs { };
 
     snowflake = {
-      dir = mkOpt path
+      dir = my.mkOpt path
         (lib.findFirst builtins.pathExists (builtins.toString ../.) [
           "${config.user.home}/Workspace/public/snowflake"
           "/etc/snowflake"
         ]);
-      hostDir = mkOpt path
+      hostDir = my.mkOpt path
         "${config.snowflake.dir}/hosts/${config.networking.hostName}";
-      binDir = mkOpt path "${config.snowflake.dir}/bin";
-      configDir = mkOpt path "${config.snowflake.dir}/config";
-      modulesDir = mkOpt path "${config.snowflake.dir}/modules";
-      themesDir = mkOpt path "${config.snowflake.modulesDir}/themes";
+      binDir = my.mkOpt path "${config.snowflake.dir}/bin";
+      configDir = my.mkOpt path "${config.snowflake.dir}/config";
+      modulesDir = my.mkOpt path "${config.snowflake.dir}/modules";
+      themesDir = my.mkOpt path "${config.snowflake.modulesDir}/themes";
     };
   };
 

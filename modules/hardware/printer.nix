@@ -1,9 +1,9 @@
 { options, config, lib, pkgs, ... }:
 
-let inherit (lib.modules) mkIf;
-in {
-  options.modules.hardware.printer = let inherit (lib.options) mkEnableOption;
-  in { enable = mkEnableOption "printer support"; };
+with lib; {
+  options.modules.hardware.printer = {
+    enable = mkEnableOption "printer support";
+  };
 
   config = mkIf config.modules.hardware.printer.enable {
     services.printing = {

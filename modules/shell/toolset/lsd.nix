@@ -1,9 +1,9 @@
 { options, config, lib, pkgs, ... }:
 
-let inherit (lib.modules) mkIf;
-in {
-  options.modules.shell.toolset.lsd = let inherit (lib.options) mkEnableOption;
-  in { enable = mkEnableOption "Next-gen ls command"; };
+with lib; {
+  options.modules.shell.toolset.lsd = {
+    enable = mkEnableOption "Next-gen ls command";
+  };
 
   config = mkIf config.modules.shell.toolset.btop.enable {
     hm.programs.lsd = {
@@ -20,8 +20,7 @@ in {
         };
       };
 
-      colors = let inherit (config.modules.themes) active;
-      in (mkIf (active != null) {
+      colors = mkIf (config.modules.themes.active != null) {
         user = "cyan";
         group = "yellow";
         date = {
@@ -54,7 +53,7 @@ in {
           large = "red";
         };
         tree-edge = "dark_grey";
-      });
+      };
     };
   };
 }

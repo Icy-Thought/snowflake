@@ -1,9 +1,6 @@
 { config, lib, pkgs, modulesPath, ... }:
 
-let
-  inherit (lib.modules) mkDefault;
-  inherit (lib.attrsets) attrValues;
-in {
+{
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
   fileSystems."/" = {
@@ -32,8 +29,8 @@ in {
   };
 
   hardware.cpu.intel.updateMicrocode = true;
-  powerManagement.cpuFreqGovernor = mkDefault "performance";
-  nix.settings.max-jobs = mkDefault 4;
+  powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
+  nix.settings.max-jobs = lib.mkDefault 4;
 
   # Manage device power-control:
   services = {

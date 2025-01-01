@@ -1,15 +1,10 @@
 { inputs, options, config, lib, pkgs, ... }:
 
-let
-  inherit (builtins) readFile;
-  inherit (lib.modules) mkIf;
-  inherit (lib.strings) optionalString;
-
-  cfg = config.modules.desktop.extensions.taffybar;
-in {
-  options.modules.desktop.extensions.taffybar =
-    let inherit (lib.options) mkEnableOption;
-    in { enable = mkEnableOption "haskell status-bar library"; };
+let cfg = config.modules.desktop.extensions.taffybar;
+in with lib; {
+  options.modules.desktop.extensions.taffybar = {
+    enable = mkEnableOption "haskell status-bar library";
+  };
 
   config = mkIf cfg.enable {
     create.configFile = let
@@ -26,7 +21,7 @@ in {
           ${optionalString (active != null) ''
             @import url("palette/${active}.css");
           ''}
-          ${readFile "${taffyDir}/taffybar.css"}
+          ${builtins.readFile "${taffyDir}/taffybar.css"}
         '';
       };
     };

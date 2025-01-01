@@ -1,18 +1,13 @@
 { inputs, config, lib, pkgs, ... }:
 
-let
-  inherit (builtins) toString;
-  inherit (lib.attrsets) attrValues filterAttrs mapAttrs mapAttrsToList;
-  inherit (lib.modules) mkAliasOptionModule mkDefault mkIf;
-  inherit (lib.my) mapModulesRec';
-in {
+with lib; {
   imports = [
     inputs.home-manager.nixosModules.home-manager
     (mkAliasOptionModule [ "hm" ] [ "home-manager" "users" config.user.name ])
     (mkAliasOptionModule [ "home" ] [ "hm" "home" ])
     (mkAliasOptionModule [ "create" "configFile" ] [ "hm" "xdg" "configFile" ])
     (mkAliasOptionModule [ "create" "dataFile" ] [ "hm" "xdg" "dataFile" ])
-  ] ++ (mapModulesRec' (toString ./modules) import);
+  ] ++ (my.mapModulesRec' (builtins.toString ./modules) import);
 
   # Common config for all nixos machines;
   environment.variables = {
@@ -81,7 +76,6 @@ in {
 
   environment = {
     defaultPackages = lib.mkForce [ ];
-    systemPackages =
-      attrValues { inherit (pkgs) cached-nix-shell unrar unzip; };
+    systemPackages = with pkgs; [ cached-nix-shell unrar unzip ];
   };
 }

@@ -1,12 +1,8 @@
 { options, config, lib, pkgs, ... }:
 
-let
-  inherit (lib.meta) getExe;
-  inherit (lib.modules) mkIf mkMerge;
-  cfg = config.modules.desktop.education;
-in {
-  options.modules.desktop.education = let inherit (lib.options) mkEnableOption;
-  in {
+let cfg = config.modules.desktop.education;
+in with lib; {
+  options.modules.desktop.education = {
     memorization.enable = mkEnableOption "SUID tool (sandbox)";
     vidcom.enable = mkEnableOption "jailed zoom-us";
   };

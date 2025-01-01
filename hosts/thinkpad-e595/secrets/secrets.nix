@@ -1,7 +1,7 @@
 let
-  inherit (builtins) pathExists readFile;
   keyFile = "/etc/ssh/ed25519_key.pub";
-  hostKey = if pathExists keyFile then readFile keyFile else "";
+  hostKey =
+    if builtins.pathExists keyFile then builtins.readFile keyFile else "";
 in {
   "ClosedAI.age".publicKeys = [ hostKey ];
   "Ement.age".publicKeys = [ hostKey ];

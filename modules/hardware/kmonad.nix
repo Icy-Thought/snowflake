@@ -1,15 +1,8 @@
 { inputs, options, config, lib, pkgs, ... }:
 
-let
-  inherit (builtins) pathExists readFile;
-  inherit (lib.modules) mkIf;
-
-  cfg = config.modules.hardware.kmonad;
-in {
-  options.modules.hardware.kmonad = let
-    inherit (lib.options) mkEnableOption mkOption;
-    inherit (lib.types) nullOr path;
-  in {
+let cfg = config.modules.hardware.kmonad;
+in with lib; {
+  options.modules.hardware.kmonad = with types; {
     enable = mkEnableOption "advanced kbd management";
     deviceID = mkOption {
       type = nullOr path;
@@ -37,7 +30,10 @@ in {
             allowCommands = false;
             compose.key = null;
           };
-          config = if pathExists layoutFile then readFile layoutFile else "";
+          config = if builtins.pathExists layoutFile then
+            builtins.readFile layoutFile
+          else
+            "";
         };
       };
   };

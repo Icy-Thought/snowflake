@@ -46,7 +46,7 @@
 
   outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, ... }:
     let
-      inherit (lib.my) mapModules mapModulesRec mapHosts;
+      inherit (lib) my;
       system = "x86_64-linux";
 
       mkPkgs = pkgs: extraOverlays:
@@ -67,7 +67,7 @@
     in {
       lib = lib.my;
 
-      overlays = (mapModules ./overlays import) // {
+      overlays = (my.mapModules ./overlays import) // {
         default = final: prev: {
           unstable = pkgs-unstable;
           my = self.packages.${system};
@@ -81,13 +81,13 @@
         };
       };
 
-      packages."${system}" = mapModules ./packages (p: pkgs.callPackage p { });
+      packages."${system}" = my.mapModules ./packages (p: pkgs.callPackage p { });
 
       nixosModules = {
         snowflake = import ./.;
-      } // mapModulesRec ./modules import;
+      } // my.mapModulesRec ./modules import;
 
-      nixosConfigurations = mapHosts ./hosts { };
+      nixosConfigurations = my.mapHosts ./hosts { };
 
       devShells."${system}".default = import ./shell.nix { inherit lib pkgs; };
 

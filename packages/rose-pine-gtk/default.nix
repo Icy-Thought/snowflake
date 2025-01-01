@@ -1,15 +1,12 @@
 { lib, stdenv, fetchFromGitHub, gtk-engine-murrine, themeVariant ? [ ]
 , iconVariant ? [ ], }:
 
-let
-  inherit (builtins) toString;
-  inherit (lib.trivial) checkListOfEnum;
-in checkListOfEnum "$Rose-Pine: GTK Theme Variants" [
+lib.checkListOfEnum "$Rose-Pine: GTK Theme Variants" [
   "Main-B-LB"
   "Main-B"
   "Main-BL-LB"
   "Main-BL"
-] themeVariant checkListOfEnum "$RosePine: GTK Theme Variants" [ "" "Moon" ]
+] themeVariant lib.checkListOfEnum "$RosePine: GTK Theme Variants" [ "" "Moon" ]
 iconVariant
 
 stdenv.mkDerivation {
@@ -26,8 +23,8 @@ stdenv.mkDerivation {
   propagatedUserEnvPkgs = [ gtk-engine-murrine ];
 
   installPhase = let
-    gtkTheme = "RosePine-${toString themeVariant}";
-    iconTheme = "Rose-Pine-${toString iconVariant}";
+    gtkTheme = "RosePine-${builtins.toString themeVariant}";
+    iconTheme = "Rose-Pine-${builtins.toString iconVariant}";
   in ''
     runHook preInstall
 

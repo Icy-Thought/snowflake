@@ -1,11 +1,9 @@
 { options, config, lib, pkgs, ... }:
 
-let
-  inherit (lib.attrsets) attrValues;
-  inherit (lib.modules) mkIf mkMerge;
-in {
-  options.modules.desktop.plasma = let inherit (lib.options) mkEnableOption;
-  in { enable = mkEnableOption "modern desktop environment"; };
+with lib; {
+  options.modules.desktop.plasma = {
+    enable = mkEnableOption "modern desktop environment";
+  };
 
   config = mkIf config.modules.desktop.plasma.enable (mkMerge [
     {
@@ -23,8 +21,10 @@ in {
       };
       services.greetd.settings.initial_session.command = "plasmawayland";
 
-      environment.plasma6.excludePackages =
-        attrValues { inherit (pkgs.kdePackages) konsole oxygen; };
+      environment.plasma6.excludePackages = with pkgs.kdePackages; [
+        konsole
+        oxygen
+      ];
       programs.dconf.enable = true;
     }
 

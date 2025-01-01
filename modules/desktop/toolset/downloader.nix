@@ -1,17 +1,13 @@
 { options, config, lib, pkgs, ... }:
 
-let
-  inherit (lib.modules) mkIf mkMerge;
-
-  cfg = config.modules.desktop.toolset.downloader;
-in {
-  options.modules.desktop.toolset.downloader =
-    let inherit (lib.options) mkEnableOption;
-    in { transmission.enable = mkEnableOption "BitTorrent client"; };
+with lib; {
+  options.modules.desktop.toolset.downloader = {
+    transmission.enable = mkEnableOption "BitTorrent client";
+  };
 
   # TODO <- remote vs gui
   config = mkMerge [
-    (mkIf cfg.transmission.enable {
+    (mkIf config.modules.desktop.toolset.downloader.transmission.enable {
       user = {
         packages = [ pkgs.transmission-gtk ];
         extraGroups = [ "transmission" ];

@@ -1,20 +1,16 @@
 { options, config, lib, pkgs, ... }:
 
-let
-  inherit (lib.attrsets) attrValues;
-  inherit (lib.modules) mkIf;
-  virtCfg = config.modules.virtualisation;
-in {
-  options.modules.virtualisation.kvm = let inherit (lib.options) mkEnableOption;
-  in {
+let virtCfg = config.modules.virtualisation;
+in with lib; {
+  options.modules.virtualisation.kvm = with types; {
     enable = mkEnableOption "Kernel-based Virutal Machine.";
-    vendor = lib.types.enum [ "amd" "intel" ] "amd";
+    vendor = enum [ "amd" "intel" ] "amd";
   };
 
   config = mkIf virtCfg.kvm.enable {
     modules.virtualisation.looking-glass.enable = true;
 
-    user.packages = attrValues { inherit (pkgs) virt-manager; };
+    user.packages = [ pkgs.virt-manager ];
 
     boot = {
       kernelModules =
@@ -53,7 +49,7 @@ in {
       serviceConfig = {
         Type = "simple";
         Restart = "on-failure";
-        ExecStart = "${lib.getExe pkgs.scream} -m /dev/shm/scream -o pulse";
+        ExecStart = "${getExe pkgs.scream} -m /dev/shm/scream -o pulse";
       };
     };
   };

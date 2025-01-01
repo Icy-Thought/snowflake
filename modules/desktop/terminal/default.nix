@@ -1,13 +1,8 @@
 { options, config, lib, pkgs, ... }:
 
-let
-  inherit (lib.modules) mkDefault mkIf mkMerge;
-  cfg = config.modules.desktop.terminal;
-in {
-  options.modules.desktop.terminal = let
-    inherit (lib.options) mkOption;
-    inherit (lib.types) str;
-  in {
+let cfg = config.modules.desktop.terminal;
+in with lib; {
+  options.modules.desktop.terminal = with types; {
     default = mkOption {
       type = str;
       default = "xterm";

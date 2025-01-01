@@ -1,9 +1,6 @@
 { lib, stdenv, fetchFromGitHub, gtk-engine-murrine, themeVariants ? [ "BL" ], }:
 
-let
-  inherit (builtins) toString;
-  inherit (lib.trivial) checkListOfEnum;
-in checkListOfEnum "$Kanagawa: GTK Theme Variants" [ "B" "B-LB" "BL" "BL-LB" ]
+lib.checkListOfEnum "$Kanagawa: GTK Theme Variants" [ "B" "B-LB" "BL" "BL-LB" ]
 themeVariants
 
 stdenv.mkDerivation {
@@ -19,7 +16,7 @@ stdenv.mkDerivation {
 
   propagatedUserEnvPkgs = [ gtk-engine-murrine ];
 
-  installPhase = let gtkTheme = "Kanagawa-${toString themeVariants}";
+  installPhase = let gtkTheme = "Kanagawa-${builtins.toString themeVariants}";
   in ''
     runHook preInstall
 

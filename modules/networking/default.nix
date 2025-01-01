@@ -1,13 +1,8 @@
 { options, config, lib, pkgs, ... }:
 
-let
-  inherit (lib.meta) getExe;
-  inherit (lib.modules) mkDefault mkIf mkMerge;
-
-  cfg = config.modules.networking;
-in {
-  options.modules.networking = let inherit (lib.options) mkEnableOption;
-  in {
+let cfg = config.modules.networking;
+in with lib; {
+  options.modules.networking = {
     iwd.enable = mkEnableOption "wpa_supplicant alt.";
     networkd.enable = mkEnableOption "systemd network manager";
     networkManager.enable = mkEnableOption "powerful network manager";

@@ -1,26 +1,22 @@
 { inputs, options, config, lib, pkgs, ... }:
 
-let
-  inherit (lib.meta) getExe;
-  inherit (lib.modules) mkIf mkMerge;
-  inherit (pkgs) writeText xorg;
-
-  cfg = config.modules.hardware.xkbLayout;
-in {
-  options.modules.hardware.xkbLayout = let inherit (lib.options) mkEnableOption;
-  in { hyperCtrl.enable = mkEnableOption "hyper xkb-layout"; };
+let cfg = config.modules.hardware.xkbLayout;
+in with lib; {
+  options.modules.hardware.xkbLayout = {
+    hyperCtrl.enable = mkEnableOption "hyper xkb-layout";
+  };
 
   config = mkMerge [
     (mkIf cfg.hyperCtrl.enable {
       services.xserver = {
         displayManager.sessionCommands = ''
-          ${getExe xorg.setxkbmap} -layout us-hyperCtrl
+          ${getExe pkgs.xorg.setxkbmap} -layout us-hyperCtrl
         '';
 
         extraLayouts.us-hyperCtrl = {
           description = "US Layout with Right Ctrl = Hyper";
           languages = [ "eng" ];
-          symbolsFile = writeText "us-hyperCtrl" ''
+          symbolsFile = pkgs.writeText "us-hyperCtrl" ''
             partial alphanumeric_keys
 
             partial modifier_keys

@@ -1,14 +1,8 @@
 { inputs, options, config, lib, pkgs, ... }:
 
-let
-  inherit (lib.attrsets) attrValues optionalAttrs;
-  inherit (lib.modules) mkIf mkMerge;
-  cfg = config.modules.desktop.qtile;
-in {
-  options.modules.desktop.qtile = let
-    inherit (lib.options) mkEnableOption mkOption;
-    inherit (lib.types) enum;
-  in {
+let cfg = config.modules.desktop.qtile;
+in with lib; {
+  options.modules.desktop.qtile = with types; {
     enable = mkEnableOption "python x11/wayland WM";
     backend = mkOption {
       type = enum [ "x11" "wayland" ];
@@ -41,20 +35,16 @@ in {
       };
       modules.hardware.kmonad.enable = true;
 
-      environment.systemPackages = attrValues ({
-        inherit (pkgs) libnotify playerctl gxmessage;
-      } // optionalAttrs (cfg.backend == "x11") { inherit (pkgs) xdotool feh; }
-        // optionalAttrs (cfg.backend == "wayland") {
-          inherit (pkgs) imv wf-recorder;
-        });
+      environment.systemPackages = with pkgs;
+        [ libnotify playerctl gxmessage ]
+        ++ optionals (cfg.backend == "x11") [ xdotool feh ]
+        ++ optional (cfg.backend == "wayland") [ imv wf-recorder ];
 
       services.xserver.windowManager.qtile = {
         enable = true;
         configFile = "${config.snowflake.configDir}/qtile/config.py";
         backend = cfg.backend;
-        # extraPackages = attrValues {
-        #   inherit (pkgs.python3Packages) qtile-extras;
-        # };
+        # extraPackages = with pkgs.python3Packages; [ qtile-extras ];
       };
     }
 

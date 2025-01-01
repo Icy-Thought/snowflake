@@ -1,12 +1,10 @@
 { options, config, lib, pkgs, ... }:
 
-let
-  inherit (lib.attrsets) attrValues;
-  inherit (lib.modules) mkIf mkMerge;
-  cfg = config.modules.hardware.graphics;
-in {
-  options.modules.hardware.graphics = let inherit (lib.options) mkEnableOption;
-  in { amd.enable = mkEnableOption "AMD graphics drivers"; };
+let cfg = config.modules.hardware.graphics;
+in with lib; {
+  options.modules.hardware.graphics = {
+    amd.enable = mkEnableOption "AMD graphics drivers";
+  };
 
   config = mkMerge [
     (mkIf cfg.amd.enable {
@@ -15,21 +13,26 @@ in {
       hardware.opengl = {
         enable = true;
         driSupport = true;
-        extraPackages = attrValues {
-          inherit (pkgs) amdvlk vaapiVdpau libvdpau-va-gl vdpauinfo;
-          inherit (pkgs.rocmPackages) clr;
-          inherit (pkgs.rocmPackages.clr) icd;
-        };
-        extraPackages32 =
-          attrValues { inherit (pkgs.driversi686Linux) amdvlk; };
+        extraPackages = with pkgs; [
+          amdvlk
+          vaapiVdpau
+          libvdpau-va-gl
+          vdpauinfo
+          rocmPackages.clr
+          rocmPackages.clr.icd
+        ];
+        extraPackages32 = [ pkgs.driversi686Linux.amdvlk ];
         driSupport32Bit = true;
       };
 
-      user.packages = attrValues {
-        inherit (pkgs) clinfo radeontop radeon-profile;
-        inherit (pkgs.rocmPackages)
-          rocminfo rocm-smi rocm-runtime rocm-cmake rocm-thunk;
-      };
+      user.packages = with pkgs;
+        [ clinfo radeontop radeon-profile ] ++ (with rocmPackages; [
+          rocminfo
+          rocm-smi
+          rocm-runtime
+          rocm-cmake
+          rocm-thunk
+        ]);
     })
   ];
 }

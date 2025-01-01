@@ -1,19 +1,10 @@
 { options, config, lib, pkgs, ... }:
 
 let
-  inherit (lib.attrsets) attrValues;
-  inherit (lib.lists) optionals;
-  inherit (lib.modules) mkIf mkMerge;
-  inherit (lib.strings) concatStringsSep;
-
   cfg = config.modules.desktop.toolset.communication;
-  desktop = config.modules.desktop;
   mailDir = "${config.hm.xdg.dataHome}/mail";
-in {
-  options.modules.desktop.toolset.communication = let
-    inherit (lib.options) mkEnableOption mkOption;
-    inherit (lib.types) nullOr enum;
-  in {
+in with lib; {
+  options.modules.desktop.toolset.communication = with types; {
     base.enable = mkEnableOption "cross-platform clients";
     mu4e.enable = mkEnableOption "a full-featured e-mail client";
     discord.enable = mkEnableOption "discord client" // {
@@ -40,9 +31,7 @@ in {
   };
 
   config = mkMerge [
-    (mkIf cfg.base.enable {
-      user.packages = attrValues { inherit (pkgs) signal-desktop; };
-    })
+    (mkIf cfg.base.enable { user.packages = [ pkgs.signal-desktop ]; })
 
     (mkIf cfg.mu4e.enable {
       hm.accounts.email = {
@@ -115,21 +104,21 @@ in {
     })
 
     (mkIf cfg.matrix.withClient.enable {
-      user.packages = let
-        inherit (pkgs) makeWrapper symlinkJoin element-desktop;
-        element-desktop' = symlinkJoin {
-          name = "element-desktop-in-dataHome";
-          paths = [ element-desktop ];
-          nativeBuildInputs = [ makeWrapper ];
-          postBuild = ''
-            wrapProgram "$out/bin/element-desktop" \
-              --add-flags '--profile-dir $XDG_DATA_HOME/Element'
-          '';
-        };
-      in if (cfg.matrix.withClient.package == "element") then
-        [ element-desktop' ]
-      else
-        [ pkgs.fractal-next ];
+      user.packages = with pkgs;
+        if (cfg.matrix.withClient.package == "element") then
+          [
+            (symlinkJoin {
+              name = "element-desktop-in-dataHome";
+              paths = [ element-desktop ];
+              nativeBuildInputs = [ makeWrapper ];
+              postBuild = ''
+                wrapProgram "$out/bin/element-desktop" \
+                  --add-flags '--profile-dir $XDG_DATA_HOME/Element'
+              '';
+            })
+          ]
+        else
+          [ fractal-next ];
     })
 
     (mkIf cfg.discord.enable { user.packages = [ pkgs.vesktop ]; })

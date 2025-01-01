@@ -1,13 +1,7 @@
 { options, config, lib, pkgs, ... }:
 
-let
-  inherit (builtins) readFile toString;
-  inherit (lib.attrsets) attrValues;
-  inherit (lib.modules) mkDefault mkIf mkMerge;
-  inherit (lib.strings) concatMapStringsSep;
-
-  cfg = config.modules.themes;
-in {
+let cfg = config.modules.themes;
+in with lib; {
   config = mkIf (cfg.active == "catppuccin") (mkMerge [
     {
       modules.themes = {
@@ -27,11 +21,12 @@ in {
         };
 
         fontConfig = {
-          packages = attrValues {
-            inherit (pkgs) noto-fonts-emoji sarasa-gothic;
-            inherit (pkgs.nerd-fonts) victor-mono;
-            google-fonts = pkgs.google-fonts.override { fonts = [ "Cardo" ]; };
-          };
+          packages = with pkgs; [
+            nerd-fonts.victor-mono
+            (google-fonts.override { fonts = [ "Cardo" ]; })
+            sarasa-gothic
+            noto-fonts-emoji
+          ];
           mono = [ "VictorMono Nerd Font" "Sarasa Mono SC" ];
           sans = [ "Sarasa Gothic SC" ];
           emoji = [ "Noto Color Emoji" ];
@@ -106,21 +101,20 @@ in {
     (mkIf config.modules.desktop.browsers.firefox.enable {
       modules.desktop.browsers.firefox.userChrome =
         let usrChromeDir = "${config.snowflake.configDir}/firefox/userChrome";
-        in concatMapStringsSep "\n" readFile [ "${usrChromeDir}/sidebery.css" ];
+        in concatMapStringsSep "\n" builtins.readFile
+        [ "${usrChromeDir}/sidebery.css" ];
     })
 
     (mkIf config.services.xserver.enable {
       hm.programs.rofi = {
         extraConfig = {
-          icon-theme = let inherit (cfg.iconTheme) name; in "${name}";
-          font = let inherit (cfg.font.sans) family weight size;
-          in "${family} ${weight} ${toString size}";
+          icon-theme = "${cfg.iconTheme.name}";
+          font = with cfg.font.sans;
+            "${family} ${weight} ${builtins.toString size}";
         };
 
-        theme = let
-          inherit (config.hm.lib.formats.rasi) mkLiteral;
-          inherit (cfg.colors.rofi) bg fg ribbon selected transparent urgent;
-        in {
+        theme = let inherit (config.hm.lib.formats.rasi) mkLiteral;
+        in with cfg.colors.rofi; {
           "*" = {
             fg = mkLiteral "${fg}";
             bg = mkLiteral "${bg.main}";
@@ -255,8 +249,7 @@ in {
         };
       };
 
-      hm.programs.sioyek.config = let inherit (cfg.font) mono sans;
-      in {
+      hm.programs.sioyek.config = with cfg.font; {
         "custom_background_color " = "0.12 0.11 0.18";
         "custom_text_color " = "0.85 0.88 0.93";
 
@@ -270,7 +263,7 @@ in {
         "page_separator_color" = "0.95 0.80 0.80";
         "status_bar_color" = "0.19 0.20 0.27";
 
-        "font_size" = "${toString sans.size}";
+        "font_size" = "${builtins.toString sans.size}";
         "ui_font" = "${mono.family} ${mono.weight}";
       };
     })

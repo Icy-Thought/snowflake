@@ -1,14 +1,10 @@
 { options, config, lib, pkgs, ... }:
 
-let
-  inherit (builtins) getEnv;
-  inherit (lib.modules) mkIf;
-
-  cfg = config.modules.shell.toolset.gnupg;
-in {
-  options.modules.shell.toolset.gnupg =
-    let inherit (lib.options) mkEnableOption;
-    in { enable = mkEnableOption "cryptographic suite"; };
+let cfg = config.modules.shell.toolset.gnupg;
+in with lib; {
+  options.modules.shell.toolset.gnupg = {
+    enable = mkEnableOption "cryptographic suite";
+  };
 
   config = mkIf config.modules.shell.toolset.gnupg.enable {
     home.sessionVariables.GNUPGHOME = "$XDG_CONFIG_HOME/gnupg";

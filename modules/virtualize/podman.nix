@@ -1,12 +1,9 @@
 { options, config, lib, pkgs, ... }:
 
-let
-  inherit (lib.attrsets) attrValues;
-  inherit (lib.modules) mkIf;
-in {
-  options.modules.virtualisation.podman =
-    let inherit (lib.options) mkEnableOption;
-    in { enable = mkEnableOption "Enable the Podman container engine"; };
+with lib; {
+  options.modules.virtualisation.podman = {
+    enable = mkEnableOption "Enable the Podman container engine";
+  };
 
   config = mkIf config.modules.virtualisation.podman.enable {
     virtualisation.podman = {
@@ -16,7 +13,7 @@ in {
       defaultNetwork.dnsname.enable = true;
       # For Nixos version > 22.11
       defaultNetwork.settings = { dns_enabled = true; };
-      extraPackages = attrValues { inherit (pkgs) conmon runc skopeo; };
+      extraPackages = with pkgs; [ conmon runc skopeo ];
     };
   };
 }

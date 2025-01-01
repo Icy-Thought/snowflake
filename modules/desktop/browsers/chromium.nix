@@ -1,23 +1,18 @@
 { options, config, lib, pkgs, ... }:
 
-let
-  inherit (builtins) toString;
-  inherit (lib.modules) mkIf;
-  inherit (lib.strings) concatStringsSep;
-in {
-  options.modules.desktop.browsers.chromium =
-    let inherit (lib.options) mkEnableOption;
-    in { enable = mkEnableOption "Google-free chromium"; };
+with lib; {
+  options.modules.desktop.browsers.chromium = {
+    enable = mkEnableOption "Google-free chromium";
+  };
 
   config = mkIf config.modules.desktop.browsers.chromium.enable {
-    user.packages = let inherit (pkgs) makeDesktopItem ungoogled-chromium;
-    in [
-      (makeDesktopItem {
+    user.packages = [
+      (pkgs.makeDesktopItem {
         name = "ungoogled-private";
         desktopName = "Ungoogled Web Browser (Private)";
         genericName = "Launch a Private Ungoogled Chromium Instance";
         icon = "chromium";
-        exec = "${ungoogled-chromium}/bin/chromium --incognito";
+        exec = "${pkgs.ungoogled-chromium}/bin/chromium --incognito";
         categories = [ "Network" ];
       })
     ];
@@ -25,7 +20,7 @@ in {
     hm.programs.chromium = {
       enable = true;
       package = let
-        ungoogledFlags = toString [
+        ungoogledFlags = builtins.toString [
           "--force-dark-mode"
           "--disable-search-engine-collection"
           "--extension-mime-request-handling=always-prompt-for-install"

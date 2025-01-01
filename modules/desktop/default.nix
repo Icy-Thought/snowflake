@@ -1,27 +1,21 @@
 { options, config, lib, pkgs, ... }:
 
-let
-  inherit (lib.attrsets) attrValues;
-  inherit (lib.modules) mkIf mkMerge;
-  inherit (lib.my) anyAttrs countAttrs;
-
-  cfg = config.modules.desktop;
-in {
-  options.modules.desktop = let
-    inherit (lib.types) either str;
-    inherit (lib.my) mkOpt;
-  in { type = mkOpt (either str null) null; };
+let cfg = config.modules.desktop;
+in with lib; {
+  options.modules.desktop = with types; {
+    type = my.mkOpt (either str null) null;
+  };
 
   config = mkMerge [
     {
       assertions = let
         isEnabled = _: v: v.enable or false;
         hasDesktopEnabled = cfg:
-          (anyAttrs isEnabled cfg)
-          || !(anyAttrs (_: v: builtins.isAttrs v && anyAttrs isEnabled v) cfg);
+          (my.anyAttrs isEnabled cfg)
+          || !(my.anyAttrs (_: v: builtins.isAttrs v && my.anyAttrs isEnabled v) cfg);
       in [
         {
-          assertion = (countAttrs (_: v: v.enable or false) cfg) < 2;
+          assertion = (my.countAttrs (_: v: v.enable or false) cfg) < 2;
           message =
             "Can't have more than one desktop environment enabled at a time";
         }
@@ -48,10 +42,14 @@ in {
         popd
       '';
 
-      user.packages = attrValues {
-        inherit (pkgs) nvfetcher clipboard-jh gucharmap hyperfine kalker;
+      user.packages = with pkgs; [
+        nvfetcher
+        clipboard-jh
+        gucharmap
+        hyperfine
+        kalker
 
-        kalker-launcher = pkgs.makeDesktopItem {
+        (makeDesktopItem {
           name = "Kalker";
           desktopName = "Kalker";
           icon = "calc";
@@ -61,8 +59,8 @@ in {
           else
             "${term} --class calculator -e kalker";
           categories = [ "Education" "Science" "Math" ];
-        };
-      };
+        })
+      ];
 
       services.xserver.enable = true;
       xdg.portal = {
@@ -75,8 +73,7 @@ in {
       fonts = {
         fontDir.enable = true;
         enableGhostscriptFonts = true;
-        packages =
-          attrValues { inherit (pkgs) sarasa-gothic scheherazade-new; };
+        packages = with pkgs; [ sarasa-gothic scheherazade-new ];
       };
 
       hm.qt = {
@@ -91,10 +88,12 @@ in {
 
       programs.regreet = {
         enable = true;
-        settings.env.SESSION_DIRS = builtins.concatStringsSep ":" [
-          "${config.services.displayManager.sessionData.desktops}/share/xsessions"
-          "${config.services.displayManager.sessionData.desktops}/share/wayland-sessions"
-        ];
+        settings.env.SESSION_DIRS =
+          let desktops = config.services.displayManager.sessionData.desktops;
+          in builtins.concatStringsSep ":" [
+            "${desktops}/share/xsessions"
+            "${desktops}/share/wayland-sessions"
+          ];
       };
       services.greetd.settings.initial_session.user = "greeter";
     })
@@ -109,8 +108,8 @@ in {
           };
         };
         sessionCommands = ''
-          ${lib.getExe pkgs.xorg.xset} -dpms
-          ${lib.getExe pkgs.xorg.xset} s off
+          ${getExe pkgs.xorg.xset} -dpms
+          ${getExe pkgs.xorg.xset} s off
         '';
       };
 

@@ -1,14 +1,8 @@
 { options, config, lib, pkgs, ... }:
 
-let
-  inherit (lib.attrsets) attrValues;
-  inherit (lib.modules) mkIf mkMerge;
-  cfg = config.modules.shell;
-in {
-  options.modules.shell = let
-    inherit (lib.options) mkOption mkEnableOption;
-    inherit (lib.types) nullOr enum;
-  in {
+let cfg = config.modules.shell;
+in with lib; {
+  options.modules.shell = with types; {
     default = mkOption {
       type = nullOr (enum [ "fish" "zsh" ]);
       default = null;
@@ -36,13 +30,19 @@ in {
         config.whitelist.prefix = [ "/home" ];
       };
 
-      user.packages = attrValues {
-        inherit (pkgs) any-nix-shell pwgen yt-dlp ripdrag yazi;
+      user.packages = with pkgs; [
+        any-nix-shell
+        pwgen
+        yt-dlp
+        ripdrag
+        yazi
 
         # GNU Alternatives
-        inherit (pkgs) bat fd zoxide;
-        rgFull = pkgs.ripgrep.override { withPCRE2 = true; };
-      };
+        bat
+        fd
+        zoxide
+        (pkgs.ripgrep.override { withPCRE2 = true; })
+      ];
     })
   ];
 }

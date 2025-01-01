@@ -1,21 +1,17 @@
 { options, config, lib, pkgs, ... }:
 
-let
-  inherit (lib.meta) getExe;
-  inherit (lib.modules) mkIf;
-in {
-  options.modules.shell.scripts.brightness =
-    let inherit (lib.options) mkEnableOption;
-    in { enable = mkEnableOption "brightness control"; };
+with lib; {
+  options.modules.shell.scripts.brightness = {
+    enable = mkEnableOption "brightness control";
+  };
 
   config = mkIf config.modules.shell.scripts.brightness.enable {
     # WARNING: won't work unless light -> udev..
     programs.light.enable = true;
 
-    user.packages = let inherit (pkgs) python3 writeScriptBin;
-    in [
-      (writeScriptBin "brightctl" ''
-        #!${getExe python3}
+    user.packages = [
+      (pkgs.writeScriptBin "brightctl" ''
+        #!${getExe pkgs.python3}
 
         import argparse
         import subprocess

@@ -1,17 +1,11 @@
 { inputs, options, config, lib, pkgs, ... }:
 
-let
-  inherit (lib.attrsets) attrValues;
-  inherit (lib.modules) mkIf mkMerge;
-
-  cfg = config.modules.desktop.toolset.player;
-in {
-  options.modules.desktop.toolset.player =
-    let inherit (lib.options) mkEnableOption;
-    in {
-      music.enable = mkEnableOption "music player";
-      video.enable = mkEnableOption "video player";
-    };
+let cfg = config.modules.desktop.toolset.player;
+in with lib; {
+  options.modules.desktop.toolset.player = {
+    music.enable = mkEnableOption "music player";
+    video.enable = mkEnableOption "video player";
+  };
 
   config = mkMerge [
     (mkIf cfg.music.enable { user.packages = [ pkgs.youtube-music ]; })
@@ -19,9 +13,13 @@ in {
     (mkIf cfg.video.enable {
       hm.programs.mpv = {
         enable = true;
-        scripts = attrValues {
-          inherit (pkgs.mpvScripts) autoload mpris sponsorblock thumbfast uosc;
-        };
+        scripts = with pkgs.mpvScripts; [
+          autoload
+          mpris
+          sponsorblock
+          thumbfast
+          uosc
+        ];
         config = {
           osc = "no";
           profile = "gpu-hq";

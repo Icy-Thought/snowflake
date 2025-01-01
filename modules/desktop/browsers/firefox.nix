@@ -1,40 +1,29 @@
 { inputs, options, config, lib, pkgs, ... }:
 
-let
-  inherit (builtins) toJSON;
-  inherit (lib.attrsets) attrValues mapAttrsToList;
-  inherit (lib.modules) mkIf mkMerge;
-  inherit (lib.strings) concatStrings;
-
-  cfg = config.modules.desktop.browsers.firefox;
-in {
-  options.modules.desktop.browsers.firefox = let
-    inherit (lib.options) mkEnableOption;
-    inherit (lib.types) attrsOf oneOf bool int lines str;
-    inherit (lib.my) mkOpt mkOpt';
-  in {
+let cfg = config.modules.desktop.browsers.firefox;
+in with lib; {
+  options.modules.desktop.browsers.firefox = with types; {
     enable = mkEnableOption "Gecko-based libre browser";
-    profileName = mkOpt str config.user.name;
-    settings = mkOpt' (attrsOf (oneOf [ bool int str ])) { } ''
+    profileName = my.mkOpt str config.user.name;
+    settings = my.mkOpt' (attrsOf (oneOf [ bool int str ])) { } ''
       Firefox preferences set in <filename>user.js</filename>
     '';
-    extraConfig = mkOpt' lines "" ''
+    extraConfig = my.mkOpt' lines "" ''
       Extra lines to add to <filename>user.js</filename>
     '';
-    userChrome = mkOpt' lines "" "CSS Styles for Firefox's interface";
-    userContent = mkOpt' lines "" "Global CSS Styles for websites";
+    userChrome = my.mkOpt' lines "" "CSS Styles for Firefox's interface";
+    userContent = my.mkOpt' lines "" "Global CSS Styles for websites";
   };
 
   config = mkIf cfg.enable {
-    user.packages = let inherit (pkgs) makeDesktopItem firefox-beta-bin;
-    in [
+    user.packages = with pkgs; [
       firefox-beta-bin
       (makeDesktopItem {
         name = "firefox-beta-private";
         desktopName = "Firefox Beta (Private)";
         genericName = "Launch a private Firefox Beta instance";
         icon = "firefox-beta";
-        exec = "${lib.getExe firefox-beta-bin} --private-window";
+        exec = "${getExe firefox-beta-bin} --private-window";
         categories = [ "Network" "WebBrowser" ];
       })
     ];
@@ -194,7 +183,7 @@ in {
         target = "${cfgPath}/${cfg.profileName}.default/user.js";
         text = ''
           ${concatStrings (mapAttrsToList (name: value: ''
-            user_pref("${name}", ${toJSON value});
+            user_pref("${name}", ${builtins.toJSON value});
           '') cfg.settings)}
           ${cfg.extraConfig}
         '';

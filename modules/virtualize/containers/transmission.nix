@@ -1,28 +1,20 @@
 { options, config, lib, pkgs, ... }:
 
-let
-  inherit (lib.modules) mkIf;
-  cfg = config.modules.virtualisation.containers.transmission;
-in {
-  options.modules.virtualisation.containers.transmission = let
-    inherit (lib.options) mkOption mkEnableOption;
-    inherit (lib.types) path str;
-  in {
+let cfg = config.modules.virtualisation.containers.transmission;
+in with lib; {
+  options.modules.virtualisation.containers.transmission = with types; {
     enable = mkEnableOption "BitTorrent client";
-
     username = mkOption {
       type = str;
       default = "alonzo";
       example = "username";
       description = "Transmission RPC User-Name";
     };
-
     password = mkOption {
       type = str;
       example = "password";
       description = "Transmission RPC User-Password";
     };
-
     download-dir = mkOption {
       type = path;
       default = "${config.user.home}/Downloads/Torrents";

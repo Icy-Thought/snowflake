@@ -1,7 +1,6 @@
 { config, lib, pkgs, modulesPath, ... }:
 
-let inherit (lib.modules) mkDefault;
-in {
+with lib; {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
   fileSystems."/" = {

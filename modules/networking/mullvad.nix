@@ -1,11 +1,9 @@
 { options, config, lib, pkgs, ... }:
 
-let
-  inherit (lib.modules) mkIf;
-  # inherit (lib.strings) concatStringsSep;
-in {
-  options.modules.networking.mullvad = let inherit (lib.options) mkEnableOption;
-  in { enable = mkEnableOption "enable Mullvad VPN client"; };
+with lib; {
+  options.modules.networking.mullvad = {
+    enable = mkEnableOption "enable Mullvad VPN client";
+  };
 
   config = mkIf config.modules.networking.mullvad.enable {
     networking = {

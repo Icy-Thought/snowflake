@@ -1,13 +1,7 @@
 { options, config, lib, pkgs, ... }:
 
-let
-  inherit (builtins) toString readFile;
-  inherit (lib.attrsets) attrValues;
-  inherit (lib.modules) mkDefault mkIf mkMerge;
-  inherit (lib.strings) concatMapStringsSep;
-
-  cfg = config.modules.themes;
-in {
+let cfg = config.modules.themes;
+in with lib; {
   config = mkIf (cfg.active == "kanagawa") (mkMerge [
     {
       modules.themes = {
@@ -25,11 +19,12 @@ in {
           package = pkgs.bibata-cursors;
         };
         fontConfig = {
-          packages = attrValues {
-            inherit (pkgs) noto-fonts-emoji sarasa-gothic;
-            inherit (pkgs.nerd-fonts) victor-mono;
-            google-fonts = pkgs.google-fonts.override { fonts = [ "Cardo" ]; };
-          };
+          packages = with pkgs; [
+            nerd-fonts.victor-mono
+            (google-fonts.override { fonts = [ "Cardo" ]; })
+            sarasa-gothic
+            noto-fonts-emoji
+          ];
           mono = [ "VictorMono Nerd Font" "Sarasa Mono SC" ];
           sans = [ "Sarasa Gothic SC" ];
           emoji = [ "Noto Color Emoji" ];
@@ -104,21 +99,22 @@ in {
     (mkIf config.modules.desktop.browsers.firefox.enable {
       modules.desktop.browsers.firefox.userChrome =
         let usrChromeDir = "${config.snowflake.configDir}/firefox/userChrome";
-        in concatMapStringsSep "\n" readFile [ "${usrChromeDir}/sidebery.css" ];
+        in concatMapStringsSep "\n" builtins.readFile
+        [ "${usrChromeDir}/sidebery.css" ];
     })
 
     (mkIf config.services.xserver.enable {
       hm.programs.rofi = {
         extraConfig = {
-          icon-theme = let inherit (cfg.iconTheme) name; in "${name}";
-          font = let inherit (cfg.font) mono sans;
-          in "${mono.family} Italic ${mono.weight} ${toString sans.size}";
+          icon-theme = "${cfg.iconTheme.name}";
+          font = with cfg.font;
+            "${mono.family} Italic ${mono.weight} ${
+              builtins.toString sans.size
+            }";
         };
 
-        theme = let
-          inherit (config.hm.lib.formats.rasi) mkLiteral;
-          inherit (cfg.colors.rofi) bg fg ribbon selected transparent urgent;
-        in {
+        theme = let inherit (config.hm.lib.formats.rasi) mkLiteral;
+        in with cfg.colors.rofi; {
           "*" = {
             fg = mkLiteral "${fg}";
             bg = mkLiteral "${bg.main}";
@@ -253,8 +249,7 @@ in {
         };
       };
 
-      hm.programs.sioyek.config = let inherit (cfg.font) mono sans;
-      in {
+      hm.programs.sioyek.config = with cfg.font; {
         "custom_background_color " = "0.10 0.11 0.15";
         "custom_text_color " = "0.75 0.79 0.96";
 
@@ -268,7 +263,7 @@ in {
         "page_separator_color" = "0.81 0.79 0.76";
         "status_bar_color" = "0.34 0.37 0.54";
 
-        "font_size" = "${toString sans.size}";
+        "font_size" = "${builtins.toString sans.size}";
         "ui_font" = "${mono.family} ${mono.weight}";
       };
     })

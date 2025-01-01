@@ -1,15 +1,10 @@
 { options, config, lib, pkgs, ... }:
 
-let
-  inherit (builtins) toString;
-  inherit (lib.meta) getExe;
-  inherit (lib.modules) mkIf mkMerge;
-
-  active = config.modules.themes.active;
-in {
-  options.modules.desktop.terminal.alacritty =
-    let inherit (lib.options) mkEnableOption;
-    in { enable = mkEnableOption "OpenGL terminal emulator"; };
+let activeTheme = config.modules.themes.active;
+in with lib; {
+  options.modules.desktop.terminal.alacritty = {
+    enable = mkEnableOption "OpenGL terminal emulator";
+  };
 
   config = mkIf config.modules.desktop.terminal.alacritty.enable {
     modules.shell.toolset.tmux.enable = true;
@@ -125,21 +120,18 @@ in {
           };
         }
 
-        (mkIf (active != null) {
-          general.import = [ "~/.config/alacritty/config/${active}.toml" ];
+        (mkIf (activeTheme != null) {
+          general.import = [ "~/.config/alacritty/config/${activeTheme}.toml" ];
         })
       ];
     };
 
-    create.configFile = mkIf (active != null) {
+    create.configFile = mkIf (activeTheme != null) {
       alacritty-conf = {
-        target = "alacritty/config/${active}.toml";
-        source = let
-          inherit (config.modules.themes.font) mono sans;
-          inherit (config.modules.themes.colors.main) bright normal types;
-          tomlFormat = pkgs.formats.toml { };
+        target = "alacritty/config/${activeTheme}.toml";
+        source = let tomlFormat = pkgs.formats.toml { };
         in tomlFormat.generate "alacritty-theme" {
-          font = {
+          font = with config.modules.themes.font; {
             builtin_box_drawing = true;
             size = mono.size;
 
@@ -173,7 +165,7 @@ in {
             };
           };
 
-          colors = {
+          colors = with config.modules.themes.colors.main; {
             primary = {
               foreground = "${types.fg}";
               background = "${types.bg}";
@@ -194,26 +186,26 @@ in {
               background = "${types.highlight}";
             };
 
-            normal = {
-              black = "${normal.black}";
-              red = "${normal.red}";
-              green = "${normal.green}";
-              yellow = "${normal.yellow}";
-              blue = "${normal.blue}";
-              magenta = "${normal.magenta}";
-              cyan = "${normal.cyan}";
-              white = "${normal.white}";
+            normal = with normal; {
+              black = "${black}";
+              red = "${red}";
+              green = "${green}";
+              yellow = "${yellow}";
+              blue = "${blue}";
+              magenta = "${magenta}";
+              cyan = "${cyan}";
+              white = "${white}";
             };
 
-            bright = {
-              black = "${bright.black}";
-              red = "${bright.red}";
-              green = "${bright.green}";
-              yellow = "${bright.yellow}";
-              blue = "${bright.blue}";
-              magenta = "${bright.magenta}";
-              cyan = "${bright.cyan}";
-              white = "${bright.white}";
+            bright = with bright; {
+              black = "${black}";
+              red = "${red}";
+              green = "${green}";
+              yellow = "${yellow}";
+              blue = "${blue}";
+              magenta = "${magenta}";
+              cyan = "${cyan}";
+              white = "${white}";
             };
           };
         };

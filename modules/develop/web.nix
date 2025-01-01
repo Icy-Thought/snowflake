@@ -1,19 +1,14 @@
 { options, config, lib, pkgs, ... }:
 
-let
-  inherit (lib.attrsets) attrValues;
-  inherit (lib.modules) mkIf mkMerge;
-  nodePkg = pkgs.nodejs_latest;
-in {
-  options.modules.develop.web = let inherit (lib.options) mkEnableOption;
-  in { enable = mkEnableOption "Web development"; };
+let nodePkg = pkgs.nodejs_latest;
+in with lib; {
+  options.modules.develop.web = { enable = mkEnableOption "Web development"; };
 
   config = mkIf config.modules.develop.web.enable (mkMerge [
     {
-      user.packages = attrValues {
-        inherit (pkgs) biome;
-        inherit (pkgs.nodePackages) yarn typescript typescript-language-server;
-      } ++ [ nodePkg ];
+      user.packages = with pkgs;
+        [ nodePkg biome ]
+        ++ (with nodePackages; [ yarn typescript typescript-language-server ]);
 
       environment.shellAliases = {
         n = ''PATH="$(${nodePkg}/bin/npm bin):$PATH"'';

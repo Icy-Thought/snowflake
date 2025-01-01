@@ -1,16 +1,13 @@
 { lib, pkgs ? import <nixpkgs> { }, }:
 
-let
-  inherit (lib.attrsets) attrValues;
-  inherit (lib.meta) getExe;
-in pkgs.mkShell {
-  buildInputs = attrValues { inherit (pkgs) git nix-bash-completions; };
+with lib;
+pkgs.mkShell {
+  buildInputs = with pkgs; [ git nix-bash-completions ];
 
   shellHook = let
-    inherit (pkgs) nixStable writeShellScriptBin;
-    nixBin = writeShellScriptBin "nix" ''
+    nixBin = pkgs.writeShellScriptBin "nix" ''
       ${
-        getExe nixStable
+        getExe pkgs.nixStable
       } --option experimental-features "nix-command flakes" "$@"
     '';
   in ''

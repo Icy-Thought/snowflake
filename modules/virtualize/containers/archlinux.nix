@@ -1,10 +1,9 @@
 { options, config, lib, pkgs, ... }:
 
-let inherit (lib.modules) mkIf;
-in {
-  options.modules.virtualisation.containers.archlinux =
-    let inherit (lib.options) mkEnableOption;
-    in { enable = mkEnableOption "arch-linux container"; };
+with lib; {
+  options.modules.virtualisation.containers.archlinux = {
+    enable = mkEnableOption "arch-linux container";
+  };
 
   config = mkIf config.modules.virtualisation.containers.archlinux.enable {
     virtualisation.libvirtd = {

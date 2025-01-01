@@ -1,15 +1,8 @@
 { options, config, lib, pkgs, ... }:
 
-let
-  inherit (lib.attrsets) attrValues;
-  inherit (lib.modules) mkIf mkMerge;
-
-  cfg = config.modules.desktop.extensions.input-method;
-in {
-  options.modules.desktop.extensions.input-method = let
-    inherit (lib.options) mkEnableOption mkOption;
-    inherit (lib.types) nullOr enum;
-  in {
+let cfg = config.modules.desktop.extensions.input-method;
+in with lib; {
+  options.modules.desktop.extensions.input-method = with types; {
     enable = mkEnableOption "Enable CJK input method";
     framework = mkOption {
       type = nullOr (enum [ "fcitx" "ibus" ]);
@@ -34,10 +27,11 @@ in {
       i18n.inputMethod = {
         enable = true;
         type = "fcitx5";
-        fcitx5.addons = attrValues {
-          inherit (pkgs) fcitx5-configtool fcitx5-chinese-addons;
-          inherit (pkgs.my) fcitx5-catppuccin;
-        };
+        fcitx5.addons = with pkgs; [
+          fcitx5-configtool
+          fcitx5-chinese-addons
+          my.fcitx5-catppuccin
+        ];
       };
     })
 
@@ -45,7 +39,7 @@ in {
       i18n.inputMethod = {
         enable = true;
         type = "ibus";
-        ibus.engines = attrValues { inherit (pkgs.ibus-engines) libpinyin; };
+        ibus.engines = [ pkgs.ibus-engines.libpinyin ];
       };
 
       hm.systemd.user.services.ibus-daemon = {
@@ -60,8 +54,8 @@ in {
           Restart = "on-failure";
 
           ExecStart = "${pkgs.ibus}/bin/ibus-daemon --replace --xim";
-          ExecReload = "${pkgs.ibus}/bin/ibus restart";
-          ExecStop = "${pkgs.ibus}/bin/ibus exit";
+          ExecReload = "${getExe pkgs.ibus} restart";
+          ExecStop = "${getExe pkgs.ibus} exit";
         };
         Install.WantedBy = [ "graphical-session.target" ];
       };

@@ -1,12 +1,9 @@
 { lib, pkgs, ... }:
 
-let
-  inherit (builtins) baseNameOf;
-  inherit (lib.strings) removeSuffix;
-in {
+{
   toCSSFile = file:
     let
-      fileName = removeSuffix ".scss" (baseNameOf file);
+      fileName = lib.removeSuffix ".scss" (builtins.baseNameOf file);
       compiledStyles =
         pkgs.runCommand "compileScssFile" { buildInputs = [ pkgs.sass ]; } ''
           mkdir "$out"

@@ -1,62 +1,48 @@
 { config, lib, pkgs, inputs, ... }:
 
-let
-  inherit (lib.attrsets) attrValues optionalAttrs;
-  inherit (lib.modules) mkIf mkMerge;
-  inherit (lib.strings) optionalString;
-  cfg = config.modules.desktop.editors.emacs;
-in {
-  options.modules.desktop.editors.emacs = let
-    inherit (lib.options) mkEnableOption mkOption;
-    inherit (lib.types) enum nullOr package;
-  in {
+let cfg = config.modules.desktop.editors.emacs;
+in with lib; {
+  options.modules.desktop.editors.emacs = {
     enable = mkEnableOption "Sprinkle a bit of magic to the nix-flake.";
     package = mkOption {
-      type = package;
-      default = if (config.modules.desktop.type == "wayland") then
-        pkgs.emacs30-pgtk
-      else
-        pkgs.emacs30-gtk3;
-      description = "Emacs version which will be installed.";
+      description = "Emacs version to be installed.";
+      type = types.package;
+      default = pkgs.emacs-gtk;
     };
     terminal = mkOption {
-      type = nullOr (enum [ "Eat" "VTerm" ]);
+      description = "Terminal emulator to be installed in Emacs.";
+      type = types.nullOr (types.enum [ "Eat" "VTerm" ]);
       default = "VTerm";
-      description = "Terminal emulator used within Emacs.";
     };
     template = mkOption {
-      type = nullOr (enum [ "doomemacs" "irkalla" ]);
-      default = "irkalla";
       description = "Which Emacs configuration to setup.";
+      type = types.nullOr (types.enum [ "doomemacs" "irkalla" ]);
+      default = "irkalla";
     };
   };
 
   config = mkIf cfg.enable (mkMerge [
     {
-      user.packages = attrValues ({
-        inherit (pkgs) binutils gnutls zstd;
-        inherit (pkgs.unstable) emacs-lsp-booster;
-        inherit (pkgs.my) my-cookies; # leetcode.el
-      } // optionalAttrs config.programs.gnupg.agent.enable {
-        inherit (pkgs) pinentry-emacs;
-      });
+      user.packages = with pkgs;
+        [ binutils gnutls zstd unstable.emacs-lsp-booster my.my-cookies ]
+        ++ optionals config.programs.gnupg.agent.enable [ pinentry-emacs ];
       environment.wordlist.enable = true; # cape-dict
 
       hm.programs.emacs = {
         enable = true;
         package = cfg.package;
         extraPackages = epkgs:
+          with epkgs;
           [
-            epkgs.mu4e
-            epkgs.melpaPackages.jinx
-            epkgs.melpaPackages.pdf-tools
-            epkgs.treesit-grammars.with-all-grammars
-            (epkgs.melpaPackages.telega.overrideAttrs (_: {
+            mu4e
+            melpaPackages.jinx
+            melpaPackages.pdf-tools
+            treesit-grammars.with-all-grammars
+            (melpaPackages.telega.overrideAttrs (_: {
               version = "0.8.290";
               src = pkgs.sources.telega;
             }))
-          ] ++ optionalAttrs (cfg.terminal == "VTerm")
-          [ epkgs.melpaPackages.vterm ];
+          ] ++ optionals (cfg.terminal == "VTerm") [ melpaPackages.vterm ];
       };
 
       hm.services.emacs = {
@@ -128,7 +114,7 @@ in {
           target = "emacs/init.org";
           source = "${configFile}";
           onChange = ''
-            ${lib.getExe cfg.package} -Q --batch \
+            ${getExe cfg.package} -Q --batch \
             -l ob-tangle "${configFile}" -f org-babel-tangle
           '';
         };

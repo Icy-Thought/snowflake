@@ -1,13 +1,12 @@
 { inputs, options, config, lib, pkgs, ... }:
 
 let
-  inherit (lib.attrsets) attrValues;
-  inherit (lib.modules) mkIf;
   hyprDir = "${config.snowflake.configDir}/hyprland";
   pyprland = inputs.pyprland.packages."x86_64-linux".pyprland;
-in {
-  options.modules.desktop.hyprland = let inherit (lib.options) mkEnableOption;
-  in { enable = mkEnableOption "hyped wayland WM"; };
+in with lib; {
+  options.modules.desktop.hyprland = {
+    enable = mkEnableOption "hyped wayland WM";
+  };
 
   config = mkIf config.modules.desktop.hyprland.enable {
     modules.desktop = {
@@ -33,9 +32,14 @@ in {
     };
     modules.hardware.kmonad.enable = true;
 
-    environment.systemPackages = attrValues {
-      inherit (pkgs) imv libnotify playerctl wf-recorder wlr-randr;
-    } ++ [ pyprland ];
+    environment.systemPackages = with pkgs; [
+      imv
+      libnotify
+      playerctl
+      wf-recorder
+      wlr-randr
+      pyprland
+    ];
 
     environment.sessionVariables = {
       ELECTRON_OZONE_PLATFORM_HINT = "auto";

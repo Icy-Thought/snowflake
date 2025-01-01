@@ -1,9 +1,9 @@
 { options, config, lib, pkgs, ... }:
 
-let inherit (lib.modules) mkIf;
-in {
-  options.modules.shell.bash = let inherit (lib.options) mkEnableOption;
-  in { enable = mkEnableOption "bash shell" // { default = true; }; };
+with lib; {
+  options.modules.shell.bash = {
+    enable = mkEnableOption "bash shell" // { default = true; };
+  };
 
   config = mkIf config.modules.shell.bash.enable {
     # Enable starship-rs + ZSH integration

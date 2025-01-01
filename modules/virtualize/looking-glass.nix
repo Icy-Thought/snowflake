@@ -1,13 +1,9 @@
 { options, config, lib, pkgs, ... }:
 
-let inherit (lib.modules) mkIf;
-in {
-  options.modules.virtualisation.looking-glass =
-    let inherit (lib.options) mkEnableOption;
-    in {
-      enable =
-        mkEnableOption "KVM(s) VGA PCI Pass-through without peripherals.";
-    };
+with lib; {
+  options.modules.virtualisation.looking-glass = {
+    enable = mkEnableOption "KVM(s) VGA PCI Pass-through without peripherals.";
+  };
 
   config = mkIf config.modules.virtualisation.looking-glass.enable {
 

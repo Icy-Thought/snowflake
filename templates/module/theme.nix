@@ -1,12 +1,7 @@
 { options, config, lib, pkgs, ... }:
 
-let
-  inherit (builtins) toString;
-  inherit (lib.attrsets) attrValues;
-  inherit (lib.modules) mkDefault mkIf mkMerge;
-
-  cfg = config.modules.themes;
-in {
+let cfg = config.modules.themes;
+in with lib; {
   config = mkIf (cfg.active == "tokyonight") (mkMerge [
     {
       modules.themes = {
@@ -30,11 +25,12 @@ in {
         };
 
         fontConfig = {
-          packages = attrValues {
-            inherit (pkgs) noto-fonts-emoji sarasa-gothic;
-            inherit (pkgs.nerd-fonts) victor-mono caskaydia-mono;
-            google-fonts = pkgs.google-fonts.override { fonts = [ "Cardo" ]; };
-          };
+          packages = with pkgs; [
+            nerd-fonts.victor-mono
+            (google-fonts.override { fonts = [ "Cardo" ]; })
+            sarasa-gothic
+            noto-fonts-emoji
+          ];
           mono = [ "VictorMono Nerd Font" "Sarasa Mono SC" ];
           sans = [ "Sarasa Gothic SC" ];
           emoji = [ "Noto Color Emoji" ];
@@ -113,24 +109,15 @@ in {
     # })
 
     (mkIf config.services.xserver.enable {
-      fonts.packages = attrValues {
-        inherit (pkgs) noto-fonts-emoji;
-        font = cfg.font.package;
-      };
-
       hm.programs.rofi = {
-        extraConfig = let
-          inherit (cfg.iconTheme) name;
-          inherit (cfg.font.sans) family weight size;
-        in {
-          icon-theme = "${name}";
-          font = "${family} ${weight} ${toString size}";
+        extraConfig = {
+          icon-theme = "${cfg.iconTheme.name}";
+          font = with cfg.font.sans;
+            "${family} ${weight} ${builtins.toString size}";
         };
 
-        theme = let
-          inherit (config.hm.lib.formats.rasi) mkLiteral;
-          inherit (cfg.colors.rofi) bg fg ribbon selected urgent transparent;
-        in {
+        theme = let inherit (config.hm.lib.formats.rasi) mkLiteral;
+        in with cfg.colors.rofi; {
           "*" = {
             fg = mkLiteral "${fg}";
             bg = mkLiteral "${bg.main}";
@@ -265,25 +252,23 @@ in {
         };
       };
 
-      hm.programs.sioyek.config =
-        let inherit (cfg.font.mono) family weight size;
-        in {
-          "custom_background_color " = "0.10 0.11 0.15";
-          "custom_text_color " = "0.75 0.79 0.96";
+      hm.programs.sioyek.config = with cfg.font.mono; {
+        "custom_background_color " = "0.10 0.11 0.15";
+        "custom_text_color " = "0.75 0.79 0.96";
 
-          "text_highlight_color" = "0.24 0.35 0.63";
-          "visual_mark_color" = "1.00 0.62 0.39 1.0";
-          "search_highlight_color" = "0.97 0.46 0.56";
-          "link_highlight_color" = "0.48 0.64 0.97";
-          "synctex_highlight_color" = "0.62 0.81 0.42";
+        "text_highlight_color" = "0.24 0.35 0.63";
+        "visual_mark_color" = "1.00 0.62 0.39 1.0";
+        "search_highlight_color" = "0.97 0.46 0.56";
+        "link_highlight_color" = "0.48 0.64 0.97";
+        "synctex_highlight_color" = "0.62 0.81 0.42";
 
-          "page_separator_width" = "2";
-          "page_separator_color" = "0.81 0.79 0.76";
-          "status_bar_color" = "0.34 0.37 0.54";
+        "page_separator_width" = "2";
+        "page_separator_color" = "0.81 0.79 0.76";
+        "status_bar_color" = "0.34 0.37 0.54";
 
-          "font_size" = "${toString size}";
-          "ui_font" = "${family} ${weight}";
-        };
+        "font_size" = "${builtins.toString size}";
+        "ui_font" = "${family} ${weight}";
+      };
     })
   ]);
 }

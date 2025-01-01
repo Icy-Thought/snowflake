@@ -1,11 +1,7 @@
 { options, config, lib, pkgs, ... }:
 
-let
-  inherit (builtins) getEnv;
-  inherit (lib.modules) mkIf mkMerge;
-in {
-  options.modules.networking.samba = let inherit (lib.options) mkEnableOption;
-  in {
+with lib; {
+  options.modules.networking.samba = {
     sharing.enable =
       mkEnableOption "Samba: enable NixOS -> external file-transfer";
     receiving.enable =
@@ -60,7 +56,7 @@ in {
         # :NOTE| set sudo smbpasswd -a samba-guest -n
         shares = {
           Public = {
-            path = (getEnv "HOME") + "/Public";
+            path = (builtins.getEnv "HOME") + "/Public";
             browseable = "yes";
             "read only" = "yes";
             "guest ok" = "yes";

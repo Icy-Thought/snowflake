@@ -1,21 +1,17 @@
 { options, config, lib, pkgs, ... }:
 
 let
-  inherit (builtins) toString;
-  inherit (lib.modules) mkIf mkMerge;
-  inherit (lib.strings) optionalString;
-in {
-  options.modules.desktop.terminal.wezterm =
-    let inherit (lib.options) mkEnableOption;
-    in { enable = mkEnableOption "GPU-accelerated terminal emulator"; };
+  activeTheme = config.modules.themes.active;
+  wezDir = "${config.snowflake.configDir}/wezterm";
+in with lib; {
+  options.modules.desktop.terminal.wezterm = {
+    enable = mkEnableOption "GPU-accelerated terminal emulator";
+  };
 
   config = mkIf config.modules.desktop.terminal.wezterm.enable {
     user.packages = [ pkgs.wezterm ];
 
-    create.configFile = let
-      inherit (config.modules.themes) active;
-      wezDir = "${config.snowflake.configDir}/wezterm";
-    in mkMerge [
+    create.configFile = mkMerge [
       {
         wezterm-utils = {
           target = "wezterm/utils.lua";
@@ -32,8 +28,8 @@ in {
             local mouse = require("modules.mouse")
             local hyperlinks = require("modules.hyperlinks")
 
-            ${optionalString (active != null) ''
-              require("statusbar.${active}")
+            ${optionalString (activeTheme != null) ''
+              require("statusbar.${activeTheme}")
 
               local colorscheme = require("theme.colorscheme")
               local font = require("theme.font")
@@ -71,13 +67,13 @@ in {
         };
       }
 
-      (mkIf (active != null) {
+      (mkIf (activeTheme != null) {
         wezterm-rice = {
           target = "wezterm/theme/colorscheme.lua";
           text = ''
             local M = {}
 
-            local active_palette = require("theme.${active}")
+            local active_palette = require("theme.${activeTheme}")
 
             M.colors = active_palette
 
@@ -87,10 +83,7 @@ in {
 
         wezterm-font = {
           target = "wezterm/theme/font.lua";
-          text = let
-            inherit (config.modules.themes.font.mono) family size weightAlt;
-            inherit (config.modules.themes.colors.main) types normal;
-          in ''
+          text = with config.modules.themes.font.mono; ''
             local wez = require("wezterm")
 
             local M = {}
@@ -103,20 +96,17 @@ in {
               "Unicode",
             })
 
-            M.font_size = ${toString size}
-            M.char_select_font_size = ${toString size}
+            M.font_size = ${builtins.toString size}
+            M.char_select_font_size = ${builtins.toString size}
 
             M.window_frame = {
-              active_titlebar_bg = "${types.bg}",
-              inactive_titlebar_bg = "${normal.black}",
-
               font = wez.font({
                   family = "${family}",
                   weight = "${weightAlt}",
                   style = "Italic",
               }),
 
-              font_size= ${toString size},
+              font_size= ${builtins.toString size},
             }
 
             return M
@@ -124,79 +114,77 @@ in {
         };
 
         wezterm-statusbar = {
-          target = "wezterm/statusbar/${active}.lua";
-          source = "${wezDir}/statusbar/${active}.lua";
+          target = "wezterm/statusbar/${activeTheme}.lua";
+          source = "${wezDir}/statusbar/${activeTheme}.lua";
         };
 
         wezterm-theme = {
-          target = "wezterm/theme/${active}.lua";
-          text =
-            let inherit (config.modules.themes.colors.main) bright normal types;
-            in ''
-              return {
-                  foreground      = "${types.fg}",
-                  background      = "${types.bg}",
+          target = "wezterm/theme/${activeTheme}.lua";
+          text = with config.modules.themes.colors.main; ''
+            return {
+                foreground      = "${types.fg}",
+                background      = "${types.bg}",
 
-                  cursor_fg       = "${types.bg}",
-                  cursor_bg       = "${normal.yellow}",
-                  cursor_border   = "${normal.yellow}",
+                cursor_fg       = "${types.bg}",
+                cursor_bg       = "${normal.yellow}",
+                cursor_border   = "${normal.yellow}",
 
-                  selection_fg    = "${types.bg}",
-                  selection_bg    = "${types.highlight}",
+                selection_fg    = "${types.bg}",
+                selection_bg    = "${types.highlight}",
 
-                  scrollbar_thumb = "${normal.magenta}",
-                  split = "${normal.green}",
+                scrollbar_thumb = "${normal.magenta}",
+                split = "${normal.green}",
 
-                  tab_bar = {
-                      background = "${types.bg}",
-                      active_tab = {
-                          bg_color  = "${types.bg}",
-                          fg_color  = "${normal.magenta}",
-                          intensity = "Normal",
-                          italic    = true,
-                      },
-                      inactive_tab = {
-                          bg_color = "${types.bg}",
-                          fg_color = "${types.fg}",
-                      },
-                      inactive_tab_edge = "${normal.black}",
-                      inactive_tab_hover = {
-                          bg_color  = "${types.bg}",
-                          fg_color  = "${normal.yellow}",
-                          underline = "Single",
-                      },
-                      new_tab = {
-                          bg_color = "${types.bg}",
-                          fg_color = "${normal.green}",
-                      },
-                      new_tab_hover = {
-                          bg_color = "${types.bg}",
-                          fg_color = "${normal.yellow}",
-                          italic   = true,
-                      },
-                  },
-                  ansi = {
-                      "${normal.black}",
-                      "${normal.red}",
-                      "${normal.green}",
-                      "${normal.yellow}",
-                      "${normal.blue}",
-                      "${normal.magenta}",
-                      "${normal.cyan}",
-                      "${normal.white}",
-                  },
-                  brights = {
-                      "${bright.black}",
-                      "${bright.red}",
-                      "${bright.green}",
-                      "${bright.yellow}",
-                      "${bright.blue}",
-                      "${bright.magenta}",
-                      "${bright.cyan}",
-                      "${bright.white}",
-                  },
-              }
-            '';
+                tab_bar = {
+                    background = "${types.bg}",
+                    active_tab = {
+                        bg_color  = "${types.bg}",
+                        fg_color  = "${normal.magenta}",
+                        intensity = "Normal",
+                        italic    = true,
+                    },
+                    inactive_tab = {
+                        bg_color = "${types.bg}",
+                        fg_color = "${types.fg}",
+                    },
+                    inactive_tab_edge = "${normal.black}",
+                    inactive_tab_hover = {
+                        bg_color  = "${types.bg}",
+                        fg_color  = "${normal.yellow}",
+                        underline = "Single",
+                    },
+                    new_tab = {
+                        bg_color = "${types.bg}",
+                        fg_color = "${normal.green}",
+                    },
+                    new_tab_hover = {
+                        bg_color = "${types.bg}",
+                        fg_color = "${normal.yellow}",
+                        italic   = true,
+                    },
+                },
+                ansi = {
+                    "${normal.black}",
+                    "${normal.red}",
+                    "${normal.green}",
+                    "${normal.yellow}",
+                    "${normal.blue}",
+                    "${normal.magenta}",
+                    "${normal.cyan}",
+                    "${normal.white}",
+                },
+                brights = {
+                    "${bright.black}",
+                    "${bright.red}",
+                    "${bright.green}",
+                    "${bright.yellow}",
+                    "${bright.blue}",
+                    "${bright.magenta}",
+                    "${bright.cyan}",
+                    "${bright.white}",
+                },
+            }
+          '';
         };
       })
     ];

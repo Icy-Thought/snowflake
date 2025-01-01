@@ -1,19 +1,15 @@
 { options, config, lib, pkgs, ... }:
 
-let
-  inherit (lib.attrsets) attrValues optionalAttrs;
-  inherit (lib.modules) mkIf mkMerge;
-  cfg = config.modules.develop.lua;
-in {
-  options.modules.develop.lua = let inherit (lib.options) mkEnableOption;
-  in {
+let cfg = config.modules.develop.lua;
+in with lib; {
+  options.modules.develop.lua = {
     enable = mkEnableOption "Lua development";
     fennel.enable = mkEnableOption "Lisp-based Lua development";
   };
 
-  config = mkIf cfg.enable (mkMerge [{
-    user.packages = attrValues ({
-      inherit (pkgs) lua lua-language-server stylua;
-    } // optionalAttrs (cfg.fennel.enable) { inherit (pkgs) fennel fnlfmt; });
-  }]);
+  config = mkIf cfg.enable {
+    user.packages = with pkgs;
+      [ lua lua-language-server stylua ]
+      ++ optionals (cfg.fennel.enable) [ fennel fnlfmt ];
+  };
 }

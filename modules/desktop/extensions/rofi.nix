@@ -1,21 +1,15 @@
 { options, config, lib, pkgs, ... }:
 
 let
-  inherit (lib.modules) mkIf;
-  inherit (lib.strings) concatStringsSep;
-
   cfg = config.modules.desktop.extensions.rofi;
   desktop = config.modules.desktop;
-in {
-  options.modules.desktop.extensions.rofi =
-    let inherit (lib.options) mkEnableOption mkPackageOption;
-    in {
-      enable = mkEnableOption "window switcher and app-launcher";
-      package = mkPackageOption pkgs "rofi" {
-        default =
-          if (desktop.type == "wayland") then "rofi-wayland" else "rofi";
-      };
+in with lib; {
+  options.modules.desktop.extensions.rofi = {
+    enable = mkEnableOption "window switcher and app-launcher";
+    package = mkPackageOption pkgs "rofi" {
+      default = if (desktop.type == "wayland") then "rofi-wayland" else "rofi";
     };
+  };
 
   # :TODO| re-create theming -> general + changable banner (drun, run, systemd and power-menu)
 
