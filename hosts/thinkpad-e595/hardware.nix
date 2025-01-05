@@ -54,6 +54,7 @@ with lib; {
 
   # Finally, our beloved hardware module(s):
   modules.hardware = {
+    plymouth.enable = true;
     pipewire.enable = true;
     bluetooth.enable = true;
     kmonad.deviceID = "/dev/input/by-path/platform-i8042-serio-0-event-kbd";
