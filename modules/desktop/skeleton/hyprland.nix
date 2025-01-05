@@ -59,7 +59,6 @@ in with lib; {
         "${hyprDir}/keymaps.conf"
       ];
     };
-    services.greetd.settings.initial_session.command = "Hyprland";
 
     hm.systemd.user.services.pyprland = {
       Unit = {

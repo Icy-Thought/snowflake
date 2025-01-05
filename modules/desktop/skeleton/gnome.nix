@@ -15,7 +15,6 @@ with lib; {
     };
 
     services.xserver.desktopManager.gnome.enable = true;
-    services.greetd.settings.initial_session.command = "gnome-session";
 
     services.gnome = {
       gnome-keyring.enable = true;

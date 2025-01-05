@@ -19,7 +19,6 @@ with lib; {
         enable = true;
         enableQt5Integration = false;
       };
-      services.greetd.settings.initial_session.command = "plasmawayland";
 
       environment.plasma6.excludePackages = with pkgs.kdePackages; [
         konsole

@@ -41,8 +41,6 @@ in with lib; {
       size = my.mkOpt int 24;
     };
 
-    onReload = my.mkOpt (attrsOf lines) { };
-
     fontConfig = {
       packages = my.mkOpt (listOf package) [ ];
       mono = my.mkOpt (listOf str) [ "" ];
@@ -132,8 +130,28 @@ in with lib; {
 
   config = mkIf (cfg.active != null) (mkMerge [
     {
-      # Allow HM to control GTK Theme:
-      programs.dconf.enable = true;
+      programs.regreet = {
+        theme = with cfg.gtk; {
+          name = "${name}";
+          package = "${package}";
+        };
+        iconTheme = with cfg.iconTheme; {
+          name = "${name}";
+          package = "${package}";
+        };
+        cursorTheme = with cfg.pointer; {
+          name = "${name}";
+          package = "${package}";
+        };
+        font = with cfg.font.mono; {
+          name = "${family}";
+          size = size;
+        };
+        settings.background = mkIf (cfg.loginWallpaper != null) {
+          path = cfg.loginWallpaper;
+          fit = "Cover";
+        };
+      };
 
       hm.gtk = {
         enable = true;
@@ -163,6 +181,7 @@ in with lib; {
           gtk-recent-files-limit = 20;
         };
       };
+      programs.dconf.enable = true; # HM -> control GTK Theme
 
       home.pointerCursor = with cfg.pointer; {
         name = name;
@@ -180,36 +199,12 @@ in with lib; {
         };
       };
 
-      create.dataFile =
-        mkIf (cfg.wallpaper != null) { "wallpaper".source = cfg.wallpaper; };
+      create.file = mkIf (cfg.wallpaper != null) {
+        ".background-image".source = cfg.wallpaper;
+      };
     }
 
     (mkIf (desktop.type == "wayland") (mkMerge [
-      {
-        programs.regreet = {
-          theme = with cfg.gtk; {
-            name = "${gtk.name}";
-            package = "${gtk.package}";
-          };
-          iconTheme = with cfg.iconTheme; {
-            name = "${iconTheme.name}";
-            package = "${iconTheme.package}";
-          };
-          cursorTheme = with cfg.pointer; {
-            name = "${pointer.name}";
-            package = "${pointer.package}";
-          };
-          font = with cfg.font; {
-            name = "${font.mono.family}";
-            size = font.mono.size;
-          };
-          settings.background = mkIf (cfg.loginWallpaper != null) {
-            path = cfg.loginWallpaper;
-            fit = "Cover";
-          };
-        };
-      }
-
       (mkIf (cfg.wallpaper != null) {
         hm.services.hyprpaper = {
           enable = true;
@@ -265,52 +260,13 @@ in with lib; {
         };
       }
 
-      # Apply theme options -> lightdm-mini-greeter
-      (mkIf (cfg.loginWallpaper != null) {
-        services.xserver.displayManager.lightdm = {
-          greeters.mini.extraConfig = with cfg.colors.main; ''
-            background-image = "${cfg.loginWallpaper}"
-            background-image-size = "100% 100%"
-
-            text-color = "${types.bg}"
-            password-background-color = "${normal.black}"
-            window-color = "${types.border}"
-            border-color = "${types.border}"
-          '';
+      # :NOTE| Auto-set wallpaper to prevent $HOME pollution!
+      (mkIf (cfg.wallpaper != null) {
+        services.xserver.desktopManager.wallpaper = {
+          mode = "fill";
+          combineScreens = false;
         };
       })
-
-      # Auto-set wallpaper to prevent $HOME pollution!
-      (mkIf (cfg.wallpaper != null) (let
-        wCfg = config.services.xserver.desktopManager.wallpaper;
-        command = ''
-          if [ -e "$XDG_DATA_HOME/wallpaper" ]; then
-            ${getExe pkgs.feh} --bg-${wCfg.mode} \
-            ${optionalString wCfg.combineScreens "--no-xinerama"} \
-            --no-fehbg \
-            $XDG_DATA_HOME/wallpaper
-          fi
-        '';
-      in {
-        modules.themes.onReload.wallpaper = command;
-        services.xserver.displayManager.sessionCommands = command;
-      }))
-
-      (mkIf (cfg.onReload != { }) (let
-        reloadTheme = (pkgs.writeScriptBin "reloadTheme" ''
-          #!${pkgs.stdenv.shell}
-          echo "Reloading current theme: ${cfg.active}"
-          ${concatStringsSep "\n" (mapAttrsToList (name: script: ''
-            echo "[${name}]"
-            ${script}
-          '') cfg.onReload)}
-        '');
-      in {
-        user.packages = [ reloadTheme ];
-        system.userActivationScripts.reloadTheme = ''
-          [ -z "$NORELOAD" ] && ${reloadTheme}/bin/reloadTheme
-        '';
-      }))
     ]))
   ]);
 }

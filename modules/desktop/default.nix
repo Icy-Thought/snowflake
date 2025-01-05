@@ -12,7 +12,8 @@ in with lib; {
         isEnabled = _: v: v.enable or false;
         hasDesktopEnabled = cfg:
           (my.anyAttrs isEnabled cfg)
-          || !(my.anyAttrs (_: v: builtins.isAttrs v && my.anyAttrs isEnabled v) cfg);
+          || !(my.anyAttrs (_: v: builtins.isAttrs v && my.anyAttrs isEnabled v)
+            cfg);
       in [
         {
           assertion = (my.countAttrs (_: v: v.enable or false) cfg) < 2;
@@ -68,7 +69,23 @@ in with lib; {
         extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
         config.common.default = "*";
       };
-      security.pam.services.login.enableGnomeKeyring = true;
+
+      programs.regreet = {
+        enable = true;
+        settings = {
+          env.SESSION_DIRS = let
+            sessionHome =
+              "${config.services.displayManager.sessionData.desktops}/share";
+          in concatStringsSep ":" [
+            "${sessionHome}/xsessions"
+            "${sessionHome}/wayland-sessions"
+          ];
+          terminal.vt = 7;
+          commands.x11_prefix = [ "startx" "/usr/bin/env" ">/dev/null 2>&1" ];
+        };
+      };
+
+      security.pam.services.greetd.enableGnomeKeyring = true;
 
       fonts = {
         fontDir.enable = true;
@@ -83,34 +100,13 @@ in with lib; {
       };
     })
 
-    (mkIf (cfg.type == "wayland") {
-      xdg.portal.wlr.enable = true;
-
-      programs.regreet = {
-        enable = true;
-        settings.env.SESSION_DIRS =
-          let desktops = config.services.displayManager.sessionData.desktops;
-          in builtins.concatStringsSep ":" [
-            "${desktops}/share/xsessions"
-            "${desktops}/share/wayland-sessions"
-          ];
-      };
-      services.greetd.settings.initial_session.user = "greeter";
-    })
+    (mkIf (cfg.type == "wayland") { xdg.portal.wlr.enable = true; })
 
     (mkIf (cfg.type == "x11") {
       services.xserver.displayManager = {
-        lightdm = {
-          enable = true;
-          greeters.mini = {
-            enable = true;
-            user = config.user.name;
-          };
-        };
-        sessionCommands = ''
-          ${getExe pkgs.xorg.xset} -dpms
-          ${getExe pkgs.xorg.xset} s off
-        '';
+        startx.enable = true;
+        sessionCommands =
+          map (cmd: "${getExe pkgs.xorg.xset} ${cmd}") [ "-dpms" "s off" ];
       };
 
       hm.xsession = {

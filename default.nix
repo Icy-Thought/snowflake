@@ -5,6 +5,7 @@ with lib; {
     inputs.home-manager.nixosModules.home-manager
     (mkAliasOptionModule [ "hm" ] [ "home-manager" "users" config.user.name ])
     (mkAliasOptionModule [ "home" ] [ "hm" "home" ])
+    (mkAliasOptionModule [ "create" "file" ] [ "hm" "home" "file" ])
     (mkAliasOptionModule [ "create" "configFile" ] [ "hm" "xdg" "configFile" ])
     (mkAliasOptionModule [ "create" "dataFile" ] [ "hm" "xdg" "dataFile" ])
   ] ++ (my.mapModulesRec' (builtins.toString ./modules) import);

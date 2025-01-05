@@ -49,8 +49,6 @@ in with lib; {
     }
 
     (mkIf (cfg.backend == "wayland") {
-      services.greetd.settings.initial_session.command = "none+qtile";
-
       environment.sessionVariables = {
         ELECTRON_OZONE_PLATFORM_HINT = "auto";
         NIXOS_OZONE_WL = "1";

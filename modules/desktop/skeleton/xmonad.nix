@@ -47,12 +47,14 @@ with lib; {
 
     services.xserver.displayManager.session = [{
       manage = "window";
-      name = "xmonad";
+      name = "none+xmonad";
+      bgsupport = true;
       start = ''
-        systemd-cat -t xmonad -- ${getExe pkgs.haskellPackages.birostrisWM} &
+        ${pkgs.runtimeShell} $HOME/.xsession ${
+          getExe pkgs.haskellPackages.birostrisWM
+        } &
         waitPID=$!
       '';
     }];
-    services.displayManager.defaultSession = "none+xmonad";
   };
 }

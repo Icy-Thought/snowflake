@@ -19,7 +19,7 @@ in with lib; {
     (mkIf cfg.corePkgs.enable {
       modules.shell.toolset = {
         lsd.enable = true;
-        btop.enable = true;
+        # btop.enable = true;
         fzf.enable = true;
         gnupg.enable = true;
       };
