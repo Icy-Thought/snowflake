@@ -5,7 +5,7 @@ with lib; {
     enable = mkEnableOption "Next-gen ls command";
   };
 
-  config = mkIf config.modules.shell.toolset.btop.enable {
+  config = mkIf config.modules.shell.toolset.lsd.enable {
     hm.programs.lsd = {
       enable = true;
       enableAliases = false;

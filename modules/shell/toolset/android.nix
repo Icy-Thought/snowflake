@@ -10,6 +10,6 @@ with lib; {
 
     # Android Debug Bridge
     programs.adb.enable = true;
-    user.extraGroups = [ "adbusers" ];
+    user.extraGroups = [ "plugdev" ];
   };
 }

@@ -17,7 +17,7 @@ with lib; {
       };
     };
 
-    user.extraGroups = [ "plugdev" "openrazer" ];
+    user.extraGroups = [ "openrazer" ];
 
     # GUI for managing your openrazer devices
     user.packages = [ pkgs.polychromatic ];
