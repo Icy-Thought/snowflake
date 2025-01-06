@@ -80,7 +80,6 @@ in with lib; {
             "${sessionHome}/xsessions"
             "${sessionHome}/wayland-sessions"
           ];
-          terminal.vt = 7;
           commands.x11_prefix = [ "startx" "/usr/bin/env" ">/dev/null 2>&1" ];
         };
       };

@@ -50,9 +50,9 @@ with lib; {
       name = "none+xmonad";
       bgsupport = true;
       start = ''
-        ${pkgs.runtimeShell} $HOME/.xsession ${
+        systemd-cat -t xmonad -- ${pkgs.runtimeShell} $HOME/.xsession ${
           getExe pkgs.haskellPackages.birostrisWM
-        } &
+        } > /dev/null 2>&1 &
         waitPID=$!
       '';
     }];
