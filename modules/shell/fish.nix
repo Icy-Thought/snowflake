@@ -51,57 +51,56 @@ in with lib; {
       in builtins.map (p: mkPlugin p) [ "done" "autopair-fish" ];
     };
 
-    create.configFile = with config.modules.themes.colors.main;
-      (mkIf (activeTheme != null) {
-        fish-theme = {
-          target = "fish/conf.d/${activeTheme}.fish";
-          text = let fishColor = hexColor: removePrefix "#" hexColor;
-          in ''
-            # --> General
-            set -l foreground ${fishColor types.fg}
-            set -l highlight  ${fishColor types.highlight}
+    create.configFile = mkIf (activeTheme != null) {
+      fish-theme = {
+        target = "fish/conf.d/${activeTheme}.fish";
+        text = let fishColor = hexColor: removePrefix "#" hexColor;
+        in with config.modules.themes.colors.main; ''
+          # --> General
+          set -l foreground ${fishColor types.fg}
+          set -l highlight  ${fishColor types.highlight}
 
-            # --> palette
-            set -l base01     ${fishColor normal.blue}
-            set -l base02     ${fishColor types.border}
-            set -l base03     ${fishColor bright.blue}
-            set -l base04     ${fishColor bright.green}
-            set -l base05     ${fishColor bright.red}
-            set -l base06     ${fishColor types.panelbg}
-            set -l base07     ${fishColor normal.yellow}
-            set -l base08     ${fishColor normal.magenta}
-            set -l base09     ${fishColor normal.cyan}
-            set -l base10     ${fishColor bright.black}
+          # --> palette
+          set -l base01     ${fishColor normal.blue}
+          set -l base02     ${fishColor types.border}
+          set -l base03     ${fishColor bright.blue}
+          set -l base04     ${fishColor bright.green}
+          set -l base05     ${fishColor bright.red}
+          set -l base06     ${fishColor types.panelbg}
+          set -l base07     ${fishColor normal.yellow}
+          set -l base08     ${fishColor normal.magenta}
+          set -l base09     ${fishColor normal.cyan}
+          set -l base10     ${fishColor bright.black}
 
-            # Syntax Highlighting
-            set -g fish_color_normal                     $foreground
-            set -g fish_color_command                    $base09
-            set -g fish_color_param                      $base02
-            set -g fish_color_keyword                    $base08
-            set -g fish_color_quote                      $base07
-            set -g fish_color_redirection                $foreground
-            set -g fish_color_end                        $base06
-            set -g fish_color_error                      $base05
-            set -g fish_color_gray                       $base10
-            set -g fish_color_selection     --background=$highlight
-            set -g fish_color_search_match  --background=$highlight
-            set -g fish_color_operator                   $base04
-            set -g fish_color_escape                     $base08
-            set -g fish_color_autosuggestion             $base10
-            set -g fish_color_cancel                     $base05
+          # Syntax Highlighting
+          set -g fish_color_normal                     $foreground
+          set -g fish_color_command                    $base09
+          set -g fish_color_param                      $base02
+          set -g fish_color_keyword                    $base08
+          set -g fish_color_quote                      $base07
+          set -g fish_color_redirection                $foreground
+          set -g fish_color_end                        $base06
+          set -g fish_color_error                      $base05
+          set -g fish_color_gray                       $base10
+          set -g fish_color_selection     --background=$highlight
+          set -g fish_color_search_match  --background=$highlight
+          set -g fish_color_operator                   $base04
+          set -g fish_color_escape                     $base08
+          set -g fish_color_autosuggestion             $base10
+          set -g fish_color_cancel                     $base05
 
-            # Prompt
-            set -g fish_color_cwd                        $base08
-            set -g fish_color_user                       $base01
-            set -g fish_color_host                       $base09
+          # Prompt
+          set -g fish_color_cwd                        $base08
+          set -g fish_color_user                       $base01
+          set -g fish_color_host                       $base09
 
-            # Completion Pager
-            set -g fish_pager_color_progress             $base10
-            set -g fish_pager_color_prefix               $base07
-            set -g fish_pager_color_completion           $foreground
-            set -g fish_pager_color_description          $base10
-          '';
-        };
-      });
+          # Completion Pager
+          set -g fish_pager_color_progress             $base10
+          set -g fish_pager_color_prefix               $base07
+          set -g fish_pager_color_completion           $foreground
+          set -g fish_pager_color_description          $base10
+        '';
+      };
+    };
   };
 }

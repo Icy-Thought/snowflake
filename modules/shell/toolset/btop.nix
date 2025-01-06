@@ -1,6 +1,6 @@
 { options, config, lib, pkgs, ... }:
 
-let activeTheme = config.modules.themes;
+let activeTheme = config.modules.themes.active;
 in with lib; {
   options.modules.shell.toolset.btop = {
     enable = mkEnableOption "system-monitor";
