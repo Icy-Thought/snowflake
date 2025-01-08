@@ -27,26 +27,26 @@
   };
   pantalaimon = {
     pname = "pantalaimon";
-    version = "78129e40d1c89fc4fd41c84baa2a33b139e2b392";
+    version = "a15f3e49c3672741f16ded2eccab55297ccd43c4";
     src = fetchFromGitHub {
       owner = "matrix-org";
       repo = "pantalaimon";
-      rev = "78129e40d1c89fc4fd41c84baa2a33b139e2b392";
+      rev = "a15f3e49c3672741f16ded2eccab55297ccd43c4";
       fetchSubmodules = false;
-      sha256 = "sha256-9Gt/91J8hiRBVC79GKRBo1qP0CXMJFCkFy7cqEm4AhM=";
+      sha256 = "sha256-wQFK0o8W1K0QaKz3fqPn3YC2Fg6/+gNXh2AMepbhQm8=";
     };
-    date = "2024-10-29";
+    date = "2024-11-01";
   };
   telega = {
     pname = "telega";
-    version = "aa891d2a5a6cba18ab79b42d396795f7b61f2e9f";
+    version = "3836cff15393fe1dc1addb4fe46b11878dab4891";
     src = fetchFromGitHub {
       owner = "zevlg";
       repo = "telega.el";
-      rev = "aa891d2a5a6cba18ab79b42d396795f7b61f2e9f";
+      rev = "3836cff15393fe1dc1addb4fe46b11878dab4891";
       fetchSubmodules = false;
-      sha256 = "sha256-V4oqnCTFYynz5h3rlWzx2MfHhEBox4am0zLvRYRWKhM=";
+      sha256 = "sha256-50giikYe+YvC74BOy2sW+0EMkycllPHNOmvNbJiGw5E=";
     };
-    date = "2024-09-11";
+    date = "2024-12-20";
   };
 }

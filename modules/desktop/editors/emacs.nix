@@ -7,7 +7,10 @@ in with lib; {
     package = mkOption {
       description = "Emacs version to be installed.";
       type = types.package;
-      default = pkgs.emacs-gtk;
+      default = if (config.modules.desktop.type == "wayland") then
+        pkgs.emacs30-pgtk
+      else
+        pkgs.emacs30-gtk3;
     };
     terminal = mkOption {
       description = "Terminal emulator to be installed in Emacs.";
