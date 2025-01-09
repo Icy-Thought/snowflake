@@ -124,7 +124,7 @@ where `deviceX` is the name you'd like to give to your host device. This name wi
 
 Suggestion: before replacing `hardware.nix` with your `hardware-configuration.nix`:
 1. view the file and see what you'd like to retain
-2. rename the file (backup)
+2. rename the file and retain it as a backup
 3. add your Nix generated hardware configuration `.nix` file
 4. paste your desired configurations in your new file
 
@@ -145,15 +145,12 @@ cp /etc/nixos/hardware-configuration.nix deviceX/hardware.nix
 
 Modify `snowflake.dir` to point to the location where you are keeping the
 snowflake repository:
-https://github.com/Icy-Thought/snowflake/blob/f576ca018a7dd97e0f9d887835e2559e1e5cc02c/modules/options.nix#L26-L29
+https://github.com/Icy-Thought/snowflake/blob/33c4028021acc7dbe713b2ae30d4a1b3b5eb628b/modules/options.nix#L8-L12
 
-## 2. Remove Redundant CPU Setting
+### 2. Icy-Thought User
 
-For the sake of making things quicker (not the wisest choice), I have added both Intel and AMD CPU settings in the `hardware.nix` template. Therefore you ought to remove the one not being used.
-
-There might be other configurations that you need to add to your `hardware.nix` file, therefore it is the wisest choice to always look (grep `hardware.`) in the [NixOS Manual](https://nixos.org/manual/nixos/unstable/).
-
-https://github.com/Icy-Thought/snowflake/blob/d93a907a6b2b1b5929819d8e4e142af61787fe43/templates/hosts/desktop/hardware.nix#L46-L47
+For obvious reasons, I think the people trying to use this configuration are looking to change the username of their new setups. To achieve that, you need to modify the username in the `modules/options.nix` file.
+https://github.com/Icy-Thought/snowflake/blob/33c4028021acc7dbe713b2ae30d4a1b3b5eb628b/modules/options.nix#L25
 
 ### 3. Hide Your File-system From Nautilus & Dolphin
 
@@ -185,7 +182,7 @@ fileSystems."/boot" = {
 > [!WARNING]
 > Make sure to replace `/dev/disk/by-uuid/xyz` (or `partuuid`) with `/dev/disk/by-label/X`, where `X` follows the label you have chosen to name your partitions with during your partition setup.
 
-## 5. Installing Nix-Flake System
+## 4. Installing Nix-Flake System
 
 > [!NOTE]
 > Before rebuilding our NixOS system with our new device configurations, we ought to make our `flake.nix` aware of our new device directory (`deviceX`). Otherwise you'll run into #25!
