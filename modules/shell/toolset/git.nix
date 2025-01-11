@@ -7,7 +7,7 @@ with lib; {
 
   config = mkIf config.modules.shell.toolset.git.enable {
     user.packages = with pkgs;
-      [ act dura gitui gitAndTools.gh gitAndTools.git-open ]
+      [ act dura gitAndTools.gh gitAndTools.git-open ]
       ++ optionals config.modules.shell.toolset.gnupg.enable
       [ gitAndTools.git-crypt ];
 
@@ -135,6 +135,35 @@ with lib; {
           "org".xfuncname = "^(\\*+ +.*)$";
         };
       };
+    };
+
+    hm.programs.gitui = {
+      enable = true;
+      theme = with config.modules.themes.colors.main; ''
+        (
+          selected_tab:          Some("Reset"),
+          branch_fg:             Some("${bright.yellow}"),
+          cmdbar_bg:             Some("${types.highlight}"),
+          cmdbar_extra_lines_bg: Some("${types.bg}"),
+          command_fg:            Some("${types.fg}"),
+          commit_author:         Some("${normal.green}"),
+          commit_hash:           Some("${normal.magenta}"),
+          commit_time:           Some("${bright.cyan}"),
+          danger_fg:             Some("${normal.red}"),
+          diff_file_added:       Some("${bright.green}"),
+          diff_file_modified:    Some("${normal.yellow}"),
+          diff_file_moved:       Some("${bright.magenta}"),
+          diff_file_removed:     Some("${bright.red}"),
+          diff_line_add:         Some("${normal.green}"),
+          diff_line_delete:      Some("${normal.red}"),
+          disabled_fg:           Some("${bright.black}"),
+          push_gauge_bg:         Some("${normal.blue}"),
+          push_gauge_fg:         Some("Reset"),
+          selection_bg:          Some("${types.highlight}"),
+          selection_fg:          Some("${types.bg}"),
+          tag_fg:                Some("${bright.magenta}"),
+        )
+      '';
     };
   };
 }
