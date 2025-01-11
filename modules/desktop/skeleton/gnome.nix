@@ -33,17 +33,17 @@ with lib; {
     };
 
     user.packages = with pkgs;
-      [ dconf2nix ] ++ (with gnome; [ polari gnome-disk-utility gnome-tweaks ])
+      [ dconf2nix polari gnome-disk-utility gnome-tweaks ]
       ++ (with gnomeExtensions; [
         appindicator
-        aylurs-widgets
+        # aylurs-widgets
         blur-my-shell
         dash-to-dock
         gsconnect
         just-perfection
-        openweather # pop-shell
+        openweather-refined # pop-shell
         removable-drive-menu
-        rounded-window-corners
+        rounded-window-corners-reborn
         space-bar
         user-themes
       ]);

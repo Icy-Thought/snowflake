@@ -81,7 +81,8 @@
         };
       };
 
-      packages."${system}" = my.mapModules ./packages (p: pkgs.callPackage p { });
+      packages."${system}" =
+        my.mapModules ./packages (p: pkgs.callPackage p { });
 
       nixosModules = {
         snowflake = import ./.;

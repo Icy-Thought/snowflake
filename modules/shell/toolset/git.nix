@@ -28,30 +28,17 @@ with lib; {
     hm.programs.git = {
       enable = true;
       package = pkgs.gitFull;
-      difftastic = {
-        enable = true;
-        background = "dark";
-        color = "always";
-        display = "inline";
-      };
 
       aliases = {
         unadd = "reset HEAD";
-
-        # Data Analysis:
         ranked-authors = "!git authors | sort | uniq -c | sort -n";
-        emails = ''
-          !git log --format="%aE" | sort -u
-        '';
-        email-domains = ''
-          !git log --format="%aE" | awk -F'@' '{print $2}' | sort -u
-        '';
+        emails = "!git log --format='%aE' | sort -u";
+        email-domains =
+          "!git log --format='%aE' | awk -F'@' '{print $2}' | sort -u";
       };
-
       attributes = [ "*.lisp diff=lisp" "*.el diff=lisp" "*.org diff=org" ];
 
       ignores = [
-        # General:
         "*.bloop"
         "*.bsp"
         "*.metals"
@@ -134,6 +121,13 @@ with lib; {
             "^(((;;;+ )|\\(|([  ]+\\(((cl-|el-patch-)?def(un|var|macro|method|custom)|gb/))).*)$";
           "org".xfuncname = "^(\\*+ +.*)$";
         };
+      };
+
+      difftastic = {
+        enable = true;
+        background = "dark";
+        color = "always";
+        display = "inline";
       };
     };
 
