@@ -8,5 +8,5 @@ in {
   "tokenGH.age".publicKeys = [ hostKey ];
   "OpenWeatherMap.age".publicKeys = [ hostKey ];
   "mailingQST.age".publicKeys = [ hostKey ];
-  # "torBylon.age".publicKeys = [ hostKey ];
+  "aletheia.age".publicKeys = [ hostKey ];
 }

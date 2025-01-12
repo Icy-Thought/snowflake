@@ -18,6 +18,8 @@ let
     biosVer = "cat /sys/class/dmi/id/bios_version";
     restart = "nix store diff-closures /run/current-system /run/booted-system";
     bat0 = "upower -i /org/freedesktop/UPower/devices/battery_BAT0";
+    wud = "systemctl stop wg-quick-aletheia.service";
+    wup = "systemctl start wg-quick-aletheia.service";
 
     # Other
     yta = "youtube-dl -x --audio-format mp3";

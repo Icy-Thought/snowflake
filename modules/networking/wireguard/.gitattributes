@@ -1,1 +1,1 @@
-akkadianVPN.nix filter=git-crypt diff=git-crypt
+*.nix filter=git-crypt diff=git-crypt
