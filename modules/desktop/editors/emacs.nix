@@ -103,15 +103,15 @@ in with lib; {
       '';
     };
 
-    create.configFile.emacs-init =
-      let configFile = "${inputs.emacs-dir}/config.org";
-      in {
-        target = "emacs/config.org";
-        source = "${configFile}";
-        onChange = ''
-          ${getExe cfg.package} -Q --batch \
-          -l ob-tangle "${configFile}" -f org-babel-tangle
-        '';
+    create.configFile = {
+      early-init = {
+        target = "emacs/early-init.el";
+        source = "${inputs.emacs-dir}/early-init.el";
       };
+      init = {
+        target = "emacs/init.el";
+        source = "${inputs.emacs-dir}/init.el";
+      };
+    };
   };
 }
